@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeActivity">
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_above="@id/rlBotoom"/>
+<RelativeLayout
+    android:id="@+id/rlBotoom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/grey"
+        android:layout_above="@id/navigationbar"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/navigationbar"
+        app:itemIconSize="@dimen/_18sdp"
+android:fitsSystemWindows="true"
+
+        android:background="@color/white"
+        app:menu="@menu/bottom_navigation_home_menu"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:textAlignment="center"
+        app:itemIconTint="@color/app"
+        app:itemTextAppearance="@style/TextStyleBN"
+        app:itemTextAppearanceActive="@style/TextStyleBN"
+        app:itemTextAppearanceInactive="@style/TextStyleBN"
+        app:itemTextColor="@color/black"
+        >
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</RelativeLayout>
+<!--
+
+    <FrameLayout
+        android:id="@+id/fullframe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />-->
+</RelativeLayout>

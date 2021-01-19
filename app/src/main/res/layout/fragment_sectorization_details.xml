@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context=".fragments.SectorizationDetailsFragment">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        >
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left_arrow"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            />
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:text="Sectorization Details"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:layout_below="@id/header">
+        <RelativeLayout
+            android:id="@+id/imgslidelayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_detailsimg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/detail_image" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_detailsimg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:paddingLeft="@dimen/_25sdp" />
+
+        </RelativeLayout>
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Bois-Bonnet"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/app"
+            android:fontFamily="@font/semibold"
+            android:layout_marginTop="@dimen/_10sdp" />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Nursery School"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_5sdp" />
+        <TextView
+            android:id="@+id/name"
+            style="@style/CommonTextWrapcontent"
+            android:drawablePadding="@dimen/_5sdp"
+            android:text="43 bis rue du Marechal Foch, 78600 Maisons-Laffitte"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:drawableRight="@drawable/colored_map"
+            android:textSize="@dimen/_10sdp"
+            android:drawableLeft="@drawable/location_grey"
+            android:textColor="@color/black"/>
+        <TextView
+        android:id="@+id/phone"
+        style="@style/CommonTextMatchparent"
+        android:text="01 23 45 67 82"
+            android:textSize="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:drawablePadding="@dimen/_5sdp"
+        android:drawableLeft="@drawable/phone_icon"
+        android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/www"
+            style="@style/CommonTextMatchparent"
+            android:text="www.nelyan.com"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:textSize="@dimen/_10sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableLeft="@drawable/world_icon"
+            android:textColor="@color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/black"
+            />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Description"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_5sdp" />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Maecenas nec quam posuere, mollis lacus sed, malesuada\ndolor. In finibus bibendum metus.."
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_5sdp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

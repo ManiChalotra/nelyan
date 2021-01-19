@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:id="@+id/rl_1"
+    android:background="@drawable/shape">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_image"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:orientation="vertical">
+                <TextView
+                   style="@style/CommonTextWrapcontent"
+                    android:text="Bais-bonnet"
+                    android:textColor="@color/app"
+                    android:textSize="@dimen/_14sdp"
+                    android:fontFamily="@font/semibold"/>
+            <TextView
+                   style="@style/CommonTextWrapcontent"
+                    android:text="Nursery Schools"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:fontFamily="@font/semibold"/>
+            <TextView
+                android:id="@+id/name"
+                style="@style/CommonTextMatchparent"
+                android:text="43 bis rue du Marechal Foch, 78600 Maisons-Laffitte"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textSize="@dimen/_8sdp"
+                android:drawableLeft="@drawable/location_grey"
+              android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/phone"
+                style="@style/CommonTextMatchparent"
+                android:text="012345678"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textSize="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableLeft="@drawable/phone_icon"
+              android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/www"
+                style="@style/CommonTextMatchparent"
+                android:text="www.nelyan.com"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textSize="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableLeft="@drawable/world_icon"
+              android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/time"
+                style="@style/CommonTextMatchparent"
+                android:text="12:10 min | 26km"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textSize="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableLeft="@drawable/clock_icon"
+              android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/get"
+                style="@style/CommonTextMatchparent"
+                android:text="GET DIRECTION"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textSize="@dimen/_8sdp"
+              android:textColor="@color/app"/>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

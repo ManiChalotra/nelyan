@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="@dimen/_200sdp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alert_shape"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:text="Report"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"/>  <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:textSize="@dimen/_12sdp"/>
+        <EditText
+           style="@style/SimpleEdittext"
+            android:hint="Type..."
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/grey"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_70sdp"
+            android:background="@color/grey"/>
+
+       <RelativeLayout
+           android:id="@+id/btnSubmit"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginTop="@dimen/_20sdp"
+           android:layout_marginBottom="@dimen/_10sdp"
+           android:background="@drawable/submit_btn">
+           <TextView
+               style="@style/CommonTextWrapcontent"
+               android:text="Submit"
+               android:layout_centerInParent="true"
+               android:textColor="@color/white"/>
+       </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

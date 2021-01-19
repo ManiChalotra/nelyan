@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/home"
+            />
+        <item
+            android:id="@+id/add"
+            android:title="@string/add" />
+
+        <item
+            android:id="@+id/alert"
+            android:title="@string/alert" />
+        <item
+            android:id="@+id/fev"
+            android:title="@string/favo" />
+        <item
+            android:id="@+id/profile"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/contact"
+            android:title="@string/contact" />
+        <item
+            android:id="@+id/noti"
+            android:title="@string/noti" />
+
+        <item
+            android:id="@+id/settings"
+            android:title="@string/settings" />
+    </group>
+</menu>

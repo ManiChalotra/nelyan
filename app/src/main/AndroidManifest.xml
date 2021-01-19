@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nelyan">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission
+        android:name="org.apache.http.legacy"
+        android:required="false" />
+
+   <!-- <permission
+        android:name="com.example.googlemap.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />-->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/app_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/app_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ui.SectroMapActivity"></activity>
+        <activity android:name=".ui.DetailActivity" />
+        <activity android:name=".ui.MyAlertActivity" />
+        <activity android:name=".ui.TraderPreviewActivity" />
+        <activity android:name=".ui.TraderActivity" />
+        <activity android:name=".ui.BabySitterActivity" />
+        <activity android:name=".ui.MaternalAssistantActivity" />
+        <activity android:name=".ui.NurserieActivity" />
+        <activity android:name=".ui.Activity3Activity" />
+        <activity android:name=".ui.SectorizationMapActivity" />
+        <activity android:name=".ui.ChildCareActivity" />
+        <activity android:name=".ui.ChatActivity" />
+        <activity android:name=".ui.SectorizationActivity" />
+        <activity android:name=".ui.Chat1Activity" />
+        <activity android:name=".ui.Activity2Activity" />
+        <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.ForgotPasswordActivity" />
+        <activity android:name=".ui.WalkthroughActivity" />
+        <activity android:name=".ui.PubilerActivity" />
+        <activity android:name=".ui.SignupActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.RegulationActivity" />
+        <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".ui.NotificationActivity" />
+        <activity android:name=".ui.EditProfileActivity" />
+        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.ContactUsActivity" />
+        <activity android:name=".ui.ChangePasswordActivity" />
+        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.PrivacyActivity" />
+        <activity android:name=".ui.TermsActivity" />
+        <activity android:name=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCEwIaqpxbqtYlDN7gid5Df_HkVD7t0hz8" />
+    </application>
+
+</manifest>

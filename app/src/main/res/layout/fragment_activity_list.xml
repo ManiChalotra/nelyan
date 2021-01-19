@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context=".fragments.ActivityListFragment">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_toolbar_root"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/left_arrow"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <TextView
+                style="@style/HeaderText"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:text="Activity List"/>
+            <TextView
+            style="@style/HeaderText"
+            android:textSize="@dimen/_12sdp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="Maisons-Laffitle"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/location_circle"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_1"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_toolbar_root"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@drawable/text_outlinebg"
+            android:fontFamily="@font/bold"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="Filter"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:fontFamily="@font/bold"
+            android:text="Order by: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="start"
+            android:layout_weight="0"
+            android:background="@drawable/text_outlinebg"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/orderby"
+                android:layout_width="120dp"
+                android:layout_marginTop="-10dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+android:paddingTop="-15dp"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:spinnerMode="dropdown"
+               />
+
+            <ImageView
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/down_arrow" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_below="@id/ll_1"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="match_parent" />
+</RelativeLayout>

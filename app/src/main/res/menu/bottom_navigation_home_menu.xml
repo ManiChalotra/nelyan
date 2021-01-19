@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        
+        android:icon="@drawable/home_icon"
+        android:title="My Accompte"/>
+
+    <item
+        android:id="@+id/msg"
+        android:enabled="true"
+        android:title="My Message"
+        android:icon="@drawable/message_icon"
+        />
+    <item
+        android:id="@+id/publier"
+        android:enabled="true"
+        android:title="Publier"
+        android:icon="@drawable/publier_icon"
+        />
+
+    <item
+        android:id="@+id/chat"
+        android:enabled="true"
+        android:title="City Tchat"
+        android:icon="@drawable/chat_icon"
+        /><item
+        android:id="@+id/event"
+        android:enabled="true"
+        android:title="Event"
+        android:icon="@drawable/event_icon"
+        />
+</menu>

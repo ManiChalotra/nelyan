@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Nelyan</string>
+    <string name="signup"><u>Sign Up</u></string>
+    <string name="privacy"><u>privacy policy.</u></string>
+    <string name="accept"><u>I accept the general conditions</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="walkone">Les activités dans ma ville</string>
+    <string name="walkonedesc">Trouver toutes les activités, associations et événements pour adultes et enfants dans ma ville : théâtre, équitation, tennis,judo, danse, bons plans, associations...</string>
+    <string name="walktwo">Garde d\'enfants</string>
+    <string name="walktwodesc">Trouver facilement un mode de garde pour vo tre enfant : une créche, une assistante matern elle, une garderie, sortie scolaire, un ou une baby-sitter...</string>
+    <string name="walkthree">Les écoles de mes enfants</string>
+    <string name="walkthreedesc">Vous êtes parents et souhaitez-vous installer? En un clic Nelyan vous affiche les emplacements des écoles à proximité de votre future adresse avant d\'emménager afin de vous projeter au mieux dans votre vie quotidienne et calculer le temps de trajet nécessaire pour vous rendre au travail...</string>
+    <string name="walkfour">Dicussions et bons plans </string>
+    <string name="walkfourdesc">Exclusivité réservée aux habitants de votre ville, Neylan met à disposition un espace pour échanger entre habitants et voisins, partager des bons plans, s\'entraider, se rencontrer...</string>
+    <string name="walkfive">Les commerçants dans ma ville</string>
+    <string name="walkfivedesc">Trouver tous les commerçants et artisans dans ma ville : resturant, supermarché, salon de coiffure, boutique prêt-à-porter, fleuriste...</string>
+    <string name="activtydetailsdesc">During this summer, many cities show movies in the park. Bring a blanket,snacks,a light sweater and enjoy the magic of cinema.
+    Any city can be exhilarating. If you come from a suburban or rural area, it can be especially magical, but even lifelong urbanities recognize the excitement and wonder of cityscapes. ith so many things to do on any given day or night, it can beoverwhelming to try and make plans, but that\'s one of the best things about the city. You can drive in with no plan at all and still find a million things to do on a moment\'s notice.
+    </string>
+    <string name="loremipsum">During this summer, many cities show movies in the park. Bring a blanket,snacks,a light sweater and enjoy the magic of cinema.</string>
+    <string name="home">Home</string>
+    <string name="add">My Add</string>
+    <string name="alert">My Alert</string>
+    <string name="favo">Favorite</string>
+    <string name="profile">Profile</string>
+    <string name="contact">Contact Us</string>
+    <string name="noti">Notifications</string>
+    <string name="settings">Settings</string>
+
+</resources>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.BabySitterActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="Baby-Sitter"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Photo/Video" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/back_shape">
+
+            <ImageView
+                android:id="@+id/ivImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/camera_icon" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_3sdp"
+
+                android:background="@drawable/back_shape" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" />
+        </LinearLayout>
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Name of Maternal Assistant"/>
+        <EditText
+            style="@style/SimpleEdittext"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:inputType="text"
+            android:hint="Name of Maternal Assistant"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Number of places still avilable"/>
+        <Spinner
+            android:id="@+id/orderby"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/regular"
+            android:gravity="start"
+            android:dropDownSelector="@drawable/down_arrow"
+            android:inputType="text"
+            android:autofillHints="date"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/_10sdp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+          android:layout_marginTop="@dimen/_2sdp"
+            android:background="@color/black"/>
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Phone Number"/>
+        <EditText
+            style="@style/SimpleEdittext"
+            android:inputType="number"
+            android:hint="Phone Number"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/> <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Address"/>
+        <EditText
+            style="@style/SimpleEdittext"
+            android:hint="Address"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/><TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Description"/>
+        <EditText
+            style="@style/SimpleEdittext"
+            android:hint="Description"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+        <Button
+            android:id="@+id/btnSubmit"
+            style="@style/Button"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/btn"
+            android:text="SUBMIT"/>
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

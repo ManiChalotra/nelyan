@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context=".fragments.NurserieFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/white">
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                />
+            <TextView
+                style="@style/HeaderText"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:text="Nurserie Details"/>
+            <ImageView
+                android:id="@+id/ivShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/share_icon"
+                android:layout_marginRight="@dimen/_10sdp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/header">
+            <RelativeLayout
+                android:id="@+id/imgslidelayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/iv_detailsimg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_large_baby" />
+                <!--<HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_alignParentBottom="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:src="@drawable/image1"/>
+                        <ImageView
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/image2"/>
+                        <ImageView
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/image3"/>  <ImageView
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:src="@drawable/img_1"/>
+                        <ImageView
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:src="@drawable/image1"/>
+                    </LinearLayout>
+
+                </HorizontalScrollView>-->
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rc_detailsimg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:paddingLeft="@dimen/_25sdp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:drawableLeft="@drawable/pic_01"
+                    android:textColor="@color/app"
+                    android:textSize="@dimen/_14sdp"
+                    android:fontFamily="@font/semibold"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:text="Name of nursery"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/_10sdp">
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="Description"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="In publishing and graphic designs, lorem ipsum is a\nfiller text commonly used to demonstrate the\ngraphic elements of documents or visual \npresentation. To demonstrate the graphic elements\nof a document or visual presentation."/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="NUMBER OF PLACES STILL AVAILABLE"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="2"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="MESSAGES"/>
+                        <ImageView
+                            android:id="@+id/iv_msg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:src="@drawable/message_ico"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="PHONE"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="+123-456-789"/><TextView
+                        style="@style/CommonTextWrapcontent"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:text="ADDRESS"/>
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_9sdp"
+                            android:drawableRight="@drawable/colored_map"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="43 bis rue de Marechal Foch, 789000 Maisons-Laffitte"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_90sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_10sdp">
+                            <fragment
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
