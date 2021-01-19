@@ -24,7 +24,7 @@
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="About Us"/>
+            android:text="About "/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
