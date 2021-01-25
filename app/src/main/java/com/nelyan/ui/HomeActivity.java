@@ -93,7 +93,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         Log.e("vghgv","hhhhhhh");
                         Fragment fragment = null;
                         fragment = new ChildCareFragment();
-                        loadFragment( fragment);
+                        Bundle args = new Bundle();
+                        args.putString("child", "childcare");
+
+                        fragment.setArguments(args);
+                        FragmentManager fragmentManager = this.getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_container, fragment);
+                        fragmentTransaction.commit();
                     }
                 }
                 if(getIntent().hasExtra("activity")){
@@ -260,6 +267,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }else if (currentFragment.getClass().equals(new NurserieFragment().getClass())) {
            super.onBackPressed();
         }else if (currentFragment.getClass().equals(new TraderPublishFragment().getClass())) {
+           super.onBackPressed();
+        }else if (currentFragment.getClass().equals(new ChildCareFragment().getClass())) {
            super.onBackPressed();
         }
         else

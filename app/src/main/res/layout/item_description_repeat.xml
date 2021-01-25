@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Add Product Image" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/back_shape">
+
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/ivCam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/grey"
+            android:src="@drawable/camera_icon" />
+
+    </RelativeLayout>
+
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Product Title" />
+
+    <EditText
+        android:id="@+id/edtProductTitle"
+        style="@style/SimpleEdittext"
+        android:hint="Product Title"
+        android:inputType="text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Product Price" />
+
+    <EditText
+        android:id="@+id/edtProductPrice"
+        style="@style/SimpleEdittext"
+        android:hint="Product Price"
+        android:inputType="number" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Description" />
+
+    <EditText
+        android:id="@+id/edtDesc"
+        style="@style/SimpleEdittext"
+        android:hint="Description" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:id="@+id/tvAdd"
+        style="@style/CommonTextWrapcontent"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableStart="@drawable/plus_icon"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="Add"
+        android:textSize="@dimen/_10sdp" />
+
+</LinearLayout>

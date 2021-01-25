@@ -40,6 +40,7 @@
                 style="@style/CommonTextWrapcontent"
                 android:text="Photo/Video" />
             <RelativeLayout
+                android:id="@+id/rlImg"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -52,7 +53,40 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/camera_icon" />
             </RelativeLayout>
-            <LinearLayout
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_10sdp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+
+                        android:id="@+id/Recycler_scroll">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                        android:id="@+id/indicator"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+
+                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/Recycler_scroll"
+                        app:spi_dotColor="@color/grey"
+                        app:spi_dotSize="@dimen/_6sdp"
+                        app:spi_dotSelectedSize="@dimen/_6sdp"
+                        app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
+                </RelativeLayout>
+            </RelativeLayout>
+          <!--  <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -75,13 +109,22 @@
                     android:layout_marginLeft="@dimen/_3sdp"
 
                     android:background="@drawable/back_shape" />
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/rlAddImg"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/back_shape" />
-            </LinearLayout>
+                    android:background="@drawable/back_shape" >
+                    <ImageView
+                        android:id="@+id/ivplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/present"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"/>
+                </RelativeLayout>
+            </LinearLayout>-->
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"

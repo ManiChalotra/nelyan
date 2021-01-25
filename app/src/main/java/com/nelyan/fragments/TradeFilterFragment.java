@@ -86,9 +86,8 @@ Button btnFilter;
         orderby.setOnItemSelectedListener(TradeFilterFragment.this);
         orderby1=v.findViewById(R.id.orderby1);
         final String[] km = new String[]{
-              "",  "OKM",
-                "1KM","2KM","3KM","4KM","5KM","6KM","7KM","8KM","9KM","10KM","11KM","12KM","13KM","14KM","15KM","16KM","17KM","18KM","19KM","20KM","21KM",
-                "22KM","23KM","24KM","25KM","26KM","27KM","28KM","29KM","30KM"
+              "",  "OKM","5KM","10KM","15KM","20KM",
+                "25KM","30KM"
 
         };
         ArrayAdapter adapter1 = new ArrayAdapter(

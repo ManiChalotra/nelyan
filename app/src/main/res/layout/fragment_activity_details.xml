@@ -169,286 +169,351 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/days"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="25dp"
-                android:fontFamily="@font/semibold"
-                android:text="DAYS"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_locationlay" />
             <LinearLayout
-                android:id="@+id/ll_weeklay"
+                android:id="@+id/ll_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="25dp"
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/days">
-
-                <TextView
-                    android:id="@+id/tvMon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selected_outlinbg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="MON"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvTue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="TUE"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvWed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="WED"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvThur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="THU"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvFri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="FRI"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvSat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="SAT"
-                    android:textColor="@color/black" />
-                <TextView
-                    android:id="@+id/tvSun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/text_outlinebg"
-                    android:fontFamily="@font/regular"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="2dp"
-                    android:paddingBottom="3dp"
-                    android:text="SUN"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-            <View
-                android:id="@+id/underlineweek"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:background="@color/grey"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_weeklay" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_detailstime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/underlineweek" />
-            <View
-                android:id="@+id/underlineweektwo"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:background="@color/grey"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rc_detailstime" />
-            <TextView
-                android:id="@+id/tv_eventdesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/regular"
-                android:text="@string/activtydetailsdesc"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/underlineweektwo" />
-            <View
-                android:id="@+id/underlinedesc"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:background="@color/grey"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_eventdesc" />
-            <TextView
-                android:id="@+id/upcoming"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:fontFamily="@font/regular"
-                android:text="Upcoming Internship / Event"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/underlinedesc" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_upcomingevents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_25sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upcoming" />
-            <TextView
-                android:id="@+id/tv_msg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:fontFamily="@font/regular"
-                android:text="MESSAGES"
-                android:textColor="@color/grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rc_upcomingevents" />
-            <ImageView
-                android:id="@+id/iv_msg"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:src="@drawable/message_ico"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_msg" />
-            <TextView
-                android:id="@+id/tv_phn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/regular"
-                android:text="PHONE"
-                android:textColor="@color/grey"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_msg" />
-            <TextView
-                android:id="@+id/tv_phntxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/regular"
-                android:text="+123-456-789"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phn" />
-            <TextView
-                android:id="@+id/llMap"
-                style="@style/CommonTextWrapcontent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phntxt"
-                android:textSize="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:textColor="@color/black"
-                android:drawableLeft="@drawable/location_black"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableRight="@drawable/colored_map"
-                android:text="43 bis rue du Marechal Foch, 78600 Maisons-Laffitte"/>
+                app:layout_constraintTop_toBottomOf="@id/ll_locationlay"
+                tools:ignore="MissingConstraints">
 
             <LinearLayout
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llMap"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_height="@dimen/_90sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp">
-                <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/round_shape" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/_115sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@color/app" />
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/round_shape" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/_225sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@color/app" />
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/round_shape" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@color/app" />
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/round_shape" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@color/app" />
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/round_shape" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+               android:id="@+id/days"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginRight="25dp"
+               android:fontFamily="@font/semibold"
+               android:text="DAYS"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/ll_locationlay" />
+           <LinearLayout
+               android:id="@+id/ll_weeklay"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:layout_marginRight="25dp"
+               android:orientation="horizontal"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/days">
+
+               <TextView
+                   android:id="@+id/tvMon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/selected_outlinbg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="MON"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvTue"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="TUE"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvWed"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="WED"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvThur"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="THU"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvFri"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="FRI"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvSat"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="SAT"
+                   android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tvSun"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:background="@drawable/text_outlinebg"
+                   android:fontFamily="@font/regular"
+                   android:paddingLeft="2dp"
+                   android:paddingTop="3dp"
+                   android:paddingRight="2dp"
+                   android:paddingBottom="3dp"
+                   android:text="SUN"
+                   android:textColor="@color/black" />
+           </LinearLayout>
+           <View
+               android:id="@+id/underlineweek"
+               android:layout_width="match_parent"
+               android:layout_height="0.5dp"
+               android:layout_marginLeft="25dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="@dimen/_25sdp"
+               android:background="@color/grey"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/ll_weeklay" />
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rc_detailstime"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="10dp"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/underlineweek" />
+           <View
+               android:id="@+id/underlineweektwo"
+               android:layout_width="match_parent"
+               android:layout_height="0.5dp"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="@dimen/_25sdp"
+               android:background="@color/grey"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/rc_detailstime" />
+           <TextView
+               android:id="@+id/tv_eventdesc"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="8dp"
+               android:fontFamily="@font/regular"
+               android:text="@string/activtydetailsdesc"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/underlineweektwo" />
+           <View
+               android:id="@+id/underlinedesc"
+               android:layout_width="match_parent"
+               android:layout_height="0.5dp"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="@dimen/_25sdp"
+               android:background="@color/grey"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/tv_eventdesc" />
+           <TextView
+               android:id="@+id/upcoming"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:layout_marginRight="@dimen/_25sdp"
+               android:fontFamily="@font/regular"
+               android:text="Upcoming Internship / Event"
+               android:textColor="@color/black"
+               android:textStyle="bold"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/underlinedesc" />
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rc_upcomingevents"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:layout_marginRight="@dimen/_25sdp"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/upcoming" />
+           <TextView
+               android:id="@+id/tv_msg"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:layout_marginRight="@dimen/_25sdp"
+               android:fontFamily="@font/regular"
+               android:text="MESSAGES"
+               android:textColor="@color/grey"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/rc_upcomingevents" />
+           <ImageView
+               android:id="@+id/iv_msg"
+               android:layout_width="@dimen/_20sdp"
+               android:layout_height="@dimen/_20sdp"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:src="@drawable/message_ico"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/tv_msg" />
+           <TextView
+               android:id="@+id/tv_phn"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:fontFamily="@font/regular"
+               android:text="PHONE"
+               android:textColor="@color/grey"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/iv_msg" />
+           <TextView
+               android:id="@+id/tv_phntxt"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:fontFamily="@font/regular"
+               android:text="+123-456-789"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/tv_phn" />
+           <TextView
+               android:id="@+id/llMap"
+               style="@style/CommonTextWrapcontent"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/tv_phntxt"
+               android:textSize="@dimen/_9sdp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:textColor="@color/black"
+               android:drawableLeft="@drawable/location_black"
+               android:drawablePadding="@dimen/_5sdp"
+               android:drawableRight="@drawable/colored_map"
+               android:text="43 bis rue du Marechal Foch, 78600 Maisons-Laffitte"/>
+           <LinearLayout
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/llMap"
+               android:layout_width="match_parent"
+               android:layout_marginLeft="@dimen/_15sdp"
+               android:layout_marginRight="@dimen/_10sdp"
+               android:layout_height="@dimen/_90sdp"
+               android:layout_marginBottom="@dimen/_20sdp"
+               android:layout_marginTop="@dimen/_10sdp">
+               <fragment
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/map"
+                   android:name="com.google.android.gms.maps.SupportMapFragment" />
+           </LinearLayout>
+            </LinearLayout>
+            </LinearLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

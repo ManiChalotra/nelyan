@@ -108,14 +108,11 @@
                         android:textSize="@dimen/_10sdp"
                         android:textColor="@color/grey"
                         />
-                    <EditText
-                        style="@style/SimpleEdittext"
-                        android:hint="Email"
-                        android:textColorHint="@color/black"
-                        android:inputType="textWebEmailAddress"
+                    <TextView
+                        style="@style/CommonTextMatchparent"
                         android:textSize="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-android:text="jimmy@gmail.com"
+                        android:text="jimmy@gmail.com"
                         android:textColor="@color/black"
                         android:fontFamily="@font/semibold"/>
                        <View

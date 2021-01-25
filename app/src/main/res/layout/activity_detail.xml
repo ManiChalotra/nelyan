@@ -185,7 +185,7 @@
             android:background="@drawable/round_shape" />
         <View
             android:layout_width="1dp"
-            android:layout_height="@dimen/_135sdp"
+            android:layout_height="@dimen/_115sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:background="@color/app" />
         <View
@@ -194,7 +194,7 @@
             android:background="@drawable/round_shape" />
         <View
             android:layout_width="1dp"
-            android:layout_height="@dimen/_170sdp"
+            android:layout_height="@dimen/_225sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:background="@color/app" />
         <View
@@ -203,7 +203,7 @@
             android:background="@drawable/round_shape" />
         <View
             android:layout_width="1dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:background="@color/app" />
         <View
@@ -212,7 +212,7 @@
             android:background="@drawable/round_shape" />
         <View
             android:layout_width="1dp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginLeft="@dimen/_5sdp"
             android:background="@color/app" />
         <View
@@ -263,7 +263,7 @@
                         android:paddingRight="2dp"
                         android:paddingBottom="3dp"
                         android:text="MON"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -379,7 +379,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rc_detailstime" />
 
-                <!--<TextView
+                <TextView
                     android:id="@+id/tv_eventdesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -393,7 +393,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/underlineweektwo" />-->
+                    app:layout_constraintTop_toBottomOf="@id/underlineweektwo" />
 
                 <View
                     android:id="@+id/underlinedesc"

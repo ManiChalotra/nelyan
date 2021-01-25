@@ -119,6 +119,17 @@
                 android:textColor="@color/black"
                 android:text="Around me"/>
         </LinearLayout>
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Enter you scroll message of ad" />
+        <EditText
+            style="@style/SimpleEdittext"
+            android:hint="Add a message that appears on your ad .. " />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
         <LinearLayout
             android:id="@+id/ll_1"
             android:layout_width="match_parent"

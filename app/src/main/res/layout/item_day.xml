@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+      <TextView
+               style="@style/CommonTextWrapcontent"
+               android:layout_marginTop="@dimen/_10sdp"
+               android:text="Select Day" />
+    <Spinner
+        android:id="@+id/orderby3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:autofillHints="date"
+        android:dropDownSelector="@drawable/down_arrow"
+        android:fontFamily="@font/regular"
+        android:gravity="start"
+        android:hint="Date Added"
+        android:inputType="text"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
+        android:textSize="@dimen/_10sdp" />
+
+    <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:background="@color/black" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false" />
+    <TextView
+        android:id="@+id/tvAddDay"
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableStart="@drawable/plus_icon"
+        android:drawablePadding="@dimen/_5sdp"
+        android:text="Add Day"
+        android:textSize="@dimen/_10sdp" />
+</LinearLayout>

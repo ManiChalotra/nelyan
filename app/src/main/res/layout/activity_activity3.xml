@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Activity3Activity">
 
     <RelativeLayout
@@ -12,6 +13,7 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp">
+
             <ImageView
                 android:id="@+id/ivBack"
                 android:layout_width="wrap_content"
@@ -20,11 +22,13 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:src="@drawable/left_arrow" />
+
             <TextView
                 style="@style/HeaderText"
                 android:layout_centerInParent="true"
                 android:text="Activity"
                 android:textColor="@color/black" />
+
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +42,7 @@
                 style="@style/CommonTextWrapcontent"
                 android:text="Photo/Video" />
             <RelativeLayout
+                android:id="@+id/rlImg"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -50,723 +55,247 @@
                     android:backgroundTint="@color/grey"
                     android:src="@drawable/camera_icon" />
             </RelativeLayout>
-            <LinearLayout
+         <!--   <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_3sdp"
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
                     android:background="@drawable/back_shape" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape" />
-            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/back_shape" />
+
+                <RelativeLayout
+                    android:id="@+id/rlAddImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/back_shape" >
+                    <ImageView
+                        android:id="@+id/ivplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/present"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"/>
+                </RelativeLayout>
+
+            </LinearLayout>-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_10sdp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+
+                        android:id="@+id/Recycler_scroll">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                        android:id="@+id/indicator"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+
+                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/Recycler_scroll"
+                        app:spi_dotColor="@color/grey"
+                        app:spi_dotSize="@dimen/_6sdp"
+                        app:spi_dotSelectedSize="@dimen/_6sdp"
+                        app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
+                </RelativeLayout>
+            </RelativeLayout>
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Type of Activity"/>
+                android:text="Type of Activity" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="horizontal">
+
                 <Spinner
                     android:id="@+id/orderby"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
+                    android:autofillHints="date"
+                    android:dropDownSelector="@drawable/down_arrow"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
-                    android:dropDownSelector="@drawable/down_arrow"
                     android:hint="Date Added"
                     android:inputType="text"
-                    android:autofillHints="date"
                     android:spinnerMode="dropdown"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey"
                     android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-            <View
-    android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_2sdp"
-    android:layout_height="1dp"
-    android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Name of Shop"/>
-            <EditText
-                style="@style/SimpleEdittext"
-                android:inputType="text"
-                android:hint="Name of Shop"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Name of Activity"/>
-            <EditText
-                style="@style/SimpleEdittext"
-                android:inputType="text"
-                android:hint="Name of Activity"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Description"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/grey"
-android:textColor="@color/black"
-                android:paddingRight="@dimen/_10sdp"
-                android:backgroundTint="@color/transparent"
-android:fontFamily="@font/regular"
-                android:textSize="@dimen/_10sdp"
-                android:hint="Description"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Enter you scroll message of ad"/>
-            <EditText
-                style="@style/SimpleEdittext"
-           android:inputType="text"
-                android:hint="Add a message that appears on your ad .. "/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Phone"/>
-            <EditText
-                style="@style/SimpleEdittext"
-                android:inputType="number"
-                android:hint="Phone"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Age Group"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <EditText
-                        style="@style/SimpleEdittext"
-                        android:inputType="number"
-                        android:hint="Age Group From"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:orientation="vertical">
-                    <EditText
-                        style="@style/SimpleEdittext"
-                        android:inputType="number"
-                        android:hint="Age Group To"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black"/>
-                </LinearLayout>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@color/black" />
+
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Days"/>
-            <Spinner
-                android:id="@+id/orderby1"
+                android:text="Name of Shop" />
+
+            <EditText
+                style="@style/SimpleEdittext"
+                android:hint="Name of Shop"
+                android:inputType="text" />
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Name of Activity" />
+
+            <EditText
+                style="@style/SimpleEdittext"
+                android:hint="Name of Activity"
+                android:inputType="text" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Description" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
-                android:gravity="start"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:dropDownSelector="@drawable/down_arrow"
-                android:hint="Date Added"
-                android:inputType="text"
-                android:autofillHints="date"
-                android:spinnerMode="dropdown"
+                android:hint="Description"
+                android:paddingRight="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
                 android:textSize="@dimen/_10sdp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Select Time"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="From:"/>
-                    <LinearLayout
-                        android:id="@+id/ll_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/edClo"
-                            style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:textColor="@color/black"
-                            android:drawableRight="@drawable/clock_purple_icon"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerInParent="true"
-                            android:textColorHint="@color/grey"
-                            android:hint="Select From"/>
+                android:background="@color/black" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="To:"/>
-                    <LinearLayout
-                        android:id="@+id/ll_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/edClo1"
-                            style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:layout_alignParentLeft="true"
-                            android:drawableRight="@drawable/clock_purple_icon"
-                            android:layout_centerInParent="true"
-                            android:textColorHint="@color/grey"
-                            android:textColor="@color/black"
-                            android:hint="Select To"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Address"/>
+                android:text="Enter you scroll message of ad" />
+
             <EditText
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:hint="Address"/>
+                android:hint="Add a message that appears on your ad .. " />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"/>
-            <LinearLayout
-                android:id="@+id/llAdrs"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/CommonTextWrapcontent"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Age Group"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-                        <EditText
-                            style="@style/SimpleEdittext"
-                            android:inputType="number"
-                            android:hint="Age Group From"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:orientation="vertical">
-                        <EditText
-                            style="@style/SimpleEdittext"
-                            android:inputType="number"
-                            android:hint="Age Group To"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/black"/>
-                    </LinearLayout>
+                android:background="@color/black" />
 
-                </LinearLayout>
-
-
-                <TextView
-                    style="@style/CommonTextWrapcontent"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Select Time"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:layout_gravity="center"
-                            android:text="From:"/>
-                        <LinearLayout
-                            android:id="@+id/ll_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/edClo0"
-                                style="@style/CommonTextMatchparent"
-                                android:inputType="number"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:textColor="@color/black"
-                                android:drawableRight="@drawable/clock_purple_icon"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerInParent="true"
-                                android:textColorHint="@color/grey"
-                                android:hint="Select From"/>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/black"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:layout_gravity="center"
-                            android:text="To:"/>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/edClo4"
-                                style="@style/CommonTextMatchparent"
-                                android:inputType="number"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:layout_alignParentLeft="true"
-                                android:drawableRight="@drawable/clock_purple_icon"
-                                android:layout_centerInParent="true"
-                                android:textColorHint="@color/grey"
-                                android:textColor="@color/black"
-                                android:hint="Select To"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/black"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp">
-                <RelativeLayout
-                    android:id="@+id/rlAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/add_more_btn"/>
-                    <TextView
-                       style="@style/CommonTextWrapcontent"
-                        android:text="Add More"
-                        android:textSize="@dimen/_8sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
-                        android:textColor="@color/white"
-                        android:layout_centerInParent="true"/>
-                </RelativeLayout>
-
-            </RelativeLayout>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:text="Add An Event" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape">
-
-                <ImageView
-                    android:id="@+id/ivCam"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="@color/grey"
-                    android:src="@drawable/camera_icon" />
-            </RelativeLayout>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:text="Event Picture"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_8sdp"/>
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Name of Event"/>
+                android:text="Phone" />
+
             <EditText
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:inputType="text"
-                android:hint="Name of Event"/>
+                android:hint="Phone"
+                android:inputType="number" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"/>
+                android:background="@color/black" />
+
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Select Date"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                       style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="From:"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tvCal"
-                           style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:textColorHint="@color/grey"
-                            android:textColor="@color/black"
-                            android:drawableRight="@drawable/calendar_icon"
-                            android:hint="10/09/2002"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:orientation="horizontal">
-                    <TextView
-                       style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="To:"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tvCal1"
-                           style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:textColorHint="@color/grey"
-                            android:textColor="@color/black"
-                            android:drawableRight="@drawable/calendar_icon"
-                            android:hint="10/09/2002"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Select Time"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <TextView
-                       style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="From:"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/edClo2"
-                            style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerInParent="true"
-                            android:drawableRight="@drawable/clock_purple_icon"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/grey"
-                            android:hint="Select From"/>
-                        <!--<RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:id="@+id/edClo2"
-                                style="@style/CommonTextMatchparent"
-                                android:inputType="number"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerInParent="true"
-                                android:text="Select From"/>
-                            <ImageView
-                                android:id="@+id/ivClock2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/clock_purple_icon"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"/>
-                        </RelativeLayout>-->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:orientation="horizontal">
-                    <TextView
-                       style="@style/CommonTextWrapcontent"
-                        android:layout_gravity="center"
-                        android:text="To:"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/edClo3"
-                            style="@style/CommonTextMatchparent"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:layout_alignParentLeft="true"
-                            android:textColorHint="@color/grey"
-                            android:textColor="@color/black"
-                            android:drawableRight="@drawable/clock_purple_icon"
-                            android:layout_centerInParent="true"
-                            android:hint="Select To"/>
-                     <!--   <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:id="@+id/edClo3"
-                                style="@style/CommonTextMatchparent"
-                                android:inputType="number"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerInParent="true"
-                                android:text="Select To"/>
-                            <ImageView
-                                android:id="@+id/ivClock3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/clock_purple_icon"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"/>
-                        </RelativeLayout>-->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/black"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Description"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/black"
-                android:paddingRight="@dimen/_10sdp"
-                android:backgroundTint="@color/transparent"
-                android:fontFamily="@font/regular"
-                android:textSize="@dimen/_10sdp"
-                android:hint="Description"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Price"/>
+                android:text="Address" />
+
             <EditText
                 style="@style/SimpleEdittext"
-                android:inputType="number"
-                android:hint="Price"/>
+                android:hint="Address" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/black"/>
-            <LinearLayout
-                android:id="@+id/ll_price"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    style="@style/CommonTextWrapcontent"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Price"/>
-                <EditText
-                    style="@style/SimpleEdittext"
-                    android:inputType="number"
-                    android:hint="Price"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@color/black"/>
-            </LinearLayout>
+                android:background="@color/black" />
+
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp">
-                <RelativeLayout
-                    android:id="@+id/rlAdd1"
-                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAgeGroup"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/add_more_btn"/>
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:text="Add More"
-                        android:textSize="@dimen/_8sdp"
-                        android:paddingRight="@dimen/_5sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:textColor="@color/white"
-                        android:layout_centerInParent="true"/>
-                </RelativeLayout>
+                    android:nestedScrollingEnabled="false" />
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+            </RelativeLayout>
+
             <Button
                 android:id="@+id/btnSubmit"
                 style="@style/Button"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/btn"
-                android:text="SUBMIT"/>
+                android:text="SUBMIT" />
+
         </LinearLayout>
+
     </RelativeLayout>
+
 </ScrollView>
