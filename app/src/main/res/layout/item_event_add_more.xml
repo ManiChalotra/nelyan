@@ -52,24 +52,22 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:padding="@dimen/_5sdp"
+    android:background="@drawable/back_shape">
     <TextView
         style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
         android:text="Select Date" />
-
-
-    -
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_3sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:orientation="horizontal">
-
-
-        -
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,67 +138,53 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Select Time" />
-
-
-    -
+</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:orientation="horizontal">
-
-
-        -
-
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/back_shape"
+        android:orientation="vertical">
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Select Time" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_gravity="center"
-                android:text="From:" />
-            <LinearLayout
+  <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/edClo2"
-                    style="@style/CommonTextMatchparent"
-                    android:drawableEnd="@drawable/clock_purple_icon"
-                    android:hint="Select From"
-                    android:inputType="number"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey" />
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:text="From:" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/edClo2"
+                        style="@style/CommonTextMatchparent"
+                        android:drawableEnd="@drawable/clock_purple_icon"
+                        android:hint="Select From"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
-
-
-        -
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_gravity="center"
-                android:text="To:" />
 
 
             -
@@ -208,17 +192,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/edClo3"
-                    style="@style/CommonTextMatchparent"
-                    android:drawableRight="@drawable/clock_purple_icon"
-                    android:hint="Select To"
-                    android:inputType="number"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey" />
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:text="To:" />
+
+
+                -
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/edClo3"
+                        style="@style/CommonTextMatchparent"
+                        android:drawableRight="@drawable/clock_purple_icon"
+                        android:hint="Select To"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
