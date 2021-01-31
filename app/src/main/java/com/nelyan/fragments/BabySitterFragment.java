@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nelyan.R;
+import com.nelyan.adapter.DetailsImageAdapter;
+import com.nelyan.modals.DetailsImageModal;
+
+import java.util.ArrayList;
+
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class BabySitterFragment extends Fragment implements OnMapReadyCallback {
     Context mContext;
     View v;
@@ -29,7 +38,9 @@ public class BabySitterFragment extends Fragment implements OnMapReadyCallback {
     TextView tvTitle;
     GoogleMap mMap;
     LinearLayout ll_btns;
-
+    ScrollingPagerIndicator indicator;
+    RecyclerView rc;
+    ArrayList<DetailsImageModal> datalist = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +80,18 @@ public class BabySitterFragment extends Fragment implements OnMapReadyCallback {
                 //  AppUtils.gotoFragment(mContext, new NurserieFragment(), R.id.frame_container, false);
             }
         });
+        rc = v.findViewById(R.id.rc_detailsimg);
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        rc.setLayoutManager(lm);
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
+        rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         return v;
     }
 

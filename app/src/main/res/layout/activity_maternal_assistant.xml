@@ -53,17 +53,17 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/camera_icon" />
         </RelativeLayout>
-        <RelativeLayout
+      <!--  <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_10sdp">
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
@@ -85,30 +85,54 @@
                     app:spi_dotSelectedSize="@dimen/_6sdp"
                     app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
             </RelativeLayout>
-        </RelativeLayout>
-        <!--<LinearLayout
+        </RelativeLayout>-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:background="@drawable/back_shape" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginLeft="@dimen/_3sdp"
-                android:layout_weight="1"
-                android:background="@drawable/back_shape" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/_3sdp"
 
-                android:background="@drawable/back_shape" />
+            <LinearLayout
+                android:id="@+id/ll_1"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" >
+                <ImageView
+                    android:id="@+id/ivImg1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_2"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" >
+                <ImageView
+                    android:id="@+id/ivImg2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_3"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/back_shape" >
+                <ImageView
+                    android:id="@+id/ivImg3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/rlAddImg"
                 android:layout_width="match_parent"
@@ -124,7 +148,8 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"/>
             </RelativeLayout>
-        </LinearLayout>-->
+
+        </LinearLayout>
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_15sdp"

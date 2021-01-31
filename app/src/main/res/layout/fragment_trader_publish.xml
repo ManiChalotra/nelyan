@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:background="@color/white"
     tools:context=".fragments.TraderPublishFragment">
@@ -56,6 +57,40 @@ android:drawableLeft="@drawable/house_icon"
             android:gravity="center"
             android:drawablePadding="@dimen/_10sdp" />
         <RelativeLayout
+            android:id="@+id/imgslidelayout"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_coursename"
+            android:layout_marginTop="@dimen/_10sdp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+
+                android:id="@+id/rc_detailsimg">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                android:id="@+id/indicator"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/rc_detailsimg"
+                app:spi_dotColor="@color/grey"
+                app:spi_dotSize="@dimen/_6sdp"
+                app:spi_dotSelectedSize="@dimen/_6sdp"
+                app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
+        </RelativeLayout>
+       <!-- <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp">
             <ImageView
@@ -98,7 +133,7 @@ android:drawableLeft="@drawable/house_icon"
                 </LinearLayout>
 
             </HorizontalScrollView>
-        </RelativeLayout>
+        </RelativeLayout>-->
         <TextView
             style="@style/CommonTextWrapcontent"
             android:text="Hairdressing Salon"

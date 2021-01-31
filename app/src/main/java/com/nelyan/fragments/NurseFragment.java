@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import com.nelyan.ui.HomeActivity;
 
 import java.util.ArrayList;
 
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class NurseFragment extends Fragment implements OnMapReadyCallback {
 
     Context mContext;
@@ -41,6 +44,8 @@ public class NurseFragment extends Fragment implements OnMapReadyCallback {
     Dialog dialog;
     GoogleMap mMap;
     TextView tvTitle;
+    ScrollingPagerIndicator indicator;
+
     ArrayList<DetailsImageModal> datalist = new ArrayList<>();
 
     @Override
@@ -87,15 +92,18 @@ public class NurseFragment extends Fragment implements OnMapReadyCallback {
                 dailogDelete();
             }
         });
-       /* rc = v.findViewById(R.id.rc_detailsimg);
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
+        rc = v.findViewById(R.id.rc_detailsimg);
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        rc.setLayoutManager(lm);
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
         DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
-        rc.setAdapter(ad);*/
+        rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         return v;
     }
     public void dailogDelete(){

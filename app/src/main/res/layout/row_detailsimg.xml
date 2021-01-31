@@ -2,8 +2,8 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/_60sdp"
-    android:layout_height="@dimen/_60sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/_5sdp"
     android:background="@drawable/imageoutline_bg"
     android:clipChildren="true"
@@ -14,17 +14,17 @@
     -
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/detailsimg"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
             android:padding="1dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image1" />
-
+            android:scaleType="fitXY"
+            android:src="@drawable/img_large" />
+<!--
         <ImageView
             android:id="@+id/iv_videoicon"
             android:layout_width="@dimen/_20sdp"
@@ -32,7 +32,7 @@
             android:layout_centerInParent="true"
             android:scaleType="centerCrop"
             android:src="@drawable/video_icon"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
 
     </RelativeLayout>
 

@@ -32,13 +32,15 @@ import com.nelyan.ui.HomeActivity;
 
 import java.util.ArrayList;
 
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class NurserieFragment extends Fragment  implements OnMapReadyCallback {
 Context mContext;
 View v;
 RecyclerView rc, rc_detailsimg;
     GoogleMap mMap;
 ImageView iv_msg,ivBack,ivShare;
-
+    ScrollingPagerIndicator indicator;
 Dialog dialog;
     ArrayList <DetailsImageModal> datalist = new ArrayList<>();
     @Override
@@ -92,14 +94,15 @@ Dialog dialog;
         rc = v.findViewById(R.id.rc_detailsimg);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         rc.setLayoutManager(lm);
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
         DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
         rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         return v;
     }
     public void dailogDelete(){

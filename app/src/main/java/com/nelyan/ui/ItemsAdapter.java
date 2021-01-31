@@ -39,7 +39,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.MyViewHolder
     @Override
     public int getItemCount() {
 
-        return 4;
+        return 5;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

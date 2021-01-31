@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_10sdp"
-    android:orientation="vertical"
-    android:background="@drawable/back_shape"
-    android:padding="@dimen/_5sdp">
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_5sdp"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:background="@drawable/back_shape"
+        android:paddingBottom="@dimen/_10sdp">
     <TextView
         style="@style/CommonTextWrapcontent"
         android:text="Select Day" />
-
     <Spinner
         android:id="@+id/orderby1"
         android:layout_width="match_parent"
@@ -32,18 +33,12 @@
         android:textColor="@color/black"
         android:textColorHint="@color/grey"
         android:textSize="@dimen/_10sdp" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_3sdp"
         android:background="@color/black" />
-</LinearLayout>
-
-
-
-    -
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -81,4 +76,5 @@
 
     </RelativeLayout>
 
+    </LinearLayout>
 </LinearLayout>

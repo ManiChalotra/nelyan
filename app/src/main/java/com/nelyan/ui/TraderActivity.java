@@ -44,10 +44,11 @@ public class TraderActivity extends image implements
     Button btnSubmit;
     TextView tvAdd, tvClock;
     TextView edClo, edClo1, edClo2, edClo3;
-    ImageView ivClock, ivClock1;
+    ImageView ivplus,ivImg1,ivImg2,ivImg3;
+    LinearLayout ll_1, ll_2,ll_3;
     Spinner orderby, orderby1;    RecyclerView Recycler_scroll;
     ScrollingPagerIndicator indicator;
-
+RelativeLayout rlAddImg,rlImg;
     RecyclerView rvDayTime,rvDesc;
     DayTimeRepeatAdapter dayTimeRepeatAdapter;
     static String imgtype,imasgezpos;
@@ -59,13 +60,13 @@ public class TraderActivity extends image implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trader);
         mContext = this;
-        indicator=findViewById(R.id.indicator);
-        Recycler_scroll=findViewById(R.id.Recycler_scroll);
+       // indicator=findViewById(R.id.indicator);
+       /* Recycler_scroll=findViewById(R.id.Recycler_scroll);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         Recycler_scroll.setLayoutManager(linearLayoutManager);
         ItemsAdapter  adapterItems = new ItemsAdapter(mContext);
         Recycler_scroll.setAdapter(adapterItems);
-        indicator.attachToRecyclerView(Recycler_scroll);
+        indicator.attachToRecyclerView(Recycler_scroll);*/
         rvDesc = findViewById(R.id.rvDesc);
         rvDayTime = findViewById(R.id.rvDayTime);
 
@@ -97,10 +98,46 @@ public class TraderActivity extends image implements
                 startActivity(i);
             }
         });
+        ll_1 = findViewById(R.id.ll_1);
+        ll_2 = findViewById(R.id.ll_2);
+        ll_3 = findViewById(R.id.ll_3);
+
         ivImg = findViewById(R.id.ivImg);
-        ivImg.setOnClickListener(new View.OnClickListener() {
+
+        ivImg1 = findViewById(R.id.ivImg1);
+        ivImg2 = findViewById(R.id.ivImg2);
+        ivImg3 = findViewById(R.id.ivImg3);
+
+        rlImg = findViewById(R.id.rlImg);
+        rlImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imgtype="0";
+                image("all");
+            }
+        });ivplus = findViewById(R.id.ivplus); rlAddImg = findViewById(R.id.rlAddImg);
+        rlAddImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgtype="1";
+                image("all");
+            }
+        });  ll_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgtype="2";
+                image("all");
+            }
+        });ll_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgtype="3";
+                image("all");
+            }
+        });ll_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgtype="4";
                 image("all");
             }
         });
@@ -167,7 +204,17 @@ public class TraderActivity extends image implements
         }
         else if (imgtype.equals("1"))
         {
-         //   ivplus.setImageBitmap(var1);
+         ivplus.setImageBitmap(var1);
+        }
+        else if (imgtype.equals("2"))
+        {
+            ivImg1.setImageBitmap(var1);
+        }else if (imgtype.equals("3"))
+        {
+            ivImg2.setImageBitmap(var1);
+        }else if (imgtype.equals("4"))
+        {
+            ivImg3.setImageBitmap(var1);
         }
         else
         {

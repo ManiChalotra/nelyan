@@ -37,13 +37,13 @@ public class DetailsImageAdapter extends RecyclerView.Adapter<DetailsImageAdapte
     public void onBindViewHolder(@NonNull Vh holder, int position) {
 
         holder.img.setImageResource(datalist.get(position).getImg());
-        if(position%2==1)
+       /* if(position%2==1)
         {
             holder.videoPic.setVisibility(View.VISIBLE);
         }
         else{
             holder.videoPic.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DetailsImageAdapter extends RecyclerView.Adapter<DetailsImageAdapte
         public Vh(@NonNull View itemView) {
             super(itemView);
             img= itemView.findViewById(R.id.detailsimg);
-            videoPic= itemView.findViewById(R.id.iv_videoicon);
+           // videoPic= itemView.findViewById(R.id.iv_videoicon);
         }
     }
 }

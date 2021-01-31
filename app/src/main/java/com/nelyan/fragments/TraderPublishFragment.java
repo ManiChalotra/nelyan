@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nelyan.R;
+import com.nelyan.adapter.DetailsImageAdapter;
+import com.nelyan.modals.DetailsImageModal;
 import com.nelyan.ui.HomeActivity;
+
+import java.util.ArrayList;
+
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 public class TraderPublishFragment extends Fragment implements OnMapReadyCallback {
     View v;
@@ -29,6 +37,9 @@ public class TraderPublishFragment extends Fragment implements OnMapReadyCallbac
     Dialog dialog;
     ImageView ivShare,ivBack;
     GoogleMap mMap;
+    ScrollingPagerIndicator indicator;
+    RecyclerView rc;
+    ArrayList<DetailsImageModal> datalist = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +82,18 @@ public class TraderPublishFragment extends Fragment implements OnMapReadyCallbac
                 dailogShare();
             }
         });
+        rc = v.findViewById(R.id.rc_detailsimg);
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        rc.setLayoutManager(lm);
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
+        rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         return v;
     }
     public void dailogShare(){

@@ -35,17 +35,19 @@ import com.nelyan.ui.HomeActivity;
 
 import java.util.ArrayList;
 
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class ActivityDetailsFragment extends Fragment  implements OnMapReadyCallback {
 View v;
 Context mContext;
 TextView tvMon,tvTue,tvWed,tvThur,tvFri,tvSat,tvSun;
 ImageView iv_msg,iv_back,iv_share;
-    RecyclerView rc,rc_detailstime,rc_upcomingevents;
+    RecyclerView rc,rc_detailstime,rc_upcomingevents,Recycler_scroll;
     ArrayList <DetailsImageModal> datalist = new ArrayList<>();
     ArrayList <DetailsTimeModal> datalisttime = new ArrayList<>();
     GoogleMap mMap;
 Dialog dialog;
-
+    ScrollingPagerIndicator indicator;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -187,7 +189,7 @@ Dialog dialog;
                 startActivity(intent);
             }
         });
-        rc = v.findViewById(R.id.rc_detailsimg);
+      rc = v.findViewById(R.id.rc_detailsimg);
         rc_detailstime = v.findViewById(R.id.rc_detailstime);
         rc_upcomingevents = v.findViewById(R.id.rc_upcomingevents);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -196,20 +198,21 @@ Dialog dialog;
         rc.setLayoutManager(lm);
         rc_detailstime.setLayoutManager(lm2);
         rc_upcomingevents.setLayoutManager(lm3);
-
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
         DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
         DetailsTimeAdapter adt = new DetailsTimeAdapter(getActivity(),datalisttime);
         DetailsUpcomingAdapter adu = new DetailsUpcomingAdapter(getActivity());
+
         rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         rc_detailstime.setAdapter(adt);
         rc_upcomingevents.setAdapter(adu);
         return v;

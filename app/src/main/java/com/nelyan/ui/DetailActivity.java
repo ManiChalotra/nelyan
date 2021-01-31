@@ -30,6 +30,8 @@ import com.nelyan.modals.DetailsTimeModal;
 
 import java.util.ArrayList;
 
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     Context mContext;
@@ -40,6 +42,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     ArrayList<DetailsImageModal> datalist = new ArrayList<>();
     ArrayList <DetailsTimeModal> datalisttime = new ArrayList<>();
     Dialog dialog;
+    ScrollingPagerIndicator indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,26 +97,22 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         rc.setLayoutManager(lm);
         rc_detailstime.setLayoutManager(lm2);
         rc_upcomingevents.setLayoutManager(lm3);
-
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-
+        indicator=findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
         datalisttime.add(new DetailsTimeModal("11:00AM ","3 Years","01:00PM","5 Years"));
-
-
         DetailsImageAdapter ad = new DetailsImageAdapter(this,datalist);
         DetailsTimeAdapter adt = new DetailsTimeAdapter(this,datalisttime);
         DetailsUpcomingAdapter adu = new DetailsUpcomingAdapter(this);
         rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         rc_detailstime.setAdapter(adt);
         rc_upcomingevents.setAdapter(adu);
-
     }
     public void dailogDelete(){
 

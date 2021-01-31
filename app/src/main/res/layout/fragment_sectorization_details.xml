@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:clickable="true"
     tools:context=".fragments.SectorizationDetailsFragment">
@@ -37,25 +38,35 @@
         <RelativeLayout
             android:id="@+id/imgslidelayout"
             android:layout_width="match_parent"
+            android:layout_centerInParent="true"
             android:layout_height="@dimen/_200sdp"
-            android:layout_marginTop="@dimen/_5sdp">
-
-            <ImageView
-                android:id="@+id/iv_detailsimg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/detail_image" />
-
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_coursename"
+            android:layout_marginTop="@dimen/_10sdp">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_detailsimg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:paddingLeft="@dimen/_25sdp" />
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
 
+                android:id="@+id/rc_detailsimg">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                android:id="@+id/indicator"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/rc_detailsimg"
+                app:spi_dotColor="@color/grey"
+                app:spi_dotSize="@dimen/_6sdp"
+                app:spi_dotSelectedSize="@dimen/_6sdp"
+                app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
         </RelativeLayout>
         <TextView
             style="@style/CommonTextWrapcontent"

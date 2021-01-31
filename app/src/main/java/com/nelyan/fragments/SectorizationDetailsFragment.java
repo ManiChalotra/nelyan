@@ -19,6 +19,8 @@ import com.nelyan.modals.DetailsImageModal;
 
 import java.util.ArrayList;
 
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
+
 public class SectorizationDetailsFragment extends Fragment {
 
     Context mContext;
@@ -26,6 +28,7 @@ public class SectorizationDetailsFragment extends Fragment {
     ImageView ivBack;
 RecyclerView  rc,rc_detailsimg;
     ArrayList<DetailsImageModal> datalist = new ArrayList<>();
+    ScrollingPagerIndicator indicator;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,14 +48,15 @@ RecyclerView  rc,rc_detailsimg;
         rc = v.findViewById(R.id.rc_detailsimg);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         rc.setLayoutManager(lm);
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
-        datalist.add(new DetailsImageModal(R.drawable.image1));
-        datalist.add(new DetailsImageModal(R.drawable.image2));
-        datalist.add(new DetailsImageModal(R.drawable.image3));
+        indicator=v.findViewById(R.id.indicator);
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
+        datalist.add(new DetailsImageModal(R.drawable.img_4));
+        datalist.add(new DetailsImageModal(R.drawable.img_1));
         DetailsImageAdapter ad = new DetailsImageAdapter(getActivity(),datalist);
         rc.setAdapter(ad);
+        indicator.attachToRecyclerView(rc);
         return v;
     }
 }
