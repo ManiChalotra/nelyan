@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/camera_icon" />
+                android:src="@drawable/pik_1" />
         </RelativeLayout>
         <!--    <RelativeLayout
                 android:layout_width="match_parent"
@@ -89,11 +89,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_weight="1"
+
                 android:background="@drawable/back_shape" >
                 <ImageView
                     android:id="@+id/ivImg1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/photo_two"
                     android:scaleType="fitXY"/>
             </LinearLayout>
 
@@ -108,6 +110,7 @@
                     android:id="@+id/ivImg2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/small_photo_3"
                     android:scaleType="fitXY"/>
             </LinearLayout>
 
@@ -122,6 +125,7 @@
                     android:id="@+id/ivImg3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/small_photo_4"
                     android:scaleType="fitXY"/>
             </LinearLayout>
 
@@ -136,12 +140,12 @@
                     android:id="@+id/ivplus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/present"
+                    android:src="@drawable/small_photo_5"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"/>
             </RelativeLayout>
-
         </LinearLayout>
+
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_15sdp"

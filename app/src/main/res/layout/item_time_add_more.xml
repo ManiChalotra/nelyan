@@ -53,6 +53,7 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/edtAgeTo"
                     style="@style/SimpleEdittext"
                     android:hint="Age Group To"
+                    android:focusable="true"
                     android:imeOptions="actionDone"
                     android:inputType="number" />
 
@@ -68,6 +69,7 @@ android:layout_marginTop="@dimen/_10sdp"
         <TextView
             style="@style/CommonTextWrapcontent"
             android:text="Days" />
+
         <Spinner
             android:id="@+id/orderby1"
             android:layout_width="match_parent"
@@ -78,12 +80,13 @@ android:layout_marginTop="@dimen/_10sdp"
             android:dropDownSelector="@drawable/down_arrow"
             android:fontFamily="@font/regular"
             android:gravity="start"
-            android:hint="Date Added"
+            android:hint="Date Added "
             android:inputType="text"
             android:spinnerMode="dropdown"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"
             android:textSize="@dimen/_10sdp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -162,6 +165,7 @@ android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/add_more_btn"
             android:gravity="center"
+            android:focusable="true"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
             android:fontFamily="@font/regular"

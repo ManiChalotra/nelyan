@@ -8,6 +8,8 @@
     tools:context=".fragments.HomeFragment">
      <include layout="@layout/tookbar"
          android:id="@+id/toolbar"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

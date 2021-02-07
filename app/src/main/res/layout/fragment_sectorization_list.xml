@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,65 +29,71 @@
             android:textColor="@color/black"
             android:text="Sectorization List"/>
     </RelativeLayout>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:orientation="vertical"
         android:layout_below="@id/header">
-        <TextView
-          style="@style/CommonTextWrapcontent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Sectorization liste for 2 rue de la digue 78600\nMaisons laffite instead of juste"/>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:text="Public Schools"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/semibold"
-        android:layout_marginTop="@dimen/_10sdp" />
-   <ImageView
-       android:id="@+id/ivMap"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_centerInParent="true"
-       android:src="@drawable/location_circle"/>
-</RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_below="@id/ll_1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:text="Private Schools"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/semibold"
-        android:layout_marginTop="@dimen/_10sdp" />
-   <ImageView
-       android:id="@+id/ivMap1"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_centerInParent="true"
-       android:src="@drawable/location_circle"/>
-</RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview1"
-            android:layout_below="@id/ll_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:orientation="vertical"
+         >
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Sectorization liste for 2 rue de la digue 78600\nMaisons laffite instead of juste"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:text="Public Schools"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/semibold"
+                    android:layout_marginTop="@dimen/_10sdp" />
+                <ImageView
+                    android:id="@+id/ivMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/location_circle"/>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_below="@id/ll_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:text="Private Schools"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/semibold"
+                    android:layout_marginTop="@dimen/_10sdp" />
+                <ImageView
+                    android:id="@+id/ivMap1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/location_circle"/>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview1"
+                android:layout_below="@id/ll_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

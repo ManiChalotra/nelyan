@@ -1,6 +1,5 @@
 package com.nelyan.adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nelyan.R;
-import com.nelyan.ui.Activity3Activity;
-import com.nelyan.ui.EditProfileActivity;
+import com.nelyan.ui.ActivityFormActivity;
 
 
 public class MyAddAdapter  extends RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder> {
@@ -70,7 +67,7 @@ holder.iv_dot.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
       //  holder.ll_1.setVisibility(View.GONE);
-        context.startActivity(new Intent(context, Activity3Activity.class));
+        context.startActivity(new Intent(context, ActivityFormActivity.class));
     }
 });holder.tvDelete.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -89,7 +86,7 @@ holder.iv_dot.setOnClickListener(new View.OnClickListener() {
 
         dialog1 = new Dialog(context);
         dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog1.setContentView(R.layout.alert_chat_delete);
+        dialog1.setContentView(R.layout.alert_my_add_delete);
         dialog1.setCancelable(true);
 
         RelativeLayout rl_1;
@@ -122,7 +119,7 @@ holder.iv_dot.setOnClickListener(new View.OnClickListener() {
         tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 context.startActivity(new Intent(context, Activity3Activity.class));
+                 context.startActivity(new Intent(context, ActivityFormActivity.class));
                 dialog.dismiss();
             }
         });

@@ -155,7 +155,7 @@ public class Activity3Activity extends image implements AdapterView.OnItemSelect
         rvAgeGroup.setLayoutManager(new LinearLayoutManager(this));
         rvAgeGroup.setAdapter(ageGroupRepeatAdapter);
 
-        EventRepeatAdapter  adapter = new EventRepeatAdapter(this,image,Activity3Activity.this,returnItemView);
+        EventRepeatAdapter  adapter = new EventRepeatAdapter(this,image, (ActivityFormActivity) mContext,returnItemView);
         rvEvent.setLayoutManager(new LinearLayoutManager(this));
         rvEvent.setAdapter(adapter) ;
 
@@ -227,7 +227,7 @@ public class Activity3Activity extends image implements AdapterView.OnItemSelect
             image.put(imasgezpos.toString(),var1);
             Log.e("kmdkmdkedcmk","Activity-"+imasgezpos+"   "+var1);
             Log.e("kmdkmdkedcmk","PPPctivity-"+image.get(imasgezpos));
-            EventRepeatAdapter  adapter = new EventRepeatAdapter(this,image,Activity3Activity.this,returnItemView);
+            EventRepeatAdapter  adapter = new EventRepeatAdapter(this,image, (ActivityFormActivity) mContext,returnItemView);
             rvEvent.setLayoutManager(new LinearLayoutManager(this));
             rvEvent.setAdapter(adapter) ;
         }

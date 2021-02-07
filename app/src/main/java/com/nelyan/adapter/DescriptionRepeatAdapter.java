@@ -29,6 +29,9 @@ public class DescriptionRepeatAdapter extends RecyclerView.Adapter<DescriptionRe
     String selectedImage ="";
     File file;
     HashMap<String, Bitmap> image;
+    HashMap<String, String>Title=new HashMap<>();
+    HashMap<String, String>price=new HashMap<>();
+    HashMap<String, String>Description=new HashMap<>();
     ArrayList<AlbumFile> mAlbumFiles = new ArrayList<AlbumFile>();
 
     public DescriptionRepeatAdapter(Context context,HashMap<String, Bitmap>image,TraderActivity descriptionRepeatListener,int returnItemView) {
@@ -88,6 +91,10 @@ public class DescriptionRepeatAdapter extends RecyclerView.Adapter<DescriptionRe
             catch (Exception e)
             {
             }
+
+            try { edtProductTitle.setText(Title.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edtDesc.setText(Description.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edtProductPrice.setText(price.get(String.valueOf(pos))); } catch (Exception e) { }
             ivEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,6 +107,9 @@ public class DescriptionRepeatAdapter extends RecyclerView.Adapter<DescriptionRe
             tvAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Title.put(String.valueOf(pos),edtProductTitle.getText().toString());
+                    price.put(String.valueOf(pos),edtProductPrice.getText().toString());
+                    Description.put(String.valueOf(pos),edtDesc.getText().toString());
                     returnItemView = returnItemView + 1;
                     notifyDataSetChanged();
                 }

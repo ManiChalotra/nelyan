@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -114,7 +113,7 @@ String type="1";
             @Override
             public void onClick(View v) {
                 if (type.equals("1")) {
-                    Intent i = new Intent(PubilerActivity.this, Activity3Activity.class);
+                    Intent i = new Intent(PubilerActivity.this, ActivityFormActivity.class);
                     startActivity(i);
                 } else if (type.equals("2")) {
                     Intent i = new Intent(PubilerActivity.this, NurserieActivity.class);

@@ -13,19 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.nelyan.R;
-import com.nelyan.adapter.ActivityListAdapter;
 import com.nelyan.adapter.MyAddAdapter;
-import com.nelyan.ui.Activity3Activity;
-import com.nelyan.ui.HomeActivity;
 import com.nelyan.ui.PubilerActivity;
-
-import static com.nelyan.R.layout.customspinner;
 
 public class MyAddFragment extends Fragment  implements AdapterView.OnItemSelectedListener{
     Context mContext;
@@ -51,7 +44,8 @@ public class MyAddFragment extends Fragment  implements AdapterView.OnItemSelect
 
                 fm.popBackStack();
             }
-        }); ivAdd=v.findViewById(R.id.ivAdd);
+        });
+        ivAdd=v.findViewById(R.id.ivAdd);
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

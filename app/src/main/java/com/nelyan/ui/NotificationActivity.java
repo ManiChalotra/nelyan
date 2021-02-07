@@ -30,8 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-             recyclerview=findViewById(R.id.recyclerview);
+        recyclerview=findViewById(R.id.recyclerview);
         notificationAdapter = new NotificationAdapter(mContext);
         recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerview.setAdapter(notificationAdapter) ;

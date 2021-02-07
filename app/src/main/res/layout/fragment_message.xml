@@ -33,66 +33,12 @@
         android:layout_marginTop="@dimen/_10sdp"
        android:orientation="vertical"
         android:layout_below="@id/header">
-        <!--<androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recyclerview"/>-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:id="@+id/rl_1"
-            android:background="@drawable/shape">
-            <LinearLayout
-                android:id="@+id/ll_pass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chat_image_1"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:text="James Author"
-                            android:textColor="@color/black"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerInParent="true"
-                            android:textSize="@dimen/_12sdp"
-                            android:fontFamily="@font/semibold"/>
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:textSize="@dimen/_8sdp"
-                            android:layout_alignParentEnd="true"
-                            android:text="17:49"/>
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/name"
-                        style="@style/CommonTextMatchparent"
-                        android:text="Hey, how are you?"
-                        android:textSize="@dimen/_10sdp"
-                        android:drawableRight="@drawable/green_dot"
-                        android:textColor="@color/black"/>
+            android:id="@+id/recyclerview"/>
 
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rl_2">
@@ -161,7 +107,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:src="@drawable/dlt_icon_red"/>
-        </RelativeLayout><RelativeLayout
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rl_3">
@@ -230,7 +177,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:src="@drawable/dlt_icon_red"/>
-        </RelativeLayout>
+        </RelativeLayout>-->
 
     </LinearLayout>
 

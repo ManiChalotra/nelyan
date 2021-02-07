@@ -603,7 +603,8 @@
                 android:fontFamily="@font/semibold"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/modify_btn"
-                /><Button
+                />
+            <Button
             android:id="@+id/btnPublish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

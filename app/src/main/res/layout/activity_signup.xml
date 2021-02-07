@@ -198,7 +198,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/black"/>   <TextView
+            android:background="@color/black"/>
+        <TextView
             style="@style/CommonTextMatchparent"
             android:text="Your City"
             android:fontFamily="@font/medium"
@@ -223,9 +224,78 @@
         <Button
             android:id="@+id/btnRegister"
             style="@style/Button"
+            android:layout_marginRight="@dimen/_3sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@drawable/btn"
             android:text="REGISTER"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/black"/>
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:text="OR"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:layout_marginRight="@dimen/_2sdp"
+                android:fontFamily="@font/semibold"
+                android:textColor="@color/black"
+                />
+            <View
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/fb_btn">
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/fb1"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:drawablePadding="@dimen/_10sdp"
+                android:text="CONTINUE WITH FACEBOOK"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/google_btn">
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/google"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:drawablePadding="@dimen/_10sdp"
+                android:text="CONTINUE WITH GOOGLE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

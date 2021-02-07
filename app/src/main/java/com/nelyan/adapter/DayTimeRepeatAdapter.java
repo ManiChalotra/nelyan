@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.nelyan.R;
 import com.nelyan.modals.DayTimeModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DayTimeRepeatAdapter extends RecyclerView.Adapter<DayTimeRepeatAdapter.DayTimeRepeatViewHolder> {
@@ -23,6 +25,7 @@ public class DayTimeRepeatAdapter extends RecyclerView.Adapter<DayTimeRepeatAdap
     Context context;
     ArrayList<DayTimeModel> dayTimeModelArrayList;
     DayTimeRepeatListener dayTimeRepeatListener;
+    HashMap<String, String> Selectedmonth=new HashMap<>();
 
     public DayTimeRepeatAdapter(Context context,ArrayList<DayTimeModel> dayTimeModelArrayList,DayTimeRepeatListener dayTimeRepeatListener) {
         this.context = context;
@@ -49,13 +52,13 @@ public class DayTimeRepeatAdapter extends RecyclerView.Adapter<DayTimeRepeatAdap
 
     class DayTimeRepeatViewHolder extends RecyclerView.ViewHolder {
 
-        Spinner daysSpinner;
+        Spinner orderby1;
         RecyclerView rvTime;
         TextView tvAddDay,tvAddTime;
 
         public DayTimeRepeatViewHolder(@NonNull View itemView) {
             super(itemView);
-            daysSpinner = itemView.findViewById(R.id.orderby1);
+            orderby1 = itemView.findViewById(R.id.orderby1);
             rvTime = itemView.findViewById(R.id.rvTime);
             tvAddDay = itemView.findViewById(R.id.tvAddDay);
             tvAddTime = itemView.findViewById(R.id.tvAddTime);
@@ -92,13 +95,34 @@ public class DayTimeRepeatAdapter extends RecyclerView.Adapter<DayTimeRepeatAdap
             days.add("Friday");
             days.add("Saturday");
             days.add("Sunday");
-            ArrayAdapter arrayAdapter = new ArrayAdapter(context, R.layout.customspinner, days);
-            daysSpinner.setAdapter(arrayAdapter);
 
+            ArrayAdapter arrayAdapter = new ArrayAdapter(context, R.layout.customspinner, days);
+            orderby1.setAdapter(arrayAdapter);
             TimeRepeatAdapter timeRepeatAdapter = new TimeRepeatAdapter(context, dayTimeModelArrayList.get(pos).getSelectTime());
             rvTime.setAdapter(timeRepeatAdapter);
             rvTime.setLayoutManager(new LinearLayoutManager(context));
+            final ArrayAdapter<String> modeAdaptercity = new ArrayAdapter<String>(context, R.layout.customspinner, days);
+            orderby1.setAdapter(modeAdaptercity);
+
+            try {
+                orderby1.setSelection(Integer.parseInt(Selectedmonth.get(String.valueOf(pos))));
+            }catch (Exception e)
+            {
+            }
+            orderby1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int jj, long l) {
+                    Selectedmonth.put(String.valueOf(pos),String.valueOf(jj));}
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     public interface DayTimeRepeatListener{

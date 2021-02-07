@@ -19,7 +19,7 @@
             android:src="@drawable/left_arrow"
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_13sdp"
             />
         <TextView
             style="@style/HeaderText"
@@ -32,23 +32,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_13sdp"
             android:src="@drawable/plus"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:orientation="vertical"
         android:layout_below="@id/header">
-<LinearLayout
+<!--<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
     android:gravity="end"
     android:orientation="horizontal">
-   <!-- <TextView
+   &lt;!&ndash; <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -89,14 +89,13 @@
             android:layout_gravity="center"
             android:src="@drawable/down_arrow" />
 
-    </LinearLayout>-->
+    </LinearLayout>&ndash;&gt;
 
-</LinearLayout>
+</LinearLayout>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_below="@id/ll_1"
             android:layout_width="match_parent"
-            android:padding="@dimen/_10sdp"
             android:layout_height="match_parent" />
     </LinearLayout>
 

@@ -40,8 +40,8 @@ public class TraderListingFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 Fragment f = fm.findFragmentById(R.id.frame_container);
-
                 fm.popBackStack();
+
             }
         });  ivMap=v.findViewById(R.id.ivMap);
         ivMap.setOnClickListener(new View.OnClickListener() {

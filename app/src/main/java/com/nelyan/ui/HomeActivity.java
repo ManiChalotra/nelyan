@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nelyan.R;
+import com.nelyan.fragments.DrawerNewHomeFragment;
 import com.nelyan.fragments.MaternalFragmentFragment;
 import com.nelyan.fragments.ActivityDetailsFragment;
 import com.nelyan.fragments.ActivityFragment;
@@ -47,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mContext=this;
         navigationbar=findViewById(R.id.navigationbar);
         loadFragment(new HomeFragment());
+        //loadFragment(new DrawerNewHomeFragment());
         BottomNavigationView navigationbar = findViewById(R.id.navigationbar);
         navigationbar.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
         ActionBar toolbar = getSupportActionBar();
@@ -201,9 +203,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.home:
-              //  drawerLayout.openDrawer(GravityCompat.START);
-
+                //DrawerNewHomeFragment.drawerLayout.openDrawer(GravityCompat.START);
                fragment = new DrawerFragment();
+
                 break;
             case R.id.msg:
                 fragment = new MessageFragment();
@@ -237,10 +239,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         return false;
 
     }
-    public void call()
-    {
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
+
     public void onBackPressed() {
 
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
@@ -270,6 +269,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
            super.onBackPressed();
         }else if (currentFragment.getClass().equals(new ChildCareFragment().getClass())) {
            super.onBackPressed();
+        }
+            else if (currentFragment.getClass().equals(new SectorizationDetailsFragment().getClass())) {
+            super.onBackPressed();}
+         else if (currentFragment.getClass().equals(new SectorizationListFragment().getClass())) {
+            super.onBackPressed();
         }
         else
         {

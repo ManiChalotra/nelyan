@@ -12,20 +12,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.nelyan.R;
-import com.nelyan.ui.Activity3Activity;
-import com.yanzhenjie.album.Action;
-import com.yanzhenjie.album.Album;
+import com.nelyan.ui.ActivityFormActivity;
 import com.yanzhenjie.album.AlbumFile;
-import com.yanzhenjie.album.api.widget.Widget;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -42,11 +37,19 @@ public class EventRepeatAdapter extends RecyclerView.Adapter<EventRepeatAdapter.
     Context context;
     RelativeLayout rl_Add ;
     int returnItemView = 1;
-    Activity3Activity eventRepeatListen;
+    ActivityFormActivity eventRepeatListen;
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date;
     HashMap<String, Bitmap>image;
-    public EventRepeatAdapter(Context context, HashMap<String, Bitmap>image, Activity3Activity eventRepeatListen,int returnItemView) {
+    HashMap<String, String>ArryedtEventName=new HashMap<>();
+    HashMap<String, String>ArrydatetvCalfrom=new HashMap<>();
+    HashMap<String, String>ArrydatetvCal1to=new HashMap<>();
+    HashMap<String, String>ArrytimeedClo2From=new HashMap<>();
+    HashMap<String, String>ArrytimeedClo3To=new HashMap<>();
+    HashMap<String, String>ArryedtDesc=new HashMap<>();
+    HashMap<String, String>ArredtPrice=new HashMap<>();
+
+    public EventRepeatAdapter(Context context, HashMap<String, Bitmap>image, ActivityFormActivity eventRepeatListen, int returnItemView) {
         this.context = context;
         this.image = image;
         this.returnItemView = returnItemView;
@@ -70,9 +73,7 @@ public class EventRepeatAdapter extends RecyclerView.Adapter<EventRepeatAdapter.
         return returnItemView;
     }
 
-
     class EventRepeatViewHolder extends RecyclerView.ViewHolder {
-
         EditText edtEventName, edtDesc, edtPrice;
         TextView tvCal, tvCal1, edClo2, edClo3, tvAddMore;
         ImageView ivEvent,ivCam;
@@ -93,23 +94,31 @@ public class EventRepeatAdapter extends RecyclerView.Adapter<EventRepeatAdapter.
         }
 
         void bind(final int pos) {
-            Log.e("kmdkmdkedcmk","sszzzzeeeeee    "+image.size());
+            Log.e("kmdkmdkedcmk","sszzzzeeeeee "+image.size());
             if (pos == returnItemView - 1) {
                 tvAddMore.setVisibility(View.VISIBLE);
             } else {
                 tvAddMore.setVisibility(View.GONE);
             }
-            try {
-                ivEvent.setImageBitmap(image.get(String.valueOf(pos)));
-                // ivCam.setVisibility(View.GONE);
-                Log.e("kmdkmdkedcmk","ss c--"+pos+"   "+image.get("0"));
-            }
-            catch (Exception e)
-            {
-            }
+            try {ivEvent.setImageBitmap(image.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edtEventName.setText(ArryedtEventName.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { tvCal.setText(ArrydatetvCalfrom.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { tvCal1.setText(ArrydatetvCal1to.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edClo2.setText(ArrytimeedClo2From.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edClo3.setText(ArrytimeedClo3To.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edtDesc.setText(ArryedtDesc.get(String.valueOf(pos))); } catch (Exception e) { }
+            try { edtPrice.setText(ArredtPrice.get(String.valueOf(pos))); } catch (Exception e) { }
+
             tvAddMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ArryedtEventName.put(String.valueOf(pos),edtEventName.getText().toString());
+                    ArrydatetvCalfrom.put(String.valueOf(pos),tvCal.getText().toString());
+                    ArrydatetvCal1to.put(String.valueOf(pos),tvCal1.getText().toString());
+                    ArrytimeedClo2From.put(String.valueOf(pos),edClo2.getText().toString());
+                    ArrytimeedClo3To.put(String.valueOf(pos),edClo3.getText().toString());
+                    ArryedtDesc.put(String.valueOf(pos),edtDesc.getText().toString());
+                    ArredtPrice.put(String.valueOf(pos),edtPrice.getText().toString());
                     returnItemView = returnItemView + 1;
                     notifyDataSetChanged();
                 }
@@ -119,7 +128,6 @@ public class EventRepeatAdapter extends RecyclerView.Adapter<EventRepeatAdapter.
                 @Override
                 public void onClick(View view) {
                     eventRepeatListen.imageClick( pos,returnItemView);
-
                 }
             });
 
@@ -213,4 +221,3 @@ public class EventRepeatAdapter extends RecyclerView.Adapter<EventRepeatAdapter.
     }
 
 }
-

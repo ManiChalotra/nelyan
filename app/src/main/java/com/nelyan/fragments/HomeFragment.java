@@ -30,26 +30,22 @@ ImageView iv_bell;
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         mContext=getActivity();
-        iv_bell= root.findViewById(R.id.iv_bell);
+     /*   iv_bell= root.findViewById(R.id.iv_bell);
         iv_bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getActivity(), NotificationActivity.class);
                 startActivity(i);
             }
-        });
-
-
+        });*/
         recyclerView = root.findViewById(R.id.rc_home);
         LinearLayoutManager lm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(lm);
         datalist.clear();
-
         datalist.add(new HomeModal(R.drawable.banner_img,"Les activités dans ma ville"));
         datalist.add(new HomeModal(R.drawable.banner_img_2,"La garde d'enfants"));
         datalist.add(new HomeModal(R.drawable.banner_img_3,"Les écoles de mon enfant"));
         datalist.add(new HomeModal(R.drawable.service_4,"Les commerçants dans ma ville"));
-
         MyHomeAdapter ad = new MyHomeAdapter(getActivity(),datalist);
 
         recyclerView.setAdapter(ad);

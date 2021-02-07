@@ -49,6 +49,8 @@
             android:layout_marginTop="@dimen/_50sdp"
             android:textColor="@color/black"
             android:maxLines="1"
+            android:fontFamily="@font/medium"
+            android:textSize="@dimen/_11sdp"
             android:paddingLeft="@dimen/_10sdp"
             android:paddingRight="@dimen/_5sdp"
             android:textColorHint="@color/grey"

@@ -41,8 +41,8 @@ RecyclerView  rc,rc_detailsimg;
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 Fragment f = fm.findFragmentById(R.id.frame_container);
-
                 fm.popBackStack();
+               // getActivity().onBackPressed();
             }
         });
         rc = v.findViewById(R.id.rc_detailsimg);

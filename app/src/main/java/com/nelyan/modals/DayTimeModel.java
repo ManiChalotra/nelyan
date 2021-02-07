@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class DayTimeModel {
 
-    ArrayList<Integer> selectTime;
+    ArrayList<TimeModel> selectTime;
 
-    public void setSelectTime(ArrayList<Integer> selectTime) {
+    public void setSelectTime(ArrayList<TimeModel> selectTime) {
         this.selectTime = selectTime;
     }
 
 
-    public ArrayList<Integer> getSelectTime() {
+    public ArrayList<TimeModel> getSelectTime() {
         return selectTime;
     }
 
-    public DayTimeModel(ArrayList<Integer> selectTime) {
+    public DayTimeModel(ArrayList<TimeModel> selectTime) {
         this.selectTime = selectTime;
     }
 

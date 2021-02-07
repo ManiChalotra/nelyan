@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nelyan.R;
+import com.nelyan.modals.DayTimeModel;
+import com.nelyan.modals.TimeModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,8 +25,8 @@ import java.util.List;
 public class TimeRepeatAdapter extends RecyclerView.Adapter<TimeRepeatAdapter.TimeRepeatViewHolder> {
 
     Context context;
-    ArrayList<Integer> arrayList;
-    public TimeRepeatAdapter(Context context,ArrayList<Integer> arrayList) {
+    ArrayList<TimeModel> arrayList;
+    public TimeRepeatAdapter(Context context,ArrayList<TimeModel> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -55,11 +57,13 @@ public class TimeRepeatAdapter extends RecyclerView.Adapter<TimeRepeatAdapter.Ti
             super(itemView);
             edClo = itemView.findViewById(R.id.edClo);
             edClo1 = itemView.findViewById(R.id.edClo1);
-            tvAdd = itemView.findViewById(R.id.tvAdd);
 
         }
 
         void bind(final int pos) {
+
+            edClo.setText(arrayList.get(pos).getStarttime());
+            edClo1.setText(arrayList.get(pos).getEndtime());
 
             edClo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,6 +76,7 @@ public class TimeRepeatAdapter extends RecyclerView.Adapter<TimeRepeatAdapter.Ti
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             edClo.setText(selectedHour + ":" + selectedMinute);
+                            arrayList.get(pos).setStarttime(edClo.getText().toString());
                         }
                     }, hour, minute, true);//Yes 24 hour time
                     mTimePicker.setTitle("Select Time");
@@ -91,15 +96,13 @@ public class TimeRepeatAdapter extends RecyclerView.Adapter<TimeRepeatAdapter.Ti
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             edClo1.setText(selectedHour + ":" + selectedMinute);
+                            arrayList.get(pos).setEndtime(edClo1.getText().toString());
                         }
                     }, hour, minute, true);//Yes 24 hour time
                     mTimePicker.setTitle("Select Time");
                     mTimePicker.show();
                 }
             });
-
-
         }
     }
-
 }

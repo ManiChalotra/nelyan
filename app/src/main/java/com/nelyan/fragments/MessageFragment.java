@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nelyan.R;
+import com.nelyan.adapter.MessageAdapter;
+import com.nelyan.adapter.NotificationAdapter;
 import com.nelyan.ui.Chat1Activity;
 import com.nelyan.ui.ChatActivity;
 import com.nelyan.ui.HomeActivity;
@@ -25,6 +29,8 @@ Context mContext;
 ImageView ivDel1,ivDel2,ivBack;
 RelativeLayout rl_1,rl_2,rl_3;
 Dialog dialog;
+RecyclerView recyclerview;
+    MessageAdapter messageAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,15 +49,19 @@ Dialog dialog;
 
             }
         });
-        rl_1=v.findViewById(R.id.rl_1);
+       /* rl_1=v.findViewById(R.id.rl_1);
         rl_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getActivity(), Chat1Activity.class);
                 startActivity(i);
             }
-        });
-        ivDel1=v.findViewById(R.id.ivDel1);
+        });*/
+        recyclerview=v.findViewById(R.id.recyclerview);
+        messageAdapter = new MessageAdapter(mContext);
+        recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerview.setAdapter(messageAdapter) ;
+      /*  ivDel1=v.findViewById(R.id.ivDel1);
         ivDel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +74,7 @@ Dialog dialog;
             public void onClick(View v) {
                 dailogDelete();
             }
-        });
+        });*/
 
 
         return v;

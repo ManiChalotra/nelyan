@@ -31,7 +31,7 @@ import com.nelyan.ui.SettingsActivity;
 
 public class DrawerFragment extends Fragment {
     Context mContext;
-    TextView tvHome,
+    TextView tvHome,tvLogin,
             tvAdd,tvAlert,tvFavorite,tvProfile,tvContact,tvNoti,tvSettings,tvLog;
     Dialog dialog;
     View v;
@@ -49,6 +49,16 @@ public class DrawerFragment extends Fragment {
                 startActivity(i);
             }
         });
+        tvLogin=v.findViewById(R.id.tvLogin);
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+
         tvAdd=v.findViewById(R.id.tvAdd);
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override

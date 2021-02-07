@@ -29,6 +29,7 @@ import com.nelyan.adapter.DescriptionRepeatAdapter;
 import com.nelyan.adapter.EventRepeatAdapter;
 import com.nelyan.adapter.TimeRepeatAdapter;
 import com.nelyan.modals.DayTimeModel;
+import com.nelyan.modals.TimeModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -142,8 +143,11 @@ RelativeLayout rlAddImg,rlImg;
             }
         });
 
-        final ArrayList<Integer> arrayList = new ArrayList();
-        arrayList.add(1);
+        final ArrayList<TimeModel> arrayList = new ArrayList();
+        TimeModel timeModel = new TimeModel();
+        timeModel.setEndtime("");
+        timeModel.setStarttime("");
+        arrayList.add(timeModel);
 
         final DayTimeModel dayTimeModel = new DayTimeModel(arrayList);
 
@@ -154,8 +158,12 @@ RelativeLayout rlAddImg,rlImg;
                 new DayTimeRepeatAdapter.DayTimeRepeatListener() {
                     @Override
                     public void dayTimeAdd(int pos) {
-                        final ArrayList<Integer> arrayList1 = new ArrayList();
-                        arrayList1.add(1);
+                        final ArrayList<TimeModel> arrayList1 = new ArrayList();
+
+                        TimeModel timeModel = new TimeModel();
+                        timeModel.setEndtime("");
+                        timeModel.setStarttime("");
+                        arrayList1.add(timeModel);
                         DayTimeModel dayTimeModel1 = new DayTimeModel(arrayList1);
                         dayTimeModelArrayList.add(dayTimeModel1);
                         dayTimeRepeatAdapter.notifyDataSetChanged();
@@ -164,8 +172,12 @@ RelativeLayout rlAddImg,rlImg;
                     @Override
                     public void timeAdd(int pos) {
 
-                        DayTimeModel dayTimeModel1 = dayTimeModelArrayList.get(pos);
-                        dayTimeModel1.getSelectTime().add(1);
+                          DayTimeModel dayTimeModel1 = dayTimeModelArrayList.get(pos);
+                        TimeModel timeModel = new TimeModel();
+                        timeModel.setEndtime("");
+                        timeModel.setStarttime("");
+
+                        dayTimeModel1.getSelectTime().add(timeModel);
                         dayTimeRepeatAdapter.notifyDataSetChanged();
                     }
                 });
@@ -227,7 +239,7 @@ RelativeLayout rlAddImg,rlImg;
         }
     }
     public void   imageClick(int pos,int size) {
-        imgtype="2";
+        imgtype="5";
         returnItemView=size;
         Log.e("wdwdwdd",String.valueOf(pos));
         imasgezpos= String.valueOf(pos);

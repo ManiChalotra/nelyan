@@ -27,5 +27,8 @@
     <string name="contact">Contact Us</string>
     <string name="noti">Notifications</string>
     <string name="settings">Settings</string>
+    <string name="mar_chal_20km">Maréchal 20KM</string>
+    <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="logout">Logout</string>
 
 </resources>

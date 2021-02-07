@@ -1,88 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_10sdp"
     android:id="@+id/rl_1"
-    android:background="@drawable/shape">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:elevation="@dimen/_5sdp"
+    android:background="@drawable/shadow_gray"
+    app:cardCornerRadius="@dimen/_5sdp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-    <LinearLayout
-        android:id="@+id/ll_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_1"/>
         <LinearLayout
+            android:id="@+id/ll_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_5sdp"
 
-            android:orientation="vertical">
-            <RelativeLayout
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_1" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="-2dp"
+                        android:fontFamily="@font/semibold"
+                        android:gravity="top"
+                        android:text="Danse"
+                        android:textColor="@color/app"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <ImageView
+                        android:id="@+id/iv_fev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+
+                        android:layout_marginRight="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:src="@drawable/heart_purple" />
+                </RelativeLayout>
+
                 <TextView
-                   style="@style/CommonTextWrapcontent"
-                    android:text="Danse"
-                    android:textColor="@color/app"
+                    android:id="@+id/name"
+                    style="@style/CommonTextWrapcontent"
+                    android:drawableLeft="@drawable/location_grey"
+
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/mar_chal_20km"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
-                    android:textSize="@dimen/_14sdp"
-                    android:fontFamily="@font/semibold"/>
-             <ImageView
-                 android:id="@+id/iv_fev"
-                 android:layout_width="40dp"
-                 android:layout_height="wrap_content"
-                 android:src="@drawable/heart_purple"
-                 android:layout_centerInParent="true"
-                 android:layout_alignParentEnd="true"
-                 />
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/name"
-                style="@style/CommonTextWrapcontent"
-                android:text="Maréchal 20KM"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:textSize="@dimen/_10sdp"
-                android:gravity="center"
-                android:drawableLeft="@drawable/location_grey"
-                android:drawablePadding="@dimen/_5sdp"
-              android:textColor="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:text="Lorem ipsum"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:textColor="@color/black"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"/>
-            <TextView
-                style="@style/CommonTextMatchparent"
-                android:textSize="@dimen/_9sdp"
-                android:text="Maecenas nec quam posuere, mollis\nlacus sed, malesuace dolor.In finibus\nbibenoum metus..."/>
+                    android:fontFamily="@font/semibold"
+                    android:text="@string/lorem_ipsum"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:text="Maecenas nec quam posuere, mollis lacus sed, malesuace dolor.In finibus bibenoum metus..."
+                    android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:textSize="@dimen/_11sdp"
-            android:textColor="@color/app"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-           android:layout_marginTop="@dimen/_5sdp"
-            android:text="Ex still 2 free places for dansing"/>
+            android:text="Ex still 2 free places for dansing"
+            android:textColor="@color/app"
+            android:textSize="@dimen/_11sdp" />
     </LinearLayout>
+
+
 </RelativeLayout>

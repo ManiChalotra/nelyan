@@ -62,7 +62,7 @@ Dialog dialog;
                 .findFragmentById(R.id.map);*/
         mapFragment.getMapAsync(this);
         tvMon=v.findViewById(R.id.tvMon);
-        tvTue=v.findViewById(R.id.tvTue);
+       /* tvTue=v.findViewById(R.id.tvTue);
         tvWed=v.findViewById(R.id.tvWed);
         tvThur=v.findViewById(R.id.tvThur);
         tvFri=v.findViewById(R.id.tvFri);
@@ -146,7 +146,7 @@ Dialog dialog;
                 tvSat.setBackground(getResources().getDrawable(R.drawable.text_outlinebg));
                 tvSun.setBackground(getResources().getDrawable(R.drawable.selected_outlinbg));
             }
-        });
+        });*/
 
         iv_back=v.findViewById(R.id.iv_back);
         iv_back.setOnClickListener(new View.OnClickListener() {
