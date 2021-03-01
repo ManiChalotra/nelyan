@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
      <include layout="@layout/tookbar"
-         android:id="@+id/toolbar"/>
+         android:id="@+id/toolbar"
+         android:visibility="gone"/>
 
 
     <androidx.recyclerview.widget.RecyclerView

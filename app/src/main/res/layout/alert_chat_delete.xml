@@ -17,6 +17,7 @@
             android:layout_gravity="center"/>
 
         <TextView
+            android:id="@+id/tvMessage"
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_20sdp"

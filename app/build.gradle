@@ -1,4 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+
 
 android {
     compileSdkVersion 30
@@ -10,9 +14,13 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+
 
     buildTypes {
         release {
@@ -20,21 +28,37 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//        kotlinOptions {
+//            jvmTarget = JavaVersion.VERSION_1_8.toString()
+//        }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
+    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -48,9 +72,79 @@ dependencies {
     implementation 'com.yanzhenjie:album:2.1.3'
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
     implementation 'com.yanzhenjie:album:2.1.3'
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // my added dependencies
+    implementation 'com.tuyenmonkey:mkloader:1.4.0'// for Progress bar
+
+    //camera open
+    implementation 'com.yanzhenjie:album:2.1.3'
+
+    //for google Current Location
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    // added for implementation of Apis.
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'// also used maven central in reprository
 
 
 
+
+
+
+
+    //for glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.tuyenmonkey:mkloader:1.4.0'// for Progress bar
+
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
+    implementation "androidx.datastore:datastore-core:1.0.0-alpha05"
+
+    //Coroutines and LifeCycle Libraries
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    // multidex
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+//for google maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+
+    // places lib used for places picker
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+    // country code picker
+    implementation 'com.hbb20:ccp:2.4.5'
+
+    //socket
+    implementation 'io.socket:socket.io-client:1.0.0'
+
+    //fcm
+    // for fcm
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+
+
+
+
+
+
+}
+repositories {
+    mavenCentral()
 }

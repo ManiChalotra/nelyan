@@ -1,54 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HomeActivity">
 
-    <FrameLayout
-        android:id="@+id/frame_container"
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/mDrawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_above="@id/rlBotoom"/>
-<RelativeLayout
-    android:id="@+id/rlBotoom"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:background="@color/grey"
-        android:layout_above="@id/navigationbar"/>
+        android:fitsSystemWindows="true">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        android:id="@+id/navigationbar"
-        app:itemIconSize="@dimen/_18sdp"
-android:fitsSystemWindows="true"
+        <RelativeLayout
+            android:id="@+id/mainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        android:background="@color/white"
-        app:menu="@menu/bottom_navigation_home_menu"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:textAlignment="center"
-        app:itemIconTint="@color/app"
-        app:itemTextAppearance="@style/TextStyleBN"
-        app:itemTextAppearanceActive="@style/TextStyleBN"
-        app:itemTextAppearanceInactive="@style/TextStyleBN"
-        app:itemTextColor="@color/black"
-        >
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-</RelativeLayout>
-<!--
 
-    <FrameLayout
-        android:id="@+id/fullframe_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />-->
+            <include layout="@layout/tookbar"
+                android:id="@+id/toolbar"/>
+
+            <FrameLayout
+                android:id="@+id/frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/rlBotoom"
+                android:layout_below="@id/toolbar"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <RelativeLayout
+                android:id="@+id/rlBotoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_above="@id/navigationbar"
+                    android:background="@color/grey" />
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/navigationbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:fitsSystemWindows="true"
+                    android:textAlignment="center"
+                    app:itemIconSize="@dimen/_18sdp"
+                    app:itemIconTint="@color/app"
+                    app:itemTextAppearance="@style/TextStyleBN"
+                    app:itemTextAppearanceActive="@style/TextStyleBN"
+                    app:itemTextAppearanceInactive="@style/TextStyleBN"
+                    app:itemTextColor="@color/black"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/bottom_navigation_home_menu" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            >
+
+            <RelativeLayout
+                android:id="@+id/drawerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app"
+               >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/user_img"/>
+                    <TextView
+                        android:id="@+id/tvLogin"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/login_btn"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:fontFamily="@font/bold"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="LOGIN"
+                        android:textColor="@color/app" />
+
+                    <TextView
+                        android:id="@+id/tvHome"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Home"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvAdd"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="My Add"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+                    <!--
+                            <TextView
+                                android:id="@+id/tvAlert"
+                                style="@style/CommonTextWrapcontent"
+                                android:layout_marginTop="@dimen/_20sdp"
+                                android:fontFamily="@font/semibold"
+                                android:paddingLeft="@dimen/_20sdp"
+                                android:text="My Alert"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_14sdp" />-->
+
+                    <TextView
+                        android:id="@+id/tvFavorite"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Favorite"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvProfile"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Profile"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvContact"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Contact Us"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvNoti"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Notification"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvSettings"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Settings"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:id="@+id/tvLog"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="Logout"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </com.google.android.material.navigation.NavigationView>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+
+
+
 </RelativeLayout>

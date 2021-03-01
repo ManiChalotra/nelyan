@@ -31,4 +31,9 @@
     <string name="lorem_ipsum">Lorem ipsum</string>
     <string name="logout">Logout</string>
 
+
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="strok" />
+
 </resources>
