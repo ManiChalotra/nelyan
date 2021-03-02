@@ -1,3 +1,3 @@
 package com.nelyan.modals
 
-data class HomeModal(var img: Int, var task: String)
+data class HomeModal(var img: String?, var task: String?)

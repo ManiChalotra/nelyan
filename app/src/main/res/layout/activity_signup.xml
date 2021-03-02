@@ -6,6 +6,17 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.SignupActivity">
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/signupProgressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -71,7 +82,7 @@
             android:textColor="@color/black"
             />
         <Spinner
-            android:id="@+id/orderby1"
+            android:id="@+id/typeSelected"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -103,6 +114,7 @@
             android:background="@color/transparent"
             android:textColor="@color/black"
             android:maxLines="1"
+            android:id="@+id/tv_username"
             android:inputType="text"
             android:hint="Full Name"/>
         <View
@@ -124,6 +136,7 @@
             android:background="@color/transparent"
             android:textColor="@color/black"
             android:maxLines="1"
+            android:id="@+id/tv_userEmail"
             android:inputType="textWebEmailAddress"
             android:hint="Email Address"/>
         <View
@@ -155,6 +168,7 @@
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
                 android:hint="Password"
+                android:id="@+id/tv_password"
                 android:fontFamily="@font/regular"
                 android:background="@null"
                 android:inputType="textWebPassword"
@@ -188,6 +202,7 @@
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
                 android:hint="Confirm Password"
+                android:id="@+id/tv_confirmPassword"
                 android:fontFamily="@font/regular"
                 android:background="@null"
                 android:inputType="textWebPassword"
@@ -213,6 +228,9 @@
             android:background="@color/transparent"
             android:textColor="@color/black"
             android:maxLines="1"
+            android:id="@+id/tv_city"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="text"
             android:hint="Your City"/>
         <View

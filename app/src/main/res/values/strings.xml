@@ -36,4 +36,14 @@
     <string name="navigation_drawer_close">close</string>
     <string name="strok" />
 
+    <string name="heading">Heading</string>
+    <string name="permissions_is_mandatory">Permissions is mandatory.</string>
+    <string name="ok">Ok</string>
+
+
+
+    <string name="go_to_settings_to_give_permissions">Go to settings to give permissions because permissions is mandatory.</string>
+
+
+
 </resources>

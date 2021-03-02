@@ -7,14 +7,31 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.preferencesKey
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan.R
 import com.nelyan.adapter.ImageSliderCustomAdapter
+import com.nelyan.utils.OpenActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import me.relex.circleindicator.CircleIndicator
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class WalkthroughActivity : AppCompatActivity() {
+class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
+
+    val dataStoragePreference by lazy { DataStoragePreference(this@WalkthroughActivity) }
+
+    private  var job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
     var mContext: Context? = null
     var indicator: CircleIndicator? = null
     var mPager: ViewPager? = null
@@ -26,6 +43,11 @@ class WalkthroughActivity : AppCompatActivity() {
     var tv_walkdesc: TextView? = null
     var login: LinearLayout? = null
     var signup: LinearLayout? = null
+
+    override fun onResume() {
+        super.onResume()
+        checkCredentails()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walkthrough)
@@ -73,5 +95,24 @@ class WalkthroughActivity : AppCompatActivity() {
             val i = Intent(this@WalkthroughActivity, LoginActivity::class.java)
             startActivity(i)
         })
+    }
+
+    private  fun checkCredentails(){
+
+        launch (Dispatchers.Main.immediate){
+           val email =  dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin"))?.first()
+           val authkey  =  dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            if(!email.isNullOrEmpty() || !authkey.isNullOrEmpty()){
+                OpenActivity(HomeActivity::class.java)
+            }
+        }
+
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }

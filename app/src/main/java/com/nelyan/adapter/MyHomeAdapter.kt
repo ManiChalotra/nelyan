@@ -1,37 +1,31 @@
 package com.nelyan.adapter
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyan.AppUtils
+import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.CornerFamily
 import com.nelyan.R
-import com.nelyan.fragments.ActivityListFragment
-import com.nelyan.fragments.ChatListFragment
-import com.nelyan.fragments.TraderListingFragment
 import com.nelyan.modals.HomeModal
-import com.nelyan.ui.SectorizationActivity
+import com.nelyan.utils.image_base_URl
+import kotlinx.android.synthetic.main.row_home.view.*
 import java.util.*
 
-class MyHomeAdapter(activity: FragmentActivity, datalist: ArrayList<HomeModal>) : RecyclerView.Adapter<MyHomeAdapter.Vh>() {
-    var a: Activity
-    var context: Context? = null
-    var ll1: LinearLayout? = null
-    var datalist: ArrayList<HomeModal>
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
-        val v = LayoutInflater.from(a).inflate(R.layout.row_home, parent, false)
-        return Vh(v)
+class MyHomeAdapter(var context :Context, var mlist : ArrayList<HomeModal>) : RecyclerView.Adapter<MyHomeAdapter.MyViewHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+      return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.row_home, parent, false))
+
     }
 
-    override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.img.setImageResource(datalist[position].img)
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.initalize(mlist, position)
+
+       /* holder.img.setImageResource(datalist[position].img)
         holder.text.text = datalist[position].task
         holder.ll1.setOnClickListener {
             if (position == 0) {
@@ -44,27 +38,40 @@ class MyHomeAdapter(activity: FragmentActivity, datalist: ArrayList<HomeModal>) 
             } else if (position == 3) {
                 AppUtils.gotoFragment(a, TraderListingFragment(), R.id.frame_container, false)
             }
-        }
+        }*/
+
+
     }
 
     override fun getItemCount(): Int {
-        return datalist.size
+        return mlist.size
     }
 
-    inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var img: ImageView
-        var ll1: LinearLayout
-        var text: TextView
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        init {
-            img = itemView.findViewById(R.id.iv_homeimg)
-            ll1 = itemView.findViewById(R.id.ll1)
-            text = itemView.findViewById(R.id.tv_hometxt)
+
+          val   img = itemView.iv_homeimg
+            val text = itemView.tv_hometxt
+
+        fun initalize(list: ArrayList<HomeModal>, position: Int){
+
+            itemView.findViewById<ShapeableImageView>(R.id.iv_homeimg).setShapeAppearanceModel(
+                    itemView.findViewById<ShapeableImageView>(R.id.iv_homeimg).getShapeAppearanceModel().toBuilder()
+                            .setTopRightCorner(CornerFamily.ROUNDED, 100F)
+                            .setTopLeftCorner(CornerFamily.ROUNDED, 0F)
+                            .setBottomLeftCorner(CornerFamily.ROUNDED, 100F)
+                            .setBottomRightCorner(CornerFamily.ROUNDED, 100F)
+                            .build() )
+
+            Glide.with(context).asBitmap().load(image_base_URl + mlist.get(position).img).into(img)
+            text.text = mlist.get(position).task
+
         }
+
+
+
+
     }
 
-    init {
-        a = activity
-        this.datalist = datalist
-    }
+
 }

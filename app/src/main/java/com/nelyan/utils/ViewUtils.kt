@@ -5,15 +5,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -26,19 +25,21 @@ import com.nelyan.R
 import com.nelyan.ui.LoginActivity
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.jvm.Throws
 
 val base_URL = "http://3.13.214.27:1052/api/"
-val security_key = "neylan@2021"
+val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
+val device_Type = "1"
+val image_base_URl = "http://3.13.214.27:1052/uploads/users/"
 
 /*error message key*/
-val MESSAGE = "message"
+val MESSAGE = "msg"
 
 // initalize the viewModel instance
 fun isUserNameValid(username: String): Boolean {
     //val p:Pattern=  Pattern.compile("^[ a-zA-Z0-9._-]{3,}\$")
-    val p: Pattern = Pattern.compile("^[a-zA-Z\\s]*\$")
+  val p: Pattern = Pattern.compile("^[a-zA-Z\\s]*\$")
+    //val p: Pattern = Pattern.compile("^[A-Za-z]+$")
     val m: Matcher = p.matcher(username)
     return m.matches()
 }
@@ -48,6 +49,8 @@ fun isUserNameValid(username: String): Boolean {
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+
 
 fun isPasswordValid(password: String): Boolean {
     return Pattern.compile(
@@ -118,21 +121,6 @@ fun <T> Context.OpenActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {
 }
 
 
-@Throws(OutOfMemoryError::class)
-fun decodeFile(uriFile: Uri): Bitmap? {
-    val filePath = uriFile.path
-    val bmOptions: BitmapFactory.Options
-    var imageBitmap: Bitmap?
-    try {
-        imageBitmap = BitmapFactory.decodeFile(filePath)
-    } catch (e: OutOfMemoryError) {
-        bmOptions = BitmapFactory.Options()
-        bmOptions.inSampleSize = 4
-        bmOptions.inPurgeable = true
-        imageBitmap = BitmapFactory.decodeFile(filePath, bmOptions)
-    }
-    return imageBitmap
-}
 
 
 fun wrapTabIndicatorToTitle(tabLayout: TabLayout, externalMargin: Int, internalMargin: Int) {
@@ -229,6 +217,25 @@ fun checkIfHasNetwork(): Boolean {
         (AppController.getInstance())!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = cm!!.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
+
+}
+
+
+
+fun Activity.myCustomToast(message: String){
+    val inflater = layoutInflater
+    val layout: View = inflater.inflate(R.layout.custom_toast_layout, findViewById(R.id.toast_layout_root) )
+   /*
+    val image: ImageView = layout.findViewById<View>(R.id.image) as ImageView
+    image.setImageResource(R.drawable.logo)
+    */
+    val text = layout.findViewById<View>(R.id.text) as TextView
+    text.text = message
+    val toast = Toast(applicationContext)
+    toast.setGravity( Gravity.BOTTOM, 0, 100)
+    toast.duration = Toast.LENGTH_LONG
+    toast.setView(layout)
+    toast.show()
 
 }
 

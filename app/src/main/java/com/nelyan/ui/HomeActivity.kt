@@ -15,8 +15,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
+import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan.AppUtils
 import com.nelyan.R
 import com.nelyan.fragments.ActivityDetailsFragment
@@ -36,8 +41,27 @@ import com.nelyan.fragments.NurserieFragment
 import com.nelyan.fragments.SectorizationDetailsFragment
 import com.nelyan.fragments.SectorizationListFragment
 import com.nelyan.fragments.TraderPublishFragment
+import com.nelyan.utils.*
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_drawer.*
+import kotlinx.android.synthetic.main.fragment_drawer.tvLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import kotlin.coroutines.CoroutineContext
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, CoroutineScope {
+
+  val appViewModel by lazy {
+      ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+  }
+    val dataStoragePreference by lazy {
+        DataStoragePreference(this)
+    }
+
+
    lateinit  var mContext: Context
     var drawerLayout: DrawerLayout? = null
     var navigationbar: BottomNavigationView? = null
@@ -59,12 +83,29 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var tvContact: TextView? = null
     var tvNoti: TextView? = null
     var tvSettings: TextView? = null
-    var tvLog: TextView? = null
     var dialog: Dialog? = null
     var v: View? = null
+    var job = Job()
+    private  var authorization = ""
+
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+
+    override fun onResume() {
+        super.onResume()
+        authorization = intent?.extras?.getString("authorization").toString()
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        initalize()
+        checkMvvmresponse()
+
+
         mContext = this
         navigationbar = findViewById(R.id.navigationbar)
         tvTitleToolbar = findViewById(R.id.tvTitleToolbar)
@@ -205,6 +246,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    private  fun initalize(){
+        tvLog.setOnClickListener(this)
+
+    }
+
     private fun setToolBarClicks() {
         iv_back = findViewById(R.id.iv_back)
         navigation_view = findViewById(R.id.navigation_view)
@@ -280,11 +326,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val i = Intent(this@HomeActivity, com.nelyan.ui.SettingsActivity::class.java)
             startActivity(i)
         })
-        tvLog = findViewById(R.id.tvLog)
-        tvLog!!.setOnClickListener(View.OnClickListener {
-            mDrawerLayout!!.closeDrawers()
-            showLog()
-        })
+
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.tvLog->{
+                mDrawerLayout!!.closeDrawers()
+                showLog()
+
+            }
+
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -350,6 +403,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
+
+
         if (fragment != null) {
             supportFragmentManager
                     .beginTransaction()
@@ -370,11 +425,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val rlNo: RelativeLayout
         rlYes = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener {
-            val i = Intent(mContext, com.nelyan.ui.LoginActivity::class.java)
-            i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(i)
-            //   mContext.startActivity(new Intent(mContext, LoginActivity.class));
-            dialog!!.dismiss()
+
+            hitLogoutApi()
+
         }
         rlNo = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
@@ -410,5 +463,46 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             super.onBackPressed()
             //navigationbar.getMenu().getItem(0).setChecked(true);
         }
+    }
+
+    private  fun hitLogoutApi(){
+        appViewModel.sendLogoutData(security_key, authorization)
+        homeProgressBar?.showProgressBar()
+    }
+
+    private  fun checkMvvmresponse(){
+        appViewModel.observeLogoutResponse()!!.observe(this, Observer { response->
+            if(response!!.isSuccessful && response.code()==200){
+                if(response.body()!= null){
+                    homeProgressBar?.hideProgressBar()
+                    val mResponse = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    Log.d("logoutResponse","---------"+ Gson().toJson(response.body()))
+                    val message = jsonObject.get("msg").toString()
+                    myCustomToast(message)
+
+                    launch (Dispatchers.Main.immediate){
+                        val i = Intent(this@HomeActivity, com.nelyan.ui.LoginActivity::class.java)
+                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(i)
+                        dialog!!.dismiss()
+                        dataStoragePreference.deleteDataBase()
+                    }
+
+                }
+            }else{
+                ErrorBodyResponse(response, this, homeProgressBar)
+            }
+        })
+
+        appViewModel.getException()!!.observe(this, Observer {
+            myCustomToast(it)
+            homeProgressBar?.hideProgressBar()
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }

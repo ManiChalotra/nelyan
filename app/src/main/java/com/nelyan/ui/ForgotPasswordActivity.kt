@@ -1,24 +1,80 @@
 package com.nelyan.ui
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.nelyan.R
+import com.nelyan.utils.*
+import kotlinx.android.synthetic.main.activity_forgot_password.*
+import org.json.JSONObject
 
-class ForgotPasswordActivity : AppCompatActivity() {
-    var mContext: Context? = null
-    var ivBack: ImageView? = null
-    var btnSubmit: Button? = null
+class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
+    val appViewModel : AppViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
-        mContext = this
-        ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
-        btnSubmit = findViewById(R.id.btnSubmit)
-        btnSubmit!!.setOnClickListener(View.OnClickListener { finish() })
+        initalize()
+        checkMvvmResponse()
+
+    }
+    private  fun initalize() {
+        ivBack.setOnClickListener(this)
+        btnSubmit.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.ivBack->{
+                onBackPressed()
+            }
+            R.id.btnSubmit->{
+                val email = tv_emailForgetPassword.text.toString()
+                if(Validation.checkEmail(email, this)){
+                    hitForgetPassowrdApi(email)
+                }
+
+            }
+
+        }
+    }
+
+    private  fun hitForgetPassowrdApi(email:String){
+        appViewModel.sendForgetPasswordData(security_key, email)
+        forgetPasswordProgressBar?.showProgressBar()
+    }
+
+    private  fun checkMvvmResponse(){
+        appViewModel!!.observeForgetPasswordResponse()!!.observe(this, Observer { response->
+            if(response!!.isSuccessful && response.code()==200){
+                if(response.body()!= null){
+                    Log.d("forgetPasswordResponse","-------------"+ Gson().toJson(response.body()))
+
+                    val mResponse = response.body()!!.toString()
+                    val jsonObject = JSONObject(mResponse)
+                    val message = jsonObject.get("msg").toString()
+                    forgetPasswordProgressBar?.hideProgressBar()
+                    myCustomToast(message)
+                    onBackPressed()
+                }else{
+                    ErrorBodyResponse(response, this, forgetPasswordProgressBar)
+                }
+            }
+        })
+
+        appViewModel.getException()!!.observe(this, Observer {
+            myCustomToast(it)
+            forgetPasswordProgressBar?.hideProgressBar()
+        })
+
     }
 }

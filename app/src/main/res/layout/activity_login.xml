@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.LoginActivity">
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/loginProgressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
+
+
    <!-- <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -55,6 +67,7 @@
                 android:textColorHint="@color/grey"
                 android:maxLines="1"
                 android:gravity="bottom"
+            android:id="@+id/tv_emailLogin"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:inputType="textWebEmailAddress"
@@ -88,6 +101,7 @@
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
                 android:hint="Password"
+                android:id="@+id/tv_passwordLogin"
                 android:fontFamily="@font/regular"
                 android:background="@null"
                 android:inputType="textWebPassword"
@@ -115,16 +129,11 @@
                     android:id="@+id/ll_chackbox"
                     >
                     <ImageView
-                        android:id="@+id/ivblank"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_tickButton"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
                         android:src="@drawable/fill_check"/>
-                    <ImageView
-                        android:id="@+id/ivOn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/tick"
-                        android:visibility="gone"/>
+
                 </LinearLayout>
                 <TextView
                     style="@style/CommonTextWrapcontent"
