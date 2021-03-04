@@ -56,23 +56,41 @@
                     android:fontFamily="@font/bold"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"/>
-                <ImageView
-                    android:id="@+id/toggle"
+
+                <androidx.appcompat.widget.SwitchCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:track="@drawable/switch_track"
+                    android:thumb="@drawable/thumb"
+                    android:checked="true"
+                    android:theme="@style/Color1SwitchStyle"
+                    android:gravity="center_vertical"
+                    android:id="@+id/iv_notification_switch"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/tab_on"/>
-                <ImageView
-                    android:id="@+id/toggle_off"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:visibility="gone"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/tab_off"/>
+                    />
+
+                <!-- <ImageView
+                     android:id="@+id/toggle"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     android:layout_marginRight="@dimen/_5sdp"
+                     android:layout_centerInParent="true"
+                     android:src="@drawable/tab_on"/>
+
+                 <ImageView
+                     android:id="@+id/toggle_off"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_centerInParent="true"
+                     android:layout_marginRight="@dimen/_5sdp"
+                     android:visibility="gone"
+                     android:layout_alignParentRight="true"
+                     android:src="@drawable/tab_off"/>
+ -->
+
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -98,14 +116,30 @@
                     android:fontFamily="@font/bold"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"/>
-                <ImageView
-                    android:id="@+id/On"
+
+
+                <androidx.appcompat.widget.SwitchCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:track="@drawable/switch_track"
+                    android:thumb="@drawable/thumb"
+                    android:checked="false"
+                    android:theme="@style/Color1SwitchStyle"
+                    android:gravity="center_vertical"
+                    android:id="@+id/iv_professional_switch"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/tab_on"/>
+                    />
+
+                <!--<ImageView
+                    android:id="@+id/On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="6dp"
+                    android:src="@drawable/tab_on" />
                 <ImageView
                     android:id="@+id/Of"
                     android:layout_width="wrap_content"
@@ -114,7 +148,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:visibility="gone"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/tab_off"/>
+                    android:src="@drawable/tab_off"/>-->
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout

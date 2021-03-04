@@ -6,6 +6,19 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.EditProfileActivity">
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/editProfileProgressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -51,15 +64,16 @@
                             android:gravity="center">
                             <ImageView
                                 android:id="@+id/ivImg"
+                                android:padding="@dimen/_15sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"/>
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_profile"
+                                android:id="@+id/iv_profileEdit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:src="@drawable/profile_img">
+                                >
                             </de.hdodenhof.circleimageview.CircleImageView>
                         </RelativeLayout>
 
@@ -88,8 +102,8 @@
                         />
                     <EditText
                         style="@style/SimpleEdittext"
+                        android:id="@+id/et_nameEditProfile"
                         android:hint="Name"
-                        android:text="Jimmy Hilla"
                         android:textColorHint="@color/black"
                         android:textSize="@dimen/_15sdp"
                         android:inputType="text"
@@ -109,10 +123,10 @@
                         android:textColor="@color/grey"
                         />
                     <TextView
+                        android:id="@+id/tv_emailEditProfile"
                         style="@style/CommonTextMatchparent"
                         android:textSize="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="jimmy@gmail.com"
                         android:textColor="@color/black"
                         android:fontFamily="@font/semibold"/>
                        <View
@@ -128,8 +142,10 @@
                         android:textColor="@color/grey"
                         />
                     <EditText
+                        android:id="@+id/et_cityEditProfile"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         style="@style/SimpleEdittext"
-                        android:hint="City Name"
                         android:textColorHint="@color/black"
                         android:inputType="text"
                         android:textSize="@dimen/_15sdp"
@@ -150,8 +166,8 @@
                         android:textColor="@color/grey"
                         />
                     <EditText
+                        android:id="@+id/et_utilizationEditProfile"
                         style="@style/SimpleEdittext"
-                        android:hint="Types of Utilisation"
                         android:textColorHint="@color/black"
                         android:inputType="text"
                         android:textSize="@dimen/_15sdp"

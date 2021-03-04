@@ -58,17 +58,55 @@ interface JsonPlaceHolder {
 
     @GET("logout")
     fun get_Logout_api(@Header("security_key") securityKey: String?,
-                       @Header("auth_key") auth_key: String?):Call<JsonObject>
+                       @Header("auth_key") auth_key: String?): Call<JsonObject>
 
     @POST("forgot_password")
     @FormUrlEncoded
     fun get_ForgetPassword_Api(@Header("security_key") securityKey: String?,
-    @Field("email")email:String?):Call<JsonObject>
+                               @Field("email") email: String?): Call<JsonObject>
 
     @GET("getHomeCategories")
     fun get_HomeCategory_Api(@Header("security_key") securityKey: String?,
-                             @Header("auth_key") auth_key: String?):Call<JsonObject>
+                             @Header("auth_key") auth_key: String?): Call<JsonObject>
 
+    @GET("get_profile")
+    fun get_Profile_api(@Header("security_key") securityKey: String?,
+                        @Header("auth_key") auth_key: String?): Call<JsonObject>
+
+    @Multipart
+    @POST("edit_profile")
+    fun get_EditProfile_withImage_Api(@Header("security_key") securityKey: String?,
+                                      @Header("auth_key") auth_key: String?,
+                                      @Part("name") name: RequestBody?,
+                                      @Part("city") city: RequestBody?,
+                                      @Part("lat") lat: RequestBody?,
+                                      @Part("longi") longi: RequestBody?,
+                                      @Part("types_of_utilisation") utilization: RequestBody?,
+                                      @Part image: MultipartBody.Part?): Call<JsonObject>
+
+    @Multipart
+    @POST("edit_profile")
+    fun get_EditProfile_withoutImage_Api(@Header("security_key") securityKey: String?,
+                                         @Header("auth_key") auth_key: String?,
+                                         @Part("name") name: RequestBody?,
+                                         @Part("city") city: RequestBody?,
+                                         @Part("lat") lat: RequestBody?,
+                                         @Part("longi") longi: RequestBody?,
+                                         @Part("types_of_utilisation") utilization: RequestBody?): Call<JsonObject>
+
+    @POST("contact_us")
+    @FormUrlEncoded
+    fun get_ContactUs_Api(@Header("security_key") securityKey: String?,
+                          @Header("auth_key") auth_key: String?,
+                          @Field("name") name: String?,
+                          @Field("email") email: String?,
+                          @Field("comment") comment: String?): Call<JsonObject>
+
+    @POST("enable_notifications")
+    @FormUrlEncoded
+    fun get_Notificatuion_Enable_Api(@Header("security_key") securityKey: String?,
+                                     @Header("auth_key") auth_key: String?,
+                                     @Field("type") type: String?):Call<JsonObject>
 
 
     companion object {

@@ -43,7 +43,9 @@
 
 
     <string name="go_to_settings_to_give_permissions">Go to settings to give permissions because permissions is mandatory.</string>
-
+    <string name="contactUs">Contact Us</string>
+    <string name="Email">Email</string>
+    <string name="Comment">Comment</string>
 
 
 </resources>

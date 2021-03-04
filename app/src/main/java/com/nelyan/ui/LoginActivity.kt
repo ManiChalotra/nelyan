@@ -122,6 +122,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope 
                     val phone = jsonObject.getJSONObject("data").get("phone").toString()
                     val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
                     val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                    val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                    val longitude = jsonObject.getJSONObject("data").get("lng").toString()
 
                     launch (Dispatchers.Main.immediate){
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
@@ -131,6 +133,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope 
                         dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
                         dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
                         dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
+                        dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
+                        dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
 
                     }
 

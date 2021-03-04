@@ -62,8 +62,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
 
+
+
    lateinit  var mContext: Context
-    var drawerLayout: DrawerLayout? = null
     var navigationbar: BottomNavigationView? = null
     var a = 1
     var doubleBackToExitPressedOnce = false
@@ -96,6 +97,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onResume() {
         super.onResume()
         authorization = intent?.extras?.getString("authorization").toString()
+        Log.d("homeAuthKey","----------"+ authorization)
 
     }
 
@@ -104,7 +106,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_home)
         initalize()
         checkMvvmresponse()
-
 
         mContext = this
         navigationbar = findViewById(R.id.navigationbar)
@@ -311,8 +312,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvContact = findViewById(R.id.tvContact)
         tvContact!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan.ui.ContactUsActivity::class.java)
-            startActivity(i)
+
+            OpenActivity(ContactUsActivity::class.java){
+                putString("authorization", authorization)
+            }
+
         })
         tvNoti = findViewById(R.id.tvNoti)
         tvNoti!!.setOnClickListener(View.OnClickListener {
@@ -323,8 +327,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvSettings = findViewById(R.id.tvSettings)
         tvSettings!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan.ui.SettingsActivity::class.java)
-            startActivity(i)
+
+            OpenActivity(SettingsActivity::class.java){
+                putString("authorization", authorization)
+            }
+
         })
 
     }
@@ -402,9 +409,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return loadFragment(fragment)
     }
 
+
+
     private fun loadFragment(fragment: Fragment?): Boolean {
-
-
         if (fragment != null) {
             supportFragmentManager
                     .beginTransaction()
@@ -412,6 +419,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     .addToBackStack("null")
                     .commit()
             return true
+        }else{
+            myCustomToast("Fragment is null")
         }
         return false
     }
