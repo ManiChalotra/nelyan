@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.nelyan.R
-import com.nelyan.ui.ActivityFormActivity
 
 class PubilerActivity : AppCompatActivity() {
     var mContext: Context? = null

@@ -15,7 +15,6 @@ import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan.R
 import com.nelyan.adapter.MyHomeAdapter
 import com.nelyan.modals.HomeModal
-import com.nelyan.ui.HomeActivity
 import com.nelyan.utils.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tookbar.*
@@ -56,15 +55,11 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope {
             homeFargProgressBar?.showProgressBar()
             checkMvvmResponse()
         }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initalize()
-
-
     }
 
     private fun initalize() {

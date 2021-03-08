@@ -28,14 +28,11 @@ import com.nelyan.fragments.ActivityDetailsFragment
 import com.nelyan.fragments.ActivityFragment
 import com.nelyan.fragments.BabySitterFragment
 import com.nelyan.fragments.ChildCareFragment
-import com.nelyan.fragments.DrawerFragment
-import com.nelyan.fragments.DrawerNewHomeFragment
 import com.nelyan.fragments.EventFragment
 import com.nelyan.fragments.FavoriteFragment
 import com.nelyan.fragments.HomeFragment
 import com.nelyan.fragments.MaternalFragmentFragment
 import com.nelyan.fragments.MessageFragment
-import com.nelyan.fragments.MyAddFragment
 import com.nelyan.fragments.NurseFragment
 import com.nelyan.fragments.NurserieFragment
 import com.nelyan.fragments.SectorizationDetailsFragment
@@ -43,7 +40,6 @@ import com.nelyan.fragments.SectorizationListFragment
 import com.nelyan.fragments.TraderPublishFragment
 import com.nelyan.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.fragment_drawer.*
 import kotlinx.android.synthetic.main.fragment_drawer.tvLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

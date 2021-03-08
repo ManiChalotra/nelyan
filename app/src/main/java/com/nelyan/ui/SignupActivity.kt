@@ -2,13 +2,11 @@ package com.nelyan.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.Status
@@ -21,7 +19,6 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
-import com.nelyan.HELPER.image
 import com.nelyan.R
 import com.nelyan.utils.*
 import kotlinx.android.synthetic.main.activity_signup.*

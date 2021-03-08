@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan.HELPER.image
 import com.nelyan.R
-import com.nelyan.fragments.NurseFragment
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
 

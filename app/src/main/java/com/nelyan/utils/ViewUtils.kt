@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +30,9 @@ val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
 val device_Type = "1"
 val image_base_URl = "http://3.13.214.27:1052/uploads/users/"
+val FOR_FACEBOOK_TYPE = "1"
+val FOR_GOOGLE_TYPE = "2"
+var OAUTH_GOOGLE_CLIENT_ID = "679915298408-s8dalhfhf8d3tecve1vdjtlo1uttm3u1.apps.googleusercontent.com"
 
 /*error message key*/
 val MESSAGE = "msg"
@@ -211,10 +213,10 @@ fun failureMethod(
 }
 
 
-fun checkIfHasNetwork(): Boolean {
+fun checkIfHasNetwork(activity: Activity): Boolean {
 
     val cm =
-        (AppController.getInstance())!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        (activity)!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = cm!!.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
 

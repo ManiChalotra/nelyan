@@ -1,4 +1,12 @@
 <resources>
+
+    <string name="facebook_app_id">2791584067750180</string>
+    <string name="fb_login_protocol_scheme">fb2791584067750180</string>
+
+
+
+
+
     <string name="app_name">Nelyan</string>
     <string name="signup"><u>Sign Up</u></string>
     <string name="privacy"><u>privacy policy.</u></string>

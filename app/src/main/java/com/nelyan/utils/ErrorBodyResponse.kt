@@ -2,7 +2,6 @@ package com.nelyan.utils
 
 import android.content.Context
 import android.util.Log
-import android.widget.ProgressBar
 import org.json.JSONObject
 import retrofit2.Response
 

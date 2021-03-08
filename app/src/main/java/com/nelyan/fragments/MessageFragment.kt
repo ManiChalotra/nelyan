@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan.R
 import com.nelyan.adapter.MessageAdapter
-import com.nelyan.adapter.NotificationAdapter
 
 class MessageFragment : Fragment() {
     var v: View? = null

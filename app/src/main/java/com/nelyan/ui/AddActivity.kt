@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan.R
 import com.nelyan.adapter.MyAddAdapter
-import com.nelyan.fragments.MyAddFragment
 
 class AddActivity : AppCompatActivity() {
    lateinit  var mContext: Context

@@ -106,7 +106,21 @@ interface JsonPlaceHolder {
     @FormUrlEncoded
     fun get_Notificatuion_Enable_Api(@Header("security_key") securityKey: String?,
                                      @Header("auth_key") auth_key: String?,
-                                     @Field("type") type: String?):Call<JsonObject>
+                                     @Field("type") type: String?): Call<JsonObject>
+
+    @POST("change_password")
+    @FormUrlEncoded
+    fun get_ChangePassword_Api(@Header("security_key") securityKey: String?,
+                               @Header("auth_key") auth_key: String?,
+                               @Field("old_password") old_password: String?,
+                               @Field("new_password") new_password: String?
+    ): Call<JsonObject>
+
+    @POST("getContent")
+    @FormUrlEncoded
+    fun get_GetContent_APi(@Header("security_key") securityKey: String?,
+                           @Header("auth_key") auth_key: String?,
+                           @Field("type") type: String?):Call<JsonObject>
 
 
     companion object {

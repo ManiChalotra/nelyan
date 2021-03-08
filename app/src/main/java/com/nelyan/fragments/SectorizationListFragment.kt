@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan.R
-import com.nelyan.adapter.NotificationAdapter
 import com.nelyan.adapter.SectorizationAdapter
 import com.nelyan.ui.SectorizationMapActivity
 

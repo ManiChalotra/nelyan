@@ -21,7 +21,6 @@ import com.nelyan.R
 import com.nelyan.adapter.DetailsImageAdapter
 import com.nelyan.adapter.DetailsTimeAdapter
 import com.nelyan.adapter.DetailsUpcomingAdapter
-import com.nelyan.fragments.ActivityDetailsFragment
 import com.nelyan.modals.DetailsImageModal
 import com.nelyan.modals.DetailsTimeModal
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator

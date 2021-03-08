@@ -1,7 +1,6 @@
 package com.nelyan.utils
 
 import android.app.Activity
-import android.content.Context
 
 object Validation {
 

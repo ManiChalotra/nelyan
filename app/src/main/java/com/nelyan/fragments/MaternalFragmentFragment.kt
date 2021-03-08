@@ -18,10 +18,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.nelyan.AppUtils
 import com.nelyan.R
 import com.nelyan.adapter.DetailsImageAdapter
-import com.nelyan.fragments.NurserieFragment
 import com.nelyan.modals.DetailsImageModal
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*

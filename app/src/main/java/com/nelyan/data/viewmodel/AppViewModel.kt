@@ -326,6 +326,92 @@ class AppViewModel : ViewModel() {
     }
 
 
+    // change password api
+    private var changePasswordMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeChangePasswordResponse(): LiveData<Response<JsonObject>?>? {
+        if (changePasswordMutableLiveData == null) {
+            changePasswordMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return changePasswordMutableLiveData
+    }
+
+    fun sendChangePasswordData(securityKey: String?,authkey:String?, oldPassword:String?, newpassword:String?) {
+        JsonPlaceHolder().get_ChangePassword_Api(securityKey, authkey,oldPassword, newpassword)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        changePasswordMutableLiveData?.value = response
+                    }
+                })
+    }
+
+
+    // get getCOntent api
+    private var getAboutUSMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    private var getTermsConditionLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    private var getPrivacyPolicyLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeAboutUsResponse(): LiveData<Response<JsonObject>?>? {
+        if (getAboutUSMutableLiveData == null) {
+            getAboutUSMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return getAboutUSMutableLiveData
+    }
+
+    fun observeTermsConditionResponse(): LiveData<Response<JsonObject>?>? {
+        if (getTermsConditionLiveData == null) {
+            getTermsConditionLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return getTermsConditionLiveData
+    }
+
+
+    fun observePrivacyPolicyResponse(): LiveData<Response<JsonObject>?>? {
+        if (getPrivacyPolicyLiveData == null) {
+            getPrivacyPolicyLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return getPrivacyPolicyLiveData
+    }
+
+    fun sendGetContentApiData(securityKey: String?,authkey:String?, type:String?) {
+        JsonPlaceHolder().get_GetContent_APi(securityKey, authkey,type)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+
+                        when(type){
+                            "1"->{
+                                getAboutUSMutableLiveData?.value = response
+
+                            }
+                            "2"->{
+                                getTermsConditionLiveData?.value = response
+
+                            }
+                            "3"->{
+                                getPrivacyPolicyLiveData?.value = response
+
+                            }
+                        }
+                    }
+                })
+    }
+
+
+
+
+
 
 
 

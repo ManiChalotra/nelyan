@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.nelyan.R
-import com.nelyan.ui.ActivityFormActivity
 
 class PublisherFrag : Fragment() {
     var mContext: Context? = null

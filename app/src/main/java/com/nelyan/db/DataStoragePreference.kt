@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 class DataStoragePreference(context: Context) {
+
     private val applicationContext = context.applicationContext
     private val dataStore: DataStore<Preferences>
 
@@ -22,6 +23,7 @@ class DataStoragePreference(context: Context) {
             name = "app_preferences"
         )
     }
+
 
     suspend fun <T> save(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore.edit { preferences ->
