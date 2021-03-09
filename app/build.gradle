@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'com.google.gms.google-services'
 
 
 android {
@@ -9,14 +9,12 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.nelyan"
+        applicationId "com.nelyan_live"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,9 +32,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//        kotlinOptions {
-//            jvmTarget = JavaVersion.VERSION_1_8.toString()
-//        }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
@@ -150,6 +145,11 @@ dependencies {
     //client secert
     89IX0lDjW7uxv-GGAfNV_UIl
 */
+
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 
 
