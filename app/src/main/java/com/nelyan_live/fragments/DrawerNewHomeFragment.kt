@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.nelyan_live.R
 import com.nelyan_live.ui.*
+import com.nelyan_live.utils.OpenActivity
 
 class DrawerNewHomeFragment : Fragment() {
     var mContext: Context? = null
@@ -60,7 +61,8 @@ class DrawerNewHomeFragment : Fragment() {
                 }
                 R.id.fev -> {
                     //  startActivity(new Intent(DrawerActivity.this,AfterSignupActivity.class));
-                    changeFragment(com.nelyan_live.fragments.FavoriteFragment())
+                  //  changeFragment(com.nelyan_live.fragments.FavoriteFragment())
+                    requireActivity().OpenActivity(FavouriteActivity::class.java)
                     drawerLayout!!.closeDrawer(GravityCompat.START)
                 }
                 R.id.profile -> {

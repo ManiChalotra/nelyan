@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.fragments.NurserieFragment
+import com.nelyan_live.ui.NurserieActivity
+import com.nelyan_live.ui.NurseryActivity
+import com.nelyan_live.utils.OpenActivity
 
-class favoriteAdapter(activity: FragmentActivity) : RecyclerView.Adapter<favoriteAdapter.RecyclerViewHolder>() {
+class FavoriteAdapter(activity: FragmentActivity) : RecyclerView.Adapter<FavoriteAdapter.RecyclerViewHolder>() {
     var context: Context? = null
     var a: Activity
     var inflater: LayoutInflater? = null
@@ -32,9 +35,13 @@ class favoriteAdapter(activity: FragmentActivity) : RecyclerView.Adapter<favorit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val v = LayoutInflater.from(a).inflate(R.layout.list_favorite, parent, false)
+        context = parent.context
         //     View v = inflater.inflate(R.layout.list_activitylist, parent, false);
         rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(a, NurserieFragment(), R.id.frame_container, false) })
+        rl_1!!.setOnClickListener(View.OnClickListener {
+           context?.OpenActivity(NurseryActivity::class.java)// AppUtils.gotoFragment(a, NurserieFragment(), R.id.frame_container, false)
+        })
+
         return RecyclerViewHolder(v)
     }
 

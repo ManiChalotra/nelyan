@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.DatePickerDialog
@@ -63,9 +64,11 @@ class ActivityFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerVi
         btnFilter = v!!.findViewById(R.id.btnFilter)
         btnFilter!!.setOnClickListener(View.OnClickListener {
             requireActivity()!!.onBackPressed()
-            /*    FragmentManager fm = getActivity().getSupportFragmentManager();
+            */
+/*    FragmentManager fm = getActivity().getSupportFragmentManager();
                 Fragment f = fm.findFragmentById(R.id.frame_container);
-                fm.popBackStack();*/
+                fm.popBackStack();*//*
+
         })
         orderby = v!!.findViewById(R.id.orderby)
         val genderlist = arrayOf<String?>(
@@ -83,7 +86,8 @@ class ActivityFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerVi
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
                 requireActivity()!!, layout.size_customspinner, km)
         orderby1!!.setAdapter(adapter1)
-        /*try {
+        */
+/*try {
             Field popup = Spinner.class.getDeclaredField("mPopup");
             popup.setAccessible(true);
             ListPopupWindow popupWindow = (ListPopupWindow) popup.get(orderby1);
@@ -91,7 +95,8 @@ class ActivityFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerVi
         }
         catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
             Log.e("sjhj","jsbhj"+e);
-        }*/orderby1!!.setOnItemSelectedListener(this@ActivityFragment)
+        }*//*
+orderby1!!.setOnItemSelectedListener(this@ActivityFragment)
         return v
     }
 
@@ -119,4 +124,4 @@ class ActivityFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerVi
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
     }
-}
+}*/

@@ -1,114 +1,108 @@
 package com.nelyan_live.ui
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.nelyan_live.R
+import com.nelyan_live.utils.OpenActivity
+import com.nelyan_live.utils.myCustomToast
+import kotlinx.android.synthetic.main.activity_pubiler.*
+import java.lang.RuntimeException
 
-class PublisherFrag : Fragment() {
-    var mContext: Context? = null
-   lateinit var v: View
-    var ivBack: ImageView? = null
-    var ivLogo: ImageView? = null
-    var ivRadio1: ImageView? = null
-    var ivOn: ImageView? = null
-    var ivRadio2: ImageView? = null
-    var ivRadio3: ImageView? = null
-    var ivRadio4: ImageView? = null
-    var ll_1: LinearLayout? = null
-    var ll_2: LinearLayout? = null
-    var ll_3: LinearLayout? = null
-    var ll_4: LinearLayout? = null
-    var ll_5: LinearLayout? = null
-    var btnSubmit: Button? = null
-    var state = 0
-    var type = "1"
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+class PublisherFrag : Fragment(), View.OnClickListener {
+
+    private var type = ""
+    private  var listner: CommunicationListner?= null
+
+    override fun onResume() {
+        super.onResume()
+        if(listner!= null){
+            listner!!.onFargmentActive(3)
+        }
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.activity_pubiler, container, false)
-        mContext = activity
-        ll_1 = v.findViewById(R.id.ll_1)
-        ll_2 = v.findViewById(R.id.ll_2)
-        ll_3 = v.findViewById(R.id.ll_3)
-        ll_4 = v.findViewById(R.id.ll_4)
-        ll_5 = v.findViewById(R.id.ll_5)
-        ivOn = v.findViewById(R.id.ivOn)
-        ivRadio1 = v.findViewById(R.id.ivRadio1)
-        ivRadio2 = v.findViewById(R.id.ivRadio2)
-        ivRadio3 = v.findViewById(R.id.ivRadio3)
-        ivRadio4 = v.findViewById(R.id.ivRadio4)
-        ll_1!!.setOnClickListener(View.OnClickListener {
-            type = "1"
-            ivOn!!.setImageResource(R.drawable.radio_outline)
-            ivRadio1!!.setImageResource(R.drawable.radio_fill)
-            ivRadio2!!.setImageResource(R.drawable.radio_outline)
-            ivRadio3!!.setImageResource(R.drawable.radio_outline)
-            ivRadio4!!.setImageResource(R.drawable.radio_outline)
-        })
-        ll_2!!.setOnClickListener(View.OnClickListener {
-            type = "2"
-            ivOn!!.setImageResource(R.drawable.radio_fill)
-            ivRadio1!!.setImageResource(R.drawable.radio_outline)
-            ivRadio2!!.setImageResource(R.drawable.radio_outline)
-            ivRadio3!!.setImageResource(R.drawable.radio_outline)
-            ivRadio4!!.setImageResource(R.drawable.radio_outline)
-        })
-        ll_3!!.setOnClickListener(View.OnClickListener {
-            type = "3"
-            ivOn!!.setImageResource(R.drawable.radio_outline)
-            ivRadio1!!.setImageResource(R.drawable.radio_outline)
-            ivRadio2!!.setImageResource(R.drawable.radio_fill)
-            ivRadio3!!.setImageResource(R.drawable.radio_outline)
-            ivRadio4!!.setImageResource(R.drawable.radio_outline)
-        })
-        ll_4!!.setOnClickListener(View.OnClickListener {
-            type = "4"
-            ivOn!!.setImageResource(R.drawable.radio_outline)
-            ivRadio1!!.setImageResource(R.drawable.radio_outline)
-            ivRadio2!!.setImageResource(R.drawable.radio_outline)
-            ivRadio3!!.setImageResource(R.drawable.radio_fill)
-            ivRadio4!!.setImageResource(R.drawable.radio_outline)
-        })
-        ll_5!!.setOnClickListener(View.OnClickListener {
-            type = "5"
-            ivOn!!.setImageResource(R.drawable.radio_outline)
-            ivRadio1!!.setImageResource(R.drawable.radio_outline)
-            ivRadio2!!.setImageResource(R.drawable.radio_outline)
-            ivRadio3!!.setImageResource(R.drawable.radio_outline)
-            ivRadio4!!.setImageResource(R.drawable.radio_fill)
-        })
-        ivLogo = v.findViewById(R.id.ivLogo)
-        ivLogo!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(mContext, HomeActivity::class.java)
-            startActivity(i)
-        })
-        btnSubmit = v.findViewById(R.id.btnSubmit)
-        btnSubmit!!.setOnClickListener(View.OnClickListener {
-            if (type == "1") {
-                val i = Intent(mContext, ActivityFormActivity::class.java)
-                startActivity(i)
-            } else if (type == "2") {
-                val i = Intent(mContext, NurserieActivity::class.java)
-                startActivity(i)
-            } else if (type == "3") {
-                val i = Intent(mContext, MaternalAssistantActivity::class.java)
-                startActivity(i)
-            } else if (type == "4") {
-                val i = Intent(mContext, BabySitterActivity::class.java)
-                startActivity(i)
-            } else if (type == "5") {
-                val i = Intent(mContext, com.nelyan_live.ui.TraderActivity::class.java)
-                startActivity(i)
+        return inflater.inflate(R.layout.activity_pubiler, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initalizeClicks()
+
+        radioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
+            run {
+                when (optionId) {
+                    R.id.btn_activity -> {
+                        type = "1"
+                    }
+                    R.id.btn_Nursery -> {
+                        type = "2"
+                    }
+                    R.id.btn_materialAssistant -> {
+                        type = "3"
+                    }
+                    R.id.btn_babySitter -> {
+                        type = "4"
+                    }
+                    R.id.btn_traderArtisans -> {
+                        type = "5"
+                    }
+                }
             }
-        })
-        return v
+        }
+    }
+
+
+    private fun initalizeClicks() {
+        btnSubmit.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.btnSubmit -> {
+                when(type){
+                    "1"->{
+                        requireActivity().OpenActivity(ActivityFormActivity::class.java)
+                    }
+                    "2"->{
+                        requireActivity().OpenActivity(NurserieActivity::class.java)
+                    }
+                    "3"->{
+                        requireActivity().OpenActivity(MaternalAssistantActivity::class.java)
+                    }
+                    "4"->{
+                        requireActivity().OpenActivity(BabySitterActivity::class.java)
+                    }
+                    "5"->{
+                        requireActivity().OpenActivity(TraderActivity::class.java)
+                    }
+                    else->{
+                        requireActivity().myCustomToast("Please select your publisher type ")
+                    }
+                }
+
+            }
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is CommunicationListner){
+            listner = context as CommunicationListner
+        }else{
+
+            throw RuntimeException("Home Fragment not Attched")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listner = null
     }
 }

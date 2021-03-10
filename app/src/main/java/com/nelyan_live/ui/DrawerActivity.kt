@@ -14,8 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.nelyan_live.R
-import com.nelyan_live.fragments.FavoriteFragment
 import com.nelyan_live.fragments.MyAddFragment
+import com.nelyan_live.utils.OpenActivity
 
 class DrawerActivity : AppCompatActivity() {
     var mContext: Context? = null
@@ -52,7 +52,8 @@ class DrawerActivity : AppCompatActivity() {
                 }
                 R.id.add -> changeFragment(MyAddFragment())
                 R.id.fev ->                       //  startActivity(new Intent(DrawerActivity.this,AfterSignupActivity.class));
-                    changeFragment(FavoriteFragment())
+                    OpenActivity(FavouriteActivity::class.java)
+                    //changeFragment(FavoriteFragment())
                 R.id.profile -> startActivity(Intent(this@DrawerActivity, com.nelyan_live.ui.ProfileActivity::class.java))
                 R.id.contact -> startActivity(Intent(this@DrawerActivity, ContactUsActivity::class.java))
                 R.id.noti -> startActivity(Intent(this@DrawerActivity, com.nelyan_live.ui.TermsActivity::class.java))

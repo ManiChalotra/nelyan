@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    tools:context=".fragments.ActivityListFragment">
+    android:id="@+id/frame_container"
+    tools:context=".ui.ActivityListActivity">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rl_toolbar_root"

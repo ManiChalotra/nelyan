@@ -30,7 +30,7 @@ class PubilerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pubiler)
-        mContext = this
+      /*  mContext = this
         ivBack = findViewById(R.id.ivBack)
         ll_1 = findViewById(R.id.ll_1)
         ll_2 = findViewById(R.id.ll_2)
@@ -38,10 +38,12 @@ class PubilerActivity : AppCompatActivity() {
         ll_4 = findViewById(R.id.ll_4)
         ll_5 = findViewById(R.id.ll_5)
         ivOn = findViewById(R.id.ivOn)
-        ivRadio1 = findViewById(R.id.ivRadio1)
+        ivRadio1 = findViewById(R.id.apivRadio1)
         ivRadio2 = findViewById(R.id.ivRadio2)
         ivRadio3 = findViewById(R.id.ivRadio3)
         ivRadio4 = findViewById(R.id.ivRadio4)
+
+
         ll_1!!.setOnClickListener(View.OnClickListener {
             type = "1"
             ivOn!!.setImageResource(R.drawable.radio_outline)
@@ -106,6 +108,6 @@ class PubilerActivity : AppCompatActivity() {
                 val i = Intent(this@PubilerActivity, com.nelyan_live.ui.TraderActivity::class.java)
                 startActivity(i)
             }
-        })
+        })*/
     }
 }

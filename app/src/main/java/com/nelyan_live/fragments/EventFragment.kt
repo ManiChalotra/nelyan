@@ -17,10 +17,17 @@ import com.nelyan_live.R.layout
 import com.nelyan_live.adapter.MyEventAdapter
 import com.nelyan_live.modals.EventModel
 import com.nelyan_live.ui.Activity2Activity
+import com.nelyan_live.ui.ActivityFragmentActivity
+import com.nelyan_live.ui.CommunicationListner
+import com.nelyan_live.utils.OpenActivity
+import java.lang.RuntimeException
 import java.util.*
 
 class EventFragment : Fragment(), OnItemSelectedListener {
-   lateinit  var mContext: Context
+
+    private  var listner: CommunicationListner?= null
+
+    lateinit  var mContext: Context
     var ivLocation: ImageView? = null
     var ivBack: ImageView? = null
     var title: TextView? = null
@@ -29,6 +36,15 @@ class EventFragment : Fragment(), OnItemSelectedListener {
     var orderby: Spinner? = null
     var rc: RecyclerView? = null
     var datalist = ArrayList<EventModel>()
+
+
+    override fun onResume() {
+        super.onResume()
+        if(listner!= null){
+            listner!!.onFargmentActive(5)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -40,11 +56,15 @@ class EventFragment : Fragment(), OnItemSelectedListener {
             val f = fm.findFragmentById(R.id.frame_container)
             fm.popBackStack()
         })
+
         ivLocation = v.findViewById(R.id.iv_bell)
         orderby = v.findViewById(R.id.orderby)
         rc = v.findViewById(R.id.rc_event)
         tvFilter = v.findViewById(R.id.tvFilter)
-        tvFilter!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, ActivityFragment(), R.id.frame_container, false) })
+        tvFilter!!.setOnClickListener(View.OnClickListener {
+            requireActivity().OpenActivity(ActivityFragmentActivity::class.java)
+            //AppUtils.gotoFragment(mContext, ActivityFragment(), R.id.frame_container, false)
+        })
         ivBack!!.setVisibility(View.VISIBLE)
         //            title.setVisibility(View.VISIBLE);
         ivLocation!!.setVisibility(View.VISIBLE)
@@ -81,4 +101,20 @@ class EventFragment : Fragment(), OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is CommunicationListner){
+            listner = context as CommunicationListner
+        }else{
+
+            throw RuntimeException("Home Fragment not Attched")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listner = null
+    }
+
 }

@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.Dialog
@@ -87,15 +88,17 @@ class ActivityListFragment : Fragment(), OnItemSelectedListener, OnMyEventRecycl
     override fun onNothingSelected(parent: AdapterView<*>?) {}
     override fun onMyEventItemClickListner() {
 
-       /* val fragment: Fragment = ActivityDetailsFragment()
+       */
+/* val fragment: Fragment = ActivityDetailsFragment()
         val fragmentManager = requireActivity()!!.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_container, fragment)
       //  fragmentTransaction.addToBackStack("poofer")
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()*/
+        fragmentTransaction.commit()*//*
+
 
         AppUtils.gotoFragment(requireActivity(), ActivityDetailsFragment(), R.id.frame_container, false)
 
     }
-}
+}*/

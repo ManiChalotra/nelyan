@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.content.Context
@@ -47,4 +48,4 @@ class TraderListingFragment : Fragment() {
         rl_1!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.TraderPublishFragment(), R.id.frame_container, false) })
         return v
     }
-}
+}*/

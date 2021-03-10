@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.content.Context
@@ -40,4 +41,4 @@ class FavoriteFragment : Fragment(), OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-}
+}*/

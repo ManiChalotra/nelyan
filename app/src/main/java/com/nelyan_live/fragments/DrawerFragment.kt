@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.ui.*
+import com.nelyan_live.utils.OpenActivity
 
 class DrawerFragment : Fragment() {
 
@@ -46,7 +47,13 @@ class DrawerFragment : Fragment() {
         tvAdd = v!!.findViewById(R.id.tvAdd)
         tvAdd!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.MyAddFragment(), R.id.frame_container, false) })
         tvFavorite = v!!.findViewById(R.id.tvFavorite)
-        tvFavorite!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.FavoriteFragment(), R.id.frame_container, false) })
+
+        tvFavorite!!.setOnClickListener(View.OnClickListener {
+            requireActivity().OpenActivity(FavouriteActivity::class.java)
+          //  AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.FavoriteFragment(), R.id.frame_container, false)
+
+        })
+
         tvProfile = v.findViewById(R.id.tvProfile)
         tvProfile!!.setOnClickListener(View.OnClickListener {
             val i = Intent(activity, ProfileActivity::class.java)

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.HomeActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
@@ -57,10 +58,9 @@
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/navigationbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?actionBarSize"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:background="@color/white"
-                    android:fitsSystemWindows="true"
                     android:textAlignment="center"
                     app:itemIconSize="@dimen/_18sdp"
                     app:itemIconTint="@color/app"
@@ -69,7 +69,12 @@
                     app:itemTextAppearanceInactive="@style/TextStyleBN"
                     app:itemTextColor="@color/black"
                     app:labelVisibilityMode="labeled"
-                    app:menu="@menu/bottom_navigation_home_menu" />
+                    app:menu="@menu/bottom_navigation_home_menu"
+                    >
+                    <include layout="@layout/bottom_navigation"/>
+
+
+                </com.google.android.material.bottomnavigation.BottomNavigationView>
             </RelativeLayout>
 
 

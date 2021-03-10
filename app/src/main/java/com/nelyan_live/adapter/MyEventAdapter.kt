@@ -12,8 +12,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.fragments.ActivityDetailsFragment
 import com.nelyan_live.modals.EventModel
+import com.nelyan_live.ui.ActivityDetailsActivity
+import com.nelyan_live.utils.OpenActivity
 import java.util.*
 
 class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
@@ -23,6 +24,7 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
     var datalist: ArrayList<EventModel>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_myevent, parent, false)
+        context = parent.context
         return Vh(v)
     }
 
@@ -36,7 +38,10 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
         holder.eprice.text = datalist[position].eventPrice.toString()
         holder.edesc.text = datalist[position].eventDesc
         holder.itemView.setOnClickListener {
-            AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, true) }
+           context?.OpenActivity(ActivityDetailsActivity::class.java)
+            // AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, true)
+
+        }
     }
 
     override fun getItemCount(): Int {

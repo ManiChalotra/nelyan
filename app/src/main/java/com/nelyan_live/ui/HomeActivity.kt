@@ -3,9 +3,7 @@ package com.nelyan_live.ui
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -31,17 +29,18 @@ import com.nelyan_live.R
 import com.nelyan_live.fragments.*
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.alert_chat_delete.*
+import kotlinx.android.synthetic.main.bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_drawer.tvLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
-import java.io.File
 import kotlin.coroutines.CoroutineContext
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, CoroutineScope {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener
+        , View.OnClickListener, CoroutineScope, CommunicationListner {
 
     val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
@@ -51,7 +50,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
 
-    lateinit var mContext: Context
     var navigationbar: BottomNavigationView? = null
     var a = 1
     var doubleBackToExitPressedOnce = false
@@ -94,15 +92,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         initalize()
         checkMvvmresponse()
 
-
-        /*
-        val  resized: Bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(File("").getPath()), 100, 100)
-        val stream = ByteArrayOutputStream()
-        resized.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray: ByteArray = stream.toByteArray()
-        */
-
-        mContext = this
         navigationbar = findViewById(R.id.navigationbar)
         tvTitleToolbar = findViewById(R.id.tvTitleToolbar)
         ivToolBarImage = findViewById(R.id.ivToolBarImage)
@@ -110,17 +99,45 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
         loadFragment(HomeFragment())
         //loadFragment(new DrawerNewHomeFragment());
-        val navigationbar = findViewById<BottomNavigationView>(R.id.navigationbar)
-        navigationbar.setOnNavigationItemSelectedListener(this)
-        val toolbar = supportActionBar
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationbar)
+        val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navigationbar)
+        bottomNavigationBar.setOnNavigationItemSelectedListener(this)
         setDrawerClicks()
         setToolBarClicks()
+
+       /* val bottomNavigationView = findViewById<View>(R.id.navigationbar) as BottomNavigationView
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    myCustomToast("1")
+                }
+                R.id.msg -> {
+                    myCustomToast("2")
+                }
+                R.id.publier -> {
+                    myCustomToast("3")
+                }
+                R.id.chat -> {
+                    myCustomToast("4")
+                }
+                R.id.event -> {
+                    myCustomToast("5")
+                }
+
+            }
+            true
+        }
+
+*/
+
+
         try {
             try {
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "map") {
-                        Log.e("vghgv", "hhhhhhh")
+
+                        OpenActivity(ActivityFragmentActivity::class.java)
+
+                       /* Log.e("vghgv", "hhhhhhh")
                         var fragment: Fragment? = null
                         fragment = ActivityFragment()
                         // Fragment fragment = new ActivityFragment();
@@ -130,7 +147,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val fragmentManager = this.supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
-                        fragmentTransaction.commit()
+                        fragmentTransaction.commit()*/
 
                     }
                 }
@@ -218,7 +235,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "acti") {
-                        var fragment: Fragment? = null
+                        OpenActivity(ActivityDetailsActivity::class.java)
+                       /* var fragment: Fragment? = null
                         fragment = ActivityDetailsFragment()
                         //    loadFragment( fragment);
                         val args = Bundle()
@@ -227,7 +245,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val fragmentManager = this.supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
-                        fragmentTransaction.commit()
+                        fragmentTransaction.commit()*/
                     }
                 }
             } catch (e: Exception) {
@@ -293,7 +311,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvFavorite = findViewById(R.id.tvFavorite)
         tvFavorite!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
-            AppUtils.gotoFragment(mContext, FavoriteFragment(), R.id.frame_container, false)
+            OpenActivity(FavouriteActivity::class.java)//AppUtils.gotoFragment(this, FavoriteFragment(), R.id.frame_container, false)
         })
         tvProfile = findViewById(R.id.tvProfile)
         tvProfile!!.setOnClickListener(View.OnClickListener {
@@ -416,7 +434,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun showLog() {
-        dialog = Dialog(mContext!!)
+        dialog = Dialog(this@HomeActivity)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_logout)
         dialog!!.setCancelable(true)
@@ -424,11 +442,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val rlNo: RelativeLayout
         rlYes = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener {
-
             hitLogoutApi()
-
         }
-
         rlNo = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
@@ -531,6 +546,56 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             myCustomToast(it)
             homeProgressBar?.hideProgressBar()
         })
+    }
+
+    override fun onFargmentActive(value: Int) {
+        when(value){
+            1->{
+                pinkColour.invoke(tv_homeTab)
+                blackColour.invoke(tv_messageTab)
+                blackColour.invoke(tv_publisherTab)
+                blackColour.invoke(tv_chatTab)
+                blackColour.invoke(tv_eventTab)
+
+            }
+            2->{
+                blackColour.invoke(tv_homeTab)
+                pinkColour.invoke(tv_messageTab)
+                blackColour.invoke(tv_publisherTab)
+                blackColour.invoke(tv_chatTab)
+                blackColour.invoke(tv_eventTab)
+
+            }
+            3->{
+                blackColour.invoke(tv_homeTab)
+                blackColour.invoke(tv_messageTab)
+                pinkColour.invoke(tv_publisherTab)
+                blackColour.invoke(tv_chatTab)
+                blackColour.invoke(tv_eventTab)
+
+            }
+            4->{
+                blackColour.invoke(tv_homeTab)
+                blackColour.invoke(tv_messageTab)
+                blackColour.invoke(tv_publisherTab)
+                pinkColour.invoke(tv_chatTab)
+                blackColour.invoke(tv_eventTab)
+            }
+            5->{
+                blackColour.invoke(tv_homeTab)
+                blackColour.invoke(tv_messageTab)
+                blackColour.invoke(tv_publisherTab)
+                blackColour.invoke(tv_chatTab)
+                pinkColour.invoke(tv_eventTab)
+            }
+        }
+    }
+
+    val pinkColour = {textView:TextView->
+        textView.setTextColor(Color.parseColor("#9c238d"))
+    }
+    val blackColour = {textView:TextView->
+        textView.setTextColor(Color.parseColor("#000000"))
     }
 
     override fun onDestroy() {

@@ -57,7 +57,7 @@ class ActivityFormActivity : image(), OnItemSelectedListener {
         rvAgeGroup = findViewById(R.id.rvAgeGroup)
         rvEvent = findViewById(R.id.rvEvent)
         rl_1 = findViewById(R.id.rl_1)
-        rl_2 = findViewById(R.id.rl_2)
+       // rl_2 = findViewById(R.id.rl_2)
         ll_1 = findViewById(R.id.ll_1)
         ll_2 = findViewById(R.id.ll_2)
         ll_3 = findViewById(R.id.ll_3)

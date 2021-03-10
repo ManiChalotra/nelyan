@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.Dialog
@@ -40,13 +41,15 @@ class TradeFilterFragment : Fragment(), OnItemSelectedListener, OnMyEventRecycle
         ll_1.setOnClickListener { dailogLocation() }
         btnFilter = v.findViewById(R.id.btnFilter)
         btnFilter!!.setOnClickListener(View.OnClickListener { requireActivity()!!.onBackPressed() })
-        /*   tvCal=v.findViewById(R.id.tvCal);
+        */
+/*   tvCal=v.findViewById(R.id.tvCal);
         tvCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateDialog();
             }
-        });*/orderby = v.findViewById(R.id.orderby)
+        });*//*
+orderby = v.findViewById(R.id.orderby)
         val genderlist = arrayOf<String?>(
                 "",
                 "Sport", "Cultural", "Languages")
@@ -70,7 +73,8 @@ class TradeFilterFragment : Fragment(), OnItemSelectedListener, OnMyEventRecycle
     override fun onNothingSelected(parent: AdapterView<*>?) {}
     override fun onMyEventItemClickListner() {}
 
-    /* private void dateDialog(){
+    */
+/* private void dateDialog(){
         DatePickerDialog.OnDateSetListener listener= new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -78,7 +82,8 @@ class TradeFilterFragment : Fragment(), OnItemSelectedListener, OnMyEventRecycle
             }};
         DatePickerDialog datePickerDialog=new DatePickerDialog(getActivity(),R.style.datepicker,listener,mYear,mMonth,mDay);
         datePickerDialog.show();
-    }*/
+    }*//*
+
     fun dailogLocation() {
         dialog = Dialog(mContext!!)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -94,4 +99,4 @@ class TradeFilterFragment : Fragment(), OnItemSelectedListener, OnMyEventRecycle
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
     }
-}
+}*/

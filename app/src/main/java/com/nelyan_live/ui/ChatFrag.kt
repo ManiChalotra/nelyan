@@ -13,9 +13,13 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.nelyan_live.R
+import java.lang.RuntimeException
 
 class ChatFrag : Fragment() {
-   lateinit  var mContext: Context
+
+    private  var listner: CommunicationListner?= null
+
+    lateinit  var mContext: Context
     lateinit  var v: View
     var ivBack: ImageView? = null
     var ivMan: ImageView? = null
@@ -26,6 +30,15 @@ class ChatFrag : Fragment() {
     var ll_1: LinearLayout? = null
     var ll_2: LinearLayout? = null
     var dialog: Dialog? = null
+
+
+    override fun onResume() {
+        super.onResume()
+        if(listner!= null){
+            listner!!.onFargmentActive(4)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -90,4 +103,24 @@ class ChatFrag : Fragment() {
     public void selectedImage(Bitmap var1, String var2) {
         ivAttachment.setImageBitmap(var1);
     }*/
+
+
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is CommunicationListner){
+            listner = context as CommunicationListner
+        }else{
+
+            throw RuntimeException("Home Fragment not Attched")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listner = null
+    }
+
+
 }

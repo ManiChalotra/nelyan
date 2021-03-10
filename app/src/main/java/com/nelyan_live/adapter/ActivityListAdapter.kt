@@ -11,8 +11,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.fragments.ActivityDetailsFragment
-import com.nelyan_live.fragments.FavoriteFragment
+import com.nelyan_live.ui.ActivityDetailsActivity
+import com.nelyan_live.ui.FavouriteActivity
+import com.nelyan_live.utils.OpenActivity
 
 class ActivityListAdapter(activity: FragmentActivity, listing: OnMyEventRecyclerViewItemClickListner) : RecyclerView.Adapter<ActivityListAdapter.RecyclerViewHolder>() {
     var context: Context? = null
@@ -26,27 +27,31 @@ class ActivityListAdapter(activity: FragmentActivity, listing: OnMyEventRecycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val v = LayoutInflater.from(a).inflate(R.layout.list_activitylist, parent, false)
+        context = parent.context
         //     View v = inflater.inflate(R.layout.list_activitylist, parent, false);
         rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, false) })
+        rl_1!!.setOnClickListener(View.OnClickListener {
+            context?.OpenActivity(ActivityDetailsActivity::class.java)
+            //AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, false)
+        })
         iv_fev = v.findViewById(R.id.iv_fev)
-        iv_fev!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(a, FavoriteFragment(), R.id.frame_container, false) })
+        iv_fev!!.setOnClickListener(View.OnClickListener {
+
+           context?.OpenActivity(FavouriteActivity::class.java)
+           // AppUtils.gotoFragment(a, FavoriteFragment(), R.id.frame_container, false)
+        })
         return RecyclerViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {}
     override fun getItemCount(): Int {
-        return 3
+        return 30
     }
 
     interface OnMyEventRecyclerViewItemClickListner {
         fun onMyEventItemClickListner()
     }
 
-    //    public ActivityListAdapter( Context context) {
-    //        this.context = context;
-    //        inflater = LayoutInflater.from(context);
-    //    }
     init {
         a = activity
         listner = listing

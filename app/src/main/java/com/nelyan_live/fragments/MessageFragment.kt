@@ -13,8 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MessageAdapter
+import com.nelyan_live.ui.CommunicationListner
+import java.lang.RuntimeException
 
 class MessageFragment : Fragment() {
+
+    private  var listner: CommunicationListner?= null
+
     var v: View? = null
    lateinit var mContext: Context
     var ivDel1: ImageView? = null
@@ -26,6 +31,13 @@ class MessageFragment : Fragment() {
     var dialog: Dialog? = null
     var recyclerview: RecyclerView? = null
     var messageAdapter: MessageAdapter? = null
+
+    override fun onResume() {
+        super.onResume()
+        if(listner!= null){
+            listner!!.onFargmentActive(2)
+        }
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -76,5 +88,21 @@ class MessageFragment : Fragment() {
             dialog!!.dismiss()
         }
         dialog!!.show()
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is CommunicationListner){
+            listner = context as CommunicationListner
+        }else{
+
+            throw RuntimeException("Home Fragment not Attched")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listner = null
     }
 }

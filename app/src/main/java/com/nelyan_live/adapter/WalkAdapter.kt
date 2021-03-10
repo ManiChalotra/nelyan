@@ -12,8 +12,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.fragments.ActivityDetailsFragment
 import com.nelyan_live.modals.WalkthroughModal
+import com.nelyan_live.ui.ActivityDetailsActivity
+import com.nelyan_live.utils.OpenActivity
 import java.util.*
 
 class WalkAdapter(activity: FragmentActivity, datalist: ArrayList<WalkthroughModal>) : RecyclerView.Adapter<WalkAdapter.Vh>() {
@@ -23,6 +24,7 @@ class WalkAdapter(activity: FragmentActivity, datalist: ArrayList<WalkthroughMod
     var datalist: ArrayList<WalkthroughModal>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_myevent, parent, false)
+        context = parent.context
         return Vh(v)
     }
 
@@ -30,7 +32,10 @@ class WalkAdapter(activity: FragmentActivity, datalist: ArrayList<WalkthroughMod
         holder.img.setImageResource(datalist[position].imagslideid)
         holder.nic.text = datalist[position].tv_walk
         holder.big.text = datalist[position].tv_walkdesc
-        holder.itemView.setOnClickListener { AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, false) }
+        holder.itemView.setOnClickListener {
+            context?.OpenActivity(ActivityDetailsActivity::class.java)
+            //AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, false)
+            }
     }
 
     override fun getItemCount(): Int {

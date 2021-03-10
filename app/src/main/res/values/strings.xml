@@ -4,9 +4,6 @@
     <string name="fb_login_protocol_scheme">fb2791584067750180</string>
 
 
-
-
-
     <string name="app_name">Nelyan</string>
     <string name="signup"><u>Sign Up</u></string>
     <string name="privacy"><u>privacy policy.</u></string>
@@ -49,11 +46,19 @@
     <string name="ok">Ok</string>
 
 
-
     <string name="go_to_settings_to_give_permissions">Go to settings to give permissions because permissions is mandatory.</string>
     <string name="contactUs">Contact Us</string>
     <string name="Email">Email</string>
     <string name="Comment">Comment</string>
+    <string name="nursery">Nursery</string>
+    <string name="activity">Activity</string>
+    <string name="materialAssitant">Material Assistant</string>
+    <string name="babySitter">Baby Sitter</string>
+    <string name="traderArtisans">Traders and Artisans</string>
+    <string name="publisher">Publisher</string>
+    <string name="myMessage">My Message</string>
+    <string name="cityChat">City Chat</string>
+    <string name="event">Event</string>
 
 
 </resources>

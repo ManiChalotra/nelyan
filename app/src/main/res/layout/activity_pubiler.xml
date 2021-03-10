@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.PubilerActivity">
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -41,7 +42,85 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/smallogo"
         android:layout_gravity="center" />
-        <LinearLayout
+
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:id="@+id/radioGroup"
+            android:layout_marginTop="?actionBarSize"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                style="@style/CommonTextWrapcontent"
+                android:fontFamily="@font/medium"
+                android:paddingLeft="@dimen/_10sdp"
+                android:button="@drawable/radio_button_selector"
+                android:text="@string/activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/btn_activity"
+                />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                style="@style/CommonTextWrapcontent"
+                android:button="@drawable/radio_button_selector"
+
+                android:fontFamily="@font/medium"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="@string/nursery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:id="@+id/btn_Nursery"
+                />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                style="@style/CommonTextWrapcontent"
+                android:fontFamily="@font/medium"
+                android:button="@drawable/radio_button_selector"
+
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="@string/materialAssitant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:id="@+id/btn_materialAssistant"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+
+                style="@style/CommonTextWrapcontent"
+                android:fontFamily="@font/medium"
+                android:paddingLeft="@dimen/_10sdp"
+                android:button="@drawable/radio_button_selector"
+
+                android:text="@string/babySitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:id="@+id/btn_babySitter"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+
+                style="@style/CommonTextWrapcontent"
+                android:fontFamily="@font/medium"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="@string/traderArtisans"
+                android:button="@drawable/radio_button_selector"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:id="@+id/btn_traderArtisans"
+                />
+        </RadioGroup>
+
+
+     <!--   <LinearLayout
             android:id="@+id/ll_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,13 +204,14 @@
             android:text="Traders and Artisans"
             android:layout_marginLeft="@dimen/_10sdp"
             android:fontFamily="@font/medium"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
         <Button
             android:id="@+id/btnSubmit"
             style="@style/Button"
-            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_marginTop="?actionBarSize"
             android:background="@drawable/btn"
             android:text="SUBMIT"/>
+
     </LinearLayout>
 </RelativeLayout>

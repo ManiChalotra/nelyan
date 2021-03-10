@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.Dialog
@@ -90,4 +91,4 @@ class ChatListFragment : Fragment(), OnItemSelectedListener {
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
     }
-}
+}*/

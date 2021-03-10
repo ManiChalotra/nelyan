@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.Dialog
@@ -60,12 +61,15 @@ class ActivityDetailsFragment : Fragment(), OnMapReadyCallback {
         mContext = activity
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-        /*    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);*/mapFragment.getMapAsync(this)
+        */
+/*    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);*//*
+mapFragment.getMapAsync(this)
         tvMon = v!!.findViewById(R.id.tvMon)
 
 
-        /* tvTue=v.findViewById(R.id.tvTue);
+        */
+/* tvTue=v.findViewById(R.id.tvTue);
         tvWed=v.findViewById(R.id.tvWed);
         tvThur=v.findViewById(R.id.tvThur);
         tvFri=v.findViewById(R.id.tvFri);
@@ -149,7 +153,8 @@ class ActivityDetailsFragment : Fragment(), OnMapReadyCallback {
                 tvSat.setBackground(getResources().getDrawable(R.drawable.text_outlinebg));
                 tvSun.setBackground(getResources().getDrawable(R.drawable.selected_outlinbg));
             }
-        });*/
+        });*//*
+
         iv_back = v!!.findViewById(R.id.iv_back)
         v!!.iv_back!!.setOnClickListener(View.OnClickListener {
 
@@ -227,4 +232,4 @@ class ActivityDetailsFragment : Fragment(), OnMapReadyCallback {
                 .title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
     }
-}
+}*/

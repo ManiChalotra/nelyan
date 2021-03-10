@@ -10,6 +10,8 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
+import com.nelyan_live.ui.ActivityListActivity
+import com.nelyan_live.utils.OpenActivity
 
 class MapActivityFragment : Fragment() {
     lateinit  var mContext: Context
@@ -33,7 +35,10 @@ class MapActivityFragment : Fragment() {
             //    AppUtils.gotoFragment(mContext, new ActivityFragment(), R.id.frame_container, false);
         })
         rl_1 = v!!.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, ActivityListFragment(), R.id.frame_container, false) })
+        rl_1!!.setOnClickListener(View.OnClickListener {
+            requireActivity().OpenActivity(ActivityListActivity::class.java)
+            //AppUtils.gotoFragment(mContext, ActivityListFragment(), R.id.frame_container, false)
+        })
         return v
     }
 }

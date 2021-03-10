@@ -1,5 +1,6 @@
 package com.nelyan_live.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,7 @@ import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyHomeAdapter
 import com.nelyan_live.modals.HomeModal
-import com.nelyan_live.ui.SectorizationActivity
+import com.nelyan_live.ui.*
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tookbar.*
@@ -28,6 +29,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 
@@ -38,6 +40,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
     }
 
     private val job by lazy { Job() }
+
+    private  var listner:CommunicationListner?= null
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -52,6 +56,15 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
     override fun onResume() {
         super.onResume()
+        if(listner!= null){
+            listner!!.onFargmentActive(1)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initalize()
+
         lifecycleScope.launch(Dispatchers.Main.immediate) {
             val authkey = DataStoragePreference(requireActivity())!!.emitStoredValue(preferencesKey<String>("auth_key"))!!.first()
             Log.d("HomeFragAuthKey", "------------------" + authkey)
@@ -59,11 +72,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             homeFargProgressBar?.showProgressBar()
             checkMvvmResponse()
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initalize()
     }
 
     private fun initalize() {
@@ -109,11 +117,13 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         when(position){
 
             0->{
-              AppUtils.gotoFragment(requireActivity(), ActivityListFragment(), R.id.frame_container, false)
+                requireActivity().OpenActivity(ActivityListActivity::class.java)
+              //AppUtils.gotoFragment(requireActivity(), ActivityListFragment(), R.id.frame_container, false)
             }
 
             1->{
-                AppUtils.gotoFragment(requireActivity(), ChatListFragment(), R.id.frame_container, false)
+                requireActivity().OpenActivity(ChatListActivity::class.java)
+                //AppUtils.gotoFragment(requireActivity(), ChatListFragment(), R.id.frame_container, false)
             }
 
             2->{
@@ -122,7 +132,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             }
 
             3->{
-                AppUtils.gotoFragment(requireActivity(), TraderListingFragment(), R.id.frame_container, false)
+                requireActivity().OpenActivity(TraderListingActivity::class.java)
+              //  AppUtils.gotoFragment(requireActivity(), TraderListingFragment(), R.id.frame_container, false)
             }
 
         }
@@ -137,6 +148,21 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             }
 
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is CommunicationListner){
+            listner = context as CommunicationListner
+        }else{
+
+throw RuntimeException("Home Fragment not Attched")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listner = null
     }
 
     override fun onDestroy() {

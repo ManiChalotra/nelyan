@@ -6,4 +6,5 @@
     <dimen name="value_20dp">20dp</dimen>
     <dimen name="value_15dp">15dp</dimen>
     <dimen name="value_2dp">2dp</dimen>
+    <dimen name="_10sp">10sp</dimen>
 </resources>
