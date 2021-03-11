@@ -1,7 +1,6 @@
 package com.nelyan_live.ui
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -24,12 +23,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.fragments.*
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.alert_chat_delete.*
 import kotlinx.android.synthetic.main.bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_drawer.tvLog
 import kotlinx.coroutines.CoroutineScope
@@ -45,10 +42,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
+
     val dataStoragePreference by lazy {
         DataStoragePreference(this)
     }
-
 
     var navigationbar: BottomNavigationView? = null
     var a = 1
@@ -218,9 +215,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nur") {
-                        var fragment: Fragment? = null
+                        OpenActivity(NurserieActivityy::class.java)
+                       /* var fragment: Fragment? = null
                         fragment = NurserieFragment()
-                        loadFragment(fragment)
+                        loadFragment(fragment)*/
                         //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
@@ -391,7 +389,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val i = Intent(this@HomeActivity, com.nelyan_live.ui.NotificationActivity::class.java)
                     startActivity(i)
                 }
-                fragment = com.nelyan_live.ui.PublisherFrag()
+                val bundle = Bundle()
+                val frag = PublisherFrag()
+                bundle.putString("authorization", authorization)
+                frag.arguments = bundle
+                fragment = frag
             }
             R.id.chat -> {
                 tvTitleToolbar!!.visibility = View.VISIBLE

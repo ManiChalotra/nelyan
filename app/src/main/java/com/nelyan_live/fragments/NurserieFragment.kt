@@ -1,3 +1,4 @@
+/*
 package com.nelyan_live.fragments
 
 import android.app.Dialog
@@ -107,4 +108,4 @@ class NurserieFragment : Fragment(), OnMapReadyCallback {
                 .title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
     }
-}
+}*/

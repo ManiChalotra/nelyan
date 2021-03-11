@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 import com.meherr.mehar.data.network.JsonPlaceHolder
+import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -411,16 +413,55 @@ class AppViewModel : ViewModel() {
     }
 
 
+    // imageUpload
+    private var imageUploadMutableLiveData: MutableLiveData<Response<ImageUploadApiResponseModel>?>? = null
 
+    fun observeUploadImageResponse(): LiveData<Response<ImageUploadApiResponseModel>?>? {
+        if (imageUploadMutableLiveData == null) {
+            imageUploadMutableLiveData = MutableLiveData<Response<ImageUploadApiResponseModel>?>()
+        }
+        return imageUploadMutableLiveData
+    }
 
+    fun sendUploadImageData(type:RequestBody?, folder:RequestBody?, image:List<MultipartBody.Part>?) {
+        JsonPlaceHolder().get_ImageUpload_Api(type, folder, image)
+                .enqueue(object : retrofit2.Callback<ImageUploadApiResponseModel> {
+                    override fun onFailure(call: Call<ImageUploadApiResponseModel>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<ImageUploadApiResponseModel>,
+                            response: Response<ImageUploadApiResponseModel>
+                    ) {
+                        imageUploadMutableLiveData?.value = response
+                    }
+                })
+    }
 
+    // get activityType Api
 
+    private var activityTypeMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeActivityTypeResponse(): LiveData<Response<JsonObject>?>? {
+        if (activityTypeMutableLiveData == null) {
+            activityTypeMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return activityTypeMutableLiveData
+    }
 
+    fun sendActivityTypeData(securityKey: String?,authkey:String?) {
+        JsonPlaceHolder().get_ActivityType_Api(securityKey, authkey)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        activityTypeMutableLiveData?.value = response
+                    }
+                })
 
-
-
-
-
-
+    }
 
 }

@@ -2,9 +2,11 @@ package com.meherr.mehar.data.network
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
 import com.nelyan_live.utils.base_URL
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -46,8 +48,6 @@ interface JsonPlaceHolder {
             @Part("city") city: RequestBody?,
             @Part("lat") lat: RequestBody?,
             @Part("longi") longi: RequestBody?): Call<JsonObject>
-
-
 
 
     @POST("login")
@@ -124,7 +124,23 @@ interface JsonPlaceHolder {
     @FormUrlEncoded
     fun get_GetContent_APi(@Header("security_key") securityKey: String?,
                            @Header("auth_key") auth_key: String?,
-                           @Field("type") type: String?):Call<JsonObject>
+                           @Field("type") type: String?): Call<JsonObject>
+
+
+    @Multipart
+    @POST("imageUplaod")
+    fun get_ImageUpload_Api(@Part("type") type: RequestBody?,
+                            @Part("folder") folder: RequestBody?,
+                            @Part image: List<MultipartBody.Part>   ?): Call<ImageUploadApiResponseModel>
+
+
+    @GET("activityTpe")
+    fun get_ActivityType_Api(@Header("security_key") securityKey: String?,
+                             @Header("auth_key") auth_key: String?): Call<JsonObject>
+
+    @GET("traderactivity")
+    fun get_TraderActivity_Api(@Header("security_key") securityKey: String?,
+                               @Header("auth_key") auth_key: String?): Call<JsonObject>
 
 
     companion object {
@@ -152,16 +168,10 @@ interface JsonPlaceHolder {
 
             })
 
-
-
             return Retrofit.Builder()
                     .baseUrl(base_URL)
                     .client(httpClient.build())
-                    .addConverterFactory(
-                            GsonConverterFactory.create(
-                                    GsonBuilder().setLenient().create()
-                            )
-                    )
+                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                     .build()
                     .create(JsonPlaceHolder::class.java)
         }

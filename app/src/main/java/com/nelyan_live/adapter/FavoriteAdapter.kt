@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.fragments.NurserieFragment
 import com.nelyan_live.ui.NurserieActivity
 import com.nelyan_live.ui.NurseryActivity
 import com.nelyan_live.utils.OpenActivity

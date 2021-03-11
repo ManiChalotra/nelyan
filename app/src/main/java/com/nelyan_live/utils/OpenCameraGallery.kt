@@ -17,6 +17,7 @@ import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.view.WindowManager
@@ -48,7 +49,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
     lateinit var mActivity: Activity
 
 
-     fun checkPermission(activity: Activity) {
+    fun checkPermission(activity: Activity) {
         mActivity = activity
         if (ActivityCompat.checkSelfPermission(
                         this!!,
@@ -112,10 +113,14 @@ abstract class OpenCameraGallery : AppCompatActivity() {
         tv_cancel.setOnClickListener { uploadImage.dismiss() }
         tvGallery.setOnClickListener {
             uploadImage.dismiss()
-          //  selectImage(ivProfile, "1")
+            //  selectImage(ivProfile, "1")
 
             val intent = Intent()
-            intent.type = "image/*"
+            intent.setType("*/*")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
+          //  intent.setType("image/* , video/*")   // for both image and video
+          //  intent.type = "image/*"     // only for image
+            //intent.type = "video/*"     // only for video
             intent.action = Intent.ACTION_GET_CONTENT
             this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
 
@@ -126,7 +131,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
 
 
     private fun requestPermission() {
-
         let { ActivityCompat.requestPermissions(it, permissions, CAMERA_REQUEST) }
     }
 
@@ -174,10 +178,17 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             try {
                 val uri = data!!.data
                 if (uri != null) {
-                    if (uri != null) {
-                        CropImage.activity(uri)
-                                .setGuidelines(CropImageView.Guidelines.ON)
-                                .start(this)
+                    val videoPath = getPath(this, uri)
+                    Log.d("videopathhhh", "--------" + videoPath)
+                    if (videoPath!!.contains(".mp4")) {
+                        getRealImagePath(videoPath)
+                    } else {
+
+                        if (uri != null) {
+                            CropImage.activity(uri)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .start(this)
+                        }
                     }
                 }
 
@@ -200,6 +211,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
 
     }
 
@@ -315,23 +327,23 @@ abstract class OpenCameraGallery : AppCompatActivity() {
         return null
     }
 
-     fun isExternalStorageDocument(uri: Uri): Boolean {
+    fun isExternalStorageDocument(uri: Uri): Boolean {
         return "com.android.externalstorage.documents" == uri.authority
     }
 
-     fun isDownloadsDocument(uri: Uri): Boolean {
+    fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }
 
-     fun isMediaDocument(uri: Uri): Boolean {
+    fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
 
-     fun isGooglePhotosUri(uri: Uri): Boolean {
+    fun isGooglePhotosUri(uri: Uri): Boolean {
         return "com.google.android.apps.photos.content" == uri.authority
     }
 
-     fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+    fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
@@ -348,6 +360,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
     }
 
 
-    abstract fun getRealImagePath(imgPath:String?)
+    abstract fun getRealImagePath(imgPath: String?)
 
 }

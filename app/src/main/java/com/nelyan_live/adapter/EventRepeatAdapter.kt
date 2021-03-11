@@ -112,7 +112,9 @@ class EventRepeatAdapter(var context: Context, var image: HashMap<String, Bitmap
                 returnItemView = returnItemView + 1
                 notifyDataSetChanged()
             }
-            ivEvent.setOnClickListener { eventRepeatListen.imageClick(pos, returnItemView) }
+            ivEvent.setOnClickListener {
+               // eventRepeatListen.imageClick(pos, returnItemView)
+            }
             tvCal.setOnClickListener {
                 date = OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
                     myCalendar[Calendar.YEAR] = year

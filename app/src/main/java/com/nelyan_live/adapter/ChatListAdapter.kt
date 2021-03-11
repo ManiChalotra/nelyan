@@ -11,35 +11,36 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.fragments.NurserieFragment
 
-class ChatListAdapter(activity: FragmentActivity) : RecyclerView.Adapter<ChatListAdapter.RecyclerViewHolder>() {
-    var context: Context? = null
-    var a: Activity
-    var inflater: LayoutInflater? = null
-    var rl_1: RelativeLayout? = null
-    var iv_fev: ImageView? = null
+class ChatListAdapter(var context:Context, var listner:OnChatListItemClickListner) : RecyclerView.Adapter<ChatListAdapter.RecyclerViewHolder>() {
 
-    inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val v = LayoutInflater.from(a).inflate(R.layout.list_activitylist, parent, false)
-        //     View v = inflater.inflate(R.layout.list_activitylist, parent, false);
-        rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener {
 
-            AppUtils.gotoFragment(a, NurserieFragment(), R.id.frame_container, false)
-
-        })
-        return RecyclerViewHolder(v)
+        return RecyclerViewHolder(LayoutInflater.from(context).inflate(R.layout.list_activitylist, parent, false), listner)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {}
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        holder.initalize(position)
+    }
     override fun getItemCount(): Int {
         return 3
     }
 
-    init {
-        a = activity
+    inner class RecyclerViewHolder(view: View, var listner:OnChatListItemClickListner): RecyclerView.ViewHolder(view){
+        fun initalize(position: Int){
+            itemView.setOnClickListener {
+                listner!!.onItemClickListner(position)
+            }
+
+        }
     }
+
+    interface OnChatListItemClickListner{
+        fun onItemClickListner(position: Int)
+    }
+
+
+
 }

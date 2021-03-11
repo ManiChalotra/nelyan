@@ -25,6 +25,8 @@ import com.nelyan_live.R
 import com.nelyan_live.adapter.DetailsImageAdapter
 import com.nelyan_live.modals.DetailsImageModal
 import com.nelyan_live.ui.HomeActivity
+import com.nelyan_live.ui.NurserieActivityy
+import com.nelyan_live.utils.OpenActivity
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
 
@@ -59,7 +61,11 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
         btnModify = v.findViewById(R.id.btnModify)
         btnModify!!.setOnClickListener(View.OnClickListener { requireActivity()!!.onBackPressed() })
         btnPublish = v.findViewById(R.id.btnPublish)
-        btnPublish!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.NurserieFragment(), R.id.frame_container, false) })
+        btnPublish!!.setOnClickListener(View.OnClickListener {
+
+            requireActivity().OpenActivity(NurserieActivityy::class.java)
+            //AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.NurserieFragment(), R.id.frame_container, false)
+        })
         ivShare = v.findViewById(R.id.ivShare)
         ivShare!!.setOnClickListener(View.OnClickListener { dailogDelete() })
         rc = v.findViewById(R.id.rc_detailsimg)
