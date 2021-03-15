@@ -16,6 +16,7 @@ import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -43,7 +44,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     val dataStoragePreference by lazy { DataStoragePreference(this@LoginActivity) }
 
-
     // for facebook
     var facebookHelper: FacebookHelper? = null
     var isFb = ""
@@ -61,6 +61,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     private var job = Job()
     private var clicked = false
+
+    // dialog
+    private  val progressDialog = ProgressDialog(this)
 
 
     override val coroutineContext: CoroutineContext
@@ -83,6 +86,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     private fun initGoogleSignin() {
 
         googleHelper = GoogleHelper(this, object : GoogleHelper.GoogleHelperCallback {
+
             override fun onSuccessGoogle(account: GoogleSignInAccount) {
                 try {
                     Log.i("GoogleHelper", "" + account)
@@ -91,7 +95,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         photo = account.photoUrl.toString()
                     }
 
-                    //googleHelper.signOut()
+                   // googleHelper.signOut()
                     try {
                         socialId = account.id!!
                         socialImage = photo
@@ -104,13 +108,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         Log.d("googleDetail","-------------image------"+ socialImage)
                         Log.d("googleDetail","-------------id------"+ socialId)
 
-                        //signInViewModel!!.socialLoginApi(socialId,socialEmail,socialType,mContext)
-
+                        appViewModel!!.sendSocialLoginData(security_key, socialId, FOR_GOOGLE_TYPE)
 
                     } catch (e: Exception) {
                         Log.d("GoogleException","-----------"+ e.toString())
                     }
-
                 } catch (ex: Exception) {
                     ex.localizedMessage
                     Log.d("gooleException","---------"+ ex.localizedMessage)
@@ -218,7 +220,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     private fun hitLoginApi(email: String, password: String) {
 
         appViewModel.sendLoginData(security_key, device_Type, "112", email, password, "123")
-        loginProgressBar?.showProgressBar()
+      progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
 
     }
 
@@ -244,7 +246,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val longitude = jsonObject.getJSONObject("data").get("lng").toString()
 
                     AllSharedPref.save(this, "auth_key", authKey)
-                    val abc = 56
 
                     launch(Dispatchers.Main.immediate) {
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
@@ -259,21 +260,46 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
                     }
 
+                    progressDialog.hidedialog()
+
                     OpenActivity(HomeActivity::class.java) {
                         putString("authorization", authKey)
                     }
                     finishAffinity()
-                    loginProgressBar?.hideProgressBar()
+                  //  loginProgressBar?.hideProgressBar()
 
                 }
 
             } else {
-                ErrorBodyResponse(response, this, loginProgressBar)
+                ErrorBodyResponse(response, this, null)
             }
         })
+
+
+        // social Login api  response
+        appViewModel.observeSocialLoginResponse()!!.observe(this, Observer { response->
+            if(response!!.isSuccessful && response.code()==200){
+                if(response.body()!= null){
+                    progressDialog.hidedialog()
+
+                    OpenActivity(SignupActivity::class.java){
+                        putString("socialLogin", "SOCIAL_LOGIN")
+                        putString("socialName", socialName)
+                        putString("socialEmail", socialEmail)
+                        putString("socialImage", socialImage)
+                    }
+                }
+            }else{
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
+
+
+
         appViewModel!!.getException()!!.observe(this, Observer {
             myCustomToast(it)
-            loginProgressBar?.hideProgressBar()
+           progressDialog.hidedialog()// loginProgressBar?.hideProgressBar()
         })
     }
 
@@ -304,19 +330,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             socialType = FOR_FACEBOOK_TYPE
 
             //--------------hit api here------------------->
-
-/*            appViewModel!!.sendSocialLoginData(
-
-                    security_key,
-                    socialId,
-                    socialType,
-                    socialName
-                    //,socialEmail
+            appViewModel!!.sendSocialLoginData(security_key, socialId, FOR_FACEBOOK_TYPE)
 
 
-            )*/
-
-            loginProgressBar?.showProgressBar()
+          progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
             facebookCustomDataModel =
                     FacebookCustomDataModel(socialName, socialId, socialEmail, socialImage, socialType)
         } catch (e: Exception) {
@@ -329,6 +346,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     override fun onResume() {
         super.onResume()
+
+
 
         //---------------for FACEBOOK--------------->
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -369,12 +388,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        Log.d("onctivityResult","---rqcode--------"+ requestCode)
+        Log.d("onctivityResult","------rlcode-----"+ resultCode)
+        Log.d("onctivityResult","-------d----"+ data)
+
         if (isFb.equals("fb")) {
             facebookHelper!!.onResult(requestCode, resultCode, data)
 
         }
 
-        /*  if (requestCode == 9001) {
+          /*if (requestCode == 9001) {
               val task = GoogleSignIn.getSignedInAccountFromIntent(data)
               handleSignInResult(task)
           }*/
@@ -385,14 +408,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     }
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+  /*  private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             updateUI(account)
         } catch (e: ApiException) {
             Log.d("TAG", "signInResult:failed code=" + e.statusCode)
         }
-    }
+    }*/
 
     private fun updateUI(account: GoogleSignInAccount?) {
 

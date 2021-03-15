@@ -93,7 +93,7 @@ public class ProgressDialog {
         TextView tvText = new TextView(context);
         tvText.setText("Loading...");
         tvText.setTextColor(ContextCompat.getColor(context, R.color.white));
-        tvText.setTextColor(Color.parseColor("#019243"));
+        tvText.setTextColor(Color.parseColor("#9c238d"));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);

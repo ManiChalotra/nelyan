@@ -18,6 +18,8 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
 
+    private  val progressDialog  by lazy {  ProgressDialog(this) }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +52,7 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     private  fun hitForgetPassowrdApi(email:String){
         appViewModel.sendForgetPasswordData(security_key, email)
-        forgetPasswordProgressBar?.showProgressBar()
+        progressDialog.setProgressDialog()//forgetPasswordProgressBar?.showProgressBar()
     }
 
     private  fun checkMvvmResponse(){
@@ -62,18 +64,19 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
                     val mResponse = response.body()!!.toString()
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
-                    forgetPasswordProgressBar?.hideProgressBar()
+                    Log.d("dkjhfkjhdh","-------"+ message)
+                   progressDialog.hidedialog()// forgetPasswordProgressBar?.hideProgressBar()
                     myCustomToast(message)
                     onBackPressed()
                 }else{
-                    ErrorBodyResponse(response, this, forgetPasswordProgressBar)
+                    ErrorBodyResponse(response, this, null)
                 }
             }
         })
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
-            forgetPasswordProgressBar?.hideProgressBar()
+            progressDialog.hidedialog()//forgetPasswordProgressBar?.hideProgressBar()
         })
 
     }

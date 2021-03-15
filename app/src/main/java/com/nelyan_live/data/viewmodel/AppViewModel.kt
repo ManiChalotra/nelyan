@@ -170,7 +170,7 @@ class AppViewModel : ViewModel() {
 
     fun sendForgetPasswordData(
             securityKey: String?,email:String?) {
-        JsonPlaceHolder().get_Logout_api(securityKey, email)
+        JsonPlaceHolder().get_ForgetPassword_Api(securityKey, email)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
@@ -486,6 +486,31 @@ class AppViewModel : ViewModel() {
                             response: Response<JsonObject>
                     ) {
                         addPostActivityMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    // social Login api
+
+    private var socialLoginMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeSocialLoginResponse(): LiveData<Response<JsonObject>?>? {
+        if (socialLoginMutableLiveData == null) {
+            socialLoginMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return socialLoginMutableLiveData
+    }
+
+    fun sendSocialLoginData(securityKey: String?,socialId:String?, socialtype: String) {
+        JsonPlaceHolder().get_SocialLogin_Api(securityKey, socialId,socialtype )
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        socialLoginMutableLiveData?.value = response
                     }
                 })
     }

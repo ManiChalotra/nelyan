@@ -161,6 +161,12 @@ interface JsonPlaceHolder {
                         @Field("media") media: String,// send json Array
     ): Call<JsonObject>
 
+    @POST("social_login")
+    @FormUrlEncoded
+    fun get_SocialLogin_Api(@Header("security_key") securityKey: String?,
+    @Field("social_id")social_id:String?,
+    @Field("social_type")social_type:String?):Call<JsonObject>
+
 
     companion object {
 

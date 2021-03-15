@@ -1,12 +1,14 @@
 package com.nelyan_live.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.Status
@@ -25,11 +27,13 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,27 +41,58 @@ import kotlin.coroutines.CoroutineContext
 
 class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineScope, View.OnClickListener {
 
-    val  category by lazy { ArrayList<String>() }
+    val category by lazy { ArrayList<String>() }
     val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     val dataStoragePreference by lazy { DataStoragePreference(this@SignupActivity) }
-    private  var imgPath = ""
-    private  var cityName = ""
-    private  var cityLatitude = ""
-   private  var cityLongitude = ""
+    private var imgPath = ""
+    private var cityName = ""
+    private var cityLatitude = ""
+    private var cityLongitude = ""
 
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
+    // dialog
+    private val progressDialog = ProgressDialog(this)
 
 
+    private var job = Job()
+    private  var socialSignup = ""
 
-
-    private  var job = Job()
-
+    private  var socialName = ""
+    private  var socialEmail = ""
+    private  var socialImage = ""
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
+
+
+    override fun onResume() {
+        super.onResume()
+         socialSignup = intent?.extras?.getString("socialLogin").toString()
+        if(socialSignup.equals("SOCIAL_LOGIN")){
+            tv_passwordSignup.visibility = View.GONE
+            password.visibility = View.GONE
+            view1.visibility = View.GONE
+            tv_confirmPasswordSignup.visibility = View.GONE
+            password1.visibility = View.GONE
+            view2.visibility = View.GONE
+
+            socialEmail = intent?.extras?.getString("socialEmail").toString()
+            socialImage = intent?.extras?.getString("socialImage").toString()
+            socialName = intent?.extras?.getString("socialName").toString()
+
+        }else{
+            tv_passwordSignup.visibility = View.VISIBLE
+            password.visibility = View.VISIBLE
+            view1.visibility = View.VISIBLE
+            tv_confirmPasswordSignup.visibility = View.VISIBLE
+            password1.visibility = View.VISIBLE
+            view2.visibility = View.VISIBLE
+
+        }
+    }
 
 
     //  String[] signup = {"Consultant", "Professional"};
@@ -69,13 +104,12 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         checkMvvmResponse()
     }
 
-  /*  override fun selectedImage(var1: Bitmap, var2: String) {
-        Log.d("imagePath","-------"+ var2)
-        iv_uploader!!.setImageBitmap(var1)
-    }*/
+    /*  override fun selectedImage(var1: Bitmap, var2: String) {
+          Log.d("imagePath","-------"+ var2)
+          iv_uploader!!.setImageBitmap(var1)
+      }*/
 
-    private   fun  initalize(){
-
+    private fun initalize() {
 
 
         ivBack.setOnClickListener(this)
@@ -88,57 +122,78 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.ivBack->{
+        when (v!!.id) {
+            R.id.ivBack -> {
                 onBackPressed()
             }
-            R.id.btnRegister->{
+            R.id.btnRegister -> {
                 val type = typeSelected.selectedItemPosition
-                if(type!=0){
-                    if(Validation.checkName(tv_username.text.toString().trim(), this)){
-                        if(Validation.checkEmail(tv_userEmail.text.toString(), this)){
-                            if(Validation.checkPassword(tv_password.text.toString(), this)){
-                                if(tv_confirmPassword.text.toString().isNullOrEmpty()){
-                                    myCustomToast("please enter confirm password")
-                                }else{
-                                    if(tv_password.text.toString().equals(tv_confirmPassword.text.toString())){
-                                        if(tv_city.text.isNullOrEmpty()){
-                                            myCustomToast("Please select your city")
-                                        }else{
-                                            val name = tv_username.text.toString().trim()
-                                            val email = tv_userEmail.text.toString()
-                                            val password = tv_password.text.toString()
-                                            hitSignUpapi(name, email, password, type.toString())
-                                        }
+                if (type != 0) {
+                    if (Validation.checkName(tv_username.text.toString().trim(), this)) {
+                        if (Validation.checkEmail(tv_userEmail.text.toString(), this)) {
 
-                                    }else{
-                                        myCustomToast("Password and confirm password do not matches")
+                            if(socialSignup.equals("")){
+                                if (Validation.checkPassword(tv_password.text.toString(), this)) {
+                                    if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
+                                        myCustomToast("please enter confirm password")
+                                    } else {
+                                        if (tv_password.text.toString().equals(tv_confirmPassword.text.toString())) {
+
+                                            if (tv_city.text.isNullOrEmpty()) {
+                                                myCustomToast("Please select your city")
+                                            } else {
+                                                val name = tv_username.text.toString().trim()
+                                                val email = tv_userEmail.text.toString()
+                                                val password = tv_password.text.toString()
+                                                hitSignUpapi(name, email, password, type.toString())
+                                            }
+
+                                        } else {
+                                            myCustomToast("Password and confirm password do not matches")
+                                        }
                                     }
                                 }
+                            }else{
+                                // here control comes when social login
+                                if (tv_city.text.isNullOrEmpty()) {
+                                    myCustomToast("Please select your city")
+                                } else {
+                                    val name = tv_username.text.toString().trim()
+
+                                }
+
                             }
+
+
+
+
+
+
+
+
                         }
                     }
 
 
-                }else{
+                } else {
                     myCustomToast("Please select the required signup type")
                 }
 
                 //OpenActivity(HomeActivity::class.java)
 
             }
-            R.id.tvPrivacy->{
+            R.id.tvPrivacy -> {
                 OpenActivity(PrivacyActivity::class.java)
             }
-            R.id.tvTerms->{
+            R.id.tvTerms -> {
                 OpenActivity(TermsActivity::class.java)
             }
-            R.id.iv_uploader->{
+            R.id.iv_uploader -> {
 
                 checkPermission(this)
                 //image("all")
             }
-            R.id.tv_city->{
+            R.id.tv_city -> {
                 showPlacePicker()
             }
 
@@ -180,38 +235,76 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
-        if(imgPath.isNullOrEmpty()){
-            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112",mName,mEmail,mPassword,mType,mSecond,city,lat,longi,)
+        if (imgPath.isNullOrEmpty()) {
+            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi, )
             signupProgressBar?.showProgressBar()
-        }else{
+        } else {
             // hit with updating the image
             var mfile: File? = null
             mfile = File(imgPath)
             val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
             var photo: MultipartBody.Part? = null
             photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-            appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "112",mName,mEmail,mPassword,mType,mSecond,city,lat,longi,photo)
-            signupProgressBar?.showProgressBar()
+            appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
+            progressDialog.setProgressDialog()
+            //signupProgressBar?.showProgressBar()
         }
-
 
 
     }
 
-    private  fun checkMvvmResponse(){
-        appViewModel!!.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response->
-            if(response!!.isSuccessful && response.code() ==200){
-                if(response.body()!= null){
-                    Log.d("signupResponse","-----"+ Gson().toJson(response.body()))
-                    signupProgressBar?.hideProgressBar()
+    private fun checkMvvmResponse() {
+        appViewModel!!.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
+                    // signupProgressBar?.hideProgressBar()
+                    // here we save credentail for signup
+
+                    val mResponse: String = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+
+                    val message = jsonObject.get("msg").toString()
+                    myCustomToast(message)
+
+                    val email = jsonObject.getJSONObject("data").get("email").toString()
+                    val password = jsonObject.getJSONObject("data").get("password").toString()
+                    val type = jsonObject.getJSONObject("data").get("type").toString()
+                    val image = jsonObject.getJSONObject("data").get("image").toString()
+                    val phone = jsonObject.getJSONObject("data").get("phone").toString()
+                    val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
+                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                    val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                    val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+
+                    AllSharedPref.save(this, "auth_key", authKey)
+
+                    launch(Dispatchers.Main.immediate) {
+                        dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
+                        dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
+                        dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
+                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
+                        dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
+                        dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
+                        dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
+                        dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
+                        dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
+
+                    }
+                    progressDialog.hidedialog()
+                    OpenActivity(HomeActivity::class.java) {
+                        putString("authorization", authKey)
+                    }
+
+
                 }
-            }else{
-                ErrorBodyResponse(response, this, signupProgressBar)
+            } else {
+                ErrorBodyResponse(response, this, null)
             }
         })
         appViewModel!!.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
-            signupProgressBar?.hideProgressBar()
+            progressDialog.hidedialog()// signupProgressBar?.hideProgressBar()
         })
     }
 
@@ -247,18 +340,19 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     }
 
 
-    private  fun settingSpinnerForTypeSelection(){
+    private fun settingSpinnerForTypeSelection() {
         category.add("")
         category.add("Consultant")
         category.add("Professional")
         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter(this, R.layout.customspinner, category as List<String>)
         typeSelected!!.setAdapter(arrayAdapter)
     }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun getRealImagePath(imagePath: String?) {
-        Log.d("getImageRealPath","---------------"+ imagePath)
+        Log.d("getImageRealPath", "---------------" + imagePath)
         imgPath = imagePath.toString()
         Glide.with(this).asBitmap().load(imgPath).circleCrop().into(iv_uploader)
     }

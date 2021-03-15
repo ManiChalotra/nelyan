@@ -24,11 +24,10 @@
         android:roundIcon="@mipmap/app_launcher_round"
         android:supportsRtl="true"
         android:largeHeap="true"
-        android:networkSecurityConfig="@xml/provider_paths"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m"
         android:requestLegacyExternalStorage="true"
+        tools:targetApi="n"
         tools:ignore="GoogleAppIndexingWarning">
 
         <provider

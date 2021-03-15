@@ -147,6 +147,7 @@
         <TextView
             style="@style/CommonTextMatchparent"
             android:text="Password"
+            android:id="@+id/tv_passwordSignup"
             android:fontFamily="@font/medium"
             android:layout_marginTop="@dimen/_15sdp"
             android:textSize="@dimen/_12sdp"
@@ -178,11 +179,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:id="@+id/view1"
             android:background="@color/black"/>
+
         <TextView
             style="@style/CommonTextMatchparent"
             android:text="Confirm Password"
             android:fontFamily="@font/medium"
+            android:id="@+id/tv_confirmPasswordSignup"
             android:layout_marginTop="@dimen/_15sdp"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/black"
@@ -212,6 +216,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:id="@+id/view2"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@color/black"/>
         <TextView

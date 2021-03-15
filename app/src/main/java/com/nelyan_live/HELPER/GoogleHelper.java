@@ -7,13 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-
+import com.google.android.gms.tasks.Task;
 
 /*
  * Created by 123 on 26-09-2017.
@@ -28,7 +30,6 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
     }
 
     public static final String TAG = GoogleHelper.class.getSimpleName();
-
     public static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
     private FragmentActivity context;
@@ -56,18 +57,18 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
-
 
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
     }
 
     public void  stopApiClient(){
+
       /*  mGoogleApiClient.stopAutoManage(context);
         mGoogleApiClient.disconnect();*/
          if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
@@ -76,16 +77,18 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount account = result.getSignInAccount();
-            // text for dob
 
-            callback.onSuccessGoogle(account);
-        } else {
-            callback.onErrorGoogle();
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            if (account!= null) {
+                callback.onSuccessGoogle(account);
+            } else {
+                callback.onErrorGoogle();
+            }
+        } catch (ApiException e) {
+            Log.d("TAG", "signInResult:failed code=" + e.getStatusCode());
         }
+
     }
 }
