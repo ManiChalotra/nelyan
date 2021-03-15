@@ -39,7 +39,9 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application).create(AppViewModel::class.java)
     }
 
-    private val job by lazy { Job() }
+    private val job = Job()
+
+    private  val dataStoragePreference by lazy { DataStoragePreference(requireContext()) }
 
     private  var listner:CommunicationListner?= null
 
@@ -48,6 +50,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
 
     private val datalist by lazy { ArrayList<HomeModal>() }
+
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,13 +68,22 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         super.onViewCreated(view, savedInstanceState)
         initalize()
 
-        lifecycleScope.launch(Dispatchers.Main.immediate) {
-            val authkey = DataStoragePreference(requireActivity())!!.emitStoredValue(preferencesKey<String>("auth_key"))!!.first()
+        val authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
+        Log.d("authorization","---------------"+ authkey)
+        appViewModel.sendHOmeCategoryData(security_key, authkey)
+        homeFargProgressBar?.showProgressBar()
+        checkMvvmResponse()
+
+        /*launch(Dispatchers.Main.immediate) {
+            val authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            val authkey1 = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             Log.d("HomeFragAuthKey", "------------------" + authkey)
+            Log.d("HomeFragAuthKey", "------------------" + authkey1)
             appViewModel.sendHOmeCategoryData(security_key, authkey)
             homeFargProgressBar?.showProgressBar()
             checkMvvmResponse()
-        }
+        }*/
+
     }
 
     private fun initalize() {

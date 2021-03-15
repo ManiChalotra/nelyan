@@ -94,6 +94,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ivToolBarImage = findViewById(R.id.ivToolBarImage)
         iv_bell = findViewById(R.id.iv_bell)
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
+
+
+
         loadFragment(HomeFragment())
         //loadFragment(new DrawerNewHomeFragment());
         val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navigationbar)
@@ -403,7 +406,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 iv_bell!!.setOnClickListener {
                     //iv_bell.get
                 }
-                fragment = com.nelyan_live.ui.ChatFrag()
+                fragment = ChatFrag()
             }
             R.id.event -> {
                 tvTitleToolbar!!.visibility = View.VISIBLE
@@ -520,6 +523,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun checkMvvmresponse() {
+
         appViewModel.observeLogoutResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {

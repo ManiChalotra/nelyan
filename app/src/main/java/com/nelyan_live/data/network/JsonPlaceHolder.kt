@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit
 
 interface JsonPlaceHolder {
 
-
     @Multipart
     @POST("signup")
     fun getSignUp_withImage_APi(
@@ -131,7 +130,7 @@ interface JsonPlaceHolder {
     @POST("imageUplaod")
     fun get_ImageUpload_Api(@Part("type") type: RequestBody?,
                             @Part("folder") folder: RequestBody?,
-                            @Part image: List<MultipartBody.Part>   ?): Call<ImageUploadApiResponseModel>
+                            @Part image: List<MultipartBody.Part>?): Call<ImageUploadApiResponseModel>
 
 
     @GET("activityTpe")
@@ -141,6 +140,26 @@ interface JsonPlaceHolder {
     @GET("traderactivity")
     fun get_TraderActivity_Api(@Header("security_key") securityKey: String?,
                                @Header("auth_key") auth_key: String?): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun get_addPOSt_Activity_Api(@Header("security_key") securityKey: String?,
+                        @Header("auth_key") auth_key: String?,
+                        @Field("type") type: String,
+                        @Field("activity_type") activity_type: String,
+                        @Field("shop_name") shop_name: String,
+                        @Field("activity_name") activity_name: String,
+                        @Field("description") description: String,
+                        @Field("message") message: String,
+                        @Field("phone") phone: String,
+                        @Field("address") address: String,
+                        @Field("city") city: String,
+                        @Field("latitude") latitude: String,
+                        @Field("longitude") longitude: String,
+                        @Field("ageGroup") ageGroup: String,// sending json Array
+                        @Field("addEvent") addEvent: String,// sending json Array
+                        @Field("media") media: String,// send json Array
+    ): Call<JsonObject>
 
 
     companion object {

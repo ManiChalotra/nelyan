@@ -69,10 +69,7 @@ class PublisherFrag : Fragment(), View.OnClickListener {
             R.id.btnSubmit -> {
                 when(type){
                     "1"->{
-                        var authkey = arguments?.getString("authorization")
-                        requireActivity().OpenActivity(ActivityFormActivity::class.java){
-                            putString("authorization", authkey)
-                        }
+                        requireActivity().OpenActivity(ActivityFormActivity::class.java)
                     }
                     "2"->{
                         requireActivity().OpenActivity(NurserieActivity::class.java)

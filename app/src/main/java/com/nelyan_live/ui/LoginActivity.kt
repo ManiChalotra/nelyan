@@ -26,6 +26,7 @@ import com.nelyan_live.HELPER.FacebookHelper
 import com.nelyan_live.HELPER.FacebookHelper.*
 import com.nelyan_live.HELPER.GoogleHelper
 import com.nelyan_live.R
+import com.nelyan_live.fragments.HomeFragment
 import com.nelyan_live.modals.FacebookCustomDataModel
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -60,6 +61,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     private var job = Job()
     private var clicked = false
+
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -240,6 +242,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                     val latitude = jsonObject.getJSONObject("data").get("lat").toString()
                     val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+
+                    AllSharedPref.save(this, "auth_key", authKey)
                     val abc = 56
 
                     launch(Dispatchers.Main.immediate) {
@@ -260,7 +264,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     }
                     finishAffinity()
                     loginProgressBar?.hideProgressBar()
-
 
                 }
 

@@ -46,14 +46,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape">
+                android:background="@drawable/back_shape"
+                android:padding="@dimen/_10sdp"
+                >
+
                 <ImageView
                     android:id="@+id/ivImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:backgroundTint="@color/grey"
-                    android:src="@drawable/pik_1" />
+                    android:src="@drawable/pik_1"
+                    />
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:elevation="@dimen/_5dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_baseline_videocam_24"
+                    android:id="@+id/iv_video1"
+                    />
+
+
+
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +79,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_1"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -74,9 +92,25 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/photo_two"
                         android:scaleType="fitXY"/>
-                </LinearLayout>
 
-                <LinearLayout
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video2"
+                        />
+
+
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/ll_2"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -90,9 +124,20 @@
                             android:src="@drawable/small_photo_3"
                         android:scaleType="fitXY"/>
 
-                </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video3"
+                        />
 
-                <LinearLayout
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/ll_3"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -106,7 +151,19 @@
                         android:src="@drawable/small_photo_4"
 
                         android:scaleType="fitXY"/>
-                </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video4"
+                        />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlAddImg"
@@ -123,6 +180,18 @@
 
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video5"
+                        />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -200,6 +269,7 @@
             <EditText
                 style="@style/SimpleEdittext"
                 android:hint="Name of Shop"
+                android:id="@+id/et_shopName"
                 android:inputType="text" />
 
             <View
@@ -215,6 +285,7 @@
             <EditText
                 style="@style/SimpleEdittext"
                 android:hint="Name of Activity"
+                android:id="@+id/et_activityName"
                 android:inputType="text" />
 
             <View
@@ -232,6 +303,7 @@
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
                 android:hint="Description"
+                android:id="@+id/et_description"
                 android:paddingRight="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
@@ -246,6 +318,7 @@
                 android:text="Enter you scroll message of ad" />
             <EditText
                 style="@style/SimpleEdittext"
+                android:id="@+id/et_message"
                 android:hint="Add a message that appears on your ad .. " />
             <View
                 android:layout_width="match_parent"
@@ -260,6 +333,7 @@
             <EditText
                 style="@style/SimpleEdittext"
                 android:hint="Phone"
+                android:id="@+id/et_phone"
                 android:inputType="number" />
 
             <View
@@ -274,7 +348,8 @@
 
             <EditText
                 style="@style/SimpleEdittext"
-                android:hint="Address" />
+                android:hint="Address"
+                android:id="@+id/et_addressActivity"/>
 
             <View
                 android:layout_width="match_parent"
@@ -291,6 +366,8 @@
                     android:id="@+id/rvAgeGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
                     android:nestedScrollingEnabled="false" />
 
             </RelativeLayout>
@@ -302,6 +379,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvEvent"
                     android:layout_width="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
 

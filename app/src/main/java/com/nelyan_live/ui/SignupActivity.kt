@@ -260,7 +260,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     override fun getRealImagePath(imagePath: String?) {
         Log.d("getImageRealPath","---------------"+ imagePath)
         imgPath = imagePath.toString()
-        Glide.with(this).asBitmap().load(imgPath).into(iv_uploader)
+        Glide.with(this).asBitmap().load(imgPath).circleCrop().into(iv_uploader)
     }
 
 
