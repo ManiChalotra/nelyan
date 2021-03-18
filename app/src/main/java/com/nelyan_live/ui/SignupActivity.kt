@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.coroutines.CoroutineScope
@@ -49,20 +50,19 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private var cityLatitude = ""
     private var cityLongitude = ""
 
+
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
     // dialog
     private val progressDialog = ProgressDialog(this)
-
-
     private var job = Job()
-    private  var socialSignup = ""
-
-    private  var socialName = ""
-    private  var socialEmail = ""
-    private  var socialImage = ""
+    private var socialSignup = ""
+    private var socialName = ""
+    private var socialEmail = ""
+    private var socialImage = ""
+     private  var socialID = ""
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -70,8 +70,11 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     override fun onResume() {
         super.onResume()
-         socialSignup = intent?.extras?.getString("socialLogin").toString()
-        if(socialSignup.equals("SOCIAL_LOGIN")){
+
+        socialSignup = intent?.extras?.getString("socialLogin").toString()
+        imgPath = socialImage
+
+        if (socialSignup.equals("SOCIAL_LOGIN")) {
             tv_passwordSignup.visibility = View.GONE
             password.visibility = View.GONE
             view1.visibility = View.GONE
@@ -82,8 +85,29 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             socialEmail = intent?.extras?.getString("socialEmail").toString()
             socialImage = intent?.extras?.getString("socialImage").toString()
             socialName = intent?.extras?.getString("socialName").toString()
+            socialID = intent?.extras?.getString("socialId").toString()
 
-        }else{
+            if(socialEmail.isEmpty()){
+                tv_userEmail.isFocusable = true
+                tv_userEmail.isFocusableInTouchMode = true
+            }else{
+                tv_userEmail.setText(socialEmail)
+                tv_userEmail.isFocusable = false
+                tv_userEmail.isFocusableInTouchMode = false
+            }
+
+
+            // setting the social credential
+            tv_username.setText(socialName)
+            if(!socialImage.isEmpty()){
+                Glide.with(this).asBitmap().centerCrop().load(socialImage).into(iv_uploader)
+            }else{
+                iv_uploader.setImageResource(R.drawable.img_uploader)
+            }
+
+
+
+        } else {
             tv_passwordSignup.visibility = View.VISIBLE
             password.visibility = View.VISIBLE
             view1.visibility = View.VISIBLE
@@ -92,6 +116,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             view2.visibility = View.VISIBLE
 
         }
+
     }
 
 
@@ -132,7 +157,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     if (Validation.checkName(tv_username.text.toString().trim(), this)) {
                         if (Validation.checkEmail(tv_userEmail.text.toString(), this)) {
 
-                            if(socialSignup.equals("")){
+                            if (socialSignup.equals("")) {
                                 if (Validation.checkPassword(tv_password.text.toString(), this)) {
                                     if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
                                         myCustomToast("please enter confirm password")
@@ -153,22 +178,19 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                         }
                                     }
                                 }
-                            }else{
+                            } else {
                                 // here control comes when social login
                                 if (tv_city.text.isNullOrEmpty()) {
                                     myCustomToast("Please select your city")
                                 } else {
+
                                     val name = tv_username.text.toString().trim()
+                                    val email = tv_userEmail.text.toString()
+                                    hitSocialCompleteProfileApi(name, email,type.toString())
 
                                 }
 
                             }
-
-
-
-
-
-
 
 
                         }
@@ -198,6 +220,19 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             }
 
         }
+    }
+
+    private fun hitSocialCompleteProfileApi(name: String, email: String, type:String) {
+            // imageType 1-> file , 2-> url
+        if (imgPath.isNullOrEmpty()) {
+            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key,  socialID, email,name, type,  cityLatitude, cityLongitude, "12", cityName,"1")
+           progressDialog.setProgressDialog()// signupProgressBar?.showProgressBar()
+        } else {
+            // here image is of type URl
+            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key,  socialID, email,name, type,  cityLatitude, cityLongitude, "12", cityName,"2",imgPath)
+            progressDialog.setProgressDialog()
+        }
+
     }
 
     private fun showPlacePicker() {
@@ -236,7 +271,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
 
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi, )
+            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi )
             signupProgressBar?.showProgressBar()
         } else {
             // hit with updating the image
@@ -302,6 +337,59 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 ErrorBodyResponse(response, this, null)
             }
         })
+
+
+        // complete profile socialLogin api
+        appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response->
+            if(response!!.isSuccessful && response.code()==200){
+                if(response.body()!= null){
+                    Log.d("completeSocialResponse", "---------" + Gson().toJson(response.body()))
+                    val mResponse: String = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+
+                    val message = jsonObject.get("msg").toString()
+                    myCustomToast(message)
+
+                    val email = jsonObject.getJSONObject("data").get("email").toString()
+                    val password = jsonObject.getJSONObject("data").get("password").toString()
+                    val type = jsonObject.getJSONObject("data").get("type").toString()
+                    val image = jsonObject.getJSONObject("data").get("image").toString()
+                    val phone = jsonObject.getJSONObject("data").get("phone").toString()
+                    val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
+                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                    val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                    val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+
+                    AllSharedPref.save(this, "auth_key", authKey)
+
+                    launch(Dispatchers.Main.immediate) {
+                        dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
+                        dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
+                        dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
+                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
+                        dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
+                        dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
+                        dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
+                        dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
+                        dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
+
+                    }
+
+                    progressDialog.hidedialog()
+
+                    OpenActivity(HomeActivity::class.java) {
+                        putString("authorization", authKey)
+                    }
+
+
+                }
+
+            }else{
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
+
         appViewModel!!.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
             progressDialog.hidedialog()// signupProgressBar?.hideProgressBar()

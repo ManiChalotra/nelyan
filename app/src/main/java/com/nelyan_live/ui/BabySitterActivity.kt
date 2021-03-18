@@ -1,48 +1,73 @@
 package com.nelyan_live.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.HELPER.image
 import com.nelyan_live.R
+import com.nelyan_live.utils.OpenCameraGallery
+import com.nelyan_live.utils.ProgressDialog
+import kotlinx.android.synthetic.main.activity_baby_sitter.*
+import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg
+import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg1
+import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg2
+import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg3
+import kotlinx.android.synthetic.main.activity_baby_sitter.ivplus
+import kotlinx.android.synthetic.main.activity_maternal_assistant.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class BabySitterActivity : image(), OnItemSelectedListener {
-    var mContext: Context? = null
-    var ivBack: ImageView? = null
-    var ivImg: ImageView? = null
-    var ivplus: ImageView? = null
-    var btnSubmit: Button? = null
-    var imgtype: String? = null
-    var rlAddImg: RelativeLayout? = null
-    var rlImg: RelativeLayout? = null
-    var orderby: Spinner? = null
-    var Recycler_scroll: RecyclerView? = null
-    var indicator: ScrollingPagerIndicator? = null
-    var ivImg1: ImageView? = null
-    var ivImg2: ImageView? = null
-    var ivImg3: ImageView? = null
-    var ll_1: LinearLayout? = null
-    var ll_2: LinearLayout? = null
-    var ll_3: LinearLayout? = null
+class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
+
+
+    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    private var IMAGE_SELECTED_TYPE = ""
+    private val job by lazy { kotlinx.coroutines.Job() }
+    private val dataStoragePreference by lazy { DataStoragePreference(this) }
+
+    // dialo for progress
+    private var progressDialog = ProgressDialog(this)
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    // Initialize Places variables
+    private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    private val PLACE_PICKER_REQUEST = 1
+
+    private var cityName = ""
+    private var cityLatitude = ""
+    private var cityLongitude = ""
+    private var cityAddress = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_baby_sitter)
-        mContext = this
-        /* indicator=findViewById(R.id.indicator);
-        Recycler_scroll=findViewById(R.id.Recycler_scroll);
+        initalizeClicks()
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        Recycler_scroll.setLayoutManager(linearLayoutManager);
-        ItemsAdapter  adapterItems = new ItemsAdapter(mContext);
-        Recycler_scroll.setAdapter(adapterItems);
-        indicator.attachToRecyclerView(Recycler_scroll);*/orderby = findViewById(R.id.orderby)
+
+        // setting the  spinner
         val count: MutableList<String?> = ArrayList()
         count.add("")
         count.add("0")
@@ -57,60 +82,182 @@ class BabySitterActivity : image(), OnItemSelectedListener {
         count.add("9")
         count.add("10")
         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
-        orderby!!.setAdapter(arrayAdapte1)
-        ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
-        ll_1 = findViewById(R.id.ll_1)
-        ll_2 = findViewById(R.id.ll_2)
-        ll_3 = findViewById(R.id.ll_3)
-        ivImg = findViewById(R.id.ivImg)
-        ivImg1 = findViewById(R.id.ivImg1)
-        ivImg2 = findViewById(R.id.ivImg2)
-        ivImg3 = findViewById(R.id.ivImg3)
-        rlImg = findViewById(R.id.rlImg)
-        rlImg!!.setOnClickListener(View.OnClickListener {
-            imgtype = "0"
-            image("all")
-        })
-        ivplus = findViewById(R.id.ivplus)
-        rlAddImg = findViewById(R.id.rlAddImg)
-        rlAddImg!!.setOnClickListener(View.OnClickListener {
-            imgtype = "1"
-            image("all")
-        })
-        ll_1!!.setOnClickListener(View.OnClickListener {
-            imgtype = "2"
-            image("all")
-        })
-        ll_2!!.setOnClickListener(View.OnClickListener {
-            imgtype = "3"
-            image("all")
-        })
-        ll_3!!.setOnClickListener(View.OnClickListener {
-            imgtype = "4"
-            image("all")
-        })
-        btnSubmit = findViewById(R.id.btnSubmit)
-        btnSubmit!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(this@BabySitterActivity, HomeActivity::class.java)
-            i.putExtra("activity", "babyfrag")
-            startActivity(i)
-        })
+        noOfPlacesBabySpinner!!.setAdapter(arrayAdapte1)
+
+
+
+
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-    override fun selectedImage(var1: Bitmap, var2: String) {
-        if (imgtype == "0") {
-            ivImg!!.setImageBitmap(var1)
-        } else if (imgtype == "1") {
-            ivplus!!.setImageBitmap(var1)
-        } else if (imgtype == "2") {
-            ivImg1!!.setImageBitmap(var1)
-        } else if (imgtype == "3") {
-            ivImg2!!.setImageBitmap(var1)
-        } else if (imgtype == "4") {
-            ivImg3!!.setImageBitmap(var1)
+    private fun initalizeClicks(){
+
+
+        ivImg.setOnClickListener(this)
+        ivImg1.setOnClickListener(this)
+        ivImg2.setOnClickListener(this)
+        ivImg3.setOnClickListener(this)
+        ivplus.setOnClickListener(this)
+        ivBackBabaySitter.setOnClickListener(this)
+        btnSubmitBabySitter.setOnClickListener(this)
+        et_addressBabySitter.isFocusable = false
+        et_addressBabySitter.isFocusableInTouchMode = false
+        et_addressBabySitter.setOnClickListener(this)
+
+
+    }
+
+
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+
+            R.id.ivImg->{
+
+                IMAGE_SELECTED_TYPE= "1"
+                checkPermission(this)
+            }
+            R.id.ivImg1->{
+                IMAGE_SELECTED_TYPE= "2"
+                checkPermission(this)
+            }
+            R.id.ivImg2->{
+                IMAGE_SELECTED_TYPE= "3"
+                checkPermission(this)
+            }
+            R.id.ivImg3->{
+                IMAGE_SELECTED_TYPE= "4"
+                checkPermission(this)
+            }
+            R.id.ivplus->{
+                IMAGE_SELECTED_TYPE= "5"
+                checkPermission(this)
+            }
+            R.id.ivBackBabaySitter->{
+                finish()
+            }
+            R.id.btnSubmitBabySitter->{
+                val i = Intent(this@BabySitterActivity, HomeActivity::class.java)
+                i.putExtra("activity", "babyfrag")
+                startActivity(i)
+            }
+            R.id.et_addressBabySitter->{
+                showPlacePicker()
+            }
         }
     }
+
+    override fun getRealImagePath(imgPath: String?) {
+        when (IMAGE_SELECTED_TYPE) {
+
+            "1" -> {
+                setImageOnTab(imgPath, ivImg)
+            }
+
+            "2" -> {
+                setImageOnTab(imgPath, ivImg1)
+            }
+
+            "3" -> {
+                setImageOnTab(imgPath, ivImg2)
+            }
+
+            "4" -> {
+                setImageOnTab(imgPath, ivImg3)
+            }
+
+            "5" -> {
+                setImageOnTab(imgPath, ivplus)
+            }
+
+        }
+    }
+
+    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
+        Log.d("getimage", "---------" + imgPATH.toString())
+
+        when (IMAGE_SELECTED_TYPE) {
+
+            "1" -> {
+                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video011)
+            }
+            "2" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video012)
+
+            }
+            "3" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
+
+            }
+            "4" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
+
+            }
+            "5" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
+            }
+        }
+
+        Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
+    }
+
+
+    private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
+
+        if (imgpath?.contains(".mp4")!!) {
+            videoButton.visibility = View.VISIBLE
+        } else {
+            videoButton.visibility = View.GONE
+        }
+    }
+
+    private fun showPlacePicker() {
+        // Initialize Places.
+        Places.initialize(applicationContext, googleMapKey)
+        // Create a new Places client instance.
+        val placesClient: PlacesClient = Places.createClient(this)
+        // Set the fields to specify which types of place data to return.
+        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        startActivityForResult(intent, PLACE_PICKER_REQUEST)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode === PLACE_PICKER_REQUEST) {
+            if (resultCode === Activity.RESULT_OK) {
+                val place = Autocomplete.getPlaceFromIntent(data!!)
+
+                cityAddress = place.address.toString()
+                et_addressBabySitter.setText(cityAddress.toString())
+                cityName = place.name.toString()
+
+                // cityID = place.id.toString()
+                cityLatitude = place.latLng?.latitude.toString()
+                cityLongitude = place.latLng?.longitude.toString()
+
+                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                val status: Status = Autocomplete.getStatusFromIntent(data!!)
+                Log.i("dddddd", status.getStatusMessage().toString())
+            } else if (resultCode === Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+                Log.i("dddddd", "-------Operation is cancelled ")
+            }
+        }
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
+
+
+
+
+
 }

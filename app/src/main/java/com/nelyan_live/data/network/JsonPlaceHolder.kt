@@ -130,7 +130,7 @@ interface JsonPlaceHolder {
     @POST("imageUplaod")
     fun get_ImageUpload_Api(@Part("type") type: RequestBody?,
                             @Part("folder") folder: RequestBody?,
-                            @Part image: List<MultipartBody.Part>?): Call<ImageUploadApiResponseModel>
+                            @Part image: ArrayList<MultipartBody.Part>?): Call<ImageUploadApiResponseModel>
 
 
     @GET("activityTpe")
@@ -144,28 +144,57 @@ interface JsonPlaceHolder {
     @POST("addPost")
     @FormUrlEncoded
     fun get_addPOSt_Activity_Api(@Header("security_key") securityKey: String?,
-                        @Header("auth_key") auth_key: String?,
-                        @Field("type") type: String,
-                        @Field("activity_type") activity_type: String,
-                        @Field("shop_name") shop_name: String,
-                        @Field("activity_name") activity_name: String,
-                        @Field("description") description: String,
-                        @Field("message") message: String,
-                        @Field("phone") phone: String,
-                        @Field("address") address: String,
-                        @Field("city") city: String,
-                        @Field("latitude") latitude: String,
-                        @Field("longitude") longitude: String,
-                        @Field("ageGroup") ageGroup: String,// sending json Array
-                        @Field("addEvent") addEvent: String,// sending json Array
-                        @Field("media") media: String,// send json Array
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 @Field("message") message: String,
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                 @Field("ageGroup") ageGroup: String,// sending json Array
+                                 @Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("media") media: String// send json Array
     ): Call<JsonObject>
 
     @POST("social_login")
     @FormUrlEncoded
     fun get_SocialLogin_Api(@Header("security_key") securityKey: String?,
-    @Field("social_id")social_id:String?,
-    @Field("social_type")social_type:String?):Call<JsonObject>
+                            @Field("social_id") social_id: String?,
+                            @Field("social_type") social_type: String?): Call<JsonObject>
+
+    @POST("completeprofile_sociallogin")
+    @FormUrlEncoded
+    fun get_SocialCompleteApi_withImage(@Header("security_key") securityKey: String?,
+                                        @Field("social_id") social_id: String?,
+                                        @Field("email") email: String?,
+                                        @Field("name") name: String?,
+                                        @Field("role") role: String?,
+                                        @Field("lat") lat: String?,
+                                        @Field("longi") longi: String?,
+                                        @Field("second") second: String?,
+                                        @Field("city") city: String?,
+                                        @Field("image_type") image_type: String?,
+                                        @Field("image") image:String?
+    ): Call<JsonObject>
+
+    @POST("completeprofile_sociallogin")
+    @FormUrlEncoded
+    fun get_SocialCompleteApi_withoutImage(@Header("security_key") securityKey: String?,
+                                           @Field("social_id") social_id: String?,
+                                           @Field("email") email: String?,
+                                           @Field("name") name: String?,
+                                           @Field("role") role: String?,
+                                           @Field("lat") lat: String?,
+                                           @Field("longi") longi: String?,
+                                           @Field("second") second: String?,
+                                           @Field("city") city: String?,
+                                           @Field("image_type") image_type: String?
+    ): Call<JsonObject>
 
 
     companion object {

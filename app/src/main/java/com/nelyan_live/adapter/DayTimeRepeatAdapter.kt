@@ -4,49 +4,40 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.R
-import com.nelyan_live.adapter.DayTimeRepeatAdapter.DayTimeRepeatViewHolder
 import com.nelyan_live.modals.DayTimeModel
 import java.util.*
 
-class DayTimeRepeatAdapter(var context: Context, dayTimeModelArrayList: ArrayList<DayTimeModel>, dayTimeRepeatListener: DayTimeRepeatListener) : RecyclerView.Adapter<DayTimeRepeatViewHolder>() {
-    var dayTimeModelArrayList: ArrayList<DayTimeModel>
-    var dayTimeRepeatListener: DayTimeRepeatListener
-    var Selectedmonth = HashMap<String, String>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTimeRepeatViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false)
-        return DayTimeRepeatViewHolder(view)
+class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeModel>) : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return  MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false))
     }
 
-    override fun onBindViewHolder(holder: DayTimeRepeatViewHolder, position: Int) {
-        holder.bind(position)
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.initalize(list, position)
     }
 
     override fun getItemCount(): Int {
-        return dayTimeModelArrayList.size
+        return list.size
     }
 
-    inner class DayTimeRepeatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var orderby1: Spinner
-        var rvTime: RecyclerView
-        var tvAddDay: TextView
-        var tvAddTime: TextView
-        fun bind(pos: Int) {
-            if (pos == dayTimeModelArrayList.size - 1) {
-                tvAddDay.visibility = View.VISIBLE
-            } else {
-                tvAddDay.visibility = View.GONE
-            }
-            tvAddDay.setOnClickListener {
-                dayTimeRepeatListener.dayTimeAdd(pos)
-                /*notifyDataSetChanged();*/
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun initalize(list: ArrayList<DayTimeModel>, position: Int) {
+
+        }
+
+        /*  fun bind(pos: Int) {
+              if (pos == dayTimeModelArrayList.size - 1) {
+                  tvAddDay.visibility = View.VISIBLE
+              } else {
+                  tvAddDay.visibility = View.GONE
+              }
+              tvAddDay.setOnClickListener {
+                  dayTimeRepeatListener.dayTimeAdd(pos)
+                  *//*notifyDataSetChanged();*//*
             }
             tvAddTime.setOnClickListener { dayTimeRepeatListener.timeAdd(pos) }
             val days: MutableList<String?> = ArrayList()
@@ -60,7 +51,7 @@ class DayTimeRepeatAdapter(var context: Context, dayTimeModelArrayList: ArrayLis
             days.add("Sunday")
             val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(context, R.layout.customspinner, days as List<Any?>)
             orderby1.adapter = arrayAdapter
-            val timeRepeatAdapter: com.nelyan_live.adapter.TimeRepeatAdapter = com.nelyan_live.adapter.TimeRepeatAdapter(context, dayTimeModelArrayList[pos].selectTime)
+            val timeRepeatAdapter =  TimeRepeatAdapter(context, dayTimeModelArrayList[pos].selectTime)
             rvTime.adapter = timeRepeatAdapter
             rvTime.layoutManager = LinearLayoutManager(context)
             val modeAdaptercity = ArrayAdapter(context, R.layout.customspinner, days)
@@ -73,7 +64,6 @@ class DayTimeRepeatAdapter(var context: Context, dayTimeModelArrayList: ArrayLis
                 override fun onItemSelected(adapterView: AdapterView<*>?, view: View, jj: Int, l: Long) {
                     Selectedmonth[pos.toString()] = jj.toString()
                 }
-
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}
             }
         }
@@ -83,21 +73,7 @@ class DayTimeRepeatAdapter(var context: Context, dayTimeModelArrayList: ArrayLis
             rvTime = itemView.findViewById(R.id.rvTime)
             tvAddDay = itemView.findViewById(R.id.tvAddDay)
             tvAddTime = itemView.findViewById(R.id.tvAddTime)
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
-
-    interface DayTimeRepeatListener {
-        fun dayTimeAdd(pos: Int)
-        fun timeAdd(pos: Int)
-    }
-
-    init {
-        this.dayTimeModelArrayList = dayTimeModelArrayList
-        this.dayTimeRepeatListener = dayTimeRepeatListener
+        }*/
     }
 
 

@@ -73,8 +73,11 @@ class DescriptionRepeatAdapter(var context: Context, var image: HashMap<String, 
             } catch (e: Exception) {
             }
             ivEvent.setOnClickListener {
+
                 //  descriptionRepeatListener.productImageClick(pos);
-                descriptionRepeatListener.imageClick(pos, returnItemView)
+
+                // descriptionRepeatListener.imageClick(pos, returnItemView)
+
                 //  descriptionRepeatListener.imageClick( pos,returnItemView);
             }
             tvAdd.setOnClickListener {

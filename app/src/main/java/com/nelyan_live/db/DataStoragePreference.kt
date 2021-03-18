@@ -17,7 +17,6 @@ class DataStoragePreference(context: Context) {
     private val applicationContext = context.applicationContext
     private val dataStore: DataStore<Preferences>
 
-
     init {
         dataStore = applicationContext.createDataStore(
             name = "app_preferences"
@@ -28,7 +27,6 @@ class DataStoragePreference(context: Context) {
     suspend fun <T> save(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore.edit { preferences ->
             preferences[KEY] = saveValue
-
         }
     }
 

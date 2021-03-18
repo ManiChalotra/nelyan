@@ -47,11 +47,23 @@
                 android:background="@drawable/back_shape">
                 <ImageView
                     android:id="@+id/ivImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:backgroundTint="@color/grey"
                     android:src="@drawable/pik_1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:elevation="@dimen/_5dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_baseline_videocam_24"
+                    android:id="@+id/iv_video11"
+                    />
+
             </RelativeLayout>
            <!-- <RelativeLayout
                 android:layout_width="wrap_content"
@@ -92,7 +104,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_1"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -104,8 +116,21 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/photo_two"
                         android:scaleType="fitXY"/>
-                </LinearLayout>
-                <LinearLayout
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video22"
+                        />
+
+
+                </RelativeLayout>
+                <RelativeLayout
                     android:id="@+id/ll_2"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -118,8 +143,20 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/small_photo_3"
                         android:scaleType="fitXY"/>
-                </LinearLayout>
-                <LinearLayout
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video33"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
                     android:id="@+id/ll_3"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -132,7 +169,19 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/small_photo_4"
                         android:scaleType="fitXY"/>
-                </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video44"
+                        />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlAddImg"
@@ -148,6 +197,18 @@
                         android:src="@drawable/small_photo_5"
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:id="@+id/iv_video55"
+                        />
+
                 </RelativeLayout>
 
             </LinearLayout>
@@ -171,7 +232,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Add Information"/>
             <Spinner
-                android:id="@+id/orderby"
+                android:id="@+id/addInfoSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
@@ -195,7 +256,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Number of places still avilable"/>
             <Spinner
-                android:id="@+id/orderby1"
+                android:id="@+id/noOfPlacesSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
@@ -231,6 +292,7 @@
                 android:text="Address"/>
             <EditText
                 style="@style/SimpleEdittext"
+                android:id="@+id/et_addressNursery"
                 android:hint="Address"/>
             <View
                 android:layout_width="match_parent"

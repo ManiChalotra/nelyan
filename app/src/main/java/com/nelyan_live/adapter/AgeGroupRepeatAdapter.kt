@@ -133,7 +133,7 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 ageTo.clearFocus()
                 days.clearFocus()
 
-                listner!!.addAgeGroupItem(list, position)
+                listner.addAgeGroupItem(list, position)
             }
 
         }

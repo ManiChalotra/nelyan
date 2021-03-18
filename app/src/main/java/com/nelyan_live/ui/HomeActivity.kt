@@ -174,7 +174,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nurFrag") {
-                        var fragment: Fragment? = null
+
+                        OpenActivity(NurseryActivity::class.java)
+                       /* var fragment: Fragment? = null
                         fragment = NurseFragment()
                         val args = Bundle()
                         args.putString("activity", "Nurseriefragment")
@@ -183,7 +185,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
                         fragmentTransaction.commit()
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
+                        //   bottomNavigationView.setSelectedItemId(R.id.home);*/
                     }
                 }
                 if (intent.hasExtra("activity")) {

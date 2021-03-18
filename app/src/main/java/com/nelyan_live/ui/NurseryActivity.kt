@@ -47,6 +47,8 @@ class NurseryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
+
         ivBack = findViewById(R.id.ivBack)
         tvTitle = findViewById(R.id.tvTitle)
         ivBack!!.setOnClickListener(View.OnClickListener { onBackPressed() })
@@ -57,6 +59,8 @@ class NurseryActivity : AppCompatActivity(), OnMapReadyCallback {
             OpenActivity(NurserieActivityy::class.java )
            // AppUtils.gotoFragment(this, com.nelyan_live.fragments.NurserieFragment(), R.id.frame_container, false)
         })
+
+
         ivShare = findViewById(R.id.ivShare)
         ivShare!!.setOnClickListener(View.OnClickListener { dailogDelete() })
         rc = findViewById(R.id.rc_detailsimg)
@@ -74,6 +78,8 @@ class NurseryActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
+
+
     fun dailogDelete() {
         dialog = Dialog(this)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)

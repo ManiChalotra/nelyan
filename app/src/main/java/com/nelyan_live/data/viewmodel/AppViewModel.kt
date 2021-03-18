@@ -49,7 +49,7 @@ class AppViewModel : ViewModel() {
             city:RequestBody?,
             latituude:RequestBody?,
             longitude:RequestBody?,
-            image:MultipartBody.Part?,
+            image:MultipartBody.Part?
 
     ) {
         JsonPlaceHolder().getSignUp_withImage_APi(securityKey, deviceType, deviceToken,name,email,password,role,second,city,latituude,longitude,image)
@@ -113,7 +113,7 @@ class AppViewModel : ViewModel() {
             deviceToken: String?,
             email:String?,
             password:String?,
-            second:String?, ) {
+            second:String? ) {
         JsonPlaceHolder().getz_Login_api(securityKey, deviceType, deviceToken,email,password,second)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -423,7 +423,7 @@ class AppViewModel : ViewModel() {
         return imageUploadMutableLiveData
     }
 
-    fun sendUploadImageData(type:RequestBody?, folder:RequestBody?, image:List<MultipartBody.Part>?) {
+    fun sendUploadImageData(type:RequestBody?, folder:RequestBody?, image:ArrayList<MultipartBody.Part>?) {
         JsonPlaceHolder().get_ImageUpload_Api(type, folder, image)
                 .enqueue(object : retrofit2.Callback<ImageUploadApiResponseModel> {
                     override fun onFailure(call: Call<ImageUploadApiResponseModel>, t: Throwable) {
@@ -514,6 +514,48 @@ class AppViewModel : ViewModel() {
                     }
                 })
     }
+
+    // get complete social Login profile api
+
+    private var completeSocialLoginMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeCompleteSociaLogin_Api_Response(): LiveData<Response<JsonObject>?>? {
+        if (completeSocialLoginMutableLiveData == null) {
+            completeSocialLoginMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return completeSocialLoginMutableLiveData
+    }
+
+    fun sendcompleteSocialLogin_withImage_Data(securityKey: String?,socialid:String?, email:String?, name:String?, role:String?, lat:String?, longi:String?, second:String?, city:String?, image_type:String?, image:String?) {
+        JsonPlaceHolder().get_SocialCompleteApi_withImage(securityKey, socialid, email, name, role, lat, longi, second, city, image_type, image)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        completeSocialLoginMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    fun sendcompleteSocialLogin_withoutImage_Data(securityKey: String?,socialid:String?, email:String?, name:String?, role:String?, lat:String?, longi:String?, second:String?, city:String?, image_type:String?) {
+        JsonPlaceHolder().get_SocialCompleteApi_withoutImage(securityKey, socialid, email, name, role, lat, longi, second, city, image_type)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        completeSocialLoginMutableLiveData?.value = response
+                    }
+                })
+
+    }
+
 
 
 }

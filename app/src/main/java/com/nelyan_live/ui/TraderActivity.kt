@@ -1,66 +1,116 @@
 package com.nelyan_live.ui
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.HELPER.image
 import com.nelyan_live.R
 import com.nelyan_live.adapter.DayTimeRepeatAdapter
-import com.nelyan_live.adapter.DayTimeRepeatAdapter.DayTimeRepeatListener
 import com.nelyan_live.adapter.DescriptionRepeatAdapter
 import com.nelyan_live.modals.DayTimeModel
 import com.nelyan_live.modals.TimeModel
-import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-import java.util.*
+import com.nelyan_live.utils.OpenCameraGallery
+import com.nelyan_live.utils.ProgressDialog
+import kotlinx.android.synthetic.main.activity_baby_sitter.*
+import kotlinx.android.synthetic.main.activity_trader.*
+import kotlinx.android.synthetic.main.activity_trader.ivImg
+import kotlinx.android.synthetic.main.activity_trader.ivImg1
+import kotlinx.android.synthetic.main.activity_trader.ivImg2
+import kotlinx.android.synthetic.main.activity_trader.ivImg3
+import kotlinx.android.synthetic.main.activity_trader.ivplus
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
-class TraderActivity : image(), OnItemSelectedListener {
-    var mContext: Context? = null
-    var ivBack: ImageView? = null
-    var ivImg: ImageView? = null
-    var ivCam: ImageView? = null
-    var btnSubmit: Button? = null
-    var tvAdd: TextView? = null
-    var tvClock: TextView? = null
-    var edClo: TextView? = null
-    var edClo1: TextView? = null
-    var edClo2: TextView? = null
-    var edClo3: TextView? = null
-    var ivplus: ImageView? = null
-    var ivImg1: ImageView? = null
-    var ivImg2: ImageView? = null
-    var ivImg3: ImageView? = null
-    var ll_1: LinearLayout? = null
-    var ll_2: LinearLayout? = null
-    var ll_3: LinearLayout? = null
-    var orderby: Spinner? = null
-    var orderby1: Spinner? = null
-    var Recycler_scroll: RecyclerView? = null
-    var indicator: ScrollingPagerIndicator? = null
-    var rlAddImg: RelativeLayout? = null
-    var rlImg: RelativeLayout? = null
-    var rvDayTime: RecyclerView? = null
-    var rvDesc: RecyclerView? = null
-    var dayTimeRepeatAdapter: DayTimeRepeatAdapter? = null
-    var returnItemView = 1
-    var image = HashMap<String, Bitmap>()
+class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
+
+
+    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    private var IMAGE_SELECTED_TYPE = ""
+    private val job by lazy { kotlinx.coroutines.Job() }
+    private val dataStoragePreference by lazy { DataStoragePreference(this) }
+
+    // dialo for progress
+    private var progressDialog = ProgressDialog(this)
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    // Initialize Places variables
+    private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    private val PLACE_PICKER_REQUEST = 1
+
+    private var cityName = ""
+    private var cityLatitude = ""
+    private var cityLongitude = ""
+    private var cityAddress = ""
+
+
+    private  var dayTimeModelArrayList:ArrayList<DayTimeModel> = ArrayList()
+
+    /*
+var mContext: Context? = null
+var ivBack: ImageView? = null
+var ivImg: ImageView? = null
+var ivCam: ImageView? = null
+var btnSubmit: Button? = null
+var tvAdd: TextView? = null
+var tvClock: TextView? = null
+var edClo: TextView? = null
+var edClo1: TextView? = null
+var edClo2: TextView? = null
+var edClo3: TextView? = null
+var ivplus: ImageView? = null
+var ivImg1: ImageView? = null
+var ivImg2: ImageView? = null
+var ivImg3: ImageView? = null
+var ll_1: LinearLayout? = null
+var ll_2: LinearLayout? = null
+var ll_3: LinearLayout? = null
+var orderby: Spinner? = null
+var orderby1: Spinner? = null
+var Recycler_scroll: RecyclerView? = null
+var indicator: ScrollingPagerIndicator? = null
+var rlAddImg: RelativeLayout? = null
+var rlImg: RelativeLayout? = null
+var rvDayTime: RecyclerView? = null
+var rvDesc: RecyclerView? = null
+var dayTimeRepeatAdapter: DayTimeRepeatAdapter? = null
+var returnItemView = 1
+var image = HashMap<String, Bitmap>()
+*/
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader)
+        initalizeClicks()
+
+        rvDayTime.adapter = DayTimeRepeatAdapter(this, dayTimeModelArrayList)
+
+    }
+
+
+
+    private fun initalizeClicks() {
+        ivImg.setOnClickListener(this)
+        ivImg1.setOnClickListener(this)
+        ivImg2.setOnClickListener(this)
+        ivImg3.setOnClickListener(this)
+        ivplus.setOnClickListener(this)
+
+    }
+
+/*
+
         mContext = this
-        // indicator=findViewById(R.id.indicator);
-        /* Recycler_scroll=findViewById(R.id.Recycler_scroll);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        Recycler_scroll.setLayoutManager(linearLayoutManager);
-        ItemsAdapter  adapterItems = new ItemsAdapter(mContext);
-        Recycler_scroll.setAdapter(adapterItems);
-        indicator.attachToRecyclerView(Recycler_scroll);*/rvDesc = findViewById(R.id.rvDesc)
+        rvDesc = findViewById(R.id.rvDesc)
         rvDayTime = findViewById(R.id.rvDayTime)
         orderby = findViewById(R.id.orderby)
         val country: MutableList<String?> = ArrayList()
@@ -69,6 +119,10 @@ class TraderActivity : image(), OnItemSelectedListener {
         country.add("Japan")
         country.add("India")
         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
+
+
+
+
         orderby!!.setAdapter(arrayAdapte1)
         ivBack = findViewById(R.id.ivBack)
         btnSubmit = findViewById(R.id.btnSubmit)
@@ -79,6 +133,9 @@ class TraderActivity : image(), OnItemSelectedListener {
             //  i.putExtra("nurActivity","nurFrag");
             startActivity(i)
         })
+
+
+
         ll_1 = findViewById(R.id.ll_1)
         ll_2 = findViewById(R.id.ll_2)
         ll_3 = findViewById(R.id.ll_3)
@@ -111,7 +168,7 @@ class TraderActivity : image(), OnItemSelectedListener {
         })
         val arrayList: ArrayList<TimeModel?> = ArrayList()
 
-        arrayList.add(TimeModel("",""))
+        arrayList.add(TimeModel("", ""))
         val dayTimeModel = DayTimeModel(arrayList)
         val dayTimeModelArrayList: ArrayList<DayTimeModel> = ArrayList<DayTimeModel>()
         dayTimeModelArrayList.add(dayTimeModel)
@@ -120,7 +177,7 @@ class TraderActivity : image(), OnItemSelectedListener {
                     override fun dayTimeAdd(pos: Int) {
                         val arrayList1: ArrayList<TimeModel?> = ArrayList()
 
-                        arrayList1.add(TimeModel("",""))
+                        arrayList1.add(TimeModel("", ""))
                         val dayTimeModel1 = DayTimeModel(arrayList1)
                         dayTimeModelArrayList.add(dayTimeModel1)
                         dayTimeRepeatAdapter!!.notifyDataSetChanged()
@@ -128,7 +185,7 @@ class TraderActivity : image(), OnItemSelectedListener {
 
                     override fun timeAdd(pos: Int) {
                         val dayTimeModel1: DayTimeModel = dayTimeModelArrayList[pos]
-                        dayTimeModel1.selectTime.add(TimeModel("",""))
+                        dayTimeModel1.selectTime.add(TimeModel("", ""))
                         dayTimeRepeatAdapter!!.notifyDataSetChanged()
                     }
                 })
@@ -136,48 +193,111 @@ class TraderActivity : image(), OnItemSelectedListener {
         rvDayTime!!.setLayoutManager(LinearLayoutManager(this))
         val adapter = DescriptionRepeatAdapter(this, image, this@TraderActivity, returnItemView)
         rvDesc!!.setLayoutManager(LinearLayoutManager(this))
-        rvDesc!!.setAdapter(adapter)
-    }
+        rvDesc!!.setAdapter(adapter)*/
 
-    /*  private String getCurrentTime() {
-        String currentTime="Current Time: "+timepicker.getCurrentHour()+":"+timepicker.getCurrentMinute();
-        return currentTime;
-    }*/
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-    override fun selectedImage(var1: Bitmap, var2: String) {
 
-        // ivImg.setImageBitmap(var1);
-        if (imgtype == "0") {
-            ivImg!!.setImageBitmap(var1)
-        } else if (imgtype == "1") {
-            ivplus!!.setImageBitmap(var1)
-        } else if (imgtype == "2") {
-            ivImg1!!.setImageBitmap(var1)
-        } else if (imgtype == "3") {
-            ivImg2!!.setImageBitmap(var1)
-        } else if (imgtype == "4") {
-            ivImg3!!.setImageBitmap(var1)
-        } else {
-            image[imasgezpos.toString()] = var1
-            Log.e("kmdkmdkedcmk", "Activity-$imasgezpos   $var1")
-            Log.e("kmdkmdkedcmk", "PPPctivity-" + image[imasgezpos])
-            val adapter = DescriptionRepeatAdapter(this, image, this@TraderActivity, returnItemView)
-            rvDesc!!.layoutManager = LinearLayoutManager(this)
-            rvDesc!!.adapter = adapter
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+
+            R.id.ivImg -> {
+                IMAGE_SELECTED_TYPE = "1"
+                checkPermission(this)
+            }
+            R.id.ivImg1 -> {
+                IMAGE_SELECTED_TYPE = "2"
+                checkPermission(this)
+            }
+            R.id.ivImg2 -> {
+                IMAGE_SELECTED_TYPE = "3"
+                checkPermission(this)
+            }
+            R.id.ivImg3 -> {
+                IMAGE_SELECTED_TYPE = "4"
+                checkPermission(this)
+            }
+            R.id.ivplus -> {
+                IMAGE_SELECTED_TYPE = "5"
+                checkPermission(this)
+            }
         }
     }
 
-    fun imageClick(pos: Int, size: Int) {
-        imgtype = "5"
-        returnItemView = size
-        Log.e("wdwdwdd", pos.toString())
-        imasgezpos = pos.toString()
-        image("all")
+    override fun getRealImagePath(imgPath: String?) {
+        when (IMAGE_SELECTED_TYPE) {
+
+            "1" -> {
+                setImageOnTab(imgPath, ivImg)
+            }
+
+            "2" -> {
+                setImageOnTab(imgPath, ivImg1)
+            }
+
+            "3" -> {
+                setImageOnTab(imgPath, ivImg2)
+            }
+
+            "4" -> {
+                setImageOnTab(imgPath, ivImg3)
+            }
+
+            "5" -> {
+                setImageOnTab(imgPath, ivplus)
+            }
+
+        }
     }
 
+    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
+        Log.d("getimage", "---------" + imgPATH.toString())
+
+        when (IMAGE_SELECTED_TYPE) {
+
+            "1" -> {
+                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video11)
+            }
+            "2" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video22)
+
+            }
+            "3" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video33)
+
+            }
+            "4" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video44)
+
+            }
+            "5" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video55)
+            }
+        }
+
+        Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
+    }
+
+
+    private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
+
+        if (imgpath?.contains(".mp4")!!) {
+            videoButton.visibility = View.VISIBLE
+        } else {
+            videoButton.visibility = View.GONE
+        }
+    }
+
+
+/*
     companion object {
         var imgtype: String? = null
         var imasgezpos: String? = null
+    }*/
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
+
 }

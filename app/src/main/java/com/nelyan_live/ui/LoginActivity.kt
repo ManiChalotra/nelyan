@@ -260,6 +260,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
                     }
 
+
                     progressDialog.hidedialog()
 
                     OpenActivity(HomeActivity::class.java) {
@@ -282,11 +283,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 if(response.body()!= null){
                     progressDialog.hidedialog()
 
+                    Log.d("socialData","-----------------"+ socialName)
+                    Log.d("socialData","-----------------"+ socialEmail)
+                    Log.d("socialData","-----------------"+ socialImage)
+
                     OpenActivity(SignupActivity::class.java){
                         putString("socialLogin", "SOCIAL_LOGIN")
                         putString("socialName", socialName)
                         putString("socialEmail", socialEmail)
                         putString("socialImage", socialImage)
+                        putString("socialId", socialId)
                     }
                 }
             }else{

@@ -31,6 +31,8 @@ import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
 
 class NurseFragment : Fragment(), OnMapReadyCallback {
+
+
     lateinit  var mContext: Context
     lateinit  var v: View
     var rc: RecyclerView? = null
@@ -45,6 +47,8 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
     var tvTitle: TextView? = null
     var indicator: ScrollingPagerIndicator? = null
     var datalist = ArrayList<DetailsImageModal>()
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -83,6 +87,7 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
         return v
     }
 
+
     fun dailogDelete() {
         dialog = Dialog(mContext!!)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -97,6 +102,7 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
         dialog!!.show()
     }
 
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
@@ -106,4 +112,6 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
                 .title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
     }
+
+
 }

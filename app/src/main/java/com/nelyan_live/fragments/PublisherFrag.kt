@@ -38,6 +38,7 @@ class PublisherFrag : Fragment(), View.OnClickListener {
 
         radioGroup.setOnCheckedChangeListener { radioGroup, optionId ->
             run {
+
                 when (optionId) {
                     R.id.btn_activity -> {
                         type = "1"
@@ -87,7 +88,6 @@ class PublisherFrag : Fragment(), View.OnClickListener {
                         requireActivity().myCustomToast("Please select your publisher type ")
                     }
                 }
-
             }
         }
     }

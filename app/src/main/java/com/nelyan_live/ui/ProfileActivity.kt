@@ -54,10 +54,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
             imageViewProgressBar?.showProgressBar()
             checkMvvmResponse()
         }
-
     }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,15 +63,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
         initalize()
         btnEdit.visibility = View.GONE
 
+
         /*  tvEdit!!.setOnClickListener(View.OnClickListener {
               val i = Intent(this@ProfileActivity, EditProfileActivity::class.java)
               startActivity(i)
           })
 
-
           tvDelete!!.setOnClickListener(View.OnClickListener { delDialog() })
-
   */
+
         /*ivPlus!!.setOnClickListener(View.OnClickListener {
             if (ll_1!!.getVisibility() == View.VISIBLE) {
                 // Its visible
@@ -98,11 +95,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
             dialog!!.dismiss()
         }
         dialog!!.show()
+
     }
 */
 
+    
     private  fun checkMvvmResponse(){
        appViewModel.observeProfileApiResponse()!!.observe(this, Observer { response->
+
+
            if(response!!.isSuccessful && response.code()==200){
                if(response.body()!= null){
                    Log.d("ProfileResponseBody","----------"+ Gson().toJson(response.body()))
