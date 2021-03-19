@@ -19,6 +19,7 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.R
@@ -43,7 +44,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener, CoroutineScope, AgeGroupRepeatAdapter.OnAGeGroupRecyclerViewItemClickListner, EventRepeatAdapter.OnEventRecyclerViewItemClickListner{
+class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener, CoroutineScope, AgeGroupRepeatAdapter.OnAGeGroupRecyclerViewItemClickListner, EventRepeatAdapter.OnEventRecyclerViewItemClickListner {
 
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
@@ -53,25 +54,25 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private val job by lazy { kotlinx.coroutines.Job() }
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivityFormActivity) }
+
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
-
-    private  var imagePathList = ArrayList<MultipartBody.Part>()
+    private var imagePathList = ArrayList<MultipartBody.Part>()
 
     // json Array
-    private  var ageGroup:JSONArray = JSONArray()
-    private   var addEvent:JSONArray = JSONArray()
-    private   var media:JSONArray = JSONArray()
+    private var ageGroup: JSONArray = JSONArray()
+    private var addEvent: JSONArray = JSONArray()
+    private var media: JSONArray = JSONArray()
 
     // dialo for progress
-    private  var progressDialog = ProgressDialog(this)
+    private var progressDialog = ProgressDialog(this)
 
     // initalize the variables
-    private  lateinit  var listAgeGroupDataModel :ArrayList<ModelPOJO.AgeGroupDataModel>
-    private  lateinit var  listAddEventDataModel:ArrayList<ModelPOJO.AddEventDataModel>
-    private  lateinit var  ageGroupRepeatAdapter:AgeGroupRepeatAdapter
-    private  lateinit var  addEventRepeatAdapter:EventRepeatAdapter
+    private lateinit var listAgeGroupDataModel: ArrayList<ModelPOJO.AgeGroupDataModel>
+    private lateinit var listAddEventDataModel: ArrayList<ModelPOJO.AddEventDataModel>
+    private lateinit var ageGroupRepeatAdapter: AgeGroupRepeatAdapter
+    private lateinit var addEventRepeatAdapter: EventRepeatAdapter
 
     private var cityName = ""
     private var cityLatitude = ""
@@ -79,10 +80,17 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private var cityAddress = ""
     private var authKey = ""
 
-    private  var eventPhotoPosition = 0
+    private var eventPhotoPosition = 0
+    private var urlListingFromResponse: ArrayList<String> = ArrayList()
+    private var addEventUrlListingResponse: ArrayList<String> = ArrayList()
 
+    var imageVideoUrlListing = arrayListOf("", "", "", "", "")
 
-    private  var urlList = ArrayList<String>()
+    private var imageVideoListPosition = -1
+    private var selectedUrlListing: ArrayList<String> = ArrayList()
+    private var checkAddEventImages = false
+    private  var checkedEvent= false
+
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -92,14 +100,14 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         hitTypeActivity_Api()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_activity3)
+
         initalizeclicks()
         checkMvvmResponse()
 
-        ageGroupRepeatAdapter = AgeGroupRepeatAdapter(this,listAgeGroupDataModel, this)
+        ageGroupRepeatAdapter = AgeGroupRepeatAdapter(this, listAgeGroupDataModel, this)
         rvAgeGroup!!.adapter = ageGroupRepeatAdapter
 
         addEventRepeatAdapter = EventRepeatAdapter(this, listAddEventDataModel, this)
@@ -108,27 +116,27 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
+
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun initalizeclicks() {
 
         // initalize the lists
-        if(this::listAgeGroupDataModel.isInitialized){
+        if (this::listAgeGroupDataModel.isInitialized) {
             listAgeGroupDataModel.clear()
 
-        }else{
+        } else {
             listAgeGroupDataModel = ArrayList()
-            listAgeGroupDataModel.add(ModelPOJO.AgeGroupDataModel("","","","",""))
+            listAgeGroupDataModel.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
         }
 
-        if(this::listAddEventDataModel.isInitialized){
+        if (this::listAddEventDataModel.isInitialized) {
             listAddEventDataModel.clear()
 
-        }else{
+        } else {
             listAddEventDataModel = ArrayList()
-            listAddEventDataModel.add(ModelPOJO.AddEventDataModel("","","","","","","",""))
+            listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "", "", ""))
         }
-
 
 
         // clicks for images
@@ -137,6 +145,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
         ivplus.setOnClickListener(this)
+
 
         // clicks for buttons
         btnSubmit.setOnClickListener(this)
@@ -150,12 +159,13 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.rlImg -> {
+
                 IMAGE_SELECTED_TYPE = "1"
                 checkPermission(this)
             }
             R.id.ivImg1 -> {
-                IMAGE_SELECTED_TYPE = "2"
 
+                IMAGE_SELECTED_TYPE = "2"
                 checkPermission(this)
             }
             R.id.ivImg2 -> {
@@ -165,47 +175,15 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
             }
             R.id.ivImg3 -> {
                 IMAGE_SELECTED_TYPE = "4"
-
                 checkPermission(this)
+
+
             }
             R.id.ivplus -> {
                 IMAGE_SELECTED_TYPE = "5"
                 checkPermission(this)
             }
             R.id.btnSubmit -> {
-
-                // taking image url from uploadimage api response
-                gettingURLOfEventImages()
-
-
-
-                // for age group listing cards
-                for(i in  0..listAgeGroupDataModel.size-1){
-                    val json = JSONObject()
-                    json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-                    json.put("age_to", listAgeGroupDataModel[i].ageTo)
-                    json.put("days",listAgeGroupDataModel[i].days)
-                    json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-                    json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                    ageGroup.put(json)
-                }
-
-               /* // for addEvent Listing cards
-                for(i in 0 until listAddEventDataModel!!.size-1 ){
-                    val json = JSONObject()
-                   json.put("image",)
-                   json.put("file_type",)
-                   json.put("date_from",)
-                   json.put("date_to",)
-                   json.put("time_from",)
-                   json.put("time_to",)
-                   json.put("description",)
-                   json.put("price",)
-                    addEvent.put(json)
-                }*/
-
-
-
 
 
                 val shopName = et_shopName.text.toString()
@@ -243,7 +221,48 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                             if (address.isEmpty()) {
                                                 myCustomToast("Please  select your address")
                                             } else {
-                                                hitApi(activityType, shopName, activityName, description,message, phone, cityAddress, cityLatitude, cityLongitude, cityName)
+
+                                                // for check upper images url from response
+                                                Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+                                                // rotating loop
+                                                for (i in 0..imageVideoUrlListing.size - 1) {
+                                                    val media = imageVideoUrlListing[i]
+                                                    if (!media.isEmpty()) {
+                                                        selectedUrlListing.add(media)
+                                                    }
+                                                }
+
+                                                // hitting api for upper 5 images
+                                                hitApiForBannerImages(0)
+                                                if(checkedEvent){
+                                                    if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                                        // taking image url from uploadimage api response
+                                                        imagePathList!!.clear()
+                                                        checkAddEventImages = true
+                                                        gettingURLOfEventImages()
+                                                        if(imagePathList.size.equals(addEventUrlListingResponse.size)){
+                                                            // for age group listing cards
+                                                            for (i in 0..listAgeGroupDataModel.size - 1) {
+                                                                val json = JSONObject()
+                                                                json.put("age_from", listAgeGroupDataModel[i].ageFrom)
+                                                                json.put("age_to", listAgeGroupDataModel[i].ageTo)
+                                                                json.put("days", listAgeGroupDataModel[i].days)
+                                                                json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                                                ageGroup.put(json)
+                                                            }
+
+                                                            hitApi(activityType, shopName, activityName, description, message, phone, cityAddress, cityLatitude, cityLongitude, cityName)
+                                                        }
+                                                    }
+                                                }
+
+
+
+
+
+
+
                                             }
                                         }
                                     }
@@ -252,6 +271,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                         }
                     }
                 }
+
+
             }
 
 
@@ -264,10 +285,47 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         }
     }
 
-    private  fun gettingURLOfEventImages(){
-        for(i in 0 until listAddEventDataModel.size){
+    private fun hitApiForBannerImages(position: Int) {
+
+        imageVideoListPosition = position
+
+        if (imageVideoListPosition < selectedUrlListing.size - 1) {
+
+            val media = selectedUrlListing[imageVideoListPosition]
+
+            if (!media.isNullOrEmpty()) {
+                var mfile: File? = null
+                mfile = File(media)
+                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                var photo: MultipartBody.Part? = null
+                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                imagePathList.add(photo)
+                var type: RequestBody
+                if (media.contains(".mp4")) {
+                    type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
+                } else {
+                    type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+                }
+                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+                appViewModel.sendUploadImageData(type, users, imagePathList)
+            } else {
+                imageVideoListPosition = imageVideoListPosition + 1
+                if (imageVideoListPosition <= selectedUrlListing.size) {
+                    hitApiForBannerImages(imageVideoListPosition)
+                }
+            }
+
+
+        }
+
+
+    }
+
+    private fun gettingURLOfEventImages() {
+
+        for (i in 0 until listAddEventDataModel.size) {
             val media = listAddEventDataModel[i].image
-            if(! media.isNullOrEmpty()){
+            if (!media.isNullOrEmpty()) {
                 var mfile: File? = null
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
@@ -277,6 +335,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
             }
         }
 
+        Log.d("imagePathLsiting", "-------------" + imagePathList!!.size)
+
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
         appViewModel.sendUploadImageData(type, users, imagePathList)
@@ -285,7 +345,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String, cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
         appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString())
-    progressDialog.setProgressDialog()
+        progressDialog.setProgressDialog()
     }
 
     private fun showPlacePicker() {
@@ -330,33 +390,40 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
 
     override fun getRealImagePath(imgPath: String?) {
-        Log.d("selectedImagePath", "-------" + imgPath)
 
+        Log.d("selectedImagePath", "-------" + imgPath)
         when (IMAGE_SELECTED_TYPE) {
+
             "1" -> {
                 setImageOnTab(imgPath, ivImg)
+                imageVideoUrlListing.set(0, imgPath.toString())
             }
             "2" -> {
                 setImageOnTab(imgPath, ivImg1)
+                imageVideoUrlListing.set(1, imgPath.toString())
             }
             "3" -> {
                 setImageOnTab(imgPath, ivImg2)
+                imageVideoUrlListing.set(2, imgPath.toString())
             }
             "4" -> {
                 setImageOnTab(imgPath, ivImg3)
+                imageVideoUrlListing.set(3, imgPath.toString())
             }
             "5" -> {
                 setImageOnTab(imgPath, ivplus)
+                imageVideoUrlListing.set(4, imgPath.toString())
             }
-            else->{
+            else -> {
+
                 // here we getting the add event image photo path
                 listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
                 addEventRepeatAdapter.notifyDataSetChanged()
 
 
-
             }
         }
+        Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
     }
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
@@ -397,23 +464,22 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
-        Log.d("listtAgrGroup","--------"+ list)
-        list.add(ModelPOJO.AgeGroupDataModel("","","","",""))
-      // imageList.add(ModelPOJO.EventImage(""))
+        Log.d("listtAgrGroup", "--------" + list)
+        list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
+        // imageList.add(ModelPOJO.EventImage(""))
         ageGroupRepeatAdapter.notifyDataSetChanged()
 
     }
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
-        listAddEventDataModel.add(ModelPOJO.AddEventDataModel("","","","","","","",""))
+        listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "", "", ""))
         addEventRepeatAdapter.notifyDataSetChanged()
     }
 
     override fun addCameraGelleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
-
+        // for adding event image on card
         eventPhotoPosition = position
         checkPermission(this)
-
     }
 
     private fun hitTypeActivity_Api() {
@@ -444,32 +510,54 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         })
 
         // add post for activity
-        appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response->
-            if(response!!.isSuccessful && response.code()==200){
-                if(response.body()!= null){
+        appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("addPostActivityResopnse","-----------"+ Gson().toJson(response.body()))
+                if (response.body() != null) {
                     progressDialog.hidedialog()
                     OpenActivity(DetailActivity::class.java)
                 }
-            }else{
+            } else {
                 ErrorBodyResponse(response, this, null)
             }
         })
 
+
         // for imageUpload api
-        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response->
-            if(response!!.isSuccessful && response.code()==200){
-                if(response.body()!= null){
-                    if(response.body()!!.data!= null){
-                        for(i in 0 until response.body()!!.data!!.size){
-                            val url = response.body()!!.data!![i].image.toString()
-                            urlList.add(url)
+        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    if (response.body()!!.data != null) {
+
+                        if (checkAddEventImages) {
+
+                            for(i in 0 until response.body()!!.data!!.size){
+                                addEventUrlListingResponse.add(response.body()!!.data!![i].image.toString())
+                            }
+
+                        } else {
+
+                            var url = response.body()!!.data!![0].image.toString()
+                            urlListingFromResponse.add(url)
+
+
+                            if (imageVideoListPosition <= 4) {
+                                imageVideoListPosition = imageVideoListPosition + 1
+                                hitApiForBannerImages(imageVideoListPosition)
+                            }else{
+                                checkedEvent = true
+                            }
+
+                            Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
                         }
                     }
-                }else{
+                } else {
                     ErrorBodyResponse(response, this, null)
                 }
             }
         })
+
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
