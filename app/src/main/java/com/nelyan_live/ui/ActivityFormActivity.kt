@@ -59,6 +59,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
     private var imagePathList = ArrayList<MultipartBody.Part>()
+    private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
     // json Array
     private var ageGroup: JSONArray = JSONArray()
@@ -88,8 +89,15 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     private var imageVideoListPosition = -1
     private var selectedUrlListing: ArrayList<String> = ArrayList()
-    private var checkAddEventImages = false
-    private  var checkedEvent= false
+    private var savedaddEventImagesData = false
+
+    //saving values variables
+    private  var activity_type = ""
+    private  var shop_name = ""
+    private  var activity_name= ""
+    private  var descp = ""
+    private  var messagee = ""
+    private  var phonee = ""
 
 
     override val coroutineContext: CoroutineContext
@@ -100,18 +108,18 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         hitTypeActivity_Api()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_activity3)
-
         initalizeclicks()
         checkMvvmResponse()
-
         ageGroupRepeatAdapter = AgeGroupRepeatAdapter(this, listAgeGroupDataModel, this)
         rvAgeGroup!!.adapter = ageGroupRepeatAdapter
 
         addEventRepeatAdapter = EventRepeatAdapter(this, listAddEventDataModel, this)
         rvEvent!!.adapter = addEventRepeatAdapter
+
 
     }
 
@@ -137,7 +145,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
             listAddEventDataModel = ArrayList()
             listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "", "", ""))
         }
-
 
         // clicks for images
         rlImg.setOnClickListener(this)
@@ -194,6 +201,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 val message = et_message.text.toString()
 
 
+
                 if (IMAGE_SELECTED_TYPE.equals("")) {
                     myCustomToast("Please select atleast one media file image or video .")
                 } else {
@@ -221,9 +229,26 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                             if (address.isEmpty()) {
                                                 myCustomToast("Please  select your address")
                                             } else {
+                                                    // adding values
+                                                activity_type =  orderby.selectedItem.toString()
+                                                shop_name = shopName
+                                                activity_name = activityName
+                                               descp =  description
+                                                messagee = message
+                                                phonee = phone
+
+
+
+                                                // checking the list
+                                                if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                                    selectedUrlListing.clear()
+                                                    urlListingFromResponse.clear()
+                                                }
 
                                                 // for check upper images url from response
                                                 Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+
+
                                                 // rotating loop
                                                 for (i in 0..imageVideoUrlListing.size - 1) {
                                                     val media = imageVideoUrlListing[i]
@@ -234,34 +259,32 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
                                                 // hitting api for upper 5 images
                                                 hitApiForBannerImages(0)
-                                                if(checkedEvent){
-                                                    if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
-                                                        // taking image url from uploadimage api response
-                                                        imagePathList!!.clear()
-                                                        checkAddEventImages = true
-                                                        gettingURLOfEventImages()
-                                                        if(imagePathList.size.equals(addEventUrlListingResponse.size)){
-                                                            // for age group listing cards
-                                                            for (i in 0..listAgeGroupDataModel.size - 1) {
-                                                                val json = JSONObject()
-                                                                json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-                                                                json.put("age_to", listAgeGroupDataModel[i].ageTo)
-                                                                json.put("days", listAgeGroupDataModel[i].days)
-                                                                json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-                                                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                                                ageGroup.put(json)
-                                                            }
-
-                                                            hitApi(activityType, shopName, activityName, description, message, phone, cityAddress, cityLatitude, cityLongitude, cityName)
-                                                        }
-                                                    }
-                                                }
 
 
+                                                /*
+                                                 if (checkedEvent) {
+                                                     if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                                         // taking image url from uploadimage api response
+                                                         imagePathList!!.clear()
 
+                                                         checkAddEventImages = true
+                                                         gettingURLOfEventImages()
+                                                         if (imagePathList.size.equals(addEventUrlListingResponse.size)) {
+                                                             // for age group listing cards
+                                                             for (i in 0..listAgeGroupDataModel.size - 1) {
+                                                                 val json = JSONObject()
+                                                                 json.put("age_from", listAgeGroupDataModel[i].ageFrom)
+                                                                 json.put("age_to", listAgeGroupDataModel[i].ageTo)
+                                                                 json.put("days", listAgeGroupDataModel[i].days)
+                                                                 json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                                                 json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                                                 ageGroup.put(json)
+                                                             }
 
-
-
+                                                             hitApi(activityType, shopName, activityName, description, message, phone, cityAddress, cityLatitude, cityLongitude, cityName)
+                                                         }
+                                                     }
+                                                 }*/
 
                                             }
                                         }
@@ -289,11 +312,15 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
         imageVideoListPosition = position
 
-        if (imageVideoListPosition < selectedUrlListing.size - 1) {
+        if (imageVideoListPosition <= selectedUrlListing.size - 1) {
+
 
             val media = selectedUrlListing[imageVideoListPosition]
 
             if (!media.isNullOrEmpty()) {
+
+                savedaddEventImagesData = false
+
                 var mfile: File? = null
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
@@ -309,19 +336,39 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
                 appViewModel.sendUploadImageData(type, users, imagePathList)
             } else {
+
                 imageVideoListPosition = imageVideoListPosition + 1
+
                 if (imageVideoListPosition <= selectedUrlListing.size) {
                     hitApiForBannerImages(imageVideoListPosition)
                 }
+
+
             }
 
+        } else {
+
+            savedaddEventImagesData = true
+            gettingURLOfEventImages()
+
+            /* urlListingFromResponse.clear()
+             addEventUrlListingResponse.clear()
+             selectedUrlListing.clear()
+             imagePathList.clear()
+             savedaddEventImagesData = true
+             gettingURLOfEventImages()
+             */
 
         }
 
 
     }
 
+
     private fun gettingURLOfEventImages() {
+        if (imagePathList2 != null) {
+            imagePathList2.clear()
+        }
 
         for (i in 0 until listAddEventDataModel.size) {
             val media = listAddEventDataModel[i].image
@@ -331,20 +378,20 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
                 photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-                imagePathList.add(photo)
+                imagePathList2.add(photo)
             }
         }
 
-        Log.d("imagePathLsiting", "-------------" + imagePathList!!.size)
+        Log.d("imagePathLsiting", "-------------" + imagePathList2!!.size)
 
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-        appViewModel.sendUploadImageData(type, users, imagePathList)
+        appViewModel.sendUploadImageData(type, users, imagePathList2)
 
     }
 
     private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String, cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
-        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString())
+        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(),"+91")
         progressDialog.setProgressDialog()
     }
 
@@ -357,8 +404,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
-
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -418,9 +465,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
                 // here we getting the add event image photo path
                 listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
+                Log.d("lisufjdhf", "-----------" + listAddEventDataModel.toString())
                 addEventRepeatAdapter.notifyDataSetChanged()
-
-
             }
         }
         Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
@@ -461,6 +507,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
             videoButton.visibility = View.GONE
         }
     }
+
 
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
@@ -512,12 +559,13 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         // add post for activity
         appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("addPostActivityResopnse","-----------"+ Gson().toJson(response.body()))
+                Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     progressDialog.hidedialog()
                     OpenActivity(DetailActivity::class.java)
                 }
             } else {
+                progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
             }
         })
@@ -529,28 +577,67 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
-
-                        if (checkAddEventImages) {
-
-                            for(i in 0 until response.body()!!.data!!.size){
-                                addEventUrlListingResponse.add(response.body()!!.data!![i].image.toString())
+                        if (!savedaddEventImagesData) {
+                            urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
+                            if (imageVideoListPosition <= 4) {
+                                imageVideoListPosition = imageVideoListPosition + 1
+                                hitApiForBannerImages(imageVideoListPosition)
                             }
 
                         } else {
 
-                            var url = response.body()!!.data!![0].image.toString()
-                            urlListingFromResponse.add(url)
 
-
-                            if (imageVideoListPosition <= 4) {
-                                imageVideoListPosition = imageVideoListPosition + 1
-                                hitApiForBannerImages(imageVideoListPosition)
-                            }else{
-                                checkedEvent = true
+                            // response for addevent images data
+                            if (addEventUrlListingResponse != null) {
+                                addEventUrlListingResponse!!.clear()
                             }
 
-                            Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
+                            for (i in 0 until response.body()!!.data!!.size) {
+                                addEventUrlListingResponse.add(response.body()!!.data!![i].image.toString())
+                            }
+
+                            // now making json format for upper images media
+                            for (i in 0..urlListingFromResponse.size - 1) {
+                                val json = JSONObject()
+                                json.put("image", urlListingFromResponse[i])
+                                media.put(json)
+                            }
+
+                                // json format for addEvent
+                            for (i in 0..addEventUrlListingResponse.size - 1) {
+                                val json = JSONObject()
+                                json.put("image", addEventUrlListingResponse[i])
+                                json.put("file_type", "image")
+                                // for(j in 0 .. i){
+                                json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
+                                json.put("date_to", listAddEventDataModel[i].dateTo.toString())
+                                json.put("time_from", listAddEventDataModel[i].timeFrom.toString())
+                                json.put("time_to", listAddEventDataModel[i].timeTo.toString())
+                                json.put("description", listAddEventDataModel[i].description.toString())
+                                json.put("price", listAddEventDataModel[i].price.toString())
+                                //}
+                                addEvent.put(json)
+                            }
+
+                            // for age group listing cards
+                            for (i in 0..listAgeGroupDataModel.size - 1) {
+                                val json = JSONObject()
+                                json.put("age_from", listAgeGroupDataModel[i].ageFrom)
+                                json.put("age_to", listAgeGroupDataModel[i].ageTo)
+                                json.put("days", listAgeGroupDataModel[i].days)
+                                json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                ageGroup.put(json)
+                            }
+
+                            hitFinallyActivityAddPostApi()
                         }
+
+
+
+                        Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
+                        Log.d("addEventUrlListing", "-------------" + addEventUrlListingResponse.toString())
+
                     }
                 } else {
                     ErrorBodyResponse(response, this, null)
@@ -565,6 +652,11 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
         })
 
+    }
+
+    private  fun hitFinallyActivityAddPostApi(){
+        appViewModel.send_addPostActivity_Data(security_key,authKey,"1",activity_type,shop_name,activity_name,descp,messagee,phonee,cityAddress,cityName,cityLatitude,cityLongitude,ageGroup.toString(), addEvent.toString(),media.toString() , "+91")
+        progressDialog.setProgressDialog()
     }
 
 

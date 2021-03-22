@@ -158,7 +158,8 @@ interface JsonPlaceHolder {
                                  @Field("longitude") longitude: String,
                                  @Field("ageGroup") ageGroup: String,// sending json Array
                                  @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String// send json Array
+                                 @Field("media") media: String,// send json Array
+                                 @Field("country_code") country_code: String
     ): Call<JsonObject>
 
     @POST("social_login")

@@ -26,6 +26,7 @@ import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
 
 class TraderPublishFragment : Fragment(), OnMapReadyCallback {
+
  lateinit   var v: View
     lateinit  var mContext: Context
     var dialog: Dialog? = null
@@ -35,13 +36,19 @@ class TraderPublishFragment : Fragment(), OnMapReadyCallback {
     var indicator: ScrollingPagerIndicator? = null
     var rc: RecyclerView? = null
     var datalist = ArrayList<DetailsImageModal>()
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_trader_publish, container, false)
         mContext = requireActivity()
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
+
+
         ivBack = v.findViewById(R.id.ivBack)
         ivBack!!.setOnClickListener(View.OnClickListener {
             try {
@@ -59,11 +66,15 @@ class TraderPublishFragment : Fragment(), OnMapReadyCallback {
                 fm.popBackStack()
             }
         })
+
         ivShare = v.findViewById(R.id.ivShare)
         ivShare!!.setOnClickListener(View.OnClickListener { dailogShare() })
+
         rc = v.findViewById(R.id.rc_detailsimg)
         val lm = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         rc!!.setLayoutManager(lm)
+
+
         indicator = v.findViewById(R.id.indicator)
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
