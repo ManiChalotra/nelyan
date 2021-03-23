@@ -404,6 +404,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
+
     }
 
 
@@ -412,11 +413,9 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         if (requestCode === PLACE_PICKER_REQUEST) {
             if (resultCode === Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
-
                 cityAddress = place.address.toString()
                 et_addressActivity.setText(cityAddress.toString())
                 cityName = place.name.toString()
-
                 // cityID = place.id.toString()
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
@@ -431,8 +430,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 Log.i("dddddd", "-------Operation is cancelled ")
             }
         }
-
-
     }
 
 
@@ -462,12 +459,12 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 imageVideoUrlListing.set(4, imgPath.toString())
             }
             else -> {
-
                 // here we getting the add event image photo path
                 listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
                 Log.d("lisufjdhf", "-----------" + listAddEventDataModel.toString())
                 addEventRepeatAdapter.notifyDataSetChanged()
             }
+            
         }
         Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
     }
