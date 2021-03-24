@@ -3,6 +3,7 @@ package com.meherr.mehar.data.network
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
+import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyan_live.utils.base_URL
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +19,7 @@ interface JsonPlaceHolder {
 
     @Multipart
     @POST("signup")
-    fun getSignUp_withImage_APi(
+    fun getSignUp_woithImage_APi(
             @Header("security_key") securityKey: String?,
             @Header("device_type") device_type: String?,
             @Header("device_token") device_token: String?,

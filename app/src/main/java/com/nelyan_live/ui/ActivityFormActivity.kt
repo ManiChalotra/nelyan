@@ -213,7 +213,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                             myCustomToast("Please enter your shop name ")
                         } else {
                             if (activityName.isEmpty()) {
-                                myCustomToast("Please  enter your activity name")
+                                myCustomToast("Please enter your activity name")
                             } else {
 
                                 if (message.isEmpty()) {
@@ -223,11 +223,11 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                         myCustomToast("Please enter your description ")
                                     } else {
                                         if (phone.isEmpty()) {
-                                            myCustomToast("Please  enter your phone ")
+                                            myCustomToast("Please enter your phone ")
 
                                         } else {
                                             if (address.isEmpty()) {
-                                                myCustomToast("Please  select your address")
+                                                myCustomToast("Please select your address")
                                             } else {
                                                     // adding values
                                                 activity_type =  orderby.selectedItem.toString()

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 import com.meherr.mehar.data.network.JsonPlaceHolder
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
+import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -52,7 +53,7 @@ class AppViewModel : ViewModel() {
             image:MultipartBody.Part?
 
     ) {
-        JsonPlaceHolder().getSignUp_withImage_APi(securityKey, deviceType, deviceToken,name,email,password,role,second,city,latituude,longitude,image)
+        JsonPlaceHolder().getSignUp_woithImage_APi(securityKey, deviceType, deviceToken,name,email,password,role,second,city,latituude,longitude,image)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
@@ -463,6 +464,34 @@ class AppViewModel : ViewModel() {
                 })
 
     }
+
+    // trader Activity spinner api
+
+    private var activityTypeTraderMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeActivityTypeTraderResponse(): LiveData<Response<JsonObject>?>? {
+        if (activityTypeTraderMutableLiveData == null) {
+            activityTypeTraderMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return activityTypeTraderMutableLiveData
+    }
+
+    fun sendActivityTypeTraderData(securityKey: String?,authkey:String?) {
+        JsonPlaceHolder().get_TraderActivity_Api(securityKey, authkey)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        activityTypeTraderMutableLiveData?.value = response
+                    }
+                })
+
+    }
+
+
 
 
     // add post Activity api

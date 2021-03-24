@@ -3,20 +3,25 @@ package com.nelyan_live.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import androidx.datastore.preferences.core.preferencesKey
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.HELPER.image
 import com.nelyan_live.R
 import com.nelyan_live.adapter.DayTimeRepeatAdapter
 import com.nelyan_live.adapter.DescriptionRepeatAdapter
+import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyan_live.modals.DayTimeModel
 import com.nelyan_live.modals.TimeModel
-import com.nelyan_live.utils.OpenCameraGallery
-import com.nelyan_live.utils.ProgressDialog
+import com.nelyan_live.utils.*
+import kotlinx.android.synthetic.main.activity_activity3.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.android.synthetic.main.activity_trader.*
 import kotlinx.android.synthetic.main.activity_trader.ivImg
@@ -24,8 +29,12 @@ import kotlinx.android.synthetic.main.activity_trader.ivImg1
 import kotlinx.android.synthetic.main.activity_trader.ivImg2
 import kotlinx.android.synthetic.main.activity_trader.ivImg3
 import kotlinx.android.synthetic.main.activity_trader.ivplus
+import kotlinx.android.synthetic.main.activity_trader.orderby
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
 class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
@@ -94,6 +103,10 @@ var image = HashMap<String, Bitmap>()
 
         rvDayTime.adapter = DayTimeRepeatAdapter(this, dayTimeModelArrayList)
 
+        hitTypeTradeActivity_Api()
+        traderTypeResponse()
+
+
     }
 
 
@@ -104,6 +117,44 @@ var image = HashMap<String, Bitmap>()
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
         ivplus.setOnClickListener(this)
+
+    }
+
+    private fun hitTypeTradeActivity_Api() {
+
+        val authkey  = AllSharedPref.restoreString(this, "auth_key")
+        appViewModel.sendActivityTypeTraderData(security_key, authkey)
+
+    }
+
+    private fun traderTypeResponse(){
+
+        appViewModel.observeActivityTypeTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+
+                if (response.body() != null) {
+                  /*  val jsonObject = JSONObject(response.body().toString())
+                    var jsonArray = jsonObject.getJSONArray("data")
+                    val trader: ArrayList<String?> = ArrayList()
+                    trader.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("name").toString()
+                        trader.add(name)
+                    }*/
+                    val  res = Gson().fromJson(response.body().toString(), TraderTypeResponse::class.java )
+                    val arrayAdapter1 = ArrayAdapter<Any?>(this, R.layout.customspinner, res.data)
+                    orderby.adapter = arrayAdapter1
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
+
+        appViewModel.getException()!!.observe(this, Observer {
+            myCustomToast(it)
+        })
+
 
     }
 

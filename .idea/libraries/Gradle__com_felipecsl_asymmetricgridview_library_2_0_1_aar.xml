@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.felipecsl.asymmetricgridview:library:2.0.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e51d874c8eaf3d361e0c8562f7c43897/jetified-library-2.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e51d874c8eaf3d361e0c8562f7c43897/jetified-library-2.0.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e51d874c8eaf3d361e0c8562f7c43897/jetified-library-2.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/772f205042dc243bc99605bf19f28971/jetified-library-2.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/772f205042dc243bc99605bf19f28971/jetified-library-2.0.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/772f205042dc243bc99605bf19f28971/jetified-library-2.0.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.felipecsl.asymmetricgridview/library/2.0.1/8a21687b1f1656f6f68b8f89fda39b89114a5cca/library-2.0.1-javadoc.jar!/" />

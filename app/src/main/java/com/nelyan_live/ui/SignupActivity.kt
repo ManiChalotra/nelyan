@@ -259,7 +259,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     private fun hitSignUpapi(name: String, email: String, password: String, type: String) {
 
-
         val mName = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val mEmail = email.toRequestBody("text/plain".toMediaTypeOrNull())
         val mPassword = password.toRequestBody("text/plain".toMediaTypeOrNull())
