@@ -44,7 +44,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener, CoroutineScope, AgeGroupRepeatAdapter.OnAGeGroupRecyclerViewItemClickListner, EventRepeatAdapter.OnEventRecyclerViewItemClickListner {
+class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener,
+        CoroutineScope, AgeGroupRepeatAdapter.OnAGeGroupRecyclerViewItemClickListner, EventRepeatAdapter.OnEventRecyclerViewItemClickListner {
 
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
@@ -92,12 +93,12 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private var savedaddEventImagesData = false
 
     //saving values variables
-    private  var activity_type = ""
-    private  var shop_name = ""
-    private  var activity_name= ""
-    private  var descp = ""
-    private  var messagee = ""
-    private  var phonee = ""
+    private var activity_type = ""
+    private var shop_name = ""
+    private var activity_name = ""
+    private var descp = ""
+    private var messagee = ""
+    private var phonee = ""
 
 
     override val coroutineContext: CoroutineContext
@@ -191,8 +192,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 checkPermission(this)
             }
             R.id.btnSubmit -> {
-
-
                 val shopName = et_shopName.text.toString()
                 val activityName = et_activityName.text.toString()
                 val description = et_description.text.toString()
@@ -229,14 +228,13 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                             if (address.isEmpty()) {
                                                 myCustomToast("Please select your address")
                                             } else {
-                                                    // adding values
-                                                activity_type =  orderby.selectedItem.toString()
+                                                // adding values
+                                                activity_type = orderby.selectedItem.toString()
                                                 shop_name = shopName
                                                 activity_name = activityName
-                                               descp =  description
+                                                descp = description
                                                 messagee = message
                                                 phonee = phone
-
 
 
                                                 // checking the list
@@ -391,7 +389,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     }
 
     private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String, cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
-        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(),"+91")
+        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(), "+91")
         progressDialog.setProgressDialog()
     }
 
@@ -464,7 +462,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 Log.d("lisufjdhf", "-----------" + listAddEventDataModel.toString())
                 addEventRepeatAdapter.notifyDataSetChanged()
             }
-            
+
         }
         Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
     }
@@ -600,7 +598,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                 media.put(json)
                             }
 
-                                // json format for addEvent
+                            // json format for addEvent
                             for (i in 0..addEventUrlListingResponse.size - 1) {
                                 val json = JSONObject()
                                 json.put("image", addEventUrlListingResponse[i])
@@ -651,8 +649,10 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     }
 
-    private  fun hitFinallyActivityAddPostApi(){
-        appViewModel.send_addPostActivity_Data(security_key,authKey,"1",activity_type,shop_name,activity_name,descp,messagee,phonee,cityAddress,cityName,cityLatitude,cityLongitude,ageGroup.toString(), addEvent.toString(),media.toString() , "+91")
+    private fun hitFinallyActivityAddPostApi() {
+        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activity_type, shop_name, activity_name,
+                descp, messagee, phonee, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(),
+                addEvent.toString(), media.toString(), "+91")
         progressDialog.setProgressDialog()
     }
 

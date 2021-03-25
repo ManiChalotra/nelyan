@@ -59,6 +59,9 @@
     <string name="myMessage">My Message</string>
     <string name="cityChat">City Chat</string>
     <string name="event">Event</string>
+    <string name="description">Description</string>
+    <string name="name_of_nurserie">Name of Nurserie</string>
+    <string name="address">Address</string>
 
 
 </resources>

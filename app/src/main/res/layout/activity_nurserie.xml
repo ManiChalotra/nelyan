@@ -216,13 +216,16 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Name of Nurserie"/>
+                android:text="@string/name_of_nurserie"/>
                 <EditText
+                    android:id="@+id/et_nursery_name"
                     style="@style/SimpleEdittext"
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:inputType="text"
-                    android:hint="Name of Nurserie"/>
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:hint="@string/name_of_nurserie"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -280,6 +283,11 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Phone Number"/>
             <EditText
+                android:id="@+id/et_phoneNumber"
+                android:maxLength="10"
+                android:digits="0123456789"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
                 style="@style/SimpleEdittext"
                 android:inputType="number"
                 android:hint="Phone Number"/>
@@ -289,11 +297,11 @@
                 android:background="@color/black"/> <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Address"/>
+                android:text="@string/address"/>
             <EditText
                 style="@style/SimpleEdittext"
                 android:id="@+id/et_addressNursery"
-                android:hint="Address"/>
+                android:hint="@string/address"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -301,16 +309,19 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Description"/>
+                android:text="@string/description"/>
             <EditText
+                android:id="@+id/et_description"
+                android:inputType="text"
+                android:imeOptions="actionNext"
                 style="@style/SimpleEdittext"
-                android:hint="Description"/>
+                android:hint="@string/description"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>
             <Button
-                android:id="@+id/btnSubmit"
+                android:id="@+id/btn_submit"
                 style="@style/Button"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"

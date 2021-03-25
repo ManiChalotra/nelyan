@@ -16,27 +16,35 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.R
-import com.nelyan_live.utils.OpenCameraGallery
-import com.nelyan_live.utils.ProgressDialog
-import kotlinx.android.synthetic.main.activity_activity3.*
+import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_nurserie.*
 import kotlinx.android.synthetic.main.activity_nurserie.ivImg
 import kotlinx.android.synthetic.main.activity_nurserie.ivImg1
 import kotlinx.android.synthetic.main.activity_nurserie.ivImg2
 import kotlinx.android.synthetic.main.activity_nurserie.ivImg3
 import kotlinx.android.synthetic.main.activity_nurserie.ivplus
+import kotlinx.android.synthetic.main.customspinner.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
 
-
+    private var media: JSONArray = JSONArray()
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private var IMAGE_SELECTED_TYPE = ""
     private val job by lazy { kotlinx.coroutines.Job() }
@@ -56,6 +64,15 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
     private var cityLatitude = ""
     private var cityLongitude = ""
     private var cityAddress = ""
+    private var urlListingFromResponse: ArrayList<String> = ArrayList()
+
+    private var imageVideoUrlListing = arrayListOf("", "", "", "", "")
+
+    private var imageVideoListPosition = -1
+    private var selectedUrlListing: ArrayList<String> = ArrayList()
+    private var imagePathList = ArrayList<MultipartBody.Part>()
+    private var imagePathList2 = ArrayList<MultipartBody.Part>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,22 +88,21 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         addInfoSpinner.setAdapter(arrayAdapte1)
 
 
-
         // no of places avilable
-         val count: MutableList<String?> = ArrayList()
-         count.add("")
-         count.add("0")
-         count.add("1")
-         count.add("2")
-         count.add("3")
-         count.add("4")
-         count.add("5")
-         count.add("6")
-         count.add("7")
-         count.add("8")
-         count.add("9")
-         count.add("10")
-         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
+        val count: MutableList<String?> = ArrayList()
+        count.add("")
+        count.add("0")
+        count.add("1")
+        count.add("2")
+        count.add("3")
+        count.add("4")
+        count.add("5")
+        count.add("6")
+        count.add("7")
+        count.add("8")
+        count.add("9")
+        count.add("10")
+        val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
         noOfPlacesSpinner.setAdapter(arrayAdapter)
 
         /*
@@ -108,6 +124,9 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         et_addressNursery.isFocusable = false
         et_addressNursery.isFocusableInTouchMode = false
         et_addressNursery.setOnClickListener(this)
+        btn_submit.setOnClickListener(this)
+
+        checkMvvmResponse()
     }
 
     override fun getRealImagePath(imgPath: String?) {
@@ -176,6 +195,46 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
     }
 
 
+    private fun hitApiForBannerImages(position: Int) {
+
+        imageVideoListPosition = position
+
+        if (imageVideoListPosition <= selectedUrlListing.size - 1) {
+
+            val media = selectedUrlListing[imageVideoListPosition]
+
+            if (!media.isNullOrEmpty()) {
+
+
+                var mfile: File? = null
+                mfile = File(media)
+                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                var photo: MultipartBody.Part? = null
+                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                imagePathList.add(photo)
+                var type: RequestBody
+                if (media.contains(".mp4")) {
+                    type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
+                } else {
+                    type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+                }
+
+                Log.e("imageimage", type.toString())
+                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+                appViewModel.sendUploadImageData(type, users, imagePathList)
+            } else {
+
+                imageVideoListPosition = imageVideoListPosition + 1
+
+                if (imageVideoListPosition <= selectedUrlListing.size) {
+                    hitApiForBannerImages(imageVideoListPosition)
+                }
+            }
+
+        }
+    }
+
+
     override fun onClick(v: View?) {
 
         when (v!!.id) {
@@ -207,11 +266,138 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
                 checkPermission(this)
             }
 
-            R.id.et_addressNursery->{
+            R.id.et_addressNursery -> {
                 showPlacePicker()
+            }
+            R.id.btn_submit -> {
+                val nurseryName = et_nursery_name.text.toString()
+                val addInfoSpinner = addInfoSpinner.selectedItem.toString()
+                val noOfPlacesSpinner = noOfPlacesSpinner.selectedItem.toString()
+                val etPhoneNumber = et_phoneNumber.text.toString()
+                val etAddressNursery = et_addressNursery.text.toString()
+                val description = et_description.text.toString()
+
+                if (IMAGE_SELECTED_TYPE.equals("")) {
+                    myCustomToast("Please select at-least one media file image or video .")
+                } else {
+                    if (nurseryName.isEmpty()) {
+                            myCustomToast("Please enter your nursery name ")
+                        } else {
+                            if (addInfoSpinner.isEmpty()) {
+                                myCustomToast("Please Add nursery information ")
+                            } else {
+                                if (noOfPlacesSpinner.isEmpty()) {
+                                    myCustomToast("Please enter number of places")
+                                } else {
+                                    if (etPhoneNumber.isEmpty()) {
+                                        myCustomToast("Please enter phone number ")
+                                    } else {
+                                        if (etAddressNursery.isEmpty()) {
+                                            myCustomToast(" Please select your address ")
+
+                                        } else {
+                                            if (description.isEmpty()) {
+                                                myCustomToast("Please enter your description")
+                                            } else {
+                                                // adding values
+                                            //    activity_type =  orderby.selectedItem.toString()
+                                               /* shop_name = shopName
+                                                activity_name = activityName
+                                                descp =  description
+                                                messagee = message
+                                                phonee = phone*/
+
+
+
+                                                // checking the list
+                                                if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                                    selectedUrlListing.clear()
+                                                    urlListingFromResponse.clear()
+                                                }
+
+                                                // for check upper images url from response
+                                                Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+
+
+                                                // rotating loop
+                                                for (i in 0..imageVideoUrlListing.size - 1) {
+                                                    val media = imageVideoUrlListing[i]
+                                                    if (!media.isEmpty()) {
+                                                        selectedUrlListing.add(media)
+                                                    }
+                                                }
+
+                                                // hitting api for upper 5 images
+                                                hitApiForBannerImages(0)
+
+                                            }
+                                     //   }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
             }
         }
     }
+
+
+    private fun checkMvvmResponse() {
+
+        // add post for activity
+        appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    progressDialog.hidedialog()
+                    OpenActivity(DetailActivity::class.java)
+                }
+            } else {
+                progressDialog.hidedialog()
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
+
+        // for imageUpload api
+        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    if (response.body()!!.data != null) {
+
+                            // now making json format for upper images media
+                            for (i in 0..urlListingFromResponse.size - 1) {
+                                val json = JSONObject()
+                                json.put("image", urlListingFromResponse[i])
+                                media.put(json)
+                            }
+
+
+                        //    hitFinallyActivityAddPostApi()
+
+
+                        Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
+
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
+                }
+            }
+        })
+
+
+        appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
+            myCustomToast(it)
+            progressDialog.hidedialog()
+
+        })
+
+    }
+
 
     private fun showPlacePicker() {
         // Initialize Places.
