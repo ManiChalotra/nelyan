@@ -583,7 +583,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
                         } else {
 
-
                             // response for addevent images data
                             if (addEventUrlListingResponse != null) {
                                 addEventUrlListingResponse!!.clear()
