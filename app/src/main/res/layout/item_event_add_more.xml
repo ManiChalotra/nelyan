@@ -4,153 +4,80 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_10sdp"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/back_shape"
         android:orientation="vertical"
         android:paddingLeft="@dimen/_5sdp"
-        android:paddingRight="@dimen/_5sdp"
         android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:background="@drawable/back_shape">
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Add An Event" />
+        android:paddingRight="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
-    <RelativeLayout
-        android:id="@+id/rl_Add"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/back_shape">
-
-        <ImageView
-            android:id="@+id/ivEventimage"
-            android:scaleType="fitXY"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/ivCam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/grey"
-            android:src="@drawable/camera_icon" />
-
-    </RelativeLayout>
-
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="Event Picture"
-        android:textSize="@dimen/_8sdp" />
-
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Name of Event" />
-
-    <EditText
-        android:id="@+id/edtEventName"
-        style="@style/SimpleEdittext"
-        android:hint="Name of Event"
-        android:inputType="text" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black" />
-
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:text="Select Date" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_gravity="center"
-                android:text="From:" />
-
-
-            -
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvCal"
-                    style="@style/CommonTextMatchparent"
-                    android:drawableRight="@drawable/calendar_icon"
-                    android:hint="10/09/2002"
-                    android:inputType="number"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        -
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_gravity="center"
-                android:text="To:" />
-
-
-            -
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvCal1"
-                    style="@style/CommonTextMatchparent"
-                    android:drawableEnd="@drawable/calendar_icon"
-                    android:hint="10/09/2002"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/grey" />
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:text="Select Time" />
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Add An Event" />
+
+        <RelativeLayout
+            android:id="@+id/rl_Add"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/back_shape">
+
+            <ImageView
+                android:id="@+id/ivEventimage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/ivCam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/grey"
+                android:src="@drawable/camera_icon" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="Event Picture"
+            android:textSize="@dimen/_8sdp" />
+
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Name of Event" />
+
+        <EditText
+            android:id="@+id/edtEventName"
+            style="@style/SimpleEdittext"
+            android:hint="Name of Event"
+            android:inputType="text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Select Date" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:orientation="horizontal">
-  <LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -160,6 +87,87 @@
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
                     android:text="From:" />
+
+
+                -
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCal"
+                        style="@style/CommonTextMatchparent"
+                        android:drawableRight="@drawable/calendar_icon"
+                        android:hint="10/09/2002"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            -
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:text="To:" />
+
+
+                -
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCal1"
+                        style="@style/CommonTextMatchparent"
+                        android:drawableEnd="@drawable/calendar_icon"
+                        android:hint="10/09/2002"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:text="Select Time" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:text="From:" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -212,59 +220,76 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
                 </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Description" />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Description" />
 
-    <EditText
-        android:id="@+id/edtDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        android:fontFamily="@font/regular"
-        android:hint="Description"
-        android:paddingRight="@dimen/_10sdp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/grey"
-        android:textSize="@dimen/_10sdp" />
+        <EditText
+            android:id="@+id/edtDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:fontFamily="@font/regular"
+            android:hint="Description"
+            android:paddingRight="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/_10sdp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
 
-    <TextView
-        style="@style/CommonTextWrapcontent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Price" />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Price" />
 
-    <EditText
-        android:id="@+id/edtPrice"
-        style="@style/SimpleEdittext"
-        android:hint="Price"
-        android:inputType="number" />
+        <EditText
+            android:id="@+id/edtPrice"
+            style="@style/SimpleEdittext"
+            android:hint="Price"
+            android:inputType="number" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:background="@color/black" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@color/black" />
 
-    <TextView
-        android:id="@+id/tvAddMore"
-        style="@style/CommonTextWrapcontent"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@drawable/add_more_btn"
-        android:gravity="center"
-        android:paddingLeft="@dimen/_5sdp"
-        android:paddingRight="@dimen/_5sdp"
-        android:text="Add More"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_8sdp" />
+        <TextView
+            style="@style/CommonTextWrapcontent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/city" />
+
+        <TextView
+            android:id="@+id/et_city_add_event"
+            style="@style/SimpleEdittext"
+            android:hint="@string/city"
+             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tvAddMore"
+            style="@style/CommonTextWrapcontent"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/add_more_btn"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:text="Add More"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp" />
     </LinearLayout>
 </LinearLayout>

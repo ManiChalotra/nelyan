@@ -60,8 +60,27 @@
     <string name="cityChat">City Chat</string>
     <string name="event">Event</string>
     <string name="description">Description</string>
+    <string name="description1">Description:</string>
     <string name="name_of_nurserie">Name of Nurserie</string>
     <string name="address">Address</string>
+    <string name="select_time">Select Time</string>
+    <string name="city">City</string>
+    <string name="no_ads_availalbe">No Ads availalbe</string>
+    <string name="available_place">Available Place: </string>
+    <string name="no_internet_error">No Internet Connection</string>
+    <string name="number_of_places_still_avilable">Number of places still avilable</string>
+    <string name="name_of_maternal_assistant">Name of Maternal Assistant</string>
+    <string name="maternal_assistant">Maternal Assistant</string>
+    <string name="photo_video">Photo/Video</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="maternal_missing_error">Please enter your maternal name</string>
+    <string name="places_number_error">Please enter number of places</string>
+    <string name="phone_number_missing">Please enter phone number</string>
+    <string name="address_missing_error">Please select your address</string>
+    <string name="description_missing">Please enter your description</string>
+    <string name="select_image_video_error">Please select at-least one media file image or video .</string>
+    <string name="submit">Submit</string>
+    <string name="price1">Price:</string>
 
 
 </resources>

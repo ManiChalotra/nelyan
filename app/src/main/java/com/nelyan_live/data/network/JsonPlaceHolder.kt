@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
 import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
+import com.nelyan_live.modals.eventList.EventListResponse
 import com.nelyan_live.utils.base_URL
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -69,9 +70,19 @@ interface JsonPlaceHolder {
     fun get_ForgetPassword_Api(@Header("security_key") securityKey: String?,
                                @Field("email") email: String?): Call<JsonObject>
 
+    @POST("add_fav")
+    @FormUrlEncoded
+    fun addFavourite(@Header("security_key") securityKey: String?,
+                     @Header("auth_key") authKey: String?,
+                     @Field("eventId") eventId: String?): Call<JsonObject>
+
     @GET("getHomeCategories")
     fun get_HomeCategory_Api(@Header("security_key") securityKey: String?,
                              @Header("auth_key") auth_key: String?): Call<JsonObject>
+
+    @GET("myAddList")
+    fun getmyAddListAPI(@Header("security_key") securityKey: String?,
+                        @Header("auth_key") auth_key: String?): Call<JsonObject>
 
     @GET("get_profile")
     fun get_Profile_api(@Header("security_key") securityKey: String?,
@@ -163,11 +174,55 @@ interface JsonPlaceHolder {
                                  @Field("country_code") country_code: String
     ): Call<JsonObject>
 
+    @POST("addPost")
+    @FormUrlEncoded
+    fun get_addNurseryPost_Api(@Header("security_key") securityKey: String?,
+                               @Header("auth_key") auth_key: String?,
+                               @Field("type") type: String,
+                               @Field("nursery_name") nurseryName: String,
+                               @Field("add_info") addInfo: String,
+                               @Field("no_of_places") noOfPlaces: String,
+                               @Field("country_code") country_code: String,
+                               @Field("phone") phone: String,
+                               @Field("address") address: String,
+                               @Field("description") description: String,
+                               @Field("city") city: String,
+                               @Field("latitude") latitude: String,
+                               @Field("longitude") longitude: String,
+                               @Field("media") media: String,// send json Array
+
+    ): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun addMaternalPost_Api(@Header("security_key") securityKey: String?,
+                            @Header("auth_key") auth_key: String?,
+                            @Field("type") type: String,
+                            @Field("material_name") materialName: String,
+                            @Field("no_of_places") noOfPlaces: String,
+                            @Field("country_code") country_code: String,
+                            @Field("phone") phone: String,
+                            @Field("address") address: String,
+                            @Field("description") description: String,
+                            @Field("city") city: String,
+                            @Field("latitude") latitude: String,
+                            @Field("longitude") longitude: String,
+                            @Field("media") media: String,// send json Array
+
+    ): Call<JsonObject>
+
     @POST("social_login")
     @FormUrlEncoded
     fun get_SocialLogin_Api(@Header("security_key") securityKey: String?,
                             @Field("social_id") social_id: String?,
                             @Field("social_type") social_type: String?): Call<JsonObject>
+
+    @POST("eventList")
+    @FormUrlEncoded
+    fun getEventList(@Header("security_key") securityKey: String?,
+                     @Header("auth_key") auth_key: String?,
+                     @Field("lat") latitude: String?,
+                     @Field("long") longitude: String?): Call<JsonObject>
 
     @POST("completeprofile_sociallogin")
     @FormUrlEncoded
@@ -181,7 +236,7 @@ interface JsonPlaceHolder {
                                         @Field("second") second: String?,
                                         @Field("city") city: String?,
                                         @Field("image_type") image_type: String?,
-                                        @Field("image") image:String?
+                                        @Field("image") image: String?
     ): Call<JsonObject>
 
     @POST("completeprofile_sociallogin")

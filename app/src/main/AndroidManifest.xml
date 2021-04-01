@@ -52,7 +52,7 @@
         <activity android:name=".ui.ActivityFragmentActivity" />
         <activity android:name=".ui.ActivityListActivity" />
         <activity
-            android:name=".ui.AddActivity"
+            android:name=".ui.MyAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity

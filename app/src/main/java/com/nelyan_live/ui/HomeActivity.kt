@@ -96,7 +96,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
 
 
-
         loadFragment(HomeFragment())
         //loadFragment(new DrawerNewHomeFragment());
         val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navigationbar)
@@ -158,6 +157,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         loadFragment(fragment)
                     }
                 }
+
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "activity") {
                         Log.e("vghgv", "hhhhhhh")
@@ -172,6 +172,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         fragmentTransaction.commit()
                     }
                 }
+
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nurFrag") {
 
@@ -262,7 +263,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun initalize() {
         tvLog.setOnClickListener(this)
-
     }
 
     private fun setToolBarClicks() {
@@ -273,7 +273,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         iv_back!!.setVisibility(View.VISIBLE)
         iv_back!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.openDrawer(navigation_view!!)
-            mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout,
+                    R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     //  closeKeyboard();
@@ -290,54 +291,54 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun setDrawerClicks() {
         tvHome = findViewById(R.id.tvHome)
+        tvLogin = findViewById(R.id.tvLogin)
+        tvAdd = findViewById(R.id.tv_myAdd)
+        tvFavorite = findViewById(R.id.tvFavorite)
+        tvProfile = findViewById(R.id.tvProfile)
+        tvNoti = findViewById(R.id.tvNoti)
+        tvContact = findViewById(R.id.tvContact)
+        tvSettings = findViewById(R.id.tvSettings)
+
         tvHome!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
             val i = Intent(this@HomeActivity, HomeActivity::class.java)
             startActivity(i)
             finishAffinity()
         })
-        tvLogin = findViewById(R.id.tvLogin)
         tvLogin!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
             val i = Intent(this@HomeActivity, com.nelyan_live.ui.LoginActivity::class.java)
             startActivity(i)
         })
-        tvAdd = findViewById(R.id.tvAdd)
         tvAdd!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan_live.ui.AddActivity::class.java)
+            val i = Intent(this@HomeActivity, com.nelyan_live.ui.MyAddActivity::class.java)
             startActivity(i)
-
 
             //  AppUtils.gotoFragment(mContext, new MyAddFragment(), R.id.frame_container, false);
         })
-        tvFavorite = findViewById(R.id.tvFavorite)
-        tvFavorite!!.setOnClickListener(View.OnClickListener {
+        tvFavorite!!.setOnClickListener{
             mDrawerLayout!!.closeDrawers()
             OpenActivity(FavouriteActivity::class.java)//AppUtils.gotoFragment(this, FavoriteFragment(), R.id.frame_container, false)
-        })
-        tvProfile = findViewById(R.id.tvProfile)
-        tvProfile!!.setOnClickListener(View.OnClickListener {
+        }
+        tvProfile!!.setOnClickListener{
             mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan_live.ui.ProfileActivity::class.java)
+            val i = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(i)
-        })
-        tvContact = findViewById(R.id.tvContact)
-        tvContact!!.setOnClickListener(View.OnClickListener {
+        }
+        tvContact!!.setOnClickListener{
             mDrawerLayout!!.closeDrawers()
 
             OpenActivity(ContactUsActivity::class.java) {
                 putString("authorization", authorization)
             }
 
-        })
-        tvNoti = findViewById(R.id.tvNoti)
+        }
         tvNoti!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan_live.ui.NotificationActivity::class.java)
+            val i = Intent(this@HomeActivity, NotificationActivity::class.java)
             startActivity(i)
         })
-        tvSettings = findViewById(R.id.tvSettings)
         tvSettings!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.closeDrawers()
 

@@ -90,7 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/regular"
-                            android:text="Danse"
+                            android:text="Chandigarh India"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/regular"
-                            android:text="Danse"
+                            android:text="10-08-2020"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
@@ -149,7 +149,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/regular"
-                            android:text="Danse"
+                            android:text="From: 10:00 AM"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
@@ -178,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:fontFamily="@font/regular"
-                            android:text="Danse"
+                            android:text="To : 05:00 PM"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/bold"
-                    android:text="Lorem ipsum"
+                    android:text="@string/price1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
 
@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:fontFamily="@font/bold"
-                    android:text="Danse"
+                    android:text="20"
                     android:textColor="@color/app"
                     android:textSize="@dimen/_14sdp" />
 

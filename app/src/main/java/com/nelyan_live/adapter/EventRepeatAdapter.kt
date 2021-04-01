@@ -20,8 +20,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AddEventDataModel>, var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.Adapter<EventRepeatAdapter.EventRepeatViewHolder>() {
+class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AddEventDataModel>,
+                         var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.Adapter<EventRepeatAdapter.EventRepeatViewHolder>() 
+{
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventRepeatViewHolder {
         return EventRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_event_add_more, parent, false), listner)
@@ -46,7 +47,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         val timeTo = itemView.edClo3
         val description = itemView.edtDesc
         val price = itemView.edtPrice
-
+        val city = itemView.et_city_add_event
 
         //  for selecting the date
         var select_date = ""
@@ -68,9 +69,15 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             dateTo.text = list.get(position).dateTo
             timeFrom.text = list.get(position).timeFrom
             timeTo.text = list.get(position).timeTo
+            city.text = list.get(position).city
 
             image.setOnClickListener{
                 listner!!.addCameraGelleryImage(list, position)
+            }
+
+            city.setOnClickListener {
+                listner.cityinAddEvent(list, position, city)
+
             }
 
 
@@ -78,6 +85,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 description.clearFocus()
                 price.clearFocus()
                 name.clearFocus()
+                city.clearFocus()
                 listner!!.onAddEventItem(list, position)
             }
 
@@ -91,7 +99,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                     timeFrom.text = "$selectedHour:$selectedMinute"
                     list[position].timeFrom = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle("Select Time")
+                mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
 
@@ -107,8 +115,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 mTimePicker.setTitle("Select Time")
                 mTimePicker.show()
             }
-
-
 
 
             dateFrom.setOnClickListener {
@@ -345,6 +351,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
     interface OnEventRecyclerViewItemClickListner {
         fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
         fun addCameraGelleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
+        fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView)
     }
 }
 

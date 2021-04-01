@@ -45,7 +45,7 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
-            android:id="@+id/tvAdd"
+            android:id="@+id/tv_myAdd"
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/semibold"

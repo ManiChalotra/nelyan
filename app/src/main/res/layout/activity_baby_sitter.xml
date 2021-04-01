@@ -43,6 +43,13 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/back_shape">
 
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_image1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:riv_corner_radius="@dimen/_5sdp"
+                android:scaleType="fitXY"/>
+
             <ImageView
                 android:id="@+id/ivImg"
                 android:layout_width="match_parent"
@@ -208,14 +215,16 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="Name of Maternal Assistant"/>
+            android:text="@string/name_of_maternal_assistant"/>
         <EditText
             android:id="@+id/et_maternalName"
             style="@style/SimpleEdittext"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:inputType="text"
-            android:hint="Name of Maternal Assistant"/>
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:hint="@string/name_of_maternal_assistant"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -223,7 +232,7 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Number of places still avilable"/>
+            android:text="@string/number_of_places_still_avilable"/>
         <Spinner
             android:id="@+id/noOfPlacesBabySpinner"
             android:layout_width="match_parent"
@@ -247,35 +256,60 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Phone Number"/>
-        <EditText
-            android:id="@+id/et_phoneNumber"
-            style="@style/SimpleEdittext"
-            android:inputType="number"
-            android:hint="Phone Number"
-            />
+            android:text="@string/phone_number"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countycode_baby_sitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_textSize="@dimen/_12sdp"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false"
+                android:layout_centerVertical="true"
+                app:ccpDialog_textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/et_phoneNumber"
+                android:imeOptions="actionNext"
+                android:digits="0123456789"
+                android:maxLines="1"
+                android:maxLength="10"
+                android:layout_toRightOf="@+id/countycode_baby_sitter"
+                style="@style/SimpleEdittext"
+                android:hint="@string/phone_number"
+                android:inputType="number" />
+
+        </RelativeLayout>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"/> <TextView
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Address"/>
+        android:text="@string/address"/>
         <EditText
             style="@style/SimpleEdittext"
             android:id="@+id/et_addressBabySitter"
-            android:hint="Address"/>
+            android:hint="@string/address"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"/><TextView
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Description"/>
+        android:text="@string/description"/>
         <EditText
             android:id="@+id/et_descriptionBabySitter"
             style="@style/SimpleEdittext"
-            android:hint="Description"/>
+            android:hint="@string/description"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -286,7 +320,8 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/btn"
-            android:text="SUBMIT"/>
+            android:textAllCaps="true"
+            android:text="@string/submit"/>
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

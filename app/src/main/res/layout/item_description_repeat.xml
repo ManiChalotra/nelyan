@@ -87,7 +87,7 @@
         android:background="@color/black" />
 
     <TextView
-        android:id="@+id/tvAdd"
+        android:id="@+id/tv_myAdd"
         style="@style/CommonTextWrapcontent"
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/_5sdp"

@@ -27,14 +27,17 @@ import java.util.regex.Pattern
 
 //val base_URL = "http://3.13.214.27:1052/api/"
 val base_URL = "http://192.168.1.125:1052/api/"  //this is local host url
+//val base_URL = "http://3.13.214.27:1052/api/"  //this is local host url
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
+val InVALID_AUTH_TOEKN = "Invalid Auth Token"
 val device_Type = "1"
 val image_base_URl = "http://3.13.214.27:1052/uploads/users/"
+
 val FOR_FACEBOOK_TYPE = "2"
 val FOR_GOOGLE_TYPE = "1"
 
-val image_url_local= "http://192.168.1.125:1052"
+val image_url_local= "http://192.168.1.125:1052/"
 var OAUTH_GOOGLE_CLIENT_ID = "679915298408-s8dalhfhf8d3tecve1vdjtlo1uttm3u1.apps.googleusercontent.com"
 
 /*error message key*/
@@ -54,7 +57,6 @@ fun isUserNameValid(username: String): Boolean {
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
-
 
 
 fun isPasswordValid(password: String): Boolean {
@@ -199,7 +201,19 @@ fun failureMethod(
     progressBar: com.tuyenmonkey.mkloader.MKLoader?
 ) {
     progressBar?.hideProgressBar()
-    if (error == UNAUTHORIZED) {
+    if (error == InVALID_AUTH_TOEKN) {
+        // here delete your database or Local Preferences ..
+        // AllSharedPref.clear(mContext)
+        Toast.makeText(
+            mContext,
+            "You are already logged in other device",
+            Toast.LENGTH_SHORT
+        ).show()
+        val intent = Intent(mContext, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        mContext.startActivity(intent)
+    }
+    else if (error == UNAUTHORIZED) {
         // here delete your database or Local Preferences ..
         // AllSharedPref.clear(mContext)
         Toast.makeText(
@@ -215,9 +229,7 @@ fun failureMethod(
     }
 }
 
-
 fun checkIfHasNetwork(activity: Activity): Boolean {
-
     val cm =
         (activity)!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = cm!!.activeNetworkInfo

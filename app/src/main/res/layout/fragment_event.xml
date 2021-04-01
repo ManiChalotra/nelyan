@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     android:clickable="true"
     tools:context=".fragments.EventFragment">
 
     <!-- <include layout="@layout/toolbar"></include>-->
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/eventProgressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
+
 
     <RelativeLayout
         android:id="@+id/rl_toolbar_root"
@@ -55,9 +68,11 @@
 
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/ll_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_below="@+id/rl_toolbar_root"
         android:layout_marginRight="@dimen/_10sdp"
         android:orientation="horizontal">
 
@@ -122,10 +137,28 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_event"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_filter">
 
-        android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_event"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_no_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:fontFamily="@font/regular"
+            android:text="No event found"/>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

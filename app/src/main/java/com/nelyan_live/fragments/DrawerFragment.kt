@@ -44,7 +44,7 @@ class DrawerFragment : Fragment() {
             val i = Intent(activity, LoginActivity::class.java)
             startActivity(i)
         })
-        tvAdd = v!!.findViewById(R.id.tvAdd)
+        tvAdd = v!!.findViewById(R.id.tv_myAdd)
         tvAdd!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(mContext, com.nelyan_live.fragments.MyAddFragment(), R.id.frame_container, false) })
         tvFavorite = v!!.findViewById(R.id.tvFavorite)
 

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,29 +20,31 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.HELPER.image
 import com.nelyan_live.R
 import com.nelyan_live.modals.ModelPOJO
-import com.nelyan_live.utils.OpenCameraGallery
-import com.nelyan_live.utils.ProgressDialog
-import com.nelyan_live.utils.myCustomToast
-import kotlinx.android.synthetic.main.activity_activity3.*
+import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg1
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg2
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg3
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivplus
-import kotlinx.android.synthetic.main.activity_maternal_assistant.*
+import kotlinx.android.synthetic.main.activity_baby_sitter.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.io.File
 import java.util.*
@@ -49,17 +52,24 @@ import kotlin.coroutines.CoroutineContext
 
 class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
 
-
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+
     private var IMAGE_SELECTED_TYPE = ""
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
-
-    private  var activity_type = ""
-    private  var maternal_name = ""
-    private  var phone_number= ""
-    private  var descp_baby_sitter = ""
-    private  var address_baby_sitter = ""
+    private var media: JSONArray = JSONArray()
+    private var countryCodee = "91"
+    /*  private  var activity_type = ""
+      private  var maternal_name = ""
+      private  var phone_number= ""
+      private  var descp_baby_sitter = ""
+      private  var address_baby_sitter = ""*/
+    private var authKey = ""
+    private var maternalName = ""
+    private var placeSpin = ""
+    private var phoneNumber = ""
+    private var address_baby_sitter = ""
+    private var descp_baby_sitter = ""
 
     private var selectedUrlListing: ArrayList<String> = ArrayList()
     private var urlListingFromResponse: ArrayList<String> = ArrayList()
@@ -112,11 +122,14 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
         noOfPlacesBabySpinner!!.setAdapter(arrayAdapte1)
 
+        launch(Dispatchers.Main.immediate) {
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+        }
+
 
     }
 
     private fun initalizeClicks() {
-
 
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
@@ -125,19 +138,22 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         ivplus.setOnClickListener(this)
         ivBackBabaySitter.setOnClickListener(this)
         btnSubmitBabySitter.setOnClickListener(this)
+
         et_addressBabySitter.isFocusable = false
         et_addressBabySitter.isFocusableInTouchMode = false
         et_addressBabySitter.setOnClickListener(this)
 
+        countycode_baby_sitter.setOnCountryChangeListener {
+            countryCodee= countycode_baby_sitter.selectedCountryCode.toString()
+        }
+        checkMvvmResponse()
 
     }
-
 
     override fun onClick(v: View?) {
         when (v!!.id) {
 
             R.id.ivImg -> {
-
                 IMAGE_SELECTED_TYPE = "1"
                 checkPermission(this)
             }
@@ -158,44 +174,34 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 checkPermission(this)
             }
             R.id.ivBackBabaySitter -> {
-                finish()
+                onBackPressed()
             }
             R.id.btnSubmitBabySitter -> {
 
-                val maternalName = et_maternalName.text.toString()
-                val phoneNumber = et_phoneNumber.text.toString()
-                val addressBabySitter = et_addressBabySitter.text.toString()
-                val descriptionBabySitter = et_descriptionBabySitter.text.toString()
-
+                maternalName = et_maternalName.text.toString()
+                placeSpin = noOfPlacesBabySpinner.selectedItem.toString()
+                phoneNumber = et_phoneNumber.text.toString()
+                address_baby_sitter = et_addressBabySitter.text.toString()
+                descp_baby_sitter = et_descriptionBabySitter.text.toString()
 
                 if (IMAGE_SELECTED_TYPE.equals("")) {
-                    myCustomToast("Please select atleast one media file image or video .")
+                    myCustomToast(getString(R.string.select_image_video_error))
                 } else {
-                    val activityType = orderby.selectedItem.toString()
-                    if (activityType.equals("") || activityType.equals("Select")) {
-                        myCustomToast("please select your activity Type ")
+                    if (maternalName.isEmpty()) {
+                        myCustomToast(getString(R.string.maternal_missing_error))
                     } else {
-                        if (maternalName.isEmpty()) {
-                            myCustomToast("Please enter your maternal assistant name ")
+                        if (placeSpin.isEmpty()) {
+                            myCustomToast(getString(R.string.places_number_error))
                         } else {
                             if (phoneNumber.isEmpty()) {
-                                myCustomToast("Please enter your phone number")
+                                myCustomToast(getString(R.string.phone_number_missing))
                             } else {
-
-                                if (addressBabySitter.isEmpty()) {
-                                    myCustomToast("Please enter your address")
+                                if (address_baby_sitter.isEmpty()) {
+                                    myCustomToast(getString(R.string.address_missing_error))
                                 } else {
-                                    if (descriptionBabySitter.isEmpty()) {
-                                        myCustomToast("Please enter your description ")
+                                    if (descp_baby_sitter.isEmpty()) {
+                                        myCustomToast(getString(R.string.description_missing))
                                     } else {
-                                        // adding values
-                                        activity_type = orderby.selectedItem.toString()
-                                        maternal_name = maternalName
-                                        phone_number = phoneNumber
-                                        address_baby_sitter = addressBabySitter
-                                        descp_baby_sitter = descriptionBabySitter
-
-
                                         // checking the list
                                         if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
                                             selectedUrlListing.clear()
@@ -204,7 +210,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                                         // for check upper images url from response
                                         Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
-
 
                                         // rotating loop
                                         for (i in 0..imageVideoUrlListing.size - 1) {
@@ -217,10 +222,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         // hitting api for upper 5 images
                                         hitApiForBannerImages(0)
 
-
-//                val i = Intent(this@BabySitterActivity, HomeActivity::class.java)
-//                i.putExtra("activity", "babyfrag")
-//                startActivity(i)
                                     }
                                 }
                             }
@@ -228,41 +229,82 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     }
                 }
 
+
             }
 
 
+            R.id.et_addressBabySitter -> {
+                showPlacePicker()
+            }
+        }
+    }
 
-                                    R.id.et_addressBabySitter->{
-                                        showPlacePicker()
-                                    }
-                                }
-                            }
+    override fun getRealImagePath(imgPath: String?) {
 
-                            override fun getRealImagePath(imgPath: String?) {
-                                when (IMAGE_SELECTED_TYPE) {
+        when (IMAGE_SELECTED_TYPE) {
+            "1" -> {
+                setImageOnTab(imgPath, iv_image1)
+                imageVideoUrlListing.set(0, imgPath.toString())
+            }
 
-                                    "1" -> {
-                                        setImageOnTab(imgPath, ivImg)
-                                    }
+            "2" -> {
+                setImageOnTab(imgPath, ivImg1)
+                imageVideoUrlListing.set(1, imgPath.toString())
+            }
 
-                                    "2" -> {
-                                        setImageOnTab(imgPath, ivImg1)
-                                    }
+            "3" -> {
+                setImageOnTab(imgPath, ivImg2)
+                imageVideoUrlListing.set(2, imgPath.toString()) }
 
-                                    "3" -> {
-                                        setImageOnTab(imgPath, ivImg2)
-                                    }
+            "4" -> {
+                setImageOnTab(imgPath, ivImg3)
+                imageVideoUrlListing.set(3, imgPath.toString())  }
 
-                                    "4" -> {
-                                        setImageOnTab(imgPath, ivImg3)
-                                    }
+            "5" -> {
+                setImageOnTab(imgPath, ivplus)
+                imageVideoUrlListing.set(4, imgPath.toString()) }
 
-                                    "5" -> {
-                                        setImageOnTab(imgPath, ivplus)
-                                    }
+        }
 
-                                }
-                            }
+    }
+
+    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
+        Log.d("getimage", "---------" + imgPATH.toString())
+
+        when (IMAGE_SELECTED_TYPE) {
+
+            "1" -> {
+                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video011)
+            }
+            "2" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video012)
+
+            }
+            "3" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
+
+            }
+            "4" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
+
+            }
+            "5" -> {
+                checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
+            }
+        }
+
+        Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
+    }
+
+    private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
+
+        if (imgpath?.contains(".mp4")!!) {
+            videoButton.visibility = View.VISIBLE
+        } else {
+            videoButton.visibility = View.GONE
+        }
+    }
 
 
     private fun hitApiForBannerImages(position: Int) {
@@ -271,12 +313,9 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
         if (imageVideoListPosition <= selectedUrlListing.size - 1) {
 
-
             val media = selectedUrlListing[imageVideoListPosition]
 
             if (!media.isNullOrEmpty()) {
-
-                savedaddEventImagesData = false
 
                 var mfile: File? = null
                 mfile = File(media)
@@ -284,12 +323,15 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 var photo: MultipartBody.Part? = null
                 photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
                 imagePathList.add(photo)
+
                 var type: RequestBody
                 if (media.contains(".mp4")) {
                     type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
                 } else {
                     type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
                 }
+
+                Log.e("imageimage", type.toString())
                 val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
                 appViewModel.sendUploadImageData(type, users, imagePathList)
             } else {
@@ -299,139 +341,119 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 if (imageVideoListPosition <= selectedUrlListing.size) {
                     hitApiForBannerImages(imageVideoListPosition)
                 }
-
-
             }
 
-        } else {
-
-            savedaddEventImagesData = true
-            gettingURLOfEventImages()
-
-            /* urlListingFromResponse.clear()
-             addEventUrlListingResponse.clear()
-             selectedUrlListing.clear()
-             imagePathList.clear()
-             savedaddEventImagesData = true
-             gettingURLOfEventImages()
-             */
-
         }
-
-
-    }
-
-    private fun gettingURLOfEventImages() {
-        if (imagePathList2 != null) {
-            imagePathList2.clear()
-        }
-
-        for (i in 0 until listAddEventDataModel.size) {
-            val media = listAddEventDataModel[i].image
-            if (!media.isNullOrEmpty()) {
-                var mfile: File? = null
-                mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-                var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-                imagePathList2.add(photo)
-            }
-        }
-
-        Log.d("imagePathLsiting", "-------------" + imagePathList2!!.size)
-
-        val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-        appViewModel.sendUploadImageData(type, users, imagePathList2)
-
     }
 
 
+    private fun checkMvvmResponse() {
+        // add post for Maternal assistant
+        Log.e("going", "messsaaaa")
+        appViewModel.observe_addMaternalPost_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("addMaternalPostResopnse", "-----------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    progressDialog.hidedialog()
+                    finish()
+                    OpenActivity(DetailActivity::class.java)
+                    myCustomToast(response.message())
+                }
+            } else {
+                progressDialog.hidedialog()
+                ErrorBodyResponse(response, this, null)
+            }
+        })
 
-                            private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
-                                Log.d("getimage", "---------" + imgPATH.toString())
-
-                                when (IMAGE_SELECTED_TYPE) {
-
-                                    "1" -> {
-                                        imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
-                                        checkVideoButtonVisibility(imgPATH.toString(), iv_video011)
-                                    }
-                                    "2" -> {
-                                        checkVideoButtonVisibility(imgPATH.toString(), iv_video012)
-
-                                    }
-                                    "3" -> {
-                                        checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
-
-                                    }
-                                    "4" -> {
-                                        checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
-
-                                    }
-                                    "5" -> {
-                                        checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
-                                    }
-                                }
-
-                                Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
-                            }
-
-
-                            private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
-
-                                if (imgpath?.contains(".mp4")!!) {
-                                    videoButton.visibility = View.VISIBLE
-                                } else {
-                                    videoButton.visibility = View.GONE
-                                }
-                            }
-
-                            private fun showPlacePicker() {
-                                // Initialize Places.
-                                Places.initialize(applicationContext, googleMapKey)
-                                // Create a new Places client instance.
-                                val placesClient: PlacesClient = Places.createClient(this)
-                                // Set the fields to specify which types of place data to return.
-                                val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-                                val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
-                                startActivityForResult(intent, PLACE_PICKER_REQUEST)
-
-                            }
-
-                            override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-                                super.onActivityResult(requestCode, resultCode, data)
-                                if (requestCode === PLACE_PICKER_REQUEST) {
-                                    if (resultCode === Activity.RESULT_OK) {
-                                        val place = Autocomplete.getPlaceFromIntent(data!!)
-
-                                        cityAddress = place.address.toString()
-                                        et_addressBabySitter.setText(cityAddress.toString())
-                                        cityName = place.name.toString()
-
-                                        // cityID = place.id.toString()
-                                        cityLatitude = place.latLng?.latitude.toString()
-                                        cityLongitude = place.latLng?.longitude.toString()
-
-                                        Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-                                    } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
-                                        // TODO: Handle the error.
-                                        val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                                        Log.i("dddddd", status.getStatusMessage().toString())
-                                    } else if (resultCode === Activity.RESULT_CANCELED) {
-                                        // The user canceled the operation.
-                                        Log.i("dddddd", "-------Operation is cancelled ")
-                                    }
-                                }
-
-                            }
-
-
-
-                            override fun onDestroy() {
-                                super.onDestroy()
-                                job.cancel()
-                            }
-
-
+        // for imageUpload api
+        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    if (response.body()!!.data != null) {
+                        urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
+                        if (imageVideoListPosition <= 4) {
+                            imageVideoListPosition = imageVideoListPosition + 1
+                            hitApiForBannerImages(imageVideoListPosition)
                         }
+                        // now making json format for upper images media
+                        for (i in 0..urlListingFromResponse.size - 1) {
+                            val json = JSONObject()
+                            json.put("image", urlListingFromResponse[i])
+                            media.put(json)
+                        }
+
+                        hitFinallyActivityAddPostApi()
+
+                        Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
+
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
+                }
+            }
+        })
+
+        appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
+            myCustomToast(it)
+            progressDialog.hidedialog()
+        })
+    }
+
+    private fun hitFinallyActivityAddPostApi() {
+        if (checkIfHasNetwork(this)) {
+            appViewModel.sendMaternalPost_Data(security_key, authKey, "4", maternalName,
+                    placeSpin, countryCodee, phoneNumber, cityAddress, descp_baby_sitter, cityName, cityLatitude, cityLongitude,
+                    media.toString())
+            progressDialog.setProgressDialog()
+        } else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
+    }
+
+    private fun showPlacePicker() {
+        // Initialize Places.
+        Places.initialize(applicationContext, googleMapKey)
+        // Create a new Places client instance.
+        val placesClient: PlacesClient = Places.createClient(this)
+        // Set the fields to specify which types of place data to return.
+        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        startActivityForResult(intent, PLACE_PICKER_REQUEST)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode === PLACE_PICKER_REQUEST) {
+            if (resultCode === Activity.RESULT_OK) {
+                val place = Autocomplete.getPlaceFromIntent(data!!)
+
+                cityAddress = place.address.toString()
+                et_addressBabySitter.setText(cityAddress.toString())
+                cityName = place.name.toString()
+
+                // cityID = place.id.toString()
+                cityLatitude = place.latLng?.latitude.toString()
+                cityLongitude = place.latLng?.longitude.toString()
+
+                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                val status: Status = Autocomplete.getStatusFromIntent(data!!)
+                Log.i("dddddd", status.getStatusMessage().toString())
+            } else if (resultCode === Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+                Log.i("dddddd", "-------Operation is cancelled ")
+            }
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
+
+
+}

@@ -10,18 +10,16 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyan_live.AppUtils
+import com.bumptech.glide.Glide
 import com.nelyan_live.R
-import com.nelyan_live.modals.EventModel
-import com.nelyan_live.ui.ActivityDetailsActivity
-import com.nelyan_live.utils.OpenActivity
+import com.nelyan_live.modals.HomeEventModel
 import java.util.*
 
-class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
+class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayList<HomeEventModel>) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
     var a: Activity
     var context: Context? = null
     var rl_1: RelativeLayout? = null
-    var datalist: ArrayList<EventModel>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_myevent, parent, false)
         context = parent.context
@@ -29,7 +27,10 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.eimg.setImageResource(datalist[position].img)
+
+        holder.bindMethod(datalist[position])
+
+       /* holder.eimg.setImageResource(datalist[position].img)
         holder.ename.text = datalist[position].eventName
         holder.eloc.text = datalist[position].eventLocation
         holder.edate.text = datalist[position].eventDate
@@ -41,7 +42,7 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
            context?.OpenActivity(ActivityDetailsActivity::class.java)
             // AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, true)
 
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
@@ -49,16 +50,19 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
     }
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ename: TextView
-        var eloc: TextView
-        var edate: TextView
-        var etime: TextView
-        var etimetwo: TextView
-        var eprice: TextView
-        var edesc: TextView
-        var eimg: ImageView
 
-        init {
+        lateinit var ename: TextView
+        lateinit var eloc: TextView
+        lateinit var edate: TextView
+        lateinit var etime: TextView
+        lateinit var etimetwo: TextView
+        lateinit var eprice: TextView
+        lateinit var edesc: TextView
+        lateinit var eimg: ImageView
+       
+        
+        
+        fun bindMethod(eventList: HomeEventModel) {
             ename = itemView.findViewById(R.id.tv_eventname)
             eloc = itemView.findViewById(R.id.tv_eventloc)
             edate = itemView.findViewById(R.id.tv_eventdate)
@@ -67,7 +71,18 @@ class MyEventAdapter(activity: FragmentActivity, datalist: ArrayList<EventModel>
             eprice = itemView.findViewById(R.id.tv_eventprice)
             edesc = itemView.findViewById(R.id.tv_eventdesc)
             eimg = itemView.findViewById(R.id.iv_eventimg)
+
+            Glide.with(context!!).load(eventList.img).error(R.drawable.places_autocomplete_toolbar_shadow).into(eimg)
+            ename.text = eventList.eventName
+            eloc.text = eventList.eventLocation
+            edate.text = eventList.eventDate
+            etime.text = eventList.eventTime
+            etimetwo.text = eventList.eventTimeSecond
+            eprice.text = eventList.eventPrice.toString()
+            edesc.text = eventList.eventDesc
+       
         }
+
     }
 
     init {

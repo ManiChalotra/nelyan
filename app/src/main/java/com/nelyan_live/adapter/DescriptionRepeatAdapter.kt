@@ -90,7 +90,7 @@ class DescriptionRepeatAdapter(var context: Context, var image: HashMap<String, 
         }
 
         init {
-            tvAdd = itemView.findViewById(R.id.tvAdd)
+            tvAdd = itemView.findViewById(R.id.tv_myAdd)
             edtDesc = itemView.findViewById(R.id.edtDesc)
             edtProductPrice = itemView.findViewById(R.id.edtProductPrice)
             edtProductTitle = itemView.findViewById(R.id.edtProductTitle)

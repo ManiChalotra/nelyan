@@ -8,28 +8,76 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.widget.ViewUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nelyan_live.R
+import com.nelyan_live.modals.MyadsEvent
+import com.nelyan_live.modals.myads.MyAdsData
 import com.nelyan_live.ui.ActivityFormActivity
+import com.nelyan_live.utils.image_url_local
 
-class MyAddAdapter(var context: Context) : RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder>() {
+class MyAddAdapter(var context: Context, internal var myadsEventlist: ArrayList<MyAdsData>) :
+        RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder>() {
     var inflater: LayoutInflater
     var dialog: Dialog? = null
     var dialog1: Dialog? = null
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var iv_dot: ImageView
-        var iv_cncl: ImageView? = null
-        var ll_1: LinearLayout
-        var tvEdit: TextView
-        var tvDelete: TextView
 
-        init {
-            iv_dot = view.findViewById(R.id.iv_dot)
-            ll_1 = view.findViewById(R.id.ll_1)
-            tvEdit = view.findViewById(R.id.tvEdit)
-            tvDelete = view.findViewById(R.id.tvDelete)
+        var tvEdit = itemView.findViewById(R.id.tvEdit) as TextView
+        var ll_1 = itemView.findViewById(R.id.ll_1) as LinearLayout
+        var tvAdName = itemView.findViewById(R.id.tv_ad_name) as TextView
+        var tvLocation = itemView.findViewById(R.id.tv_location) as TextView
+        var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
+        var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
+        var tvMsg = itemView.findViewById(R.id.tv_msg) as TextView
+        var tvDelete = itemView.findViewById(R.id.tvDelete) as TextView
+        var iv_dot = itemView.findViewById(R.id.iv_dot) as ImageView
+        var imageAds = itemView.findViewById(R.id.image_ads) as ImageView
+       // var iv_cncl = itemView.findViewById(R.id.tvDelete) as ImageView
+
+        fun bind(myadsList: MyAdsData) {
+
+            if (myadsList.categoryId == 1){
+                tvActivityname.setText(myadsList.nameOfShop)
+                tvLocation.setText(myadsList.address)
+                tvDescription.setText(myadsList.description)
+                tvAdName.setText(myadsList.activityname)
+                tvMsg.setText(myadsList.adMsg)
+                if (myadsList.activityimages.size > 0)
+                Glide.with(context).load(image_url_local + myadsList.activityimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                else
+                    imageAds.setImageResource(R.mipmap.no_image_placeholder)
+            } else if (myadsList.categoryId == 2){
+                tvActivityname.setText(myadsList.addInfo)
+                tvLocation.setText(myadsList.address)
+                tvDescription.setText(context.getString(R.string.description1)+" "+myadsList.description)
+                tvAdName.setText(myadsList.name)
+                tvMsg.setText(context.getString(R.string.available_place) +" "+ myadsList.availablePlace)
+
+                if (myadsList.nurseryimages.size > 0)
+                    Glide.with(context).load(image_url_local + myadsList.nurseryimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                else
+                    imageAds.setImageResource(R.mipmap.no_image_placeholder)
+            }
+     else if (myadsList.categoryId == 3){
+                tvAdName.setText(myadsList.name)
+               // tvActivityname.setText(myadsList.addInfo)
+                tvLocation.setText(myadsList.address)
+                tvDescription.setText(context.getString(R.string.description1)+" "+myadsList.description)
+                tvMsg.setText(context.getString(R.string.available_place) +" "+ myadsList.availablePlace)
+
+                if (myadsList.nurseryasistantimages.size > 0)
+                    Glide.with(context).load(image_url_local + myadsList.nurseryasistantimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                else
+                    imageAds.setImageResource(R.mipmap.no_image_placeholder)
+            }
         }
+
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -38,6 +86,9 @@ class MyAddAdapter(var context: Context) : RecyclerView.Adapter<MyAddAdapter.Rec
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+
+        holder.bind(myadsEventlist[position])
+
         holder.iv_dot.setOnClickListener {
             if (holder.ll_1.visibility == View.VISIBLE) {
 // Its visible
@@ -56,7 +107,7 @@ class MyAddAdapter(var context: Context) : RecyclerView.Adapter<MyAddAdapter.Rec
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return myadsEventlist.size
     }
 
     fun dailogDelete() {

@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -50,6 +51,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
+
     private var IMAGE_SELECTED_TYPE = ""
 
     private val job by lazy { kotlinx.coroutines.Job() }
@@ -59,6 +61,7 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
+    private val addEventRequestcode = 2
     private var imagePathList = ArrayList<MultipartBody.Part>()
     private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
@@ -99,6 +102,9 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
     private var descp = ""
     private var messagee = ""
     private var phonee = ""
+
+    private lateinit var updateEventList : ArrayList<ModelPOJO.AddEventDataModel>
+    private  var pos = -1
 
 
     override val coroutineContext: CoroutineContext
@@ -144,7 +150,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
         } else {
             listAddEventDataModel = ArrayList()
-            listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "", "", ""))
+            listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
+                    "", "", "", "", ""))
         }
 
         // clicks for images
@@ -358,8 +365,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
              */
 
         }
-
-
     }
 
 
@@ -388,8 +393,10 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     }
 
-    private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String, cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
-        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description, message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(), "+91")
+    private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String,
+                       cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
+        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description,
+                message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(), "+91")
         progressDialog.setProgressDialog()
     }
 
@@ -405,6 +412,17 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     }
 
+    private fun showPlacePickerForAddEvent() {
+        // Initialize Places.
+        Places.initialize(applicationContext, googleMapKey)
+        // Create a new Places client instance.
+        val placesClient: PlacesClient = Places.createClient(this)
+        // Set the fields to specify which types of place data to return.
+        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        startActivityForResult(intent, addEventRequestcode)
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -427,6 +445,21 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
             }
+        }else if(requestCode == addEventRequestcode){
+
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            cityAddress = place.address.toString()
+            cityName = place.name.toString()
+            // cityID = place.id.toString()
+            cityLatitude = place.latLng?.latitude.toString()
+            cityLongitude = place.latLng?.longitude.toString()
+
+            updateEventList.get(pos).lati = cityLatitude
+            updateEventList.get(pos).city = cityName
+            updateEventList.get(pos).longi = cityLongitude
+
+            addEventRepeatAdapter.notifyDataSetChanged()
+
         }
     }
 
@@ -503,7 +536,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
         }
     }
 
-
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
         Log.d("listtAgrGroup", "--------" + list)
@@ -513,8 +545,22 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
     }
 
+    override fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView ) {
+        updateEventList = list
+        pos = position
+        showPlacePickerForAddEvent()
+       /* list.get(position).city = cityName
+        list.get(position).lati = cityLatitude
+        list.get(position).longi = cityLongitude*/
+      //  city.setText(list.get(position).city)
+
+       // addEventRepeatAdapter.notifyDataSetChanged()
+
+    }
+
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
-        listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "", "", ""))
+        listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
+                "", "", "", "", ""))
         addEventRepeatAdapter.notifyDataSetChanged()
     }
 
@@ -581,7 +627,6 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
                         } else {
 
-
                             // response for addevent images data
                             if (addEventUrlListingResponse != null) {
                                 addEventUrlListingResponse!!.clear()
@@ -610,6 +655,9 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                 json.put("time_to", listAddEventDataModel[i].timeTo.toString())
                                 json.put("description", listAddEventDataModel[i].description.toString())
                                 json.put("price", listAddEventDataModel[i].price.toString())
+                                json.put("city", listAddEventDataModel[i].city.toString())
+                                json.put("lat", listAddEventDataModel[i].lati.toString())
+                                json.put("lng", listAddEventDataModel[i].longi.toString())
                                 //}
                                 addEvent.put(json)
                             }
@@ -621,6 +669,8 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
                                 json.put("age_to", listAgeGroupDataModel[i].ageTo)
                                 json.put("days", listAgeGroupDataModel[i].days)
                                 json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
                                 json.put("time_to", listAgeGroupDataModel[i].timeTo)
                                 ageGroup.put(json)
                             }
