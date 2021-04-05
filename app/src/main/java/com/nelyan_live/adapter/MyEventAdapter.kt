@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
 import com.nelyan_live.modals.HomeEventModel
+import com.nelyan_live.utils.image_base_URl
+/*import com.nelyan_live.utils.image_url_local*/
 import java.util.*
 
 class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayList<HomeEventModel>) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
@@ -53,31 +55,35 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
 
         lateinit var ename: TextView
         lateinit var eloc: TextView
-        lateinit var edate: TextView
+        lateinit var eStartdate: TextView
+        lateinit var eEnddate: TextView
         lateinit var etime: TextView
         lateinit var etimetwo: TextView
         lateinit var eprice: TextView
         lateinit var edesc: TextView
         lateinit var eimg: ImageView
        
-        
-        
+
         fun bindMethod(eventList: HomeEventModel) {
+
             ename = itemView.findViewById(R.id.tv_eventname)
             eloc = itemView.findViewById(R.id.tv_eventloc)
-            edate = itemView.findViewById(R.id.tv_eventdate)
+            eStartdate = itemView.findViewById(R.id.tv_eventStartdate)
+            eEnddate = itemView.findViewById(R.id.tv_eventEnddate)
             etime = itemView.findViewById(R.id.tv_eventtime)
             etimetwo = itemView.findViewById(R.id.tv_eventtimetwo)
             eprice = itemView.findViewById(R.id.tv_eventprice)
             edesc = itemView.findViewById(R.id.tv_eventdesc)
             eimg = itemView.findViewById(R.id.iv_eventimg)
 
-            Glide.with(context!!).load(eventList.img).error(R.drawable.places_autocomplete_toolbar_shadow).into(eimg)
+            Glide.with(context!!).load(image_base_URl +eventList.img).error(R.mipmap.no_image_placeholder).into(eimg)
+
             ename.text = eventList.eventName
             eloc.text = eventList.eventLocation
-            edate.text = eventList.eventDate
-            etime.text = eventList.eventTime
-            etimetwo.text = eventList.eventTimeSecond
+            eStartdate.text = context!!.getString(R.string.startdate1)+" "+eventList.eventStartDate
+            eEnddate.text = context!!.getString(R.string.end_date1)+" "+eventList.eventEndDate
+            etime.text = context!!.getString(R.string.start_time1)+" "+eventList.eventStartTime
+            etimetwo.text = context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
             eprice.text = eventList.eventPrice.toString()
             edesc.text = eventList.eventDesc
        

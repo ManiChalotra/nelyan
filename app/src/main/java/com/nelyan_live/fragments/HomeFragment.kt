@@ -7,15 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.preferences.core.preferencesKey
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyHomeAdapter
 import com.nelyan_live.modals.HomeModal
@@ -26,8 +22,6 @@ import kotlinx.android.synthetic.main.tookbar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
@@ -74,6 +68,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         homeFargProgressBar?.showProgressBar()
         checkMvvmResponse()
 
+
+
         /*launch(Dispatchers.Main.immediate) {
             val authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             val authkey1 = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
@@ -117,34 +113,35 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
                 ErrorBodyResponse(response, requireActivity(), homeFargProgressBar)
             }
         })
+
         appViewModel.getException()!!.observe(requireActivity(), androidx.lifecycle.Observer {
             requireActivity().myCustomToast(it)
             homeFargProgressBar?.hideProgressBar()
         })
-
-
     }
 
     override fun onItemHomeClickListner(list: java.util.ArrayList<HomeModal>, position: Int) {
         when(position){
 
             0->{
-                requireActivity().OpenActivity(ActivityListActivity::class.java)
+                requireActivity().OpenActivity(ActivitiesListActivity::class.java)
+                {putString("type","1")}
               //AppUtils.gotoFragment(requireActivity(), ActivityListFragment(), R.id.frame_container, false)
             }
 
             1->{
-                requireActivity().OpenActivity(ChatListActivity::class.java)
+                requireActivity().OpenActivity(HomeChildCareListActivity::class.java){putString("type","2")}
                 //AppUtils.gotoFragment(requireActivity(), ChatListFragment(), R.id.frame_container, false)
             }
 
             2->{
                 val i = Intent(requireActivity(), SectorizationActivity::class.java)
+                i.putExtra("type","3")
                 requireActivity().startActivity(i)
             }
 
             3->{
-                requireActivity().OpenActivity(TraderListingActivity::class.java)
+                requireActivity().OpenActivity(TraderListingActivity::class.java){putString("type","4")}
               //  AppUtils.gotoFragment(requireActivity(), TraderListingFragment(), R.id.frame_container, false)
             }
 

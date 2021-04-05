@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:clickable="true"
     tools:context=".fragments.MyAddFragment">
+
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/myads_progressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
 
     <RelativeLayout
         android:id="@+id/header"

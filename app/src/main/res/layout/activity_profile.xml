@@ -6,204 +6,219 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.ProfileActivity">
+
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/profileProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/profileProgressBar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
     <RelativeLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp">
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_10sdp"
-            />
-        <TextView
-            style="@style/HeaderText"
-            android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="Profile"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_190sdp">
-            <ImageView
-                android:id="@+id/iv_userProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"/>
-            <com.tuyenmonkey.mkloader.MKLoader
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:mk_type="FishSpinner"
-                android:layout_centerInParent="true"
-                android:elevation="@dimen/_5dp"
-                android:id="@+id/imageViewProgressBar"
-                android:visibility="gone"
-                app:mk_color="@color/colorPrimary"
-                />
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/ivPlus"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/plus"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_70sdp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
+        android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:src="@drawable/left_arrow" />
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_centerInParent="true"
+                android:text="Profile"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:visibility="gone"
-         android:layout_marginTop="-30dp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/shape"
-            android:orientation="vertical"
-            android:padding="@dimen/_7sdp"
-            >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header"
+            android:fillViewport="true">
 
-            <TextView
-                android:id="@+id/tvEdit"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/semibold"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="Edit"
-                android:textSize="@dimen/_10sdp" />
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/semibold"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="Delete"
-                android:textSize="@dimen/_10sdp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_190sdp">
 
-        </LinearLayout>
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="Name"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
-            />
-<TextView
-  style="@style/CommonTextMatchparent"
-    android:id="@+id/tv_usernameProfile"
-    android:textSize="@dimen/_15sdp"
-    android:layout_marginTop="@dimen/_5sdp"
-    android:textColor="@color/black"
-    android:fontFamily="@font/semibold"/>
-<!--
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/black"/>-->
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="Email"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
-            />
-        <TextView
-            android:id="@+id/tv_emailProfile"
-            style="@style/CommonTextMatchparent"
-            android:textSize="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold"/>
-     <!--   <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/black"/>-->
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="City Name"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
-            />
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:id="@+id/tv_cityProfile"
-            android:textSize="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold"/>
-      <!--  <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/black"/>-->
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="Types of Utilisation"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey"
-            />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_userProfile"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="@dimen/_140sdp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_user_place" />
 
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:id="@+id/tv_utilizationProfile"
-            android:textSize="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold"/>
+                    <com.tuyenmonkey.mkloader.MKLoader
+                        android:id="@+id/imageViewProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:elevation="@dimen/_5dp"
+                        android:visibility="gone"
+                        app:mk_color="@color/colorPrimary"
+                        app:mk_type="FishSpinner" />
 
-        <Button
-            style="@style/Button"
-            android:id="@+id/btnEdit"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:text="EDIT PROFILE"
-            android:background="@drawable/btn"/>
-    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ivPlus"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="@dimen/_70sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:src="@drawable/plus"
+                        android:visibility="gone" />
 
-</RelativeLayout>
+                </RelativeLayout>
 
-<!--    </ScrollView>-->
+                <LinearLayout
+                    android:id="@+id/ll_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_7sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="Edit"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/tvDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="Delete"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="Name"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_usernameProfile"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+                <!--
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@color/black"/>-->
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Email"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_emailProfile"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+                <!--   <View
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:background="@color/black"/>-->
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="City Name"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_cityProfile"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+                <!--  <View
+                      android:layout_width="match_parent"
+                      android:layout_height="1dp"
+                      android:layout_marginTop="@dimen/_5sdp"
+                      android:background="@color/black"/>-->
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/types_of_utilisation"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_utilizationProfile"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <Button
+                    android:id="@+id/btnEdit"
+                    style="@style/Button"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/btn"
+                    android:text="@string/edit_profile"
+                    android:textAllCaps="true" />
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+    <!--    </ScrollView>-->
 
 
 </RelativeLayout>

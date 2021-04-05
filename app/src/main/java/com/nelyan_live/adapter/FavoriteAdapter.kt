@@ -9,9 +9,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.ui.NurserieActivity
 import com.nelyan_live.ui.NurseryActivity
 import com.nelyan_live.utils.OpenActivity
 
@@ -27,7 +25,7 @@ class FavoriteAdapter(activity: FragmentActivity) : RecyclerView.Adapter<Favorit
         var iv_unfev: ImageView
 
         init {
-            iv_fev = view.findViewById(R.id.iv_fev)
+            iv_fev = view.findViewById(R.id.iv_favourtie)
             iv_unfev = view.findViewById(R.id.iv_unfev)
         }
     }

@@ -62,62 +62,10 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private var socialName = ""
     private var socialEmail = ""
     private var socialImage = ""
-     private  var socialID = ""
+    private var socialID = ""
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
-
-    override fun onResume() {
-        super.onResume()
-
-        socialSignup = intent?.extras?.getString("socialLogin").toString()
-        imgPath = socialImage
-
-        if (socialSignup.equals("SOCIAL_LOGIN")) {
-            tv_passwordSignup.visibility = View.GONE
-            password.visibility = View.GONE
-            view1.visibility = View.GONE
-            tv_confirmPasswordSignup.visibility = View.GONE
-            password1.visibility = View.GONE
-            view2.visibility = View.GONE
-
-            socialEmail = intent?.extras?.getString("socialEmail").toString()
-            socialImage = intent?.extras?.getString("socialImage").toString()
-            socialName = intent?.extras?.getString("socialName").toString()
-            socialID = intent?.extras?.getString("socialId").toString()
-
-            if(socialEmail.isEmpty()){
-                tv_userEmail.isFocusable = true
-                tv_userEmail.isFocusableInTouchMode = true
-            }else{
-                tv_userEmail.setText(socialEmail)
-                tv_userEmail.isFocusable = false
-                tv_userEmail.isFocusableInTouchMode = false
-            }
-
-
-            // setting the social credential
-            tv_username.setText(socialName)
-            if(!socialImage.isEmpty()){
-                Glide.with(this).asBitmap().centerCrop().load(socialImage).into(iv_uploader)
-            }else{
-                iv_uploader.setImageResource(R.drawable.img_uploader)
-            }
-
-
-
-        } else {
-            tv_passwordSignup.visibility = View.VISIBLE
-            password.visibility = View.VISIBLE
-            view1.visibility = View.VISIBLE
-            tv_confirmPasswordSignup.visibility = View.VISIBLE
-            password1.visibility = View.VISIBLE
-            view2.visibility = View.VISIBLE
-
-        }
-
-    }
 
 
     //  String[] signup = {"Consultant", "Professional"};
@@ -134,9 +82,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
           iv_uploader!!.setImageBitmap(var1)
       }*/
 
+
     private fun initalize() {
-
-
         ivBack.setOnClickListener(this)
         btnRegister.setOnClickListener(this)
         tvPrivacy.setOnClickListener(this)
@@ -145,6 +92,61 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         tv_city.setOnClickListener(this)
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (intent.extras != null) {
+
+            socialSignup = intent?.extras?.getString("socialLogin").toString()
+            imgPath = socialImage
+
+            if (socialSignup.equals("SOCIAL_LOGIN")) {
+                tv_passwordSignup.visibility = View.GONE
+                password.visibility = View.GONE
+                view1.visibility = View.GONE
+                tv_confirmPasswordSignup.visibility = View.GONE
+                password1.visibility = View.GONE
+                view2.visibility = View.GONE
+
+                socialEmail = intent?.extras?.getString("socialEmail").toString()
+                socialImage = intent?.extras?.getString("socialImage").toString()
+                socialName = intent?.extras?.getString("socialName").toString()
+                socialID = intent?.extras?.getString("socialId").toString()
+
+                if (socialEmail.isEmpty()) {
+                    tv_userEmail.isFocusable = true
+                    tv_userEmail.isFocusableInTouchMode = true
+                } else {
+                    tv_userEmail.setText(socialEmail)
+                    tv_userEmail.isFocusable = false
+                    tv_userEmail.isFocusableInTouchMode = false
+                }
+
+                // setting the social credential
+                tv_username.setText(socialName)
+                if (!socialImage.isEmpty()) {
+                    Glide.with(this).asBitmap().centerCrop().load(socialImage).into(iv_uploader)
+                } else {
+                    iv_uploader.setImageResource(R.drawable.img_uploader)
+                }
+
+
+            } else {
+                tv_passwordSignup.visibility = View.VISIBLE
+                password.visibility = View.VISIBLE
+                view1.visibility = View.VISIBLE
+                tv_confirmPasswordSignup.visibility = View.VISIBLE
+                password1.visibility = View.VISIBLE
+                view2.visibility = View.VISIBLE
+
+            }
+
+        }
+
+
+    }
+
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -156,8 +158,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 if (type != 0) {
                     if (Validation.checkName(tv_username.text.toString().trim(), this)) {
                         if (Validation.checkEmail(tv_userEmail.text.toString(), this)) {
+                            if (socialSignup.equals("") || socialSignup.isEmpty() || socialSignup == null) {
 
-                            if (socialSignup.equals("")) {
                                 if (Validation.checkPassword(tv_password.text.toString(), this)) {
                                     if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
                                         myCustomToast("please enter confirm password")
@@ -178,20 +180,20 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                         }
                                     }
                                 }
+
                             } else {
                                 // here control comes when social login
                                 if (tv_city.text.isNullOrEmpty()) {
-                                    myCustomToast("Please select your city")
+                                    myCustomToast(getString(R.string.select_city_error))
                                 } else {
 
                                     val name = tv_username.text.toString().trim()
                                     val email = tv_userEmail.text.toString()
-                                    hitSocialCompleteProfileApi(name, email,type.toString())
+                                    hitSocialCompleteProfileApi(name, email, type.toString())
 
                                 }
 
                             }
-
 
                         }
                     }
@@ -211,7 +213,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 OpenActivity(TermsActivity::class.java)
             }
             R.id.iv_uploader -> {
-
                 checkPermission(this)
                 //image("all")
             }
@@ -222,14 +223,14 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         }
     }
 
-    private fun hitSocialCompleteProfileApi(name: String, email: String, type:String) {
-            // imageType 1-> file , 2-> url
+    private fun hitSocialCompleteProfileApi(name: String, email: String, type: String) {
+        // imageType 1-> file , 2-> url
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key,  socialID, email,name, type,  cityLatitude, cityLongitude, "12", cityName,"1")
-           progressDialog.setProgressDialog()// signupProgressBar?.showProgressBar()
+            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude, "12", cityName, "1")
+            progressDialog.setProgressDialog()// signupProgressBar?.showProgressBar()
         } else {
             // here image is of type URl
-            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key,  socialID, email,name, type,  cityLatitude, cityLongitude, "12", cityName,"2",imgPath)
+            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude, "12", cityName, "2", imgPath)
             progressDialog.setProgressDialog()
         }
 
@@ -270,7 +271,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
 
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi )
+            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
             signupProgressBar?.showProgressBar()
         } else {
             // hit with updating the image
@@ -337,11 +338,10 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             }
         })
 
-
         // complete profile socialLogin api
-        appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response->
-            if(response!!.isSuccessful && response.code()==200){
-                if(response.body()!= null){
+        appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
                     Log.d("completeSocialResponse", "---------" + Gson().toJson(response.body()))
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
@@ -383,7 +383,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                 }
 
-            }else{
+            } else {
                 ErrorBodyResponse(response, this, null)
             }
         })

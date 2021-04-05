@@ -12,6 +12,8 @@ import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.meherr.mehar.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
+import com.nelyan_live.modals.myads.MyAdsData
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.coroutines.CoroutineScope
@@ -39,6 +41,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
     private  var utilization = ""
     private  var dataReady = false
     private  var authkey = ""
+
 
 
     override val coroutineContext: CoroutineContext
@@ -115,7 +118,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                     city = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                      utilization = jsonObject.getJSONObject("data").get("utilization").toString()
 
-                   Glide.with(this).asBitmap().load(image_base_URl + image).circleCrop().into(iv_userProfile)
+                   Glide.with(this).asBitmap().load(from_admin_image_base_URl + image).circleCrop().into(iv_userProfile)
                    tv_usernameProfile.text = name
                    tv_emailProfile.text = email
                    tv_cityProfile.text = city

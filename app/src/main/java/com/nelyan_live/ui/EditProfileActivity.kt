@@ -74,6 +74,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
     override fun onResume() {
         super.onResume()
+
         if (imagePathCreated.isNullOrEmpty()) {
             imagePathCreated = intent?.extras?.getString("userImage").toString()
             name = intent?.extras?.getString("userName").toString()
@@ -92,15 +93,11 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
         }
 
-
         launch(Dispatchers.Main.immediate) {
             latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             longitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
         }
-
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

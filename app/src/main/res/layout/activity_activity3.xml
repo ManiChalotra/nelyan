@@ -345,19 +345,17 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Address" />
+                android:text="@string/address" />
 
             <EditText
                 style="@style/SimpleEdittext"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:id="@+id/et_addressActivity"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black" />
-
-
 
             <RelativeLayout
                 android:layout_width="match_parent"

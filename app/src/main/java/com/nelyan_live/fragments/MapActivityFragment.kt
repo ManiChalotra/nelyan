@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.ui.ActivityListActivity
+import com.nelyan_live.ui.ActivitiesListActivity
 import com.nelyan_live.utils.OpenActivity
 
 class MapActivityFragment : Fragment() {
@@ -36,7 +35,7 @@ class MapActivityFragment : Fragment() {
         })
         rl_1 = v!!.findViewById(R.id.rl_1)
         rl_1!!.setOnClickListener(View.OnClickListener {
-            requireActivity().OpenActivity(ActivityListActivity::class.java)
+            requireActivity().OpenActivity(ActivitiesListActivity::class.java)
             //AppUtils.gotoFragment(mContext, ActivityListFragment(), R.id.frame_container, false)
         })
         return v

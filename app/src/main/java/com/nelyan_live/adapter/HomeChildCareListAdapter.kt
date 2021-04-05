@@ -1,19 +1,14 @@
 package com.nelyan_live.adapter
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
+import com.nelyan_live.modals.homechildcare.HomeChildCareResponseData
 
-class ChatListAdapter(var context:Context, var listner:OnChatListItemClickListner) : RecyclerView.Adapter<ChatListAdapter.RecyclerViewHolder>() {
-
+class HomeChildCareListAdapter(var context: Context, internal var childCareDatalist: ArrayList<HomeChildCareResponseData>, var listner: OnChatListItemClickListner) : RecyclerView.Adapter<HomeChildCareListAdapter.RecyclerViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -22,16 +17,17 @@ class ChatListAdapter(var context:Context, var listner:OnChatListItemClickListne
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.initalize(position)
+        holder.initalize(childCareDatalist[position])
     }
     override fun getItemCount(): Int {
-        return 3
+        return childCareDatalist.size
     }
 
     inner class RecyclerViewHolder(view: View, var listner:OnChatListItemClickListner): RecyclerView.ViewHolder(view){
-        fun initalize(position: Int){
+
+        fun initalize(childCareDatalist: HomeChildCareResponseData){
             itemView.setOnClickListener {
-                listner!!.onItemClickListner(position)
+                listner!!.onItemClickListner(adapterPosition)
             }
 
         }

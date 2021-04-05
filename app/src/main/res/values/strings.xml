@@ -65,7 +65,8 @@
     <string name="address">Address</string>
     <string name="select_time">Select Time</string>
     <string name="city">City</string>
-    <string name="no_ads_availalbe">No Ads availalbe</string>
+    <string name="no_ads_availalbe">No Ads available</string>
+    <string name="no_activities_available">No Activities available</string>
     <string name="available_place">Available Place: </string>
     <string name="no_internet_error">No Internet Connection</string>
     <string name="number_of_places_still_avilable">Number of places still avilable</string>
@@ -81,6 +82,31 @@
     <string name="select_image_video_error">Please select at-least one media file image or video .</string>
     <string name="submit">Submit</string>
     <string name="price1">Price:</string>
-
+    <string name="startdate1">Start Date:</string>
+    <string name="end_date1">End Date:</string>
+    <string name="end_time1">End Time:</string>
+    <string name="start_time1">Start Time:</string>
+    <string name="select_city_error">Please select your city</string>
+    <string name="select">Select</string>
+    <string name="sign_up_as_a">Sign Up As A</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="your_city">Your City</string>
+    <string name="register">REGISTER</string>
+    <string name="or">OR</string>
+    <string name="continue_with_facebook">CONTINUE WITH FACEBOOK</string>
+    <string name="continue_with_google">CONTINUE WITH GOOGLE</string>
+    <string name="by_clicking_on_countinue">By clicking on countinue,</string>
+    <string name="types_of_utilisation">Types of Utilisation</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="address_error">Please select your address</string>
+    <string name="message_missing_error">Please enter your message</string>
+    <string name="activity_name_missing_error">Please enter your activity name</string>
+    <string name="shop_name_missing_error">Please enter your shop name</string>
+    <string name="activity_type_missing_error">Please select your activity Type</string>
+    <string name="media_missing_error">Please select atleast one media file image or video .</string>
 
 </resources>

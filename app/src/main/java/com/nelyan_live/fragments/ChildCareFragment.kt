@@ -11,9 +11,9 @@ import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import com.nelyan_live.R
 import com.nelyan_live.R.layout
-import com.nelyan_live.adapter.ActivityListAdapter.OnMyEventRecyclerViewItemClickListner
+import com.nelyan_live.adapter.ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner
 
-class ChildCareFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerViewItemClickListner {
+class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRecyclerViewItemClickListner {
     lateinit  var v: View
     var mContext: Context? = null
     var ivBack: ImageView? = null
@@ -80,7 +80,7 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerV
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-    override fun onMyEventItemClickListner() {}
+
     fun dailogLocation() {
         dialog = Dialog(mContext!!)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -95,5 +95,13 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerV
         rlYes = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
+    }
+
+    override fun onAddFavoriteClick() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onHomeActivitiesItemClickListner() {
+        TODO("Not yet implemented")
     }
 }

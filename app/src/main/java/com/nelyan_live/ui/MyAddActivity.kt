@@ -53,7 +53,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope {
         ivBack!!.setOnClickListener(View.OnClickListener { onBackPressed() })
         ivAdd = findViewById(R.id.ivAdd)
         ivAdd!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(this@MyAddActivity, com.nelyan_live.ui.PubilerActivity::class.java)
+            val i = Intent(this@MyAddActivity, PubilerActivity::class.java)
             startActivity(i)
         })
         recyclerview = findViewById(R.id.recyclerview)
@@ -77,7 +77,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope {
         if (checkIfHasNetwork(this)) {
             authorization = AllSharedPref.restoreString(this, "auth_key")
             appViewModel.sendMyAdsListData(security_key, authorization)
-            eventProgressBar?.showProgressBar()
+            myads_progressBar?.showProgressBar()
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
@@ -93,7 +93,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope {
         appViewModel.observerMyAdsListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    eventProgressBar?.hideProgressBar()
+                    myads_progressBar?.hideProgressBar()
                     Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
@@ -134,12 +134,12 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope {
                     }
                 }
             } else {
-                ErrorBodyResponse(response, this, homeFargProgressBar)
+                ErrorBodyResponse(response, this, myads_progressBar)
             }
         })
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             this.myCustomToast(it)
-            homeFargProgressBar?.hideProgressBar()
+            myads_progressBar?.hideProgressBar()
         })
 
     }

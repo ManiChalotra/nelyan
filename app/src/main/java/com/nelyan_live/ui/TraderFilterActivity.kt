@@ -10,7 +10,7 @@ import com.nelyan_live.R
 import com.nelyan_live.adapter.ActivityListAdapter
 import kotlinx.android.synthetic.main.fragment_trade_filter.*
 
-class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterView.OnItemSelectedListener, ActivityListAdapter.OnMyEventRecyclerViewItemClickListner {
+class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterView.OnItemSelectedListener, ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +57,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-    override fun onMyEventItemClickListner() {}
 
     fun dailogLocation() {
        val  dialog = Dialog(this)
@@ -73,6 +72,14 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         rlYes = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
+    }
+
+    override fun onAddFavoriteClick() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onHomeActivitiesItemClickListner() {
+        TODO("Not yet implemented")
     }
 
 }

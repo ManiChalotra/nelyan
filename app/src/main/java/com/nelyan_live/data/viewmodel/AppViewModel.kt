@@ -159,6 +159,35 @@ class AppViewModel : ViewModel() {
 
     }
 
+
+ // home Activities List api
+    private var homeActivitiesMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeHomeActivitiesResponse(): LiveData<Response<JsonObject>?>? {
+        if (homeActivitiesMutableLiveData == null) {
+            homeActivitiesMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return homeActivitiesMutableLiveData
+    }
+
+    fun sendHomeActivitiesData(
+            securityKey: String?, authkey:String?, categoryType:String?) {
+        JsonPlaceHolder().getHomeDataListing(securityKey, authkey, categoryType)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        homeActivitiesMutableLiveData?.value = response
+                    }
+                })
+
+    }
+
     // forget password api
     private var forgetPasswordMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 

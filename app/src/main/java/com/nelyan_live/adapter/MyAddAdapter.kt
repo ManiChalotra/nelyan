@@ -14,8 +14,9 @@ import com.bumptech.glide.Glide
 import com.nelyan_live.R
 import com.nelyan_live.modals.MyadsEvent
 import com.nelyan_live.modals.myads.MyAdsData
-import com.nelyan_live.ui.ActivityFormActivity
-import com.nelyan_live.utils.image_url_local
+import com.nelyan_live.ui.ActivityFormActivity/*
+import com.nelyan_live.utils.image_url_local*/
+import com.nelyan_live.utils.image_base_URl
 
 class MyAddAdapter(var context: Context, internal var myadsEventlist: ArrayList<MyAdsData>) :
         RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder>() {
@@ -35,48 +36,47 @@ class MyAddAdapter(var context: Context, internal var myadsEventlist: ArrayList<
         var tvDelete = itemView.findViewById(R.id.tvDelete) as TextView
         var iv_dot = itemView.findViewById(R.id.iv_dot) as ImageView
         var imageAds = itemView.findViewById(R.id.image_ads) as ImageView
-       // var iv_cncl = itemView.findViewById(R.id.tvDelete) as ImageView
+        // var iv_cncl = itemView.findViewById(R.id.tvDelete) as ImageView
 
         fun bind(myadsList: MyAdsData) {
-
-            if (myadsList.categoryId == 1){
+            if (myadsList.categoryId == 1) {
                 tvActivityname.setText(myadsList.nameOfShop)
                 tvLocation.setText(myadsList.address)
                 tvDescription.setText(myadsList.description)
                 tvAdName.setText(myadsList.activityname)
                 tvMsg.setText(myadsList.adMsg)
                 if (myadsList.activityimages.size > 0)
-                Glide.with(context).load(image_url_local + myadsList.activityimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
-                else
-                    imageAds.setImageResource(R.mipmap.no_image_placeholder)
-            } else if (myadsList.categoryId == 2){
-                tvActivityname.setText(myadsList.addInfo)
-                tvLocation.setText(myadsList.address)
-                tvDescription.setText(context.getString(R.string.description1)+" "+myadsList.description)
-                tvAdName.setText(myadsList.name)
-                tvMsg.setText(context.getString(R.string.available_place) +" "+ myadsList.availablePlace)
-
-                if (myadsList.nurseryimages.size > 0)
-                    Glide.with(context).load(image_url_local + myadsList.nurseryimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                    Glide.with(context).load(image_base_URl + myadsList.activityimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
                 else
                     imageAds.setImageResource(R.mipmap.no_image_placeholder)
             }
-     else if (myadsList.categoryId == 3){
-                tvAdName.setText(myadsList.name)
-               // tvActivityname.setText(myadsList.addInfo)
+
+            else if (myadsList.categoryId == 2) {
+                tvActivityname.setText(myadsList.addInfo)
                 tvLocation.setText(myadsList.address)
-                tvDescription.setText(context.getString(R.string.description1)+" "+myadsList.description)
-                tvMsg.setText(context.getString(R.string.available_place) +" "+ myadsList.availablePlace)
+                tvDescription.setText(context.getString(R.string.description1) + " " + myadsList.description)
+                tvAdName.setText(myadsList.name)
+                tvMsg.setText(context.getString(R.string.available_place) + " " + myadsList.availablePlace)
+
+                if (myadsList.nurseryimages.size > 0)
+                    Glide.with(context).load(image_base_URl + myadsList.nurseryimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                else
+                    imageAds.setImageResource(R.mipmap.no_image_placeholder)
+            }
+
+            else if (myadsList.categoryId == 3) {
+                tvAdName.setText(myadsList.name)
+                // tvActivityname.setText(myadsList.addInfo)
+                tvLocation.setText(myadsList.address)
+                tvDescription.setText(context.getString(R.string.description1) + " " + myadsList.description)
+                tvMsg.setText(context.getString(R.string.available_place) + " " + myadsList.availablePlace)
 
                 if (myadsList.nurseryasistantimages.size > 0)
-                    Glide.with(context).load(image_url_local + myadsList.nurseryasistantimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
+                    Glide.with(context).load(image_base_URl + myadsList.nurseryasistantimages.get(0).images).error(R.mipmap.no_image_placeholder).into(imageAds)
                 else
                     imageAds.setImageResource(R.mipmap.no_image_placeholder)
             }
         }
-
-
-
 
     }
 

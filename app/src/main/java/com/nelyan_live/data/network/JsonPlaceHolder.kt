@@ -65,6 +65,11 @@ interface JsonPlaceHolder {
     fun get_Logout_api(@Header("security_key") securityKey: String?,
                        @Header("auth_key") auth_key: String?): Call<JsonObject>
 
+    @POST("homeDataListing")
+    @FormUrlEncoded
+    fun getHomeDataListing(@Header("security_key") securityKey: String?,
+                       @Header("auth_key") auth_key: String?, @Field("type") type: String?): Call<JsonObject>
+
     @POST("forgot_password")
     @FormUrlEncoded
     fun get_ForgetPassword_Api(@Header("security_key") securityKey: String?,

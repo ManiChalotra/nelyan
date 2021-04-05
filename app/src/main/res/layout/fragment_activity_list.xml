@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:clickable="true"
     android:id="@+id/frame_container"
-    tools:context=".ui.ActivityListActivity">
+    tools:context=".ui.ActivitiesListActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
         android:layout_width="wrap_content"
@@ -137,10 +137,30 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@id/ll_1"
-     />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_no_activities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_activities_available"
+            android:visibility="gone"
+            android:fontFamily="@font/regular"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home_activities"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

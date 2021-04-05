@@ -47,10 +47,10 @@
         <activity android:name=".ui.FavouriteActivity" />
         <activity android:name=".ui.TraderFilterActivity" />
         <activity android:name=".ui.TraderListingActivity" />
-        <activity android:name=".ui.ChatListActivity" />
+        <activity android:name=".ui.HomeChildCareListActivity" />
         <activity android:name=".ui.ActivityDetailsActivity" />
         <activity android:name=".ui.ActivityFragmentActivity" />
-        <activity android:name=".ui.ActivityListActivity" />
+        <activity android:name=".ui.ActivitiesListActivity" />
         <activity
             android:name=".ui.MyAddActivity"
             android:screenOrientation="portrait"
@@ -105,7 +105,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ChildCareActivity"
+            android:name=".ui.HomeChildCareOnMapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity

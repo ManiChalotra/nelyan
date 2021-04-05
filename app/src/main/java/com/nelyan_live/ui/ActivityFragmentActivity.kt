@@ -12,7 +12,7 @@ import com.nelyan_live.R
 import com.nelyan_live.adapter.ActivityListAdapter
 import java.util.*
 
-class ActivityFragmentActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener, ActivityListAdapter.OnMyEventRecyclerViewItemClickListner {
+class ActivityFragmentActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
 
     var btnFilter: Button? = null
     var tvCal: TextView? = null
@@ -76,7 +76,7 @@ class ActivityFragmentActivity : AppCompatActivity() , AdapterView.OnItemSelecte
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-    override fun onMyEventItemClickListner() {}
+
     private fun dateDialog() {
         val listener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> tvCal!!.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year }
         val datePickerDialog = DatePickerDialog(this, R.style.datepicker, listener, mYear, mMonth, mDay)

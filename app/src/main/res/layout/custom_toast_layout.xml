@@ -8,8 +8,8 @@
     android:background="@drawable/pink_rect">
 
     <TextView
-        app:layout_constraintTop_toTopOf="@+id/image"
-        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="@+id/iv_activity_image"
+        app:layout_constraintStart_toEndOf="@+id/iv_activity_image"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:id="@+id/text"
         android:lineSpacingExtra="@dimen/_2sdp"

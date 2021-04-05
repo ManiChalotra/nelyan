@@ -42,7 +42,6 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
         val timeFrom = itemView.edClo
         val timeTo = itemView.edClo1
 
-
         fun initalize(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
             timeFrom.text = list.get(position).timeFrom
@@ -58,6 +57,7 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
             day.add("Friday")
             day.add("Saturday")
             day.add("Sunday")
+
             val modeAdaptercity = ArrayAdapter(context, R.layout.customspinner, day)
             days.adapter = modeAdaptercity
             val spinnerPosition: Int = modeAdaptercity.getPosition(list.get(position).days)
@@ -74,7 +74,6 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 }
             })
 
-
             // add text watcher  for age To
             ageTo.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
@@ -85,7 +84,6 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-
 
             var name = ""
             // setting the data in spinner
@@ -132,13 +130,9 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 ageFrom.clearFocus()
                 ageTo.clearFocus()
                 days.clearFocus()
-
                 listner.addAgeGroupItem(list, position)
             }
-
         }
-
-
     }
 
 

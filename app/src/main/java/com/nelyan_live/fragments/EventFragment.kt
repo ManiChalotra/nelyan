@@ -164,9 +164,22 @@ class EventFragment : Fragment(), OnItemSelectedListener {
                         val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
                         val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
                         val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+                        if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
+                            val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("dateFrom").toString()
+                            val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("dateTo").toString()
+                            val eventStartTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("startTime").toString()
+                            val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("endTime").toString()
+                            datalist!!.add(HomeEventModel(image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                                    description))
+                        }else {
+                            datalist!!.add(HomeEventModel(image, name, city, "", "", "", "",
+                                    price, description))
+                        }
 
-                        datalist!!.add(HomeEventModel(image, name, city, "", "", "", price,
-                                description))
                     }
 
                     if (mSizeOfData == 0){

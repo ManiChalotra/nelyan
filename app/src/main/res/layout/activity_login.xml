@@ -17,49 +17,40 @@
         app:mk_color="@color/colorPrimary"
         />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-   <!-- <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp">
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_10sdp" />
-    </RelativeLayout>-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:orientation="vertical"
-      >
-        <ImageView
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
-            android:src="@drawable/smallogo"
-            android:layout_gravity="center"/>
-<TextView
-   style="@style/CommonTextWrapcontent"
-    android:text="Login"
-    android:textSize="@dimen/_15sdp"
-    android:layout_marginTop="@dimen/_20sdp"
-    android:textColor="@color/black"
-    android:fontFamily="@font/bold"/>
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="Email"
-            android:fontFamily="@font/medium"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/black"
-            />
-        <EditText
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:src="@drawable/smallogo"
+                android:layout_gravity="center"/>
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:text="Login"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/bold"/>
+            <TextView
+                style="@style/CommonTextMatchparent"
+                android:text="Email"
+                android:fontFamily="@font/medium"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/black"
+                />
+            <EditText
                 style="@style/SimpleEdittext"
                 android:layout_marginTop="8dp"
                 android:background="@color/transparent"
@@ -67,195 +58,198 @@
                 android:textColorHint="@color/grey"
                 android:maxLines="1"
                 android:gravity="bottom"
-            android:id="@+id/tv_emailLogin"
+                android:id="@+id/tv_emailLogin"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:inputType="textWebEmailAddress"
                 android:hint="Email"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/black"/>
-        <TextView
-            style="@style/CommonTextMatchparent"
-            android:text="Password"
-            android:fontFamily="@font/medium"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/black"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            android:id="@+id/password"
-            android:layout_marginTop="-10dp"
-
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/grey">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <View
                 android:layout_width="match_parent"
-                android:textSize="@dimen/_10sdp"
-                android:textColorHint="@color/grey"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black"/>
+            <TextView
+                style="@style/CommonTextMatchparent"
+                android:text="Password"
+                android:fontFamily="@font/medium"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:hint="Password"
-                android:id="@+id/tv_passwordLogin"
-                android:fontFamily="@font/regular"
-                android:background="@null"
-                android:inputType="textWebPassword"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="-10dp"
-            android:background="@color/black"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="wrap_content"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:orientation="horizontal">
+                app:hintEnabled="false"
+                android:id="@+id/password"
+                android:layout_marginTop="-10dp"
+
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/grey">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
+                    android:hint="Password"
+                    android:id="@+id/tv_passwordLogin"
+                    android:fontFamily="@font/regular"
+                    android:background="@null"
+                    android:inputType="textWebPassword"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="-10dp"
+                android:background="@color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/ll_chackbox"
-                    >
-                    <ImageView
-                        android:id="@+id/iv_tickButton"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:src="@drawable/fill_check"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/ll_chackbox"
+                        >
+                        <ImageView
+                            android:id="@+id/iv_tickButton"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:src="@drawable/fill_check"/>
 
+                    </LinearLayout>
+                    <TextView
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="Remember Me"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tvForgotPass"
                     style="@style/CommonTextWrapcontent"
-                    android:layout_marginLeft="@dimen/_8sdp"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="@dimen/_10sdp"
-                    android:text="Remember Me"/>
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    android:text="Forgot Password?"/>
+            </RelativeLayout>
+            <Button
+                android:id="@+id/btnLogin"
+                style="@style/Button"
+
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/btn"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:text="LOGIN"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="horizontal">
+                <View
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@color/black"/>
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:text="OR"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:layout_marginRight="@dimen/_2sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    />
+                <View
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@color/black"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tvForgotPass"
-                style="@style/CommonTextWrapcontent"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/fb_btn">
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/fb1"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:id="@+id/iv_facebookLogin_button"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:text="CONTINUE WITH FACEBOOK"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_centerInParent="true"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/black"
-                android:text="Forgot Password?"/>
-        </RelativeLayout>
-        <Button
-            android:id="@+id/btnLogin"
-           style="@style/Button"
-
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/btn"
-            android:layout_marginRight="@dimen/_3sdp"
-            android:layout_marginLeft="@dimen/_3sdp"
-            android:text="LOGIN"/>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_marginTop="@dimen/_15sdp"
-    android:orientation="horizontal">
-    <View
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:background="@color/black"/>
-    <TextView
-      style="@style/CommonTextWrapcontent"
-        android:text="OR"
-        android:layout_marginLeft="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_2sdp"
-        android:fontFamily="@font/semibold"
-        android:textColor="@color/black"
-        />
-    <View
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:background="@color/black"/>
-</LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/fb_btn">
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
+                android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:drawableLeft="@drawable/fb1"
-                android:fontFamily="@font/semibold"
                 android:gravity="center"
-                android:id="@+id/iv_facebookLogin_button"
-                android:drawablePadding="@dimen/_10sdp"
-                android:text="CONTINUE WITH FACEBOOK"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/google_btn">
+                android:background="@drawable/google_btn">
 
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/google"
-                android:fontFamily="@font/semibold"
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/google"
+                    android:fontFamily="@font/semibold"
+                    android:gravity="center"
+                    android:id="@+id/iv_googleLogin_button"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:text="CONTINUE WITH GOOGLE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:id="@+id/iv_googleLogin_button"
-                android:drawablePadding="@dimen/_10sdp"
-                android:text="CONTINUE WITH GOOGLE"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:gravity="center"
+                    android:text="Don't have an account? "
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/grey"
+                    />
+                <TextView
+                    android:id="@+id/tvSignup"
+                    style="@style/CommonTextWrapcontent"
+                    android:gravity="center"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="@string/signup"
+                    android:textStyle="bold"
+                    android:textColor="@color/app"/>
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:gravity="center"
-                android:text="Don't have an account? "
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@color/grey"
-                />
-            <TextView
-                android:id="@+id/tvSignup"
-                style="@style/CommonTextWrapcontent"
-                android:gravity="center"
-                android:textSize="@dimen/_12sdp"
-                android:text="@string/signup"
-                android:textStyle="bold"
-                android:textColor="@color/app"/>
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

@@ -152,7 +152,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 OpenActivity(ForgotPasswordActivity::class.java)
             }
             R.id.tvSignup -> {
-                OpenActivity(SignupActivity::class.java)
+                OpenActivity(SignupActivity::class.java){
+                    putString("socialLogin", "")
+                    putString("socialName", "")
+                    putString("socialEmail", "")
+                    putString("socialImage", "")
+                    putString("socialId", "")
+                }
             }
             R.id.btnLogin -> {
                 val email = tv_emailLogin.text.toString()

@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.nelyan_live.R
 import com.nelyan_live.adapter.TraderListingAdapter
 import com.nelyan_live.utils.OpenActivity
-import com.nelyan_live.utils.myCustomToast
 import kotlinx.android.synthetic.main.fragment_trader_listing.*
 
 class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderListingAdapter.OnTraderItemClickListner {
@@ -34,7 +33,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 onBackPressed()
             }
             R.id.ivMap -> {
-                OpenActivity(ChildCareActivity::class.java)
+                OpenActivity(HomeChildCareOnMapActivity::class.java)
             }
             R.id.tvFilter -> {
                 OpenActivity(TraderFilterActivity::class.java)

@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.nelyan_live.R
 
-class ChildCareActivity : AppCompatActivity(), OnMapReadyCallback {
+class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback {
     var mContext: Context? = null
     var ivBack: ImageView? = null
     var ivFilter: ImageView? = null

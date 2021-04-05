@@ -209,31 +209,31 @@ class ActivityFormActivity : OpenCameraGallery(), OnItemSelectedListener, View.O
 
 
                 if (IMAGE_SELECTED_TYPE.equals("")) {
-                    myCustomToast("Please select atleast one media file image or video .")
+                    myCustomToast(getString(R.string.media_missing_error))
                 } else {
                     val activityType = orderby.selectedItem.toString()
-                    if (activityType.equals("") || activityType.equals("Select")) {
-                        myCustomToast("please select your activity Type ")
+                    if (activityType.equals("") || activityType.equals(getString(R.string.select))) {
+                        myCustomToast(getString(R.string.activity_type_missing_error))
                     } else {
                         if (shopName.isEmpty()) {
-                            myCustomToast("Please enter your shop name ")
+                            myCustomToast(getString(R.string.shop_name_missing_error))
                         } else {
                             if (activityName.isEmpty()) {
-                                myCustomToast("Please enter your activity name")
+                                myCustomToast(getString(R.string.activity_name_missing_error))
                             } else {
 
                                 if (message.isEmpty()) {
-                                    myCustomToast("Please enter your message")
+                                    myCustomToast(getString(R.string.message_missing_error))
                                 } else {
                                     if (description.isEmpty()) {
-                                        myCustomToast("Please enter your description ")
+                                        myCustomToast(getString(R.string.description_missing))
                                     } else {
                                         if (phone.isEmpty()) {
-                                            myCustomToast("Please enter your phone ")
+                                            myCustomToast(getString(R.string.phone_number_missing))
 
                                         } else {
                                             if (address.isEmpty()) {
-                                                myCustomToast("Please select your address")
+                                                myCustomToast(getString(R.string.address_missing_error))
                                             } else {
                                                 // adding values
                                                 activity_type = orderby.selectedItem.toString()

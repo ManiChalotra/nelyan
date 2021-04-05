@@ -6,54 +6,81 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyan_live.AppUtils
+import com.bumptech.glide.Glide
 import com.nelyan_live.R
+import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyan_live.ui.ActivityDetailsActivity
 import com.nelyan_live.ui.FavouriteActivity
 import com.nelyan_live.utils.OpenActivity
+import com.nelyan_live.utils.image_base_URl
 
-class ActivityListAdapter(activity: FragmentActivity, listing: OnMyEventRecyclerViewItemClickListner) : RecyclerView.Adapter<ActivityListAdapter.RecyclerViewHolder>() {
+class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitivitiesList: ArrayList<HomeAcitivityResponseData>,
+                          internal var OnCLICK: OnHomeActivitiesRecyclerViewItemClickListner) : RecyclerView.Adapter<ActivityListAdapter.RecyclerViewHolder>() {
     var context: Context? = null
-    var a: Activity
-    var rl_1: RelativeLayout? = null
     var image: ImageView? = null
-    var iv_fev: ImageView? = null
-    var listner: OnMyEventRecyclerViewItemClickListner
 
-    inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
+
+    inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
+
+        var tvAddress = itemView.findViewById(R.id.tv_address) as TextView
+        var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
+        var tvAdInfo = itemView.findViewById(R.id.tv_ad_info) as TextView
+        var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
+        var tvMsg = itemView.findViewById(R.id.tv_available_place) as TextView
+        var ivActivityImage = itemView.findViewById(R.id.iv_activity_image) as ImageView
+        var ivFavourite = itemView.findViewById(R.id.iv_favourite) as ImageView
+        var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
+
+        fun bindMethod(homeAcitivityList: HomeAcitivityResponseData) {
+
+            tvActivityname.text = homeAcitivityList.activityname
+            tvDescription.text = homeAcitivityList.description
+            tvMsg.text = homeAcitivityList.adMsg
+
+
+
+            if (homeAcitivityList.activityimages !=null && homeAcitivityList.activityimages.size !=0){
+                Glide.with(context!!).load(image_base_URl+homeAcitivityList.activityimages.get(0).images).
+                error(R.mipmap.no_image_placeholder).into(ivActivityImage)
+            }
+
+            ivFavourite!!.setOnClickListener{
+                context?.OpenActivity(FavouriteActivity::class.java)
+
+            }
+
+            rl_1!!.setOnClickListener{
+                context?.OpenActivity(ActivityDetailsActivity::class.java)
+
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val v = LayoutInflater.from(a).inflate(R.layout.list_activitylist, parent, false)
         context = parent.context
-        //     View v = inflater.inflate(R.layout.list_activitylist, parent, false);
-        rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener {
-            context?.OpenActivity(ActivityDetailsActivity::class.java)
-            //AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, false)
-        })
-        iv_fev = v.findViewById(R.id.iv_fev)
-        iv_fev!!.setOnClickListener(View.OnClickListener {
+        return RecyclerViewHolder(LayoutInflater.from(context).inflate(R.layout.list_activitylist, parent, false))
 
-           context?.OpenActivity(FavouriteActivity::class.java)
-           // AppUtils.gotoFragment(a, FavoriteFragment(), R.id.frame_container, false)
-        })
-        return RecyclerViewHolder(v)
+              /*  val v = LayoutInflater.from(context).inflate(R.layout.list_activitylist, parent, false)
+        return RecyclerViewHolder(v)*/
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {}
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        holder.bindMethod(homeAcitivitiesList[position])
+    }
     override fun getItemCount(): Int {
-        return 30
+        return homeAcitivitiesList.size
     }
 
-    interface OnMyEventRecyclerViewItemClickListner {
-        fun onMyEventItemClickListner()
+    interface OnHomeActivitiesRecyclerViewItemClickListner {
+        fun onAddFavoriteClick()
+        fun onHomeActivitiesItemClickListner()
     }
 
-    init {
-        a = activity
-        listner = listing
-    }
+
+
 }

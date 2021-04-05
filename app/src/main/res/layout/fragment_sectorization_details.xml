@@ -82,7 +82,7 @@
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/_5sdp" />
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/tv_address"
             style="@style/CommonTextWrapcontent"
             android:drawablePadding="@dimen/_5sdp"
             android:text="43 bis rue du Marechal Foch, 78600 Maisons-Laffitte"
