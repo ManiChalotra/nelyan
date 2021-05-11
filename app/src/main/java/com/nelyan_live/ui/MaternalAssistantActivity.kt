@@ -22,7 +22,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_maternal_assistant.*
@@ -392,7 +392,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
 
     private fun hitFinallyActivityAddPostApi() {
         if (checkIfHasNetwork(this)) {
-            appViewModel.sendMaternalPost_Data(security_key, authKey, "3", maternalName,
+            appViewModel.sendMaternalPost_Data(security_key, authKey, "3", "", maternalName,"",
                 placeSpin, countryCodee, phoneNumber, cityAddress, description, cityName, cityLatitude, cityLongitude,
                 media.toString())
         progressDialog.setProgressDialog()

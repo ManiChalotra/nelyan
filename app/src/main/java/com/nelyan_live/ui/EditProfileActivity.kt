@@ -17,7 +17,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
@@ -41,6 +41,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
+
     private val dataStoragePreference by lazy {
         DataStoragePreference(this@EditProfileActivity)
     }
@@ -85,7 +86,8 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
             Log.d("getPatttthhhh", "-------" + imagePathCreated)
 
-            Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(image_base_URl + imagePathCreated).into(iv_profileEdit)
+            Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + imagePathCreated).error(R.mipmap.ic_user_place)
+                    .into(iv_profileEdit)
             et_nameEditProfile.setText(name); setFocusEditText(et_nameEditProfile)
             tv_emailEditProfile.text = email
             et_cityEditProfile.setText(city); setFocusEditText(et_cityEditProfile)
@@ -126,8 +128,20 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
                 val email = tv_emailEditProfile.text.toString()
                 val utilization = et_utilizationEditProfile.text.toString()
                 val city = et_cityEditProfile.text.toString()
-                hitEditProfileApi(name, email, city, utilization)
 
+                if (Validation.checkName(name, this)) {
+                    if (Validation.checkEmail(email, this)) {
+                        if (city.equals("") || city.isEmpty() || city == null) {
+                            myCustomToast(getString(R.string.city_missing_error))
+                        } else {
+                            if (!utilization.equals("") || !utilization.isEmpty() || utilization != null) {
+                                myCustomToast(getString(R.string.utilization_missing_error))
+                            } else {
+                                hitEditProfileApi(name, email, city, utilization)
+                            }
+                        }
+                    }
+                }
             }
             R.id.et_cityEditProfile -> {
                 showPlacePicker()
@@ -170,6 +184,15 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
+
+                    val name = jsonObject.getJSONObject("data").get("name").toString()
+                    val image = jsonObject.getJSONObject("data").get("image").toString()
+
+                    launch(Dispatchers.Main.immediate) {
+                        dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
+                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
+                      }
+
                     myCustomToast(message)
                     onBackPressed()
                 }

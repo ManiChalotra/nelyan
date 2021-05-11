@@ -4,7 +4,6 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AgeGroupDataModel>, var listner: OnAGeGroupRecyclerViewItemClickListner) : RecyclerView.Adapter<AgeGroupRepeatAdapter.AgeGroupRepeatViewHolder>() {
+class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AgeGroupDataModel>, var listner: OnAGeGroupRecyclerViewItemClickListner)
+    : RecyclerView.Adapter<AgeGroupRepeatAdapter.AgeGroupRepeatViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgeGroupRepeatViewHolder {
         return AgeGroupRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false), listner)
@@ -38,9 +39,9 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
 
         val ageFrom = itemView.edtAgeFrom
         val ageTo = itemView.edtAgeTo
-        val days = itemView.orderby1
-        val timeFrom = itemView.edClo
-        val timeTo = itemView.edClo1
+        val days = itemView.spinner_dayss
+        val timeFrom = itemView.tv_mornning_fromtime
+        val timeTo = itemView.tv_morning_totime
 
         fun initalize(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
@@ -105,10 +106,11 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker: TimePickerDialog
                 mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    timeFrom.text = "$selectedHour:$selectedMinute"
+                  //  timeFrom.text = "$selectedHour:$selectedMinute"
+                    timeFrom.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
                     list[position].timeFrom = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle("Select Time")
+                mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
 
@@ -118,7 +120,8 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker: TimePickerDialog
                 mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    timeTo.text = "$selectedHour:$selectedMinute"
+                 //   timeTo.text = "$selectedHour:$selectedMinute"
+                    timeTo.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
                     list[position].timeTo = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle("Select Time")

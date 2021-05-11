@@ -52,8 +52,8 @@ class ChatActivity : image() {
             val i = Intent(this@ChatActivity, Chat1Activity::class.java)
             startActivity(i)
         })
-        ll_1 = findViewById(R.id.ll_1)
-        ll_2 = findViewById(R.id.ll_2)
+        ll_1 = findViewById(R.id.ll_public)
+        ll_2 = findViewById(R.id.ll_privates)
         ll_1!!.setOnClickListener(View.OnClickListener { showDailog() })
         ll_2!!.setOnClickListener(View.OnClickListener { dailogDelete() })
     }

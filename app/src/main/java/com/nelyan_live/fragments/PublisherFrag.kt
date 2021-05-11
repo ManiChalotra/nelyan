@@ -43,7 +43,10 @@ class PublisherFrag : Fragment(), View.OnClickListener {
                     R.id.btn_activity -> {
                         type = "1"
                     }
-                    R.id.btn_Nursery -> {
+                    R.id.btn_child_care -> {
+                        type = "2"
+                    }
+                   /* R.id.btn_Nursery -> {
                         type = "2"
                     }
                     R.id.btn_materialAssistant -> {
@@ -51,9 +54,9 @@ class PublisherFrag : Fragment(), View.OnClickListener {
                     }
                     R.id.btn_babySitter -> {
                         type = "4"
-                    }
+                    }*/
                     R.id.btn_traderArtisans -> {
-                        type = "5"
+                        type = "3"
                     }
                 }
             }
@@ -70,22 +73,22 @@ class PublisherFrag : Fragment(), View.OnClickListener {
             R.id.btnSubmit -> {
                 when(type){
                     "1"->{
-                        requireActivity().OpenActivity(ActivityFormActivity::class.java)
+                        requireActivity().OpenActivity(AddActivity::class.java)
                     }
                     "2"->{
-                        requireActivity().OpenActivity(NurserieActivity::class.java)
+                        requireActivity().OpenActivity(BabySitterActivity::class.java)
                     }
                     "3"->{
-                        requireActivity().OpenActivity(MaternalAssistantActivity::class.java)
+                        requireActivity().OpenActivity(TraderActivity::class.java)
                     }
-                    "4"->{
+                   /* "4"->{
                         requireActivity().OpenActivity(BabySitterActivity::class.java)
                     }
                     "5"->{
                         requireActivity().OpenActivity(TraderActivity::class.java)
-                    }
+                    }*/
                     else->{
-                        requireActivity().myCustomToast("Please select your publisher type ")
+                        requireActivity().myCustomToast(getString(R.string.publisher_unselected_error))
                     }
                 }
             }

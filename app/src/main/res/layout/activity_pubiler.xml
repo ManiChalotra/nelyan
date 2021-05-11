@@ -11,207 +11,222 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
-            android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/_10sdp"
-            />
+            android:src="@drawable/left_arrow" />
+
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="Publier"/>
+            android:text="@string/publisher"
+            android:textColor="@color/black" />
     </RelativeLayout>
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:orientation="vertical"
-        android:layout_below="@id/header">
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_90sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:src="@drawable/smallogo"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:fillViewport="true">
 
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:id="@+id/radioGroup"
-            android:layout_marginTop="?actionBarSize"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                style="@style/CommonTextWrapcontent"
-                android:fontFamily="@font/medium"
-                android:paddingLeft="@dimen/_10sdp"
-                android:button="@drawable/radio_button_selector"
-                android:text="@string/activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:id="@+id/btn_activity"
-                />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                style="@style/CommonTextWrapcontent"
-                android:button="@drawable/radio_button_selector"
-
-                android:fontFamily="@font/medium"
-                android:paddingLeft="@dimen/_10sdp"
-                android:text="@string/nursery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/btn_Nursery"
-                />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                style="@style/CommonTextWrapcontent"
-                android:fontFamily="@font/medium"
-                android:button="@drawable/radio_button_selector"
-
-                android:paddingLeft="@dimen/_10sdp"
-                android:text="@string/materialAssitant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/btn_materialAssistant"
-                />
-
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-
-                style="@style/CommonTextWrapcontent"
-                android:fontFamily="@font/medium"
-                android:paddingLeft="@dimen/_10sdp"
-                android:button="@drawable/radio_button_selector"
-
-                android:text="@string/babySitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/btn_babySitter"
-                />
-
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-
-                style="@style/CommonTextWrapcontent"
-                android:fontFamily="@font/medium"
-                android:paddingLeft="@dimen/_10sdp"
-                android:text="@string/traderArtisans"
-                android:button="@drawable/radio_button_selector"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:id="@+id/btn_traderArtisans"
-                />
-        </RadioGroup>
-
-
-     <!--   <LinearLayout
-            android:id="@+id/ll_1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_60sdp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:orientation="vertical">
+
             <ImageView
-                android:id="@+id/ivRadio1"
+                android:id="@+id/ivLogo"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:src="@drawable/latest_logo" />
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/radio_fill"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:text="Activity"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:fontFamily="@font/medium"/>
-        </LinearLayout>
-       <LinearLayout
-           android:id="@+id/ll_2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/_25sdp"
-           android:orientation="horizontal">
-           <ImageView
-               android:id="@+id/ivOn"
+                android:layout_marginTop="?actionBarSize">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/btn_activity"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/activity"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/btn_Nursery"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/nursery"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/btn_materialAssistant"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/maternal_asistant"
+                    android:visibility="gone" />
+
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/btn_babySitter"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/babySitter"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/btn_child_care"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/child_care" />
+
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+
+                    android:id="@+id/btn_traderArtisans"
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+
+                    android:button="@drawable/radio_button_selector"
+                    android:fontFamily="@font/medium"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="@string/traderArtisans" />
+            </RadioGroup>
+
+
+            <!--   <LinearLayout
+                   android:id="@+id/ll_1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/_60sdp"
+                   android:orientation="horizontal">
+                   <ImageView
+                       android:id="@+id/ivRadio1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/radio_fill"/>
+                   <TextView
+                       style="@style/CommonTextWrapcontent"
+                       android:text="Activity"
+                       android:layout_marginLeft="@dimen/_10sdp"
+                       android:fontFamily="@font/medium"/>
+               </LinearLayout>
+              <LinearLayout
+                  android:id="@+id/ll_2"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/_25sdp"
+                  android:orientation="horizontal">
+                  <ImageView
+                      android:id="@+id/ivOn"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:src="@drawable/radio_outline"/>
+                  <TextView
+                      style="@style/CommonTextWrapcontent"
+                      android:text="Nursery"
+                      android:layout_marginLeft="@dimen/_10sdp"
+                      android:fontFamily="@font/medium"/>
+              </LinearLayout>
+           <LinearLayout
+               android:id="@+id/ll_3"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/radio_outline"/>
-           <TextView
-               style="@style/CommonTextWrapcontent"
-               android:text="Nursery"
-               android:layout_marginLeft="@dimen/_10sdp"
-               android:fontFamily="@font/medium"/>
-       </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/ivRadio2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/radio_outline"/>
-        <TextView
-            style="@style/CommonTextWrapcontent"
-            android:text="Maternal Assistant"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/medium"/>
-    </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/ivRadio3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/radio_outline"/>
-        <TextView
-            style="@style/CommonTextWrapcontent"
-            android:text="Baby Sitter"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/medium"/>
-    </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/ivRadio4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/radio_outline"/>
-        <TextView
-            style="@style/CommonTextWrapcontent"
-            android:text="Traders and Artisans"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="@font/medium"/>
-    </LinearLayout>-->
+               android:layout_marginTop="@dimen/_25sdp"
+               android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/ivRadio2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/radio_outline"/>
+               <TextView
+                   style="@style/CommonTextWrapcontent"
+                   android:text="Maternal Assistant"
+                   android:layout_marginLeft="@dimen/_10sdp"
+                   android:fontFamily="@font/medium"/>
+           </LinearLayout>
+               <LinearLayout
+                   android:id="@+id/ll_4"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="@dimen/_25sdp"
+               android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/ivRadio3"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/radio_outline"/>
+               <TextView
+                   style="@style/CommonTextWrapcontent"
+                   android:text="Baby Sitter"
+                   android:layout_marginLeft="@dimen/_10sdp"
+                   android:fontFamily="@font/medium"/>
+           </LinearLayout>
+               <LinearLayout
+                   android:id="@+id/ll_5"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="@dimen/_25sdp"
+               android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/ivRadio4"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/radio_outline"/>
+               <TextView
+                   style="@style/CommonTextWrapcontent"
+                   android:text="Traders and Artisans"
+                   android:layout_marginLeft="@dimen/_10sdp"
+                   android:fontFamily="@font/medium"/>
+           </LinearLayout>-->
 
-        <Button
-            android:id="@+id/btnSubmit"
-            style="@style/Button"
-            android:layout_marginTop="?actionBarSize"
-            android:background="@drawable/btn"
-            android:text="SUBMIT"/>
+            <Button
+                android:id="@+id/btnSubmit"
+                style="@style/Button"
+                android:layout_marginTop="?actionBarSize"
+                android:background="@drawable/btn"
+                android:text="SUBMIT" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>

@@ -55,6 +55,7 @@ class MyHomeAdapter(var context: Context, var mlist: ArrayList<HomeModal>, var l
         val text = itemView.tv_hometxt
 
         fun initalize(list: ArrayList<HomeModal>, position: Int) {
+
             itemView.findViewById<ShapeableImageView>(R.id.iv_homeimg).setShapeAppearanceModel(
                     itemView.findViewById<ShapeableImageView>(R.id.iv_homeimg).getShapeAppearanceModel().toBuilder()
                             .setTopRightCorner(CornerFamily.ROUNDED, 100F)

@@ -60,8 +60,8 @@ class TimeRepeatAdapter(var context: Context, var arrayList: ArrayList<TimeModel
         }
 
         init {
-            edClo = itemView.findViewById(R.id.edClo)
-            edClo1 = itemView.findViewById(R.id.edClo1)
+            edClo = itemView.findViewById(R.id.tv_mornning_fromtime)
+            edClo1 = itemView.findViewById(R.id.tv_morning_totime)
         }
     }
 

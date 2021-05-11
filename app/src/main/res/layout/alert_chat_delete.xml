@@ -1,73 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_15sdp">
+    android:layout_margin="@dimen/_15sdp"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/alert_shape"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dlt_icon"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_gravity="center"/>
+            android:src="@drawable/dlt_icon" />
 
         <TextView
             android:id="@+id/tvMessage"
             style="@style/CommonTextWrapcontent"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:text="Are you sure want to\ndelete Chat?"
-            android:textColor="@color/black"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:fontFamily="@font/medium"
             android:gravity="center"
-            android:textSize="@dimen/_14sdp"/>
+            android:text="Are you sure want to\ndelete Chat?"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/grey"/>
+            android:background="@color/grey" />
 
-     <RelativeLayout
-         android:id="@+id/rl_1"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="@dimen/_40sdp"
-         android:layout_marginRight="@dimen/_40sdp">
+        <RelativeLayout
+            android:id="@+id/rl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp">
 
-             <TextView
-                 android:id="@+id/tvNo"
-                 style="@style/CommonTextWrapcontent"
-                 android:layout_gravity="center"
-                 android:textAlignment="center"
-android:layout_alignParentLeft="true"
-
+            <TextView
+                android:id="@+id/tvNo"
+                style="@style/CommonTextWrapcontent"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                 android:textSize="@dimen/_14sdp"
-                 android:text="No"/>
+                android:layout_gravity="center"
+                android:layout_toLeftOf="@+id/viewww"
+                android:text="@string/no"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sdp" />
 
 
-         <View
-             android:layout_width="1dp"
-             android:layout_height="@dimen/_40sdp"
-             android:layout_centerInParent="true"
-             android:background="@color/black"/>
-         <TextView
-             style="@style/CommonTextWrapcontent"
-             android:id="@+id/tvYes"
-             android:layout_alignParentEnd="true"
-             android:layout_centerInParent="true"
-             android:textAlignment="center"
+            <View
+                android:id="@+id/viewww"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerInParent="true"
+                android:background="@color/black" />
 
-             android:textSize="@dimen/_14sdp"
-             android:text="Yes"/>
-     </RelativeLayout>
+            <TextView
+                android:id="@+id/tvYes"
+                android:layout_width="match_parent"
+                style="@style/CommonTextWrapcontent"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/viewww"
+                android:layout_centerInParent="true"
+                android:text="@string/yes"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sdp" />
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

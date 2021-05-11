@@ -20,7 +20,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -50,13 +51,15 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private var cityLatitude = ""
     private var cityLongitude = ""
 
+    private var termsConditipon_data = ""
+    private var privacyPolicy_data = ""
 
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
+    private var deviceToken: String?= null
 
     // dialog
-    private val progressDialog = ProgressDialog(this)
     private var job = Job()
     private var socialSignup = ""
     private var socialName = ""
@@ -67,6 +70,9 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+    // dialog
+    private val progressDialog = ProgressDialog(this)
+
 
     //  String[] signup = {"Consultant", "Professional"};
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +80,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         setContentView(R.layout.activity_signup)
         initalize()
         settingSpinnerForTypeSelection()
-        checkMvvmResponse()
+
     }
 
     /*  override fun selectedImage(var1: Bitmap, var2: String) {
@@ -95,6 +101,22 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     override fun onResume() {
         super.onResume()
+
+        launch (Dispatchers.Main.immediate){
+            deviceToken = dataStoragePreference?.emitStoredValue(preferencesKey<String>("fcmToken"))?.first()
+        }
+
+        launch(Dispatchers.Main.immediate) {
+
+            // for terms condition
+            appViewModel.sendGetContentApiData(security_key, "", "2")
+
+        }
+        launch(Dispatchers.Main.immediate) {
+
+            // for privacy policy
+            appViewModel.sendGetContentApiData(security_key, "", "3")
+        }
 
         if (intent.extras != null) {
 
@@ -141,9 +163,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 view2.visibility = View.VISIBLE
 
             }
-
         }
-
+        checkMvvmResponse()
 
     }
 
@@ -162,12 +183,11 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                                 if (Validation.checkPassword(tv_password.text.toString(), this)) {
                                     if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
-                                        myCustomToast("please enter confirm password")
+                                        myCustomToast(getString(R.string.confirm_password_missing_error))
                                     } else {
                                         if (tv_password.text.toString().equals(tv_confirmPassword.text.toString())) {
-
                                             if (tv_city.text.isNullOrEmpty()) {
-                                                myCustomToast("Please select your city")
+                                                myCustomToast(getString(R.string.city_missing_error))
                                             } else {
                                                 val name = tv_username.text.toString().trim()
                                                 val email = tv_userEmail.text.toString()
@@ -176,7 +196,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                             }
 
                                         } else {
-                                            myCustomToast("Password and confirm password do not matches")
+                                            myCustomToast(getString(R.string.password_mismatch_error))
                                         }
                                     }
                                 }
@@ -186,51 +206,61 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                 if (tv_city.text.isNullOrEmpty()) {
                                     myCustomToast(getString(R.string.select_city_error))
                                 } else {
-
                                     val name = tv_username.text.toString().trim()
                                     val email = tv_userEmail.text.toString()
                                     hitSocialCompleteProfileApi(name, email, type.toString())
 
                                 }
-
                             }
-
                         }
                     }
 
-
                 } else {
-                    myCustomToast("Please select the required signup type")
+                    myCustomToast(getString(R.string.signup_type_error))
                 }
 
-                //OpenActivity(HomeActivity::class.java)
-
             }
+
             R.id.tvPrivacy -> {
-                OpenActivity(PrivacyActivity::class.java)
+                if (!privacyPolicy_data.isEmpty() && !privacyPolicy_data.equals("") && privacyPolicy_data != null) {
+                    OpenActivity(PrivacyActivity::class.java) {
+                        putString("cmsData", privacyPolicy_data)
+                    }
+                }
             }
             R.id.tvTerms -> {
-                OpenActivity(TermsActivity::class.java)
+                if (!termsConditipon_data.isEmpty() && !termsConditipon_data.equals("") && termsConditipon_data != null) {
+                    OpenActivity(TermsActivity::class.java) {
+                        putString("cmsData", termsConditipon_data)
+                    }
+                }
             }
+
             R.id.iv_uploader -> {
-                checkPermission(this)
-                //image("all")
+                checkPermission(this)                //image("all")
             }
+
             R.id.tv_city -> {
                 showPlacePicker()
             }
-
         }
     }
 
     private fun hitSocialCompleteProfileApi(name: String, email: String, type: String) {
         // imageType 1-> file , 2-> url
+        val tsLong = System.currentTimeMillis() / 1000
+        val currentTS = tsLong.toString()
+        Log.e("current", currentTS.toString())
+
+
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude, "12", cityName, "1")
+            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
+                    currentTS, cityName, "1")
             progressDialog.setProgressDialog()// signupProgressBar?.showProgressBar()
         } else {
             // here image is of type URl
-            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude, "12", cityName, "2", imgPath)
+            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
+                    currentTS, cityName, "2", imgPath)
             progressDialog.setProgressDialog()
         }
 
@@ -260,19 +290,30 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     private fun hitSignUpapi(name: String, email: String, password: String, type: String) {
 
+        val tsLong = System.currentTimeMillis() / 1000
+        val currentTS = tsLong.toString()
+        Log.e("current", currentTS.toString())
+
         val mName = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val mEmail = email.toRequestBody("text/plain".toMediaTypeOrNull())
         val mPassword = password.toRequestBody("text/plain".toMediaTypeOrNull())
         val mType = type.toRequestBody("text/plain".toMediaTypeOrNull())
-        val mSecond = "12".toRequestBody("text/plain".toMediaTypeOrNull())
+        val mSecond = currentTS.toRequestBody("text/plain".toMediaTypeOrNull())
         val city = cityName.toRequestBody("text/plain".toMediaTypeOrNull())
         val lat = cityLatitude.toRequestBody("text/plain".toMediaTypeOrNull())
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
-            signupProgressBar?.showProgressBar()
+            if (deviceToken.equals("") || deviceToken == null){
+                appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "1212313", mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
+            }else{
+                appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, deviceToken, mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
+
+            }
+            //signupProgressBar?.showProgressBar()
+            progressDialog.setProgressDialog()
+
         } else {
             // hit with updating the image
             var mfile: File? = null
@@ -280,11 +321,16 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
             var photo: MultipartBody.Part? = null
             photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-            appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "112", mName, mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
+            if (deviceToken.equals("") || deviceToken == null) {
+                appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "121321231", mName, mEmail,
+                        mPassword, mType, mSecond, city, lat, longi, photo)
+            }else {
+                appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, deviceToken, mName,
+                        mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
+            }
             progressDialog.setProgressDialog()
             //signupProgressBar?.showProgressBar()
         }
-
 
     }
 
@@ -293,6 +339,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
+                    progressDialog.hidedialog()
                     // signupProgressBar?.hideProgressBar()
                     // here we save credentail for signup
 
@@ -303,8 +350,10 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     myCustomToast(message)
 
                     val email = jsonObject.getJSONObject("data").get("email").toString()
+                    val name = jsonObject.getJSONObject("data").get("name").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
                     val type = jsonObject.getJSONObject("data").get("type").toString()
+                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
                     val image = jsonObject.getJSONObject("data").get("image").toString()
                     val phone = jsonObject.getJSONObject("data").get("phone").toString()
                     val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
@@ -314,10 +363,12 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                     AllSharedPref.save(this, "auth_key", authKey)
 
-                    launch(Dispatchers.Main.immediate) {
+                    launch(Dispatchers.IO) {
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
+                        dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
                         dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
+                        dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
                         dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
                         dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
                         dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
@@ -326,17 +377,53 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                         dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
 
                     }
+
                     progressDialog.hidedialog()
                     OpenActivity(HomeActivity::class.java) {
                         putString("authorization", authKey)
                     }
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
+                progressDialog.hidedialog()
 
+            }
+        })
 
+        // for terms condition
+        appViewModel!!.observeTermsConditionResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+
+            //  appViewModel.observeTermsConditionResponse()!!.observe(this, Observer { response->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    Log.d("getContent_terms", "---------" + Gson().toJson(response.body()))
+
+                    val mResponse = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    termsConditipon_data = jsonObject.getJSONObject("data").get("content").toString()
                 }
             } else {
                 ErrorBodyResponse(response, this, null)
             }
         })
+
+        // for  privacy policy
+
+        appViewModel!!.observePrivacyPolicyResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            //   appViewModel.observePrivacyPolicyResponse()!!.observe(this, Observer { response->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    Log.d("getContent_privacy", "---------" + Gson().toJson(response.body()))
+
+                    val mResponse = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    privacyPolicy_data = jsonObject.getJSONObject("data").get("content").toString()
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
 
         // complete profile socialLogin api
         appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
@@ -348,10 +435,13 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
+                    progressDialog.hidedialog()
+
 
                     val email = jsonObject.getJSONObject("data").get("email").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
                     val type = jsonObject.getJSONObject("data").get("type").toString()
+                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
                     val image = jsonObject.getJSONObject("data").get("image").toString()
                     val phone = jsonObject.getJSONObject("data").get("phone").toString()
                     val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
@@ -361,13 +451,14 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                     AllSharedPref.save(this, "auth_key", authKey)
 
-                    launch(Dispatchers.Main.immediate) {
+                    launch(Dispatchers.IO) {
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
                         dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
                         dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
                         dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
                         dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
                         dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
+                        dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
                         dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
                         dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
                         dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
@@ -385,9 +476,10 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             } else {
                 ErrorBodyResponse(response, this, null)
+                progressDialog.hidedialog()
+
             }
         })
-
 
         appViewModel!!.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)

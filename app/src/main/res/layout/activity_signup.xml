@@ -17,40 +17,40 @@
         app:mk_color="@color/colorPrimary"
         app:mk_type="FishSpinner" />
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/sign_up"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@id/header">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-            <RelativeLayout
-                android:id="@+id/header"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp">
-
-                <ImageView
-                    android:id="@+id/ivBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:src="@drawable/left_arrow" />
-
-                <TextView
-                    style="@style/HeaderText"
-                    android:layout_centerInParent="true"
-                    android:text="Sign Up"
-                    android:textColor="@color/black" />
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/header"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:orientation="vertical">
@@ -60,7 +60,7 @@
                     android:layout_height="@dimen/_90sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:src="@drawable/smallogo" />
+                    android:src="@drawable/logo" />
 
                 <ImageView
                     android:id="@+id/iv_uploader"
@@ -122,6 +122,7 @@
                     android:background="@color/transparent"
                     android:hint="@string/full_name"
                     android:inputType="text"
+                    android:maxLength="30"
                     android:maxLines="1"
                     android:textColor="@color/black" />
 
@@ -274,6 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <View
@@ -299,8 +301,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/fb_btn"
                     android:gravity="center"
@@ -309,6 +312,7 @@
                     <TextView
                         style="@style/CommonTextWrapcontent"
                         android:layout_gravity="center"
+                        android:layout_marginTop="-5dp"
                         android:drawableLeft="@drawable/fb1"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/semibold"
@@ -320,9 +324,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone"
                     android:background="@drawable/google_btn"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -330,6 +335,7 @@
                     <TextView
                         style="@style/CommonTextWrapcontent"
                         android:layout_gravity="center"
+                        android:layout_marginTop="-5dp"
                         android:drawableLeft="@drawable/google"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/semibold"
@@ -350,7 +356,7 @@
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:text="@string/by_clicking_on_countinue"
+                        android:text="@string/by_clicking_on_continue"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
 
@@ -358,6 +364,7 @@
                         android:id="@+id/tvTerms"
                         style="@style/CommonTextWrapcontent"
                         android:text="@string/accept"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:textColor="@color/app"
                         android:textSize="@dimen/_9sdp" />
                 </LinearLayout>

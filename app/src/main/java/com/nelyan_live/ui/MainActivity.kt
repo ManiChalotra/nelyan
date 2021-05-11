@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.utils.OpenActivity
 import com.nelyan_live.utils.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -78,9 +80,21 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         timer = Timer()
         timer!!.schedule(object : TimerTask() {
             override fun run() {
-                val i = Intent(this@MainActivity, WalkthroughActivity::class.java)
-                startActivity(i)
-                finish()
+                launch (Dispatchers.Main.immediate){
+                    val email =  dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin"))?.first()
+                    val authkey  =  dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+                    if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
+                        OpenActivity(HomeActivity::class.java)
+                        finishAffinity()
+                    }else {
+                        val i = Intent(this@MainActivity, WalkthroughActivity::class.java)
+                        startActivity(i)
+                        finishAffinity()
+
+                    }
+                }
+
+
             }
         }, 3000)
     }

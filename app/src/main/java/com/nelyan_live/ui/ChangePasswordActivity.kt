@@ -62,17 +62,17 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
                 val oldPassword = et_oldPassword.text.toString()
                 val newPassword = et_newPassword.text.toString()
                 val confirmPassword = et_confirmPassword.text.toString()
-                if (Validation.checkPassword(oldPassword, this)) {
-                    if (Validation.checkPassword(newPassword, this)) {
+                if (Validation.checkoldPassword(oldPassword, this)) {
+                    if (Validation.checkNewPassword(newPassword, this)) {
                         if (!confirmPassword.isEmpty()) {
                             if (newPassword.equals(confirmPassword)) {
                                 hitChangePasswordApi(oldPassword, newPassword)
 
                             } else {
-                                myCustomToast("password do not matches")
+                                myCustomToast(getString(R.string.password_donot_match_error))
                             }
                         } else {
-                            myCustomToast("Please enter confirm Password")
+                            myCustomToast(getString(R.string.confirm_password_missing_erro))
                         }
                     }
                 }
@@ -118,7 +118,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
         dialog.setCanceledOnTouchOutside(false)
         dialog!!.setCancelable(false)
         val btnOk: Button
-        btnOk = dialog!!.findViewById(R.id.btnOk)
+        btnOk = dialog!!.findViewById(R.id.btn_sectorization_ok)
         btnOk.setOnClickListener { //   mContext.startActivity(new Intent(mContext, SettingsActivity.class));
             finish()// finish the activity
             dialog!!.dismiss()

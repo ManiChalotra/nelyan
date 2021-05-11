@@ -1,5 +1,6 @@
 package com.nelyan_live.fragments
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,43 +21,45 @@ import com.nelyan_live.R.layout
 import com.nelyan_live.adapter.MyEventAdapter
 import com.nelyan_live.modals.HomeEventModel
 import com.nelyan_live.modals.eventList.EventData
-import com.nelyan_live.ui.Activity2Activity
-import com.nelyan_live.ui.ActivityFragmentActivity
+import com.nelyan_live.ui.ActivitiesOnMapActivity
 import com.nelyan_live.ui.CommunicationListner
+import com.nelyan_live.ui.ActivitiesFilterActivity
 import com.nelyan_live.utils.*
+
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
-import java.lang.RuntimeException
-import kotlin.collections.ArrayList
 
-class EventFragment : Fragment(), OnItemSelectedListener {
 
-    private  var listner: CommunicationListner?= null
+class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
+
+    private var listner: CommunicationListner? = null
 
     private val appViewModel: AppViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application).
-        create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application).create(AppViewModel::class.java)
     }
 
-    private lateinit  var mContext: Context
+    private val FILTER_ACTIVITY_REQUEST_CODE = 0
+
+    private lateinit var mContext: Context
     private var ivLocation: ImageView? = null
     private var ivBack: ImageView? = null
+    private var ivFavouritee: ImageView? = null
     private var title: TextView? = null
     private var tvFilter: TextView? = null
-    private lateinit  var v: View
+    private var tvNoEvent: TextView? = null
+    private lateinit var v: View
     private var orderby: Spinner? = null
     private var rc: RecyclerView? = null
-
+    private var authkey= ""
     private val eventData by lazy { ArrayList<EventData>() }
 
-   // var eventDatalist = ArrayList<EventData>()
-   // var eventDatalist = ArrayList<EventModel>()
-   private val datalist by lazy { ArrayList<HomeEventModel>() }
+    // var eventDatalist = ArrayList<EventData>()
+    // var eventDatalist = ArrayList<EventModel>()
+    private val datalist by lazy { ArrayList<HomeEventModel>() }
 
     override fun onResume() {
         super.onResume()
-        if(listner!= null){
+        if (listner != null) {
             listner!!.onFargmentActive(5)
         }
     }
@@ -74,11 +77,16 @@ class EventFragment : Fragment(), OnItemSelectedListener {
         })
 
         ivLocation = v.findViewById(R.id.iv_bell)
-        orderby = v.findViewById(R.id.orderby)
+        orderby = v.findViewById(R.id.trader_type)
+        tvNoEvent = v.findViewById(R.id.tv_no_event)
         rc = v.findViewById(R.id.rc_event)
         tvFilter = v.findViewById(R.id.tvFilter)
         tvFilter!!.setOnClickListener(View.OnClickListener {
-            requireActivity().OpenActivity(ActivityFragmentActivity::class.java)
+
+            val intent = Intent(requireContext(), ActivitiesFilterActivity::class.java)
+            startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
+
+            // requireActivity().OpenActivity(FilterActivity::class.java)
             //AppUtils.gotoFragment(mContext, ActivityFragment(), R.id.frame_container, false)
         })
         ivBack!!.setVisibility(View.VISIBLE)
@@ -94,7 +102,7 @@ class EventFragment : Fragment(), OnItemSelectedListener {
 
 
         ivLocation!!.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, Activity2Activity::class.java)
+            val intent = Intent(activity, ActivitiesOnMapActivity::class.java)
             intent.putExtra("event", "activity")
             startActivity(intent)
             /*Intent i= new Intent(getActivity(), Activity2Activity.class);
@@ -124,18 +132,47 @@ class EventFragment : Fragment(), OnItemSelectedListener {
         checkMvvmResponse()
     }
 
-    private fun eventListAPI () {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+
+                // get String data from Intent
+                val returnName = data!!.getStringExtra("name")
+                val returnDistance = data!!.getStringExtra("distance")
+                val returnLocation = data!!.getStringExtra("location")
+                val returnDate = data!!.getStringExtra("date")
+                val returnLat = data!!.getStringExtra("lat")
+                val returnlng = data!!.getStringExtra("lng")
+
+                if (checkIfHasNetwork(requireActivity())) {
+                     authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
+                    //    appViewModel.sendFilterEventListData(security_key, authkey, "30.7046","30.7046")
+                    appViewModel.sendFilterEventListData(security_key, authkey, returnLat, returnlng, returnDistance,
+                            returnName, returnDate, returnLocation)
+                    eventProgressBar?.showProgressBar()
+                } else {
+                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+                }
+
+            }
+        }
+    }
+
+    private fun eventListAPI() {
         if (checkIfHasNetwork(requireActivity())) {
-            val authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
-            appViewModel.sendEventListData(security_key, authkey, "30.7046","76.7179")
+             authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
+            appViewModel.sendEventListData(security_key, authkey, "30.7046", "30.7046")      //TODO set the current Lat-Lng of user
             eventProgressBar?.showProgressBar()
         } else {
             showSnackBar(requireActivity(), getString(R.string.no_internet_error))
         }
     }
 
-    private fun setAdaptor(datalist: ArrayList<HomeEventModel>){
-        val myEventAdapter = MyEventAdapter(requireActivity(), datalist)
+
+    private fun setAdaptor(datalist: ArrayList<HomeEventModel>) {
+        val myEventAdapter = MyEventAdapter(requireActivity(), datalist, this)
         //rc.setAdapter(null);
         rc!!.setAdapter(myEventAdapter)
     }
@@ -158,12 +195,15 @@ class EventFragment : Fragment(), OnItemSelectedListener {
 
                     for (i in 0 until mSizeOfData) {
                         val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
+                        val id = jsonObject.getJSONArray("data").getJSONObject(i).get("id").toString()
                         val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
                         val description = jsonObject.getJSONArray("data").getJSONObject(i).get("description").toString()
+                        val isFav = jsonObject.getJSONArray("data").getJSONObject(i).get("isFav").toString()
                         val latitude = jsonObject.getJSONArray("data").getJSONObject(i).get("latitude").toString()
                         val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
                         val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
                         val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+
                         if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
                             val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                     .getJSONObject(0).get("dateFrom").toString()
@@ -173,22 +213,22 @@ class EventFragment : Fragment(), OnItemSelectedListener {
                                     .getJSONObject(0).get("startTime").toString()
                             val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                     .getJSONObject(0).get("endTime").toString()
-                            datalist!!.add(HomeEventModel(image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
-                                    description))
-                        }else {
-                            datalist!!.add(HomeEventModel(image, name, city, "", "", "", "",
-                                    price, description))
+                            datalist!!.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                                    description, isFav))
+                        } else {
+                            datalist!!.add(HomeEventModel(id, image, name, city, "", "", "", "",
+                                    price, description, isFav))
                         }
 
                     }
 
-                    if (mSizeOfData == 0){
+                    if (mSizeOfData == 0) {
                         rc!!.visibility = View.GONE
-                        tv_no_event!!.visibility = View.VISIBLE
-                    }else{
+                        tvNoEvent!!.visibility = View.VISIBLE
+                    } else {
                         rc!!.visibility = View.VISIBLE
-                        tv_no_event!!.visibility = View.GONE
-                    setAdaptor(datalist)
+                        tvNoEvent!!.visibility = View.GONE
+                        setAdaptor(datalist)
                     }
 
                 }
@@ -196,6 +236,89 @@ class EventFragment : Fragment(), OnItemSelectedListener {
                 ErrorBodyResponse(response, requireActivity(), eventProgressBar)
             }
         })
+
+        appViewModel.observeAddFavouriteApiResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("addFavouriteResBody", "----------" + Gson().toJson(response.body()))
+                eventProgressBar?.hideProgressBar()
+                val mResponse = response.body().toString()
+                val jsonObject = JSONObject(mResponse)
+
+                val message = jsonObject.get("msg").toString()
+
+                if (message.equals("You marked this Event as Your Favourite")){
+                    ivFavouritee!!.setImageResource(R.drawable.heart)
+                }else {
+                    ivFavouritee!!.setImageResource(R.drawable.heart_purple)
+                }
+
+            } else {
+                ErrorBodyResponse(response, requireActivity(), eventProgressBar)
+                eventProgressBar?.hideProgressBar()
+            }
+        })
+
+
+        appViewModel.observeFilterEventListResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    eventProgressBar?.hideProgressBar()
+                    Log.d("homeFilterEventResponse", "-------------" + Gson().toJson(response.body()))
+                    val mResponse = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    val listArray = jsonObject.getJSONArray("data")
+                    val mSizeOfData = listArray.length()
+
+
+                    if (datalist != null) {
+                        datalist!!.clear()
+                    }
+
+                    for (i in 0 until mSizeOfData) {
+                        val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
+                        val id = jsonObject.getJSONArray("data").getJSONObject(i).get("id").toString()
+                        val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
+                        val description = jsonObject.getJSONArray("data").getJSONObject(i).get("description").toString()
+                        val isFav = jsonObject.getJSONArray("data").getJSONObject(i).get("isFav").toString()
+                        val latitude = jsonObject.getJSONArray("data").getJSONObject(i).get("latitude").toString()
+                        val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
+                        val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
+                        val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+
+                        if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
+                            val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("dateFrom").toString()
+                            val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("dateTo").toString()
+                            val eventStartTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("startTime").toString()
+                            val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                    .getJSONObject(0).get("endTime").toString()
+                            datalist!!.add(HomeEventModel(id,image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                                    description, isFav))
+                        } else {
+                            datalist!!.add(HomeEventModel(id, image, name, city, "", "", "", "",
+                                    price, description, isFav))
+                        }
+
+                    }
+
+                    if (mSizeOfData == 0) {
+                        rc!!.visibility = View.GONE
+                        tv_no_event!!.visibility = View.VISIBLE
+                    } else {
+                        rc!!.visibility = View.VISIBLE
+                        tv_no_event!!.visibility = View.GONE
+                        setAdaptor(datalist)
+                    }
+
+                }
+            } else {
+                ErrorBodyResponse(response, requireActivity(), eventProgressBar)
+            }
+        })
+
+
         appViewModel.getException()!!.observe(requireActivity(), androidx.lifecycle.Observer {
             requireActivity().myCustomToast(it)
             eventProgressBar?.hideProgressBar()
@@ -205,9 +328,9 @@ class EventFragment : Fragment(), OnItemSelectedListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is CommunicationListner){
+        if (context is CommunicationListner) {
             listner = context as CommunicationListner
-        }else{
+        } else {
 
             throw RuntimeException("Home Fragment not Attched")
         }
@@ -216,6 +339,18 @@ class EventFragment : Fragment(), OnItemSelectedListener {
     override fun onDetach() {
         super.onDetach()
         listner = null
+    }
+
+    override fun onAddFavoriteClick(eventID: String, ivFavourite: ImageView) {
+        ivFavouritee = ivFavourite
+
+        if (checkIfHasNetwork(requireActivity())) {
+            appViewModel.addFavouriteApiData(security_key, authkey, eventID, )
+            eventProgressBar.showProgressBar()//  loginProgressBar?.showProgressBar()
+        } else {
+            showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+        }
+
     }
 
 }

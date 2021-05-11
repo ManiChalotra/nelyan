@@ -62,10 +62,10 @@ class TraderPreviewActivity : AppCompatActivity(), OnMapReadyCallback {
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
         datalist.add(DetailsImageModal(R.drawable.img_1))
-        val ad = DetailsImageAdapter(this, datalist)
+       /* val ad = DetailsImageAdapter(this, datalist)
         rc!!.setAdapter(ad)
         indicator!!.attachToRecyclerView(rc!!)
-    }
+    */}
 
     fun dailogShare() {
         dialog = Dialog(mContext!!)
@@ -73,7 +73,7 @@ class TraderPreviewActivity : AppCompatActivity(), OnMapReadyCallback {
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
         val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_1)
+        ll_1 = dialog!!.findViewById(R.id.ll_public)
         ll_1.setOnClickListener {
             mContext!!.startActivity(Intent(mContext, HomeActivity::class.java))
             dialog!!.dismiss()

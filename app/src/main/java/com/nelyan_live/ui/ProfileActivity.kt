@@ -10,10 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
-import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
-import com.nelyan_live.modals.myads.MyAdsData
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.coroutines.CoroutineScope
@@ -106,7 +104,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
     private  fun checkMvvmResponse(){
        appViewModel.observeProfileApiResponse()!!.observe(this, Observer { response->
 
-
            if(response!!.isSuccessful && response.code()==200){
                if(response.body()!= null){
                    Log.d("ProfileResponseBody","----------"+ Gson().toJson(response.body()))
@@ -118,7 +115,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                     city = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                      utilization = jsonObject.getJSONObject("data").get("utilization").toString()
 
-                   Glide.with(this).asBitmap().load(from_admin_image_base_URl + image).circleCrop().into(iv_userProfile)
+                   Glide.with(this).asBitmap().load(from_admin_image_base_URl + image).error(R.mipmap.ic_user_place).into(iv_userProfile)
                    tv_usernameProfile.text = name
                    tv_emailProfile.text = email
                    tv_cityProfile.text = city

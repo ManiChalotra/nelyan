@@ -16,9 +16,9 @@
         android:paddingBottom="@dimen/_10sdp">
     <TextView
         style="@style/CommonTextWrapcontent"
-        android:text="Select Day" />
+        android:text="@string/select_day" />
     <Spinner
-        android:id="@+id/orderby1"
+        android:id="@+id/spinner_dayss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -27,7 +27,6 @@
         android:dropDownSelector="@drawable/down_arrow"
         android:fontFamily="@font/regular"
         android:gravity="start"
-        android:hint="Date Added"
         android:inputType="text"
         android:spinnerMode="dropdown"
         android:textColor="@color/black"
@@ -42,7 +41,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTime"
@@ -51,6 +51,8 @@
             android:nestedScrollingEnabled="false" />
 
     </RelativeLayout>
+
+        <include layout="@layout/item_time_repart"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -60,8 +62,10 @@
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_5sdp"
             android:drawablePadding="@dimen/_5sdp"
-            android:text="Add Day"
+            android:text="@string/add_day"
             android:textSize="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
             app:drawableStartCompat="@drawable/plus_icon" />
 
         <TextView
@@ -70,7 +74,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:drawablePadding="@dimen/_5sdp"
-            android:text="Add"
+            android:visibility="gone"
+            android:text="@string/add"
             android:textSize="@dimen/_10sdp"
             android:focusable="true"
             app:drawableStartCompat="@drawable/plus_icon" />

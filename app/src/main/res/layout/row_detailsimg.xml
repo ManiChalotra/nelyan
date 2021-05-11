@@ -14,13 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/detailsimg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
             android:padding="1dp"
+            app:riv_corner_radius="@dimen/_5sdp"
             android:scaleType="fitXY"
-            android:src="@drawable/img_large" />
+            android:src="@mipmap/no_image_placeholder" />
 <!--
         <ImageView
             android:id="@+id/iv_videoicon"

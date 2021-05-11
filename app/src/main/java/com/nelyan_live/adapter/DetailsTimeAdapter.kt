@@ -20,10 +20,10 @@ class DetailsTimeAdapter(activityDetailsActivity: FragmentActivity, datalisttime
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.t1.setText(datalisttime[position].time)
-        holder.t2.setText(datalisttime[position].year)
-        holder.t3.setText(datalisttime[position].timeone)
-        holder.t4.setText(datalisttime[position].yearone)
+        holder.t1.setText(datalisttime[position].fromTime)
+        holder.t2.setText(datalisttime[position].fromYears + a.getString(R.string.years))
+        holder.t3.setText(datalisttime[position].toTime)
+        holder.t4.setText(datalisttime[position].toYears + a.getString(R.string.years))
     }
 
     override fun getItemCount(): Int {

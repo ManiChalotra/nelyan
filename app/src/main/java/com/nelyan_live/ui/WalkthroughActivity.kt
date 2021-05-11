@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.adapter.ImageSliderCustomAdapter
 import com.nelyan_live.utils.OpenActivity
@@ -98,17 +98,6 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private  fun checkCredentails(){
-
-        launch (Dispatchers.Main.immediate){
-           val email =  dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin"))?.first()
-           val authkey  =  dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
-            if(!email.isNullOrEmpty() || !authkey.isNullOrEmpty()){
-                OpenActivity(HomeActivity::class.java)
-            }
-        }
-
-
-
     }
 
     override fun onDestroy() {

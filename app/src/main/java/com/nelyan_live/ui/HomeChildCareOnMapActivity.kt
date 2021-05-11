@@ -29,15 +29,13 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback {
         ivBack!!.setOnClickListener(View.OnClickListener { finish() })
         ivFilter = findViewById(R.id.ivFilter)
         ivFilter!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(mContext, HomeActivity::class.java)
-            i.putExtra("activity", "activity")
-            startActivity(i)
+            onBackPressed()
         })
         rl_1 = findViewById(R.id.rl_1)
         rl_1!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(mContext, HomeActivity::class.java)
+            /*val i = Intent(mContext, HomeActivity::class.java)
             i.putExtra("activity", "nur")
-            startActivity(i)
+            startActivity(i)*/
         })
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment?

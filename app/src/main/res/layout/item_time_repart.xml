@@ -3,13 +3,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"
     android:orientation="vertical">
     <TextView
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Select Time" />
+        android:text="@string/select_time1" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,10 +24,7 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_gravity="center"
-                android:text="From:" />
-
-
-            -
+                android:text="@string/from1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -36,12 +32,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/edClo"
+                    android:id="@+id/tv_mornning_fromtime"
                     style="@style/CommonTextMatchparent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:drawableRight="@drawable/clock_purple_icon"
-                    android:hint="Select From"
+                    android:hint="@string/select_from"
                     android:inputType="number"
                     android:paddingLeft="@dimen/_5sdp"
                     android:textColor="@color/black"
@@ -69,17 +65,101 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_gravity="center"
-                android:text="To:" />
+                android:text="@string/to1" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_3sdp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/edClo1"
+                    android:id="@+id/tv_morning_totime"
                     style="@style/CommonTextMatchparent"
                     android:drawableEnd="@drawable/clock_purple_icon"
-                    android:hint="Select To"
+                    android:hint="@string/select_to"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/select_time2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="center"
+                android:text="@string/from1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_evening_fromtime"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:drawableRight="@drawable/clock_purple_icon"
+                    android:hint="@string/select_from"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        -
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="center"
+                android:text="@string/to1" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_evening_totime"
+                    style="@style/CommonTextMatchparent"
+                    android:drawableEnd="@drawable/clock_purple_icon"
+                    android:hint="@string/select_to"
                     android:inputType="number"
                     android:paddingLeft="@dimen/_5sdp"
                     android:textColor="@color/black"

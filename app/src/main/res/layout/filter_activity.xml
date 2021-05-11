@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context=".ui.ActivitiesFilterActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/activity"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/activity_filter_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        app:mk_type="FishSpinner" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="@dimen/_5sdp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="60"
+                    android:backgroundTint="@color/transparent"
+                    android:drawableRight="@drawable/blk_cross"
+                    android:fontFamily="@font/regular"
+                    android:hint="@string/enter_name"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_weight="35"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_dayss"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:autofillHints="date"
+                        android:dropDownHeight="100dp"
+                        android:fontFamily="@font/regular"
+                        android:gravity="start"
+                        android:hint="@string/select_distance"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_weight="60"
+                    android:background="@color/black" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="30"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:src="@drawable/around_me_icon" />
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Around me"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:src="@drawable/location_grey" />
+
+                <TextView
+                    android:id="@+id/et_location"
+                    style="@style/SimpleEdittext"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:backgroundTint="@color/transparent"
+                    android:hint="@string/enter_location"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Events by Date"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/tv_cal"
+                style="@style/CommonTextMatchparent"
+                android:layout_marginTop="5dp"
+                android:background="@color/transparent"
+                android:drawableRight="@drawable/calendar_icon"
+                android:hint="Events by Date"
+                android:visibility="gone"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/type_of_activities"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="@dimen/_12sdp"
+
+ />
+
+            <Spinner
+                android:id="@+id/trader_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:visibility="gone"
+                android:autofillHints="date"
+                android:dropDownSelector="@drawable/down_arrow"
+                android:fontFamily="@font/regular"
+                android:gravity="start"
+                android:hint="@string/activity_types"
+                android:inputType="text"
+                android:spinnerMode="dropdown"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black"
+                />
+
+            <Button
+                android:id="@+id/btnFilter"
+                style="@style/Button"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_70sdp"
+                android:background="@drawable/btn"
+                android:textAllCaps="true"
+                android:text="@string/filter" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

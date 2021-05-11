@@ -34,7 +34,7 @@ class ActivityFragment : Fragment(), OnItemSelectedListener, OnMyEventRecyclerVi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        v = inflater.inflate(layout.fragment_activity, container, false)
+        v = inflater.inflate(layout.filter_activity, container, false)
         mContext = activity
         ivBack = v!!.findViewById(R.id.ivBack)
         ivBack!!.setOnClickListener(View.OnClickListener { // getActivity().onBackPressed();

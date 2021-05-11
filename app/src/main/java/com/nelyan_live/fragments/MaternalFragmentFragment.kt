@@ -62,10 +62,10 @@ class MaternalFragmentFragment : Fragment(), OnMapReadyCallback {
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
         datalist.add(DetailsImageModal(R.drawable.img_1))
-        val ad = DetailsImageAdapter(requireActivity()!!, datalist)
+       /* val ad = DetailsImageAdapter(requireActivity()!!, datalist)
         rc!!.setAdapter(ad)
         indicator!!.attachToRecyclerView(rc!!)
-        return v
+       */ return v
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

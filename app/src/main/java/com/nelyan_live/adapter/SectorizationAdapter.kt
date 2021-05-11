@@ -26,7 +26,8 @@ class SectorizationAdapter(activity: FragmentActivity) : RecyclerView.Adapter<Se
         val v = LayoutInflater.from(a).inflate(R.layout.list_sectorization, parent, false)
         //     View v = inflater.inflate(R.layout.list_activitylist, parent, false);
         rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener { AppUtils.gotoFragment(a, SectorizationDetailsFragment(), R.id.frame_container, false) })
+        rl_1!!.setOnClickListener(View.OnClickListener {
+            AppUtils.gotoFragment(a, SectorizationDetailsFragment(), R.id.frame_container, false) })
         return RecyclerViewHolder(v)
     }
 

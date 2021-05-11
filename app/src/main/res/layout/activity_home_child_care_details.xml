@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeChildCareDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/child_care_details"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:src="@drawable/share_icon" />
+    </RelativeLayout>
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/childcare_details_progressbar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:background="@color/white"
+        android:clickable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/imgslidelayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_coursename">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_childcare_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_centerInParent="true"/>
+
+                <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                    android:id="@+id/child_care_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rv_childcare_images"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:spi_dotColor="@color/grey"
+                    app:spi_dotSelectedColor="@color/colorPrimaryDark"
+                    app:spi_dotSelectedSize="@dimen/_6sdp"
+                    app:spi_dotSize="@dimen/_6sdp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_child_care_name"
+                    style="@style/CommonTextWrapcontent"
+                    android:drawableLeft="@drawable/pic_01"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:fontFamily="@font/semibold"
+                    android:text="@string/name_of_child_care"
+                    android:textColor="@color/app"
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:background="@color/app" />
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:background="@drawable/round_shape" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="@string/description"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_child_care_description"
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="@string/number_of_places_still_available"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_available_place"
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="2"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="MESSAGES"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/iv_msg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:src="@drawable/message_ico"
+                            android:visibility="gone" />
+
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="@string/phone"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_childcare_phone"
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="@string/address"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/tv_child_care_address"
+                            style="@style/CommonTextWrapcontent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:drawableRight="@drawable/colored_map"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_9sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_90sdp"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_20sdp">
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnModify"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/modify_btn"
+                        android:fontFamily="@font/semibold"
+                        android:text="@string/modify"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <Button
+                        android:id="@+id/btnPublish"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/publish_btn"
+                        android:fontFamily="@font/semibold"
+                        android:text="PUBLISH"
+                        android:textAllCaps="true"
+                        android:textColor="@color/app"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

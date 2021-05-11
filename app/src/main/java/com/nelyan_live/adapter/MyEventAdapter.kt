@@ -17,7 +17,8 @@ import com.nelyan_live.utils.image_base_URl
 /*import com.nelyan_live.utils.image_url_local*/
 import java.util.*
 
-class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayList<HomeEventModel>) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
+class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayList<HomeEventModel>,
+                     internal var OnCLICK: OnEventItemClickListner) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
     var a: Activity
     var context: Context? = null
     var rl_1: RelativeLayout? = null
@@ -62,7 +63,8 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
         lateinit var eprice: TextView
         lateinit var edesc: TextView
         lateinit var eimg: ImageView
-       
+        lateinit var ivEventFav: ImageView
+
 
         fun bindMethod(eventList: HomeEventModel) {
 
@@ -74,6 +76,7 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             etimetwo = itemView.findViewById(R.id.tv_eventtimetwo)
             eprice = itemView.findViewById(R.id.tv_eventprice)
             edesc = itemView.findViewById(R.id.tv_eventdesc)
+            ivEventFav = itemView.findViewById(R.id.iv_event_fav)
             eimg = itemView.findViewById(R.id.iv_eventimg)
 
             Glide.with(context!!).load(image_base_URl +eventList.img).error(R.mipmap.no_image_placeholder).into(eimg)
@@ -86,7 +89,12 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             etimetwo.text = context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
             eprice.text = eventList.eventPrice.toString()
             edesc.text = eventList.eventDesc
-       
+
+
+            ivEventFav.setOnClickListener {
+                OnCLICK.onAddFavoriteClick(eventList.id.toString(), ivEventFav)
+
+            }
         }
 
     }
@@ -95,4 +103,10 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
         a = activity
         this.datalist = datalist
     }
+
+    interface OnEventItemClickListner {
+        fun onAddFavoriteClick(eventID: String, ivFavourite: ImageView)
+
+    }
+
 }

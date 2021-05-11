@@ -16,33 +16,34 @@ import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.HELPER.FacebookHelper
 import com.nelyan_live.HELPER.FacebookHelper.*
 import com.nelyan_live.HELPER.GoogleHelper
 import com.nelyan_live.R
-import com.nelyan_live.fragments.HomeFragment
 import com.nelyan_live.modals.FacebookCustomDataModel
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
+import java.sql.Timestamp
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, FacebookHelperCallback {
 
     val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
-    val dataStoragePreference by lazy { DataStoragePreference(this@LoginActivity) }
+    val dataStoragePreference by lazy { DataStoragePreference(this) }
 
     // for facebook
     var facebookHelper: FacebookHelper? = null
@@ -53,6 +54,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     var socialEmail = ""
     var socialImage = ""
     var facebookCustomDataModel: FacebookCustomDataModel? = null
+    private var deviceToken: String?= null
 
 
     // for google gmail
@@ -63,7 +65,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     private var clicked = false
 
     // dialog
-    private  val progressDialog = ProgressDialog(this)
+    private val progressDialog = ProgressDialog(this)
 
 
     override val coroutineContext: CoroutineContext
@@ -95,7 +97,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         photo = account.photoUrl.toString()
                     }
 
-                   // googleHelper.signOut()
+                    // googleHelper.signOut()
                     try {
                         socialId = account.id!!
                         socialImage = photo
@@ -103,19 +105,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         socialName = account.displayName!!
                         socialType = FOR_GOOGLE_TYPE
 
-                        Log.d("googleDetail","-------------name------"+ socialName)
-                        Log.d("googleDetail","-------------email------"+ socialEmail)
-                        Log.d("googleDetail","-------------image------"+ socialImage)
-                        Log.d("googleDetail","-------------id------"+ socialId)
+                        Log.d("googleDetail", "-------------name------" + socialName)
+                        Log.d("googleDetail", "-------------email------" + socialEmail)
+                        Log.d("googleDetail", "-------------image------" + socialImage)
+                        Log.d("googleDetail", "-------------id------" + socialId)
 
-                        appViewModel!!.sendSocialLoginData(security_key, socialId, FOR_GOOGLE_TYPE)
+                        appViewModel!!.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
 
                     } catch (e: Exception) {
-                        Log.d("GoogleException","-----------"+ e.toString())
+                        Log.d("GoogleException", "-----------" + e.toString())
                     }
                 } catch (ex: Exception) {
                     ex.localizedMessage
-                    Log.d("gooleException","---------"+ ex.localizedMessage)
+                    Log.d("gooleException", "---------" + ex.localizedMessage)
                 }
             }
 
@@ -141,8 +143,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         tvSignup.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
         iv_tickButton.setOnClickListener(this)
-        iv_facebookLogin_button.setOnClickListener(this)
-        iv_googleLogin_button.setOnClickListener(this)
+        ll_facebook_login.setOnClickListener(this)
+        ll_google_login.setOnClickListener(this)
+
+        launch (Dispatchers.Main.immediate){
+            deviceToken = dataStoragePreference?.emitStoredValue(preferencesKey<String>("fcmToken"))?.first()
+        }
+
 
     }
 
@@ -152,7 +159,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 OpenActivity(ForgotPasswordActivity::class.java)
             }
             R.id.tvSignup -> {
-                OpenActivity(SignupActivity::class.java){
+                OpenActivity(SignupActivity::class.java) {
                     putString("socialLogin", "")
                     putString("socialName", "")
                     putString("socialEmail", "")
@@ -165,11 +172,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 val password = tv_passwordLogin.text.toString()
                 if (Validation.checkEmail(email, this)) {
                     if (Validation.checkPassword(password, this)) {
-                        if (clicked) {
+                      //  if (clicked) {
                             hitLoginApi(email, password)
-                        } else {
+                        /*} else {
                             myCustomToast("Please  tick the remember me Option for always  Logged in App ")
-                        }
+                        }*/
                     }
                 }
 
@@ -190,7 +197,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
 
             }
-            R.id.iv_facebookLogin_button -> {
+            R.id.ll_facebook_login -> {
                 if (checkIfHasNetwork(this@LoginActivity)) {
                     isFb = "fb"
                     facebookHelper!!.login(this)
@@ -200,11 +207,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             }
 
 
-            R.id.iv_googleLogin_button -> {
-
-
+            R.id.ll_google_login -> {
                 if (checkIfHasNetwork(this@LoginActivity)) {
-                    isFb="google"
+                    isFb = "google"
                     googleHelper.signOut()
                     googleHelper.signIn()
 
@@ -223,11 +228,37 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
       }
   */
 
+   /* fun calenderDateTime_to_timestamp(str_date: String?): Long {
+        var time_stamp: Long = 0
+        try {
+            val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.ENGLISH)
+            //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+            // formatter.setTimeZone(TimeZone.getTimeZone("UTC"));             /*to Set UTC or GMT format */
+            formatter.timeZone = TimeZone.getDefault() /*to Set default time zone */
+            val date = formatter.parse(str_date) as Date
+            time_stamp = date.time
+        } catch (ex: ParseException) {
+            ex.printStackTrace()
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+        time_stamp = time_stamp / 1000
+        return time_stamp
+    }
+
+*/
     private fun hitLoginApi(email: String, password: String) {
 
-        appViewModel.sendLoginData(security_key, device_Type, "112", email, password, "123")
-      progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
+        val tsLong = System.currentTimeMillis() / 1000
+        val currentTS = tsLong.toString()
+        Log.e("current", currentTS.toString())
 
+        if (checkIfHasNetwork(this@LoginActivity)) {
+            appViewModel.sendLoginData(security_key, device_Type, deviceToken, email, password, currentTS)
+            progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
+        } else {
+            showSnackBar(this@LoginActivity, getString(R.string.no_internet_error))
+        }
     }
 
     private fun checkMVVMResponse() {
@@ -241,9 +272,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 
+
                     val email = jsonObject.getJSONObject("data").get("email").toString()
+                    val name = jsonObject.getJSONObject("data").get("name").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
                     val type = jsonObject.getJSONObject("data").get("type").toString()
+                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
                     val image = jsonObject.getJSONObject("data").get("image").toString()
                     val phone = jsonObject.getJSONObject("data").get("phone").toString()
                     val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
@@ -253,10 +287,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
                     AllSharedPref.save(this, "auth_key", authKey)
 
-                    launch(Dispatchers.Main.immediate) {
+                    launch(Dispatchers.IO) {
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
+                        dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
                         dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
+                        dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
                         dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
                         dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
                         dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
@@ -264,8 +300,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
                         dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
 
-                    }
 
+                        Log.d("savedValues", "----------"+
+                        "\n\n"+ "---email---"+email+
+                        "\n\n"+ "---name---"+name+
+                        "\n\n"+ "---password---"+password+
+                        "\n\n"+ "---type---"+type+
+                        "\n\n"+ "---image---"+image+
+                        "\n\n"+ "---phone---"+phone+
+                        "\n\n"+ "---authkey---"+authKey+
+                        "\n\n"+ "---cityZipCode---"+cityOrZipcode+
+                        "\n\n"+ "---latitude---"+latitude+
+                        "\n\n"+ "---longitude---"+longitude
+                        )
+                    }
 
                     progressDialog.hidedialog()
 
@@ -273,48 +321,90 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         putString("authorization", authKey)
                     }
                     finishAffinity()
-                  //  loginProgressBar?.hideProgressBar()
-
+                    //  loginProgressBar?.hideProgressBar()
                 }
 
             } else {
                 ErrorBodyResponse(response, this, null)
+                progressDialog.hidedialog()
+
             }
         })
 
 
         // social Login api  response
-        appViewModel.observeSocialLoginResponse()!!.observe(this, Observer { response->
-            if(response!!.isSuccessful && response.code()==200){
-                if(response.body()!= null){
+        appViewModel.observeSocialLoginResponse()!!.observe(this, Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
                     progressDialog.hidedialog()
 
-                    Log.d("socialData","-----------------"+ socialName)
-                    Log.d("socialData","-----------------"+ socialEmail)
-                    Log.d("socialData","-----------------"+ socialImage)
+                    Log.d("socialData", "-----------------" + socialName)
+                    Log.d("socialData", "-----------------" + socialEmail)
+                    Log.d("socialData", "-----------------" + socialImage)
 
-                    OpenActivity(SignupActivity::class.java){
-                        putString("socialLogin", "SOCIAL_LOGIN")
-                        putString("socialName", socialName)
-                        putString("socialEmail", socialEmail)
-                        putString("socialImage", socialImage)
-                        putString("socialId", socialId)
+                    val mResponse: String = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    val message = jsonObject.get("msg").toString()
+                    val isAlready = jsonObject.getJSONObject("data").get("isAlready").toString()
+
+                    if (isAlready.equals("0")){
+                        OpenActivity(SignupActivity::class.java) {
+                            putString("socialLogin", "SOCIAL_LOGIN")
+                            putString("socialName", socialName)
+                            putString("socialEmail", socialEmail)
+                            putString("socialImage", socialImage)
+                            putString("socialId", socialId)
+                        }
+
+                    }else {
+                        myCustomToast(message)
+
+                        val email = jsonObject.getJSONObject("data").get("email").toString()
+                        val name = jsonObject.getJSONObject("data").get("name").toString()
+                        val password = jsonObject.getJSONObject("data").get("password").toString()
+                        val type = jsonObject.getJSONObject("data").get("type").toString()
+                        val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                        val image = jsonObject.getJSONObject("data").get("image").toString()
+                        val phone = jsonObject.getJSONObject("data").get("phone").toString()
+                        val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
+                        val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                        val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+
+                        AllSharedPref.save(this, "auth_key", authKey)
+
+                        launch(Dispatchers.Main.immediate) {
+                            dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
+                            dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
+                            dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
+                            dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
+                            dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
+                            dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
+                            dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
+                            dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
+                            dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
+                            dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
+                            dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
+                        }
+
+                        OpenActivity(HomeActivity::class.java) {
+                            putString("authorization", authKey)
+                        }
+                        finishAffinity()
+
                     }
-                }
-            }else{
+                  }
+            } else {
                 ErrorBodyResponse(response, this, null)
+                progressDialog.hidedialog()
             }
         })
 
-
-
-
         appViewModel!!.getException()!!.observe(this, Observer {
             myCustomToast(it)
-           progressDialog.hidedialog()// loginProgressBar?.hideProgressBar()
+            progressDialog.hidedialog()// loginProgressBar?.hideProgressBar()
         })
     }
-
 
     override fun onCancelFacebook() {
         Log.d("onCancel", "-----------------" + "cancel")
@@ -342,23 +432,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             socialType = FOR_FACEBOOK_TYPE
 
             //--------------hit api here------------------->
-            appViewModel!!.sendSocialLoginData(security_key, socialId, FOR_FACEBOOK_TYPE)
+            appViewModel!!.sendSocialLoginData(security_key, device_Type, deviceToken!!, socialId, FOR_FACEBOOK_TYPE)
 
 
-          progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
+            progressDialog.setProgressDialog()//  loginProgressBar?.showProgressBar()
             facebookCustomDataModel =
                     FacebookCustomDataModel(socialName, socialId, socialEmail, socialImage, socialType)
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-
     }
 
 
     override fun onResume() {
         super.onResume()
-
 
 
         //---------------for FACEBOOK--------------->
@@ -376,13 +464,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         }.executeAsync()
 
         try {
-
             LoginManager.getInstance().logOut();
             facebookHelper!!.logout()
         } catch (e: Exception) {
         }
         //---------------------END---------------------->
-
 
 
     }
@@ -400,19 +486,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.d("onctivityResult","---rqcode--------"+ requestCode)
-        Log.d("onctivityResult","------rlcode-----"+ resultCode)
-        Log.d("onctivityResult","-------d----"+ data)
+        Log.d("onctivityResult", "---rqcode--------" + requestCode)
+        Log.d("onctivityResult", "------rlcode-----" + resultCode)
+        Log.d("onctivityResult", "-------d----" + data)
 
         if (isFb.equals("fb")) {
             facebookHelper!!.onResult(requestCode, resultCode, data)
 
         }
 
-          /*if (requestCode == 9001) {
-              val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-              handleSignInResult(task)
-          }*/
+        /*if (requestCode == 9001) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }*/
 
         if (isFb.equals("google")) {
             googleHelper.onResult(requestCode, resultCode, data)
@@ -420,14 +506,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     }
 
-  /*  private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            updateUI(account)
-        } catch (e: ApiException) {
-            Log.d("TAG", "signInResult:failed code=" + e.statusCode)
-        }
-    }*/
+    /*  private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+          try {
+              val account = completedTask.getResult(ApiException::class.java)
+              updateUI(account)
+          } catch (e: ApiException) {
+              Log.d("TAG", "signInResult:failed code=" + e.statusCode)
+          }
+      }*/
 
     private fun updateUI(account: GoogleSignInAccount?) {
 
@@ -453,8 +539,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             e.printStackTrace()
         }
     }
-
-
 
 
     override fun onDestroy() {

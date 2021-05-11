@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyHomeAdapter
 import com.nelyan_live.modals.HomeModal
@@ -130,12 +130,13 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             }
 
             1->{
-                requireActivity().OpenActivity(HomeChildCareListActivity::class.java){putString("type","2")}
-                //AppUtils.gotoFragment(requireActivity(), ChatListFragment(), R.id.frame_container, false)
+                requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
+                {putString("type","2")}
+
             }
 
             2->{
-                val i = Intent(requireActivity(), SectorizationActivity::class.java)
+                val i = Intent(requireActivity(), TraderListingActivity::class.java)
                 i.putExtra("type","3")
                 requireActivity().startActivity(i)
             }

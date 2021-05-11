@@ -1,7 +1,6 @@
 package com.nelyan_live.ui
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -73,9 +72,9 @@ class NurserieActivityy : AppCompatActivity(), OnMapReadyCallback {
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
         datalist.add(DetailsImageModal(R.drawable.img_1))
-        val ad = DetailsImageAdapter(this, datalist)
+       /* val ad = DetailsImageAdapter(this, datalist)
         rc!!.setAdapter(ad)
-        indicator!!.attachToRecyclerView(rc!!)
+       */ indicator!!.attachToRecyclerView(rc!!)
 
     }
 
@@ -85,7 +84,7 @@ class NurserieActivityy : AppCompatActivity(), OnMapReadyCallback {
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
         val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_1)
+        ll_1 = dialog!!.findViewById(R.id.ll_public)
         ll_1.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
             dialog!!.dismiss()

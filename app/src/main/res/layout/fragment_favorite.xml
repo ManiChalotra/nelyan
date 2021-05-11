@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:id="@+id/frame_container"
     android:clickable="true"
@@ -25,18 +26,83 @@
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="Favorite"/>
+            android:text="@string/favorite"/>
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:mk_type="FishSpinner"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:id="@+id/myfav_progressBar"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_types"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/header"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ads"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/app"
+            android:fontFamily="@font/semibold"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/events"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/semibold"
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_types"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_types"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/_7sdp"
         android:layout_marginRight="@dimen/_7sdp"
-        android:layout_below="@id/header">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+        android:layout_below="@+id/view_types">
+
+        <TextView
+            android:id="@+id/tv_no_fav"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/recyclerview"/>
-    </LinearLayout>
+            android:text="@string/no_favourite_availalbe"
+            android:visibility="gone"
+            android:fontFamily="@font/regular"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_my_favourite"/>
+    </RelativeLayout>
 
 </RelativeLayout>

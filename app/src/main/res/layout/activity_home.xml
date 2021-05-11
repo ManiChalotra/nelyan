@@ -99,14 +99,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_50sdp"
                     android:orientation="vertical">
-                    <ImageView
-                        android:id="@+id/user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_home_userpic"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/user_img"/>
+
                     <TextView
-                        android:id="@+id/tvLogin"
+                        android:id="@+id/tv_user_name"
                         style="@style/CommonTextWrapcontent"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -116,7 +117,6 @@
                         android:paddingRight="@dimen/_20sdp"
                         android:fontFamily="@font/bold"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="LOGIN"
                         android:textColor="@color/app" />
 
                     <TextView
@@ -135,7 +135,7 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
                         android:paddingLeft="@dimen/_20sdp"
-                        android:text="My Add"
+                        android:text="@string/my_ads"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
                     <!--

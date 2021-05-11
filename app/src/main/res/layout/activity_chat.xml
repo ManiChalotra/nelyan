@@ -224,7 +224,7 @@
             android:text="Today"
             />
         <LinearLayout
-            android:id="@+id/ll_1"
+            android:id="@+id/ll_public"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/lightgrey"
@@ -278,7 +278,7 @@
                 android:text="2:03pm"/>
         </LinearLayout>
             <LinearLayout
-                android:id="@+id/ll_2"
+                android:id="@+id/ll_privates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightgrey"

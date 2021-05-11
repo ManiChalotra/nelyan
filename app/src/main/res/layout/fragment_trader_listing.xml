@@ -9,6 +9,17 @@
     android:id="@+id/frame_container"
     tools:context=".ui.TraderListingActivity">
 
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/trader_list_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_5dp"
+        android:visibility="gone"
+        app:mk_color="@color/colorPrimary"
+        app:mk_type="FishSpinner" />
+
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -31,13 +42,13 @@
 
             <TextView
                 style="@style/HeaderText"
-                android:text="Trader / Artisant"
+                android:text="@string/trader_artisant"
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tv_city_zipcode"
                 style="@style/HeaderText"
                 android:layout_gravity="center"
-                android:text="Maisons-Laffitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
@@ -55,7 +66,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/header"
         android:paddingRight="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -73,20 +84,39 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingRight="@dimen/_20sdp"
             android:paddingBottom="@dimen/_2sdp"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_public">
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_20sdp"
             android:id="@+id/rv_traderListing"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             />
 
+            <TextView
+                android:id="@+id/tv_no_trader_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/regular"
+                android:text="@string/no_child_care_available"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
 
+
+        </RelativeLayout>
         <!--<RelativeLayout
             android:id="@+id/rl_1"
             android:layout_width="match_parent"

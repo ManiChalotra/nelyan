@@ -81,10 +81,10 @@ class TraderPublishFragment : Fragment(), OnMapReadyCallback {
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
         datalist.add(DetailsImageModal(R.drawable.img_1))
-        val ad = DetailsImageAdapter(requireActivity()!!, datalist)
+       /* val ad = DetailsImageAdapter(requireActivity()!!, datalist)
         rc!!.setAdapter(ad)
         indicator!!.attachToRecyclerView(rc!!)
-        return v
+       */ return v
     }
 
     fun dailogShare() {
@@ -93,7 +93,7 @@ class TraderPublishFragment : Fragment(), OnMapReadyCallback {
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
         val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_1)
+        ll_1 = dialog!!.findViewById(R.id.ll_public)
         ll_1.setOnClickListener {
             mContext!!.startActivity(Intent(mContext, HomeActivity::class.java))
             dialog!!.dismiss()

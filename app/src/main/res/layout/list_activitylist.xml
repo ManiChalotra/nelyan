@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
     android:elevation="@dimen/_5sdp"
     android:background="@drawable/shadow_gray"
     app:cardCornerRadius="@dimen/_5sdp">
@@ -18,7 +18,6 @@
             android:id="@+id/ll_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -32,8 +31,10 @@
                 android:src="@mipmap/no_image_placeholder" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/ll_activity_details"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:orientation="vertical">
 
@@ -45,43 +46,30 @@
                         android:id="@+id/tv_activityname"
                         style="@style/CommonTextWrapcontent"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginTop="-2dp"
                         android:fontFamily="@font/semibold"
                         android:gravity="top"
-                        android:text="Danse"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:layout_toLeftOf="@+id/iv_favourite"
                         android:textColor="@color/app"
                         android:textSize="@dimen/_14sdp" />
 
-                    <ImageView
-                        android:id="@+id/iv_favourite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:layout_marginRight="@dimen/_4sdp"
-                        android:src="@drawable/heart_purple" />
                 </RelativeLayout>
+
+
 
                 <TextView
                     android:id="@+id/tv_address"
                     style="@style/CommonTextWrapcontent"
                     android:drawableLeft="@drawable/location_grey"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="@string/mar_chal_20km"
+                    android:drawablePadding="@dimen/_2sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
-                    android:id="@+id/tv_ad_info"
+                    android:id="@+id/tv_nameOfShop"
                     style="@style/CommonTextWrapcontent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/semibold"
-                    android:text="@string/lorem_ipsum"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -89,9 +77,20 @@
                     android:id="@+id/tv_description"
                     style="@style/CommonTextMatchparent"
                     android:layout_marginRight="@dimen/_4sdp"
-                    android:text="Maecenas nec quam posuere, mollis lacus sed, malesuace dolor.In finibus bibenoum metus..."
                     android:textSize="@dimen/_9sdp" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_favouritessss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:src="@drawable/heart_purple" />
+
         </LinearLayout>
 
         <TextView
@@ -100,7 +99,6 @@
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:text="Ex still 2 free places for dansing"
             android:textColor="@color/app"
             android:textSize="@dimen/_11sdp" />
     </LinearLayout>

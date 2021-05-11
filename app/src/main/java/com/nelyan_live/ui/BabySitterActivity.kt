@@ -1,17 +1,13 @@
 package com.nelyan_live.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
@@ -22,9 +18,9 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
-import com.nelyan_live.HELPER.image
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
 import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
@@ -33,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg1
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg2
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg3
 import kotlinx.android.synthetic.main.activity_baby_sitter.ivplus
-import kotlinx.android.synthetic.main.activity_baby_sitter.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -41,25 +36,29 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
-import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    var mediaArrayBody: ArrayList<MultipartBody.Part> = ArrayList()
+
 
     private var IMAGE_SELECTED_TYPE = ""
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
     private var media: JSONArray = JSONArray()
     private var countryCodee = "91"
-    /*  private  var activity_type = ""
+    private var childCareType = ""
+    private var childCareId = ""
+
+    /*
       private  var maternal_name = ""
       private  var phone_number= ""
       private  var descp_baby_sitter = ""
@@ -98,6 +97,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private var cityLatitude = ""
     private var cityLongitude = ""
     private var cityAddress = ""
+    private var isImageUploaded=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,29 +105,50 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         initalizeClicks()
 
 
-        // setting the  spinner
-        val count: MutableList<String?> = ArrayList()
-        count.add("")
-        count.add("0")
-        count.add("1")
-        count.add("2")
-        count.add("3")
-        count.add("4")
-        count.add("5")
-        count.add("6")
-        count.add("7")
-        count.add("8")
-        count.add("9")
-        count.add("10")
-        val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
-        noOfPlacesBabySpinner!!.setAdapter(arrayAdapte1)
+        /* // setting the  spinner
+         val count: MutableList<String?> = ArrayList()
+         count.add("")
+         count.add("0")
+         count.add("1")
+         count.add("2")
+         count.add("3")
+         count.add("4")
+         count.add("5")
+         count.add("6")
+         count.add("7")
+         count.add("8")
+         count.add("9")
+         count.add("10")
+         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
+         noOfPlacesBabySpinner!!.setAdapter(arrayAdapte1)
+ */
+        // Child care Type  spinner
+        /*val childCareList: MutableList<String?> = ArrayList()
+        childCareList.add("")
+        childCareList.add(getString(R.string.nursery))
+        childCareList.add(getString(R.string.maternal_asistant))
+        childCareList.add(getString(R.string.baby_sitter))*/
+
 
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
         }
 
-
+        hitChildCareType_Api()
     }
+
+    private fun hitChildCareType_Api() {
+        if (checkIfHasNetwork(this@BabySitterActivity)) {
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference?.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+                appViewModel.sendChildCareTypeData(security_key, authKey)
+            }
+        } else {
+            showSnackBar(this@BabySitterActivity, getString(R.string.no_internet_error))
+
+        }
+    }
+
 
     private fun initalizeClicks() {
 
@@ -144,7 +165,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         et_addressBabySitter.setOnClickListener(this)
 
         countycode_baby_sitter.setOnCountryChangeListener {
-            countryCodee= countycode_baby_sitter.selectedCountryCode.toString()
+            countryCodee = countycode_baby_sitter.selectedCountryCode.toString()
         }
         checkMvvmResponse()
 
@@ -165,6 +186,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 IMAGE_SELECTED_TYPE = "3"
                 checkPermission(this)
             }
+/*
             R.id.ivImg3 -> {
                 IMAGE_SELECTED_TYPE = "4"
                 checkPermission(this)
@@ -173,13 +195,14 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 IMAGE_SELECTED_TYPE = "5"
                 checkPermission(this)
             }
+*/
             R.id.ivBackBabaySitter -> {
                 onBackPressed()
             }
             R.id.btnSubmitBabySitter -> {
-
                 maternalName = et_maternalName.text.toString()
-                placeSpin = noOfPlacesBabySpinner.selectedItem.toString()
+                childCareType = sp_child_care_type.selectedItem.toString()
+                placeSpin = et_number_of_places.text.toString()
                 phoneNumber = et_phoneNumber.text.toString()
                 address_baby_sitter = et_addressBabySitter.text.toString()
                 descp_baby_sitter = et_descriptionBabySitter.text.toString()
@@ -187,46 +210,65 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 if (IMAGE_SELECTED_TYPE.equals("")) {
                     myCustomToast(getString(R.string.select_image_video_error))
                 } else {
-                    if (maternalName.isEmpty()) {
-                        myCustomToast(getString(R.string.maternal_missing_error))
+                    if (childCareType.equals("") || childCareType.equals(getString(R.string.select))) {
+                        myCustomToast(getString(R.string.child_care_type_missing_error))
                     } else {
-                        if (placeSpin.isEmpty()) {
-                            myCustomToast(getString(R.string.places_number_error))
+                        if (maternalName.isEmpty()) {
+                            myCustomToast(getString(R.string.maternal_missing_error))
                         } else {
-                            if (phoneNumber.isEmpty()) {
-                                myCustomToast(getString(R.string.phone_number_missing))
+                            if (placeSpin.isEmpty()) {
+                                myCustomToast(getString(R.string.places_number_error))
                             } else {
-                                if (address_baby_sitter.isEmpty()) {
-                                    myCustomToast(getString(R.string.address_missing_error))
+                                if (phoneNumber.isEmpty()) {
+                                    myCustomToast(getString(R.string.phone_number_missing))
                                 } else {
-                                    if (descp_baby_sitter.isEmpty()) {
-                                        myCustomToast(getString(R.string.description_missing))
+                                    if (address_baby_sitter.isEmpty()) {
+                                        myCustomToast(getString(R.string.address_missing_error))
                                     } else {
-                                        // checking the list
-                                        if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
-                                            selectedUrlListing.clear()
-                                            urlListingFromResponse.clear()
-                                        }
+                                        if (descp_baby_sitter.isEmpty()) {
+                                            myCustomToast(getString(R.string.description_missing))
+                                        } else {
+                                            if (childCareType.equals("Nursery")) {
+                                                childCareId = "1"
 
-                                        // for check upper images url from response
-                                        Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+                                            } else if (childCareType.equals("Maternal Assistant")) {
+                                                childCareId = "2"
 
-                                        // rotating loop
-                                        for (i in 0..imageVideoUrlListing.size - 1) {
-                                            val media = imageVideoUrlListing[i]
-                                            if (!media.isEmpty()) {
-                                                selectedUrlListing.add(media)
+                                            } else if (childCareType.equals("Baby Sitter")) {
+                                                childCareId = "3"
+                                            }
+
+                                            // checking the list
+                                            if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                                selectedUrlListing.clear()
+                                                urlListingFromResponse.clear()
+                                            }
+
+                                            // for check upper images url from response
+                                            Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+
+                                            // rotating loop
+                                            for (i in 0..imageVideoUrlListing.size - 1) {
+                                                val media = imageVideoUrlListing.get(i)
+                                                if (!media.isEmpty()) {
+                                                    selectedUrlListing.add(media)
+                                                }
+                                            }
+                                            Log.d("selectedUpperimages", "-------------------" + selectedUrlListing.toString())
+
+                                            if (isImageUploaded.equals("") && isImageUploaded !=null) {
+                                                hitApiForBannerImages(0)
+                                            }else {
+                                                hitFinallyActivityAddPostApi()
                                             }
                                         }
-
-                                        // hitting api for upper 5 images
-                                        hitApiForBannerImages(0)
-
                                     }
                                 }
                             }
                         }
+
                     }
+
                 }
 
 
@@ -243,8 +285,9 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
         when (IMAGE_SELECTED_TYPE) {
             "1" -> {
-                setImageOnTab(imgPath, iv_image1)
+                setImageOnTab(imgPath, ivImg)
                 imageVideoUrlListing.set(0, imgPath.toString())
+                iv_image1.visibility = View.GONE
             }
 
             "2" -> {
@@ -254,16 +297,19 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             "3" -> {
                 setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing.set(2, imgPath.toString()) }
+                imageVideoUrlListing.set(2, imgPath.toString())
+            }
 
-            "4" -> {
-                setImageOnTab(imgPath, ivImg3)
-                imageVideoUrlListing.set(3, imgPath.toString())  }
+            /*  "4" -> {
+                  setImageOnTab(imgPath, ivImg3)
+                  imageVideoUrlListing.set(3, imgPath.toString())
+              }
 
-            "5" -> {
-                setImageOnTab(imgPath, ivplus)
-                imageVideoUrlListing.set(4, imgPath.toString()) }
-
+              "5" -> {
+                  setImageOnTab(imgPath, ivplus)
+                  imageVideoUrlListing.set(4, imgPath.toString())
+              }
+  */
         }
 
     }
@@ -274,24 +320,22 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
-                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+             //   imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video011)
             }
             "2" -> {
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video012)
-
             }
             "3" -> {
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
+            }
+            /* "4" -> {
+                 checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
 
-            }
-            "4" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
-
-            }
-            "5" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
-            }
+             }
+             "5" -> {
+                 checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
+             }*/
         }
 
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
@@ -306,7 +350,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         }
     }
 
-
     private fun hitApiForBannerImages(position: Int) {
 
         imageVideoListPosition = position
@@ -315,26 +358,52 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             val media = selectedUrlListing[imageVideoListPosition]
 
-            if (!media.isNullOrEmpty()) {
+            // if (!media.isNullOrEmpty()) {
 
-                var mfile: File? = null
-                mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+//                var mfile: File? = null
+//
+//                mfile = File(selectedUrlListing)
+//                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+//                var photo: MultipartBody.Part? = null
+//                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+//                imagePathList.add(photo)
+
+            if (imagePathList != null) {
+                imagePathList!!.clear()
+            } else {
+                imagePathList = java.util.ArrayList()
+
+            }
+
+
+            var mfile: File? = null
+            for (i in 0..selectedUrlListing!!.size - 1) {
+                mfile = File(selectedUrlListing!![i])
+                val imageFile: RequestBody? = RequestBody.create("image/*".toMediaTypeOrNull(), mfile)
                 var photo: MultipartBody.Part? = null
                 photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-                imagePathList.add(photo)
+                imagePathList!!.add(photo)
+            }
 
-                var type: RequestBody
-                if (media.contains(".mp4")) {
-                    type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
-                } else {
-                    type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-                }
 
-                Log.e("imageimage", type.toString())
-                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-                appViewModel.sendUploadImageData(type, users, imagePathList)
+            var type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+            /*
+            if (media.contains(".mp4")) {
+                type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
             } else {
+                type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+            }
+
+            Log.e("imageimage", type.toString())
+            */
+            val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+            appViewModel.sendUploadImageData(type, users, imagePathList)
+            progressDialog.setProgressDialog()
+            //}
+
+            /*
+             else {
+
 
                 imageVideoListPosition = imageVideoListPosition + 1
 
@@ -343,6 +412,9 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 }
             }
 
+
+            */
+
         }
     }
 
@@ -350,20 +422,26 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private fun checkMvvmResponse() {
         // add post for Maternal assistant
         Log.e("going", "messsaaaa")
-        appViewModel.observe_addMaternalPost_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+
+        appViewModel.observeChildCareTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("addMaternalPostResopnse", "-----------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
-                    progressDialog.hidedialog()
-                    finish()
-                    OpenActivity(DetailActivity::class.java)
-                    myCustomToast(response.message())
+                    val jsonObject = JSONObject(response.body().toString())
+                    var jsonArray = jsonObject.getJSONArray("data")
+                    val country: ArrayList<String?> = ArrayList()
+                    country.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("categoryName").toString()
+                        country.add(name)
+                    }
+                    val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
+                    sp_child_care_type!!.setAdapter(arrayAdapter)
                 }
             } else {
-                progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
             }
         })
+
 
         // for imageUpload api
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
@@ -371,6 +449,24 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
+
+                        if (urlListingFromResponse != null) {
+                            urlListingFromResponse!!.clear()
+                        } else {
+                            urlListingFromResponse = ArrayList()
+
+                        }
+
+                        var mlist = response.body()!!.data
+                        if (mlist.isNullOrEmpty()) {
+                            mlist = ArrayList()
+                        } else {
+                            makeImageJsonArray(mlist)
+
+                        }
+
+
+/*
                         urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
                         if (imageVideoListPosition <= 4) {
                             imageVideoListPosition = imageVideoListPosition + 1
@@ -388,11 +484,32 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
 
                     }
+*/
+                        hitFinallyActivityAddPostApi()
+                      //  progressDialog.hidedialog()
+                    }
                 } else {
                     ErrorBodyResponse(response, this, null)
+                    progressDialog.hidedialog()
                 }
             }
         })
+
+        appViewModel.observe_addMaternalPost_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                Log.d("addMaternalPostResopnse", "-----------" + Gson().toJson(response.body()))
+                if (response.body() != null) {
+                    progressDialog.hidedialog()
+                    finishAffinity()
+                    OpenActivity(HomeActivity::class.java)
+                    myCustomToast(response.message())
+                }
+            } else {
+                progressDialog.hidedialog()
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
@@ -400,16 +517,29 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         })
     }
 
+    fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
+        media = JSONArray()
+        for (i in 0..mlist!!.size - 1) {
+            val image = mlist.get(i).image.toString()
+            urlListingFromResponse.add(image)
+            val json = JSONObject()
+            json.put("image", image)
+            json.put("file_type", "image")
+            media.put(json)
+
+        }
+    }
+
     private fun hitFinallyActivityAddPostApi() {
         if (checkIfHasNetwork(this)) {
-            appViewModel.sendMaternalPost_Data(security_key, authKey, "4", maternalName,
+            appViewModel.sendMaternalPost_Data(security_key, authKey, "2", childCareId, maternalName, "hah@gmail.com",
                     placeSpin, countryCodee, phoneNumber, cityAddress, descp_baby_sitter, cityName, cityLatitude, cityLongitude,
                     media.toString())
-            progressDialog.setProgressDialog()
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
     }
+
 
     private fun showPlacePicker() {
         // Initialize Places.
@@ -431,6 +561,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                 cityAddress = place.address.toString()
                 et_addressBabySitter.setText(cityAddress.toString())
+                cityName = place.name.toString()
                 cityName = place.name.toString()
 
                 // cityID = place.id.toString()

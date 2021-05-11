@@ -65,7 +65,7 @@
             </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
-                android:layout_below="@id/ll_1"
+                android:layout_below="@id/ll_public"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <RelativeLayout
@@ -88,7 +88,7 @@
             </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview1"
-                android:layout_below="@id/ll_1"
+                android:layout_below="@id/ll_public"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

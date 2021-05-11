@@ -24,17 +24,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="Name of Traineeship: "
+                android:text="@string/name_of_traineship"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_event_namee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="Danse"
                 android:textColor="@color/app"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
 
@@ -51,19 +52,12 @@
             android:layout_weight="1"
             android:gravity="end">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="Date: "
-                android:textColor="@color/black"
-                android:textSize="@dimen/_6sdp" />
 
             <TextView
+                android:id="@+id/tv_event_dates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="10.12.2020 To 11.12.2020"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_6sdp" />
 
@@ -89,18 +83,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="Age: "
+                android:text="@string/age"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_age_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
@@ -121,19 +117,12 @@
             android:layout_weight="1"
             android:gravity="end">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="Time: "
-                android:textColor="@color/black"
-                android:textSize="@dimen/_6sdp" />
 
             <TextView
+                android:id="@+id/tv_event_times"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="11:00AM To 12:20PM"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_6sdp" />
 
@@ -142,37 +131,28 @@
     </LinearLayout>
 
 
-    -
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:gravity="end">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="$"
-            android:textColor="@color/app"
-            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_event_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            android:text="450.80"
             android:textColor="@color/app"
             android:textStyle="bold" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_event_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
-        android:text="@string/loremipsum"
-        android:textSize="12dp" />
+        android:textSize="@dimen/_10sdp" />
 
 </LinearLayout>

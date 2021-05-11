@@ -21,7 +21,6 @@ class ErrorBodyResponse<T> {
 
     }
 
-
     fun handleErrorResponse() {
         try {
             val jObjError = JSONObject(response.errorBody()!!.string())
@@ -33,6 +32,5 @@ class ErrorBodyResponse<T> {
             failureMethod(context, ex.localizedMessage, progressBar)
         }
     }
-
 
 }

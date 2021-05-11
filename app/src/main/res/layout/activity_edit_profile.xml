@@ -3,195 +3,213 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.EditProfileActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/editProfileProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/editProfileProgressBar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
 
-        <ScrollView
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="Edit Profile"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/header"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
+
                 <RelativeLayout
-                    android:id="@+id/header"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
-                    <ImageView
-                        android:id="@+id/ivBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/left_arrow"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        />
-                    <TextView
-                        style="@style/HeaderText"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/black"
-                        android:text="Edit Profile"/>
-                </RelativeLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/header"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:orientation="vertical">
+                    android:layout_width="@dimen/_160sdp"
+                    android:layout_height="@dimen/_160sdp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
                     <RelativeLayout
-                        android:layout_width="@dimen/_160sdp"
-                        android:layout_height="@dimen/_160sdp"
-                        android:gravity="center"
-                        android:layout_gravity="center">
-
-                        <RelativeLayout
-                            android:id="@+id/rlImg"
+                        android:id="@+id/rlImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <!--<ImageView
+                            android:id="@+id/ivImg"
+                            android:padding="@dimen/_15sdp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center">
-                            <!--<ImageView
-                                android:id="@+id/ivImg"
-                                android:padding="@dimen/_15sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerInParent="true"/>-->
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/iv_profileEdit"
-                                android:layout_width="@dimen/_140sdp"
-                                android:layout_height="@dimen/_140sdp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@mipmap/ic_user_place"
-                                >
-                            </de.hdodenhof.circleimageview.CircleImageView>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/rlAdd"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="@dimen/_20sdp"
-                            android:layout_marginRight="@dimen/_20sdp">
-                            <ImageView
-                                android:id="@+id/ivPlus"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"/>-->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_profileEdit"
+                            android:layout_width="@dimen/_140sdp"
+                            android:layout_height="@dimen/_140sdp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/ic_user_place"/>
                     </RelativeLayout>
 
-                    <TextView
-                        style="@style/CommonTextMatchparent"
-                        android:text="Name"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/grey"
-                        />
-                    <EditText
-                        style="@style/SimpleEdittext"
-                        android:id="@+id/et_nameEditProfile"
-                        android:hint="Name"
-                        android:textColorHint="@color/black"
-                        android:textSize="@dimen/_15sdp"
-                        android:inputType="text"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/semibold"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:background="@color/black"/>
-                    <TextView
-                        style="@style/CommonTextMatchparent"
-                        android:text="Email"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/grey"
-                        />
-                    <TextView
-                        android:id="@+id/tv_emailEditProfile"
-                        style="@style/CommonTextMatchparent"
-                        android:textSize="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/semibold"/>
-                       <View
-                           android:layout_width="match_parent"
-                           android:layout_height="1dp"
-                           android:layout_marginTop="@dimen/_5sdp"
-                           android:background="@color/black"/>
-                    <TextView
-                        style="@style/CommonTextMatchparent"
-                        android:text="City Name"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/grey"
-                        />
-                    <EditText
-                        android:id="@+id/et_cityEditProfile"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        style="@style/SimpleEdittext"
-                        android:textColorHint="@color/black"
-                        android:inputType="text"
-                        android:textSize="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="Masisons-Laffitle"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/semibold"/>
-                      <View
-                          android:layout_width="match_parent"
-                          android:layout_height="1dp"
-                          android:layout_marginTop="@dimen/_5sdp"
-                          android:background="@color/black"/>
-                    <TextView
-                        style="@style/CommonTextMatchparent"
-                        android:text="Types of Utilisation"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/grey"
-                        />
-                    <EditText
-                        android:id="@+id/et_utilizationEditProfile"
-                        style="@style/SimpleEdittext"
-                        android:textColorHint="@color/black"
-                        android:inputType="text"
-                        android:textSize="@dimen/_15sdp"
-                        android:text="Ex: Post ads"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/semibold"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@color/black"/>
-                    <Button
-                        style="@style/Button"
-                        android:id="@+id/btnSave"
-                        android:layout_marginTop="@dimen/_40sdp"
+                    <RelativeLayout
+                        android:id="@+id/rlAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:text="SAVE"
-                        android:background="@drawable/btn"/>
-                </LinearLayout>
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_20sdp">
 
-            </RelativeLayout>
-        </ScrollView>
-    </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/ivPlus"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/profile_carmera" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/name"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <EditText
+                    android:id="@+id/et_nameEditProfile"
+                    style="@style/SimpleEdittext"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:hint="@string/name"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/Email"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_emailEditProfile"
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/city_name"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <EditText
+                    android:id="@+id/et_cityEditProfile"
+                    style="@style/SimpleEdittext"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/semibold"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
+                <TextView
+                    style="@style/CommonTextMatchparent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/types_of_utilisation"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_utilizationEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/semibold"
+                    android:hint="@string/enter_utilisation"
+                    android:textColor="@color/black"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/grey"
+                    android:maxLines="1"
+                    android:backgroundTint="@color/black"
+                    android:gravity="bottom"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/black" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    style="@style/Button"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/btn"
+                    android:text="SAVE" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

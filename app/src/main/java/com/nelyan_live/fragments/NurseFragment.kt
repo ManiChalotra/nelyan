@@ -20,9 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
-import com.nelyan_live.adapter.DetailsImageAdapter
 import com.nelyan_live.modals.DetailsImageModal
 import com.nelyan_live.ui.HomeActivity
 import com.nelyan_live.ui.NurserieActivityy
@@ -52,7 +50,7 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_nurse, container, false)
+        v = inflater.inflate(R.layout.activity_home_child_care_details, container, false)
         mContext = requireActivity()
         /*  Bundle bundle = getArguments();
         String message = bundle.getString("message");
@@ -81,10 +79,10 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
         datalist.add(DetailsImageModal(R.drawable.img_1))
         datalist.add(DetailsImageModal(R.drawable.img_4))
         datalist.add(DetailsImageModal(R.drawable.img_1))
-        val ad = DetailsImageAdapter(requireActivity()!!, datalist)
+       /* val ad = DetailsImageAdapter(requireActivity()!!, datalist)
         rc!!.setAdapter(ad)
         indicator!!.attachToRecyclerView(rc!!)
-        return v
+       */ return v
     }
 
 
@@ -94,7 +92,7 @@ class NurseFragment : Fragment(), OnMapReadyCallback {
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
         val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_1)
+        ll_1 = dialog!!.findViewById(R.id.ll_public)
         ll_1.setOnClickListener {
             mContext!!.startActivity(Intent(mContext, HomeActivity::class.java))
             dialog!!.dismiss()

@@ -31,12 +31,17 @@ class ContactUsActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_contact_us)
         initalize()
         checkMvvmResponse()
+
+
+
     }
 
 
 
     private fun initalize() {
         btnSubmit.setOnClickListener(this)
+        ivBack.setOnClickListener(this)
+
     }
 
 
@@ -56,6 +61,9 @@ class ContactUsActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
+            }
+            R.id.ivBack -> {
+                onBackPressed()
             }
         }
     }

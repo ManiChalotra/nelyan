@@ -31,6 +31,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 import java.io.IOException
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.jvm.Throws
@@ -117,7 +118,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
 
             val intent = Intent()
             intent.setType("*/*")
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
           //  intent.setType("image/* , video/*")   // for both image and video
           //  intent.type = "image/*"     // only for image
             //intent.type = "video/*"     // only for video
@@ -159,6 +160,24 @@ abstract class OpenCameraGallery : AppCompatActivity() {
 
         ////////////////////////////////////////
         // for handling image and gallery
+       /* if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
+            try {
+
+                if (Uri.parse(imgPath) != null) {
+                    getRealImagePath(getPath(this, Uri.parse(imgPath)))
+
+                  *//*  CropImage.activity(Uri.parse(imgPath))
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(mActivity)*//*
+                }
+
+                // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
+                // civProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath))
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } */
         if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
             try {
                 if (Uri.parse(imgPath) != null) {
@@ -173,30 +192,42 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        } else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
+        }
+        else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
 
             try {
                 val uri = data!!.data
                 if (uri != null) {
-                    val videoPath = getPath(this, uri)
+                    CropImage.activity(uri)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(this)
+               /* if (uri != null) {
+                    getRealImagePath(
+                            getPath(this, uri)
+                    )*/
+                   /* val videoPath = getPath(this, uri)
                     Log.d("videopathhhh", "--------" + videoPath)
                     if (videoPath!!.contains(".mp4")) {
                         getRealImagePath(videoPath)
-                    } else {
+                    }
+                    */
+
+                    /* else {
 
                         if (uri != null) {
                             CropImage.activity(uri)
                                     .setGuidelines(CropImageView.Guidelines.ON)
                                     .start(this)
                         }
-                    }
+                    }*/
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
-        } else if (CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE === requestCode && resultCode == Activity.RESULT_OK) {
+        }
+        else if (CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE === requestCode && resultCode == Activity.RESULT_OK) {
             try {
                 val result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 if (resultCode == AppCompatActivity.RESULT_OK) {
@@ -211,7 +242,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
 
     }
 

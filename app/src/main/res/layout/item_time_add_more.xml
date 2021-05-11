@@ -15,7 +15,7 @@ android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/back_shape">
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:text="Age Group" />
+            android:text="@string/age_group_years" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,8 +31,11 @@ android:layout_marginTop="@dimen/_10sdp"
                 <EditText
                     android:id="@+id/edtAgeFrom"
                     style="@style/SimpleEdittext"
-                    android:hint="Age Group From"
-                    android:imeOptions="actionDone"
+                    android:hint="@string/age_group_from"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:digits="0123456789"
                     android:inputType="number" />
 
                 <View
@@ -52,8 +55,11 @@ android:layout_marginTop="@dimen/_10sdp"
                 <EditText
                     android:id="@+id/edtAgeTo"
                     style="@style/SimpleEdittext"
-                    android:hint="Age Group To"
+                    android:hint="@string/age_group_to"
                     android:focusable="true"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:digits="0123456789"
                     android:imeOptions="actionDone"
                     android:inputType="number" />
 
@@ -68,10 +74,10 @@ android:layout_marginTop="@dimen/_10sdp"
         </LinearLayout>
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:text="Days" />
+            android:text="@string/days" />
 
         <Spinner
-            android:id="@+id/orderby1"
+            android:id="@+id/spinner_dayss"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -80,7 +86,7 @@ android:layout_marginTop="@dimen/_10sdp"
             android:dropDownSelector="@drawable/down_arrow"
             android:fontFamily="@font/regular"
             android:gravity="start"
-            android:hint="Date Added "
+            android:hint="@string/date_added"
             android:inputType="text"
             android:spinnerMode="dropdown"
             android:textColor="@color/black"
@@ -115,14 +121,13 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:text="From:" />
 
                 <TextView
-                    android:id="@+id/edClo"
+                    android:id="@+id/tv_mornning_fromtime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/clock_purple_icon"
                     android:hint="Select From"
                     android:inputType="number"
                     android:fontFamily="@font/regular"
-
                     android:paddingStart="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey" />
@@ -146,11 +151,11 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:text="To:" />
 
                 <TextView
-                    android:id="@+id/edClo1"
+                    android:id="@+id/tv_morning_totime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/clock_purple_icon"
-                    android:hint="Select To"
+                    android:hint="@string/select_to"
                     android:inputType="number"
                     android:fontFamily="@font/regular"
                     android:paddingLeft="@dimen/_5sdp"

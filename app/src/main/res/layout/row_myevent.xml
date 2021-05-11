@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+            android:padding="@dimen/_7sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,8 +40,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/iv_eventimg"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/no_image_placeholder"
                     app:riv_corner_radius="@dimen/_8sdp" />
@@ -53,13 +53,31 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_eventname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/bold"
-                        android:textColor="@color/app"
-                        android:textSize="@dimen/_14sdp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_eventname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/iv_event_fav"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/app"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <ImageView
+                            android:id="@+id/iv_event_fav"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/_2sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/heart_purple" />
+
+                    </RelativeLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -99,8 +117,8 @@
                             android:id="@+id/tv_eventStartdate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:fontFamily="@font/regular"
+                            android:layout_weight="1"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
@@ -109,6 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_weight="1"
                             android:fontFamily="@font/regular"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />

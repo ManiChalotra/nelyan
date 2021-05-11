@@ -71,8 +71,8 @@ class ChatFrag : Fragment() {
             val i = Intent(mContext, Chat1Activity::class.java)
             startActivity(i)
         })
-        ll_1 = v.findViewById(R.id.ll_1)
-        ll_2 = v.findViewById(R.id.ll_2)
+        ll_1 = v.findViewById(R.id.ll_public)
+        ll_2 = v.findViewById(R.id.ll_privates)
         ll_1!!.setOnClickListener(View.OnClickListener { showDailog() })
         ll_2!!.setOnClickListener(View.OnClickListener { dailogDelete() })
         return v

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/_10sdp"
     android:orientation="vertical">
 
@@ -18,7 +19,7 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Add An Event" />
+            android:text="@string/add_an_event" />
 
         <RelativeLayout
             android:id="@+id/rl_Add"
@@ -27,8 +28,9 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/back_shape">
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivEventimage"
+                app:riv_corner_radius="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY" />
@@ -47,18 +49,20 @@
             style="@style/CommonTextWrapcontent"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="Event Picture"
+            android:text="@string/event_picture"
             android:textSize="@dimen/_8sdp" />
 
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Name of Event" />
+            android:text="@string/name_of_event" />
 
         <EditText
             android:id="@+id/edtEventName"
             style="@style/SimpleEdittext"
-            android:hint="Name of Event"
+            android:maxLength="150"
+            android:maxLines="1"
+            android:hint="@string/name_of_event"
             android:inputType="text" />
 
         <View
@@ -68,7 +72,7 @@
 
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:text="Select Date" />
+            android:text="@string/select_date" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +90,7 @@
                 <TextView
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
-                    android:text="From:" />
+                    android:text="@string/from1" />
 
 
                 -
@@ -97,10 +101,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvCal"
+                        android:id="@+id/tv_cal"
                         style="@style/CommonTextMatchparent"
                         android:drawableRight="@drawable/calendar_icon"
-                        android:hint="10/09/2002"
+                        android:hint="@string/select_date"
                         android:inputType="number"
                         android:paddingLeft="@dimen/_5sdp"
                         android:textColor="@color/black"
@@ -123,7 +127,7 @@
                 <TextView
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
-                    android:text="To:" />
+                    android:text="@string/to1" />
 
 
                 -
@@ -137,7 +141,7 @@
                         android:id="@+id/tvCal1"
                         style="@style/CommonTextMatchparent"
                         android:drawableEnd="@drawable/calendar_icon"
-                        android:hint="10/09/2002"
+                        android:hint="@string/select_date"
                         android:inputType="number"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
@@ -148,7 +152,7 @@
 
         <TextView
             style="@style/CommonTextWrapcontent"
-            android:text="Select Time" />
+            android:text="@string/select_time" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,7 +170,7 @@
                 <TextView
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
-                    android:text="From:" />
+                    android:text="@string/from1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,7 +181,7 @@
                         android:id="@+id/edClo2"
                         style="@style/CommonTextMatchparent"
                         android:drawableEnd="@drawable/clock_purple_icon"
-                        android:hint="Select From"
+                        android:hint="@string/select_from"
                         android:inputType="number"
                         android:paddingLeft="@dimen/_5sdp"
                         android:textColor="@color/black"
@@ -200,7 +204,7 @@
                 <TextView
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
-                    android:text="To:" />
+                    android:text="@string/to1" />
 
 
                 -
@@ -214,7 +218,7 @@
                         android:id="@+id/edClo3"
                         style="@style/CommonTextMatchparent"
                         android:drawableRight="@drawable/clock_purple_icon"
-                        android:hint="Select To"
+                        android:hint="@string/select_to"
                         android:inputType="number"
                         android:paddingLeft="@dimen/_5sdp"
                         android:textColor="@color/black"
@@ -226,7 +230,7 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Description" />
+            android:text="@string/description" />
 
         <EditText
             android:id="@+id/edtDesc"
@@ -248,12 +252,15 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Price" />
+            android:text="@string/price" />
 
         <EditText
             android:id="@+id/edtPrice"
             style="@style/SimpleEdittext"
-            android:hint="Price"
+            android:hint="@string/price11"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:digits="0123456789."
             android:inputType="number" />
 
         <View
@@ -288,7 +295,7 @@
             android:gravity="center"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
-            android:text="Add More"
+            android:text="@string/add_more"
             android:textColor="@color/white"
             android:textSize="@dimen/_8sdp" />
     </LinearLayout>

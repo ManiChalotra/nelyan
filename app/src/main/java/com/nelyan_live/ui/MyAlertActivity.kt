@@ -25,7 +25,7 @@ class MyAlertActivity : AppCompatActivity() {
             val i = Intent(this@MyAlertActivity, HomeActivity::class.java)
             startActivity(i)
         })
-        btnOk = findViewById(R.id.btnOk)
+        btnOk = findViewById(R.id.btn_sectorization_ok)
         btnOk!!.setOnClickListener(View.OnClickListener { finish() })
     }
 }

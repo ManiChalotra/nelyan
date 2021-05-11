@@ -51,7 +51,7 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_40sdp">
 <LinearLayout
-    android:id="@+id/ll_1"
+    android:id="@+id/ll_public"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/shape"
@@ -90,8 +90,8 @@
 </LinearLayout>
 </LinearLayout>
             <LinearLayout
-    android:id="@+id/ll_2"
-      android:layout_below="@id/ll_1"
+    android:id="@+id/ll_privates"
+      android:layout_below="@id/ll_public"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/shape"
@@ -130,7 +130,7 @@
 </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_3"
-                android:layout_below="@id/ll_2"
+                android:layout_below="@id/ll_privates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape"

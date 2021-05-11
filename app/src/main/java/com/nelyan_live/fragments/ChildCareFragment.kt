@@ -52,14 +52,14 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
                 fm.popBackStack()
             }
         })
-        spin1 = v.findViewById(R.id.spin1)
+        spin1 = v.findViewById(R.id.spinner_childcare_type)
         btnSearch = v.findViewById(R.id.btnSearch)
         btnSearch!!.setOnClickListener(View.OnClickListener {
             val fm = requireActivity()!!.supportFragmentManager
             val f = fm.findFragmentById(R.id.frame_container)
             fm.popBackStack()
         })
-        orderby1 = v.findViewById(R.id.orderby1)
+        orderby1 = v.findViewById(R.id.spinner_dayss)
         val km = arrayOf<String?>(
                 "", "OKM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM"
         )
@@ -67,7 +67,7 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
                 requireActivity()!!, layout.size_customspinner, km)
         orderby1!!.setAdapter(adapter1)
         orderby1!!.setOnItemSelectedListener(this@ChildCareFragment)
-        spin1 = v.findViewById(R.id.spin1)
+        spin1 = v.findViewById(R.id.spinner_childcare_type)
         val spi = arrayOf<String?>(
                 "", "crèche",
                 "maternal assistant ", "babysitter")
@@ -97,11 +97,13 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
         dialog!!.show()
     }
 
-    override fun onAddFavoriteClick() {
+    override fun onAddFavoriteClick(toString: String, ivFavourite: ImageView) {
         TODO("Not yet implemented")
     }
 
-    override fun onHomeActivitiesItemClickListner() {
+    override fun onHomeActivitiesItemClickListner(activityId: String, categoryId: String, postLatitude: String, postLongitude: String) {
         TODO("Not yet implemented")
     }
+
+
 }

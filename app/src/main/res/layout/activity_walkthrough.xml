@@ -50,12 +50,12 @@
         android:orientation="vertical">
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_20sdp"
-            android:src="@drawable/smallogo" />
+            android:src="@drawable/latest_logo" />
        <!-- <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="@dimen/_360sdp"
                     android:layout_marginTop="10dp" />
 
                 

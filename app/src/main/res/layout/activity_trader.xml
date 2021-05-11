@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.TraderActivity">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/_40sdp">
 
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
 
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp">
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/trader_artisant"
+            android:textColor="@color/black" />
 
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:src="@drawable/left_arrow" />
-
-            <TextView
-                style="@style/HeaderText"
-                android:layout_centerInParent="true"
-                android:text="Trader / Artisant"
-                android:textColor="@color/black" />
-
-        </RelativeLayout>
-
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +41,7 @@
 
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:text="Photo/Video" />
+                android:text="@string/photo" />
 
             <RelativeLayout
                 android:id="@+id/rlImg"
@@ -52,11 +49,12 @@
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/back_shape">
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
+                    app:riv_corner_radius="@dimen/_5sdp"
                     android:backgroundTint="@color/grey"
                     android:src="@drawable/pik_1" />
 
@@ -73,34 +71,34 @@
                     />
 
             </RelativeLayout>
-               <!-- <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_10sdp">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
+            <!-- <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:layout_marginTop="@dimen/_10sdp">
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentTop="true"
+                     android:layout_centerInParent="true"
 
-                        android:id="@+id/Recycler_scroll">
-                    </androidx.recyclerview.widget.RecyclerView>
+                     android:id="@+id/Recycler_scroll">
+                 </androidx.recyclerview.widget.RecyclerView>
 
-                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                        android:id="@+id/indicator"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                     android:id="@+id/indicator"
+                     android:layout_gravity="center"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_10sdp"
 
-                        android:layout_centerInParent="true"
-                        android:layout_below="@+id/Recycler_scroll"
-                        app:spi_dotColor="@color/grey"
-                        app:spi_dotSize="@dimen/_6sdp"
-                        app:spi_dotSelectedSize="@dimen/_6sdp"
-                        app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
-                </RelativeLayout>-->
+                     android:layout_centerInParent="true"
+                     android:layout_below="@+id/Recycler_scroll"
+                     app:spi_dotColor="@color/grey"
+                     app:spi_dotSize="@dimen/_6sdp"
+                     app:spi_dotSelectedSize="@dimen/_6sdp"
+                     app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
+             </RelativeLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,17 +106,18 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/ll_1"
+                    android:id="@+id/ll_public"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape" >
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImg1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/photo_two"
-                        android:scaleType="fitXY"/>
+                        app:riv_corner_radius="@dimen/_5sdp"
+                        android:scaleType="centerInside"/>
 
                     <ImageView
                         android:layout_width="@dimen/_30sdp"
@@ -134,18 +133,19 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/ll_2"
+                    android:id="@+id/ll_privates"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape" >
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImg2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        app:riv_corner_radius="@dimen/_5sdp"
                         android:src="@drawable/small_photo_3"
-                        android:scaleType="fitXY"/>
+                        android:scaleType="centerInside"/>
 
 
                     <ImageView
@@ -164,6 +164,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_3"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/_3sdp"
@@ -192,6 +193,7 @@
                 <RelativeLayout
                     android:id="@+id/rlAddImg"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="70dp"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
@@ -227,10 +229,10 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="Type of Trader" />
+                android:text="@string/type_of_trader" />
 
             <Spinner
-                android:id="@+id/orderby"
+                android:id="@+id/trader_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
@@ -239,7 +241,6 @@
                 android:dropDownSelector="@drawable/down_arrow"
                 android:fontFamily="@font/regular"
                 android:gravity="start"
-                android:hint="Date Added"
                 android:inputType="text"
                 android:spinnerMode="dropdown"
                 android:textColor="@color/black"
@@ -255,13 +256,17 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Name of Shop" />
+                android:text="@string/name_of_shop" />
 
             <EditText
+                android:id="@+id/et_trader_shop_name"
                 style="@style/SimpleEdittext"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:hint="Name of Shop"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
+                android:maxLength="150"
+                android:hint="@string/name_of_shop"
                 android:inputType="text" />
 
             <View
@@ -272,6 +277,7 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"
                 android:text="Name of Activity" />
 
             <EditText
@@ -279,21 +285,26 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:hint="Name of Activity"
+                android:visibility="gone"
                 android:inputType="text" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="@color/black" />
 
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Description" />
+                android:text="@string/description" />
 
             <EditText
+                android:id="@+id/et_description_trader"
                 style="@style/SimpleEdittext"
-                android:hint="Description" />
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:hint="@string/description" />
 
             <View
                 android:layout_width="match_parent"
@@ -303,13 +314,14 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Address" />
+                android:text="@string/address" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_address"
                 style="@style/SimpleEdittext"
                 android:drawableLeft="@drawable/location_grey"
                 android:drawablePadding="@dimen/_10sdp"
-                android:hint="Address" />
+                android:hint="@string/address" />
 
             <View
                 android:layout_width="match_parent"
@@ -320,13 +332,44 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Mobile" />
+                android:text="@string/phone" />
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/countycode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    app:ccpDialog_textColor="@color/black"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="@dimen/_12sdp" />
+
+                <EditText
+                    android:id="@+id/et_trader_phone"
+                    style="@style/SimpleEdittext"
+                    android:layout_toRightOf="@+id/countycode"
+                    android:digits="0123456789"
+                    android:hint="@string/phone_number"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:maxLines="1" />
+
+            </RelativeLayout>
+
+<!--
             <EditText
                 style="@style/SimpleEdittext"
                 android:drawablePadding="@dimen/_10sdp"
-                android:hint="Mobile"
+                android:hint="@string/phone"
                 android:inputType="number" />
+-->
 
             <View
                 android:layout_width="match_parent"
@@ -337,28 +380,33 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Email Address" />
+                android:text="@string/email_address" />
 
             <EditText
+                android:id="@+id/et_trader_email"
                 style="@style/SimpleEdittext"
-                android:hint="Email Address"
+                android:hint="@string/email_address"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:inputType="textEmailAddress" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/website" />
+
+            <EditText
+                android:id="@+id/et_web_address"
+                style="@style/SimpleEdittext"
+                android:hint="@string/website"
+                android:maxLines="1"
                 android:inputType="textWebEmailAddress" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
-
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Website" />
-
-            <EditText
-                style="@style/SimpleEdittext"
-                android:hint="Website"
-                android:inputType="text" />
 
             <View
                 android:layout_width="match_parent"
@@ -387,6 +435,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="gone"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:orientation="horizontal">
 
@@ -413,13 +462,12 @@
             </LinearLayout>
 
 
-            -
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:orientation="horizontal">
 
@@ -446,12 +494,11 @@
             </LinearLayout>
 
 
-            -
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:orientation="horizontal">
@@ -482,34 +529,34 @@
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
-                android:text="Product Detail"
+                android:text="@string/product_detail"
                 android:textSize="@dimen/_14sdp" />
 
-
-            -
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvDesc"
+                    android:id="@+id/rv_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:nestedScrollingEnabled="false" />
 
             </RelativeLayout>
 
             <Button
-                android:id="@+id/btnSubmit"
+                android:id="@+id/btn_trader_submit"
                 style="@style/Button"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/btn"
-                android:text="SUBMIT" />
+                android:textAllCaps="true"
+                android:text="@string/submit" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</LinearLayout>

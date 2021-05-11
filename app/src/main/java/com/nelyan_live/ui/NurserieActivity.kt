@@ -19,7 +19,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_nurserie.*
@@ -238,6 +238,8 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
                 Log.e("imageimage", type.toString())
                 val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
                 appViewModel.sendUploadImageData(type, users, imagePathList)
+                progressDialog.setProgressDialog()
+
             } else {
                 imageVideoListPosition = imageVideoListPosition + 1
 
@@ -287,26 +289,26 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
                 description = et_description.text.toString()
 
                 if (IMAGE_SELECTED_TYPE.equals("")) {
-                    myCustomToast("Please select at-least one media file image or video .")
+                    myCustomToast(getString(R.string.media_missing_error))
                 } else {
                     if (nurseryName.isEmpty()) {
-                        myCustomToast("Please enter your nursery name ")
+                        myCustomToast(getString(R.string.nursery_missing_erorr))
                     } else {
                         if (addInformationSpinerrr.isEmpty()) {
-                            myCustomToast("Please Add nursery information ")
+                            myCustomToast(getString(R.string.nursery_info_missing_error))
                         } else {
                             if (placeSpin.isEmpty()) {
-                                myCustomToast("Please enter number of places")
+                                myCustomToast(getString(R.string.Number_of_places_missing_error))
                             } else {
                                 if (etPhoneNumber.isEmpty()) {
-                                    myCustomToast("Please enter phone number ")
+                                    myCustomToast(getString(R.string.phone_number_missing))
                                 } else {
                                     if (etAddressNursery.isEmpty()) {
-                                        myCustomToast(" Please select your address ")
+                                        myCustomToast(getString(R.string.address_missing_error))
 
                                     } else {
                                         if (description.isEmpty()) {
-                                            myCustomToast("Please enter your description")
+                                            myCustomToast(getString(R.string.description_missing))
                                         } else {
                                             // adding values
                                             //    activity_type =  orderby.selectedItem.toString()
@@ -414,7 +416,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         appViewModel.send_addNuseryPost_Data(security_key, authKey, "2", nurseryName, addInformationSpinerrr,
                 placeSpin, "+91", etPhoneNumber, cityAddress, description, cityName, cityLatitude, cityLongitude,
                 media.toString())
-        progressDialog.setProgressDialog()
+     //   progressDialog.setProgressDialog()
     }
 
 

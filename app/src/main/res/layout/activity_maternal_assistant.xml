@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.MaternalAssistantActivity">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/_40sdp">
 
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
 
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:src="@drawable/left_arrow" />
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/maternal_assistant"
+            android:textColor="@color/black" />
 
-            <TextView
-                style="@style/HeaderText"
-                android:layout_centerInParent="true"
-                android:text="@string/maternal_assistant"
-                android:textColor="@color/black" />
+    </RelativeLayout>
 
-        </RelativeLayout>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/ll_1"
+                    android:id="@+id/ll_public"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_weight="1"
@@ -143,7 +143,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/ll_2"
+                    android:id="@+id/ll_privates"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginLeft="@dimen/_3sdp"
@@ -299,7 +299,6 @@
                     android:layout_height="wrap_content"
                     app:ccp_textSize="@dimen/_12sdp"
                     app:ccp_showFlag="false"
-
                     app:ccp_showNameCode="false"
                     android:layout_centerVertical="true"
                     app:ccpDialog_textColor="@color/black"/>
@@ -363,6 +362,8 @@
                 android:background="@drawable/btn"
                 android:text="SUBMIT" />
         </LinearLayout>
-    </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+
+
+</LinearLayout>

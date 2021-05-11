@@ -1,123 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.NurserieActivity">
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp">
+        android:layout_height="@dimen/_40sdp">
 
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:src="@drawable/left_arrow" />
-
-            <TextView
-                style="@style/HeaderText"
-                android:layout_centerInParent="true"
-                android:text="Nurserie"
-                android:textColor="@color/black" />
-
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp">
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:text="Photo/Video" />
-            <RelativeLayout
-                android:id="@+id/rlImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape">
+            android:src="@drawable/left_arrow" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/ivImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:riv_corner_radius="@dimen/_5sdp"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="@color/grey"
-                    android:src="@drawable/pik_1" />
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/nursery"
+            android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:elevation="@dimen/_5dp"
-                    android:scaleType="fitXY"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_baseline_videocam_24"
-                    android:id="@+id/iv_video11"
-                    />
+    </RelativeLayout>
 
-            </RelativeLayout>
-           <!-- <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_10sdp">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-                        android:id="@+id/Recycler_scroll">
-                    </androidx.recyclerview.widget.RecyclerView>
 
-                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                        android:id="@+id/indicator"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-
-                        android:layout_centerInParent="true"
-                        android:layout_below="@+id/Recycler_scroll"
-                        app:spi_dotColor="@color/grey"
-                        app:spi_dotSize="@dimen/_6sdp"
-                        app:spi_dotSelectedSize="@dimen/_6sdp"
-                        app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
-                </RelativeLayout>
-            </RelativeLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
-
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp">
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:text="Photo/Video" />
                 <RelativeLayout
-                    android:id="@+id/ll_1"
+                    android:id="@+id/rlImg"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
-                    <ImageView
-                        android:id="@+id/ivImg1"
+                    android:layout_height="@dimen/_90sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/back_shape">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/ivImg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/photo_two"
-                        android:scaleType="fitXY"/>
+                        app:riv_corner_radius="@dimen/_5sdp"
+                        android:layout_centerInParent="true"
+                        android:backgroundTint="@color/grey"
+                        android:src="@drawable/pik_1" />
 
                     <ImageView
                         android:layout_width="@dimen/_30sdp"
@@ -127,99 +68,164 @@
                         android:visibility="gone"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video22"
+                        android:id="@+id/iv_video11"
                         />
 
-
                 </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/ll_2"
+                <!-- <RelativeLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     >
+                     <RelativeLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_centerInParent="true"
+                         android:layout_marginTop="@dimen/_10sdp">
+                         <androidx.recyclerview.widget.RecyclerView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_alignParentTop="true"
+                             android:layout_centerInParent="true"
+
+                             android:id="@+id/Recycler_scroll">
+                         </androidx.recyclerview.widget.RecyclerView>
+
+                         <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                             android:id="@+id/indicator"
+                             android:layout_gravity="center"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="@dimen/_10sdp"
+
+                             android:layout_centerInParent="true"
+                             android:layout_below="@+id/Recycler_scroll"
+                             app:spi_dotColor="@color/grey"
+                             app:spi_dotSize="@dimen/_6sdp"
+                             app:spi_dotSelectedSize="@dimen/_6sdp"
+                             app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
+                     </RelativeLayout>
+                 </RelativeLayout>-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
-                    <ImageView
-                        android:id="@+id/ivImg2"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/ll_public"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/small_photo_3"
-                        android:scaleType="fitXY"/>
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/back_shape" >
+                        <ImageView
+                            android:id="@+id/ivImg1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/photo_two"
+                            android:scaleType="fitXY"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video33"
-                        />
+                        <ImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:elevation="@dimen/_5dp"
+                            android:scaleType="fitXY"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_videocam_24"
+                            android:id="@+id/iv_video22"
+                            />
 
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/ll_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
-                    <ImageView
-                        android:id="@+id/ivImg3"
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll_privates"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/small_photo_4"
-                        android:scaleType="fitXY"/>
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/back_shape" >
+                        <ImageView
+                            android:id="@+id/ivImg2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_photo_3"
+                            android:scaleType="fitXY"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video44"
-                        />
+                        <ImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:elevation="@dimen/_5dp"
+                            android:scaleType="fitXY"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_videocam_24"
+                            android:id="@+id/iv_video33"
+                            />
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlAddImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
-                    <ImageView
-                        android:id="@+id/ivplus"
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll_3"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/small_photo_5"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"/>
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/back_shape" >
+                        <ImageView
+                            android:id="@+id/ivImg3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_photo_4"
+                            android:scaleType="fitXY"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video55"
-                        />
+                        <ImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:elevation="@dimen/_5dp"
+                            android:scaleType="fitXY"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_videocam_24"
+                            android:id="@+id/iv_video44"
+                            />
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-            </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlAddImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/back_shape" >
+                        <ImageView
+                            android:id="@+id/ivplus"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/small_photo_5"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"/>
 
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:text="@string/name_of_nurserie"/>
-                <EditText
+                        <ImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:elevation="@dimen/_5dp"
+                            android:scaleType="fitXY"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_videocam_24"
+                            android:id="@+id/iv_video55"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/name_of_nursery"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_nursery_name"
                     style="@style/SimpleEdittext"
                     android:layout_alignParentLeft="true"
@@ -228,108 +234,132 @@
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:hint="@string/name_of_nurserie"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Add Information"/>
-            <Spinner
-                android:id="@+id/addInfoSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/regular"
-                android:gravity="start"
-                android:dropDownSelector="@drawable/down_arrow"
-                android:inputType="text"
-                android:autofillHints="date"
-                android:spinnerMode="dropdown"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Number of places still avilable"/>
-            <Spinner
-                android:id="@+id/noOfPlacesSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:fontFamily="@font/regular"
-                android:gravity="start"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:dropDownSelector="@drawable/down_arrow"
-                android:inputType="text"
-                android:autofillHints="date"
-                android:spinnerMode="dropdown"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Phone Number"/>
-            <EditText
-                android:id="@+id/et_phoneNumber"
-                android:maxLength="10"
-                android:digits="0123456789"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
-                style="@style/SimpleEdittext"
-                android:inputType="number"
-                android:hint="Phone Number"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/> <TextView
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/>
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/add_information"/>
+                <Spinner
+                    android:id="@+id/addInfoSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:dropDownSelector="@drawable/down_arrow"
+                    android:inputType="text"
+                    android:autofillHints="date"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@color/black"/>
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/number_of_places_still_available"/>
+                <Spinner
+                    android:id="@+id/noOfPlacesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:dropDownSelector="@drawable/down_arrow"
+                    android:inputType="text"
+                    android:autofillHints="date"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@color/black"/>
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/phone_number"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/countycode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:ccpDialog_textColor="@color/black"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="@dimen/_12sdp" />
+
+                    <EditText
+                        android:id="@+id/et_phoneNumber"
+                        style="@style/SimpleEdittext"
+                        android:layout_toRightOf="@+id/countycode"
+                        android:digits="0123456789"
+                        android:hint="@string/phone_number"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:maxLines="1" />
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/> <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/address"/>
-            <EditText
-                style="@style/SimpleEdittext"
-                android:id="@+id/et_addressNursery"
-                android:hint="@string/address"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <TextView
-                style="@style/CommonTextWrapcontent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/description"/>
-            <EditText
-                android:id="@+id/et_description"
-                android:inputType="text"
-                android:imeOptions="actionNext"
-                style="@style/SimpleEdittext"
-                android:hint="@string/description"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
-            <Button
-                android:id="@+id/btn_submit"
-                style="@style/Button"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:background="@drawable/btn"
-                android:text="SUBMIT"/>
-        </LinearLayout>
-    </LinearLayout>
+                <EditText
+                    style="@style/SimpleEdittext"
+                    android:id="@+id/et_addressNursery"
+                    android:hint="@string/address"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/>
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/description"/>
+                <EditText
+                    android:id="@+id/et_description"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    style="@style/SimpleEdittext"
+                    android:hint="@string/description"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/>
+                <Button
+                    android:id="@+id/btn_submit"
+                    style="@style/Button"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/btn"
+                    android:text="SUBMIT"/>
+            </LinearLayout>
 
-</ScrollView>
+
+    </ScrollView>
+
+</LinearLayout>

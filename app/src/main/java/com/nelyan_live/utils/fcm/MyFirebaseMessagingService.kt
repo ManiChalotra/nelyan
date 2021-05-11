@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.meherr.mehar.db.DataStoragePreference
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.utils.AppController
 import kotlinx.coroutines.CoroutineScope

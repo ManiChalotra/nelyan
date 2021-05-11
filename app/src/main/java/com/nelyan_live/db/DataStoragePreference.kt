@@ -1,4 +1,4 @@
-package com.meherr.mehar.db
+package com.nelyan_live.db
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -22,7 +22,6 @@ class DataStoragePreference(context: Context) {
             name = "app_preferences"
         )
     }
-
 
     suspend fun <T> save(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore.edit { preferences ->

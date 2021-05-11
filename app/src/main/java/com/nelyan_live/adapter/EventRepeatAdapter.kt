@@ -41,7 +41,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         val addButton = itemView.tvAddMore
         val image = itemView.ivEventimage
         val name = itemView.edtEventName
-        val dateFrom = itemView.tvCal
+        val dateFrom = itemView.tv_cal
         val dateTo = itemView.tvCal1
         val timeFrom = itemView.edClo2
         val timeTo = itemView.edClo3
@@ -96,7 +96,8 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker: TimePickerDialog
                 mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    timeFrom.text = "$selectedHour:$selectedMinute"
+//                    timeFrom.text = "$selectedHour:$selectedMinute"
+                    timeFrom.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
                     list[position].timeFrom = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle(context.getString(R.string.select_time))
@@ -109,10 +110,11 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker: TimePickerDialog
                 mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    timeTo.text = "$selectedHour:$selectedMinute"
+                   // timeTo.text = "$selectedHour:$selectedMinute"
+                    timeTo.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
                     list[position].timeTo = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle("Select Time")
+                mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
 
@@ -137,6 +139,16 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 }
             })
 
+            name.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].name = s.toString()
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
+
             description.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].description = s.toString()
@@ -146,9 +158,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-
-
-
         }
 
         private fun select_date_register_popup( position: Int, type: String) {
@@ -195,7 +204,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 }
                     }, mYear, mMonth, mDay
             )
-            mDatePicker.datePicker.maxDate = System.currentTimeMillis()
+            mDatePicker.datePicker.minDate = System.currentTimeMillis()
             if (!mDatePicker.isShowing) {
                 mDatePicker.show()
             }

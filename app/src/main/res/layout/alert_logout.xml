@@ -15,14 +15,14 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:text="Are you sure you want to logout?"
+            android:text="@string/are_you_sure_you_want_to_logout"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:fontFamily="@font/medium"
             android:gravity="center"
             android:textSize="@dimen/_14sdp"/>
         <LinearLayout
-            android:id="@+id/ll_1"
+            android:id="@+id/ll_public"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
@@ -45,7 +45,7 @@
                     android:textColor="@color/white"
                     android:layout_centerInParent="true"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:id="@+id/tvYes"
                     android:fontFamily="@font/semibold"/>
             </RelativeLayout>
@@ -62,7 +62,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp"
                     android:layout_centerInParent="true"
-                    android:text="No"
+                    android:text="@string/no"
                     android:fontFamily="@font/semibold"
                     android:id="@+id/tvNo"/>
             </RelativeLayout>

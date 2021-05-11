@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyAddAdapter
-import com.nelyan_live.modals.myads.MyAdsData
+
 import com.nelyan_live.ui.PubilerActivity
 
 class MyAddFragment : Fragment(), OnItemSelectedListener {
@@ -27,7 +27,7 @@ class MyAddFragment : Fragment(), OnItemSelectedListener {
     var myAddAdapter: MyAddAdapter? = null
     var recyclerview: RecyclerView? = null
     private val MyAddFragment: MyAddFragment? = null
-    private val datalist by lazy { ArrayList<MyAdsData>() }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,7 +45,9 @@ class MyAddFragment : Fragment(), OnItemSelectedListener {
             startActivity(i)
         })
         recyclerview = v!!.findViewById(R.id.recyclerview)
+/*
         myAddAdapter = MyAddAdapter(mContext, datalist)
+*/
         recyclerview!!.setLayoutManager(LinearLayoutManager(mContext))
         recyclerview!!.setAdapter(myAddAdapter)
         return v
