@@ -1,185 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    tools:context=".fragments.MessageFragment">
 
-    <RelativeLayout
-        android:id="@+id/header"
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="messageVM"
+            type="com.nelyan_live.chat.MessagesVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:visibility="gone"
-        >
-        <ImageView
-            android:id="@+id/ivBack"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".fragments.MessageFragment">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:id="@+id/recyclerview"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                setRecyclerAdapter="@{messageVM.membersAdapter}"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
             android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="@{messageVM.noDataMessage}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
-        <TextView
-            style="@style/HeaderText"
-            android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="Message"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-       android:orientation="vertical"
-        android:layout_below="@id/header">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerview"/>
 
-        <!--<RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rl_2">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_35sdp"
-
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/shape">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/chat_image_1"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:orientation="vertical">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                style="@style/CommonTextWrapcontent"
-                                android:text="James Author"
-                                android:textColor="@color/black"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerInParent="true"
-                                android:textSize="@dimen/_12sdp"
-                                android:fontFamily="@font/semibold"/>
-                            <TextView
-                                style="@style/CommonTextWrapcontent"
-                                android:textSize="@dimen/_8sdp"
-                                android:layout_alignParentEnd="true"
-                                android:text="17:49"/>
-                        </RelativeLayout>
-                        <TextView
-                            style="@style/CommonTextMatchparent"
-                            android:text="Hey, how are you?"
-                            android:textSize="@dimen/_10sdp"
-                            android:drawableRight="@drawable/green_dot"
-                            android:textColor="@color/black"/>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
-            <ImageView
-                android:id="@+id/ivDel1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:paddingRight="@dimen/_15sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/dlt_icon_red"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rl_3">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_35sdp"
-
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/shape">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/chat_image_1"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:orientation="vertical">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                style="@style/CommonTextWrapcontent"
-                                android:text="James Author"
-                                android:textColor="@color/black"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerInParent="true"
-                                android:textSize="@dimen/_12sdp"
-                                android:fontFamily="@font/semibold"/>
-                            <TextView
-                                style="@style/CommonTextWrapcontent"
-                                android:textSize="@dimen/_8sdp"
-                                android:layout_alignParentEnd="true"
-                                android:text="17:49"/>
-                        </RelativeLayout>
-                        <TextView
-                            style="@style/CommonTextMatchparent"
-                            android:text="Hey, how are you?"
-                            android:textSize="@dimen/_10sdp"
-                            android:drawableRight="@drawable/green_dot"
-                            android:textColor="@color/black"/>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
-            <ImageView
-                android:id="@+id/ivDel2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:paddingRight="@dimen/_15sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/dlt_icon_red"/>
-        </RelativeLayout>-->
-
-    </LinearLayout>
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

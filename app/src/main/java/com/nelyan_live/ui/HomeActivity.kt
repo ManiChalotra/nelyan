@@ -79,6 +79,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var userType = ""
     private var userlocation = ""
 
+    var userId = ""
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -90,9 +91,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.d("homeAuthKey", "----------" + authorization)
 
         launch(Dispatchers.Main.immediate) {
-            var userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
+             userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+            val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
              userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            var userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
+            val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
             if (userImage != null)
                 Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)

@@ -22,9 +22,9 @@ class Chat1Activity : image() {
         setContentView(R.layout.activity_chat1)
         mContext = this
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
         ivAttachment = findViewById(R.id.ivAttachment)
-        ivAttachment!!.setOnClickListener(View.OnClickListener { image("all") })
+        ivAttachment!!.setOnClickListener { image("all") }
         recyclerview = findViewById(R.id.recyclerview)
         chatAdapter = ChatAdapter(mContext)
         recyclerview!!.setLayoutManager(LinearLayoutManager(mContext))

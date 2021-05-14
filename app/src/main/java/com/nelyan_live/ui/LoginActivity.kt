@@ -272,7 +272,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 
-
+                    val id = jsonObject.getJSONObject("data").get("id").toString()
                     val email = jsonObject.getJSONObject("data").get("email").toString()
                     val name = jsonObject.getJSONObject("data").get("name").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
@@ -288,6 +288,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     AllSharedPref.save(this, "auth_key", authKey)
 
                     launch(Dispatchers.IO) {
+                        dataStoragePreference.save(id, preferencesKey<String>("id"))
+
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
                         dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
