@@ -8,6 +8,6 @@ data class PostDetailsEventstiming(
     val endTime: String,
     val eventId: Int,
     val id: Int,
-    val startTime: String,
+    val startTime: String
     /*val updatedAt: String*/
 )

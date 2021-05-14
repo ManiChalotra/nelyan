@@ -252,7 +252,7 @@ interface JsonPlaceHolder {
                             @Field("website") website: String,
                             @Field("selectDay") selectDay: String,// sending json Array
                             @Field("productDetail") productDetail: String,// sending json Array
-                            @Field("media") media: String,// send json Array
+                            @Field("media") media: String// send json Array
 
     ): Call<JsonObject>
 
@@ -271,7 +271,7 @@ interface JsonPlaceHolder {
                                @Field("city") city: String,
                                @Field("latitude") latitude: String,
                                @Field("longitude") longitude: String,
-                               @Field("media") media: String,// send json Array
+                               @Field("media") media: String// send json Array
 
     ): Call<JsonObject>
 
@@ -291,7 +291,7 @@ interface JsonPlaceHolder {
                             @Field("city") city: String,
                             @Field("latitude") latitude: String,
                             @Field("longitude") longitude: String,
-                            @Field("media") media: String,// send json Array
+                            @Field("media") media: String// send json Array
 
     ): Call<JsonObject>
 
@@ -332,7 +332,7 @@ interface JsonPlaceHolder {
                            @Field("distance") distance: String?,
                            @Field("name") name: String?,
                            @Field("address") address: String?,
-                            @Field("childCareId") childCareId: String?, ): Call<JsonObject>
+                            @Field("childCareId") childCareId: String? ): Call<JsonObject>
 
     @POST("eventList")
     @FormUrlEncoded

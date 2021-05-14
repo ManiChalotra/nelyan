@@ -1,13 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.datastore:datastore:1.0.0-alpha05@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2fb092b0ed746719101694028a2b957e/jetified-datastore-1.0.0-alpha05/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2fb092b0ed746719101694028a2b957e/jetified-datastore-1.0.0-alpha05/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2fb092b0ed746719101694028a2b957e/jetified-datastore-1.0.0-alpha05/res" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/684d04ae0a6a7f8896baee44b6842e91/datastore-1.0.0-alpha05/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/684d04ae0a6a7f8896baee44b6842e91/datastore-1.0.0-alpha05/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.datastore/datastore/1.0.0-alpha05/105e15561070983af7d28dc012c9e49bb39f8982/datastore-1.0.0-alpha05-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/androidx.datastore/datastore/1.0.0-alpha05/105e15561070983af7d28dc012c9e49bb39f8982/datastore-1.0.0-alpha05-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

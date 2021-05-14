@@ -5,6 +5,6 @@ data class TradersimageMyAds(
     val id: Int,
     val images: String,
     /*val mediaType: Int,*/
-    val tradersId: Int,
+    val tradersId: Int
     /*val updatedAt: String*/
 )

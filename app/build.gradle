@@ -6,7 +6,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.nelyan_live"
@@ -31,11 +31,17 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    packagingOptions {
+        exclude 'DebugProbesKt.bin'
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
+    }
+    /*tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
             jvmTarget = "1.8"
-        }
+        }//DebugProbesKt.bin
+    }*/
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
@@ -70,8 +76,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.31"
 
     // my added dependencies
     implementation 'com.tuyenmonkey:mkloader:1.4.0'// for Progress bar
@@ -107,7 +113,15 @@ dependencies {
     implementation "androidx.datastore:datastore-core:1.0.0-alpha05"
 
     //Coroutines and LifeCycle Libraries
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+    /*implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    {
+        exclude group: 'org.jetbrains.kotlinx', module: 'kotlinx-coroutines-core-jvm'
+    }*/
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
+
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-rc01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 

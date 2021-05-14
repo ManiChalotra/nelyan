@@ -99,7 +99,7 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
     private var addEventUrlListingResponse: ArrayList<String>? = null
 
 
-    var imageVideoUrlListing = arrayListOf("", "", "", )
+    var imageVideoUrlListing = arrayListOf("", "", "" )
 
     private var imageVideoListPosition = -1
     private var selectedUrlListing: ArrayList<String> = ArrayList()

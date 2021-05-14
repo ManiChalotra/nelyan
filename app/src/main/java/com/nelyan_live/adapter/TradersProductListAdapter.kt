@@ -22,7 +22,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TradersProductListAdapter(var context: Context, var traderProductList: ArrayList<TraderProduct>,
+class TradersProductListAdapter(var context: Context, var traderProductList: ArrayList<TraderProduct>
                                 ) : RecyclerView.Adapter<TradersProductListAdapter.TraderProductViewHolder>()
 {
 

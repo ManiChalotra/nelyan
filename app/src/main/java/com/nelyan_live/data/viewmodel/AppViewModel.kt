@@ -773,7 +773,7 @@ class AppViewModel : ViewModel() {
 
     fun send_addPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
                                   description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                               email:String, website:String, selectDay:String, productDetail:String, media:String, ) {
+                               email:String, website:String, selectDay:String, productDetail:String, media:String ) {
         JsonPlaceHolder().getAddTraderPostApi(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
                 latitude,longitude, email, website, selectDay,productDetail,media)
                 .enqueue(object : retrofit2.Callback<JsonObject> {

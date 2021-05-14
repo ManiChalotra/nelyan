@@ -345,7 +345,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
         ivFavouritee = ivFavourite
 
         if (checkIfHasNetwork(requireActivity())) {
-            appViewModel.addFavouriteApiData(security_key, authkey, eventID, )
+            appViewModel.addFavouriteApiData(security_key, authkey, eventID )
             eventProgressBar.showProgressBar()//  loginProgressBar?.showProgressBar()
         } else {
             showSnackBar(requireActivity(), getString(R.string.no_internet_error))

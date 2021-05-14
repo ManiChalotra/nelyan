@@ -147,7 +147,7 @@ var image = HashMap<String, Bitmap>()
         rvDayTime!!.adapter = dayTimeRepeatAdapter
 
 
-        productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this@TraderActivity, )
+        productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this@TraderActivity )
         rvProductDetails!!.setLayoutManager(LinearLayoutManager(this))
         rvProductDetails!!.setAdapter(productDetailRepeatAdapter)
 
@@ -174,7 +174,7 @@ var image = HashMap<String, Bitmap>()
 
         } else {
             productDetailDataModelArrayList = ArrayList()
-            productDetailDataModelArrayList.add(ProductDetailDataModel("", "", "", "", ))
+            productDetailDataModelArrayList.add(ProductDetailDataModel("", "", "", "" ))
         }
 
 
