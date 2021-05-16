@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         setChatVisibility="@{model.senderId}"
-
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
