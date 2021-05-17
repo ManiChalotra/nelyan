@@ -42,6 +42,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import kotlin.coroutines.CoroutineContext
 
 class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope, View.OnClickListener {
@@ -50,10 +53,9 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     var ivFilter: ImageView? = null
     var rl_1: RelativeLayout? = null
     var listType: String? = null
-  //  private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
- //   private val activitisImageslist by lazy { ArrayList<Activityimage>() }
+    private var activitisDatalist: ArrayList<HomeAcitivityResponseData>? = ArrayList()
+
     private var activitisImageslist: ArrayList<Activityimage>? = null
-    private var activitisDatalist: ArrayList<HomeAcitivityResponseData>? = null
 
     var latitude = ""
     var longitude = ""
@@ -66,12 +68,12 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     var currentLong = "0.0"
 
 
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesOnMapActivity) }
     private var authkey: String? = null
     private val job by lazy {
         Job()
     }
+
 
     override fun onPermissionGranted() {
 
@@ -85,6 +87,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_activities_map)
@@ -94,8 +97,8 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         rl_1 = findViewById(R.id.rl_1)
 
         if (intent.extras != null) {
-            listType = intent.getStringExtra("type").toString()
-            Log.e("qwe", intent.getStringExtra("type").toString())
+            activitisDatalist = intent.getSerializableExtra("activitisDatalist") as ArrayList<HomeAcitivityResponseData>
+            Log.e("activitisDatalist", activitisDatalist!!.size.toString())
         }
 
         ivBack!!.setOnClickListener(this)
@@ -108,7 +111,6 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         ivFilter!!.setOnClickListener(View.OnClickListener {
             Log.e("vghgv", "aaaaa")
             finish()
-            //  AppUtils.gotoFragment(mContext, new ActivityFragment(), R.id.frame_container, false);
         })
 
         rl_1!!.setOnClickListener(View.OnClickListener {
@@ -135,127 +137,103 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         if (mMap != null) {
             mMap!!.clear()
 
-            val sydney = LatLng(currentLat.toDouble(), currentLong.toDouble())
-            mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14f))
 
+            Thread(Runnable {
+                activitisDatalist = getUserBitmaps()
 
-            if (checkIfHasNetwork(this@ActivitiesOnMapActivity)) {
-                appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
-                activity_list_map_progressbar?.showProgressBar()
-                checkMvvmResponse()
-            } else {
-                showSnackBar(this@ActivitiesOnMapActivity, getString(R.string.no_internet_error))
-            }
-        }
+                this!!.runOnUiThread {
+
+                    for (i in activitisDatalist!!.indices) {
+                        var imagview: CircleImageView = markerView.findViewById(R.id.profile_images)
+
+                        imagview.setImageBitmap(activitisDatalist!![i].activityimages[0].bitmap)
+
+                        mMap!!.addMarker(
+                                MarkerOptions()
+                                        .position(
+                                                LatLng(
+                                                        activitisDatalist!![i].latitude.toDouble(),
+                                                        activitisDatalist!![i].longitude.toDouble()
+                                                )
+                                        )
+                                        .title(activitisDatalist!![i].activityname)
+                                        .icon(
+                                                BitmapDescriptorFactory.fromBitmap(
+                                                        getMarkerBitmapFromView(
+                                                                markerView
+                                                        )
+                                                )
+                                        ).snippet("" + i)
+                        )
+                    }
+
+                    val customWindow = CustomInfoWindowForActivities(this@ActivitiesOnMapActivity!!, activitisDatalist!!)
+                    mMap!!.setInfoWindowAdapter(customWindow)
+                    mMap!!.setOnInfoWindowClickListener {
+
+                        var intents=Intent(this@ActivitiesOnMapActivity!!,ActivityDetailsActivity::class.java)
+                        intents.putExtra("categoryId", activitisDatalist!![Integer.parseInt(it.snippet)].categoryId)
+                        intents.putExtra("activityId", activitisDatalist!![Integer.parseInt(it.snippet)].id)
+
+                        startActivity(intents)
+                    }
+                }
+            }).start()
 
 
 /*
-        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        val india = LatLng(48.946697, 2.153927)
+            googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        val india = LatLng(currentLat.toDouble(), currentLong.toDouble())
         mMap!!.addMarker(MarkerOptions()
                 .position(india)
                 .title("Marker in Sydney"))
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
 */
+
+        }
+
+
+
     }
 
 
-    private fun checkMvvmResponse() {
-        appViewModel.observeHomeActivitiesResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    activity_list_map_progressbar?.hideProgressBar()
-                    Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
-
-                    if (activitisDatalist != null) {
-                        activitisDatalist!!.clear()
-                        activitisDatalist!!.addAll(homeAcitivitiesResponse.data)
 
 
-                        Thread(Runnable {
-                           // activitisImageslist = getUserBitmaps()
-
-                            this@ActivitiesOnMapActivity!!.runOnUiThread {
-                                activity_list_map_progressbar.hideProgressBar()
-
-                                for (i in activitisDatalist!!.indices) {
-                                    var imagview: CircleImageView = markerView.findViewById(R.id.profile_images)
-
-                                    Glide.with(mContext!!).load(image_base_URl+activitisDatalist!![i].activityimages!![0].images).into(imagview)
-                                   // imagview.setImageBitmap(activitisDatalist!![i].activityimages!![0].)
-
-                                    mMap!!.addMarker(
-                                            MarkerOptions()
-                                                    .position(
-                                                            LatLng(
-                                                                    activitisDatalist!![i].latitude.toDouble(),
-                                                                    activitisDatalist!![i].longitude.toDouble()
-                                                            )
-                                                    )
-                                                    .title(activitisDatalist!![i].nameOfShop)
-                                                    .icon(
-                                                            BitmapDescriptorFactory.fromBitmap(
-                                                                    getMarkerBitmapFromView(
-                                                                            markerView
-                                                                    )
-                                                            )
-                                                    ).snippet("" + i)
-                                    )
-                                }
-
-/*                                val customWindow = CustomInfoWindowForUser2(activity!!, activitisDatalist!!)
-                                mMap!!.setInfoWindowAdapter(customWindow)
-                                mMap!!.setOnInfoWindowClickListener {
-
-
-                                    var intents=Intent(activity,UserPostListActivity::class.java)
-                                    intents.putExtra("userId", activitisDatalist!![Integer.parseInt(it.snippet)].id)
-                                    intents.putExtra("userPhoto", activitisDatalist!![Integer.parseInt(it.snippet)].image)
-
-                                    startActivity(intents)
-                                } */
-                            }
-                        }).start()
-
-
-                    }
-
-                }
-            } else {
-                ErrorBodyResponse(response, this, activity_list_map_progressbar)
-                activity_list_map_progressbar?.hideProgressBar()
-            }
-        })
-
-
-        appViewModel.getException()!!.observe(this, Observer {
-            myCustomToast(it)
-            activity_list_map_progressbar?.hideProgressBar()
-        })
-    }
-
-/*
-    private fun getUserBitmaps(): ArrayList<Activityimage> {
+    private fun getUserBitmaps(): ArrayList<HomeAcitivityResponseData> {
         for(i in activitisDatalist!!.indices) {
-
             if (activitisDatalist!![i].activityimages.size == 0) {
-                    activitisDatalist!![i].activityimages[i].bitmap = BitmapFactory.decodeResource(resources, R.mipmap.no_image_placeholder)
+                    activitisDatalist!![i].activityimages[0].bitmap = BitmapFactory.decodeResource(resources,
+                            R.mipmap.no_image_placeholder)
                 } else {
-                    activitisDatalist!![i].bitmap = getBitmapFromURL(image_base_URl + activitisDatalist!![i].activityimages.get(0).images)
+                    activitisDatalist!![i].activityimages[0].bitmap = getBitmapFromURL(image_base_URl +
+                            activitisDatalist!![i].activityimages.get(0).images)
                 }
 
         }
 
         return activitisDatalist!!
     }
-*/
+
+
+    fun getBitmapFromURL(src: String): Bitmap? {
+
+        try {
+            var url = URL(src)
+            var connection = url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            var input = connection.inputStream
+            var myBitmap = BitmapFactory.decodeStream(input)
+            return myBitmap
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+    }
+
 
 
     private fun getMarkerBitmapFromView(view: View): Bitmap {
-
 
 //        mMarkerImageView.setImageBitmap(bitmap);
         view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)

@@ -53,8 +53,8 @@
 
                 <ImageView
                     android:id="@+id/iv_image1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/pik_1"/>
 
@@ -62,7 +62,7 @@
                     android:id="@+id/ivImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     app:riv_corner_radius="@dimen/_5sdp"
                     android:layout_centerInParent="true"
                     />
@@ -115,7 +115,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_public"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape">
 
@@ -123,7 +123,7 @@
                         android:id="@+id/ivImg1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerInside"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/photo_two" />
 
 
@@ -141,7 +141,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_privates"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape">
@@ -150,7 +150,7 @@
                         android:id="@+id/ivImg2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerInside"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/small_photo_3" />
 
                     <ImageView
@@ -228,6 +228,13 @@
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:text="@string/type" />
+
+            <TextView
+                android:id="@+id/tv_child_care_type"
+                style="@style/SimpleEdittext"
+                android:visibility="gone"
+                android:hint="@string/select_type" />
+
 
             <Spinner
                 android:id="@+id/sp_child_care_type"

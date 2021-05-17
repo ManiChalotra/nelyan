@@ -8,6 +8,8 @@ data class ActivityimageMyAds(
     val id: Int,
     val images: String,
     val mediaType: Int
+
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),

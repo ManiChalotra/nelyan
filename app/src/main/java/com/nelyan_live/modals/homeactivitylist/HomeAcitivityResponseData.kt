@@ -1,5 +1,6 @@
 package com.nelyan_live.modals.homeactivitylist
 
+import android.graphics.Bitmap
 import java.io.Serializable
 
 data class HomeAcitivityResponseData(
@@ -24,5 +25,6 @@ data class HomeAcitivityResponseData(
         val typeofActivityId: Int,
         val updatedAt: String,
         val isFav: Int,
-        val userId: Int
+        val userId: Int,
+
 ):Serializable

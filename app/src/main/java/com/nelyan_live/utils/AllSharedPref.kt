@@ -13,6 +13,19 @@ object  AllSharedPref {
 
         return editor.commit()
     }
+
+    fun saveEmail(context: Context, key: String, value: String): Boolean {
+        val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        editor.putString(key, value)
+
+        return editor.commit()
+    }
+    fun savePassword(context: Context, key: String, value: String): Boolean {
+        val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        editor.putString(key, value)
+
+        return editor.commit()
+    }
     fun setToken(context: Context, key: String, value: String):Boolean{
         val editor=context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
         editor.putString(key,value)
@@ -56,6 +69,21 @@ object  AllSharedPref {
         return savedSession.getString(key, default_value)!!
 
     }
+    fun restoreStringEmail(context: Context, key: String): String {
+        val savedSession = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)
+        val default_value = ""
+        return savedSession.getString(key, default_value)!!
+
+    }
+    fun restoreStringPassword(context: Context, key: String): String {
+        val savedSession = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)
+        val default_value = ""
+        return savedSession.getString(key, default_value)!!
+
+    }
+
+
+
 
     fun restoreInt(context: Context, key: String): Int {
         val savedSession = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)
@@ -78,6 +106,15 @@ object  AllSharedPref {
 
     fun clear(context: Context) {
         val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        editor.clear()
+        editor.commit()
+    }
+
+    fun clear1(context: Context) {
+        //  mSharedPreferences.edit().clear().apply();
+        val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        saveEmail(context, "showRememberEmail", "")
+        savePassword(context, "showRememberPassword", "")
         editor.clear()
         editor.commit()
     }

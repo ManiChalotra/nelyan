@@ -112,8 +112,8 @@
     <string name="activity_name_missing_error">Please enter your activity name</string>
     <string name="shop_name_missing_error">Please enter your shop name</string>
     <string name="activity_type_missing_error">Please select your activity Type</string>
-    <string name="trader_type_missing_error">Please select your trader Type</string>
-    <string name="child_care_type_missing_error">Please select Child Care Type</string>
+    <string name="trader_type_missing_error">Please select your trader type</string>
+    <string name="child_care_type_missing_error">Please select child care type</string>
     <string name="media_missing_error">Please select atleast one media file image.</string>
     <string name="ad_info1">Ad Info:</string>
     <string name="favorite">Favorite</string>
@@ -205,6 +205,7 @@
     <string name="add_product_image">Add Product Image</string>
     <string name="product_title">Product Title</string>
     <string name="product_price">Product Price</string>
+    <string name="product_price1">Product Price($)</string>
     <string name="description">Description</string>
     <string name="type_of_trader">Type of Trader</string>
     <string name="select_day">Select Day</string>
@@ -243,5 +244,13 @@
     <string name="around_me">Around me</string>
     <string name="select_type">Select type</string>
     <string name="search">SEARCH</string>
+    <string name="year">Year</string>
+    <string name="shop_timings">Shop Timings</string>
+    <string name="event_fav_added">Event added to favorites successfully</string>
+    <string name="event_fav_remove">Event removed from favorites</string>
+    <string name="post_fav_added">Post removed from favorites</string>
+    <string name="post_added_fav">Post added to favorites successfully</string>
+    <string name="post_fav_remove">Post removed from favorites</string>
+    <string name="post_updated_success">Post updated successfully</string>
 
 </resources>

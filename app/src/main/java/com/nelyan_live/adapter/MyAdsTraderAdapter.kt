@@ -10,7 +10,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
-import com.nelyan_live.modals.myAd.GetTraderMyAds
+import com.nelyan_live.modals.myAd.*
 import com.nelyan_live.ui.AddActivity
 import com.nelyan_live.ui.TraderPublishActivty
 import com.nelyan_live.utils.OpenActivity
@@ -59,7 +59,14 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
-                callPopup(ivDot, adapterPosition, myadsList.id)
+
+                /*position: Int, adID: String?, traderTypeId: String, nameofShop: String,
+                                description: String, countryCode: String, phoneNumber: String, address: String, email: String, website: String,
+                                traderImageList : ArrayList<TradersimageMyAds>, daytimeList : ArrayList<TraderDaysTimingMyAds>,
+                                traderProductList : ArrayList<TraderProductMyAds>*/
+                callPopup(ivDot, adapterPosition, myadsList.id, myadsList.typeofTraderId, myadsList.nameOfShop, myadsList.description,
+                        myadsList.country_code, myadsList.phone, myadsList.address, myadsList.email, myadsList.website, myadsList.tradersimages,
+                        myadsList.traderDaysTimings, myadsList.traderProducts)
             }
 
 
@@ -96,6 +103,8 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
             llTraderDetails.setOnClickListener {
                 context.OpenActivity(TraderPublishActivty::class.java){
                     putString("postId", myadsList.id.toString())
+                    putString("latti", myadsList.latitude)
+                    putString("longi", myadsList.longitude)
                 }
 
             }
@@ -140,7 +149,9 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
     }
 */
 
-    private fun callPopup(ivDot: ImageView, adapterPosition: Int, adId: Int) {
+    private fun callPopup(ivDot: ImageView, adapterPosition: Int, id: Int, typeofTraderId: Int, nameOfShop: String,
+                          description: String, countryCode: String, phone: String, address: String, email: String, website: String,
+                          tradersimages: ArrayList<TradersimageMyAds>, traderDaysTimings: ArrayList<TraderDaysTimingMyAds>, traderProducts: ArrayList<TraderProductMyAds>) {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
         val editt = popupView.findViewById<View>(R.id.tvEdit) as TextView
@@ -155,12 +166,16 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
         popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.RIGHT)
 
         editt.setOnClickListener {
+            deleteEditTradersAdListner.onEditTraderAdClick(adapterPosition, id.toString(), typeofTraderId.toString(), nameOfShop, description.toString(), countryCode,
+                    phone, address, email, website, tradersimages, traderDaysTimings, traderProducts)
+            popupWindow!!.dismiss()
+
             popupWindow!!.dismiss()
 
         }
 
         deletee.setOnClickListener {
-            deleteEditTradersAdListner.onTraderAdDeleteAdClick(adapterPosition, adId.toString())
+            deleteEditTradersAdListner.onTraderAdDeleteAdClick(adapterPosition, id.toString())
             popupWindow!!.dismiss()
         }
 
@@ -238,7 +253,10 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
     interface OnDeleteEditTradersAdClickListner{
         fun onTraderAdDeleteAdClick(position: Int, adID: String?)
-        fun onEditTraderAdClick(position: Int, adID: String?)
+        fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String,
+                                description: String, countryCode: String, phoneNumber: String, address: String, email: String, website: String,
+                                traderImageList : ArrayList<TradersimageMyAds>, daytimeList : ArrayList<TraderDaysTimingMyAds>,
+                                traderProductList : ArrayList<TraderProductMyAds>)
     }
 
 }

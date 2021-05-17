@@ -54,7 +54,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     var socialEmail = ""
     var socialImage = ""
     var facebookCustomDataModel: FacebookCustomDataModel? = null
-    private var deviceToken: String?= null
+    private var deviceToken: String? = null
+
+    var isRemmberme = false
 
 
     // for google gmail
@@ -82,6 +84,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         initalize()
         checkMVVMResponse()
 
+        if (!AllSharedPref.restoreStringEmail(this, "showRememberEmail").isNullOrEmpty() ||
+                !AllSharedPref.restoreStringEmail(this, "showRememberPassword").isNullOrEmpty()) {
+            tv_emailLogin.setText(AllSharedPref.restoreString(this, "showRememberEmail"))
+            tv_passwordLogin.setText(AllSharedPref.restoreString(this, "showRememberPassword"))
+            iv_tickButton.setImageResource(R.drawable.tick)
+        }else{
+            iv_tickButton.setImageResource(R.drawable.fill_check)
+
+        }
+
+/* dataStoragePreference.save(email,preferencesKey("showRememberEmail"))
+                            dataStoragePreference.save(tv_passwordLogin.text.toString(),preferencesKey("showRememberPassword"))*/
+
+        /* if(AllSharedPref.restoreString(this@LoginActivity, "showRememberEmail")*//* || dataStoragePreference.emitStoredValue(preferencesKey<String>("showRememberPassword")).first()!=null*//*){
+            tv_emailLogin.setText(dataStoragePreference.emitStoredValue(preferencesKey<String>("showRememberEmail")).first())
+            tv_passwordLogin.setText(dataStoragePreference.emitStoredValue(preferencesKey<String>("showRememberPassword")).first())
+
+}*/
 
     }
 
@@ -110,7 +130,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         Log.d("googleDetail", "-------------image------" + socialImage)
                         Log.d("googleDetail", "-------------id------" + socialId)
 
-                        appViewModel!!.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
+                        appViewModel!!.sendSocialLoginData(security_key, device_Type, deviceToken!!, socialId, FOR_GOOGLE_TYPE)
 
                     } catch (e: Exception) {
                         Log.d("GoogleException", "-----------" + e.toString())
@@ -146,7 +166,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         ll_facebook_login.setOnClickListener(this)
         ll_google_login.setOnClickListener(this)
 
-        launch (Dispatchers.Main.immediate){
+        launch(Dispatchers.Main.immediate) {
             deviceToken = dataStoragePreference?.emitStoredValue(preferencesKey<String>("fcmToken"))?.first()
         }
 
@@ -172,8 +192,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 val password = tv_passwordLogin.text.toString()
                 if (Validation.checkEmail(email, this)) {
                     if (Validation.checkPassword(password, this)) {
-                      //  if (clicked) {
-                            hitLoginApi(email, password)
+                        //  if (clicked) {
+                        hitLoginApi(email, password)
                         /*} else {
                             myCustomToast("Please  tick the remember me Option for always  Logged in App ")
                         }*/
@@ -188,13 +208,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 val myLogo = (myDrawable as BitmapDrawable).bitmap
                 if (bmap.sameAs(myLogo)) {
                     clicked = true
+                    isRemmberme = true
                     iv_tickButton.setImageResource(R.drawable.tick)
                 } else {
                     clicked = false
+                    isRemmberme = false
                     iv_tickButton.setImageResource(R.drawable.fill_check)
+                    AllSharedPref.clear1(this@LoginActivity)
 
                 }
-
+/*iv_tickButton*/
 
             }
             R.id.ll_facebook_login -> {
@@ -228,25 +251,25 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
       }
   */
 
-   /* fun calenderDateTime_to_timestamp(str_date: String?): Long {
-        var time_stamp: Long = 0
-        try {
-            val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.ENGLISH)
-            //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-            // formatter.setTimeZone(TimeZone.getTimeZone("UTC"));             /*to Set UTC or GMT format */
-            formatter.timeZone = TimeZone.getDefault() /*to Set default time zone */
-            val date = formatter.parse(str_date) as Date
-            time_stamp = date.time
-        } catch (ex: ParseException) {
-            ex.printStackTrace()
-        } catch (ex: java.lang.Exception) {
-            ex.printStackTrace()
-        }
-        time_stamp = time_stamp / 1000
-        return time_stamp
-    }
+    /* fun calenderDateTime_to_timestamp(str_date: String?): Long {
+         var time_stamp: Long = 0
+         try {
+             val formatter = SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.ENGLISH)
+             //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+             // formatter.setTimeZone(TimeZone.getTimeZone("UTC"));             /*to Set UTC or GMT format */
+             formatter.timeZone = TimeZone.getDefault() /*to Set default time zone */
+             val date = formatter.parse(str_date) as Date
+             time_stamp = date.time
+         } catch (ex: ParseException) {
+             ex.printStackTrace()
+         } catch (ex: java.lang.Exception) {
+             ex.printStackTrace()
+         }
+         time_stamp = time_stamp / 1000
+         return time_stamp
+     }
 
-*/
+ */
     private fun hitLoginApi(email: String, password: String) {
 
         val tsLong = System.currentTimeMillis() / 1000
@@ -300,18 +323,22 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
                         dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
 
+                        if (isRemmberme) {
+                            AllSharedPref.saveEmail(this@LoginActivity, "showRememberEmail", email)
+                            AllSharedPref.savePassword(this@LoginActivity, "showRememberPassword", tv_passwordLogin.text.toString().trim())
 
-                        Log.d("savedValues", "----------"+
-                        "\n\n"+ "---email---"+email+
-                        "\n\n"+ "---name---"+name+
-                        "\n\n"+ "---password---"+password+
-                        "\n\n"+ "---type---"+type+
-                        "\n\n"+ "---image---"+image+
-                        "\n\n"+ "---phone---"+phone+
-                        "\n\n"+ "---authkey---"+authKey+
-                        "\n\n"+ "---cityZipCode---"+cityOrZipcode+
-                        "\n\n"+ "---latitude---"+latitude+
-                        "\n\n"+ "---longitude---"+longitude
+                        }
+                        Log.d("savedValues", "----------" +
+                                "\n\n" + "---email---" + email +
+                                "\n\n" + "---name---" + name +
+                                "\n\n" + "---password---" + password +
+                                "\n\n" + "---type---" + type +
+                                "\n\n" + "---image---" + image +
+                                "\n\n" + "---phone---" + phone +
+                                "\n\n" + "---authkey---" + authKey +
+                                "\n\n" + "---cityZipCode---" + cityOrZipcode +
+                                "\n\n" + "---latitude---" + latitude +
+                                "\n\n" + "---longitude---" + longitude
                         )
                     }
 
@@ -347,7 +374,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val message = jsonObject.get("msg").toString()
                     val isAlready = jsonObject.getJSONObject("data").get("isAlready").toString()
 
-                    if (isAlready.equals("0")){
+                    if (isAlready.equals("0")) {
                         OpenActivity(SignupActivity::class.java) {
                             putString("socialLogin", "SOCIAL_LOGIN")
                             putString("socialName", socialName)
@@ -356,7 +383,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                             putString("socialId", socialId)
                         }
 
-                    }else {
+                    } else {
                         myCustomToast(message)
 
                         val email = jsonObject.getJSONObject("data").get("email").toString()
@@ -373,7 +400,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
                         AllSharedPref.save(this, "auth_key", authKey)
 
-                        launch(Dispatchers.Main.immediate) {
+                        launch(Dispatchers.IO) {
                             dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
                             dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
                             dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
@@ -393,7 +420,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         finishAffinity()
 
                     }
-                  }
+                }
             } else {
                 ErrorBodyResponse(response, this, null)
                 progressDialog.hidedialog()

@@ -227,17 +227,16 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                     val jsonObject = JSONObject(mResponse)
 
                     val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
+                 //   myCustomToast(message)
 
                     tv_child_care_name.text = jsonObject.getJSONObject("data").get("name").toString()
                     tv_child_care_description.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_available_place.text = jsonObject.getJSONObject("data").get("availableplace").toString()
-                    tv_childcare_phone.text = jsonObject.getJSONObject("data").get("countryCode").toString() + "-" +
+                    tv_childcare_phone.text = "+"+jsonObject.getJSONObject("data").get("countryCode").toString() + "-" +
                             jsonObject.getJSONObject("data").get("phone").toString()
                     tv_child_care_address.text = jsonObject.getJSONObject("data").get("city").toString()
 
                     var childcareTypeId= jsonObject.getJSONObject("data").get("ChildcareType").toString()
-
 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
@@ -301,13 +300,27 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        val india = LatLng(48.946697, 2.153927)
-        mMap!!.addMarker(MarkerOptions()
-                .position(india)
-                .title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
-    }
+
+        if (intent.extras !=null){
+            var lattti= intent.getStringExtra("lati")
+            var longi= intent.getStringExtra("longi")
+
+            if (!lattti.isNullOrEmpty() && !longi.isNullOrEmpty()){
+                googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                val india = LatLng(lattti!!.toDouble(), longi!!.toDouble())
+                mMap!!.addMarker(MarkerOptions()
+                        .position(india)
+                        .title(getString(R.string.child_care)))
+                //   mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+                val zoomLevel = 12.0f //This goes up to 21
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india, zoomLevel))
+
+            }
+
+        }
+
+
+       }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job

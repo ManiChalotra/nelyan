@@ -49,7 +49,7 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
             Glide.with(context).asBitmap().load(list.get(position).image).error(R.mipmap.no_image_placeholder).into(image)
             name.setText(list.get(position).title)
             tvProductDesc.setText(list.get(position).description)
-            tvProductPrice.setText(list.get(position).price)
+            tvProductPrice.text= "$"+ list.get(position).price
 
         }
 

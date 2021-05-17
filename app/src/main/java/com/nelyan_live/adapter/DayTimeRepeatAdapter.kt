@@ -2,24 +2,31 @@ package com.nelyan_live.adapter
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.R
 import com.nelyan_live.modals.DayTimeModel
 import com.nelyan_live.modals.ModelPOJO
+import com.nelyan_live.utils.CommonMethodsKotlin
+
+import java.text.SimpleDateFormat
 import java.util.*
 
-class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeModel>, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
+class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeModel>, var listner: OnDayTimeRecyclerViewItemClickListner)
+    : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
+
+    var end1TimeTimestamp = ""
+    var end2TimeTimestamp = ""
+    var startTime1Timestamp = ""
+    var startTime2Timestamp = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return  MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false), listner)
+        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false), listner)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -30,7 +37,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
         return list.size
     }
 
-    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner)  : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
 
         var rvTime = itemView.findViewById(R.id.rvTime) as RecyclerView
         var tvAddDay = itemView.findViewById(R.id.tvAddDay) as TextView
@@ -50,6 +57,10 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
             tvAddDay.setOnClickListener {
                 listner.dayTimeAdd(list, position)
+                startTime1Timestamp=""
+                end1TimeTimestamp=""
+                startTime2Timestamp=""
+                end2TimeTimestamp=""
                 //*notifyDataSetChanged();*//*
             }
 
@@ -62,6 +73,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                     // context.toast(name)
                     list[position].selectedDay = name.toString()
                 }
+
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
                     // your code here
                 }
@@ -82,68 +94,106 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
             days.add("Saturday")
             days.add("Sunday")
 
-            val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days )
+            val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days)
             spinnerDayss.adapter = arrayAdapter
 //            val spinnerPosition: Int = arrayAdapter.getPosition(list.get(position).selectedDay)
- //           spinnerDayss.setSelection(spinnerPosition)
+            //           spinnerDayss.setSelection(spinnerPosition)
 
             tvMorningFromtime.setOnClickListener {
-                val mcurrentTime = Calendar.getInstance()
-                val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
-                    tvMorningFromtime.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
-                    list[position].firstStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle(context.getString(R.string.select_time))
-                mTimePicker.show()
+                timee("start1")
             }
             tvMorningTotime.setOnClickListener {
-                val mcurrentTime = Calendar.getInstance()
-                val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
-                    tvMorningTotime.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
-                    list[position].firstEndtime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle(context.getString(R.string.select_time))
-                mTimePicker.show()
-
+                timee("end1")
             }
-
             tvEveningFromtime.setOnClickListener {
-                val mcurrentTime = Calendar.getInstance()
-                val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
-                    tvEveningFromtime.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
-                    list[position].secondStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle(context.getString(R.string.select_time))
-                mTimePicker.show()
+                timee("start2")
 
             }
             tvEveningTotime.setOnClickListener {
-                val mcurrentTime = Calendar.getInstance()
-                val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
-                    tvEveningTotime.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
-                    list[position].secondEndtime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle(context.getString(R.string.select_time))
-                mTimePicker.show()
-
+                timee("end2")
             }
 
+        }
+
+
+        fun timee(type: String) {
+            val cal = Calendar.getInstance()
+            val c = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+
+                var a = SimpleDateFormat("HH:mm").format(cal.time)
+
+              /*  if (cal.getTimeInMillis() >= c.getTimeInMillis()) {
+              */      //it's after current
+                    if (type.equals("start1")) {
+                        tvMorningFromtime.text = SimpleDateFormat("HH:mm").format(cal.time)
+                        startTime1Timestamp = (CommonMethodsKotlin.time_to_timestamp(tvMorningFromtime.text.toString(), "HH:mm")).toString()
+                        list[adapterPosition].firstStarttime = tvMorningFromtime.text.toString()
+                        Log.e("startTimeTimestamp", startTime1Timestamp)
+
+                    } else if (type.equals("end1")) {
+                        end1TimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                        if(!startTime1Timestamp.isNullOrEmpty() && startTime1Timestamp<end1TimeTimestamp){
+                            tvMorningTotime.text = SimpleDateFormat("HH:mm").format(cal.time)
+                            list[adapterPosition].firstEndtime = tvMorningTotime.text.toString()
+                            Log.e("endTimeTimestamp", end1TimeTimestamp)
+                        } else {
+                            Toast.makeText(context, "Invalid Time", Toast.LENGTH_SHORT).show()
+                            tvMorningTotime.text=""
+
+                        }
+
+                    }
+                    else if (type.equals("start2")) {
+                        startTime2Timestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                        if(!startTime1Timestamp.isNullOrEmpty() && !end1TimeTimestamp.isNullOrEmpty() && end1TimeTimestamp<startTime2Timestamp){
+                            tvEveningFromtime.text = SimpleDateFormat("HH:mm").format(cal.time)
+                            list[adapterPosition].secondStarttime = tvEveningFromtime.text.toString()
+                            Log.e("endTimeTimestamp", startTime2Timestamp)
+                        } else {
+                            Toast.makeText(context, "Invalid Time", Toast.LENGTH_SHORT).show()
+                            tvEveningFromtime.text=""
+
+                        }
+                    }
+                    else if (type.equals("end2")) {
+                        end2TimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+
+                        if(!startTime1Timestamp.isNullOrEmpty() && !end1TimeTimestamp.isNullOrEmpty() &&
+                                !startTime2Timestamp.isNullOrEmpty() && startTime2Timestamp<end2TimeTimestamp){
+                            tvEveningTotime.text = SimpleDateFormat("HH:mm").format(cal.time)
+                            list[adapterPosition].secondEndtime = tvEveningTotime.text.toString()
+                            Log.e("endTimeTimestamp", end2TimeTimestamp)
+                        } else {
+                            Toast.makeText(context, "Invalid Time", Toast.LENGTH_SHORT).show()
+                            tvEveningTotime.text=""
+                        }
+
+
+
+                    }
+
+            //    }
+            /*else {
+                    //it's before current'
+                    Toast.makeText(context, "Invalid Time", Toast.LENGTH_SHORT).show()
+                }*/
+
+
+/*
+            if(a.equals("AM"))
+            {
+                typ="Am"
+            }
+            else
+            {
+                typ="Pm"
+            }
+*/
+            }
+            TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
         }
 
 
@@ -190,7 +240,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
         init {
 
-         }
+        }
     }
 
     interface OnDayTimeRecyclerViewItemClickListner {

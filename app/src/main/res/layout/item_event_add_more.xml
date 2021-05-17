@@ -15,11 +15,25 @@
         android:paddingTop="@dimen/_10sdp"
         android:paddingRight="@dimen/_5sdp"
         android:paddingBottom="@dimen/_10sdp">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/add_an_event" />
+    <TextView
+        android:id="@+id/tvDelete"
+        style="@style/CommonTextWrapcontent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textColor="@color/red"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:text="DELETE" />
+</RelativeLayout>
 
-        <TextView
-            style="@style/CommonTextWrapcontent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/add_an_event" />
 
         <RelativeLayout
             android:id="@+id/rl_Add"

@@ -186,15 +186,34 @@
                         android:layout_marginRight="@dimen/_10sdp"
                         android:textSize="@dimen/_9sdp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_shops_timings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+
+                    <TextView
+                        style="@style/CommonTextWrapcontent"
                         android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="vertical"/>
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/bold"
+                        android:text="@string/shop_timings"
+                        android:textAllCaps="true"
+                        android:textColor="@color/grey" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/detailstime_day_bg"
+                        android:padding="@dimen/_5sdp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_shops_timings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:orientation="vertical"/>
+
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/tv_trader_no_days"
@@ -244,7 +263,6 @@
                                 android:layout_marginLeft="@dimen/_15sdp"
                                 android:layout_weight="80"
                                 android:fontFamily="@font/regular"
-                                android:text="10:30AM-1PM, 2:30AM-6:30PM"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
                         </LinearLayout>
@@ -455,7 +473,6 @@
                         android:id="@+id/rv_traderproduct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="vertical"/>
 
@@ -471,10 +488,6 @@
                         android:textSize="@dimen/_14sdp" />
 
 
-
-
-
-
                     <TextView
                         android:id="@+id/tv_trader_address"
                         style="@style/CommonTextWrapcontent"
@@ -483,14 +496,16 @@
                         android:drawableLeft="@drawable/location_black"
                         android:drawableRight="@drawable/colored_map"
                         android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_90sdp"
+                        android:layout_height="@dimen/_300sdp"
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_20sdp">
 

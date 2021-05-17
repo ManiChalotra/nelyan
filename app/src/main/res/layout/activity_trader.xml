@@ -231,6 +231,12 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:text="@string/type_of_trader" />
 
+            <TextView
+                android:id="@+id/tv_trader_type"
+                style="@style/SimpleEdittext"
+                android:hint="@string/select_type" />
+
+
             <Spinner
                 android:id="@+id/trader_type"
                 android:layout_width="match_parent"
@@ -241,6 +247,7 @@
                 android:dropDownSelector="@drawable/down_arrow"
                 android:fontFamily="@font/regular"
                 android:gravity="start"
+                android:visibility="gone"
                 android:inputType="text"
                 android:spinnerMode="dropdown"
                 android:textColor="@color/black"

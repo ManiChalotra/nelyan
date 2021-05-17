@@ -10,8 +10,8 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
+import com.nelyan_live.modals.myAd.*
 
-import com.nelyan_live.modals.myAd.GetChildcarePostMyAds
 import com.nelyan_live.ui.AddActivity
 import com.nelyan_live.ui.HomeChildCareDetailsActivity
 import com.nelyan_live.utils.OpenActivity
@@ -57,10 +57,13 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         fun bind(myadsList: GetChildcarePostMyAds) {
 
             ivDot.setImageResource(R.drawable.option_dot)
-
+/*fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
+                                    description: String, countryCode: String, phoneNumber: String, address: String, city: String,
+                                    childCareImageList : ArrayList<ChildCareImageMyAds>)*/
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
-                callPopup(ivDot, adapterPosition, myadsList.id)
+                callPopup(ivDot, adapterPosition, myadsList.id, myadsList.ChildcareType, myadsList.name, myadsList.availableplace, myadsList.description, myadsList.countryCode,
+                        myadsList.phone, myadsList.city,  myadsList.ChildCareImages, myadsList.latitude, myadsList.longitude)
 /*
                 if (isMenuOpend.equals("0")){
                     ll_1.visibility = View.VISIBLE
@@ -98,6 +101,8 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
                 context?.OpenActivity(HomeChildCareDetailsActivity::class.java){
                     putString("activityId", myadsList.id.toString())
                     putString("categoryId", myadsList.type.toString())
+                    putString("lati", myadsList.latitude)
+                    putString("longi", myadsList.longitude)
                 }
 
             }
@@ -143,7 +148,9 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
     }
 */
 
-    private fun callPopup(ivDot: ImageView, adapterPosition: Int, adId: Int) {
+    private fun callPopup(ivDot: ImageView, adapterPosition: Int, id: Int, childcareType: Int, name: String, availableplace: Int,
+                          description: String, countryCode: String, phone: String, city: String, childCareImages: ArrayList<ChildCareImageMyAds>,
+                          latitude: String, longitude: String) {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
         val editt = popupView.findViewById<View>(R.id.tvEdit) as TextView
@@ -156,14 +163,17 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
 
         popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.RIGHT)
-
+/*fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
+                                    description: String, countryCode: String, phoneNumber: String, address: String, city: String,
+                                    childCareImageList : ArrayList<ChildCareImageMyAds>)*/
         editt.setOnClickListener {
-            deleteEditListner.onEditAdClick(adapterPosition, adId.toString())
+            deleteEditListner.onEditAdClick(adapterPosition, id.toString(), childcareType.toString(), name, availableplace.toString(),
+                    description, countryCode, phone, city, childCareImages, latitude, longitude)
             popupWindow!!.dismiss()
         }
 
         deletee.setOnClickListener {
-            deleteEditListner.onChildCareDeleteAdClick(adapterPosition, adId.toString() )
+            deleteEditListner.onChildCareDeleteAdClick(adapterPosition, id.toString() )
             popupWindow!!.dismiss()
 
         }
@@ -242,7 +252,9 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
     interface OnDeleteEditClickListner{
         fun onChildCareDeleteAdClick(position: Int, adID: String?)
-        fun onEditAdClick(position: Int, adID: String?)
+        fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
+                                    description: String, countryCode: String, phoneNumber: String, city: String,
+                                    childCareImageList : ArrayList<ChildCareImageMyAds>, latitude: String, longitude: String)
     }
 
 }

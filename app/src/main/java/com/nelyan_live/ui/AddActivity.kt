@@ -30,13 +30,6 @@ import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.activity_addactivity.countycode
-import kotlinx.android.synthetic.main.activity_addactivity.ivBack
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg1
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg2
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg3
-import kotlinx.android.synthetic.main.activity_addactivity.ivplus
-import kotlinx.android.synthetic.main.activity_addactivity.rlImg
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -364,7 +357,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 imageVideoListPosition = imageVideoListPosition + 1
 
                 if (imageVideoListPosition <= selectedUrlListing.size) {
-                    hitApiForBannerImages(imageVideoListPosition)
+                 //   hitApiForBannerImages(imageVideoListPosition)
                 }
             }
 
@@ -635,10 +628,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
-                    response.body()
                     progressDialog.hidedialog()
                     val mResponse = response.body().toString()
                     var jsonObject = JSONObject(mResponse)
+
+                    myCustomToast("Post Added Successfully")
+
                     val postid = jsonObject.getJSONObject("data").get("postId").toString()
                     val categoryId = jsonObject.getJSONObject("data").get("categoryId").toString()
                     finishAffinity()
@@ -662,7 +657,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                             urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
                             if (imageVideoListPosition <= 4) {
                                 imageVideoListPosition = imageVideoListPosition + 1
-                                hitApiForBannerImages(imageVideoListPosition)
+                     //           hitApiForBannerImages(imageVideoListPosition)
                             }
 
                         } else {

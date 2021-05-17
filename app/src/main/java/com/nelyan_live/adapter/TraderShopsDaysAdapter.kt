@@ -46,7 +46,7 @@ class TraderShopsDaysAdapter(internal  var context: Context, internal  var activ
             tvDay = itemView.findViewById(R.id.tv_day)
             tvTimings = itemView.findViewById(R.id.tv_timings)
             tvDay.text = traderDaysTiming.day
-            tvTimings.text = traderDaysTiming.startTime+"-"+traderDaysTiming.endTime+"-"+traderDaysTiming.secondStartTime+"-"+traderDaysTiming.secondEndTime
+            tvTimings.text = traderDaysTiming.startTime+"-"+traderDaysTiming.endTime+", "+traderDaysTiming.secondStartTime+"-"+traderDaysTiming.secondEndTime
 
         }
 

@@ -11,11 +11,12 @@ import android.os.Build
 import android.provider.Telephony
 import android.util.Log
 import android.widget.Toast
-import com.facebook.share.model.ShareLinkContent
-import com.facebook.share.widget.ShareDialog
 import com.nelyan_live.R
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 public class CommonMethodsKotlin {
@@ -55,6 +56,133 @@ public class CommonMethodsKotlin {
 
             }
 
+        }
+
+
+        fun time_to_timestamp(str_date: String?, pattren: String?): Long {
+            var time_stamp: Long = 0
+            try {
+                val formatter = SimpleDateFormat(pattren)
+                //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+                // formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                val date = formatter.parse(str_date) as Date
+                time_stamp = date.time
+            } catch (ex: ParseException) {
+                ex.printStackTrace()
+            } catch (ex: java.lang.Exception) {
+                ex.printStackTrace()
+            }
+            time_stamp = time_stamp / 1000
+            return time_stamp
+        }
+
+
+        /*
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String getPath(final Context context, final Uri uri) {
+        final boolean isKitKatOrAbove = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+// DocumentProvider
+        if (isKitKatOrAbove && DocumentsContract.isDocumentUri(context, uri)) {
+// ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+// TODO handle non-primary volumes
+            }
+// DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+// MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video1".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+// MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+// File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+*/
+        // save the given bitmap on external storage and returns the path of the file.
+        /*
+    public static String saveImageToExternalStorage(Bitmap bitmap) {
+
+        // Calendar now = Calendar.getInstance();
+        String ImageURi = null;
+        String imageFileName = "image" + System.currentTimeMillis() + ".jpg";
+        //  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+        try {
+            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    AppController.getInstance().getString(R.string.app_name));
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            //  String mPath = sdf.format(now.getTime()) + ".jpg";
+            File imageFile = new File(dir, imageFileName);
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 60;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            ImageURi = imageFile.getAbsolutePath();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return ImageURi;
+    }
+*/
+        /*Calender date to string convert*/
+        fun calender_date_to_timestamp(str_date: String?): Long {
+            var time_stamp: Long = 0
+            try {
+                val formatter = SimpleDateFormat("dd-MM-yyyy")
+                //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+                formatter.timeZone = TimeZone.getTimeZone("UTC")
+                val date = formatter.parse(str_date) as Date
+                time_stamp = date.time
+            } catch (ex: ParseException) {
+                ex.printStackTrace()
+            } catch (ex: java.lang.Exception) {
+                ex.printStackTrace()
+            }
+            time_stamp = time_stamp / 1000
+            return time_stamp
         }
 
 

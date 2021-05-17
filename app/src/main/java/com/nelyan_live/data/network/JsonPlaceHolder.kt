@@ -84,8 +84,8 @@ interface JsonPlaceHolder {
     @POST("addPost_fav")
     @FormUrlEncoded
     fun addFavouritePost(@Header("security_key") securityKey: String?,
-                     @Header("auth_key") authKey: String?,
-                     @Field("postId") postId: String?,  @Field("type") type: String? ): Call<JsonObject>
+                         @Header("auth_key") authKey: String?,
+                         @Field("postId") postId: String?, @Field("type") type: String?): Call<JsonObject>
 
     @POST("post_detail")
     @FormUrlEncoded
@@ -101,6 +101,14 @@ interface JsonPlaceHolder {
     @GET("myAddList")
     fun getmyAddListAPI(@Header("security_key") securityKey: String?,
                         @Header("auth_key") auth_key: String?): Call<JsonObject>
+
+    @FormUrlEncoded
+    @POST("post_detail")
+    fun getPostDetailAPI(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") auth_key: String?,
+                         @Field("type") type: String?,
+                         @Field("postid") postid: String?,
+    ): Call<JsonObject>
 
     @GET("get_profile")
     fun get_Profile_api(@Header("security_key") securityKey: String?,
@@ -144,8 +152,8 @@ interface JsonPlaceHolder {
     @POST("switchAccount")
     @FormUrlEncoded
     fun switchAccount(@Header("security_key") securityKey: String?,
-                                     @Header("auth_key") auth_key: String?,
-                                     @Field("type") type: String?): Call<JsonObject>
+                      @Header("auth_key") auth_key: String?,
+                      @Field("type") type: String?): Call<JsonObject>
 
     @POST("change_password")
     @FormUrlEncoded
@@ -164,9 +172,9 @@ interface JsonPlaceHolder {
     @POST("delete_ad")
     @FormUrlEncoded
     fun deleteAd(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") auth_key: String?,
-                           @Field("categoryId") categoryId: String?,
-                           @Field("postId") postId: String?): Call<JsonObject>
+                 @Header("auth_key") auth_key: String?,
+                 @Field("categoryId") categoryId: String?,
+                 @Field("postId") postId: String?): Call<JsonObject>
 
 
     @Multipart
@@ -201,7 +209,7 @@ interface JsonPlaceHolder {
                                  @Field("shop_name") shop_name: String,
                                  @Field("activity_name") activity_name: String,
                                  @Field("description") description: String,
-                                 /*@Field("message") message: String,*/
+            /*@Field("message") message: String,*/
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
@@ -216,22 +224,25 @@ interface JsonPlaceHolder {
     @POST("edit_myadd")
     @FormUrlEncoded
     fun editMyaddActivity(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("postId") postId: String,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 @Field("ageGroup") ageGroup: String,// sending json Array
-                                 @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,// send json Array
-                                 @Field("country_code") country_code: String
+                          @Header("auth_key") auth_key: String?,
+                          @Field("postId") postId: String,
+                          @Field("type") type: String,
+                          @Field("activity_type") activity_type: String,
+                          @Field("shop_name") shop_name: String,
+                          @Field("activity_name") activity_name: String,
+                          @Field("description") description: String,
+                          @Field("phone") phone: String,
+                          @Field("address") address: String,
+                          @Field("city") city: String,
+                          @Field("latitude") latitude: String,
+                          @Field("longitude") longitude: String,
+                          @Field("ageGroup") ageGroup: String,// sending json Array
+                          @Field("addEvent") addEvent: String,// sending json Array
+            /*@Field("media") media: String,// send json Array*/
+                          @Field("country_code") country_code: String,
+                          @Field("image1") image1: String,
+                          @Field("image2") image2: String,
+                          @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("addPost")
@@ -293,6 +304,56 @@ interface JsonPlaceHolder {
                             @Field("longitude") longitude: String,
                             @Field("media") media: String,// send json Array
 
+
+    ): Call<JsonObject>
+
+    @FormUrlEncoded
+    @POST("edit_myadd")
+    fun editMaternalPost_Api(@Header("security_key") securityKey: String?,
+                             @Header("auth_key") auth_key: String?,
+                             @Field("type") type: String,
+                             @Field("ChildCareId") childCareId: String,
+                             @Field("name") materialName: String,
+                             @Field("email") email: String,
+                             @Field("website") website: String,
+                             @Field("no_of_places") noOfPlaces: String,
+                             @Field("country_code") country_code: String,
+                             @Field("phone") phone: String,
+                             @Field("address") address: String,
+                             @Field("description") description: String,
+                             @Field("city") city: String,
+                             @Field("latitude") latitude: String,
+                             @Field("longitude") longitude: String,
+                             @Field("image1") image1: String,
+                             @Field("image2") image2: String,
+                             @Field("image3") image3: String,
+                             @Field("postId") postId: String
+
+    ): Call<JsonObject>
+
+    @FormUrlEncoded
+    @POST("edit_myadd")
+    fun editTraderPost_Api(@Header("security_key") securityKey: String?,
+                           @Header("auth_key") auth_key: String?,
+                           @Field("type") type: String,
+                           @Field("trader_type") traderType: String,
+                           @Field("shop_name") shop_name: String,
+                           @Field("description") description: String,
+                           @Field("country_code") country_code: String,
+                           @Field("phone") phone: String,
+                           @Field("address") address: String,
+                           @Field("city") city: String,
+                           @Field("latitude") latitude: String,
+                           @Field("longitude") longitude: String,
+                           @Field("email") email: String,
+                           @Field("website") website: String,
+                           @Field("selectDay") selectDay: String,// sending json Array
+                           @Field("productDetail") productDetail: String,
+                           @Field("image1") image1: String,
+                           @Field("image2") image2: String,
+                           @Field("image3") image3: String,
+                           @Field("postId") postId: String
+
     ): Call<JsonObject>
 
     @POST("social_login")
@@ -316,22 +377,22 @@ interface JsonPlaceHolder {
     @POST("TraderFilter")
     @FormUrlEncoded
     fun traderFilter_Api(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") authKey: String?,
-                           @Field("lat") lat: String?,
-                           @Field("long") longitude: String?,
-                           @Field("distance") distance: String?,
-                           @Field("name") name: String?,
-                           @Field("address") address: String?): Call<JsonObject>
+                         @Header("auth_key") authKey: String?,
+                         @Field("lat") lat: String?,
+                         @Field("long") longitude: String?,
+                         @Field("distance") distance: String?,
+                         @Field("name") name: String?,
+                         @Field("address") address: String?): Call<JsonObject>
 
     @POST("childCareFilter")
     @FormUrlEncoded
     fun childCareFilter_Api(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") authKey: String?,
-                           @Field("lat") lat: String?,
-                           @Field("long") longitude: String?,
-                           @Field("distance") distance: String?,
-                           @Field("name") name: String?,
-                           @Field("address") address: String?,
+                            @Header("auth_key") authKey: String?,
+                            @Field("lat") lat: String?,
+                            @Field("long") longitude: String?,
+                            @Field("distance") distance: String?,
+                            @Field("name") name: String?,
+                            @Field("address") address: String?,
                             @Field("childCareId") childCareId: String?, ): Call<JsonObject>
 
     @POST("eventList")

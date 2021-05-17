@@ -185,6 +185,7 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
+                android:visibility="gone"
                 android:fontFamily="@font/regular"
                 android:text="Ex still 2 free places for dancing"
                 android:textColor="@color/black"

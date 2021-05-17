@@ -94,12 +94,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             })
 
 
-        iv_map!!.setOnClickListener(View.OnClickListener { // navigationbar.setVisibility(View.GONE);
-            val i = Intent(this, ActivitiesOnMapActivity::class.java)
-            /*TODO pass the response of activity list*/
-            i.putExtra("type", listType)
-            startActivity(i)
-        })
+
+
 
         val orderbylist = arrayOf<String?>(
                 "", "Events in City",
@@ -176,6 +172,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         recyclerview!!.visibility = View.VISIBLE
                         tv_no_activities!!.visibility = View.GONE
                         setAdaptor(activitisDatalist)
+                        gotoMap(activitisDatalist)
                     }
                 }
             } else {
@@ -194,11 +191,12 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val message = jsonObject.get("msg").toString()
                 myCustomToast(message)
                 if (message.equals("You marked this Post as Your Favourite")){
+                    myCustomToast(getString(R.string.post_added_fav))
                     ivFavouritee!!.setImageResource(R.drawable.heart)
                 }else {
+                    myCustomToast(getString(R.string.post_fav_remove))
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
-
 
             } else {
                 ErrorBodyResponse(response, this, activity_list_progressbar)
@@ -221,6 +219,15 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         } else {
             showSnackBar(this@ActivitiesListActivity, getString(R.string.no_internet_error))
         }
+
+    }
+
+    private fun gotoMap(activitisDatalist: ArrayList<HomeAcitivityResponseData>) {
+        iv_map!!.setOnClickListener(View.OnClickListener { // navigationbar.setVisibility(View.GONE);
+            val i = Intent(this, ActivitiesOnMapActivity::class.java)
+            i.putExtra("activitisDatalist", activitisDatalist)
+            startActivity(i)
+        })
 
     }
 

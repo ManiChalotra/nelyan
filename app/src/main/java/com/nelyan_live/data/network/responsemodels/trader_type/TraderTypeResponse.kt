@@ -7,15 +7,15 @@ data class TraderTypeResponse(
     var success: Int
 ) {
     data class Data(
-        var createdAt: Int,
-        var id: Int,
+     /*   var createdAt: Int,
+     */   var id: Int,
         var name: String,
-        var updatedAt: Int
-    ){
+       /* var updatedAt: Int*/
+    )/*{
         override fun toString(): String {
             return name
         }
-    }
+    }*/
 
 
 }

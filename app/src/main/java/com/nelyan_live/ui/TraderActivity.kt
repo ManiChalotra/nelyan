@@ -89,47 +89,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private var addEventUrlListingResponse: ArrayList<String> = ArrayList()
     private var imagePathList = ArrayList<MultipartBody.Part>()
     private var imagePathList2 = ArrayList<MultipartBody.Part>()
-
-
-    var imageVideoUrlListing = arrayListOf("", "", "", "", "")
+    private var isImageUploaded=""
+    private var imageVideoUrlListing = arrayListOf("", "", "")
 
     private var imageVideoListPosition = -1
     private var selectedUrlListing: ArrayList<String> = ArrayList()
     private var savedaddEventImagesData = false
-
-
-    /*
-var mContext: Context? = null
-var ivBack: ImageView? = null
-var ivImg: ImageView? = null
-var ivCam: ImageView? = null
-var btnSubmit: Button? = null
-var tvAdd: TextView? = null
-var tvClock: TextView? = null
-var edClo: TextView? = null
-var edClo1: TextView? = null
-var edClo2: TextView? = null
-var edClo3: TextView? = null
-var ivplus: ImageView? = null
-var ivImg1: ImageView? = null
-var ivImg2: ImageView? = null
-var ivImg3: ImageView? = null
-var ll_1: LinearLayout? = null
-var ll_2: LinearLayout? = null
-var ll_3: LinearLayout? = null
-var orderby: Spinner? = null
-var orderby1: Spinner? = null
-var Recycler_scroll: RecyclerView? = null
-var indicator: ScrollingPagerIndicator? = null
-var rlAddImg: RelativeLayout? = null
-var rlImg: RelativeLayout? = null
-
-
-var dayTimeRepeatAdapter: DayTimeRepeatAdapter? = null
-var returnItemView = 1
-var image = HashMap<String, Bitmap>()
-*/
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -331,30 +296,52 @@ var image = HashMap<String, Bitmap>()
 
             val media = selectedUrlListing[imageVideoListPosition]
 
-            if (!media.isNullOrEmpty()) {
+            // if (!media.isNullOrEmpty()) {
 
-                savedaddEventImagesData = false
+//                var mfile: File? = null
+//
+//                mfile = File(selectedUrlListing)
+//                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+//                var photo: MultipartBody.Part? = null
+//                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+//                imagePathList.add(photo)
 
-                var mfile: File? = null
-                mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+            if (imagePathList != null) {
+                imagePathList!!.clear()
+            } else {
+                imagePathList = java.util.ArrayList()
+
+            }
+
+
+            var mfile: File? = null
+            for (i in 0..selectedUrlListing!!.size - 1) {
+                mfile = File(selectedUrlListing!![i])
+                val imageFile: RequestBody? = RequestBody.create("image/*".toMediaTypeOrNull(), mfile)
                 var photo: MultipartBody.Part? = null
                 photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-                imagePathList.add(photo)
-                var type: RequestBody
-                type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+                imagePathList!!.add(photo)
+            }
 
-/*
-                if (media.contains(".mp4")) {
-                    type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
-                } else {
-                    type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-                }
-*/
-                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-                appViewModel.sendUploadImageData(type, users, imagePathList)
-                progressDialog.setProgressDialog()
+
+            var type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+            /*
+            if (media.contains(".mp4")) {
+                type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
             } else {
+                type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+            }
+
+            Log.e("imageimage", type.toString())
+            */
+            val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+            appViewModel.sendUploadImageData(type, users, imagePathList)
+            progressDialog.setProgressDialog()
+            //}
+
+            /*
+             else {
+
 
                 imageVideoListPosition = imageVideoListPosition + 1
 
@@ -362,6 +349,7 @@ var image = HashMap<String, Bitmap>()
                     hitApiForBannerImages(imageVideoListPosition)
                 }
             }
+            */
 
         } else {
 
@@ -414,7 +402,7 @@ var image = HashMap<String, Bitmap>()
                     val postid = jsonObject.getJSONObject("data").get("postId").toString()
                     val categoryId = jsonObject.getJSONObject("data").get("categoryId").toString()
                     finishAffinity()
-
+                    myCustomToast("Post Added Successfully")
                     OpenActivity(HomeActivity::class.java)
 
                 }
@@ -453,6 +441,8 @@ var image = HashMap<String, Bitmap>()
                                 media.put(json)
                             }
 
+
+
                             // json format for select day
                             makeJsonArray()
 
@@ -482,120 +472,6 @@ var image = HashMap<String, Bitmap>()
 
     }
 
-/*
-
-        mContext = this
-        orderby = findViewById(R.id.orderby)
-        val country: MutableList<String?> = ArrayList()
-        country.add("")
-        country.add("USA")
-        country.add("Japan")
-        country.add("India")
-        val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
-
-
-
-
-        orderby!!.setAdapter(arrayAdapte1)
-        ivBack = findViewById(R.id.ivBack)
-        btnSubmit = findViewById(R.id.btnSubmit)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
-        btnSubmit = findViewById(R.id.btnSubmit)
-        btnSubmit!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(this@TraderActivity, com.nelyan_live.ui.TraderPreviewActivity::class.java)
-            //  i.putExtra("nurActivity","nurFrag");
-            startActivity(i)
-        })
-
-
-
-        ll_1 = findViewById(R.id.ll_1)
-        ll_2 = findViewById(R.id.ll_2)
-        ll_3 = findViewById(R.id.ll_3)
-        ivImg = findViewById(R.id.ivImg)
-        ivImg1 = findViewById(R.id.ivImg1)
-        ivImg2 = findViewById(R.id.ivImg2)
-        ivImg3 = findViewById(R.id.ivImg3)
-        rlImg = findViewById(R.id.rlImg)
-        rlImg!!.setOnClickListener(View.OnClickListener {
-            imgtype = "0"
-            image("all")
-        })
-        ivplus = findViewById(R.id.ivplus)
-        rlAddImg = findViewById(R.id.rlAddImg)
-        rlAddImg!!.setOnClickListener(View.OnClickListener {
-            imgtype = "1"
-            image("all")
-        })
-        ll_1!!.setOnClickListener(View.OnClickListener {
-            imgtype = "2"
-            image("all")
-        })
-        ll_2!!.setOnClickListener(View.OnClickListener {
-            imgtype = "3"
-            image("all")
-        })
-        ll_3!!.setOnClickListener(View.OnClickListener {
-            imgtype = "4"
-            image("all")
-        })
-        val arrayList: ArrayList<TimeModel?> = ArrayList()
-
-        arrayList.add(TimeModel("", ""))
-        val dayTimeModel = DayTimeModel(arrayList)
-        val dayTimeModelArrayList: ArrayList<DayTimeModel> = ArrayList<DayTimeModel>()
-        dayTimeModelArrayList.add(dayTimeModel)
-        dayTimeRepeatAdapter = DayTimeRepeatAdapter(this, dayTimeModelArrayList,
-                object : DayTimeRepeatListener {
-                    override fun dayTimeAdd(pos: Int) {
-                        val arrayList1: ArrayList<TimeModel?> = ArrayList()
-
-                        arrayList1.add(TimeModel("", ""))
-                        val dayTimeModel1 = DayTimeModel(arrayList1)
-                        dayTimeModelArrayList.add(dayTimeModel1)
-                        dayTimeRepeatAdapter!!.notifyDataSetChanged()
-                    }
-
-                    override fun timeAdd(pos: Int) {
-                        val dayTimeModel1: DayTimeModel = dayTimeModelArrayList[pos]
-                        dayTimeModel1.selectTime.add(TimeModel("", ""))
-                        dayTimeRepeatAdapter!!.notifyDataSetChanged()
-                    }
-                })
-        rvDayTime!!.setAdapter(dayTimeRepeatAdapter)
-        rvDayTime!!.setLayoutManager(LinearLayoutManager(this))
-        val adapter = DescriptionRepeatAdapter(this, image, this@TraderActivity, returnItemView)
-        rvDesc!!.setLayoutManager(LinearLayoutManager(this))
-        rvDesc!!.setAdapter(adapter)*/
-
-
-    private fun isValid(): Boolean {
-        traderType = trader_type.selectedItem.toString()
-        var check = false
-        if (checkStringNull(IS_IMAGE_SELECTED))
-            myCustomToast(getString(R.string.media_missing_error))
-        else if (checkStringNull(traderType))
-            myCustomToast(getString(R.string.trader_type_missing_error))
-        else if (checkStringNull(et_trader_shop_name.text.toString()))
-            myCustomToast(getString(R.string.shop_name_missing_error))
-        else if (checkStringNull(et_description_trader.text.toString()))
-            myCustomToast(getString(R.string.description_missing))
-        else if (checkStringNull(et_trader_phone.text.toString()))
-            myCustomToast(getString(R.string.phone_number_missing))
-        else if (checkStringNull(et_trader_email.text.toString()))
-            myCustomToast(getString(R.string.email_address_missing))
-        else if (checkStringNull(et_trader_email.text.toString()))
-            myCustomToast(getString(R.string.email_address_missing))
-        else if (!Validation.checkEmail(et_trader_email.text.toString(), this))
-            myCustomToast(getString(R.string.invalid_email_address))
-        else
-            check = true
-        return check
-    }
-
-    fun checkStringNull(string: String?): Boolean {
-        return string == null || string == "null" || string.isEmpty()
-    }
 
 
     override fun onClick(v: View?) {
@@ -658,17 +534,20 @@ var image = HashMap<String, Bitmap>()
                                             // for check upper images url from response
                                             Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
 
-
                                             // rotating loop
                                             for (i in 0..imageVideoUrlListing.size - 1) {
-                                                val media = imageVideoUrlListing[i]
+                                                val media = imageVideoUrlListing.get(i)
                                                 if (!media.isEmpty()) {
                                                     selectedUrlListing.add(media)
                                                 }
                                             }
+                                            Log.d("selectedUpperimages", "-------------------" + selectedUrlListing.toString())
 
-                                            // hitting api for upper 5 images
-                                            hitApiForBannerImages(0)
+                                            if (isImageUploaded.equals("") && isImageUploaded !=null) {
+                                                hitApiForBannerImages(0)
+                                            }else {
+                                                hitFinalTraderPostApi()
+                                            }
 
                                             /*
                                              if (checkedEvent) {
@@ -724,23 +603,23 @@ var image = HashMap<String, Bitmap>()
             "1" -> {
                 setImageOnTab(imgPath, ivImg)
                 imageVideoUrlListing.set(0, imgPath.toString())
-                IMAGE_SELECTED_TYPE = ""
+               // IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
 
             "2" -> {
                 setImageOnTab(imgPath, ivImg1)
                 imageVideoUrlListing.set(1, imgPath.toString())
-                IMAGE_SELECTED_TYPE = ""
+               // IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
             "3" -> {
                 setImageOnTab(imgPath, ivImg2)
                 imageVideoUrlListing.set(2, imgPath.toString())
-                IMAGE_SELECTED_TYPE = ""
+              //  IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
-            else -> {
+            "4" -> {
                 productDetailDataModelArrayList[productPhotoPosition].image = imgPath.toString()
                 Log.d("lisufjdhf", "-----------" + productDetailDataModelArrayList.toString())
                 productDetailRepeatAdapter.notifyDataSetChanged()
@@ -758,6 +637,8 @@ var image = HashMap<String, Bitmap>()
 
         }
     }
+
+
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
         Log.d("getimage", "---------" + imgPATH.toString())
@@ -826,6 +707,7 @@ var image = HashMap<String, Bitmap>()
 
     override fun addCameraGelleryImage(list: ArrayList<ProductDetailDataModel>, position: Int) {
         productPhotoPosition = position
+        IMAGE_SELECTED_TYPE="4"
         checkPermission(this)
     }
 

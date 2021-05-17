@@ -58,6 +58,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
         var llActivityDetails = itemView.findViewById(R.id.ll_activity_details) as LinearLayout
 
+
         fun bind(myadsList: GetActivitypostMyAds) {
             ivDot.setImageResource(R.drawable.option_dot)
 
@@ -65,7 +66,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
                 Log.e("Dot Click", "Clikkceckk")
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.activityname, myadsList.typeofActivityId,
                         myadsList.nameOfShop, myadsList.description, myadsList.address, myadsList.city, myadsList.country_code,
-                        myadsList.phone, myadsList.ageGroups, myadsList.events, myadsList.activityimages)
+                        myadsList.phone, myadsList.ageGroups, myadsList.events, myadsList.activityimages, myadsList.latitude, myadsList.longitude)
 
             }
 
@@ -73,6 +74,23 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
             tvDescription.text = myadsList.description
             tvAddress.text = myadsList.address +" "+myadsList.city
             tvNameOfShop.text = myadsList.nameOfShop
+
+            if (myadsList.typeofActivityId == 5){
+                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.sports)
+
+            } else if (myadsList.typeofActivityId == 9){
+                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.dance)
+
+            } else if (myadsList.typeofActivityId == 10){
+                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.drawing)
+
+            }else if (myadsList.typeofActivityId == 11){
+                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.zumba)
+
+            }else if (myadsList.typeofActivityId == 13){
+                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.tutor_mother_subject)
+
+            }
 
 
             if (myadsList.activityimages.size !=null && myadsList.activityimages.size !=0)
@@ -86,6 +104,8 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
                 context?.OpenActivity(ActivityDetailsActivity::class.java){
                     putString("activityId", myadsList.id.toString())
                     putString("categoryId", myadsList.categoryId.toString())
+                    putString("lati", myadsList.latitude)
+                    putString("longi", myadsList.longitude)
                 }
 
             }
@@ -133,7 +153,8 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
     private fun callPopup(ivDot: ImageView, adapterPosition: Int, adId: Int, activityname: String, typeofActivityId: Int,
                           nameOfShop: String, description: String, address: String, city: String, countryCode: String, phone: String,
-                          ageGroups: ArrayList<AgeGroupMyAds>, events: ArrayList<EventMyAds>, activityimages: ArrayList<ActivityimageMyAds>)
+                          ageGroups: ArrayList<AgeGroupMyAds>, events: ArrayList<EventMyAds>, activityimages: ArrayList<ActivityimageMyAds>,
+                          latitude: String, longitude: String)
     {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
@@ -150,7 +171,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
         editt.setOnClickListener {
             activitiesDeleteEditListener.onEditActivitiesAdClick(adapterPosition, adId.toString(), typeofActivityId.toString(), nameOfShop, activityname,
-                     description, countryCode, phone, address, city, ageGroups,  activityimages, events )
+                     description, countryCode, phone, address, city, ageGroups,  activityimages, events, latitude, longitude,  )
             popupWindow!!.dismiss()
         }
 
@@ -237,8 +258,10 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         fun onActivitiesDeleteAdClick(position: Int, adID: String? )
         fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String, nameofActivity: String,
                                     description: String, countryCode: String, phoneNumber: String, address: String, city: String,
-                                    ageGroupListMyAds : ArrayList<AgeGroupMyAds>, ActivityimagesList : ArrayList<ActivityimageMyAds>,
-                                    eventMyAdsList : ArrayList<EventMyAds>)
+                                    ageGroupListMyAds: ArrayList<AgeGroupMyAds>, ActivityimagesList: ArrayList<ActivityimageMyAds>,
+                                    eventMyAdsList: ArrayList<EventMyAds>,
+                                    latitude: String,
+                                    longitude: String)
     }
 
 }

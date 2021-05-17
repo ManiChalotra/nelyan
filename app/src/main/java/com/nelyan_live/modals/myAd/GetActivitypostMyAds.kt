@@ -9,6 +9,8 @@ data class GetActivitypostMyAds(
         val country_code: String,
        /* val createdAt: String,*/
         val description: String,
+        val latitude: String,
+        val longitude: String,
         val events: ArrayList<EventMyAds>,
         val id: Int,
         /*val isPublished: Int,*/

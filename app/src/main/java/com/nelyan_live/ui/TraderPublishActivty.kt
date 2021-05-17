@@ -4,13 +4,13 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,21 +28,25 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.nelyan_live.R
-import com.nelyan_live.adapter.*
+import com.nelyan_live.adapter.TraderDetailsImageAdapter
+import com.nelyan_live.adapter.TraderShopsDaysAdapter
+import com.nelyan_live.adapter.TradersProductListAdapter
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.traderPostDetails.TraderDaysTiming
 import com.nelyan_live.modals.traderPostDetails.TraderProduct
 import com.nelyan_live.modals.traderPostDetails.Tradersimage
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.alert_share.*
-
 import kotlinx.android.synthetic.main.fragment_trader_publish.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-import java.util.ArrayList
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnClickListener, CoroutineScope {
@@ -201,8 +205,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     val jsonObject = JSONObject(mResponse)
 
                     val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
-
+                  /*  myCustomToast(message)
+*/
 
                     tv_shop_name.text = jsonObject.getJSONObject("data").get("nameOfShop").toString()
                     var traderTypeId= jsonObject.getJSONObject("data").get("typeofTraderId").toString()
@@ -223,12 +227,12 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         tv_trader_type.text = this.getString(R.string.gadget_repair)
                     }
                     tv_trader_desc.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_trader_phone.text = jsonObject.getJSONObject("data").get("country_code").toString() + "-" +
+                    tv_trader_phone.text = "+"+jsonObject.getJSONObject("data").get("country_code").toString() + "-" +
                             jsonObject.getJSONObject("data").get("phone").toString()
                     tv_trader_email.text = jsonObject.getJSONObject("data").get("email").toString()
                     tv_website.text = jsonObject.getJSONObject("data").get("website").toString()
-                    tv_trader_address.text = jsonObject.getJSONObject("data").get("address").toString() +" "+
-                            jsonObject.getJSONObject("data").get("city").toString()
+                    tv_trader_address.text = jsonObject.getJSONObject("data").get("address").toString() /*+" "+
+                            jsonObject.getJSONObject("data").get("city").toString()*/
 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
@@ -366,12 +370,25 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        val india = LatLng(48.946697, 2.153927)
-        mMap!!.addMarker(MarkerOptions()
-                .position(india)
-                .title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+        if (intent.extras !=null){
+
+
+            var lattti= intent.getStringExtra("latti")
+            var longi= intent.getStringExtra("longi")
+
+            if (!lattti.isNullOrEmpty() && longi.isNullOrEmpty()){
+                googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                val india = LatLng(lattti!!.toDouble(), longi!!.toDouble())
+                mMap!!.addMarker(MarkerOptions()
+                        .position(india)
+                        .title(getString(R.string.trader)))
+                //  mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+                val zoomLevel = 12.0f //This goes up to 21
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india, zoomLevel))
+            }
+
+        }
+
     }
 
     override fun onClick(v: View?) {

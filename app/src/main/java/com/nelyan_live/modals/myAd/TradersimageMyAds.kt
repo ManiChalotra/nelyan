@@ -1,5 +1,7 @@
 package com.nelyan_live.modals.myAd
 
+import java.io.Serializable
+
 data class TradersimageMyAds(
    /* val createdAt: String,*/
     val id: Int,
@@ -7,4 +9,4 @@ data class TradersimageMyAds(
     /*val mediaType: Int,*/
     val tradersId: Int,
     /*val updatedAt: String*/
-)
+) : Serializable

@@ -243,8 +243,10 @@ class HomeChildCareListActivity : AppCompatActivity(),View.OnClickListener, Adap
                 val message = jsonObject.get("msg").toString()
                 myCustomToast(message)
                 if (message.equals("You marked this Post as Your Favourite")){
+                    myCustomToast(getString(R.string.post_added_fav))
                     ivFavouritee!!.setImageResource(R.drawable.heart)
                 }else {
+                    myCustomToast(getString(R.string.post_fav_remove))
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
 

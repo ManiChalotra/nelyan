@@ -268,6 +268,35 @@ class AppViewModel : ViewModel() {
 
     }
 
+
+    //manu code.............................................
+    // get edit detail api
+    private var getEditDetailMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observerEditDetailResponse(): LiveData<Response<JsonObject>?>? {
+        if (getEditDetailMutableLiveData == null) {
+            getEditDetailMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return getEditDetailMutableLiveData
+    }
+
+    fun getEditDetailData(securityKey: String?,authkey:String?, type:String, postid:String) {
+        JsonPlaceHolder().getPostDetailAPI(securityKey, authkey, type, postid)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        getEditDetailMutableLiveData?.value = response
+                    }
+                })
+
+    }
+
     // get profile api
     private var profileMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 
@@ -713,9 +742,9 @@ class AppViewModel : ViewModel() {
     }
 
     fun send_addPostActivity_Data(securityKey: String?,authkey:String?, type: String, activityType:String, shopname:String, activityName:String,
-                                  description:String, /*message:String,*/ phone:String, address:String, city:String, latitude:String, longitude:String,
+                                  description:String, phone:String, address:String, city:String, latitude:String, longitude:String,
                                   ageGroup:String, addEvent:String, media:String, country_code:String) {
-        JsonPlaceHolder().get_addPOSt_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,/*message,*/phone,address,city,
+        JsonPlaceHolder().get_addPOSt_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description, phone,address,city,
                 latitude,longitude,ageGroup,addEvent,media, country_code)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -745,9 +774,10 @@ class AppViewModel : ViewModel() {
 
     fun send_editActivity_Data(securityKey: String?,authkey:String?, postId: String, type: String, activityType:String, shopname:String, activityName:String,
                                   description:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                                  ageGroup:String, addEvent:String, media:String, country_code:String) {
+                                  ageGroup:String, addEvent:String/*, media:String*/, country_code:String,image1:String,
+                               image2:String, image3:String) {
         JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,/*message,*/phone,address,city,
-                latitude,longitude,ageGroup,addEvent,media, country_code)
+                latitude,longitude,ageGroup,addEvent/*,media*/, country_code, image1, image2, image3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
@@ -785,6 +815,35 @@ class AppViewModel : ViewModel() {
                             response: Response<JsonObject>
                     ) {
                         addPostTraderMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    // edit post Trader api
+
+    private var editPostTraderMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeEditPostTraderResponse(): LiveData<Response<JsonObject>?>? {
+        if (editPostTraderMutableLiveData == null) {
+            editPostTraderMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return editPostTraderMutableLiveData
+    }
+
+    fun send_editPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
+                                  description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
+                               email:String, website:String, selectDay:String, productDetail:String, image1:String,
+    image2:String, image3: String, postId: String) {
+        JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        editPostTraderMutableLiveData?.value = response
                     }
                 })
     }
@@ -843,6 +902,36 @@ class AppViewModel : ViewModel() {
                             response: Response<JsonObject>
                     ) {
                         addMaternalPostMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    // edit post Maternal Assistant api
+
+    private var editMaternalPostMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observe_editMaternalPost_Response(): LiveData<Response<JsonObject>?>? {
+        if (editMaternalPostMutableLiveData == null) {
+            editMaternalPostMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return editMaternalPostMutableLiveData
+    }
+
+    fun editMaternalPost_Data(securityKey: String?,authkey:String?, type: String, childCareTypeId: String,  maternalName:String, email: String,
+                              website: String, noOfPlaces:String, countryCode:String, phone:String, address:String, description:String, city:String,
+                                latitude:String, longitude:String/*,  media:String*/, image1:String, image2:String,
+    image3:String, postid:String) {
+        JsonPlaceHolder().editMaternalPost_Api(securityKey, authkey,type, childCareTypeId, maternalName, email, website, noOfPlaces, countryCode, phone,
+                address, description, city,latitude,longitude,image1, image2, image3, postid)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        editMaternalPostMutableLiveData?.value = response
                     }
                 })
     }

@@ -243,7 +243,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     val jsonObject = JSONObject(mResponse)
 
                     val message = jsonObject.get("msg").toString()
+/*
                     myCustomToast(message)
+*/
 
 
                     tv_activity_title.text = jsonObject.getJSONObject("data").get("nameOfShop").toString()
@@ -251,7 +253,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_phntxt.text = jsonObject.getJSONObject("data").get("country_code").toString() + "-" + jsonObject.getJSONObject("data").get("phone").toString()
+                    tv_phntxt.text = "+"+jsonObject.getJSONObject("data").get("country_code").toString() + "-" +
+                            jsonObject.getJSONObject("data").get("phone").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_actvity_address.text = jsonObject.getJSONObject("data").get("address").toString()
 
@@ -455,7 +458,11 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 mMap!!.addMarker(MarkerOptions()
                         .position(india)
                         .title("Activity"))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+               // mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+                val zoomLevel = 12.0f //This goes up to 21
+
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india, zoomLevel))
+
             }
 
 

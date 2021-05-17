@@ -11,11 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
 import com.nelyan_live.modals.ModelPOJO
+import com.nelyan_live.utils.CommonMethodsKotlin
 import kotlinx.android.synthetic.main.item_event_add_more.view.*
+import java.lang.Double
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +28,12 @@ import java.util.*
 class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AddEventDataModel>,
                          var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.Adapter<EventRepeatAdapter.EventRepeatViewHolder>() 
 {
+    var fromTimeTimestamp = ""
+    var toTimeTimestamp = ""
+    var endDateTimestamp = ""
+    var startDateTimestamp = ""
+    private var isCurrentDate = ""
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventRepeatViewHolder {
         return EventRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_event_add_more, parent, false), listner)
@@ -39,6 +50,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
     inner class EventRepeatViewHolder(itemView: View, var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
 
         val addButton = itemView.tvAddMore
+        val tvDelete = itemView.tvDelete
         val image = itemView.ivEventimage
         val name = itemView.edtEventName
         val dateFrom = itemView.tv_cal
@@ -87,10 +99,29 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 name.clearFocus()
                 city.clearFocus()
                 listner!!.onAddEventItem(list, position)
+                fromTimeTimestamp=""
+                toTimeTimestamp=""
+            }
+
+
+            if (adapterPosition!= 0){
+                tvDelete.visibility = View.VISIBLE
+            }else{
+                tvDelete.visibility = View.GONE
+
+            }
+
+            tvDelete.setOnClickListener {
+                list.removeAt(position)
+                notifyDataSetChanged()
             }
 
 
             timeFrom.setOnClickListener {
+
+                timee("start")
+
+/*
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
@@ -102,20 +133,11 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
+*/
             }
 
             timeTo.setOnClickListener {
-                val mcurrentTime = Calendar.getInstance()
-                val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                   // timeTo.text = "$selectedHour:$selectedMinute"
-                    timeTo.setText(String.format("%02d:%02d", selectedHour, selectedMinute))
-                    list[position].timeTo = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
-                mTimePicker.setTitle(context.getString(R.string.select_time))
-                mTimePicker.show()
+                timee("end")
             }
 
 
@@ -160,6 +182,8 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             })
         }
 
+
+
         private fun select_date_register_popup( position: Int, type: String) {
              select_date=""
             val mYear: Int
@@ -193,8 +217,42 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                         Log.e("date_timestamp", date_timestamp)
                         select_date = day + "/" + month + "/" + selectedyear
 
+                val mFormat = DecimalFormat("00")
+                mFormat.format(Double.valueOf(year.toDouble()))
 
-                if (type.equals("1")){
+                mFormat.roundingMode = RoundingMode.UP
+                val Dates = (mFormat.format(Double.valueOf(day.toDouble())) + "/" + mFormat.format(Double.valueOf((month + 1).toDouble()))
+                        + "/" + mFormat.format(Double.valueOf(year.toDouble())))
+
+
+                if (type.equals("1")) {
+                    list.get(position).dateFrom = select_date
+                    notifyDataSetChanged()
+
+                    startDateTimestamp = CommonMethodsKotlin.calender_date_to_timestamp(Dates).toString()
+
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+
+                    val dateString = dateFormat.format(mcurrentDate.getTime())
+                    if (Dates.equals(dateString)){
+                        isCurrentDate="Yes"
+                        Log.e("isCurrentDate", isCurrentDate)
+                    }else {
+                        isCurrentDate="No"
+                        Log.e("isCurrentDate", isCurrentDate)
+                    }
+
+
+                } else {
+                    list.get(position).dateTo = select_date
+                    notifyDataSetChanged()
+                    endDateTimestamp = CommonMethodsKotlin.calender_date_to_timestamp(Dates).toString()
+                }
+
+
+
+/*
+                if (type.equals("start")){
                     list.get(position).dateFrom = select_date
                     notifyDataSetChanged()
                 } else if (type.equals("2")){
@@ -202,12 +260,64 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                     notifyDataSetChanged()
 
                 }
+*/
                     }, mYear, mMonth, mDay
             )
             mDatePicker.datePicker.minDate = System.currentTimeMillis()
             if (!mDatePicker.isShowing) {
                 mDatePicker.show()
             }
+        }
+
+
+        fun timee(type: String) {
+            val cal = Calendar.getInstance()
+            val c = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+
+                var a = SimpleDateFormat("HH:mm").format(cal.time)
+
+
+                if (isCurrentDate.equals("Yes")) {
+                    if (cal.getTimeInMillis() >= c.getTimeInMillis()) {
+                        //it's after current
+                        if (type.equals("start")) {
+                            fromTimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                            timeFrom.text = SimpleDateFormat("HH:mm").format(cal.time)
+                            list[adapterPosition].timeFrom = timeFrom.text.toString()
+
+                        } else {
+                            toTimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                            timeTo.text = SimpleDateFormat("HH:mm").format(cal.time)
+                            list[adapterPosition].timeTo = timeTo.text.toString()
+                        }
+
+                    } else {
+                        //it's before current'
+                        Toast.makeText(context, "Invalid Time", Toast.LENGTH_SHORT).show()
+                     }
+                } else {
+                    if (type.equals("start")) {
+                        timeFrom.text = SimpleDateFormat("hh:mm a").format(cal.time)
+                        fromTimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                        list[adapterPosition].timeFrom = timeTo.text.toString()
+                        Log.e("startTimeTimestamp", fromTimeTimestamp)
+
+                    } else {
+                        timeTo.text = SimpleDateFormat("hh:mm a").format(cal.time)
+                        toTimeTimestamp = (CommonMethodsKotlin.time_to_timestamp(a, "HH:mm")).toString()
+                        Log.e("endTimeTimestamp", toTimeTimestamp)
+                        list[adapterPosition].timeTo = timeTo.text.toString()
+                    }
+
+                }
+
+                //    }
+
+            }
+            TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
         }
 
 

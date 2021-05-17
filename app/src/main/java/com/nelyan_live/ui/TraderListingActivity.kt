@@ -142,8 +142,10 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 val message = jsonObject.get("msg").toString()
                 myCustomToast(message)
                 if (message.equals("You marked this Post as Your Favourite")){
+                    myCustomToast(getString(R.string.post_added_fav))
                     ivFavourite.setImageResource(R.drawable.heart)
                 }else {
+                    myCustomToast(getString(R.string.post_fav_remove))
                     ivFavourite.setImageResource(R.drawable.heart_purple)
                 }
 
@@ -202,9 +204,11 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
         }
     }
 
-    override fun onTraderListItemClickListner(position: Int, postId: String) {
+    override fun onTraderListItemClickListner(position: Int, postId: String, latitude: String, longitude: String) {
         OpenActivity(TraderPublishActivty::class.java){
             putString("postId", postId)
+            putString("latti", latitude)
+            putString("longi", longitude)
         }
     }
 

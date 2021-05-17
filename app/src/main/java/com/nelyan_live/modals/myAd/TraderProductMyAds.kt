@@ -1,12 +1,14 @@
 package com.nelyan_live.modals.myAd
 
+import java.io.Serializable
+
 data class TraderProductMyAds(
-    val createdAt: String,
-    val description: String,
-    val id: Int,
-    val image: String,
-    val price: String,
-    val title: String,
-    val traderId: Int,
-    val updatedAt: String
-)
+  /*  val createdAt: String,*/
+    var description: String,
+    var id: Int,
+    var image: String,
+    var price: String,
+    var title: String,
+    var traderId: Int,
+    /*val updatedAt: String*/
+) :Serializable

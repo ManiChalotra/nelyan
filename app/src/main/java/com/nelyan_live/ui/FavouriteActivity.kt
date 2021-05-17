@@ -162,16 +162,20 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 val message = jsonObject.get("msg").toString()
                 myCustomToast(message)
                 if (selectedFavType.equals("Event")){
-                    if (message.equals("You marked this Post as Your Favourite")){
+                    if (message.equals("You marked this Event as Your Favourite")){
+                        myCustomToast(getString(R.string.event_fav_added))
                         ivFavouriteeEvent!!.setImageResource(R.drawable.heart)
                     }else {
+                        myCustomToast(getString(R.string.event_fav_remove))
                         ivFavouriteeEvent!!.setImageResource(R.drawable.heart_purple)
                     }
 
                 } else if (selectedFavType.equals("Ads")){
                     if (message.equals("You marked this Post as Your Favourite")){
+                        myCustomToast(getString(R.string.post_added_fav))
                         ivFavouriteePost!!.setImageResource(R.drawable.heart)
                     }else {
+                        myCustomToast(getString(R.string.post_fav_remove))
                         ivFavouriteePost!!.setImageResource(R.drawable.heart_purple)
                     }
 

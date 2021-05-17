@@ -216,7 +216,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         if (maternalName.isEmpty()) {
                             myCustomToast(getString(R.string.maternal_missing_error))
                         } else {
-                            if (placeSpin.isEmpty()) {
+                            if (placeSpin.isEmpty() || placeSpin.equals("0")) {
                                 myCustomToast(getString(R.string.places_number_error))
                             } else {
                                 if (phoneNumber.isEmpty()) {
@@ -270,8 +270,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     }
 
                 }
-
-
             }
 
 
@@ -500,9 +498,12 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 Log.d("addMaternalPostResopnse", "-----------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     progressDialog.hidedialog()
+                    val mResponse = response.body().toString()
+                    var jsonObject = JSONObject(mResponse)
+                    myCustomToast("Post Added Successfully")
+
                     finishAffinity()
                     OpenActivity(HomeActivity::class.java)
-                    myCustomToast(response.message())
                 }
             } else {
                 progressDialog.hidedialog()

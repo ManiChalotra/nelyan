@@ -60,7 +60,7 @@ class TraderListingAdapter(var context: Context, internal var traderPostList: Ar
 
             tvEmail.text = traderPostList.email
             tvTraderdesc.text = traderPostList.description
-            phone.text = traderPostList.country_code+"-"+traderPostList.phone
+            phone.text = "+"+traderPostList.country_code+"-"+traderPostList.phone
             tvAddress.text = traderPostList.address+" "+traderPostList.city
 
             if (traderPostList.tradersimages.size >0)
@@ -82,14 +82,14 @@ class TraderListingAdapter(var context: Context, internal var traderPostList: Ar
             }
 
             llTraderDetails.setOnClickListener {
-                listner!!.onTraderListItemClickListner(adapterPosition, traderPostList.id.toString())
+                listner!!.onTraderListItemClickListner(adapterPosition, traderPostList.id.toString(), traderPostList.latitude, traderPostList.longitude)
 
             }
         }
     }
 
     interface OnTraderItemClickListner {
-        fun onTraderListItemClickListner(position: Int , postId: String)
+        fun onTraderListItemClickListner(position: Int , postId: String, latitude: String, longitude: String)
         fun onFavouriteItemClickListner(position: Int, postID: String, favourite: ImageView)
     }
 }

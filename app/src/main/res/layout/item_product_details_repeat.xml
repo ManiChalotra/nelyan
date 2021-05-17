@@ -60,7 +60,7 @@
     <TextView
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="@string/product_price" />
+        android:text="@string/product_price1" />
 
     <EditText
         android:id="@+id/edtProductPrice"
@@ -82,6 +82,7 @@
         android:id="@+id/edtDesc"
         style="@style/SimpleEdittext"
         android:imeOptions="actionDone"
+        android:maxLines="4"
         android:hint="@string/description" />
 
     <View

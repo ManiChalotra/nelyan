@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.meherr.mehar.data.viewmodel.AppViewModel
 import com.nelyan_live.R
@@ -28,7 +27,6 @@ import com.nelyan_live.modals.myAd.*
 
 
 import com.nelyan_live.utils.*
-import kotlinx.android.synthetic.main.activity_home_child_care_list.*
 import kotlinx.android.synthetic.main.activity_myadd.*
 import kotlinx.android.synthetic.main.alert_add_post_restiction.*
 import kotlinx.coroutines.CoroutineScope
@@ -54,21 +52,25 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     var rvTraderMyads: RecyclerView? = null
     var job = Job()
     private var authorization = ""
-    var categoryId=""
-    var actvitiesPos=0
-    var tradersPos=0
-    var childdcarePos=0
+    var categoryId = ""
+    var actvitiesPos = 0
+    var tradersPos = 0
+    var childdcarePos = 0
     private val datalist by lazy { ArrayList<GetActivitypostMyAds>() }
     private val childCarelist by lazy { ArrayList<GetChildcarePostMyAds>() }
     private val traderlist by lazy { ArrayList<GetTraderMyAds>() }
     private val activityImageMyAdsList by lazy { ArrayList<ActivityimageMyAds>() }
     private val childCareImageList by lazy { ArrayList<ChildCareImageMyAds>() }
     private val traderImageList by lazy { ArrayList<TradersimageMyAds>() }
+    private val traderdayTimeList by lazy { ArrayList<TraderDaysTimingMyAds>() }
+    private val traderProductList by lazy { ArrayList<TraderProductMyAds>() }
     private val ageGroupMyAdsList by lazy { ArrayList<AgeGroupMyAds>() }
     private val eventMyAdsList by lazy { ArrayList<EventMyAds>() }
     private var activityImagesJsonArray: JSONArray = JSONArray()
     private var childCareImagesJsonArray: JSONArray = JSONArray()
     private var traderImagesJsonArray: JSONArray = JSONArray()
+    private var traderProductsJsonArray: JSONArray = JSONArray()
+    private var traderDaytimeJsonArray: JSONArray = JSONArray()
 
     private var ageGroupJsonArray: JSONArray = JSONArray()
     private var evenytsJsonArray: JSONArray = JSONArray()
@@ -123,7 +125,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
             authorization = AllSharedPref.restoreString(this, "auth_key")
             appViewModel.sendMyAdsListData(security_key, authorization)
             myads_progressBar?.showProgressBar()
-          //  checkMvvmResponse()
+            //  checkMvvmResponse()
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
@@ -174,61 +176,61 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                     val mSizeOfTrader = jsonObject.getJSONObject("data").getJSONArray("GetTrader").length()
 
                     /*List of My ads Activities*/
-                   /* for (i in 0 until mSizeOfData) {
-                        if (mSizeOfData != 0) {
-                            val postID = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("id").toString()
-                            val userId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("userId").toString()
-                            val categoryId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("categoryId").toString()
-                            val typeofActivityId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("typeofActivityId").toString()
-                            val activityName = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("activityname").toString()
-                            val nameOfShop = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("nameOfShop").toString()
-                            val description = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("description").toString()
-                            val adMsg = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("adMsg").toString()
-                            val phone = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("phone").toString()
-                            val countryCode = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("country_code").toString()
-                            val city = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("city").toString()
-                            val address = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).get("address").toString()
+                    /* for (i in 0 until mSizeOfData) {
+                         if (mSizeOfData != 0) {
+                             val postID = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("id").toString()
+                             val userId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("userId").toString()
+                             val categoryId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("categoryId").toString()
+                             val typeofActivityId = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("typeofActivityId").toString()
+                             val activityName = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("activityname").toString()
+                             val nameOfShop = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("nameOfShop").toString()
+                             val description = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("description").toString()
+                             val adMsg = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("adMsg").toString()
+                             val phone = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("phone").toString()
+                             val countryCode = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("country_code").toString()
+                             val city = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("city").toString()
+                             val address = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).get("address").toString()
 
-                            activityImagesJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).getJSONArray("activityimages")
-                            ageGroupJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).getJSONArray("ageGroups")
-                            evenytsJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
-                                    .getJSONObject(i).getJSONArray("events")
+                             activityImagesJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).getJSONArray("activityimages")
+                             ageGroupJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).getJSONArray("ageGroups")
+                             evenytsJsonArray = jsonObject.getJSONObject("data").getJSONArray("getActivitypost")
+                                     .getJSONObject(i).getJSONArray("events")
 
 
 
-                            if (activityImageMyAdsList != null) {
-                                activityImageMyAdsList!!.clear()
-                            }
+                             if (activityImageMyAdsList != null) {
+                                 activityImageMyAdsList!!.clear()
+                             }
 
-                            if (activityImagesJsonArray != null) {
-                                for (j in 0 until activityImagesJsonArray.length()) {
+                             if (activityImagesJsonArray != null) {
+                                 for (j in 0 until activityImagesJsonArray.length()) {
 
-                                    val image = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
-                                    getJSONArray("activityimages").getJSONObject(j).get("images").toString()
-                                    val id = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
-                                    getJSONArray("activityimages").getJSONObject(j).get("id").toString().toInt()
-                                    val activityID = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
-                                    getJSONArray("activityimages").getJSONObject(j).get("activityId").toString().toInt()
-                                    val mediaType = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
-                                    getJSONArray("activityimages").getJSONObject(j).get("mediaType").toString().toInt()
-                                    activityImageMyAdsList.add(ActivityimageMyAds(activityID, id, image, mediaType))
-                                }
-                            }
-*//*
+                                     val image = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
+                                     getJSONArray("activityimages").getJSONObject(j).get("images").toString()
+                                     val id = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
+                                     getJSONArray("activityimages").getJSONObject(j).get("id").toString().toInt()
+                                     val activityID = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
+                                     getJSONArray("activityimages").getJSONObject(j).get("activityId").toString().toInt()
+                                     val mediaType = jsonObject.getJSONObject("data").getJSONArray("getActivitypost").getJSONObject(i).
+                                     getJSONArray("activityimages").getJSONObject(j).get("mediaType").toString().toInt()
+                                     activityImageMyAdsList.add(ActivityimageMyAds(activityID, id, image, mediaType))
+                                 }
+                             }
+ *//*
                             datalist!!.add(GetActivitypostMyAds(activityImageMyAdsList, activityName, categoryId.toInt(), countryCode, description,
                                     postID.toInt(), nameOfShop, phone, typeofActivityId.toInt(), userId.toInt(), address, city ))
 *//*
@@ -276,6 +278,10 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                     .getJSONObject(i).get("phone").toString()
                             val city = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts")
                                     .getJSONObject(i).get("city").toString()
+                            val latitude = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts")
+                                    .getJSONObject(i).get("latitude").toString()
+                            val longitude = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts")
+                                    .getJSONObject(i).get("longitude").toString()
                             val countryCode = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts")
                                     .getJSONObject(i).get("countryCode").toString()
 
@@ -293,17 +299,15 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
                                     val image = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts").getJSONObject(i)
                                             .getJSONArray("ChildCareImages").getJSONObject(j).get("image").toString()
-                                    val id = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts").getJSONObject(i).
-                                    getJSONArray("ChildCareImages").getJSONObject(j).get("id").toString().toInt()
-                                    val postId = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts").getJSONObject(i).
-                                    getJSONArray("ChildCareImages").getJSONObject(j).get("postId").toString().toInt()
+                                    val id = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts").getJSONObject(i).getJSONArray("ChildCareImages").getJSONObject(j).get("id").toString().toInt()
+                                    val postId = jsonObject.getJSONObject("data").getJSONArray("getChildcarePosts").getJSONObject(i).getJSONArray("ChildCareImages").getJSONObject(j).get("postId").toString().toInt()
 
                                     childCareImageList.add(ChildCareImageMyAds(id, image, postId))
                                 }
                             }
 
                             childCarelist!!.add(GetChildcarePostMyAds(childCareImageList, childcareType.toInt(), availableplace.toInt(), city, countryCode, description,
-                                    postID.toInt(), name, phone, postID.toInt(), userId.toInt()))
+                                    postID.toInt(), latitude, longitude, name, phone, postID.toInt(), userId.toInt()))
                         }
                     }
 
@@ -331,6 +335,10 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                     .getJSONObject(i).get("nameOfShop").toString()
                             val description = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
                                     .getJSONObject(i).get("description").toString()
+                            val latitude = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                    .getJSONObject(i).get("latitude").toString()
+                            val longitude = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                    .getJSONObject(i).get("longitude").toString()
                             val address = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
                                     .getJSONObject(i).get("address").toString()
                             val email = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
@@ -346,6 +354,12 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
                             traderImagesJsonArray = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
                                     .getJSONObject(i).getJSONArray("tradersimages")
+
+                            traderDaytimeJsonArray = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                    .getJSONObject(i).getJSONArray("traderDaysTimings")
+
+                            traderProductsJsonArray = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                    .getJSONObject(i).getJSONArray("traderProducts")
 
 
 
@@ -364,9 +378,48 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                     traderImageList.add(TradersimageMyAds(id, image, tradersId))
                                 }
                             }
+                            if (traderDaytimeJsonArray != null) {
+                                for (j in 0 until traderDaytimeJsonArray.length()) {
+
+                                    val id = jsonObject.getJSONObject("data").getJSONArray("GetTrader").getJSONObject(i).getJSONArray("traderDaysTimings")
+                                            .getJSONObject(j).get("id").toString().toInt()
+                                    val traderId = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("traderId").toString().toInt()
+                                    val day = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("day").toString()
+                                    val startTime = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("startTime").toString()
+                                    val endTime = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("endTime").toString()
+
+                                    val secondStartTime = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("secondStartTime").toString()
+
+                                    val secondEndTime = jsonObject.getJSONObject("data").getJSONArray("GetTrader")
+                                            .getJSONObject(i).getJSONArray("traderDaysTimings").getJSONObject(j).get("secondEndTime").toString()
+
+
+
+                                    traderdayTimeList.add(TraderDaysTimingMyAds(day, endTime, id, secondEndTime, secondStartTime, startTime, traderId))
+                                }
+                            }
+                            if (traderProductsJsonArray != null) {
+                                for (j in 0 until traderProductsJsonArray.length()) {
+
+                                    val id = traderProductsJsonArray.getJSONObject(j).get("id").toString().toInt()
+                                    val traderId = traderProductsJsonArray.getJSONObject(j).get("traderId").toString().toInt()
+                                    val image = traderProductsJsonArray.getJSONObject(j).get("image").toString()
+                                    val title = traderProductsJsonArray.getJSONObject(j).get("title").toString()
+                                    val price = traderProductsJsonArray.getJSONObject(j).get("price").toString()
+                                    val description = traderProductsJsonArray.getJSONObject(j).get("description").toString()
+
+                                    traderProductList.add(TraderProductMyAds(description,  id, image, price, title, traderId))
+                                }
+                            }
 
                             traderlist!!.add(GetTraderMyAds(address, categoryId.toInt(), city, countryCode, description, email,
-                                    postID.toInt(), nameOfShop, phone, tradername, traderImageList, typeofTraderId.toInt(), userId.toInt(), website))
+                                    postID.toInt(), latitude, longitude, nameOfShop, phone, traderdayTimeList, traderProductList, tradername,
+                                    traderImageList, typeofTraderId.toInt(), userId.toInt(), website, ))
                         }
                     }
 
@@ -376,37 +429,37 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                     }
 
 
-                    if (selectedTypeAds.equals("2")){
-                        if (childCarelist.size !=0){
+                    if (selectedTypeAds.equals("2")) {
+                        if (childCarelist.size != 0) {
                             recyclerview!!.visibility = View.VISIBLE
                             tv_no_ad!!.visibility = View.GONE
                             setChildCareAdaptor(childCarelist)
                             myAdsChildCareAdapter!!.notifyDataSetChanged()
 
-                        }else{
+                        } else {
                             recyclerview!!.visibility = View.GONE
                             tv_no_ad!!.visibility = View.VISIBLE
                         }
 
-                    }else if (selectedTypeAds.equals("3")){
-                        if (traderlist.size !=0){
+                    } else if (selectedTypeAds.equals("3")) {
+                        if (traderlist.size != 0) {
                             recyclerview!!.visibility = View.VISIBLE
                             tv_no_ad!!.visibility = View.GONE
                             setTraderAdaptor(traderlist)
                             myAdsTraderAdapter!!.notifyDataSetChanged()
 
-                        }else{
+                        } else {
                             recyclerview!!.visibility = View.GONE
                             tv_no_ad!!.visibility = View.VISIBLE
                         }
-                    }else if (selectedTypeAds.equals("1")){
-                        if (datalist.size !=0){
+                    } else if (selectedTypeAds.equals("1")) {
+                        if (datalist.size != 0) {
                             recyclerview!!.visibility = View.VISIBLE
                             tv_no_ad!!.visibility = View.GONE
                             setAdaptor(datalist)
                             myAddAdapter!!.notifyDataSetChanged()
 
-                        }else{
+                        } else {
                             recyclerview!!.visibility = View.GONE
                             tv_no_ad!!.visibility = View.VISIBLE
 
@@ -428,7 +481,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                 val message = jsonObject.get("msg").toString()
                 myCustomToast(message)
 
-                if (categoryId.equals("2")){
+                if (categoryId.equals("2")) {
                     childCarelist.removeAt(childdcarePos)
                     myAdsChildCareAdapter!!.notifyDataSetChanged()
                     Log.e("deleteListSize", childCarelist.size.toString())
@@ -442,7 +495,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
                     }
 
-                }else if (categoryId.equals("1")){
+                } else if (categoryId.equals("1")) {
 
                     datalist.removeAt(actvitiesPos)
                     myAddAdapter!!.notifyDataSetChanged()
@@ -458,7 +511,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                     }
 
 
-                }else if (categoryId.equals("3")){
+                } else if (categoryId.equals("3")) {
                     traderlist.removeAt(tradersPos)
                     myAdsTraderAdapter!!.notifyDataSetChanged()
                     Log.e("deleteListSize", traderlist.size.toString())
@@ -517,7 +570,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                 if (userType.equals("2")) {
                     val i = Intent(this@MyAddActivity, PubilerActivity::class.java)
                     startActivity(i)
-                }else {
+                } else {
                     consultantUserDialogMethod()
                 }
             }
@@ -528,9 +581,26 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     }
 
     override fun onChildCareDeleteAdClick(position: Int, adID: String?) {
-         categoryId="2"
-        childdcarePos=position
+        categoryId = "2"
+        childdcarePos = position
         hitDeleteMyadsApi(position, adID, categoryId)
+    }
+
+    override fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String, description: String, countryCode: String,
+                               phoneNumber: String, city: String, childCareImageList: ArrayList<ChildCareImageMyAds>, lattude: String, longitude:String) {
+        var intent = Intent(mContext, EditBabySitterActivity::class.java)
+        intent.putExtra("adID", adID)
+        intent.putExtra("childType", childTypeId)
+        intent.putExtra("name", name)
+        intent.putExtra("noofplaces", noofplaces)
+        intent.putExtra("description", description)
+        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("city", city)
+        intent.putExtra("childCareImageList", childCareImageList)
+        intent.putExtra("latitude", lattude)
+        intent.putExtra("longitude", longitude)
+        startActivity(intent)
     }
 
 
@@ -554,14 +624,9 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
         consultantUserDialog!!.show()
     }
 
-
-    override fun onEditAdClick(position: Int, adID: String?) {
-
-    }
-
     override fun onActivitiesDeleteAdClick(position: Int, adID: String?) {
-        categoryId="1"
-        actvitiesPos=position
+        categoryId = "1"
+        actvitiesPos = position
         hitDeleteMyadsApi(position, adID, categoryId)
 
     }
@@ -569,32 +634,52 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     override fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String,
                                          nameofActivity: String, description: String, countryCode: String, phoneNumber: String,
                                          address: String, city: String, ageGroupListMyAds: ArrayList<AgeGroupMyAds>,
-                                         activityimagesList: ArrayList<ActivityimageMyAds>, eventMyAdsList: ArrayList<EventMyAds>) {
+                                         activityimagesList: ArrayList<ActivityimageMyAds>, eventMyAdsList: ArrayList<EventMyAds>,
+                                         latitude: String, longitude: String) {
 
-          var intent =Intent(mContext, EditActivity::class.java)
-          intent.putExtra("adID", adID)
-          intent.putExtra("activityTypeId", activityTypeId)
-          intent.putExtra("nameofShop", nameofShop)
-          intent.putExtra("nameofActivity", nameofActivity)
-          intent.putExtra("description", description)
-          intent.putExtra("countryCode", countryCode)
-          intent.putExtra("phoneNumber", phoneNumber)
-          intent.putExtra("address", address)
-          intent.putParcelableArrayListExtra("ageGroupList", ageGroupListMyAds)
-          intent.putParcelableArrayListExtra("activityimagesList", activityimagesList)
-          intent.putParcelableArrayListExtra("eventMyAdsList", eventMyAdsList)
-          startActivity(intent)
+        var intent = Intent(mContext, EditActivity::class.java)
+        intent.putExtra("adID", adID)
+        intent.putExtra("activityTypeId", activityTypeId)
+        intent.putExtra("nameofShop", nameofShop)
+        intent.putExtra("nameofActivity", nameofActivity)
+        intent.putExtra("description", description)
+        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("address", address)
+        intent.putParcelableArrayListExtra("ageGroupList", ageGroupListMyAds)
+        intent.putParcelableArrayListExtra("activityimagesList", activityimagesList)
+        intent.putParcelableArrayListExtra("eventMyAdsList", eventMyAdsList)
+        intent.putExtra("latitude", latitude)
+        intent.putExtra("longitude", longitude)
+        startActivity(intent)
     }
 
 
     override fun onTraderAdDeleteAdClick(position: Int, adID: String?) {
-        categoryId="3"
-        tradersPos=position
+        categoryId = "3"
+        tradersPos = position
         hitDeleteMyadsApi(position, adID, categoryId)
 
     }
 
-    override fun onEditTraderAdClick(position: Int, adID: String?) {
+    override fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String, description: String, countryCode: String,
+                                     phoneNumber: String, address: String, email: String, website: String, traderImageList: ArrayList<TradersimageMyAds>,
+                                     daytimeList: ArrayList<TraderDaysTimingMyAds>, traderProductList: ArrayList<TraderProductMyAds>) {
+        var intent = Intent(mContext, EditTraderActivity::class.java)
+        intent.putExtra("adID", adID)
+        intent.putExtra("traderTypeId", traderTypeId)
+        intent.putExtra("nameofShop", nameofShop)
+        intent.putExtra("description", description)
+        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("address", address)
+        intent.putExtra("email", email)
+        intent.putExtra("website", website)
+        intent.putExtra("traderImageList", traderImageList)
+        intent.putExtra("daytimeList", daytimeList)
+        intent.putExtra("traderProductList", traderProductList)
+        startActivity(intent)
 
     }
+
 }
