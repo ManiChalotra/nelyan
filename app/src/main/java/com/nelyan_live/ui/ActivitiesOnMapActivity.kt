@@ -1,19 +1,15 @@
 package com.nelyan_live.ui
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.homeactivitylist.Activityimage

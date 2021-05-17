@@ -1,17 +1,13 @@
 package com.nelyan_live.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
@@ -21,7 +17,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.utils.*
@@ -39,7 +35,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
-import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.io.File
 import java.util.*
 import kotlin.coroutines.CoroutineContext

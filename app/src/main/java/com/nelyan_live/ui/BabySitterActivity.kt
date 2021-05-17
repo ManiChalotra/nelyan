@@ -17,7 +17,7 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel

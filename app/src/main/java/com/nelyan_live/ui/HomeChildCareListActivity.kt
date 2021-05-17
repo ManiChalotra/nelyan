@@ -18,13 +18,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.AppUtils
 import com.nelyan_live.R
 import com.nelyan_live.adapter.HomeChildCareListAdapter
-import com.nelyan_live.fragments.ChildCareFragment
-import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyan_live.modals.homechildcare.HomeChiildCareREsponse
 import com.nelyan_live.modals.homechildcare.HomeChildCareeData
 

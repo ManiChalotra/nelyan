@@ -9,12 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.meherr.mehar.data.viewmodel.AppViewModel
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
-import com.nelyan_live.modals.homeSectorization.GetPrivate
-import com.nelyan_live.modals.homeSectorization.GetPublic
 
 class SectorizationActivity : AppCompatActivity(), View.OnClickListener {
     var mContext: Context? = null

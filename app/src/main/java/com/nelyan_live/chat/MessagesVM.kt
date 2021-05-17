@@ -49,12 +49,28 @@ class MessagesVM :ViewModel() {
                                     .putExtra("senderID", listMembers[position].user_id)
                                     .putExtra("senderName", listMembers[position].userName)
                                     .putExtra("senderImage", listMembers[position].userImage)
+                                    .putExtra("userId", userId)
                             )
 
                     }
                 } }
         })
     }
+
+    fun onClick(view:View,s:String){
+        when(s){
+            "noData"->{
+
+              /*  view.context.startActivity(
+                        Intent(view.context, Chat1Activity::class.java)
+                                .putExtra("senderID", "187")
+                                .putExtra("senderName", "kamal")
+                                .putExtra("senderImage", "dsffds")
+                )*/
+            }
+        }
+    }
+
 
     fun connectSocket(context:Context) {
 

@@ -1,7 +1,6 @@
 package com.nelyan_live.ui
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -19,15 +18,12 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
-import com.nelyan_live.modals.homeactivitylist.HomeActivityResponse
 import com.nelyan_live.modals.homechildcare.HomeChiildCareREsponse
 import com.nelyan_live.modals.homechildcare.HomeChildCareeData
 import com.nelyan_live.utils.*
-import kotlinx.android.synthetic.main.filter_activity.*
 
 import kotlinx.android.synthetic.main.fragment_child_care.*
 import kotlinx.android.synthetic.main.fragment_child_care.et_location

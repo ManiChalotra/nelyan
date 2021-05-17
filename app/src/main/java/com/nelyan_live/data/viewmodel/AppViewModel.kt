@@ -1,4 +1,4 @@
-package com.meherr.mehar.data.viewmodel
+package com.nelyan_live.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 import com.meherr.mehar.data.network.JsonPlaceHolder
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
-import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -246,7 +244,7 @@ class AppViewModel : ViewModel() {
 
     fun observerMyAdsListResponse(): LiveData<Response<JsonObject>?>? {
         if (myAdsListMutableLiveData == null) {
-            myAdsListMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            myAdsListMutableLiveData = MutableLiveData()
         }
         return myAdsListMutableLiveData
     }

@@ -35,16 +35,16 @@ object BindingAdapter {
     }
 
 
-    @BindingAdapter(value = ["setChatVisibility"], requireAll = false)
+    @BindingAdapter(value = ["setChatVisibility","setUserID"], requireAll = false)
     @JvmStatic
-    fun setChatVisibility(ll: View, str: String) {
+    fun setChatVisibility(ll: View, str: String, userId: String) {
 
 
 
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
         Log.e("dsfgasdfasdfadsf", "====$33333=====${str}")
 
-        if(str=="")
+        if(str==userId)
         {
             ll.visibility = View.GONE
         }

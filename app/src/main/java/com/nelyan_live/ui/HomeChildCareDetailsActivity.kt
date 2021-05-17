@@ -12,7 +12,6 @@ import android.widget.*
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.share.model.ShareHashtag
 import com.facebook.share.model.ShareLinkContent
@@ -24,13 +23,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.ChildCareDetailsImageAdapter
 
 
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.modals.DetailsImageModal
 import com.nelyan_live.modals.childcarePostdetails.ChildCareImage
 
 import com.nelyan_live.utils.*

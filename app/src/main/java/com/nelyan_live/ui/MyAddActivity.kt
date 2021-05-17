@@ -15,9 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyAddAdapter
 import com.nelyan_live.adapter.MyAdsChildCareAdapter
@@ -28,7 +27,6 @@ import com.nelyan_live.modals.myAd.*
 
 
 import com.nelyan_live.utils.*
-import kotlinx.android.synthetic.main.activity_home_child_care_list.*
 import kotlinx.android.synthetic.main.activity_myadd.*
 import kotlinx.android.synthetic.main.alert_add_post_restiction.*
 import kotlinx.coroutines.CoroutineScope

@@ -86,7 +86,6 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
         setAnimation(holder, position)
     }
 
-
     class VH<T : AbstractModel>(private val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: T) {

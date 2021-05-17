@@ -17,6 +17,7 @@ data class ChatData(
     var recieverName: String = "",
     var recieverImage: String = "",
     var senderName: String = "",
-    var senderImage: String = ""
+    var senderImage: String = "",
+    var myID: String = ""
 
 ) : AbstractModel()

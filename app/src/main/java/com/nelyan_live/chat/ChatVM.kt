@@ -25,6 +25,7 @@ class ChatVM :ViewModel() {
     lateinit var ctx: Context
     lateinit var rvChat: RecyclerView
     var senderID =""
+    var userId =""
     var block ="0"
 
     var message : ObservableField<String> = ObservableField("")
@@ -64,8 +65,8 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
-            json.put("userId", 180)
-            json.put("user2Id", 114)
+            json.put("senderId", userId)
+            json.put("receiverId", senderID)
             json.put("messageType", 0)
             json.put("message", message.get().toString())
             socket.emit("send_message",json)
@@ -83,7 +84,7 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
-            json.put("userId", "")
+            json.put("userId", userId)
             json.put("user2Id", senderID)
             socket.emit("delete_chat",json)
 
@@ -99,7 +100,7 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
-            json.put("userId", "")
+            json.put("userId", userId)
             json.put("user2Id", senderID)
             json.put("status", if(s=="Block") "1" else "0")
             socket.emit("block_user",json)
@@ -136,7 +137,7 @@ class ChatVM :ViewModel() {
 
         ctx = context
         try{
-            socket = IO.socket("http://202.164.42.227:2210")
+            socket = IO.socket("http://3.13.214.27:1052")
             socket.on(Socket.EVENT_CONNECT, onConnect)
             socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
             socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
@@ -144,8 +145,8 @@ class ChatVM :ViewModel() {
 
             socket.on("connect_user", connectListener)
             socket.on("connect_listener", connectListener)
-            socket.on("get_chat", chatList)
-            socket.on("my_chat", chatList)
+            socket.on("get_message", chatList)
+            socket.on("get_data_message", chatList)
             socket.on("send_message", newMessage)
             socket.on("new_message", newMessage)
             socket.on("block_user", blockData)
@@ -257,10 +258,11 @@ class ChatVM :ViewModel() {
                     json.getString("deletedId"),
                     json.getString("created"),
                     json.getString("updated"),
-                    json.getString("receiverName"),
-                    json.getString("receiverImage"),
+                    json.getString("recieverName"),
+                    json.getString("recieverImage"),
                     json.getString("senderName"),
-                    json.getString("senderImage")
+                    json.getString("senderImage"),
+                    userId
 
                 ))
             }
@@ -272,6 +274,8 @@ class ChatVM :ViewModel() {
                     listChat.clear()
                     listChat.addAll(listData)
                     chatAdapter.addItems(listChat)
+                    rvChat.scrollToPosition(listChat.size-1)
+
                     Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
 
                     if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
@@ -340,9 +344,10 @@ class ChatVM :ViewModel() {
                 json.getString("created"),
                 json.getString("updated"),
                 "",
-                json.getString("receiverImage"),
+                json.getString("recieverImage"),
                 json.getString("senderName"),
-                json.getString("senderImage")
+                json.getString("senderImage"),
+                    userId
 
             ))
 
@@ -388,9 +393,9 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try{
 
-            Log.e("socket=connectUser", "180")
+            Log.e("socket=connectUser", userId)
 
-            json.put("userId", "180")
+            json.put("userId", userId)
             socket.emit("connect_user",json)
 
         }
@@ -404,9 +409,9 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try{
 
-            json.put("userId", 180)
-            json.put("user2Id", 114)
-            socket.emit("get_chat",json)
+            json.put("senderId", userId)
+            json.put("receiverId", senderID)
+            socket.emit("get_message",json)
 
         }
 

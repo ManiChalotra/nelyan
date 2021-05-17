@@ -19,13 +19,12 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyan_live.modals.homeactivitylist.HomeActivityResponse
 import com.nelyan_live.utils.*
-import kotlinx.android.synthetic.main.activity_home_child_care_list.*
 
 import kotlinx.android.synthetic.main.filter_activity.*
 import kotlinx.coroutines.CoroutineScope

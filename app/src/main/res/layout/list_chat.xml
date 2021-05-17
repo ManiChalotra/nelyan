@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         setChatVisibility="@{model.senderId}"
+        setUserID="@{model.myID}"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -33,8 +34,6 @@
             app:layout_constraintBottom_toBottomOf="@id/tvSender"
             app:layout_constraintStart_toStartOf="parent"
             />
-
-
 
         <TextView
             android:id="@+id/tvSender"
@@ -73,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/llSender"
         app:layout_constraintEnd_toEndOf="parent"
         setChatVisibility="@{model.receiverId}"
-
+        setUserID="@{model.myID}"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView

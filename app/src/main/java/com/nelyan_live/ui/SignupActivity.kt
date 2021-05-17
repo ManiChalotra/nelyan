@@ -1,7 +1,6 @@
 package com.nelyan_live.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -19,10 +18,9 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
-import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.coroutines.CoroutineScope

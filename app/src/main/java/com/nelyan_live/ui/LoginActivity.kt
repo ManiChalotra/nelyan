@@ -18,7 +18,7 @@ import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.HELPER.FacebookHelper
 import com.nelyan_live.HELPER.FacebookHelper.*
@@ -34,10 +34,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
-import java.sql.Timestamp
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, FacebookHelperCallback {
@@ -247,6 +243,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     }
 
 */
+
+
     private fun hitLoginApi(email: String, password: String) {
 
         val tsLong = System.currentTimeMillis() / 1000
@@ -262,7 +260,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     }
 
     private fun checkMVVMResponse() {
-        appViewModel!!.observeLOginResponse()!!.observe(this, Observer { response ->
+        appViewModel.observeLOginResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     Log.d("loginResponse", "---------" + Gson().toJson(response.body()))

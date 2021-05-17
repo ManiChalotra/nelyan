@@ -7,12 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_forgot_password.ivBack
-import kotlinx.android.synthetic.main.activity_home_child_care_list.*
 import org.json.JSONObject
 
 class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {

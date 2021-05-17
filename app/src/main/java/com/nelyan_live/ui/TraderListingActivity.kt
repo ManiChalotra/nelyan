@@ -14,15 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.TraderListingAdapter
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyan_live.modals.hometraderpostlist.HomeTraderListData
 import com.nelyan_live.modals.hometraderpostlist.HomeTraderPostListResponse
 import com.nelyan_live.utils.*
-import kotlinx.android.synthetic.main.fragment_activity_list.*
 import kotlinx.android.synthetic.main.fragment_trader_listing.*
 import kotlinx.android.synthetic.main.fragment_trader_listing.ivBack
 import kotlinx.android.synthetic.main.fragment_trader_listing.tvFilter

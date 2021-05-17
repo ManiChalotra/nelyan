@@ -27,7 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.meherr.mehar.data.viewmodel.AppViewModel
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.ActivitiesEventsDaysAdapter
 import com.nelyan_live.adapter.DetailsImageAdapter
@@ -36,7 +36,6 @@ import com.nelyan_live.adapter.DetailsUpcomingAdapter
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.ActivitiesEventsDaysModel
 import com.nelyan_live.modals.DetailsTimeModal
-import com.nelyan_live.modals.myAd.ChildCareImageMyAds
 import com.nelyan_live.modals.postDetails.Activityimage
 import com.nelyan_live.modals.postDetails.PostDetailsEvents
 import com.nelyan_live.modals.postDetails.PostDetailsEventstiming
