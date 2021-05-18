@@ -182,12 +182,13 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             try {
                 if (Uri.parse(imgPath) != null) {
                     CropImage.activity(Uri.parse(imgPath))
+                            .setAspectRatio(1,1)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .start(mActivity)
                 }
 
                 // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
-                // civProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath))
+                 //civProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath))
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -199,6 +200,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 val uri = data!!.data
                 if (uri != null) {
                     CropImage.activity(uri)
+                            .setAspectRatio(1,1)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .start(this)
                /* if (uri != null) {

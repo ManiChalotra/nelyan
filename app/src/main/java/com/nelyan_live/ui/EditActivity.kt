@@ -37,6 +37,7 @@ import com.nelyan_live.modals.myAd.ActivityimageMyAds
 import com.nelyan_live.modals.myAd.AgeGroupMyAds
 import com.nelyan_live.modals.myAd.EventMyAds
 import com.nelyan_live.utils.*
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.activity_addactivity.countycode
 import kotlinx.android.synthetic.main.activity_addactivity.ivBack
@@ -266,20 +267,20 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
                     image1 = activityimageList.get(0).images
                     image2 = ""
                     image3 = ""
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
+                   // Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
 
                 } else if (activityimageList.size == 2) {
                     image1 = activityimageList.get(0).images
                     image2 = activityimageList.get(1).images
                     image3 = ""
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
+                  //  Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
                     Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
 
                 } else if (activityimageList.size == 3) {
                     image1 = activityimageList.get(0).images
                     image2 = activityimageList.get(1).images
                     image3 = activityimageList.get(2).images
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
+                  //  Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
                     Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
                     Glide.with(this).load(image_base_URl + activityimageList.get(2).images).error(R.mipmap.no_image_placeholder).into(ivImg2)
 
@@ -989,7 +990,8 @@ if (checkedEvent) {
         Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
     }
 
-    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
+    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?
+    ) {
         Log.d("getimage", "---------" + imgPATH.toString())
 
         /*when (IMAGE_SELECTED_TYPE) {

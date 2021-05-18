@@ -58,8 +58,23 @@
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/_100sdp">
 
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/pik_1"/>
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/ivImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/back_shape"
+                    app:riv_corner_radius="@dimen/_5sdp"
+                    android:layout_centerInParent="true"
+                    />
+
+              <!--  <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivImg"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
@@ -69,6 +84,8 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/pik_1"
                     app:riv_corner_radius="@dimen/_5sdp" />
+-->
+
 
                 <ImageView
                     android:id="@+id/iv_video1"

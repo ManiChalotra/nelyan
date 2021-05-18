@@ -28,6 +28,7 @@ import com.nelyan_live.adapter.AgeGroupRepeatAdapter
 import com.nelyan_live.adapter.EventRepeatAdapter
 import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.activity_addactivity.countycode
 import kotlinx.coroutines.CoroutineScope
@@ -482,7 +483,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
-                setImageOnTab(imgPath, ivImg)
+                setImageOnTab(imgPath,ivImg)
                 imageVideoUrlListing.set(0, imgPath.toString())
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
