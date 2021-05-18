@@ -254,7 +254,6 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     override fun onItemClickListner(position: Int) {
-
     }
 
     override fun onAddFavoriteEventClick(position: Int, eventId: String?, ivFavourite: ImageView) {

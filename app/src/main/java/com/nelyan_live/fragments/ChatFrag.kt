@@ -1,24 +1,33 @@
 package com.nelyan_live.fragments
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
 import com.nelyan_live.R
-import com.nelyan_live.ui.Chat1Activity
+import com.nelyan_live.chat.ChatData
+import com.nelyan_live.chat.GroupChatVM
+import com.nelyan_live.data.viewmodel.AppViewModel
+import com.nelyan_live.databinding.ActivityChatBinding
 import com.nelyan_live.ui.CommunicationListner
+import com.nelyan_live.ui.HomeActivity
 import com.nelyan_live.ui.RegulationActivity
+import com.nelyan_live.utils.*
+import org.json.JSONObject
 import java.lang.RuntimeException
 
-class ChatFrag : Fragment() {
+class ChatFrag(var userlocation: String,var userlat: String,var userlong: String) : Fragment() {
 
     private  var listner: CommunicationListner?= null
 
@@ -34,6 +43,11 @@ class ChatFrag : Fragment() {
     var ll_2: LinearLayout? = null
     var dialog: Dialog? = null
 
+    val groupChatVM : GroupChatVM by viewModels()
+
+
+    lateinit var activityChatBinding: ActivityChatBinding
+
 
     override fun onResume() {
         super.onResume()
@@ -44,68 +58,43 @@ class ChatFrag : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.activity_chat, container, false)
-        mContext = requireActivity()
-        ivOn = v.findViewById(R.id.ivOn)
-        ivOf = v.findViewById(R.id.ivOf)
-        ivOn!!.setOnClickListener(View.OnClickListener {
-            ivOf!!.setVisibility(View.VISIBLE)
-            ivOn!!.setVisibility(View.GONE)
-        })
-        ivOf!!.setOnClickListener(View.OnClickListener {
-            ivOf!!.setVisibility(View.GONE)
-            ivOn!!.setVisibility(View.VISIBLE)
-        })
-        ivAttachment = v.findViewById(R.id.ivAttachment)
-        ivAttachment!!.setOnClickListener(View.OnClickListener {
-            // image("all");
-        })
-        btnRegulation = v.findViewById(R.id.btnRegulation)
-        btnRegulation!!.setOnClickListener(View.OnClickListener {
+
+        activityChatBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context),R.layout.activity_chat, container, false)
+        activityChatBinding.groupChatVM = groupChatVM
+
+        mContext = container.context
+
+        activityChatBinding.btnRegulation!!.setOnClickListener {
             val i = Intent(mContext, RegulationActivity::class.java)
             startActivity(i)
-        })
-        ivMan = v.findViewById(R.id.ivMan)
-        ivMan!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(mContext, Chat1Activity::class.java)
-            startActivity(i)
-        })
-        ll_1 = v.findViewById(R.id.ll_public)
-        ll_2 = v.findViewById(R.id.ll_privates)
-        ll_1!!.setOnClickListener(View.OnClickListener { showDailog() })
-        ll_2!!.setOnClickListener(View.OnClickListener { dailogDelete() })
-        return v
+        }
+
+        return activityChatBinding.root
     }
 
     fun showDailog() {
-        dialog = Dialog(mContext!!)
+        dialog = Dialog(mContext)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_chat_flag)
         dialog!!.setCancelable(true)
-        val btnSubmit: RelativeLayout
-        btnSubmit = dialog!!.findViewById(R.id.btnSubmit)
-        btnSubmit.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        val btnSubmit: RelativeLayout = dialog!!.findViewById(R.id.btnSubmit)
+        btnSubmit.setOnClickListener {
             dialog!!.dismiss()
         }
         dialog!!.show()
     }
 
     fun dailogDelete() {
-        dialog = Dialog(mContext!!)
+        dialog = Dialog(mContext)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_chat_delete)
         dialog!!.setCancelable(true)
-        val rl_1: RelativeLayout
-        rl_1 = dialog!!.findViewById(R.id.rl_1)
+        val rl_1: RelativeLayout = dialog!!.findViewById(R.id.rl_1)
         rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
             dialog!!.dismiss()
         }
         dialog!!.show()
-    } /* @Override
-    public void selectedImage(Bitmap var1, String var2) {
-        ivAttachment.setImageBitmap(var1);
-    }*/
+    }
 
 
 
@@ -113,7 +102,7 @@ class ChatFrag : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is CommunicationListner){
-            listner = context as CommunicationListner
+            listner = context
         }else{
 
             throw RuntimeException("Home Fragment not Attched")
@@ -125,5 +114,96 @@ class ChatFrag : Fragment() {
         listner = null
     }
 
+    val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance((mContext as Activity).application).create(AppViewModel::class.java)
+    }
+
+
+    private var authorization = ""
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        groupChatVM.groupName = userlocation
+        groupChatVM.userId = (view.context as HomeActivity).userId
+        groupChatVM.rvChat = activityChatBinding.rvChat
+        groupChatVM.connectSocket(view.context)
+        if (checkIfHasNetwork((mContext as Activity))) {
+            authorization = AllSharedPref.restoreString(mContext, "auth_key")
+            appViewModel.groupMessageApiData(security_key, authorization,userlocation,"0","20")
+           // myfav_progressBar?.showProgressBar()
+        }
+        else {
+            showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
+        }
+
+        appViewModel.observeGroupMessageApiResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+
+                    Log.e("myFavResponse", "-------------" + Gson().toJson(response.body()))
+                    val jsonMain = JSONObject(response.body().toString())
+                    Log.e("socket===", jsonMain.toString())
+                    val listData : ArrayList<ChatData> = ArrayList()
+
+                    val jsonArray = jsonMain.getJSONArray("data")
+                    for(i in 0 until jsonArray.length()) {
+
+                        val json = jsonArray.getJSONObject(i)
+
+                        listData.add(ChatData(
+                                json.getString("id"),
+                                json.getString("senderId"),
+                                json.getString("receiverId"),
+                                "",
+                                "",
+                                json.getString("message"),
+                                json.getString("readStatus"),
+                                json.getString("messageType"),
+                                json.getString("deletedId"),
+                                json.getString("created"),
+                                json.getString("updated"),
+                                "",
+                                json.getString("recieverImage"),
+                                json.getString("senderName"),
+                                json.getString("senderImage"),
+                                groupChatVM.userId,"1"
+
+                        ))
+                    }
+
+
+                    if(listData.isNotEmpty()) {
+                        groupChatVM.listChat.addAll(listData)
+
+                        groupChatVM.listChat.reverse()
+                        groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
+                        activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
+                        groupChatVM.noDataMessage.set("")
+                    }
+                    else{
+                        groupChatVM.noDataMessage.set("No chat found")
+                        groupChatVM.updateLocation(userlat,userlong,userlocation)
+
+                    }
+
+                }
+            } else {
+
+                Toast.makeText(mContext,"something went wrong",Toast.LENGTH_SHORT).show()
+
+               // ErrorBodyResponse(response, this, myfav_progressBar)
+            }
+        })
+
+
+    }
+
+    override fun onDestroyView() {
+
+        super.onDestroyView()
+        Log.e("fasfasfa","======onDestroyView")
+
+        groupChatVM.disconnectSocket()
+    }
 
 }

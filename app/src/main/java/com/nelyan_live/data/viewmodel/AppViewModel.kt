@@ -316,6 +316,31 @@ class AppViewModel : ViewModel() {
                 })
     }
 
+   // get Group Messages api
+    private var groupMessageMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeGroupMessageApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (groupMessageMutableLiveData == null) {
+            groupMessageMutableLiveData = MutableLiveData()
+        }
+        return groupMessageMutableLiveData
+    }
+
+    fun groupMessageApiData(securityKey: String?,authkey:String?, cityName:String?, page:String?, limit:String?) {
+        JsonPlaceHolder().getGroupMessages(securityKey, authkey, cityName, page, limit)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        groupMessageMutableLiveData?.value = response
+                    }
+                })
+    }
+
    // add favourite  post api
     private var addFavouritePostMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 

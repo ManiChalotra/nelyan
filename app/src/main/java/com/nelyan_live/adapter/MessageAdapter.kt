@@ -20,7 +20,7 @@ class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter
         val v = inflater.inflate(R.layout.list_message, parent, false)
         val viewHolder = RecyclerViewHolder(v)
         rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener(View.OnClickListener { context.startActivity(Intent(context, Chat1Activity::class.java)) })
+        rl_1!!.setOnClickListener({ context.startActivity(Intent(context, Chat1Activity::class.java)) })
         return viewHolder
     }
 

@@ -273,6 +273,7 @@ class ChatVM :ViewModel() {
                 withContext(Dispatchers.Main) {
                     listChat.clear()
                     listChat.addAll(listData)
+                    listChat.reverse()
                     chatAdapter.addItems(listChat)
                     rvChat.scrollToPosition(listChat.size-1)
 

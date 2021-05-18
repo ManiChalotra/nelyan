@@ -42,14 +42,32 @@ object BindingAdapter {
 
 
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
-        Log.e("dsfgasdfasdfadsf", "====$33333=====${str}")
+        Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
 
         if(str==userId)
         {
-            ll.visibility = View.GONE
+            ll.visibility = View.VISIBLE
         }
         else
-        {ll.visibility = View.VISIBLE}
+        {ll.visibility = View.GONE}
+    }
+
+
+    @BindingAdapter(value = ["setLeftChatVisibility","setUserID"], requireAll = false)
+    @JvmStatic
+    fun setLeftChatVisibility(ll: View, str: String, userId: String) {
+
+
+
+        Log.e("dsfgasdfasdfadsf", "====$33333=====")
+        Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
+
+        if(str!=userId)
+        {
+            ll.visibility = View.VISIBLE
+        }
+        else
+        {ll.visibility = View.GONE}
     }
 
 
@@ -63,13 +81,15 @@ object BindingAdapter {
         str: String?
 
     ) {
-        Glide.with(ivImage.context).load(str).dontTransform()
-            .override(200,200).placeholder(
-                ContextCompat.getDrawable(
-                    ivImage.context,
-                    R.drawable.placeholder
-                )
-            ).into(ivImage)
+        if(!str.isNullOrEmpty()) {
+            Glide.with(ivImage.context).load(str).dontTransform()
+                    .override(200, 200).placeholder(
+                            ContextCompat.getDrawable(
+                                    ivImage.context,
+                                    R.drawable.placeholder
+                            )
+                    ).into(ivImage)
+        }
     }
 
 }

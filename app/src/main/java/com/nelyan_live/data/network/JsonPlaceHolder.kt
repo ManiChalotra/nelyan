@@ -382,6 +382,16 @@ interface JsonPlaceHolder {
     ): Call<JsonObject>
 
 
+
+    @POST("get_group_messages")
+    @FormUrlEncoded
+    fun getGroupMessages(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") authKey: String?,
+                         @Field("cityName") cityName: String?,
+                         @Field("page") page: String?,
+                         @Field("limit") limit: String?): Call<JsonObject>
+
+
     companion object {
 
         operator fun invoke(): JsonPlaceHolder {

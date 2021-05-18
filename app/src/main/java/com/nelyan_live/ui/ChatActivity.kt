@@ -44,14 +44,9 @@ class ChatActivity : image() {
         ivAttachment!!.setOnClickListener(View.OnClickListener { image("all") })
         btnRegulation = findViewById(R.id.btnRegulation)
         btnRegulation!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(this@ChatActivity, com.nelyan_live.ui.RegulationActivity::class.java)
-            startActivity(i)
+
         })
-        ivMan = findViewById(R.id.ivMan)
-        ivMan!!.setOnClickListener(View.OnClickListener {
-            val i = Intent(this@ChatActivity, Chat1Activity::class.java)
-            startActivity(i)
-        })
+
         ll_1 = findViewById(R.id.ll_public)
         ll_2 = findViewById(R.id.ll_privates)
         ll_1!!.setOnClickListener(View.OnClickListener { showDailog() })

@@ -34,6 +34,8 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     setChatImage="@{model.userImage}"
+                    android:src="@drawable/placeholder"
+
                     />
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -78,6 +78,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var authorization = ""
     private var userType = ""
     private var userlocation = ""
+    private var userlat = ""
+    private var userlong = ""
 
     var userId = ""
 
@@ -94,6 +96,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
              userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
             val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
              userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
             if (userImage != null)
@@ -464,7 +468,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 iv_bell!!.setOnClickListener {
                     //iv_bell.get
                 }
-                fragment = ChatFrag()
+                fragment = ChatFrag(userlocation,userlat,userlong)
             }
             R.id.event -> {
                 tvTitleToolbar!!.visibility = View.VISIBLE

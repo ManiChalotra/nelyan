@@ -16,6 +16,6 @@ class RegulationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_regulation)
         mContext = this
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
     }
 }
