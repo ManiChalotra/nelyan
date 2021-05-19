@@ -9,7 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -74,29 +77,7 @@ class ChatFrag(var userlocation: String,var userlat: String,var userlong: String
         return activityChatBinding.root
     }
 
-    fun showDailog() {
-        dialog = Dialog(mContext)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_chat_flag)
-        dialog!!.setCancelable(true)
-        val btnSubmit: RelativeLayout = dialog!!.findViewById(R.id.btnSubmit)
-        btnSubmit.setOnClickListener {
-            dialog!!.dismiss()
-        }
-        dialog!!.show()
-    }
 
-    fun dailogDelete() {
-        dialog = Dialog(mContext)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_chat_delete)
-        dialog!!.setCancelable(true)
-        val rl_1: RelativeLayout = dialog!!.findViewById(R.id.rl_1)
-        rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
-            dialog!!.dismiss()
-        }
-        dialog!!.show()
-    }
 
 
 
@@ -193,7 +174,6 @@ class ChatFrag(var userlocation: String,var userlat: String,var userlong: String
 
                 Toast.makeText(mContext,"something went wrong",Toast.LENGTH_SHORT).show()
 
-               // ErrorBodyResponse(response, this, myfav_progressBar)
             }
         })
 

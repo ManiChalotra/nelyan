@@ -21,22 +21,14 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.adapter.AgeGroupRepeatAdapter
 import com.nelyan_live.adapter.EventRepeatAdapter
+import com.nelyan_live.data.viewmodel.AppViewModel
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
-import kotlinx.android.synthetic.main.activity_addactivity.countycode
-import kotlinx.android.synthetic.main.activity_addactivity.ivBack
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg1
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg2
-import kotlinx.android.synthetic.main.activity_addactivity.ivImg3
-import kotlinx.android.synthetic.main.activity_addactivity.ivplus
-import kotlinx.android.synthetic.main.activity_addactivity.rlImg
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -123,10 +115,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
-    override fun onResume() {
-        super.onResume()
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -344,7 +332,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList.add(photo)
                 var type: RequestBody
                 type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -397,12 +385,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList2.add(photo)
             }
         }
 
-        Log.d("imagePathLsiting", "-------------" + imagePathList2!!.size)
+        Log.d("imagePathLsiting", "-------------" + imagePathList2.size)
 
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -449,7 +437,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             if (resultCode === Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
                 cityAddress = place.address.toString()
-                et_addressActivity.setText(cityAddress.toString())
+                et_addressActivity.text = cityAddress.toString()
                 cityName = place.name.toString()
                 // cityID = place.id.toString()
                 addressLatitude = place.latLng?.latitude.toString()
@@ -459,7 +447,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
@@ -490,13 +478,13 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
             "1" -> {
                 setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing.set(0, imgPath.toString())
+                imageVideoUrlListing[0] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
             "2" -> {
                 setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing.set(1, imgPath.toString())
+                imageVideoUrlListing[1] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
@@ -562,7 +550,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
-        if (imgpath?.contains(".mp4")!!) {
+        if (imgpath.contains(".mp4")) {
             videoButton.visibility = View.VISIBLE
         } else {
             videoButton.visibility = View.GONE
@@ -605,7 +593,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private fun hitTypeActivity_Api() {
         launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference?.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendActivityTypeData(security_key, authKey)
         }
     }
@@ -668,7 +656,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         } else {
                             // response for addevent images data
                             if (addEventUrlListingResponse != null) {
-                                addEventUrlListingResponse!!.clear()
+                                addEventUrlListingResponse.clear()
                             }
 
                             for (i in 0 until response.body()!!.data!!.size) {

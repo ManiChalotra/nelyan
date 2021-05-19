@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.utils.OpenActivity
-import com.nelyan_live.utils.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -60,13 +59,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 val token = task.result
                 launch(Dispatchers.Main.immediate) {
                     dataStoragePreference = DataStoragePreference(this@MainActivity)
-                    if (dataStoragePreference != null) {
-                        dataStoragePreference?.save(token, preferencesKey("fcmToken"))
-                    } else {
-                        toast("preference is null")
-                    }
+                    dataStoragePreference.save(token, preferencesKey("fcmToken"))
                 }
-                Log.d("newFcmToken", "---------" + token)
+                Log.d("newFcmToken", "---------$token")
             })
         } catch (e: Exception) {
             e.printStackTrace()
@@ -81,9 +76,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         timer!!.schedule(object : TimerTask() {
             override fun run() {
                 launch (Dispatchers.Main.immediate){
-                    val email =  dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin"))?.first()
-                    val authkey  =  dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
-                    if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
+                    val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
+                    val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                    if(email.isNotEmpty() && authkey.isNotEmpty()){
                         OpenActivity(HomeActivity::class.java)
                         finishAffinity()
                     }else {

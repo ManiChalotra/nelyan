@@ -23,9 +23,9 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.fragments.*
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
@@ -90,25 +90,26 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onResume() {
         super.onResume()
         authorization = intent?.extras?.getString("authorization").toString()
-        Log.d("homeAuthKey", "----------" + authorization)
+        Log.d("homeAuthKey", "----------$authorization")
 
+       // dataStoragePreference = D
         launch(Dispatchers.Main.immediate) {
              userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
             val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
              userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+           val  userlocation22 = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-            if (userImage != null)
-                Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
+            Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
             Log.e("userImage123", from_admin_image_base_URl + userImage)
-            if (userName != null)
-                tvUserName!!.text = userName
+            tvUserName!!.text = userName
 
 
-            Log.d("imageeeeeee", dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
-                    ?: "This is null")
+            Log.d("userlocation", dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first())
+            Log.d("userlocation====", userlocation)
+            Log.d("userlocation==54==", userName)
 
         }
     }
@@ -195,7 +196,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         fragment = ChildCareFragment()
                         val args = Bundle()
                         args.putString("child", "childcare")
-                        fragment!!.arguments = args
+                        fragment.arguments = args
                         val fragmentManager = this.supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
@@ -225,7 +226,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         fragment = TraderPublishFragment()
                         val args = Bundle()
                         args.putString("activity", "traderfragment")
-                        fragment!!.arguments = args
+                        fragment.arguments = args
                         val fragmentManager = this.supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
@@ -300,7 +301,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigation_view = findViewById(R.id.navigation_view)
         mainContainer = findViewById(R.id.mainContainer)
         iv_back!!.setImageResource(R.drawable.ic_menu)
-        iv_back!!.setVisibility(View.VISIBLE)
+        iv_back!!.visibility = View.VISIBLE
         iv_back!!.setOnClickListener(View.OnClickListener {
             mDrawerLayout!!.openDrawer(navigation_view!!)
             mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout,
@@ -311,8 +312,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val min = 0.9f
                     val max = 1.0f
                     val scaleFactor = max - (max - min) * slideOffset
-                    mainContainer!!.setScaleX(scaleFactor)
-                    mainContainer!!.setScaleY(scaleFactor)
+                    mainContainer!!.scaleX = scaleFactor
+                    mainContainer!!.scaleY = scaleFactor
                 }
             }
             mDrawerLayout!!.addDrawerListener(mDrawerToggle!!)

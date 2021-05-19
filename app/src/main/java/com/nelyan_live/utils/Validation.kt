@@ -7,7 +7,7 @@ object Validation {
 
      fun checkName(name: String, activity: Activity): Boolean {
 
-        if(!name.isNullOrEmpty()){
+        if(name.isNotEmpty()){
             if(name.length>2){
                 if(isUserNameValid(name)){
                     return true
@@ -25,7 +25,7 @@ object Validation {
     }
 
      fun checkEmail(email: String, activity: Activity): Boolean {
-        if (!email.isNullOrEmpty()) {
+        if (!email.isEmpty()) {
             if (isEmailValid(email)) {
                 return true
             } else {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_15sdp"
@@ -27,7 +28,7 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:fontFamily="@font/medium"
             android:gravity="center"
-            android:text="Are you sure want to\ndelete Chat?"
+            android:text="Are you sure want to delete Chat?"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 
@@ -47,13 +48,11 @@
             <TextView
                 android:id="@+id/tvNo"
                 style="@style/CommonTextWrapcontent"
-                android:layout_width="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_toLeftOf="@+id/viewww"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                android:layout_toStartOf="@+id/viewww"
                 android:text="@string/no"
-                android:textAlignment="center"
                 android:textSize="@dimen/_14sdp" />
 
 
@@ -66,13 +65,12 @@
 
             <TextView
                 android:id="@+id/tvYes"
-                android:layout_width="match_parent"
                 style="@style/CommonTextWrapcontent"
-                android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/viewww"
-                android:layout_centerInParent="true"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/viewww"
                 android:text="@string/yes"
-                android:textAlignment="center"
                 android:textSize="@dimen/_14sdp" />
         </RelativeLayout>
 

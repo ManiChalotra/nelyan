@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.coroutines.CoroutineScope
@@ -49,7 +49,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
         super.onResume()
 
         launch (Dispatchers.Main.immediate){
-             authkey = dataStoragePreference?.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+             authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendprofileApiData(security_key,authkey)
             profileProgressBar?.showProgressBar()
             imageViewProgressBar?.showProgressBar()
@@ -165,6 +165,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
             }
 
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        OpenActivity(HomeActivity::class.java)
+        finishAffinity()
     }
 
     override fun onDestroy() {

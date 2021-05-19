@@ -2,11 +2,8 @@ package com.nelyan_live.db
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.*
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.clear
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.createDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -25,12 +22,15 @@ class DataStoragePreference(context: Context) {
 
     suspend fun <T> save(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore.edit { preferences ->
+            if(preferences.contains(KEY)) preferences.remove(KEY)
+
             preferences[KEY] = saveValue
         }
     }
 
     fun <T> emitStoredValue(value: Preferences.Key<T>): Flow<T> {
         return dataStore.data.catch {
+
             if (it is IOException) {
                 emit(emptyPreferences())
             } else {

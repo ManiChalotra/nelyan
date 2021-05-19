@@ -1,5 +1,6 @@
-package com.meherr.mehar.util.helper.fcm
+package com.nelyan_live.utils.fcm
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -16,8 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.utils.AppController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.d("fcm_token", "-----$refreshedToken")
 
         launch {
-            dataStoragePreference?.save(refreshedToken, preferencesKey("device_token"))
+            dataStoragePreference.save(refreshedToken, preferencesKey("device_token"))
         }
 
         sendRegistrationToServer(refreshedToken)
@@ -62,7 +63,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
     fun sendRegistrationToServer(token: String?) {
         Log.e("device_token", token!!)
         launch {
-            dataStoragePreference?.save(token, preferencesKey("device_token"))
+            dataStoragePreference.save(token, preferencesKey("device_token"))
         }
     }
 
@@ -145,7 +146,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
     // return useWhiteIcon ? R.mipmap.ic_notification_trans : R.mipmap.ic_launcher;
     // to get data for noti
     private val notificationIcon: Int
-        private get() {
+        @SuppressLint("ObsoleteSdkInt")
+        get() {
             val useWhiteIcon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
             // return useWhiteIcon ? R.mipmap.ic_notification_trans : R.mipmap.ic_launcher;
             return if (useWhiteIcon) R.mipmap.ic_launcher else R.mipmap.ic_launcher

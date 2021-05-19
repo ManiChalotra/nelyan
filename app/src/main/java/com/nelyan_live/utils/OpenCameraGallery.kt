@@ -17,7 +17,6 @@ import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.view.WindowManager
@@ -31,10 +30,8 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 import java.io.IOException
-import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.jvm.Throws
 
 abstract class OpenCameraGallery : AppCompatActivity() {
 
@@ -53,13 +50,13 @@ abstract class OpenCameraGallery : AppCompatActivity() {
     fun checkPermission(activity: Activity) {
         mActivity = activity
         if (ActivityCompat.checkSelfPermission(
-                        this!!,
+                        this,
                         Manifest.permission.CAMERA
                 ) + ActivityCompat.checkSelfPermission(
-                        this!!,
+                        this,
                         Manifest.permission.READ_EXTERNAL_STORAGE
                 ) + ActivityCompat.checkSelfPermission(
-                        this!!,
+                        this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -72,7 +69,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
 
 
     private fun uploadImage() {
-        val uploadImage = Dialog(this!!, R.style.Theme_Dialog)
+        val uploadImage = Dialog(this, R.style.Theme_Dialog)
         uploadImage.requestWindowFeature(Window.FEATURE_NO_TITLE)
         uploadImage.setContentView(R.layout.camera_gallery_popup)
         uploadImage.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
@@ -88,7 +85,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (cameraIntent.resolveActivity(this!!.packageManager) != null) {
+            if (cameraIntent.resolveActivity(this.packageManager) != null) {
                 // Create the File where the photo should go
                 var photoFile: File? = null
                 try {
@@ -117,7 +114,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             //  selectImage(ivProfile, "1")
 
             val intent = Intent()
-            intent.setType("*/*")
+            intent.type = "*/*"
             intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
           //  intent.setType("image/* , video/*")   // for both image and video
           //  intent.type = "image/*"     // only for image
@@ -231,7 +228,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             try {
                 val result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    val uri: Uri = result.getUri()
+                    val uri: Uri = result.uri
                     if (uri != null) {
                         imgPath = getPath(mActivity, uri).toString()
                         getRealImagePath(imgPath)

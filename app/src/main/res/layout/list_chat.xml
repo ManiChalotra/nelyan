@@ -26,8 +26,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivSender"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:padding="3dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
@@ -38,18 +39,36 @@
             />
 
         <TextView
+            android:id="@+id/tvSenderName"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_width="@dimen/_12sdp"
+            android:textAllCaps="true"
+            android:text="@{model.senderName}"
+            android:maxLength="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_5sdp"
+            android:background="@drawable/location_circle"
+            android:backgroundTint="@color/colorAccent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/ivSender"
+            app:layout_constraintEnd_toEndOf="@id/ivSender"
+            />
+
+
+        <TextView
             android:id="@+id/tvSender"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="@dimen/_12sdp"
             android:text="@{model.message}"
             android:maxWidth="200dp"
             android:minWidth="80dp"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14dp"
             android:background="@drawable/chat"
+
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tvSenderTime"
             app:layout_constraintStart_toEndOf="@id/ivSender"/>
@@ -94,8 +113,9 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivReceiver"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:padding="3dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
@@ -107,11 +127,28 @@
             />
 
 
+        <TextView
+            android:id="@+id/tvReceiverName"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_width="@dimen/_12sdp"
+            android:textAllCaps="true"
+            android:text="@{model.senderName}"
+            android:maxLength="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_5sdp"
+            android:background="@drawable/location_circle"
+            android:backgroundTint="@color/colorAccent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/ivReceiver"
+            app:layout_constraintStart_toStartOf="@id/ivReceiver"
+            />
+
+
 
         <TextView
             android:id="@+id/tvReceiver"
             android:layout_gravity="center"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:text="@{model.message}"
             android:maxWidth="200dp"
             android:minWidth="80dp"

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
@@ -61,10 +62,10 @@ class GroupChatVM :ViewModel() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.alert_chat_delete)
         dialog.setCancelable(true)
-        val rl_1: RelativeLayout = dialog.findViewById(R.id.rl_1)
-        rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        val tvYes: TextView = dialog.findViewById(R.id.tvYes)
+        val tvNo: TextView = dialog.findViewById(R.id.tvNo)
+        tvYes.setOnClickListener {
             dialog.dismiss()
-
             val json = JSONObject()
             try {
                 json.put("userId", userId)
@@ -85,6 +86,9 @@ class GroupChatVM :ViewModel() {
             groupChatAdapter.notifyItemRangeChanged(position,listChat.size)
 
 
+        }
+        tvNo.setOnClickListener {
+            dialog.dismiss()
         }
         dialog.show()
     }
@@ -370,7 +374,7 @@ class GroupChatVM :ViewModel() {
                     json.getString("recieverImage"),
                     json.getString("senderName"),
                     json.getString("senderImage"),
-                    userId
+                    userId,"1"
 
             ))
 

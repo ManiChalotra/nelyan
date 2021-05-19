@@ -16,12 +16,11 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.ivBack
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -69,14 +68,15 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
     override fun getRealImagePath(imgPath: String?) {
         imggPathh = imgPath.toString()
-        Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(imggPathh).into(iv_profileEdit)
-        Log.d("getEditPhotoPath", "----------" + imgPath)
+        //Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
+        Glide.with(this).load(imgPath).into(iv_profileEdit)
+        Log.d("getEditPhotoPath", "----------$imgPath")
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (imagePathCreated.isNullOrEmpty()) {
+        if (imagePathCreated.isEmpty()) {
             imagePathCreated = intent?.extras?.getString("userImage").toString()
             name = intent?.extras?.getString("userName").toString()
             email = intent?.extras?.getString("userEmail").toString()
@@ -84,10 +84,10 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             utilization = intent?.extras?.getString("userUtilization").toString()
             authkey = intent?.extras?.getString("authorization").toString()
 
-            Log.d("getPatttthhhh", "-------" + imagePathCreated)
+            Log.d("getPatttthhhh", "---onResume----" + imagePathCreated)
 
-            Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + imagePathCreated).error(R.mipmap.ic_user_place)
-                    .into(iv_profileEdit)
+            /*Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + imagePathCreated).error(R.mipmap.ic_user_place)
+                    .into(iv_profileEdit)*/
             et_nameEditProfile.setText(name); setFocusEditText(et_nameEditProfile)
             tv_emailEditProfile.text = email
             et_cityEditProfile.setText(city); setFocusEditText(et_cityEditProfile)
@@ -106,6 +106,8 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
         setContentView(R.layout.activity_edit_profile)
         initalize()
         checkMvvmResponse()
+        Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + intent?.extras?.getString("userImage").toString()).error(R.mipmap.ic_user_place)
+                .into(iv_profileEdit)
     }
 
     private fun initalize() {
@@ -131,17 +133,21 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
                 if (Validation.checkName(name, this)) {
                     if (Validation.checkEmail(email, this)) {
-                        if (city.equals("") || city.isEmpty() || city == null) {
+                        if (city.isEmpty()) {
                             myCustomToast(getString(R.string.city_missing_error))
                         } else {
-                            if (!utilization.equals("") || !utilization.isEmpty() || utilization != null) {
+                            if(utilization.isEmpty()) {
                                 myCustomToast(getString(R.string.utilization_missing_error))
-                            } else {
-                                hitEditProfileApi(name, email, city, utilization)
+                            }
+                            else
+                            {
+                                hitEditProfileApi(name,email,city,utilization)
                             }
                         }
                     }
                 }
+
+
             }
             R.id.et_cityEditProfile -> {
                 showPlacePicker()
@@ -159,7 +165,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
         val mLongitude = longitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
-        if (imggPathh.isNullOrEmpty()) {
+        if (imggPathh.isEmpty()) {
             // without image
             appViewModel.sendEditProfileApiWithoutImageData(security_key, authkey, mName, mCity, mLatitude, mLongitude, mUtilization)
         } else {
@@ -168,7 +174,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             mfile = File(imggPathh)
             val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
             var photo: MultipartBody.Part? = null
-            photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+            photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
             appViewModel.sendEditProfileApiWithImageData(security_key, authkey, mName, mCity, mLatitude, mLongitude, mUtilization, photo)
         }
 
@@ -185,13 +191,27 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
 
+
+                    Log.i("observeEditProfileResponse  ", "-------$jsonObject")
+
                     val name = jsonObject.getJSONObject("data").get("name").toString()
                     val image = jsonObject.getJSONObject("data").get("image").toString()
+                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                    val lat = jsonObject.getJSONObject("data").get("lat").toString()
+                    val long = jsonObject.getJSONObject("data").get("lng").toString()
 
                     launch(Dispatchers.Main.immediate) {
-                        dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
-                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
-                      }
+                        dataStoragePreference.save(name, preferencesKey("nameLogin"))
+                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                        dataStoragePreference.save(lat, preferencesKey("latitudeLogin"))
+                        dataStoragePreference.save(long, preferencesKey("longitudeLogin"))
+
+
+                        Log.d("userlocation======", dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first())
+
+
+                    }
 
                     myCustomToast(message)
                     onBackPressed()
@@ -248,7 +268,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
@@ -266,7 +286,7 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     }
 
     private fun setFocusEditText(editText: EditText) {
-        val pos: Int = editText.getText().length
+        val pos: Int = editText.text.length
         editText.setSelection(pos)
     }
 
