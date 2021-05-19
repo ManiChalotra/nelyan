@@ -31,13 +31,14 @@ class GroupChatVM :ViewModel() {
     var block ="0"
 
     var message : ObservableField<String> = ObservableField("")
+
     var senderName : ObservableField<String> = ObservableField("")
+
     var senderImage : ObservableField<String> = ObservableField("")
     var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
 
     val groupChatAdapter by lazy { RecyclerAdapter<ChatData>(R.layout.list_chat) }
      val listChat by lazy { ArrayList<ChatData>() }
-
 
     init {
 

@@ -30,13 +30,10 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
         notifyItemInserted(position)
     }
 
-
     fun removeAtPosition(position: Int) {
         this.items.removeAt(position)
         notifyItemRemoved(position)
     }
-
-
 
     fun addItems(items: List<T>) {
         this.items.clear()
