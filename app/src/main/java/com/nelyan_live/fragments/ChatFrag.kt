@@ -23,13 +23,16 @@ import com.nelyan_live.databinding.ActivityChatBinding
 import com.nelyan_live.ui.CommunicationListner
 import com.nelyan_live.ui.HomeActivity
 import com.nelyan_live.ui.RegulationActivity
-import com.nelyan_live.utils.*
+import com.nelyan_live.utils.AllSharedPref
+import com.nelyan_live.utils.checkIfHasNetwork
+import com.nelyan_live.utils.security_key
+import com.nelyan_live.utils.showSnackBar
 import org.json.JSONObject
-import java.lang.RuntimeException
 
 class ChatFrag(var userlocation: String,var userlat: String,var userlong: String) : Fragment() {
 
     private  var listner: CommunicationListner?= null
+
 
     lateinit  var mContext: Context
     lateinit  var v: View
@@ -42,7 +45,6 @@ class ChatFrag(var userlocation: String,var userlat: String,var userlong: String
     var ll_1: LinearLayout? = null
     var ll_2: LinearLayout? = null
     var dialog: Dialog? = null
-
     val groupChatVM : GroupChatVM by viewModels()
 
 

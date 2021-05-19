@@ -57,9 +57,9 @@ class GroupChatVM :ViewModel() {
 
     fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
         dialog = Dialog(context)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_chat_delete)
-        dialog!!.setCancelable(true)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.alert_chat_delete)
+        dialog.setCancelable(true)
         val rl_1: RelativeLayout = dialog.findViewById(R.id.rl_1)
         rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
             dialog.dismiss()
@@ -85,7 +85,7 @@ class GroupChatVM :ViewModel() {
 
 
         }
-        dialog!!.show()
+        dialog.show()
     }
 
     fun showDailog(context: Context, senderId: String, id1: String, groupId: String) {
