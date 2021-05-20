@@ -77,6 +77,9 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
         return VH(binding)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     override fun getItemCount(): Int = items.size
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.github.nkzawa.emitter.Emitter
@@ -75,22 +74,26 @@ class MessagesVM :ViewModel() {
     fun connectSocket(context:Context) {
 
         ctx = context
-        try{
-            socket = IO.socket("http://3.13.214.27:1052")
-            socket.on(Socket.EVENT_CONNECT, onConnect)
-            socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
-            socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
-            socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectTimeout)
 
-            // socket.on("order accept", onOrderAccept)
-            socket.on("connect_user", connectListener)
-            socket.on("connect_listener", connectListener)
-            socket.on("chat_listing", chatList)
-            socket.on("chat_message", chatList)
-            socket.connect()
 
-        }
-        catch (e :Exception){e.printStackTrace()}
+            try {
+                socket = IO.socket("http://3.13.214.27:1052")
+                socket.on(Socket.EVENT_CONNECT, onConnect)
+                socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
+                socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
+                socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectTimeout)
+
+                // socket.on("order accept", onOrderAccept)
+                socket.on("connect_user", connectListener)
+                socket.on("connect_listener", connectListener)
+                socket.on("chat_listing", chatList)
+                socket.on("chat_message", chatList)
+                socket.connect()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
 
     }
 
@@ -122,9 +125,19 @@ class MessagesVM :ViewModel() {
     private val onDisconnect = Emitter.Listener  { Log.e("socket", "run: disconnect")  }
 
 
-    private val onConnectError = Emitter.Listener  { Log.e("socket", "run: onConnectError")  }
+    private val onConnectError = Emitter.Listener  {
 
-    private val onConnectTimeout = Emitter.Listener  { Log.e("socket", "run: onConnectTimeout") }
+        Log.e("socket", "run: onConnectError")
+       // connectSocket(ctx)
+    }
+
+    private val onConnectTimeout = Emitter.Listener  {
+
+        Log.e("socket", "run: onConnectTimeout")
+      //  connectSocket(ctx)
+
+
+    }
 
 
     private val connectListener = Emitter.Listener{

@@ -2,6 +2,7 @@ package com.nelyan_live.chat
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -15,6 +16,7 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyan_live.R
+import com.nelyan_live.ui.Chat1Activity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -54,7 +56,21 @@ class GroupChatVM :ViewModel() {
                     "flag" -> {
                         showDailog(view.context,listChat[position].senderId,listChat[position].id,listChat[position].groupId)
 
-                    } } } }) }
+                    }
+                    "chat" -> {
+
+                        disconnectSocket()
+
+                        view.context.startActivity(
+                                Intent(view.context, Chat1Activity::class.java)
+                                        .putExtra("senderID", listChat[position].senderId)
+                                        .putExtra("senderName", listChat[position].senderName)
+                                        .putExtra("senderImage", listChat[position].senderImage)
+                                        .putExtra("userId", userId)
+                        )
+
+                    }
+                } } }) }
 
 
     fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
@@ -101,12 +117,13 @@ class GroupChatVM :ViewModel() {
         val btnSubmit: RelativeLayout = dialog.findViewById(R.id.btnSubmit)
         val etReport: EditText = dialog.findViewById(R.id.etReport)
         btnSubmit.setOnClickListener {
-            dialog.dismiss()
+
             if(etReport.text.toString().isEmpty())
             {
                 Toast.makeText(ctx,"please enter message",Toast.LENGTH_SHORT).show()
             }
             else {
+                dialog.dismiss()
                 val json = JSONObject()
                 try {
                     json.put("userId", userId)
@@ -137,14 +154,16 @@ class GroupChatVM :ViewModel() {
             // threeDialog(view)
             // }
             "ivSend"->{
-                if(message.get().toString().isEmpty())
+                if(message.get()!!.trim().isEmpty())
                 {
                     Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
 
                     // CommonMethods.alertDialog(view.context,"please enter message")
                 }
                 else {
-                    sendChatMessage()
+                    Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
+
+                    //  sendChatMessage()
                 }
             }
         }
@@ -162,8 +181,8 @@ class GroupChatVM :ViewModel() {
             json.put("message", message.get().toString())
 
             Log.e("socket","=======$json")
-            socket.emit("send_group_message",json)
 
+            socket.emit("send_group_message",json)
             message.set("")
         }
 
@@ -213,7 +232,7 @@ class GroupChatVM :ViewModel() {
     {
         rvChat = rv
 
-        if(message.get().toString().isEmpty())
+        if(message.get().toString().trim().isEmpty())
         {
 
             Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
@@ -221,7 +240,11 @@ class GroupChatVM :ViewModel() {
             //CommonMethods.alertDialog(view.context,"please enter message")
         }
         else {
+
+           // Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}------", Toast.LENGTH_SHORT).show()
+
             sendChatMessage()
+
         }
 
     }
@@ -315,7 +338,7 @@ class GroupChatVM :ViewModel() {
         GlobalScope.launch {
 
             withContext(Dispatchers.Main) {
-                Toast.makeText(ctx, json.getString("success_message"), Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Message reported successfully", Toast.LENGTH_SHORT).show()
 
             }}
     }

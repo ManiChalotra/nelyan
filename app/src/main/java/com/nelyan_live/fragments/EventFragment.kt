@@ -15,17 +15,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.R.layout
 import com.nelyan_live.adapter.MyEventAdapter
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.modals.HomeEventModel
 import com.nelyan_live.modals.eventList.EventData
+import com.nelyan_live.ui.ActivitiesFilterActivity
 import com.nelyan_live.ui.ActivitiesOnMapActivity
 import com.nelyan_live.ui.CommunicationListner
-import com.nelyan_live.ui.ActivitiesFilterActivity
 import com.nelyan_live.utils.*
-
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.json.JSONObject
 
@@ -71,7 +70,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
         mContext = requireActivity()
         ivBack = v.findViewById(R.id.ivBack)
         ivBack!!.setOnClickListener(View.OnClickListener {
-            val fm = requireActivity()!!.supportFragmentManager
+            val fm = requireActivity().supportFragmentManager
             val f = fm.findFragmentById(R.id.frame_container)
             fm.popBackStack()
         })
@@ -89,12 +88,12 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
             // requireActivity().OpenActivity(FilterActivity::class.java)
             //AppUtils.gotoFragment(mContext, ActivityFragment(), R.id.frame_container, false)
         })
-        ivBack!!.setVisibility(View.VISIBLE)
+        ivBack!!.visibility = View.VISIBLE
         //            title.setVisibility(View.VISIBLE);
-        ivLocation!!.setVisibility(View.VISIBLE)
+        ivLocation!!.visibility = View.VISIBLE
         ivLocation!!.setImageResource(R.drawable.location_circle)
         val LM = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rc!!.setLayoutManager(LM)
+        rc!!.layoutManager = LM
         /*eventDatalist.clear()
         eventDatalist.add(EventModel(R.drawable.img_1, "Danse", "Marechal 20KM", "10.12.2020 To 11.12.2020", "11:00 AM 3 Year", "01:00 PM 5 Year", 450.80, "During the summer,many cities show movies in the park. Bring a blanket, snacks, a light sweater, and enjoy the magic of cinema"))
         eventDatalist.add(EventModel(R.drawable.img_1, "Danse", "Marechal 20KM", "10.12.2020 To 11.12.2020", "11:00 AM 3 Year", "01:00 PM 5 Year", 450.80, "During the summer,many cities show movies in the park. Bring a blanket, snacks, a light sweater, and enjoy the magic of cinema"))
@@ -113,13 +112,13 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
                 "Date Added",
                 "Distance")
         val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                requireActivity()!!, layout.customspinner, genderlist)
+                requireActivity(), layout.customspinner, genderlist)
 
 // Setting Adapter to the Spinner
-        orderby!!.setAdapter(adapter)
+        orderby!!.adapter = adapter
 
 // Setting OnItemClickListener to the Spinner
-        orderby!!.setOnItemSelectedListener(this@EventFragment)
+        orderby!!.onItemSelectedListener = this@EventFragment
         return v
     }
 
@@ -140,11 +139,11 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
 
                 // get String data from Intent
                 val returnName = data!!.getStringExtra("name")
-                val returnDistance = data!!.getStringExtra("distance")
-                val returnLocation = data!!.getStringExtra("location")
-                val returnDate = data!!.getStringExtra("date")
-                val returnLat = data!!.getStringExtra("lat")
-                val returnlng = data!!.getStringExtra("lng")
+                val returnDistance = data.getStringExtra("distance")
+                val returnLocation = data.getStringExtra("location")
+                val returnDate = data.getStringExtra("date")
+                val returnLat = data.getStringExtra("lat")
+                val returnlng = data.getStringExtra("lng")
 
                 if (checkIfHasNetwork(requireActivity())) {
                      authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
@@ -172,9 +171,12 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
 
 
     private fun setAdaptor(datalist: ArrayList<HomeEventModel>) {
-        val myEventAdapter = MyEventAdapter(requireActivity(), datalist, this)
-        //rc.setAdapter(null);
-        rc!!.setAdapter(myEventAdapter)
+        try {
+            val myEventAdapter = MyEventAdapter(requireActivity(), datalist, this)
+            rc!!.adapter = myEventAdapter
+        }
+        catch (e:Exception)
+        {e.printStackTrace()}
     }
 
 
@@ -189,9 +191,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
                     val listArray = jsonObject.getJSONArray("data")
                     val mSizeOfData = listArray.length()
 
-                    if (datalist != null) {
-                        datalist!!.clear()
-                    }
+                    datalist.clear()
 
                     for (i in 0 until mSizeOfData) {
                         val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
@@ -213,10 +213,10 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
                                     .getJSONObject(0).get("startTime").toString()
                             val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                     .getJSONObject(0).get("endTime").toString()
-                            datalist!!.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                            datalist.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
                                     description, isFav))
                         } else {
-                            datalist!!.add(HomeEventModel(id, image, name, city, "", "", "", "",
+                            datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
                                     price, description, isFav))
                         }
 
@@ -271,7 +271,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
 
 
                     if (datalist != null) {
-                        datalist!!.clear()
+                        datalist.clear()
                     }
 
                     for (i in 0 until mSizeOfData) {
@@ -294,10 +294,10 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
                                     .getJSONObject(0).get("startTime").toString()
                             val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                     .getJSONObject(0).get("endTime").toString()
-                            datalist!!.add(HomeEventModel(id,image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                            datalist.add(HomeEventModel(id,image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
                                     description, isFav))
                         } else {
-                            datalist!!.add(HomeEventModel(id, image, name, city, "", "", "", "",
+                            datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
                                     price, description, isFav))
                         }
 
@@ -329,7 +329,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CommunicationListner) {
-            listner = context as CommunicationListner
+            listner = context
         } else {
 
             throw RuntimeException("Home Fragment not Attched")
@@ -346,7 +346,7 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
 
         if (checkIfHasNetwork(requireActivity())) {
             appViewModel.addFavouriteApiData(security_key, authkey, eventID )
-            eventProgressBar.showProgressBar()//  loginProgressBar?.showProgressBar()
+            eventProgressBar.showProgressBar()
         } else {
             showSnackBar(requireActivity(), getString(R.string.no_internet_error))
         }

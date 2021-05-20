@@ -38,8 +38,8 @@
                     android:layout_height="@dimen/_25sdp"
                     setChatImage="@{chatVM.senderImage}"
                     android:src="@drawable/placeholder"
-
                     />
+
                 <TextView
                     style="@style/HeaderText"
                     android:layout_height="match_parent"
@@ -96,7 +96,7 @@
                 android:inputType="textWebEditText"
                 android:layout_gravity="center"
                 android:fontFamily="@font/regular"
-                android:maxLines="1"
+                android:maxLines="3"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/icon"
@@ -106,7 +106,9 @@
                 android:text="@={chatVM.message}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"

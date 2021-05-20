@@ -12,7 +12,6 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyan_live.R
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,26 +40,16 @@ class ChatVM :ViewModel() {
         when(s)
         {
 
-           // "three"->{
-                //CommonMethods.hideKeyboard(view)
-               // threeDialog(view)
-           // }
             "ivSend"->{
                 if(message.get().toString().isEmpty())
                 {
                     Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
-
-                   // CommonMethods.alertDialog(view.context,"please enter message")
                 }
                 else {
                     sendChatMessage()
-                }
-            }
-        }
-    }
+                } } } }
 
-
-     fun sendChatMessage() {
+    fun sendChatMessage() {
 
         val json = JSONObject()
         try
@@ -132,7 +121,6 @@ class ChatVM :ViewModel() {
 
     fun connectSocket(context: Context) {
 
-
         Log.e("socket", "connectSocket connectSocket")
 
         ctx = context
@@ -142,7 +130,6 @@ class ChatVM :ViewModel() {
             socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
             socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
             socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectTimeout)
-
             socket.on("connect_user", connectListener)
             socket.on("connect_listener", connectListener)
             socket.on("get_message", chatList)
@@ -191,14 +178,11 @@ class ChatVM :ViewModel() {
         getUserChat()
     }
 
-
     private val onDisconnect = Emitter.Listener  { Log.e("socket", "run: disconnect")  }
-
 
     private val onConnectError = Emitter.Listener  { Log.e("socket", "run: onConnectError")  }
 
     private val onConnectTimeout = Emitter.Listener  { Log.e("socket", "run: onConnectTimeout") }
-
 
     private val connectListener = Emitter.Listener{
         Log.e("socket", "chat   JOIN")
@@ -221,8 +205,6 @@ class ChatVM :ViewModel() {
             for(i in 0 until jsonArray.length())
             {
                 val json = jsonArray.getJSONObject(i)
-
-
 
                 /*[
                     {
@@ -261,19 +243,18 @@ class ChatVM :ViewModel() {
                     json.getString("recieverName"),
                     json.getString("recieverImage"),
                     json.getString("senderName"),
-                    json.getString("senderImage"),
+                    if(json.getString("senderId") == userId){json.getString("senderImage")}else{json.getString("recieverImage")},
                     userId
 
                 ))
             }
-
 
             GlobalScope.launch {
 
                 withContext(Dispatchers.Main) {
                     listChat.clear()
                     listChat.addAll(listData)
-                    listChat.reverse()
+                   // listChat.reverse()
                     chatAdapter.addItems(listChat)
                     rvChat.scrollToPosition(listChat.size-1)
 
@@ -308,6 +289,23 @@ class ChatVM :ViewModel() {
 
         try {
 
+            /*{
+                "id": 451,
+                "senderId": 188,
+                "receiverId": 197,
+                "chatConstantId": 9,
+                "groupId": 0,
+                "message": "hello 197",
+                "readStatus": 0,
+                "messageType": 0,
+                "deletedId": 0,
+                "created": 1621493605,
+                "updated": 1621493605,
+                "senderName": "ani",
+                "senderImage": "",
+                "recieverImage": "a9e5857f-0c7e-40ce-b87f-69cde43a844c.jpg",
+                "recieverName": "ramu"
+            }*/
             /*{
                 "id": 389,
                 "senderId": 188,
@@ -421,14 +419,7 @@ class ChatVM :ViewModel() {
 
     }
 
-
     lateinit var dialog: Dialog
-
-
-
-
-
-
 
 
 }

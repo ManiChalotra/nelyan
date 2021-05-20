@@ -14,7 +14,6 @@ import com.nelyan_live.chat.MessagesVM
 import com.nelyan_live.databinding.FragmentMessageBinding
 import com.nelyan_live.ui.CommunicationListner
 import com.nelyan_live.ui.HomeActivity
-import java.lang.RuntimeException
 
 
 class MessageFragment : Fragment() {
@@ -36,7 +35,6 @@ class MessageFragment : Fragment() {
 
         fragmentMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context),R.layout.fragment_message, container, false)
         fragmentMessageBinding.messageVM =messagesVM
-        messagesVM.connectSocket(container.context)
 
         messagesVM.userId = (container.context as HomeActivity).userId
 
@@ -44,8 +42,15 @@ class MessageFragment : Fragment() {
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        messagesVM.connectSocket(view.context)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.e("fasfasfa","======onAttach")
+
         if(context is CommunicationListner)
         {
             listner = context
@@ -58,15 +63,17 @@ class MessageFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        Log.e("fasfasfa","======onDetach")
 
         listner = null
     }
 
     override fun onDestroyView() {
+        Log.e("fasfasfa","======fdgfdgfdgdfgfdg")
 
+        messagesVM.disconnectSocket()
         super.onDestroyView()
         Log.e("fasfasfa","======onDestroyView")
 
-        messagesVM.disconnectSocket()
     }
 }

@@ -80,37 +80,27 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var userlocation = ""
     private var userlat = ""
     private var userlong = ""
-
     var userId = ""
+    lateinit var fragment: Fragment
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
 
     override fun onResume() {
         super.onResume()
         authorization = intent?.extras?.getString("authorization").toString()
         Log.d("homeAuthKey", "----------$authorization")
 
-       // dataStoragePreference = D
         launch(Dispatchers.Main.immediate) {
              userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
             val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
              userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-           val  userlocation22 = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
             Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
-            Log.e("userImage123", from_admin_image_base_URl + userImage)
             tvUserName!!.text = userName
-
-
-            Log.d("userlocation", dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first())
-            Log.d("userlocation====", userlocation)
-            Log.d("userlocation==54==", userName)
-
         }
     }
 
@@ -125,74 +115,29 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ivToolBarImage = findViewById(R.id.ivToolBarImage)
         iv_bell = findViewById(R.id.iv_bell)
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
-
-
         loadFragment(HomeFragment())
-        //loadFragment(new DrawerNewHomeFragment());
+
         val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navigationbar)
         bottomNavigationBar.setOnNavigationItemSelectedListener(this)
         setDrawerClicks()
         setToolBarClicks()
 
-        /* val bottomNavigationView = findViewById<View>(R.id.navigationbar) as BottomNavigationView
-         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-             when (item.itemId) {
-                 R.id.home -> {
-                     myCustomToast("1")
-                 }
-                 R.id.msg -> {
-                     myCustomToast("2")
-                 }
-                 R.id.publier -> {
-                     myCustomToast("3")
-                 }
-                 R.id.chat -> {
-                     myCustomToast("4")
-                 }
-                 R.id.event -> {
-                     myCustomToast("5")
-                 }
-
-             }
-             true
-         }
-
- */
-
-
-        try {
             try {
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "map") {
 
                         OpenActivity(ActivitiesFilterActivity::class.java)
-
-                        /* Log.e("vghgv", "hhhhhhh")
-                         var fragment: Fragment? = null
-                         fragment = ActivityFragment()
-                         // Fragment fragment = new ActivityFragment();
-                         val args = Bundle()
-                         args.putString("unamea", "Homeactivity")
-                         fragment!!.arguments = args
-                         val fragmentManager = this.supportFragmentManager
-                         val fragmentTransaction = fragmentManager.beginTransaction()
-                         fragmentTransaction.replace(R.id.frame_container, fragment)
-                         fragmentTransaction.commit()*/
-
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "sectrofrag") {
-                        var fragment: Fragment? = null
                         fragment = SectorizationDetailsFragment()
                         loadFragment(fragment)
                     }
                 }
-
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "activity") {
                         Log.e("vghgv", "hhhhhhh")
-                        var fragment: Fragment? = null
                         fragment = ChildCareFragment()
                         val args = Bundle()
                         args.putString("child", "childcare")
@@ -203,26 +148,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         fragmentTransaction.commit()
                     }
                 }
-
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nurFrag") {
 
                         OpenActivity(HomeChildCareDetailsActivity::class.java)
-                        /* var fragment: Fragment? = null
-                         fragment = NurseFragment()
-                         val args = Bundle()
-                         args.putString("activity", "Nurseriefragment")
-                         fragment!!.arguments = args
-                         val fragmentManager = this.supportFragmentManager
-                         val fragmentTransaction = fragmentManager.beginTransaction()
-                         fragmentTransaction.replace(R.id.frame_container, fragment)
-                         fragmentTransaction.commit()
-                         //   bottomNavigationView.setSelectedItemId(R.id.home);*/
                     }
                 }
                 if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "tarfrag") {
-                        var fragment: Fragment? = null
+                if (intent.getStringExtra("activity") == "tarfrag") {
                         fragment = TraderPublishFragment()
                         val args = Bundle()
                         args.putString("activity", "traderfragment")
@@ -231,65 +164,42 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         fragmentTransaction.replace(R.id.frame_container, fragment)
                         fragmentTransaction.commit()
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "mater") {
-                        var fragment: Fragment? = null
                         fragment = MaternalFragmentFragment()
                         loadFragment(fragment)
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "babyfrag") {
-                        var fragment: Fragment? = null
                         fragment = BabySitterFragment()
                         loadFragment(fragment)
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nur") {
                         OpenActivity(NurserieActivityy::class.java)
-                        /* var fragment: Fragment? = null
-                         fragment = NurserieFragment()
-                         loadFragment(fragment)*/
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "seclist") {
-                        var fragment: Fragment? = null
                         fragment = SectorizationListFragment()
                         loadFragment(fragment)
 
-                        //   bottomNavigationView.setSelectedItemId(R.id.home);
                     }
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "acti") {
                         OpenActivity(ActivityDetailsActivity::class.java)
-                        /* var fragment: Fragment? = null
-                         fragment = ActivityDetailsFragment()
-                         //    loadFragment( fragment);
-                         val args = Bundle()
-                         args.putString("activity", "Home")
-                         fragment!!.arguments = args
-                         val fragmentManager = this.supportFragmentManager
-                         val fragmentTransaction = fragmentManager.beginTransaction()
-                         fragmentTransaction.replace(R.id.frame_container, fragment)
-                         fragmentTransaction.commit()*/
                     }
                 }
             } catch (e: Exception) {
-                var fragment: Fragment? = null
                 fragment = HomeFragment()
                 loadFragment(fragment)
             }
-        } catch (e: Exception) {
-        }
+
     }
 
     private fun initalize() {
@@ -302,13 +212,12 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mainContainer = findViewById(R.id.mainContainer)
         iv_back!!.setImageResource(R.drawable.ic_menu)
         iv_back!!.visibility = View.VISIBLE
-        iv_back!!.setOnClickListener(View.OnClickListener {
+        iv_back!!.setOnClickListener {
             mDrawerLayout!!.openDrawer(navigation_view!!)
             mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout,
                     R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
-                    //  closeKeyboard();
                     val min = 0.9f
                     val max = 1.0f
                     val scaleFactor = max - (max - min) * slideOffset
@@ -317,7 +226,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
             mDrawerLayout!!.addDrawerListener(mDrawerToggle!!)
-        })
+        }
     }
 
     private fun setDrawerClicks() {
@@ -331,31 +240,22 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvContact = findViewById(R.id.tvContact)
         tvSettings = findViewById(R.id.tvSettings)
 
-        tvHome!!.setOnClickListener(View.OnClickListener {
+        tvHome!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
             val i = Intent(this@HomeActivity, HomeActivity::class.java)
             startActivity(i)
             finishAffinity()
-        })
+        }
 
-
-/*
-        tvLogin!!.setOnClickListener(View.OnClickListener {
-            mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, com.nelyan_live.ui.LoginActivity::class.java)
-            startActivity(i)
-        })
-*/
-        tvAdd!!.setOnClickListener(View.OnClickListener {
+        tvAdd!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
             val i = Intent(this@HomeActivity, MyAddActivity::class.java)
             startActivity(i)
 
-            //  AppUtils.gotoFragment(mContext, new MyAddFragment(), R.id.frame_container, false);
-        })
+        }
         tvFavorite!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
-            OpenActivity(FavouriteActivity::class.java)//AppUtils.gotoFragment(this, FavoriteFragment(), R.id.frame_container, false)
+            OpenActivity(FavouriteActivity::class.java)
         }
 
         tvProfile!!.setOnClickListener {
@@ -371,19 +271,19 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         }
 
-        tvNoti!!.setOnClickListener(View.OnClickListener {
+        tvNoti!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
             val i = Intent(this@HomeActivity, NotificationActivity::class.java)
             startActivity(i)
-        })
+        }
 
-        tvSettings!!.setOnClickListener(View.OnClickListener {
+        tvSettings!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
 
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
             }
-        })
+        }
 
     }
 
@@ -403,10 +303,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         consultantUserDialog!!.setCancelable(false)
         consultantUserDialog!!.setCanceledOnTouchOutside(false)
 
-        consultantUserDialog!!.iv_cross.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        consultantUserDialog!!.iv_cross.setOnClickListener {
             consultantUserDialog!!.dismiss()
         }
-        consultantUserDialog!!.rl_open_settings.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        consultantUserDialog!!.rl_open_settings.setOnClickListener {
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
                 consultantUserDialog!!.dismiss()
@@ -416,21 +316,30 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         consultantUserDialog!!.show()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        var fragment: Fragment? = null
+    override fun onNavigationItemSelected(item: MenuItem):Boolean {
+
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
+
         when (item.itemId) {
+
             R.id.home -> {
-                //DrawerNewHomeFragment.drawerLayout.openDrawer(GravityCompat.START);
-                iv_bell!!.setImageResource(R.drawable.notification_icon)
-                tvTitleToolbar!!.visibility = View.GONE
-                ivToolBarImage!!.visibility = View.VISIBLE
-                iv_bell!!.setOnClickListener {
-                    val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                    startActivity(i)
+                if (currentFragment !is HomeFragment) {
+                    iv_bell!!.setImageResource(R.drawable.notification_icon)
+                    tvTitleToolbar!!.visibility = View.GONE
+                    ivToolBarImage!!.visibility = View.VISIBLE
+                    iv_bell!!.setOnClickListener {
+                        val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+                        startActivity(i) }
+                    fragment = HomeFragment()
+                    loadFragment(fragment)
                 }
-                fragment = HomeFragment()
             }
             R.id.msg -> {
+                if (currentFragment !is MessageFragment) {
+                    if(currentFragment is ChatFrag)
+                    {
+                        supportFragmentManager.popBackStack()
+                    }
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
                 tvTitleToolbar!!.text = "Message"
@@ -440,65 +349,72 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     startActivity(i)
                 }
                 fragment = MessageFragment()
+                    loadFragment(fragment)
+            }
             }
             R.id.publier -> {
-                if (userType.equals("2")) {
-                    tvTitleToolbar!!.visibility = View.VISIBLE
-                    ivToolBarImage!!.visibility = View.GONE
-                    tvTitleToolbar!!.text = "Publier"
-                    iv_bell!!.setImageResource(R.drawable.notification_icon)
-                    iv_bell!!.setOnClickListener {
-                        val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                        startActivity(i)
+                if (currentFragment !is PublisherFrag) {
+                    if (userType == "2") {
+                        tvTitleToolbar!!.visibility = View.VISIBLE
+                        ivToolBarImage!!.visibility = View.GONE
+                        tvTitleToolbar!!.text = "Publier"
+                        iv_bell!!.setImageResource(R.drawable.notification_icon)
+                        iv_bell!!.setOnClickListener {
+                            val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+                            startActivity(i)
+                        }
+                        val bundle = Bundle()
+                        val frag = PublisherFrag()
+                        bundle.putString("authorization", authorization)
+                        frag.arguments = bundle
+                        fragment = frag
+                    } else {
+                        consultantUserDialogMethod()
                     }
-                    val bundle = Bundle()
-                    val frag = PublisherFrag()
-                    bundle.putString("authorization", authorization)
-                    frag.arguments = bundle
-                    fragment = frag
-                }
-                else {
-                    consultantUserDialogMethod()
+                    loadFragment(fragment)
                 }
             }
             R.id.chat -> {
-                tvTitleToolbar!!.visibility = View.VISIBLE
-                ivToolBarImage!!.visibility = View.GONE
-                tvTitleToolbar!!.text = userlocation
-                iv_bell!!.setImageResource(R.drawable.tab_on)
-                iv_bell!!.setOnClickListener {
-                    //iv_bell.get
+                if (currentFragment !is ChatFrag) {
+                    tvTitleToolbar!!.visibility = View.VISIBLE
+                    ivToolBarImage!!.visibility = View.GONE
+                    tvTitleToolbar!!.text = userlocation
+                    iv_bell!!.setImageResource(R.drawable.tab_on)
+
+                    fragment = ChatFrag(userlocation, userlat, userlong)
+                    loadFragment(fragment)
                 }
-                fragment = ChatFrag(userlocation,userlat,userlong)
             }
             R.id.event -> {
-                tvTitleToolbar!!.visibility = View.VISIBLE
-                ivToolBarImage!!.visibility = View.GONE
-                tvTitleToolbar!!.text = getString(R.string.upcoming_events) +"\n"+ userlocation
-                iv_bell!!.setImageResource(R.drawable.location_circle)
-                iv_bell!!.setOnClickListener {
-                    val intent = Intent(this@HomeActivity, ActivitiesOnMapActivity::class.java)
-                    intent.putExtra("event", "activity")
-                    startActivity(intent)
+                if (currentFragment !is EventFragment) {
+                    tvTitleToolbar!!.visibility = View.VISIBLE
+                    ivToolBarImage!!.visibility = View.GONE
+                    tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
+                    iv_bell!!.setImageResource(R.drawable.location_circle)
+                    iv_bell!!.setOnClickListener {
+                        val intent = Intent(this@HomeActivity, ActivitiesOnMapActivity::class.java)
+                        intent.putExtra("event", "activity")
+                        startActivity(intent)
+                    }
+                    fragment = EventFragment()
+                    loadFragment(fragment)
                 }
-                fragment = EventFragment()
             }
         }
-        return loadFragment(fragment)
+
+        return true
     }
 
+    private fun loadFragment(fragment: Fragment): Boolean {
 
-    private fun loadFragment(fragment: Fragment?): Boolean {
-        if (fragment != null) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_container, fragment)
-                    .commit()
-            return true
-        } else {
-           // myCustomToast("Fragment is null")
-        }
-        return false
+
+
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .commit()
+
+        return true
     }
 
     private fun showLog() {
@@ -506,13 +422,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_logout)
         dialog!!.setCancelable(true)
-        val rlYes: RelativeLayout
-        val rlNo: RelativeLayout
-        rlYes = dialog!!.findViewById(R.id.rlYes)
+        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener {
             hitLogoutApi()
         }
-        rlNo = dialog!!.findViewById(R.id.rlNo)
+        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
 
@@ -530,54 +444,20 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             doubleBackToExitPressedOnce = true
             Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else {
-            if (currentFragment !is HomeFragment) {
+        }
+        else {
                 loadFragment(HomeFragment())
                 iv_bell!!.setImageResource(R.drawable.notification_icon)
                 tvTitleToolbar!!.visibility = View.GONE
                 ivToolBarImage!!.visibility = View.VISIBLE
                 iv_bell!!.setOnClickListener {
-                    val i = Intent(this@HomeActivity, com.nelyan_live.ui.NotificationActivity::class.java)
+                    val i = Intent(this@HomeActivity, NotificationActivity::class.java)
                     startActivity(i)
                 }
                 supportFragmentManager.popBackStack()
-            } else {
-
-
             }
-        }
 
-        /* val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
-         if (currentFragment is HomeFragment) {
-             if (doubleBackToExitPressedOnce) {
-                 finishAffinity()
-                 return
-             }else{
-                 myCustomToast("press once again to exit from the App.")
-             }
-             doubleBackToExitPressedOnce = true
-             Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-         }
-         else if (currentFragment is  ActivityFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is ActivityDetailsFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is NurserieFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is  TraderPublishFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is ChildCareFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is  SectorizationDetailsFragment) {
-                super.onBackPressed()
-            } else if (currentFragment is  SectorizationListFragment) {
-                super.onBackPressed()
-            } else {
-                super.onBackPressed()
-            }
- */
     }
-
 
     private fun hitLogoutApi() {
         appViewModel.sendLogoutData(security_key, authorization)
@@ -597,7 +477,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     myCustomToast(message)
 
                     launch(Dispatchers.Main.immediate) {
-                        val i = Intent(this@HomeActivity, com.nelyan_live.ui.LoginActivity::class.java)
+                        val i = Intent(this@HomeActivity, LoginActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(i)
                         dialog!!.dismiss()

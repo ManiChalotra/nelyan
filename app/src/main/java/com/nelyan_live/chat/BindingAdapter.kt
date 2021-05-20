@@ -82,13 +82,15 @@ object BindingAdapter {
 
     ) {
         if(!str.isNullOrEmpty()) {
-            Glide.with(ivImage.context).load(str).dontTransform()
-                    .override(200, 200).placeholder(
-                            ContextCompat.getDrawable(
-                                    ivImage.context,
-                                    R.drawable.placeholder
-                            )
-                    ).into(ivImage)
+
+                    Glide.with(ivImage.context).load("http://3.13.214.27:1052/uploads/users/$str").dontTransform()
+                            .override(200, 200).placeholder(
+                                    ContextCompat.getDrawable(
+                                            ivImage.context,
+                                            R.drawable.placeholder
+                                    )
+                            ).into(ivImage)
+
         }
     }
 

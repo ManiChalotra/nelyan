@@ -9,6 +9,7 @@ import com.nelyan_live.HELPER.image
 import com.nelyan_live.R
 import com.nelyan_live.chat.ChatVM
 import com.nelyan_live.databinding.ActivityChat1Binding
+import com.nelyan_live.utils.OpenActivity
 
 class Chat1Activity : image() {
     var ivBack: ImageView? = null
@@ -45,6 +46,8 @@ class Chat1Activity : image() {
     override fun onBackPressed() {
         chatVM.disconnectSocket()
         super.onBackPressed()
+        OpenActivity(HomeActivity::class.java)
+        finishAffinity()
     }
     override fun selectedImage(var1: Bitmap, var2: String) {
       //  ivAttachment!!.setImageBitmap(var1)
