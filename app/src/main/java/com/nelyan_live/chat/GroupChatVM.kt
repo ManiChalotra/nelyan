@@ -55,7 +55,6 @@ class GroupChatVM :ViewModel() {
                     }
                     "flag" -> {
                         showDailog(view.context,listChat[position].senderId,listChat[position].id,listChat[position].groupId)
-
                     }
                     "chat" -> {
 

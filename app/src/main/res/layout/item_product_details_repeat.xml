@@ -20,8 +20,9 @@
         android:text="@string/add_product_image" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/back_shape">
 
@@ -29,7 +30,8 @@
             android:id="@+id/ivProductImage"
             android:layout_width="match_parent"
             app:riv_corner_radius="@dimen/_5sdp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
 
         <ImageView
             android:id="@+id/ivCam"
@@ -37,7 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/grey"
-            android:src="@drawable/camera_icon" />
+            android:src="@drawable/ic_photo_one"
+            android:scaleType="centerCrop"
+            />
 
     </RelativeLayout>
 

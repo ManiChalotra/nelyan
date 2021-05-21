@@ -473,7 +473,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun getRealImagePath(imgPath: String?) {
 
-        Log.d("selectedImagePath", "-------" + imgPath)
+        Log.d("selectedImagePath", "-------$imgPath")
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {

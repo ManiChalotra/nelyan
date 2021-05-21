@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.BabySitterActivity">
+
 
     <RelativeLayout
         android:id="@+id/header"
@@ -16,9 +18,9 @@
             android:id="@+id/ivBackBabaySitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
         <TextView
@@ -44,10 +46,129 @@
                 style="@style/CommonTextWrapcontent"
                 android:text="@string/photo" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/ll_public"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/back_shape">
+
+                    <ImageView
+                        android:id="@+id/ivImg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_photo_one" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_video012"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ll_privates"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/back_shape">
+
+                    <ImageView
+                        android:id="@+id/ivImg2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo_two" />
+
+                    <ImageView
+                        android:id="@+id/iv_video013"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ll_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:background="@drawable/back_shape">
+
+                    <ImageView
+                        android:id="@+id/ivImg3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/small_photo_4" />
+
+                    <ImageView
+                        android:id="@+id/iv_video014"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAddImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:background="@drawable/back_shape">
+
+                    <ImageView
+                        android:id="@+id/ivplus"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/small_photo_5" />
+
+                    <ImageView
+                        android:id="@+id/iv_video015"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
+                        android:elevation="@dimen/_5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_videocam_24"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/rlImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_width="@dimen/_140sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/back_shape">
 
@@ -56,13 +177,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/pik_1"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_photo_3"/>
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     app:riv_corner_radius="@dimen/_5sdp"
                     android:layout_centerInParent="true"
                     />
@@ -106,123 +228,7 @@
                         app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
                 </RelativeLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/ll_public"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape">
-
-                    <ImageView
-                        android:id="@+id/ivImg1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/photo_two" />
-
-
-                    <ImageView
-                        android:id="@+id/iv_video012"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_centerInParent="true"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:visibility="gone" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/ll_privates"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back_shape">
-
-                    <ImageView
-                        android:id="@+id/ivImg2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/small_photo_3" />
-
-                    <ImageView
-                        android:id="@+id/iv_video013"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_centerInParent="true"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:visibility="gone" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/ll_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:background="@drawable/back_shape">
-
-                    <ImageView
-                        android:id="@+id/ivImg3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/small_photo_4" />
-
-                    <ImageView
-                        android:id="@+id/iv_video014"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_centerInParent="true"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:visibility="gone" />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlAddImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:background="@drawable/back_shape">
-
-                    <ImageView
-                        android:id="@+id/ivplus"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:src="@drawable/small_photo_5" />
-
-                    <ImageView
-                        android:id="@+id/iv_video015"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_centerInParent="true"
-                        android:elevation="@dimen/_5dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_baseline_videocam_24"
-                        android:visibility="gone" />
-
-                </RelativeLayout>
-            </LinearLayout>
 
             <TextView
                 style="@style/CommonTextWrapcontent"

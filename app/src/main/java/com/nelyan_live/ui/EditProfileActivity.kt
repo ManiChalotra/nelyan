@@ -73,8 +73,13 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
         Log.d("getEditPhotoPath", "----------$imgPath")
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profile)
+        initalize()
+        checkMvvmResponse()
+        Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + intent?.extras?.getString("userImage").toString()).error(R.mipmap.ic_user_place)
+                .into(iv_profileEdit)
 
         if (imagePathCreated.isEmpty()) {
             imagePathCreated = intent?.extras?.getString("userImage").toString()
@@ -85,9 +90,13 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             authkey = intent?.extras?.getString("authorization").toString()
 
             Log.d("getPatttthhhh", "---onResume----" + imagePathCreated)
+            //2021-05-21 13:15:00.732 25708-25708/com.nelyan_live I/dddddd: Place: Ludhiana, ChIJfVo0YnSDGjkREAbGjjQCEWg,Ludhiana, Punjab, India,lat/lng: (30.900965,75.8572758)
+
+            //2021-05-21 13:15:00.733 25708-25708/com.nelyan_live D/getPatttthhhh: ---onResume----
 
             /*Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + imagePathCreated).error(R.mipmap.ic_user_place)
                     .into(iv_profileEdit)*/
+
             et_nameEditProfile.setText(name); setFocusEditText(et_nameEditProfile)
             tv_emailEditProfile.text = email
             et_cityEditProfile.setText(city); setFocusEditText(et_cityEditProfile)
@@ -99,15 +108,8 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             longitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
         }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
-        initalize()
-        checkMvvmResponse()
-        Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + intent?.extras?.getString("userImage").toString()).error(R.mipmap.ic_user_place)
-                .into(iv_profileEdit)
+
     }
 
     private fun initalize() {
@@ -206,8 +208,6 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
                         dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
                         dataStoragePreference.save(lat, preferencesKey("latitudeLogin"))
                         dataStoragePreference.save(long, preferencesKey("longitudeLogin"))
-
-
                         Log.d("userlocation======", dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first())
 
 

@@ -92,6 +92,10 @@ object BindingAdapter {
                             ).into(ivImage)
 
         }
+        else
+        {
+            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context,R.drawable.placeholder))
+        }
     }
 
 }

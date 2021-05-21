@@ -11,21 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
 import com.nelyan_live.adapter.ProductDetailRepeatAdapter.ProductDetailsRepeatViewHolder
-import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.modals.ProductDetailDataModel
 import java.util.*
 
 class ProductDetailRepeatAdapter(internal var context: Context, internal var list: ArrayList<ProductDetailDataModel> ,
                                  internal var productRepeatListener: ProductRepeatListener) : RecyclerView.Adapter<ProductDetailsRepeatViewHolder>() {
-   // var returnItemView = 1
-    /*var productRepeatListener: TraderActivity
-    var selectedImage = ""
-    var file: File? = null
-    var Title = HashMap<String, String>()
-    var price = HashMap<String, String>()
-    var Description = HashMap<String, String>()
-    var mAlbumFiles = ArrayList<AlbumFile>()*/
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductDetailsRepeatViewHolder {
 
@@ -73,7 +63,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
             edtProductPrice.setText(list.get(position).productPrice)
 
             ivCam.setOnClickListener{
-                productRepeatListener!!.addCameraGelleryImage(list, position)
+                productRepeatListener.addCameraGelleryImage(list, position)
             }
 
 
@@ -81,7 +71,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 edtDesc.clearFocus()
                 edtProductPrice.clearFocus()
                 edtProductTitle.clearFocus()
-                productRepeatListener!!.onITEEMClick(list, position)
+                productRepeatListener.onITEEMClick(list, position)
             }
 
 

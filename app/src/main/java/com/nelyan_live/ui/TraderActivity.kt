@@ -20,16 +20,15 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.DayTimeRepeatAdapter
 import com.nelyan_live.adapter.ProductDetailRepeatAdapter
 import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.DayTimeModel
 import com.nelyan_live.modals.ProductDetailDataModel
 import com.nelyan_live.utils.*
-
 import kotlinx.android.synthetic.main.activity_trader.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,10 +73,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
+
     private var cityName = ""
     private var cityLatitude = ""
     private var cityLongitude = ""
     private var cityAddress = ""
+
     var rvDayTime: RecyclerView? = null
     var rvProductDetails: RecyclerView? = null
     private lateinit var dayTimeModelArrayList: ArrayList<DayTimeModel>
@@ -148,8 +149,8 @@ var image = HashMap<String, Bitmap>()
 
 
         productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this@TraderActivity )
-        rvProductDetails!!.setLayoutManager(LinearLayoutManager(this))
-        rvProductDetails!!.setAdapter(productDetailRepeatAdapter)
+        rvProductDetails!!.layoutManager = LinearLayoutManager(this)
+        rvProductDetails!!.adapter = productDetailRepeatAdapter
 
 
         hitTypeTradeActivity_Api()
@@ -208,7 +209,7 @@ var image = HashMap<String, Bitmap>()
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
                 cityName = place.name.toString()
-                tv_address.setText(cityName.toString())
+                tv_address.text = cityName.toString()
 
                 // cityID = place.id.toString()
                 cityLatitude = place.latLng?.latitude.toString()
@@ -221,7 +222,7 @@ var image = HashMap<String, Bitmap>()
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
@@ -271,12 +272,12 @@ var image = HashMap<String, Bitmap>()
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList2.add(photo)
             }
         }
 
-        Log.d("imagePathLsiting", "-------------" + imagePathList2!!.size)
+        Log.d("imagePathLsiting", "-------------" + imagePathList2.size)
 
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -339,7 +340,7 @@ var image = HashMap<String, Bitmap>()
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList.add(photo)
                 var type: RequestBody
                 type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -439,7 +440,7 @@ var image = HashMap<String, Bitmap>()
                         } else {
                             // response for addevent images data
                             if (addEventUrlListingResponse != null) {
-                                addEventUrlListingResponse!!.clear()
+                                addEventUrlListingResponse.clear()
                             }
 
                             for (i in 0 until response.body()!!.data!!.size) {
@@ -765,7 +766,7 @@ var image = HashMap<String, Bitmap>()
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
-                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                imageview?.scaleType = ImageView.ScaleType.FIT_XY
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video11)
             }
             "2" -> {
@@ -793,7 +794,7 @@ var image = HashMap<String, Bitmap>()
 
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
-        if (imgpath?.contains(".mp4")!!) {
+        if (imgpath.contains(".mp4")) {
             videoButton.visibility = View.VISIBLE
         } else {
             videoButton.visibility = View.GONE

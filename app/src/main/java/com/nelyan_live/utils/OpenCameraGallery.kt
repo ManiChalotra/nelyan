@@ -27,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.nelyan_live.R
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -163,9 +162,11 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 if (Uri.parse(imgPath) != null) {
                     getRealImagePath(getPath(this, Uri.parse(imgPath)))
 
-                  *//*  CropImage.activity(Uri.parse(imgPath))
+                  */
+        /*  CropImage.activity(Uri.parse(imgPath))
                             .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(mActivity)*//*
+                            .start(mActivity)*/
+        /*
                 }
 
                 // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
@@ -175,12 +176,16 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 e.printStackTrace()
             }
         } */
+
         if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
             try {
                 if (Uri.parse(imgPath) != null) {
-                    CropImage.activity(Uri.parse(imgPath))
+                    imgPath = getPath(mActivity, Uri.parse(imgPath)).toString()
+                    getRealImagePath(imgPath)
+
+                    /*CropImage.activity(Uri.parse(imgPath))
                             .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(mActivity)
+                            .start(mActivity)*/
                 }
 
                 // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
@@ -195,9 +200,11 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             try {
                 val uri = data!!.data
                 if (uri != null) {
-                    CropImage.activity(uri)
+                    imgPath = getPath(mActivity, uri).toString()
+                    getRealImagePath(imgPath)
+                    /*CropImage.activity(uri)
                             .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(this)
+                            .start(this)*/
                /* if (uri != null) {
                     getRealImagePath(
                             getPath(this, uri)
@@ -208,7 +215,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                         getRealImagePath(videoPath)
                     }
                     */
-
                     /* else {
 
                         if (uri != null) {
@@ -217,6 +223,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                                     .start(this)
                         }
                     }*/
+
                 }
 
             } catch (e: Exception) {
@@ -227,7 +234,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
         else if (CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE === requestCode && resultCode == Activity.RESULT_OK) {
             try {
                 val result: CropImage.ActivityResult = CropImage.getActivityResult(data)
-                if (resultCode == AppCompatActivity.RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     val uri: Uri = result.uri
                     if (uri != null) {
                         imgPath = getPath(mActivity, uri).toString()

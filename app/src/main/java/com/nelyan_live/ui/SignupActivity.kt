@@ -5,8 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -18,9 +19,9 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.coroutines.CoroutineScope
@@ -45,6 +46,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     val dataStoragePreference by lazy { DataStoragePreference(this@SignupActivity) }
     private var imgPath = ""
+    private var imgPathNormal = ""
     private var cityName = ""
     private var cityLatitude = ""
     private var cityLongitude = ""
@@ -101,7 +103,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         super.onResume()
 
         launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference?.emitStoredValue(preferencesKey<String>("fcmToken"))?.first()
+            deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
         }
 
         launch(Dispatchers.Main.immediate) {
@@ -119,9 +121,15 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         if (intent.extras != null) {
 
             socialSignup = intent?.extras?.getString("socialLogin").toString()
+
+
+            Log.d("getImageRealPath", "---22------------$socialImage")
+
             imgPath = socialImage
 
-            if (socialSignup.equals("SOCIAL_LOGIN")) {
+
+
+            if (socialSignup == "SOCIAL_LOGIN") {
                 tv_passwordSignup.visibility = View.GONE
                 password.visibility = View.GONE
                 view1.visibility = View.GONE
@@ -177,7 +185,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 if (type != 0) {
                     if (Validation.checkName(tv_username.text.toString().trim(), this)) {
                         if (Validation.checkEmail(tv_userEmail.text.toString(), this)) {
-                            if (socialSignup.equals("") || socialSignup.isEmpty() || socialSignup == null) {
+                            if (socialSignup == "" || socialSignup.isEmpty() || socialSignup == null) {
 
                                 if (Validation.checkPassword(tv_password.text.toString(), this)) {
                                     if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
@@ -290,7 +298,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
         val tsLong = System.currentTimeMillis() / 1000
         val currentTS = tsLong.toString()
-        Log.e("current", currentTS.toString())
+        Log.e("current", currentTS)
 
         val mName = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val mEmail = email.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -302,7 +310,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
-        if (imgPath.isNullOrEmpty()) {
+        if (imgPathNormal.isNullOrEmpty()) {
             if (deviceToken.equals("") || deviceToken == null){
                 appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "1212313", mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
             }else{
@@ -310,15 +318,22 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             }
             //signupProgressBar?.showProgressBar()
+
+            Log.e("sadfdfaf","==222222======")
+
             progressDialog.setProgressDialog()
 
         } else {
             // hit with updating the image
             var mfile: File? = null
-            mfile = File(imgPath)
+            mfile = File(imgPathNormal)
             val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-            var photo: MultipartBody.Part? = null
-            photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+            val photo: MultipartBody.Part?
+            photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+
+
+            Log.e("sadfdfaf","==111111=====$imgPathNormal")
+
             if (deviceToken.equals("") || deviceToken == null) {
                 appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "121321231", mName, mEmail,
                         mPassword, mType, mSecond, city, lat, longi, photo)
@@ -333,7 +348,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     }
 
     private fun checkMvvmResponse() {
-        appViewModel!!.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
@@ -391,7 +406,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         })
 
         // for terms condition
-        appViewModel!!.observeTermsConditionResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeTermsConditionResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
 
             //  appViewModel.observeTermsConditionResponse()!!.observe(this, Observer { response->
             if (response!!.isSuccessful && response.code() == 200) {
@@ -409,7 +424,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
         // for  privacy policy
 
-        appViewModel!!.observePrivacyPolicyResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observePrivacyPolicyResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             //   appViewModel.observePrivacyPolicyResponse()!!.observe(this, Observer { response->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
@@ -481,7 +496,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             }
         })
 
-        appViewModel!!.getException()!!.observe(this, androidx.lifecycle.Observer {
+        appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
             progressDialog.hidedialog()// signupProgressBar?.hideProgressBar()
         })
@@ -508,7 +523,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
@@ -524,15 +539,16 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         category.add("Consultant")
         category.add("Professional")
         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter(this, R.layout.customspinner, category as List<String>)
-        typeSelected!!.setAdapter(arrayAdapter)
+        typeSelected!!.adapter = arrayAdapter
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun getRealImagePath(imagePath: String?) {
-        Log.d("getImageRealPath", "---------------" + imagePath)
+        Log.d("getImageRealPath", "---11------------$imagePath")
         imgPath = imagePath.toString()
+        imgPathNormal = imagePath.toString()
         Glide.with(this).asBitmap().load(imgPath).circleCrop().into(iv_uploader)
     }
 

@@ -23,17 +23,20 @@
 
         <RelativeLayout
             android:id="@+id/rl_Add"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_90sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/back_shape">
+            android:layout_gravity="center"
+            android:background="@drawable/back_shape"
+            >
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivEventimage"
                 app:riv_corner_radius="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop"
+                />
 
             <ImageView
                 android:id="@+id/ivCam"
@@ -41,7 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:backgroundTint="@color/grey"
-                android:src="@drawable/camera_icon" />
+                android:src="@drawable/ic_photo_one"
+                android:scaleType="centerCrop"
+                />
 
         </RelativeLayout>
 
@@ -93,7 +98,7 @@
                     android:text="@string/from1" />
 
 
-                -
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,7 +120,7 @@
             </LinearLayout>
 
 
-            -
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,7 +135,7 @@
                     android:text="@string/to1" />
 
 
-                -
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -192,7 +197,7 @@
             </LinearLayout>
 
 
-            -
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,7 +212,7 @@
                     android:text="@string/to1" />
 
 
-                -
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -107,6 +107,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+
+
+
         initalize()
         checkMvvmresponse()
 
@@ -123,6 +127,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setToolBarClicks()
 
             try {
+                if (intent.hasExtra("chat")) {
+
+                        Log.d("homeAuthKey====", "----------$userId")
+
+                        userId = intent.getStringExtra("chat")!!
+                    Log.d("homeAuthKey==22==", "----------$userId")
+
+                    bottomNavigationBar.selectedItemId = R.id.msg
+                       // fragment = MessageFragment()
+                       // loadFragment(fragment)
+
+                }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "map") {
 
@@ -320,6 +336,19 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
 
+        if(currentFragment is ChatFrag ) {
+            Log.e("fasfasfa", "======ChatFrag")
+            currentFragment.groupChatVM.disconnectSocket()
+        }
+        if(currentFragment is MessageFragment )
+        {
+            currentFragment.messagesVM.disconnectSocket()
+        }
+        if(currentFragment is EventFragment )
+        {
+            currentFragment.onDestroy()
+        }
+
         when (item.itemId) {
 
             R.id.home -> {
@@ -338,7 +367,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if (currentFragment !is MessageFragment) {
                     if(currentFragment is ChatFrag)
                     {
-                        supportFragmentManager.popBackStack()
+                        Log.e("fasfasfa","======detach")
+                        currentFragment.groupChatVM.disconnectSocket()
                     }
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
@@ -368,10 +398,12 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         bundle.putString("authorization", authorization)
                         frag.arguments = bundle
                         fragment = frag
-                    } else {
+                        loadFragment(fragment)
+                    }
+                    else {
                         consultantUserDialogMethod()
                     }
-                    loadFragment(fragment)
+
                 }
             }
             R.id.chat -> {

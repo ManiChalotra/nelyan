@@ -28,12 +28,7 @@ class MessagesVM :ViewModel() {
     val membersAdapter by lazy { RecyclerAdapter<ChatListResponse>(R.layout.list_message) }
     val listMembers by lazy { ArrayList<ChatListResponse>() }
 
-
     init {
-
-
-
-
 
         membersAdapter.setOnItemClick(object : RecyclerAdapter.OnItemClick {
             override fun onClick(view: View, position: Int, type: String) {
@@ -50,7 +45,6 @@ class MessagesVM :ViewModel() {
                                     .putExtra("senderImage", listMembers[position].userImage)
                                     .putExtra("userId", userId)
                             )
-
                     }
                 } }
         })
@@ -88,6 +82,8 @@ class MessagesVM :ViewModel() {
                 socket.on("connect_listener", connectListener)
                 socket.on("chat_listing", chatList)
                 socket.on("chat_message", chatList)
+                socket.on("send_message", newMessage)
+                socket.on("new_message", newMessage)
                 socket.connect()
 
             } catch (e: Exception) {
@@ -110,6 +106,8 @@ class MessagesVM :ViewModel() {
         socket.off("connect_listener", connectListener)
         socket.off("chat_listing", chatList)
         socket.off("chat_message", chatList)
+        socket.off("send_message", newMessage)
+        socket.off("new_message", newMessage)
 
     }
 
@@ -144,6 +142,20 @@ class MessagesVM :ViewModel() {
         Log.e("socket", "JOIN")
         Log.e("socket", it[0].toString())
         getUserList()
+    }
+
+    private val newMessage = Emitter.Listener{
+
+        Log.e("socket", "chat    newMessage")
+        Log.e("socket", it[0].toString())
+
+        try {
+
+            getUserList()
+        }
+        catch (e:Exception)
+        {e.printStackTrace()}
+
     }
 
     private val chatList = Emitter.Listener{

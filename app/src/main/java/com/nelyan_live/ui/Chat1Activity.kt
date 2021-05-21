@@ -17,6 +17,7 @@ class Chat1Activity : image() {
 
 
     lateinit var activityChat1Binding: ActivityChat1Binding
+     var userId =  ""
 
     val chatVM: ChatVM by viewModels()
 
@@ -30,7 +31,9 @@ class Chat1Activity : image() {
         activityChat1Binding.ivBack.setOnClickListener { onBackPressed() }
 
         ivAttachment = findViewById(R.id.ivAttachment)
-        ivAttachment!!.setOnClickListener { image("all") }
+        ivAttachment!!.setOnClickListener {
+            //image("all")
+        }
         chatVM.rvChat =activityChat1Binding.rvChat
 
         if (intent.hasExtra("senderID")) {
@@ -38,15 +41,25 @@ class Chat1Activity : image() {
             chatVM.senderName.set(intent.getStringExtra("senderName")!!)
             chatVM.senderImage.set(intent.getStringExtra("senderImage")!!)
             chatVM.userId = intent.getStringExtra("userId")!!
+            userId = intent.getStringExtra("userId")!!
         }
         chatVM.connectSocket(this)
 
+        activityChat1Binding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if(bottom<oldBottom) {
+                v!!.post { if(chatVM.listChat.isNotEmpty()) {
+                    activityChat1Binding.rvChat.smoothScrollToPosition(chatVM.listChat.size - 1)
+                } }
+            }
+        }
     }
 
     override fun onBackPressed() {
         chatVM.disconnectSocket()
         super.onBackPressed()
-        OpenActivity(HomeActivity::class.java)
+        OpenActivity(HomeActivity::class.java){
+            putString("chat", userId)
+        }
         finishAffinity()
     }
     override fun selectedImage(var1: Bitmap, var2: String) {

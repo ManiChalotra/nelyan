@@ -33,7 +33,7 @@ class ChatVM :ViewModel() {
     var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
 
     val chatAdapter by lazy { RecyclerAdapter<ChatData>(R.layout.list_chat) }
-    private val listChat by lazy { ArrayList<ChatData>() }
+     val listChat by lazy { ArrayList<ChatData>() }
 
     fun onClick(view: View, s:String)
     {
@@ -58,6 +58,9 @@ class ChatVM :ViewModel() {
             json.put("receiverId", senderID)
             json.put("messageType", 0)
             json.put("message", message.get().toString())
+
+            Log.e("send_message","=======$json")
+
             socket.emit("send_message",json)
 
             message.set("")
@@ -106,7 +109,7 @@ class ChatVM :ViewModel() {
     {
         rvChat = rv
 
-        if(message.get().toString().isEmpty())
+        if(message.get().toString().trim().isEmpty())
         {
 
             Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()

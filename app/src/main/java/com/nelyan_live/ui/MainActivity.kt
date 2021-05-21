@@ -76,9 +76,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         timer!!.schedule(object : TimerTask() {
             override fun run() {
                 launch (Dispatchers.Main.immediate){
+                    dataStoragePreference = DataStoragePreference(this@MainActivity)
                     val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
                     val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                    if(email.isNotEmpty() && authkey.isNotEmpty()){
+
+
+                    if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
                         OpenActivity(HomeActivity::class.java)
                         finishAffinity()
                     }else {
@@ -88,8 +91,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
                     }
                 }
-
-
             }
         }, 3000)
     }

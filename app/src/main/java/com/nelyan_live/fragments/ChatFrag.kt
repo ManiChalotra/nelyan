@@ -34,7 +34,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     lateinit var mContext: Context
 
-    private val groupChatVM: GroupChatVM by viewModels()
+     val groupChatVM: GroupChatVM by viewModels()
 
     lateinit var activityChatBinding: ActivityChatBinding
 
@@ -73,6 +73,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onDetach() {
         super.onDetach()
+        Log.e("fasfasfa","==chatFrag=====onDetach")
+
         listner = null
     }
 
@@ -92,7 +94,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
             appViewModel.groupMessageApiData(security_key, authorization, userlocation, "0", "20")
             // myfav_progressBar?.showProgressBar()
-        } else {
+        }
+        else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
@@ -153,11 +156,19 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             }
         })
 
+        activityChatBinding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if(bottom<oldBottom) {
+                v!!.post { if(groupChatVM.listChat.isNotEmpty()) {
+                    activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
+                } }
+            }
+        }
+
 
     }
 
     override fun onDestroyView() {
-        groupChatVM.disconnectSocket()
+      //  groupChatVM.disconnectSocket()
         Log.e("fasfasfa","==chatFrag=====onDestroyView")
         super.onDestroyView()
 

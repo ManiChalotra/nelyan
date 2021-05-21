@@ -60,7 +60,7 @@
                             style="@style/CommonTextWrapcontent"
                             android:textSize="@dimen/_8sdp"
                             android:layout_alignParentEnd="true"
-                            setTime="@{model.created}"/>
+                            setTime="@{model.created_at}"/>
                     </RelativeLayout>
                     <TextView
                         android:id="@+id/tv_address"

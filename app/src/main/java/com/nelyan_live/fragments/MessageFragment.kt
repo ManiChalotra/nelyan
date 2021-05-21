@@ -19,7 +19,7 @@ import com.nelyan_live.ui.HomeActivity
 class MessageFragment : Fragment() {
 
     private  var listner: CommunicationListner?= null
-    private val messagesVM: MessagesVM by viewModels()
+     val messagesVM: MessagesVM by viewModels()
 
     override fun onResume() {
         super.onResume()
@@ -71,7 +71,7 @@ class MessageFragment : Fragment() {
     override fun onDestroyView() {
         Log.e("fasfasfa","======fdgfdgfdgdfgfdg")
 
-        messagesVM.disconnectSocket()
+        //messagesVM.disconnectSocket()
         super.onDestroyView()
         Log.e("fasfasfa","======onDestroyView")
 

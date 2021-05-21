@@ -260,62 +260,65 @@ class EventFragment : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEvent
 
 
         appViewModel.observeFilterEventListResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    eventProgressBar?.hideProgressBar()
-                    Log.d("homeFilterEventResponse", "-------------" + Gson().toJson(response.body()))
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val listArray = jsonObject.getJSONArray("data")
-                    val mSizeOfData = listArray.length()
+            try {
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        eventProgressBar?.hideProgressBar()
+                        Log.d("homeFilterEventResponse", "-------------" + Gson().toJson(response.body()))
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        val listArray = jsonObject.getJSONArray("data")
+                        val mSizeOfData = listArray.length()
 
 
-                    if (datalist != null) {
-                        datalist.clear()
-                    }
+                        if (datalist != null) {
+                            datalist.clear()
+                        }
 
-                    for (i in 0 until mSizeOfData) {
-                        val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
-                        val id = jsonObject.getJSONArray("data").getJSONObject(i).get("id").toString()
-                        val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
-                        val description = jsonObject.getJSONArray("data").getJSONObject(i).get("description").toString()
-                        val isFav = jsonObject.getJSONArray("data").getJSONObject(i).get("isFav").toString()
-                        val latitude = jsonObject.getJSONArray("data").getJSONObject(i).get("latitude").toString()
-                        val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
-                        val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
-                        val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+                        for (i in 0 until mSizeOfData) {
+                            val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
+                            val id = jsonObject.getJSONArray("data").getJSONObject(i).get("id").toString()
+                            val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
+                            val description = jsonObject.getJSONArray("data").getJSONObject(i).get("description").toString()
+                            val isFav = jsonObject.getJSONArray("data").getJSONObject(i).get("isFav").toString()
+                            val latitude = jsonObject.getJSONArray("data").getJSONObject(i).get("latitude").toString()
+                            val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
+                            val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
+                            val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
 
-                        if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
-                            val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("dateFrom").toString()
-                            val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("dateTo").toString()
-                            val eventStartTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("startTime").toString()
-                            val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("endTime").toString()
-                            datalist.add(HomeEventModel(id,image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
-                                    description, isFav))
+                            if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
+                                val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                        .getJSONObject(0).get("dateFrom").toString()
+                                val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                        .getJSONObject(0).get("dateTo").toString()
+                                val eventStartTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                        .getJSONObject(0).get("startTime").toString()
+                                val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
+                                        .getJSONObject(0).get("endTime").toString()
+                                datalist.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
+                                        description, isFav))
+                            } else {
+                                datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
+                                        price, description, isFav))
+                            }
+
+                        }
+
+                        if (mSizeOfData == 0) {
+                            rc!!.visibility = View.GONE
+                            tv_no_event!!.visibility = View.VISIBLE
                         } else {
-                            datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
-                                    price, description, isFav))
+                            rc!!.visibility = View.VISIBLE
+                            tv_no_event!!.visibility = View.GONE
+                            setAdaptor(datalist)
                         }
 
                     }
-
-                    if (mSizeOfData == 0) {
-                        rc!!.visibility = View.GONE
-                        tv_no_event!!.visibility = View.VISIBLE
-                    } else {
-                        rc!!.visibility = View.VISIBLE
-                        tv_no_event!!.visibility = View.GONE
-                        setAdaptor(datalist)
-                    }
-
+                } else {
+                    ErrorBodyResponse(response, requireActivity(), eventProgressBar)
                 }
-            } else {
-                ErrorBodyResponse(response, requireActivity(), eventProgressBar)
-            }
+            }catch (e:Exception)
+            {e.printStackTrace()}
         })
 
 

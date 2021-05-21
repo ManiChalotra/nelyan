@@ -27,12 +27,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.R
 import com.nelyan_live.adapter.ActivitiesEventsDaysAdapter
 import com.nelyan_live.adapter.DetailsImageAdapter
 import com.nelyan_live.adapter.DetailsTimeAdapter
 import com.nelyan_live.adapter.DetailsUpcomingAdapter
+import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.ActivitiesEventsDaysModel
 import com.nelyan_live.modals.DetailsTimeModal
@@ -42,7 +42,6 @@ import com.nelyan_live.modals.postDetails.PostDetailsEventstiming
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.alert_share.*
 import kotlinx.android.synthetic.main.fragment_activity_details.*
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,7 +50,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, OnMapReadyCallback {
@@ -128,7 +126,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         }
 
         launch(Dispatchers.Main.immediate) {
-            authkey = dataStoragePreference?.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.postDetailsApiData(security_key, authkey, "1", postId, categoryId)
             activity_details_progressbar?.showProgressBar()
 
@@ -219,8 +217,14 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 onBackPressed()
             }
             R.id.iv_msg -> {
-                val intent = Intent(this, Chat1Activity::class.java)
-                startActivity(intent)
+
+                /*val intent = Intent(this, Chat1Activity::class.java)
+                        .putExtra("senderID", listChat[position].senderId)
+                        .putExtra("senderName", listChat[position].senderName)
+                        .putExtra("senderImage", listChat[position].senderImage)
+                        .putExtra("userId", userId)
+
+                startActivity(intent)*/
             }
             R.id.iv_share -> {
                 dailogshare()
@@ -237,6 +241,33 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
                     activity_details_progressbar?.hideProgressBar()
                     Log.d("postDetailsResponse", "-------------" + Gson().toJson(response.body()))
+
+                    //{"success":1,"code":200,"msg":"Post Details","data":
+                    // {"id":103,"userId":179,"categoryId":1,"typeofActivityId":5,"activityname":"Bill Activity",
+                    // "nameOfShop":"dance Indian movies","description":"Bill Activity","adMsg":"dance Indian movies",
+                    // "phone":"8407970000","country_code":"54","address":"Beas, Punjab, India","city":"Jaipur","latitude":"",
+                    // "longitude":"75.2869121","isPublished":0,"status":1,"createdAt":"2021-05-13T14:30:35.000Z",
+                    // "updatedAt":"2021-05-17T08:05:00.000Z",
+                    // "activityimages":[{"id":189,"activityId":103,
+                    // "images":"/uploads/users/1621238500503-file.jpg","mediaType":1}],"ageGroups":[{"id":129,
+                    // "eventId":0,"activityPostId":103,"ageFrom":"80","ageTo":"90","days":"Wednesday",
+                    // "timeFrom":"14:58","timeTo":"19:58","createdAt":"2021-05-17T08:05:00.000Z",
+                    // "updatedAt":"2021-05-17T08:05:00.000Z"}],
+                    // "events":[{"id":154,"userId":179,
+                    // "activityId":103,"name":"evening tym","description":"description drawing event",
+                    // "price":"80","city":"Kabul","latitude":"34.5553494","longitude":"69.207486",
+                    // "image":"/uploads/users/1620916234997-file.jpg","status":1,"createdAt":"2021-05-17T08:05:00.000Z",
+                    // "updatedAt":"2021-05-17T08:05:00.000Z",
+                    // "eventstimings":[{"id":92,"eventId":154,
+                    // "activityId":103,"dateFrom":"13/05/2021","dateTo":"22/05/2021","startTime":"19:59",
+                    // "endTime":"22:59","createdAt":"2021-05-17T08:05:00.000Z","updatedAt":"2021-05-17T08:05:00.000Z"}]},
+                    // {"id":155,"userId":179,"activityId":103,"name":"evening tym","description":"description drawing shop",
+                    // "price":"90","city":"Jaipur","latitude":"26.9124336","longitude":"75.7872709",
+                    // "image":"/uploads/users/1620916234997-file.jpg","status":1,"createdAt":"2021-05-17T08:05:00.000Z",
+                    // "updatedAt":"2021-05-17T08:05:00.000Z",
+                    // "eventstimings":[{"id":93,"eventId":155,"activityId":103,
+                    // "dateFrom":"13/05/2021","dateTo":"22/05/2021","startTime":"19:59","endTime":"22:59",
+                    // "createdAt":"2021-05-17T08:05:00.000Z","updatedAt":"2021-05-17T08:05:00.000Z"}]}]}}
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
@@ -270,7 +301,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 /*Set Activities Images List in adapter*/
 
                     if (listActivityimage != null) {
-                        listActivityimage!!.clear()
+                        listActivityimage.clear()
                     } else {
                         listActivityimage = ArrayList()
                     }
@@ -285,14 +316,14 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
                     if (mSizeOfData != 0) {
                         val ad = DetailsImageAdapter(this, listActivityimage)
-                        rvActivtiesImages!!.setAdapter(ad)
+                        rvActivtiesImages!!.adapter = ad
                         indicator!!.attachToRecyclerView(rvActivtiesImages!!)
                     }
 
 
 /*Set Age Group List in adapter*/
                     if (datalisttime != null) {
-                        datalisttime!!.clear()
+                        datalisttime.clear()
                     } else {
                         datalisttime = ArrayList()
                     }
@@ -307,8 +338,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     if (mSizeOfAgeGroup != 0) {
                         val activitiesEventsDaysAdapter = ActivitiesEventsDaysAdapter(this, this@ActivityDetailsActivity, daysList)
                         val lmmanager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                        rvDays!!.setLayoutManager(lmmanager)
-                        rvDays!!.setAdapter(activitiesEventsDaysAdapter)
+                        rvDays!!.layoutManager = lmmanager
+                        rvDays!!.adapter = activitiesEventsDaysAdapter
 
                         rvDays!!.visibility = View.VISIBLE
                         tv_no_days!!.visibility = View.GONE
@@ -333,8 +364,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     if (mSizeOfAgeGroup != 0) {
                         val detailsTimeAdapter = DetailsTimeAdapter(this, datalisttime)
                         val lm2 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                        rc_detailstime!!.setLayoutManager(lm2)
-                        rc_detailstime!!.setAdapter(detailsTimeAdapter)
+                        rc_detailstime!!.layoutManager = lm2
+                        rc_detailstime!!.adapter = detailsTimeAdapter
 
                         rc_detailstime!!.visibility = View.VISIBLE
                         tv_no_age_group!!.visibility = View.GONE
@@ -347,7 +378,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
 /*Set Upcoming Events List in adapter*/
                     if (listUpcomingEvents != null) {
-                        listUpcomingEvents!!.clear()
+                        listUpcomingEvents.clear()
                     } else {
                         listUpcomingEvents = ArrayList()
                     }
@@ -356,7 +387,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     if (mSizeOfEvents != 0) {
 
                         if (listUpcomingEventsTimings != null) {
-                            listUpcomingEventsTimings!!.clear()
+                            listUpcomingEventsTimings.clear()
                         } else {
                             listUpcomingEventsTimings = ArrayList()
                         }

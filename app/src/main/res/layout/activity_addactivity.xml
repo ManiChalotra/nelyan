@@ -50,36 +50,6 @@
                 android:fontFamily="@font/semibold"
                 android:text="@string/photo" />
 
-            <RelativeLayout
-                android:id="@+id/rlImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape"
-                android:padding="@dimen/_5sdp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/ivImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/pik_1"
-                    app:riv_corner_radius="@dimen/_5sdp" />
-
-                <ImageView
-                    android:id="@+id/iv_video1"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_centerInParent="true"
-                    android:elevation="@dimen/_5dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_baseline_videocam_24"
-                    android:visibility="gone" />
-
-
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,17 +59,16 @@
                 <RelativeLayout
                     android:id="@+id/ll_public"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="@dimen/_100sdp"
                     android:layout_weight="1"
-
                     android:background="@drawable/back_shape">
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImg1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/photo_two"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_photo_one"
                         app:riv_corner_radius="@dimen/_5sdp" />
 
                     <com.makeramen.roundedimageview.RoundedImageView
@@ -119,8 +88,8 @@
                 <RelativeLayout
                     android:id="@+id/ll_privates"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape">
 
@@ -128,8 +97,8 @@
                         android:id="@+id/ivImg2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/small_photo_3"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo_two"
                         app:riv_corner_radius="@dimen/_5sdp" />
 
                     <com.makeramen.roundedimageview.RoundedImageView
@@ -207,6 +176,39 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlImg"
+                android:layout_width="@dimen/_140sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_shape"
+                android:layout_gravity="center"
+                >
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/ivImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_photo_3"
+                    app:riv_corner_radius="@dimen/_5sdp" />
+
+                <ImageView
+                    android:id="@+id/iv_video1"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:elevation="@dimen/_5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_videocam_24"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+
 
 
 
