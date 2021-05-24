@@ -38,8 +38,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener,
@@ -106,6 +104,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var messagee = ""
     private var phonee = ""
     private var countryCodee = "91"
+    private var event = false
 
     private lateinit var updateEventList: ArrayList<ModelPOJO.AddEventDataModel>
     private var pos = -1
@@ -177,6 +176,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.rlImg -> {
+
                 IMAGE_SELECTED_TYPE = "1"
                 checkPermission(this)
             }
@@ -304,7 +304,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
         Log.d("hitApiForBannerImages", "---${imageVideoListPosition}----${selectedUrlListing.size - 1}-----" )
 
-        if (imageVideoListPosition <= selectedUrlListing.size - 1) {
+        if (imageVideoListPosition < selectedUrlListing.size - 1) {
 
             val media = selectedUrlListing[imageVideoListPosition]
 
@@ -312,7 +312,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
                 savedaddEventImagesData = false
 
-                var mfile: File? = null
+                val mfile: File?
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 val photo: MultipartBody.Part?
@@ -338,8 +338,34 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         else {
 
             savedaddEventImagesData = true
-            gettingURLOfEventImages()
+          //  gettingURLOfEventImages()
 
+            val media = selectedUrlListing[imageVideoListPosition]
+
+            if (!media.isNullOrEmpty()) {
+
+                savedaddEventImagesData = false
+
+                val mfile: File?
+                mfile = File(media)
+                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                val photo: MultipartBody.Part?
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+                imagePathList.add(photo)
+                val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
+
+                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+                appViewModel.sendUploadImageData(type, users, imagePathList)
+                progressDialog.setProgressDialog()
+            }
+
+            else {
+                imageVideoListPosition += 1
+
+                if (imageVideoListPosition <= selectedUrlListing.size) {
+                    hitApiForBannerImages(imageVideoListPosition)
+                }
+            }
         }
     }
 
@@ -369,22 +395,14 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     }
 
-/*
-    private fun hitApi(activityType: String, shopName: String, activityName: String, description: String, message: String, phone: String,
-                       cityName: String, cityLatitude: String, cityLongitude: String, cityaddress: String?) {
-        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityType, shopName, activityName, description,
-                message, phone, cityAddress, cityName, cityLatitude, cityLongitude, ageGroup.toString(), addEvent.toString(), media.toString(), "+91")
-        progressDialog.setProgressDialog()
-    }
-*/
+
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(applicationContext, googleMapKey)
         // Create a new Places client instance.
         val placesClient: PlacesClient = Places.createClient(this)
         // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
@@ -396,7 +414,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         // Create a new Places client instance.
         val placesClient: PlacesClient = Places.createClient(this)
         // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, addEventRequestcode)
 
@@ -405,23 +423,27 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
-                val place = Autocomplete.getPlaceFromIntent(data!!)
-                cityAddress = place.address.toString()
-                et_addressActivity.text = cityAddress.toString()
-                cityName = place.name.toString()
-                // cityID = place.id.toString()
-                addressLatitude = place.latLng?.latitude.toString()
-                addressLongitude = place.latLng?.longitude.toString()
+            when {
+                resultCode === Activity.RESULT_OK -> {
+                    val place = Autocomplete.getPlaceFromIntent(data!!)
+                    cityAddress = place.address.toString()
+                    et_addressActivity.text = cityAddress.toString()
+                    cityName = place.name.toString()
+                    // cityID = place.id.toString()
+                    addressLatitude = place.latLng?.latitude.toString()
+                    addressLongitude = place.latLng?.longitude.toString()
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            } else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
+                    Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+                }
+                resultCode === AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    val status: Status = Autocomplete.getStatusFromIntent(data!!)
+                    Log.i("dddddd", status.statusMessage.toString())
+                }
+                resultCode === Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                    Log.i("dddddd", "-------Operation is cancelled ")
+                }
             }
         } else if (requestCode == addEventRequestcode) {
 
@@ -432,9 +454,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             cityLatitude = place.latLng?.latitude.toString()
             cityLongitude = place.latLng?.longitude.toString()
 
-            updateEventList.get(pos).lati = cityLatitude
-            updateEventList.get(pos).city = cityName
-            updateEventList.get(pos).longi = cityLongitude
+            updateEventList[pos].lati = cityLatitude
+            updateEventList[pos].city = cityName
+            updateEventList[pos].longi = cityLongitude
 
             addEventRepeatAdapter.notifyDataSetChanged()
 
@@ -467,6 +489,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             }
             else -> {
                 // here we getting the add event image photo path
+                event = true
                 listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
                 Log.d("lisufjdhf", "-----------$listAddEventDataModel")
                 addEventRepeatAdapter.notifyDataSetChanged()
@@ -493,13 +516,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
             }
 
-            /* "4" -> {
-                 checkVideoButtonVisibility(imgPATH.toString(), iv_video4)
-
-             }
-             "5" -> {
-                 checkVideoButtonVisibility(imgPATH.toString(), iv_video5)
-             }*/
         }
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
     }
@@ -515,7 +531,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
-        Log.d("listtAgrGroup", "--------" + list)
+        Log.d("listtAgrGroup", "--------$list")
         list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
         // imageList.add(ModelPOJO.EventImage(""))
         ageGroupRepeatAdapter.notifyDataSetChanged()
@@ -526,12 +542,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         updateEventList = list
         pos = position
         showPlacePickerForAddEvent()
-        /* list.get(position).city = cityName
-         list.get(position).lati = cityLatitude
-         list.get(position).longi = cityLongitude*/
-        //  city.setText(list.get(position).city)
-
-        // addEventRepeatAdapter.notifyDataSetChanged()
 
     }
 
@@ -559,7 +569,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     val jsonObject = JSONObject(response.body().toString())
-                    var jsonArray = jsonObject.getJSONArray("data")
+                    val jsonArray = jsonObject.getJSONArray("data")
                     val country: ArrayList<String?> = ArrayList()
                     country.add("")
                     for (i in 0 until jsonArray.length()) {
@@ -582,7 +592,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                     response.body()
                     progressDialog.hidedialog()
                     val mResponse = response.body().toString()
-                    var jsonObject = JSONObject(mResponse)
+                    val jsonObject = JSONObject(mResponse)
                     val postid = jsonObject.getJSONObject("data").get("postId").toString()
                     val categoryId = jsonObject.getJSONObject("data").get("categoryId").toString()
                     finishAffinity()
@@ -610,7 +620,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 hitApiForBannerImages(imageVideoListPosition)
                             }
 
-                        } else {
+                        }
+                        else {
                             // response for addevent images data
                             addEventUrlListingResponse.clear()
 
