@@ -3,12 +3,9 @@ package com.meherr.mehar.data.network
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
-import com.nelyan_live.data.network.responsemodels.trader_type.TraderTypeResponse
-import com.nelyan_live.modals.eventList.EventListResponse
 import com.nelyan_live.utils.base_URL
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -209,6 +206,48 @@ interface JsonPlaceHolder {
                                  @Field("longitude") longitude: String,
                                  @Field("ageGroup") ageGroup: String,// sending json Array
                                  @Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("media") media: String,// send json Array
+                                 @Field("country_code") country_code: String
+    ): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun get_addPOSt_withoutevent_Activity_Api(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 /*@Field("message") message: String,*/
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                 @Field("ageGroup") ageGroup: String,// sending json Array
+                                 //@Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("media") media: String,// send json Array
+                                 @Field("country_code") country_code: String
+    ): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun get_addPOSt_withoutevent_age_Activity_Api(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 /*@Field("message") message: String,*/
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                 //@Field("ageGroup") ageGroup: String,// sending json Array
+                                 //@Field("addEvent") addEvent: String,// sending json Array
                                  @Field("media") media: String,// send json Array
                                  @Field("country_code") country_code: String
     ): Call<JsonObject>

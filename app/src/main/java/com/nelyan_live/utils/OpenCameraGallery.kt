@@ -154,28 +154,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        ////////////////////////////////////////
-        // for handling image and gallery
-       /* if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
-            try {
-
-                if (Uri.parse(imgPath) != null) {
-                    getRealImagePath(getPath(this, Uri.parse(imgPath)))
-
-                  */
-        /*  CropImage.activity(Uri.parse(imgPath))
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(mActivity)*/
-        /*
-                }
-
-                // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
-                // civProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath))
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        } */
 
         if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
             try {
@@ -188,8 +166,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                             .start(mActivity)*/
                 }
 
-                // imgPath = CommonUtil.getPath(requireContext(), Uri.parse(imgPath))
-                // civProfile.setImageBitmap(BitmapFactory.decodeFile(imgPath))
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -202,27 +178,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 if (uri != null) {
                     imgPath = getPath(mActivity, uri).toString()
                     getRealImagePath(imgPath)
-                    /*CropImage.activity(uri)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(this)*/
-               /* if (uri != null) {
-                    getRealImagePath(
-                            getPath(this, uri)
-                    )*/
-                   /* val videoPath = getPath(this, uri)
-                    Log.d("videopathhhh", "--------" + videoPath)
-                    if (videoPath!!.contains(".mp4")) {
-                        getRealImagePath(videoPath)
-                    }
-                    */
-                    /* else {
-
-                        if (uri != null) {
-                            CropImage.activity(uri)
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .start(this)
-                        }
-                    }*/
 
                 }
 
@@ -338,12 +293,16 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
                 var contentUri: Uri? = null
-                if ("image" == type) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                } else if ("video" == type) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                } else if ("audio" == type) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                when (type) {
+                    "image" -> {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    }
+                    "video" -> {
+                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    }
+                    "audio" -> {
+                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                    }
                 }
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(
