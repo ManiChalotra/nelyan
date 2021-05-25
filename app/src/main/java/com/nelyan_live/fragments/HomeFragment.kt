@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.adapter.MyHomeAdapter
+import com.nelyan_live.data.viewmodel.AppViewModel
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.HomeModal
-import com.nelyan_live.ui.*
+import com.nelyan_live.ui.ActivitiesListActivity
+import com.nelyan_live.ui.CommunicationListner
+import com.nelyan_live.ui.HomeChildCareListActivity
+import com.nelyan_live.ui.TraderListingActivity
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tookbar.*
@@ -23,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import org.json.JSONObject
-import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 
@@ -98,13 +100,13 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
                     val mSizeOfData = listArray.length()
 
                     if (datalist != null) {
-                        datalist!!.clear()
+                        datalist.clear()
                     }
 
                     for (i in 0 until mSizeOfData) {
                         val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
                         val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
-                        datalist!!.add(HomeModal(image, name))
+                        datalist.add(HomeModal(image, name))
                     }
 
                     rv_home?.adapter = MyHomeAdapter(requireActivity(), datalist, this@HomeFragment)
@@ -132,7 +134,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             1->{
                 requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
                 {putString("type","2")}
-
             }
 
             2->{
@@ -154,7 +155,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         when (v!!.id) {
             R.id.iv_back -> {
                 iv_back!!.setImageResource(R.drawable.menu)
-                iv_back!!.setVisibility(View.GONE)
+                iv_back!!.visibility = View.GONE
             }
 
         }
@@ -163,7 +164,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is CommunicationListner){
-            listner = context as CommunicationListner
+            listner = context
         }else{
 
 throw RuntimeException("Home Fragment not Attched")

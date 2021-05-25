@@ -200,37 +200,10 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_baseline_videocam_24"
                     android:id="@+id/iv_video11"
+
                     />
 
             </RelativeLayout>
-            <!-- <RelativeLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 android:layout_marginTop="@dimen/_10sdp">
-                 <androidx.recyclerview.widget.RecyclerView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_alignParentTop="true"
-                     android:layout_centerInParent="true"
-
-                     android:id="@+id/Recycler_scroll">
-                 </androidx.recyclerview.widget.RecyclerView>
-
-                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                     android:id="@+id/indicator"
-                     android:layout_gravity="center"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="@dimen/_10sdp"
-
-                     android:layout_centerInParent="true"
-                     android:layout_below="@+id/Recycler_scroll"
-                     app:spi_dotColor="@color/grey"
-                     app:spi_dotSize="@dimen/_6sdp"
-                     app:spi_dotSelectedSize="@dimen/_6sdp"
-                     app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
-             </RelativeLayout>-->
 
             <TextView
                 style="@style/CommonTextWrapcontent"
@@ -354,7 +327,8 @@
                     app:ccpDialog_textColor="@color/black"
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/_12sdp" />
+                    app:ccp_textSize="@dimen/_12sdp"
+                    app:ccp_defaultPhoneCode="33"/>
 
                 <EditText
                     android:id="@+id/et_trader_phone"

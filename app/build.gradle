@@ -202,6 +202,11 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.3.2"
 
 
+    //swipeLayout
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+
+
+
 }
 repositories {
     mavenCentral()

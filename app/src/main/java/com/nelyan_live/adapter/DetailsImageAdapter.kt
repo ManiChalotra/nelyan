@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyan_live.R
 import com.nelyan_live.adapter.DetailsImageAdapter.Vh
-import com.nelyan_live.modals.DetailsImageModal
 import com.nelyan_live.modals.postDetails.Activityimage
 import com.nelyan_live.utils.image_base_URl
-import java.util.*
-import kotlin.collections.ArrayList
 
 class DetailsImageAdapter(activityDetailsActivity: FragmentActivity, datalist: ArrayList<Activityimage>) : RecyclerView.Adapter<Vh>() {
     var a: Activity
@@ -26,16 +23,9 @@ class DetailsImageAdapter(activityDetailsActivity: FragmentActivity, datalist: A
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------"+ datalist.get(position).images)
+        Log.d("serverImages", "------------------------------"+ datalist[position].images)
         Glide.with(a).asBitmap().load(image_base_URl+datalist.get(position).images).into(holder.img)
-        //holder.img.setImageResource(datalist[position].images.toString())
-        /* if(position%2==1)
-        {
-            holder.videoPic.setVisibility(View.VISIBLE);
-        }
-        else{
-            holder.videoPic.setVisibility(View.GONE);
-        }*/
+
     }
 
     override fun getItemCount(): Int {

@@ -365,7 +365,9 @@
                     app:ccpDialog_textColor="@color/black"
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/_12sdp" />
+                    app:ccp_textSize="@dimen/_12sdp"
+                    app:ccp_defaultPhoneCode="33"
+                    />
 
                 <EditText
                     android:id="@+id/et_phone"

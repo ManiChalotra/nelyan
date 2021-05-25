@@ -19,10 +19,11 @@
         app:mk_color="@color/colorPrimary"
         />
 
-
-    <include layout="@layout/tookbar"
+    <include
+         layout="@layout/tookbar"
          android:id="@+id/toolbar"
-         android:visibility="gone"/>
+         android:visibility="gone"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView

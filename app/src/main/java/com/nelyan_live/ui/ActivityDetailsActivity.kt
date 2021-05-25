@@ -91,6 +91,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
     private val job by lazy {
         Job()
     }
+
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
 
 
@@ -100,11 +101,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-        /*    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);*/
         mapFragment.getMapAsync(this)
 
-        // tvMon = findViewById(R.id.tvMon)
         iv_msg = findViewById(R.id.iv_msg)
         iv_share = findViewById(R.id.iv_share)
 
@@ -131,7 +129,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
             activity_details_progressbar?.showProgressBar()
 
         }
-
         checkMvvmResponse()
 
     }
@@ -141,8 +138,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
-        val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_public)
+        val ll_1: LinearLayout = dialog!!.findViewById(R.id.ll_public)
 
         dialog!!.ll_twitter_share.setOnClickListener {
             CommonMethodsKotlin.twitterShare(this)
@@ -192,19 +188,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
             }
 
-/*
-            var content =  ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
-                    .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan.. social app.  ").build())
-                    .build()
-
-            try {
-                shareDialog!!.show(content) // Show ShareDialog
-
-            } catch (ex: ActivityNotFoundException) {
-                myCustomToast( getString(R.string.facebook_not_error))
-            }
-*/
             dialog!!.dismiss()
         }
         dialog!!.show()
@@ -218,13 +201,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
             }
             R.id.iv_msg -> {
 
-                /*val intent = Intent(this, Chat1Activity::class.java)
-                        .putExtra("senderID", listChat[position].senderId)
-                        .putExtra("senderName", listChat[position].senderName)
-                        .putExtra("senderImage", listChat[position].senderImage)
-                        .putExtra("userId", userId)
-
-                startActivity(intent)*/
             }
             R.id.iv_share -> {
                 dailogshare()
@@ -297,14 +273,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     val mSizeOfAgeGroup: Int = listArrayAgeGroups.length()
                     val mSizeOfEvents: Int = listArrayEvents.length()
 
-
 /*Set Activities Images List in adapter*/
 
-                    if (listActivityimage != null) {
-                        listActivityimage.clear()
-                    } else {
-                        listActivityimage = ArrayList()
-                    }
+                    listActivityimage.clear()
                     for (i in 0 until mSizeOfData) {
                         val model = listArray.getJSONObject(i)
                         val images = model.get("images")

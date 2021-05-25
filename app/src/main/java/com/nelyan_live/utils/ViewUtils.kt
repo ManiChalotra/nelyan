@@ -23,13 +23,11 @@ import com.google.android.material.tabs.TabLayout
 import com.nelyan_live.R
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.ui.LoginActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.coroutines.CoroutineContext
 
 val base_URL = "http://3.13.214.27:1052/api/"
 //val base_URL = "http://192.168.1.125:1052/api/"  //this is local host url
@@ -37,6 +35,7 @@ val base_URL = "http://3.13.214.27:1052/api/"
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
 val InVALID_AUTH_TOEKN = "Invalid Auth Token"
+val Age_Group_Required  = "ageGroup field is required"
 val InVALID_Credentials = "Invalid Credentials"
 val device_Type = "1"
 val from_admin_image_base_URl = "http://3.13.214.27:1052/uploads/users/"
@@ -188,14 +187,14 @@ fun tintSwitchButton(sw: SwitchCompat, resolvedColor: Int) {
     )
 
     DrawableCompat.setTintList(
-            sw?.trackDrawable, ColorStateList(
+            sw.trackDrawable, ColorStateList(
             states,
             intArrayOf(resolvedColor, resolvedColor)
     )
     )
 
     DrawableCompat.setTintList(
-            sw?.thumbDrawable, ColorStateList(
+            sw.thumbDrawable, ColorStateList(
             states,
             intArrayOf(Color.WHITE, Color.WHITE)
     )
@@ -208,55 +207,68 @@ fun failureMethod(
         progressBar: com.tuyenmonkey.mkloader.MKLoader?
 ) {
     progressBar?.hideProgressBar()
-    if (error == InVALID_AUTH_TOEKN) {
-        // here delete your database or Local Preferences ..
-        // AllSharedPref.clear(mContext)
-        Toast.makeText(
-                mContext,
-                "You are already logged in other device",
-                Toast.LENGTH_SHORT
-        ).show()
-        val intent = Intent(mContext, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        mContext.startActivity(intent)
-        GlobalScope.launch {
-            DataStoragePreference(mContext).deleteDataBase()
-        }
+    when (error) {
+        InVALID_AUTH_TOEKN -> {
+            // here delete your database or Local Preferences ..
+            // AllSharedPref.clear(mContext)
+            Toast.makeText(
+                    mContext,
+                    "You are already logged in other device",
+                    Toast.LENGTH_SHORT
+            ).show()
+            val intent = Intent(mContext, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            mContext.startActivity(intent)
+            GlobalScope.launch {
+                DataStoragePreference(mContext).deleteDataBase()
+            }
 
 /*
-        launh(Dispatcher.main.immediate){
-            dataStoragePreference.deleteDataBase()
-        }
-*/
-    } else if (error == UNAUTHORIZED) {
-        // here delete your database or Local Preferences ..
-        // AllSharedPref.clear(mContext)
-        Toast.makeText(
-                mContext,
-                "You are already logged in other device",
-                Toast.LENGTH_SHORT
-        ).show()
-        val intent = Intent(mContext, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        mContext.startActivity(intent)
+    launh(Dispatcher.main.immediate){
+        dataStoragePreference.deleteDataBase()
     }
-    else if (error == InVALID_Credentials) {
-        // here delete your database or Local Preferences ..
-        // AllSharedPref.clear(mContext)
-        Toast.makeText(
-                mContext,
-                "Incorrect email or password",
-                Toast.LENGTH_SHORT
-        ).show()
-    } else {
-        Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show()
+*/
+        }
+        UNAUTHORIZED -> {
+            // here delete your database or Local Preferences ..
+            // AllSharedPref.clear(mContext)
+            Toast.makeText(
+                    mContext,
+                    "You are already logged in other device",
+                    Toast.LENGTH_SHORT
+            ).show()
+            val intent = Intent(mContext, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            mContext.startActivity(intent)
+        }
+        InVALID_Credentials -> {
+            // here delete your database or Local Preferences ..
+            // AllSharedPref.clear(mContext)
+            Toast.makeText(
+                    mContext,
+                    "Incorrect email or password",
+                    Toast.LENGTH_SHORT
+            ).show()
+        }
+        Age_Group_Required -> {
+            // here delete your database or Local Preferences ..
+            // AllSharedPref.clear(mContext)
+            Toast.makeText(
+                    mContext,
+                    "Age Group Required",
+                    Toast.LENGTH_SHORT
+            ).show()
+        }
+        else -> {
+            Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show()
+        }
     }
 }
 
 fun checkIfHasNetwork(activity: Activity): Boolean {
     val cm =
-            (activity)!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val networkInfo = cm!!.activeNetworkInfo
+            (activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = cm.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
 
 }
@@ -274,7 +286,7 @@ fun Activity.myCustomToast(message: String) {
     val toast = Toast(applicationContext)
     toast.setGravity(Gravity.BOTTOM, 0, 100)
     toast.duration = Toast.LENGTH_LONG
-    toast.setView(layout)
+    toast.view = layout
     toast.show()
 
 }

@@ -18,16 +18,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_nurserie.*
-import kotlinx.android.synthetic.main.activity_nurserie.ivImg
-import kotlinx.android.synthetic.main.activity_nurserie.ivImg1
-import kotlinx.android.synthetic.main.activity_nurserie.ivImg2
-import kotlinx.android.synthetic.main.activity_nurserie.ivImg3
-import kotlinx.android.synthetic.main.activity_nurserie.ivplus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -93,7 +88,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         info.add("Public")
         info.add("Private")
         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, info as List<Any?>)
-        addInfoSpinner.setAdapter(arrayAdapte1)
+        addInfoSpinner.adapter = arrayAdapte1
 
 
         // no of places avilable
@@ -111,10 +106,10 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         count.add("9")
         count.add("10")
         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
-        noOfPlacesSpinner.setAdapter(arrayAdapter)
+        noOfPlacesSpinner.adapter = arrayAdapter
 
         launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
         }
         /*
          btnSubmit!!.setOnClickListener(View.OnClickListener {
@@ -181,7 +176,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
-                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                imageview?.scaleType = ImageView.ScaleType.FIT_XY
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video11)
             }
             "2" -> {
@@ -205,7 +200,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
 
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
-        if (imgpath?.contains(".mp4")!!) {
+        if (imgpath.contains(".mp4")) {
             videoButton.visibility = View.VISIBLE
         } else {
             videoButton.visibility = View.GONE
@@ -226,7 +221,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList.add(photo)
                 var type: RequestBody
                 if (media.contains(".mp4")) {
@@ -414,7 +409,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
 
     private fun hitFinallyActivityAddPostApi() {
         appViewModel.send_addNuseryPost_Data(security_key, authKey, "2", nurseryName, addInformationSpinerrr,
-                placeSpin, "+91", etPhoneNumber, cityAddress, description, cityName, cityLatitude, cityLongitude,
+                placeSpin, "+33", etPhoneNumber, cityAddress, description, cityName, cityLatitude, cityLongitude,
                 media.toString())
      //   progressDialog.setProgressDialog()
     }
@@ -450,7 +445,7 @@ class NurserieActivity : OpenCameraGallery(), View.OnClickListener, CoroutineSco
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")

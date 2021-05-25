@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="model"
             type="com.nelyan_live.chat.ChatListResponse" />
@@ -10,73 +11,139 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/_10sdp"
         android:layout_height="wrap_content">
-        <RelativeLayout
+
+        <com.daimajia.swipe.SwipeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:id="@+id/rl_1"
-            android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`chat`)}"
-            android:background="@drawable/shape">
-            <LinearLayout
-                android:id="@+id/ll_pass"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:foregroundGravity="center"
+            app:drag_edge="right"
+            app:show_mode="pull_out"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/_10sdp"
+                >
+
+                <ImageView
+                    android:id="@+id/tvDelete"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/dlt_icon_red"
+                    />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_activity_image"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    setChatImage="@{model.userImage}"
-                    android:src="@drawable/placeholder"
-
-                    />
-                <LinearLayout
+                android:id="@+id/rl_1"
+                android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`chat`)}"
+                android:background="@drawable/shape">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:text="@{model.userName}"
-                            android:textColor="@color/black"
-                            android:singleLine="true"
-                            android:maxLength="20"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerInParent="true"
-                            android:textSize="@dimen/_12sdp"
-                            android:fontFamily="@font/semibold"/>
-                        <TextView
-                            style="@style/CommonTextWrapcontent"
-                            android:textSize="@dimen/_8sdp"
-                            android:layout_alignParentEnd="true"
-                            setTime="@{model.created_at}"/>
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/tv_address"
-                        style="@style/CommonTextMatchparent"
-                        android:text="@{model.lastMessage}"
-                        android:textSize="@dimen/_10sdp"
-                        android:drawableEnd="@drawable/green_dot"
-                        android:textColor="@color/black"
-                        android:singleLine="true"
-                        android:maxLength="30"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_activity_image"
+                        android:layout_width="@dimen/_42sdp"
+                        android:layout_height="@dimen/_42sdp"
+                        setChatImage="@{model.userImage}"
+                        android:src="@drawable/placeholder"
+                        app:civ_border_width="@dimen/_1sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        setBorderColor="@{model.isOnline}"
                         />
 
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_activity_image"
+                        app:layout_constraintEnd_toEndOf="@id/iv_activity_image"
+                        android:src="@drawable/green_dot"
+                        android:padding="@dimen/_2sdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="@dimen/_2sdp"
+                        android:visibility="@{model.isOnline.equals(`0`) ? View.GONE : View.VISIBLE}"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_activity_image"
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                style="@style/CommonTextWrapcontent"
+                                android:text="@{model.userName}"
+                                android:textColor="@color/black"
+                                android:singleLine="true"
+                                android:maxLength="20"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:textSize="@dimen/_12sdp"
+                                android:fontFamily="@font/semibold"/>
+                            <TextView
+                                style="@style/CommonTextWrapcontent"
+                                android:textSize="@dimen/_8sdp"
+                                android:layout_alignParentEnd="true"
+                                setMessageTime="@{model.created_at}"/>
+                        </RelativeLayout>
+
+
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            style="@style/CommonTextMatchparent"
+                            android:text="@{model.lastMessage}"
+                            android:textSize="@dimen/_11sdp"
+                            android:drawableEnd="@{model.isOnline.equals(`0`) ? null : @drawable/green_dot}"
+                            android:drawableStart="@{model.unreadcount.equals(`0`) ? @drawable/blue_double_check : null}"
+                            android:drawablePadding="@dimen/_2sdp"
+                            android:textColor="@{model.unreadcount.equals(`0`) ? @color/grey : @color/black}"
+                            android:singleLine="true"
+                            android:maxLength="30"
+
+                            />
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+        </com.daimajia.swipe.SwipeLayout>
+
+
     </LinearLayout>
 </layout>
 

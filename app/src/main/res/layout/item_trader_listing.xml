@@ -33,7 +33,7 @@
                     android:layout_height="@dimen/_70sdp"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/no_image_placeholder"
                     app:riv_corner_radius="@dimen/_5sdp" />
 

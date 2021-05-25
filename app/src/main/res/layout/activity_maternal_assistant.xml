@@ -301,7 +301,8 @@
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
                     android:layout_centerVertical="true"
-                    app:ccpDialog_textColor="@color/black"/>
+                    app:ccpDialog_textColor="@color/black"
+                    app:ccp_defaultPhoneCode="33"/>
 
                 <EditText
                     android:id="@+id/et_phoneNumber_maternal"

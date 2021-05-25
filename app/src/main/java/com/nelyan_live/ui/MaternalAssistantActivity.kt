@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,13 +18,12 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
+import com.nelyan_live.R
 import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.R
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_maternal_assistant.*
 import kotlinx.android.synthetic.main.activity_maternal_assistant.view.*
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -72,7 +72,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
     private var cityLongitude = ""
     private var cityAddress = ""
     private var authKey = ""
-    private var countryCodee = "91"
+    private var countryCodee = "33"
     private var urlListingFromResponse: ArrayList<String> = ArrayList()
     private var media: JSONArray = JSONArray()
 
@@ -97,11 +97,11 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
         count.add("9")
         count.add("10")
         val arrayAdapte1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, count as List<Any?>)
-        noOfPlacesMaterialSpinner.setAdapter(arrayAdapte1)
+        noOfPlacesMaterialSpinner.adapter = arrayAdapte1
         btn_maternal_submit!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
         }
     }
 
@@ -158,7 +158,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
 
         when (IMAGE_SELECTED_TYPE) {
             "1" -> {
-                imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                imageview?.scaleType = ImageView.ScaleType.FIT_XY
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video01)
             }
             "2" -> {
@@ -183,7 +183,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
 
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
-        if (imgpath?.contains(".mp4")!!) {
+        if (imgpath.contains(".mp4")) {
             videoButton.visibility = View.VISIBLE
         } else {
             videoButton.visibility = View.GONE
@@ -204,7 +204,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
                 mfile = File(media)
                 val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList.add(photo)
 
                 var type: RequestBody
@@ -414,7 +414,7 @@ class MaternalAssistantActivity : OpenCameraGallery(), View.OnClickListener, Cor
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")

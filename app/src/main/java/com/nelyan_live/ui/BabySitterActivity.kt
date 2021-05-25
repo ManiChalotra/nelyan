@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,18 +18,13 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.nelyan_live.data.viewmodel.AppViewModel
-import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.R
 import com.nelyan_live.data.network.responsemodels.ImageUploadApiResponseModel
+import com.nelyan_live.data.viewmodel.AppViewModel
+import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.modals.ModelPOJO
 import com.nelyan_live.utils.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
-import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg
-import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg1
-import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg2
-import kotlinx.android.synthetic.main.activity_baby_sitter.ivImg3
-import kotlinx.android.synthetic.main.activity_baby_sitter.ivplus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -54,7 +50,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
     private var media: JSONArray = JSONArray()
-    private var countryCodee = "91"
+    private var countryCodee = "+33"
     private var childCareType = ""
     private var childCareId = ""
 
@@ -131,7 +127,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
         launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
         }
 
         hitChildCareType_Api()
@@ -140,7 +136,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private fun hitChildCareType_Api() {
         if (checkIfHasNetwork(this@BabySitterActivity)) {
             launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference?.emitStoredValue(preferencesKey<String>("auth_key"))?.first()
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
                 appViewModel.sendChildCareTypeData(security_key, authKey)
             }
         } else {
@@ -207,10 +203,10 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 address_baby_sitter = et_addressBabySitter.text.toString()
                 descp_baby_sitter = et_descriptionBabySitter.text.toString()
 
-                if (IMAGE_SELECTED_TYPE.equals("")) {
+                if (IMAGE_SELECTED_TYPE == "") {
                     myCustomToast(getString(R.string.select_image_video_error))
                 } else {
-                    if (childCareType.equals("") || childCareType.equals(getString(R.string.select))) {
+                    if (childCareType == "" || childCareType == getString(R.string.select)) {
                         myCustomToast(getString(R.string.child_care_type_missing_error))
                     } else {
                         if (maternalName.isEmpty()) {
@@ -228,27 +224,27 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         if (descp_baby_sitter.isEmpty()) {
                                             myCustomToast(getString(R.string.description_missing))
                                         } else {
-                                            if (childCareType.equals("Nursery")) {
+                                            if (childCareType == "Nursery") {
                                                 childCareId = "1"
 
-                                            } else if (childCareType.equals("Maternal Assistant")) {
+                                            } else if (childCareType == "Maternal Assistant") {
                                                 childCareId = "2"
 
-                                            } else if (childCareType.equals("Baby Sitter")) {
+                                            } else if (childCareType == "Baby Sitter") {
                                                 childCareId = "3"
                                             }
 
                                             // checking the list
-                                            if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
+                                            if (selectedUrlListing.size == urlListingFromResponse.size) {
                                                 selectedUrlListing.clear()
                                                 urlListingFromResponse.clear()
                                             }
 
                                             // for check upper images url from response
-                                            Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+                                            Log.d("imageVideoListSize", "-----------$imageVideoUrlListing")
 
                                             // rotating loop
-                                            for (i in 0..imageVideoUrlListing.size - 1) {
+                                            for (i in 0 until imageVideoUrlListing.size) {
                                                 val media = imageVideoUrlListing.get(i)
                                                 if (!media.isEmpty()) {
                                                     selectedUrlListing.add(media)
@@ -256,7 +252,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             }
                                             Log.d("selectedUpperimages", "-------------------" + selectedUrlListing.toString())
 
-                                            if (isImageUploaded.equals("") && isImageUploaded !=null) {
+                                            if (isImageUploaded == "" && isImageUploaded !=null) {
                                                 hitApiForBannerImages(0)
                                             }else {
                                                 hitFinallyActivityAddPostApi()
@@ -343,7 +339,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
-        if (imgpath?.contains(".mp4")!!) {
+        if (imgpath.contains(".mp4")) {
             videoButton.visibility = View.VISIBLE
         } else {
             videoButton.visibility = View.GONE
@@ -369,7 +365,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 //                imagePathList.add(photo)
 
             if (imagePathList != null) {
-                imagePathList!!.clear()
+                imagePathList.clear()
             } else {
                 imagePathList = java.util.ArrayList()
 
@@ -377,12 +373,12 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
             var mfile: File? = null
-            for (i in 0..selectedUrlListing!!.size - 1) {
-                mfile = File(selectedUrlListing!![i])
+            for (i in 0..selectedUrlListing.size - 1) {
+                mfile = File(selectedUrlListing[i])
                 val imageFile: RequestBody? = RequestBody.create("image/*".toMediaTypeOrNull(), mfile)
                 var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-                imagePathList!!.add(photo)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+                imagePathList.add(photo)
             }
 
 
@@ -435,7 +431,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         country.add(name)
                     }
                     val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
-                    sp_child_care_type!!.setAdapter(arrayAdapter)
+                    sp_child_care_type!!.adapter = arrayAdapter
                 }
             } else {
                 ErrorBodyResponse(response, this, null)
@@ -451,7 +447,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     if (response.body()!!.data != null) {
 
                         if (urlListingFromResponse != null) {
-                            urlListingFromResponse!!.clear()
+                            urlListingFromResponse.clear()
                         } else {
                             urlListingFromResponse = ArrayList()
 
@@ -519,7 +515,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
         media = JSONArray()
-        for (i in 0..mlist!!.size - 1) {
+        for (i in 0..mlist.size - 1) {
             val image = mlist.get(i).image.toString()
             urlListingFromResponse.add(image)
             val json = JSONObject()
@@ -572,7 +568,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.getStatusMessage().toString())
+                Log.i("dddddd", status.statusMessage.toString())
             } else if (resultCode === Activity.RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.i("dddddd", "-------Operation is cancelled ")
