@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -325,13 +326,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             "3" -> {
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
             }
-            /* "4" -> {
-                 checkVideoButtonVisibility(imgPATH.toString(), iv_video014)
-
-             }
-             "5" -> {
-                 checkVideoButtonVisibility(imgPATH.toString(), iv_video015)
-             }*/
         }
 
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
@@ -354,16 +348,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             val media = selectedUrlListing[imageVideoListPosition]
 
-            // if (!media.isNullOrEmpty()) {
-
-//                var mfile: File? = null
-//
-//                mfile = File(selectedUrlListing)
-//                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-//                var photo: MultipartBody.Part? = null
-//                photo = MultipartBody.Part.createFormData("image", mfile?.name, imageFile!!)
-//                imagePathList.add(photo)
-
             if (imagePathList != null) {
                 imagePathList.clear()
             } else {
@@ -373,57 +357,34 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
             var mfile: File? = null
-            for (i in 0..selectedUrlListing.size - 1) {
+            for (i in 0 until selectedUrlListing.size) {
                 mfile = File(selectedUrlListing[i])
-                val imageFile: RequestBody? = RequestBody.create("image/*".toMediaTypeOrNull(), mfile)
+                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 var photo: MultipartBody.Part? = null
                 photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
                 imagePathList.add(photo)
             }
 
 
-            var type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-            /*
-            if (media.contains(".mp4")) {
-                type = "video".toRequestBody("text/plain".toMediaTypeOrNull())
-            } else {
-                type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-            }
+            val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
 
-            Log.e("imageimage", type.toString())
-            */
             val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
             appViewModel.sendUploadImageData(type, users, imagePathList)
             progressDialog.setProgressDialog()
-            //}
 
-            /*
-             else {
-
-
-                imageVideoListPosition = imageVideoListPosition + 1
-
-                if (imageVideoListPosition <= selectedUrlListing.size) {
-                    hitApiForBannerImages(imageVideoListPosition)
-                }
-            }
-
-
-            */
 
         }
     }
 
 
     private fun checkMvvmResponse() {
-        // add post for Maternal assistant
         Log.e("going", "messsaaaa")
 
         appViewModel.observeChildCareTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     val jsonObject = JSONObject(response.body().toString())
-                    var jsonArray = jsonObject.getJSONArray("data")
+                    val jsonArray = jsonObject.getJSONArray("data")
                     val country: ArrayList<String?> = ArrayList()
                     country.add("")
                     for (i in 0 until jsonArray.length()) {
@@ -438,8 +399,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             }
         })
 
-
-        // for imageUpload api
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
@@ -450,39 +409,17 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             urlListingFromResponse.clear()
                         } else {
                             urlListingFromResponse = ArrayList()
-
                         }
 
                         var mlist = response.body()!!.data
                         if (mlist.isNullOrEmpty()) {
                             mlist = ArrayList()
-                        } else {
+                        }
+                        else {
                             makeImageJsonArray(mlist)
-
-                        }
-
-
-/*
-                        urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
-                        if (imageVideoListPosition <= 4) {
-                            imageVideoListPosition = imageVideoListPosition + 1
-                            hitApiForBannerImages(imageVideoListPosition)
-                        }
-                        // now making json format for upper images media
-                        for (i in 0..urlListingFromResponse.size - 1) {
-                            val json = JSONObject()
-                            json.put("image", urlListingFromResponse[i])
-                            media.put(json)
                         }
 
                         hitFinallyActivityAddPostApi()
-
-                        Log.d("urlListt", "-------------" + urlListingFromResponse.toString())
-
-                    }
-*/
-                        hitFinallyActivityAddPostApi()
-                      //  progressDialog.hidedialog()
                     }
                 } else {
                     ErrorBodyResponse(response, this, null)
@@ -515,7 +452,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
         media = JSONArray()
-        for (i in 0..mlist.size - 1) {
+        for (i in mlist.indices) {
             val image = mlist.get(i).image.toString()
             urlListingFromResponse.add(image)
             val json = JSONObject()
@@ -552,26 +489,31 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
-                val place = Autocomplete.getPlaceFromIntent(data!!)
+            when {
+                resultCode === Activity.RESULT_OK -> {
+                    val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                cityAddress = place.address.toString()
-                et_addressBabySitter.setText(cityAddress.toString())
-                cityName = place.name.toString()
-                cityName = place.name.toString()
+                    cityAddress = place.address.toString()
+                    et_addressBabySitter.setText(cityAddress.toString())
+                    cityName = place.name.toString()
+                    cityName = place.name.toString()
 
-                // cityID = place.id.toString()
-                cityLatitude = place.latLng?.latitude.toString()
-                cityLongitude = place.latLng?.longitude.toString()
+                    // cityID = place.id.toString()
+                    cityLatitude = place.latLng?.latitude.toString()
+                    cityLongitude = place.latLng?.longitude.toString()
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            } else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
+                    Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+                }
+                resultCode === AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    val status: Status = Autocomplete.getStatusFromIntent(data!!)
+                    Log.i("dddddd", status.statusMessage.toString())
+                }
+
+                resultCode === Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                    Log.i("dddddd", "-------Operation is cancelled ")
+                }
             }
         }
 

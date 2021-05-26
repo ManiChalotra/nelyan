@@ -97,7 +97,7 @@
             setTime="@{model.created}"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/tvSender"
+            app:layout_constraintStart_toStartOf="@id/tvSender"
             android:textSize="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -158,6 +158,7 @@
             android:padding="8dp"
             android:textColor="@color/black"
             android:textSize="14dp"
+            android:drawableEnd="@{model.readStatus.equals(`1`) ? @drawable/blue_double_check : null}"
             android:background="@drawable/rightchat"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tvReceiverTime"
@@ -184,7 +185,7 @@
             setTime="@{model.created}"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvReceiver"
+            app:layout_constraintEnd_toEndOf="@id/tvReceiver"
             android:textSize="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,11 @@
 package com.nelyan_live.chat
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.github.nkzawa.emitter.Emitter
@@ -46,6 +48,9 @@ class MessagesVM :ViewModel() {
                                     .putExtra("userId", userId)
                             )
                     }
+                    "delete" -> {
+                        delDialog(listMembers[position].user_id)
+                                            }
                 } }
         })
     }
@@ -84,6 +89,8 @@ class MessagesVM :ViewModel() {
                 socket.on("chat_message", chatList)
                 socket.on("send_message", newMessage)
                 socket.on("new_message", newMessage)
+                socket.on("delete_chat_listing", deleteChat)
+                socket.on("chat_list_data", deleteChat)
                 socket.connect()
 
             } catch (e: Exception) {
@@ -108,6 +115,8 @@ class MessagesVM :ViewModel() {
         socket.off("chat_message", chatList)
         socket.off("send_message", newMessage)
         socket.off("new_message", newMessage)
+        socket.off("delete_chat_listing", deleteChat)
+        socket.off("chat_list_data", deleteChat)
 
     }
 
@@ -157,6 +166,55 @@ class MessagesVM :ViewModel() {
         {e.printStackTrace()}
 
     }
+    private val deleteChat = Emitter.Listener{
+
+        Log.e("socket", "chat    deleteChat")
+        Log.e("socket", it[0].toString())
+
+        try {
+            getUserList()
+        }
+        catch (e:Exception)
+        {e.printStackTrace()}
+
+    }
+
+    fun delDialog(id:String) {
+        val  dialog = Dialog(ctx)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.alert_chat_delete)
+        dialog.setCancelable(true)
+        val tvNo: TextView = dialog.findViewById(R.id.tvNo)
+        val tvYes: TextView = dialog.findViewById(R.id.tvYes)
+        tvNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
+        tvYes.setOnClickListener {
+            dialog.dismiss()
+
+            deleteChatMessages(id)
+        }
+
+        dialog.show()
+
+    }
+
+    private fun deleteChatMessages(id:String) {
+        val json = JSONObject()
+        try {
+
+            json.put("userId", userId)
+            json.put("user2Id", id)
+            socket.emit("delete_chat_listing", json)
+
+        }
+        catch (e: Exception)
+        {e.printStackTrace()}
+    }
+
+
 
     private val chatList = Emitter.Listener{
 

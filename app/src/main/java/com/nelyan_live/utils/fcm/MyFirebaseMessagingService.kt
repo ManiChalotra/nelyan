@@ -38,11 +38,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
     var notification_code: String? = null
     var notification: Notification? = null
 
-
-
     private  var job = Job()
-    private  var dataStoragePreference= DataStoragePreference(AppController.getInstance().applicationContext)
-
+    //private  var dataStoragePreference= DataStoragePreference(AppController.getInstance().applicationContext)
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -53,39 +50,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.d(TAG, "Refreshed token: $refreshedToken")
         Log.d("fcm_token", "-----$refreshedToken")
 
+        val dataStoragePreference= DataStoragePreference(AppController.getInstance().applicationContext)
         launch {
             dataStoragePreference.save(refreshedToken, preferencesKey("device_token"))
-        }
-
-        sendRegistrationToServer(refreshedToken)
-    }
-
-    fun sendRegistrationToServer(token: String?) {
-        Log.e("device_token", token!!)
-        launch {
-            dataStoragePreference.save(token, preferencesKey("device_token"))
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
+        Log.e(TAG, "Notification_Message_Body  ========$remoteMessage")
+        Log.e(TAG, "Notification_Message_Body  ========${remoteMessage.notification}")
+        Log.e(TAG, "Notification_Message_Body" + remoteMessage.data)
+
         manager
         CHANNEL_ID = applicationContext.packageName
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_ONE_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
+                    CHANNEL_ID,
+                    CHANNEL_ONE_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationChannel!!.enableLights(true)
             notificationChannel!!.lightColor = Color.RED
             notificationChannel!!.setShowBadge(true)
             notificationChannel!!.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
-        Log.e(
-            TAG,
-            "Notification Message Body: " + remoteMessage.data
-        )
+
         message = remoteMessage.data["message"]
         notification_code = remoteMessage.data["code"]
         title = remoteMessage.data["title"]
@@ -99,29 +90,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
     }
 
     private val manager: NotificationManager?
-        private get() {
+        get() {
             if (notificationManager == null) {
                 notificationManager =
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             }
+
             return notificationManager
         }
 
-    // methods for push notification form fcm
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun sendMessagePush() {
         val intent: Intent? = null
-        // write here your activity name you wants to open on notification click 
-        //  intent = new Intent(this, NotificationActivity.class);
-        //intent.putExtra("jobId",jobid);
+
         intent!!.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            i,
-            intent,
-            PendingIntent.FLAG_ONE_SHOT
-        )
+        val pendingIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT)
+
         val icon1 = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
         val defaultSoundUri =
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -143,8 +129,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         notificationManager!!.notify(i++, notification)
     }
 
-    // return useWhiteIcon ? R.mipmap.ic_notification_trans : R.mipmap.ic_launcher;
-    // to get data for noti
     private val notificationIcon: Int
         @SuppressLint("ObsoleteSdkInt")
         get() {
@@ -159,7 +143,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         job.cancel()
     }
 
-    // JSONObject objectBody = new JSONObject(remoteMessage.getData().get("body"));
     companion object {
         private const val TAG = "MyFirebaseMsgService"
         private var i = 0

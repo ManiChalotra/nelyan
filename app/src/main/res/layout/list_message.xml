@@ -40,6 +40,8 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/dlt_icon_red"
+                    android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`delete`)}"
+
                     />
 
 
