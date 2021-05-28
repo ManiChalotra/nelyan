@@ -206,6 +206,9 @@ dependencies {
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
 
+    //image
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }
 repositories {

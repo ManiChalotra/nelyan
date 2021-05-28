@@ -148,21 +148,16 @@ class GroupChatVM :ViewModel() {
         when(s)
         {
 
-            // "three"->{
-            //CommonMethods.hideKeyboard(view)
-            // threeDialog(view)
-            // }
+
             "ivSend"->{
                 if(message.get()!!.trim().isEmpty())
                 {
                     Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
 
-                    // CommonMethods.alertDialog(view.context,"please enter message")
                 }
                 else {
                     Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
 
-                    //  sendChatMessage()
                 }
             }
         }
@@ -210,22 +205,6 @@ class GroupChatVM :ViewModel() {
             e.printStackTrace()
         }
     }
-    private fun clearChat() {
-
-        val json = JSONObject()
-        try
-        {
-            json.put("userId", userId)
-            json.put("user2Id", senderID)
-            socket.emit("delete_chat",json)
-
-        }
-
-        catch (e: Exception)
-        {
-            e.printStackTrace()
-        }
-    }
 
     fun sendMessage(view: View, rv: RecyclerView)
     {
@@ -233,15 +212,9 @@ class GroupChatVM :ViewModel() {
 
         if(message.get().toString().trim().isEmpty())
         {
-
             Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
-
-            //CommonMethods.alertDialog(view.context,"please enter message")
         }
         else {
-
-           // Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}------", Toast.LENGTH_SHORT).show()
-
             sendChatMessage()
 
         }
@@ -250,9 +223,7 @@ class GroupChatVM :ViewModel() {
 
     fun connectSocket(context: Context) {
 
-
         Log.e("socket", "connectSocket connectSocket")
-
         ctx = context
         try{
             socket = IO.socket("http://3.13.214.27:1052")
@@ -305,7 +276,7 @@ class GroupChatVM :ViewModel() {
 
     private val onConnect = Emitter.Listener {
         Log.e("socket", "chat: onConnect")
-        //connectUser()
+        connectUser()
         //getUserChat()
     }
 
@@ -320,7 +291,6 @@ class GroupChatVM :ViewModel() {
 
     private val connectListener = Emitter.Listener{
         Log.e("socket", "chat   JOIN")
-        Log.e("socket", it[0].toString())
         Log.e("socket", it[0].toString())
     }
 

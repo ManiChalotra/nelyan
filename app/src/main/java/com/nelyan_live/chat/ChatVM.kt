@@ -17,6 +17,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatVM :ViewModel() {
 
@@ -27,12 +30,17 @@ class ChatVM :ViewModel() {
     var userId =""
     var block ="0"
 
+    /*init {
+        socket = SocketManager.socket
+    }*/
+
+
     var message : ObservableField<String> = ObservableField("")
     var senderName : ObservableField<String> = ObservableField("")
     var senderImage : ObservableField<String> = ObservableField("")
     var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
 
-    val chatAdapter by lazy { RecyclerAdapter<ChatData>(R.layout.list_chat) }
+    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right) }
      val listChat by lazy { ArrayList<ChatData>() }
 
     fun onClick(view: View, s:String)
@@ -71,39 +79,6 @@ class ChatVM :ViewModel() {
             e.printStackTrace()
         }
     }
-    private fun clearChat() {
-
-        val json = JSONObject()
-        try
-        {
-            json.put("userId", userId)
-            json.put("user2Id", senderID)
-            socket.emit("delete_chat",json)
-
-        }
-
-        catch (e: Exception)
-        {
-            e.printStackTrace()
-        }
-    }
-    private fun blockUser(s: String) {
-
-        val json = JSONObject()
-        try
-        {
-            json.put("userId", userId)
-            json.put("user2Id", senderID)
-            json.put("status", if(s=="Block") "1" else "0")
-            socket.emit("block_user",json)
-
-        }
-
-        catch (e: Exception)
-        {
-            e.printStackTrace()
-        }
-    }
 
     fun sendMessage(view: View,rv:RecyclerView)
     {
@@ -114,7 +89,6 @@ class ChatVM :ViewModel() {
 
             Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
 
-            //CommonMethods.alertDialog(view.context,"please enter message")
         }
         else {
             sendChatMessage()
@@ -143,6 +117,8 @@ class ChatVM :ViewModel() {
             socket.on("block_data", blockData)
             socket.on("delete_chat", deleteData)
             socket.on("delete_data", deleteData)
+            socket.on("seen_unseen", seenMessages)
+            socket.on("seen_unseen_msg", seenMessages)
             socket.connect()
 
             Log.e("socket", "sfdafdsfdsfsdf")
@@ -171,6 +147,8 @@ class ChatVM :ViewModel() {
         socket.off("block_data", blockData)
         socket.off("delete_chat", deleteData)
         socket.off("delete_data", deleteData)
+        socket.off("seen_unseen", seenMessages)
+        socket.off("seen_unseen_msg", seenMessages)
 
 
     }
@@ -179,6 +157,7 @@ class ChatVM :ViewModel() {
         Log.e("socket", "chat: onConnect")
         connectUser()
         getUserChat()
+
     }
 
     private val onDisconnect = Emitter.Listener  { Log.e("socket", "run: disconnect")  }
@@ -247,7 +226,10 @@ class ChatVM :ViewModel() {
                     json.getString("recieverImage"),
                     json.getString("senderName"),
                     if(json.getString("senderId") == userId){json.getString("senderImage")}else{json.getString("recieverImage")},
-                    userId
+                    userId,
+                        "",
+                        if(i==0){true}
+                        else{checkDateCompare(json.getString("created"),listData[i-1].created)}
 
                 ))
             }
@@ -272,7 +254,19 @@ class ChatVM :ViewModel() {
         catch (e:Exception)
         {e.printStackTrace()}
 
+        setSeenStatus()
+
     }
+
+    private fun checkDateCompare(created: String, created1: String): Boolean {
+
+
+        val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
+        val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
+
+        return date1!=date2
+    }
+
     private val blockData = Emitter.Listener{
 
         Log.e("socket", "chat    blockData")
@@ -282,6 +276,44 @@ class ChatVM :ViewModel() {
 
         if(""==json.getString("userId"))  block = json.getString("block_data")
 
+
+    }
+
+
+    private val seenMessages = Emitter.Listener{
+
+        if(mySeen)
+        {
+        Log.e("socket", "chat    seenMessages")
+        Log.e("socket", it[0].toString())
+
+        GlobalScope.launch {
+
+            withContext(Dispatchers.Main) {
+
+               // listChat.addAll(listData)
+
+                for(i in 0 until listChat.size)
+                {
+                    if(listChat[i].readStatus=="0")
+                    {
+                        listChat[i].readStatus="1"
+                        chatAdapter.notifyItemChanged(i)
+                    }
+                }
+
+              //  chatAdapter.addAtPosition(listChat,listChat.size-1)
+
+               // rvChat.scrollToPosition(listChat.size-1)
+                Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
+
+                if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
+            }
+        }}
+        else
+        {
+            mySeen = true
+        }
 
     }
 
@@ -366,9 +398,11 @@ class ChatVM :ViewModel() {
                     if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
                 }
             }
+
         }
         catch (e:Exception)
         {e.printStackTrace()}
+        setSeenStatus()
 
     }
     private val deleteData = Emitter.Listener{
@@ -399,6 +433,25 @@ class ChatVM :ViewModel() {
 
             json.put("userId", userId)
             socket.emit("connect_user",json)
+
+        }
+
+        catch (e: Exception)
+        {e.printStackTrace()}
+
+    }
+
+    var mySeen = false
+
+    private fun setSeenStatus() {
+        val json = JSONObject()
+        try{
+            mySeen = false
+            Log.e("socket=connectUser", userId)
+
+            json.put("userId", userId)
+            json.put("user2Id", senderID)
+            socket.emit("seen_unseen",json)
 
         }
 

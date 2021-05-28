@@ -96,8 +96,6 @@ class MessagesVM :ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-
     }
 
     fun disconnectSocket() {
@@ -190,7 +188,6 @@ class MessagesVM :ViewModel() {
             dialog.dismiss()
         }
 
-
         tvYes.setOnClickListener {
             dialog.dismiss()
 
@@ -274,7 +271,8 @@ class MessagesVM :ViewModel() {
                     "",
                     json.getString("isOnline"),
                     json.getString("unreadcount"),
-                    ""
+                    json.getString("readStatus")
+
                 ))
             }
 

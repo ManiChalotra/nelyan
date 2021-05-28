@@ -27,6 +27,9 @@ import com.nelyan_live.utils.checkIfHasNetwork
 import com.nelyan_live.utils.security_key
 import com.nelyan_live.utils.showSnackBar
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatFrag(var userlocation: String, var userlat: String, var userlong: String) : Fragment() {
 
@@ -109,7 +112,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     val listData: ArrayList<ChatData> = ArrayList()
 
                     val jsonArray = jsonMain.getJSONArray("data")
-                    for (i in 0 until jsonArray.length()) {
+
+                    Log.e("socket=======", "===="+jsonArray.length())
+
+                    for (i in jsonArray.length()-1 downTo  0) {
 
                         val json = jsonArray.getJSONObject(i)
 
@@ -129,7 +135,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                                 json.getString("recieverImage"),
                                 json.getString("senderName"),
                                 json.getString("senderImage"),
-                                groupChatVM.userId, "1"
+                                groupChatVM.userId, "1",if(listData.size==0){true}
+                        else{checkDateCompare(json.getString("created"),listData[listData.size-1].created)}
 
                         ))
                     }
@@ -138,7 +145,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     if (listData.isNotEmpty()) {
                         groupChatVM.listChat.addAll(listData)
 
-                        groupChatVM.listChat.reverse()
+                        ///groupChatVM.listChat.reverse()
                         groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
                         activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
                         groupChatVM.noDataMessage.set("")
@@ -166,6 +173,16 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
 
     }
+
+    private fun checkDateCompare(created: String, created1: String): Boolean {
+
+
+        val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
+        val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
+
+        return date1!=date2
+    }
+
 
     override fun onDestroyView() {
       //  groupChatVM.disconnectSocket()

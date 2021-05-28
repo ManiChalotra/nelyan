@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="model"
+            type="com.nelyan_live.chat.ChatData" />
+    </data>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llSender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                setMessageListTime="@{model.created}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:gravity="center"
+                android:visibility="@{model.dateShown ? View.VISIBLE : View.GONE}"
+                android:text=""
+                android:paddingBottom="@dimen/_2sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivSender"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                setChatImage="@{model.senderImage}"
+                android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`chat`)}"
+                android:src="@drawable/placeholder"
+                app:layout_constraintBottom_toBottomOf="@id/tvSender"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tvSenderName"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_width="@dimen/_12sdp"
+                android:textAllCaps="true"
+                android:text="@{model.senderName}"
+                android:maxLength="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_5sdp"
+                android:background="@drawable/location_circle"
+                android:backgroundTint="@color/colorAccent"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/ivSender"
+                app:layout_constraintEnd_toEndOf="@id/ivSender"
+                />
+
+            <TextView
+                android:id="@+id/tvSender"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:text="@{model.message}"
+                android:maxWidth="200dp"
+                android:minWidth="80dp"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:background="@drawable/chat"
+                app:layout_constraintTop_toBottomOf="@id/tvDate"
+                app:layout_constraintBottom_toTopOf="@id/tvSenderTime"
+                app:layout_constraintStart_toEndOf="@id/ivSender"/>
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                app:layout_constraintTop_toTopOf="@id/tvSender"
+                app:layout_constraintBottom_toBottomOf="@id/tvSender"
+                app:layout_constraintStart_toEndOf="@id/tvSender"
+                android:src="@drawable/flag_icon"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
+                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`flag`)}"
+                />
+
+            <TextView
+
+                android:id="@+id/tvSenderTime"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                setMessageTime="@{model.created}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvSender"
+                android:textSize="8dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

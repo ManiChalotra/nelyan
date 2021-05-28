@@ -92,27 +92,25 @@
                         android:visibility="@{model.isOnline.equals(`0`) ? View.GONE : View.VISIBLE}"
                         />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_2sdp"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_activity_image"
-                        >
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_activity_image">
                             <TextView
+                                android:id="@+id/tvName"
                                 style="@style/CommonTextWrapcontent"
                                 android:text="@{model.userName}"
                                 android:textColor="@color/black"
                                 android:singleLine="true"
                                 android:maxLength="20"
-                                android:layout_alignParentStart="true"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
                                 android:layout_centerInParent="true"
                                 android:textSize="@dimen/_12sdp"
                                 android:fontFamily="@font/semibold"/>
@@ -120,26 +118,50 @@
                                 style="@style/CommonTextWrapcontent"
                                 android:textSize="@dimen/_8sdp"
                                 android:layout_alignParentEnd="true"
-                                setMessageTime="@{model.created_at}"/>
-                        </RelativeLayout>
+                                setMessageTime="@{model.created_at}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_address"
+                                style="@style/CommonTextMatchparent"
+                                android:layout_width="0dp"
+                                android:text="@{model.lastMessage}"
+                                android:textSize="@dimen/_11sdp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvName"
+                                app:layout_constraintStart_toEndOf="@id/ivTick"
+                                android:drawableEnd="@{model.isOnline.equals(`0`) ? null : @drawable/green_dot}"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:textColor="@{model.unreadcount.equals(`0`) ? @color/grey : @color/black}"
+                                android:singleLine="true"
+                                android:maxLength="30"
+                                />
+                            <ImageView
+                                android:id="@+id/ivTick"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:src="@drawable/blue_double_check"
+                                android:layout_below="@id/tvName"
+                                app:layout_constraintBottom_toBottomOf="@id/tv_address"
+                                android:paddingEnd="@dimen/_5sdp"
+                                setTickStatus="@{model}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-                        <TextView
-                            android:id="@+id/tv_address"
-                            style="@style/CommonTextMatchparent"
-                            android:text="@{model.lastMessage}"
-                            android:textSize="@dimen/_11sdp"
-                            android:drawableEnd="@{model.isOnline.equals(`0`) ? null : @drawable/green_dot}"
-                            android:drawableStart="@{model.unreadcount.equals(`0`) ? @drawable/blue_double_check : null}"
-                            android:drawablePadding="@dimen/_2sdp"
-                            android:textColor="@{model.unreadcount.equals(`0`) ? @color/grey : @color/black}"
-                            android:singleLine="true"
-                            android:maxLength="30"
 
-                            />
 
-                    </LinearLayout>
+
+
+                       <!--android:drawableStart="@{model.unreadcount.equals(`0`) ? @drawable/blue_double_check : null}"-->
+
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
 

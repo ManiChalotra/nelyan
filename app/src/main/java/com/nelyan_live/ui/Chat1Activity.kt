@@ -2,6 +2,7 @@ package com.nelyan_live.ui
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -36,7 +37,12 @@ class Chat1Activity : image() {
         }
         chatVM.rvChat =activityChat1Binding.rvChat
 
+
+        Log.e("ssdfdsfsd","=====${intent.getStringExtra("senderID")}")
+
         if (intent.hasExtra("senderID")) {
+
+
             chatVM.senderID = intent.getStringExtra("senderID")!!
             chatVM.senderName.set(intent.getStringExtra("senderName")!!)
             chatVM.senderImage.set(intent.getStringExtra("senderImage")!!)

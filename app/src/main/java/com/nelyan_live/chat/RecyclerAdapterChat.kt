@@ -1,5 +1,6 @@
 package com.nelyan_live.chat
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,21 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.BR
 
-class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
-    RecyclerView.Adapter<RecyclerAdapter.VH<T>>() {
+class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int) :
+        RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
 
     private val items = mutableListOf<T>()
     private var inflater: LayoutInflater? = null
     private var onItemClick: OnItemClick? = null
 
     private var orientationType: Int = 0
+
+    var IMAGE_RIGHT = 0
+    var IMAGE_LEFT = 1
+    var TEXT_RIGHT = 2
+    var TEXT_LEFT = 3
+
+
     var setAnimOrNot: Boolean = true
     private val animatedPosition: HashSet<Int> = HashSet()
 
@@ -68,17 +76,64 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH<T> {
         val layoutInflater = inflater ?: LayoutInflater.from(parent.context)
 
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            layoutInflater,
-            layoutId,
-            parent,
-            false
+        when(viewType)
+        {
+            TEXT_RIGHT->{
+                Log.e("dfdasfaf","=========111111=======")
+                val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                    layoutInflater,
+                    layoutId2,
+                    parent,
+                    false
+            )
+                return VH(binding)}
+            TEXT_LEFT->{
+
+                Log.e("dfdasfaf","=========222222=======")
+
+                val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                    layoutInflater,
+                    layoutId,
+                    parent,
+                    false
+            )
+                return VH(binding)}
+            else->{
+                Log.e("dfdasfaf","=========333333=======")
+
+                val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                        layoutInflater,
+                        layoutId,
+                        parent,
+                        false
+                )
+                return VH(binding)
+            }
+        }
+
+
+       /* val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                layoutInflater,
+                layoutId,
+                parent,
+                false
         )
-        return VH(binding)
+        return VH(binding)*/
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
+
+        var data  = (items[position] as ChatData)
+        if(data.senderId==data.myID)
+        {
+            return TEXT_RIGHT
+        }
+        else
+        {
+            return TEXT_LEFT
+        }
+
+       // return position
     }
 
     /*override fun getItemViewType(position: Int): Int {
@@ -88,16 +143,16 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VH<T>, position: Int) {
+
         val model = items[position]
         model.adapterPosition = position
-        onItemClick?.let { model.onItemClick = it }
+        onItemClick?.let { model.onItemClickChat = it }
         holder.bind(model)
-
         setAnimation(holder, position)
     }
 
     class VH<T : AbstractModel>(private val binding: ViewDataBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
         fun bind(model: T) {
             binding.setVariable(BR.model, model)
             binding.executePendingBindings()

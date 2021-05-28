@@ -1,7 +1,5 @@
 package com.nelyan_live.chat
 
-import com.nelyan_live.chat.AbstractModel
-
 data class ChatData(
     var id: String = "",
     var senderId: String = "",
@@ -19,7 +17,8 @@ data class ChatData(
     var senderName: String = "",
     var senderImage: String = "",
     var myID: String = "",
-    var isFlag: String = ""
+    var isFlag: String = "",
+    var dateShown: Boolean = false
 
 
 ) : AbstractModel()

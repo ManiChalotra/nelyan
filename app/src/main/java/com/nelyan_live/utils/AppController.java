@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
+
 import java.util.Locale;
 
 // extend with base Application instaed of Application
@@ -30,6 +32,8 @@ public class AppController extends Application implements AppLifecycleHandler.Ap
         super.onCreate();
         mInstance = this;
         //mSocketManager = getSocketManager();
+
+       // SocketManager.INSTANCE.connectSocketMain();
 
         lifecycleHandler = new AppLifecycleHandler(this);
         registerLifecycleHandler(lifecycleHandler);

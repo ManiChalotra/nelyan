@@ -1,7 +1,5 @@
 package com.nelyan_live.chat
 
-import com.nelyan_live.chat.AbstractModel
-
 class ChatListResponse (
     var id: String = "",
     var senderId: String = "",
@@ -20,5 +18,5 @@ class ChatListResponse (
     var reportcount: String = "",
     var isOnline: String = "",
     var unreadcount: String = "",
-    var blockCount: String = ""
+    var readStatus: String = ""
     ) : AbstractModel()

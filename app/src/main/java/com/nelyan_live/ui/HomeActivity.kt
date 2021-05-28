@@ -14,12 +14,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
@@ -28,6 +28,7 @@ import com.nelyan_live.data.viewmodel.AppViewModel
 import com.nelyan_live.db.DataStoragePreference
 import com.nelyan_live.fragments.*
 import com.nelyan_live.utils.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.alert_add_post_restiction.*
 import kotlinx.android.synthetic.main.bottom_navigation.*
@@ -99,7 +100,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-            Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
+          //  Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
+
+            Picasso.get().load(from_admin_image_base_URl + userImage).resize(100, 100)
+                    .placeholder(ContextCompat.getDrawable(
+                            ivHomeUserpic!!.context,
+                            R.drawable.placeholder
+                    )!!).into(ivHomeUserpic)
+
             tvUserName!!.text = userName
         }
     }
@@ -211,12 +219,17 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         OpenActivity(ActivityDetailsActivity::class.java)
                     }
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 fragment = HomeFragment()
                 loadFragment(fragment)
             }
 
+
+
     }
+
+
 
     private fun initalize() {
         tvLog.setOnClickListener(this)
@@ -400,10 +413,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         fragment = frag
                         loadFragment(fragment)
                     }
+
                     else {
                         consultantUserDialogMethod()
                     }
-
                 }
             }
             R.id.chat -> {
