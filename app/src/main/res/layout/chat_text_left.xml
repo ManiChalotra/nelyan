@@ -9,7 +9,6 @@
             type="com.nelyan_live.chat.ChatData" />
     </data>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/llSender"
             android:layout_width="match_parent"
