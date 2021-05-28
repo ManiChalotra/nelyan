@@ -91,6 +91,8 @@ class MessagesVM :ViewModel() {
                 socket.on("new_message", newMessage)
                 socket.on("delete_chat_listing", deleteChat)
                 socket.on("chat_list_data", deleteChat)
+                socket.on("seen_unseen_msg", seenMessages)
+
                 socket.connect()
 
             } catch (e: Exception) {
@@ -115,6 +117,7 @@ class MessagesVM :ViewModel() {
         socket.off("new_message", newMessage)
         socket.off("delete_chat_listing", deleteChat)
         socket.off("chat_list_data", deleteChat)
+        socket.off("seen_unseen_msg", seenMessages)
 
     }
 
@@ -164,6 +167,21 @@ class MessagesVM :ViewModel() {
         {e.printStackTrace()}
 
     }
+
+    private val seenMessages = Emitter.Listener{
+
+        Log.e("socket", "chat    seenMessages")
+        Log.e("socket", it[0].toString())
+
+        try {
+
+            getUserList()
+        }
+        catch (e:Exception)
+        {e.printStackTrace()}
+
+    }
+
     private val deleteChat = Emitter.Listener{
 
         Log.e("socket", "chat    deleteChat")
@@ -216,8 +234,7 @@ class MessagesVM :ViewModel() {
     private val chatList = Emitter.Listener{
 
         Log.e("socket", "chatList")
-        Log.e("socket", it.toString())
-        Log.e("socket", it[0].toString())
+        Log.e("socket", "====${it[0]}===")
         Log.e("socket", it[0].toString())
 
         try {
@@ -251,7 +268,6 @@ class MessagesVM :ViewModel() {
                 //  }
                 //]
 
-
                 val json = jsonArray.getJSONObject(i)
                 listData.add(ChatListResponse(
                     json.getString("id"),
@@ -263,7 +279,7 @@ class MessagesVM :ViewModel() {
                     json.getString("created"),
                     json.getString("updated"),
                     json.getString("user_id"),
-                    json.getString("lastMessage"),
+                    if(json.getString("messageType")=="1"){"image"}else{json.getString("lastMessage")},
                     json.getString("userName"),
                     json.getString("userImage"),
                     json.getString("created_at"),

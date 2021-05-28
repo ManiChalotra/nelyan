@@ -60,7 +60,8 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
         ) {
             uploadImage()
-        } else {
+        }
+        else {
             requestPermission()
         }
 
@@ -351,7 +352,6 @@ abstract class OpenCameraGallery : AppCompatActivity() {
         }
         return null
     }
-
 
     abstract fun getRealImagePath(imgPath: String?)
 

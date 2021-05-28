@@ -1,6 +1,9 @@
 package com.nelyan_live.utils.fcm
 
-import android.app.*
+import android.app.ActivityManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -17,27 +20,27 @@ import com.nelyan_live.utils.AppController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
+
+
+
+
     var title: String? = ""
     var message: String? = ""
 
-    //    for oreo
-    var CHANNEL_ID = "" // The id of the channel.
-    var CHANNEL_ONE_NAME = "Channel One"
 
     var notificationManager: NotificationManager? = null
 
-    var notificationChannel: NotificationChannel? = null
-    var notification_code: String? = null
-    var notification: Notification? = null
+    val dataStoragePreference by lazy { DataStoragePreference(this) }
 
     private  var job = Job()
-    //private  var dataStoragePreference= DataStoragePreference(AppController.getInstance().applicationContext)
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -59,6 +62,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         super.onMessageReceived(remoteMessage)
         Log.e("new_message", "=======$remoteMessage")
         Log.e("new_message", "=======${remoteMessage.data}")
+        var myId =""
 
 
         val data1 = remoteMessage.data
@@ -77,6 +81,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
 
         Log.e("new_message", "=======${userId}")
+        Log.e("new_message", "=======${id}")
 
 
         // Log.e("new_message", "=======${remoteMessage.notification!!.title}")
@@ -137,7 +142,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
                // .putExtra("disconnect", userId)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-
        // SocketManager.disconnectSocketMain()
 
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
@@ -157,10 +161,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         val am: ActivityManager = AppController.mInstance.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val cn: String = am.getRunningTasks(1)[0].toString()
 
-
         Log.e("new_message", "==212=====${cn}")
+        Log.e("new_message", "==212=222====${myId}")
 
-        manager.notify(0, builder.build())
+        launch(Dispatchers.Main.immediate) {
+            myId = DataStoragePreference(AppController.getInstance()).emitStoredValue(preferencesKey<String>("id")).first()
+
+            Log.e("new_message", "==212=1111111====${myId}")
+
+        Log.e("new_message", "==212=324234====${currentChatUser}")
+        Log.e("new_message", "==212=111324234231111====${id}")
+        Log.e("new_message", "==212=111324234231111====${myId}")
+            if(myChatVisible && id!=currentChatUser && id!=myId ) {
+                manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+            }
+
+
+        }
+
 
     }
 
@@ -176,6 +194,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-        private var i = 0
+         var myChatVisible = true
+         var currentChatUser = ""
     }
 }

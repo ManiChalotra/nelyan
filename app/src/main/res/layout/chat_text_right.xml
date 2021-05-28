@@ -80,7 +80,7 @@
                 android:textColor="@color/black"
                 android:textSize="14dp"
                 android:drawableEnd="@drawable/blue_double_check"
-                setDrawableTint="@{model.readStatus}"
+                setDrawableTint="@{model}"
                 android:background="@drawable/rightchat"
                 app:layout_constraintTop_toBottomOf="@id/tvDate"
                 app:layout_constraintBottom_toTopOf="@id/tvReceiverTime"

@@ -19,7 +19,7 @@ class TermsActivity : AppCompatActivity() {
         super.onResume()
         data = intent?.extras?.getString("cmsData").toString()
         data = Html.fromHtml(data).toString()
-        Log.d("datassss__terms", "-------"+ data)
+        Log.d("datassss__terms", "-------$data")
         tv_termsTEXT.text = data
 
 

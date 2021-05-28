@@ -10,7 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyan_live.BR
 
-class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int) :
+class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int,@LayoutRes val layoutId3: Int,@LayoutRes val layoutId4: Int) :
         RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
 
     private val items = mutableListOf<T>()
@@ -98,6 +98,28 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
                     false
             )
                 return VH(binding)}
+            IMAGE_RIGHT->{
+
+                Log.e("dfdasfaf","=========222222=======")
+
+                val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                    layoutInflater,
+                    layoutId3,
+                    parent,
+                    false
+            )
+                return VH(binding)}
+            IMAGE_LEFT->{
+
+                Log.e("dfdasfaf","=========222222=======")
+
+                val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                    layoutInflater,
+                    layoutId4,
+                    parent,
+                    false
+            )
+                return VH(binding)}
             else->{
                 Log.e("dfdasfaf","=========333333=======")
 
@@ -123,14 +145,14 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
 
     override fun getItemViewType(position: Int): Int {
 
-        var data  = (items[position] as ChatData)
+        val data  = (items[position] as ChatData)
         if(data.senderId==data.myID)
         {
-            return TEXT_RIGHT
+            return if(data.messageType=="0") TEXT_RIGHT else IMAGE_RIGHT
         }
         else
         {
-            return TEXT_LEFT
+            return if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
         }
 
        // return position

@@ -341,6 +341,82 @@ class AppViewModel : ViewModel() {
                 })
     }
 
+
+    // get Group Notification check api
+    private var groupGroupNotifyMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeGroupNotifyApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (groupGroupNotifyMutableLiveData == null) {
+            groupGroupNotifyMutableLiveData = MutableLiveData()
+        }
+        return groupGroupNotifyMutableLiveData
+    }
+
+    fun groupNotifyApiData(securityKey: String?,authkey:String?, groupId:String? ) {
+        JsonPlaceHolder().getGroupMessagesNotification(securityKey, authkey, groupId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        groupGroupNotifyMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    // change Group Notification check api
+    private var changeGroupNotifyMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeChangeNotifyApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (changeGroupNotifyMutableLiveData == null) {
+            changeGroupNotifyMutableLiveData = MutableLiveData()
+        }
+        return changeGroupNotifyMutableLiveData
+    }
+
+    fun changeNotifyApiData(securityKey: String?,authkey:String?, groupId:String?, status:String? ) {
+        JsonPlaceHolder().changeGroupMessagesNotification(securityKey, authkey, groupId,status)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        changeGroupNotifyMutableLiveData?.value = response
+                    }
+                })
+    }
+
+    // change Chat Regulation  api
+    private var changeChatRegulationMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeChatRegulationApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (changeChatRegulationMutableLiveData == null) {
+            changeChatRegulationMutableLiveData = MutableLiveData()
+        }
+        return changeChatRegulationMutableLiveData
+    }
+
+    fun getChatRegulations(securityKey: String?,authkey:String?) {
+        JsonPlaceHolder().getChatRegulation(securityKey, authkey)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        changeChatRegulationMutableLiveData?.value = response
+                    }
+                })
+    }
+
    // add favourite  post api
     private var addFavouritePostMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 

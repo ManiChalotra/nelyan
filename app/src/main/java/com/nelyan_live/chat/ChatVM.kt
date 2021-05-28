@@ -40,7 +40,7 @@ class ChatVM :ViewModel() {
     var senderImage : ObservableField<String> = ObservableField("")
     var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
 
-    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right) }
+    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
      val listChat by lazy { ArrayList<ChatData>() }
 
     fun onClick(view: View, s:String)
@@ -66,6 +66,28 @@ class ChatVM :ViewModel() {
             json.put("receiverId", senderID)
             json.put("messageType", 0)
             json.put("message", message.get().toString())
+
+            Log.e("send_message","=======$json")
+
+            socket.emit("send_message",json)
+
+            message.set("")
+        }
+
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+        }
+    }
+    fun sendChatImageMessage(str: String) {
+
+        val json = JSONObject()
+        try
+        {
+            json.put("senderId", userId)
+            json.put("receiverId", senderID)
+            json.put("messageType", 1)
+            json.put("message", str)
 
             Log.e("send_message","=======$json")
 
@@ -127,6 +149,7 @@ class ChatVM :ViewModel() {
         catch (e :Exception){e.printStackTrace()}
 
     }
+
 
     fun disconnectSocket() {
         socket.disconnect()
@@ -364,6 +387,8 @@ class ChatVM :ViewModel() {
             Log.e("socket===", json.toString())
 
             val listData : ArrayList<ChatData> = ArrayList()
+
+
 
             listData.add(ChatData(
                 json.getString("id"),

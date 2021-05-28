@@ -31,6 +31,8 @@ class GroupChatVM :ViewModel() {
     var senderID =""
     var userId =""
     var groupName =""
+    var groupId =""
+    var notifyStatus ="0"
     var block ="0"
 
     var message : ObservableField<String> = ObservableField("")
@@ -40,12 +42,12 @@ class GroupChatVM :ViewModel() {
     var senderImage : ObservableField<String> = ObservableField("")
     var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
 
-    val groupChatAdapter by lazy { RecyclerAdapter<ChatData>(R.layout.list_chat) }
+    val groupChatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
      val listChat by lazy { ArrayList<ChatData>() }
 
     init {
 
-        groupChatAdapter.setOnItemClick(object : RecyclerAdapter.OnItemClick {
+        groupChatAdapter.setOnItemClick(object : RecyclerAdapterChat.OnItemClick {
             override fun onClick(view: View, position: Int, type: String) {
 
                 when (type) {
@@ -185,6 +187,31 @@ class GroupChatVM :ViewModel() {
             e.printStackTrace()
         }
     }
+
+    fun sendChatImageMessage(str: String) {
+
+        val json = JSONObject()
+        try
+        {
+            json.put("senderId", userId)
+            json.put("groupName", groupName)
+            json.put("messageType", 1)
+            json.put("message", str)
+
+            Log.e("send_group_message","=======$json")
+
+            socket.emit("send_group_message",json)
+
+            message.set("")
+        }
+
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+        }
+    }
+
+
     fun updateLocation(lat:String,long:String,city:String) {
 
         val json = JSONObject()
@@ -369,6 +396,7 @@ class GroupChatVM :ViewModel() {
                     userId,"1"
 
             ))
+            groupId = json.getString("groupId")
 
             GlobalScope.launch {
 

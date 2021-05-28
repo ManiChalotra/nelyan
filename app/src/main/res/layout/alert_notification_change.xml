@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_15sdp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alert_shape"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            style="@style/CommonTextWrapcontent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:text="Are you sure to mute this Group Notifications ?"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@color/grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tvNo"
+                style="@style/CommonTextWrapcontent"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                android:layout_toStartOf="@+id/viewww"
+                android:text="@string/no"
+                android:textSize="@dimen/_14sdp" />
+
+
+            <View
+                android:id="@+id/viewww"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerInParent="true"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/tvYes"
+                style="@style/CommonTextWrapcontent"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/viewww"
+                android:text="@string/yes"
+                android:textSize="@dimen/_14sdp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

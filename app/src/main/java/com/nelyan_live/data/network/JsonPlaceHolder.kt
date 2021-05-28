@@ -430,6 +430,25 @@ interface JsonPlaceHolder {
                          @Field("page") page: String?,
                          @Field("limit") limit: String?): Call<JsonObject>
 
+    @POST("get_group_notification_status")
+    @FormUrlEncoded
+    fun getGroupMessagesNotification(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") authKey: String?,
+                         @Field("groupId") groupId: String?): Call<JsonObject>
+
+    @PUT("group_noification_status")
+    @FormUrlEncoded
+    fun changeGroupMessagesNotification(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") authKey: String?,
+                         @Field("groupId") groupId: String?,
+                         @Field("status") status: String?
+    ): Call<JsonObject>
+
+    @GET("get_chat_regulation")
+    fun getChatRegulation(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") authKey: String?
+
+    ): Call<JsonObject>
 
     companion object {
 

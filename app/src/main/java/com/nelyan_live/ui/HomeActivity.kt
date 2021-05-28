@@ -426,7 +426,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     tvTitleToolbar!!.text = userlocation
                     iv_bell!!.setImageResource(R.drawable.tab_on)
 
-                    fragment = ChatFrag(userlocation, userlat, userlong)
+                    fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
                     loadFragment(fragment)
                 }
             }

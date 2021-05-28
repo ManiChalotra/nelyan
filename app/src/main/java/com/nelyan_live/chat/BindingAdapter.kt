@@ -178,21 +178,30 @@ object BindingAdapter {
 
     @BindingAdapter(value = ["setDrawableTint"], requireAll = false)
     @JvmStatic
-    fun setDrawableTint(tv: TextView, str: String) {
+    fun setDrawableTint(tv: TextView, str: ChatData) {
 
 
 
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
         Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
 
-        if(str=="1")
-        {
-            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.blue))
+
+        if(str.isFlag=="") {
+            if(str.readStatus=="1")
+            {
+                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.blue))
+            }
+            else
+            {
+                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.lightgrey))
+            }
+        } else {
+            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.grey))
         }
-        else
-        {
-            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.lightgrey))
-        }
+
+
+
+
     }
 
 
@@ -208,7 +217,38 @@ object BindingAdapter {
     ) {
         if(!str.isNullOrEmpty()) {
 
+
             Picasso.get().load("http://3.13.214.27:1052/uploads/users/$str").resize(100, 100)
+                    .placeholder(ContextCompat.getDrawable(
+                    ivImage.context,
+                    R.drawable.placeholder
+            )!!).into(ivImage)
+                   /* Glide.with(ivImage.context).load("http://3.13.214.27:1052/uploads/users/$str").dontTransform()
+                            .override(100, 100).placeholder(
+                                    ContextCompat.getDrawable(
+                                            ivImage.context,
+                                            R.drawable.placeholder
+                                    )
+                            ).into(ivImage)*/
+
+        }
+        else
+        {
+            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context,R.drawable.placeholder))
+        }
+    }
+
+    @BindingAdapter(value = ["setChatMessages"], requireAll = false)
+    @JvmStatic
+    fun setChatMessages(
+        ivImage: ImageView,
+        str: String?
+
+    ) {
+        if(!str.isNullOrEmpty()) {
+
+
+            Picasso.get().load("http://3.13.214.27:1052/uploads/users/$str")
                     .placeholder(ContextCompat.getDrawable(
                     ivImage.context,
                     R.drawable.placeholder
