@@ -94,6 +94,7 @@
 
                 />
 
+
             <TextView
                 android:id="@+id/tvReceiver"
                 android:layout_gravity="center"

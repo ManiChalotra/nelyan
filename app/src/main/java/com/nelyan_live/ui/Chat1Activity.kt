@@ -60,6 +60,7 @@ class Chat1Activity :  OpenCameraGallery() {
             chatVM.userId = intent.getStringExtra("userId")!!
             userId = intent.getStringExtra("userId")!!
         }
+
         chatVM.connectSocket(this)
 
         activityChat1Binding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->

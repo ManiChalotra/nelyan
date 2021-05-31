@@ -28,7 +28,7 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:fontFamily="@font/medium"
             android:gravity="center"
-            android:text="Are you sure to mute this Group Notifications ?"
+            android:text="@string/are_you_sure_to_mute_this_group_notifications"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 

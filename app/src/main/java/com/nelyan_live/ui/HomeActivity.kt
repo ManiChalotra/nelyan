@@ -89,6 +89,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onResume() {
         super.onResume()
+
+        Log.d("homeAuthKey", "----------")
+
         authorization = intent?.extras?.getString("authorization").toString()
         Log.d("homeAuthKey", "----------$authorization")
 
@@ -101,6 +104,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
           //  Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
+            Log.e("dataHome ------", "---111-------$userlocation------$userlat------$userlong----")
 
             Picasso.get().load(from_admin_image_base_URl + userImage).resize(100, 100)
                     .placeholder(ContextCompat.getDrawable(
@@ -115,10 +119,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-
-
-
         initalize()
         checkMvvmresponse()
 
@@ -135,6 +135,23 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setToolBarClicks()
 
             try {
+
+
+                if(intent.hasExtra("groupChat"))
+                {
+                    launch(Dispatchers.Main.immediate) {
+                        userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                        userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                        userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+
+                        Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
+
+                        bottomNavigationBar.selectedItemId = R.id.chat
+                    }
+
+
+                }
+
                 if (intent.hasExtra("chat")) {
 
                         Log.d("homeAuthKey====", "----------$userId")
@@ -346,6 +363,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(item: MenuItem):Boolean {
+
+
+
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
 

@@ -74,18 +74,18 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         MyFirebaseMessagingService.myChatVisible = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         activityChatBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context), R.layout.activity_chat, container, false)
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
 
-        activityChatBinding.btnRegulation!!.setOnClickListener {
+        activityChatBinding.btnRegulation.setOnClickListener {
             val i = Intent(mContext, RegulationActivity::class.java)
             startActivity(i)
         }
 
-        activityChatBinding.ivAttachment!!.setOnClickListener {
+        activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()
         }
 
@@ -126,14 +126,19 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
 
         if (checkIfHasNetwork((mContext as Activity))) {
+
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
+
+            Log.e("groupMessageApiData", "-------------$security_key----$authorization----$userlocation----")
+
+
             appViewModel.groupMessageApiData(security_key, authorization, userlocation, "0", "20")
         }
         else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeGroupMessageApiResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeGroupMessageApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
@@ -237,7 +242,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeGroupNotifyApiResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeGroupNotifyApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
@@ -255,7 +260,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         }
 
                     }
-                    ivBell.setImageResource(if(groupChatVM.notifyStatus=="1"){R.drawable.tab_on}else{R.drawable.tab_off})
+                    ivBell.setImageResource(if(groupChatVM.notifyStatus=="0"){R.drawable.tab_on}else{R.drawable.tab_off})
                     ivBell.visibility = View.VISIBLE
                 }
 
@@ -299,7 +304,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeChangeNotifyApiResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeChangeNotifyApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
@@ -591,6 +596,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         setImageTrue = true
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+
+
+        Log.d("setImage", "------------$imagePathList")
+        Log.d("setImage", "------------${imagePathList.size}")
+
         appViewModel.sendUploadImageData(type, users, imagePathList)
        // progressDialog.setProgressDialog()
 

@@ -1,6 +1,5 @@
 package com.nelyan_live.utils.fcm
 
-import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,14 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.nelyan_live.R
 import com.nelyan_live.db.DataStoragePreference
-import com.nelyan_live.ui.MainActivity
+import com.nelyan_live.ui.Chat1Activity
+import com.nelyan_live.ui.HomeActivity
 import com.nelyan_live.utils.AppController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,13 +28,8 @@ import kotlin.coroutines.CoroutineContext
 
 class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
-
-
-
     var title: String? = ""
     var message: String? = ""
-
-
     var notificationManager: NotificationManager? = null
 
     val dataStoragePreference by lazy { DataStoragePreference(this) }
@@ -57,7 +51,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.e("new_message", "=======$remoteMessage")
@@ -74,45 +67,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         val jsonMain = JSONObject(data1["data"]!!.toString())
 
 
-        val id  = jsonMain.getString("senderId")
+        val senderID  = jsonMain.getString("senderId")
         val name  = jsonMain.getString("senderName")
         val image  = jsonMain.getString("senderImage")
         val userId  = jsonMain.getString("receiverId")
+        val groupId  = jsonMain.getInt("groupId")
 
 
         Log.e("new_message", "=======${userId}")
-        Log.e("new_message", "=======${id}")
+        Log.e("new_message", "=======${senderID}")
 
 
-        // Log.e("new_message", "=======${remoteMessage.notification!!.title}")
-        //  Log.e("new_message", "=======${remoteMessage.notification!!.title}")
-        //  Log.e("new_message", "=======${remoteMessage.notification!!.body}")
+       //  Log.e("new_message", "=======${remoteMessage.notification!!.title}")
+       //   Log.e("new_message", "=======${remoteMessage.notification!!.title}")
+       //   Log.e("new_message", "=======${remoteMessage.notification!!.body}")
 
-        /* {
-             "message": "A new movie test push again has been added.",
-             "data": {
-             "message": "A new movie test push again has been added.",
-             "deviceType": 0,
-             "deviceToken": "c1ob-ZUgTd6__baW1KOy8Q:APA91bE5lkwK5AzwQGFI2SOkueae6n4vSMMzrJcXw3SFQoJTTyIi4r2b_UwUPmNsNRiSGwlEouo7q7ZklxK6EuYyaMST7mCXtGbgjTYL7eMdla69GqCwlS4g8E67lElNGM4K4W4xb2t0",
-             "receiverId": 108,
-             "movie": {
-             "created": "1609502644",
-             "id": 34,
-             "status": 1,
-             "title": "test push again",
-             "description": "test",
-             "image": "http://localhost:8011/uploads/movies/aaa9ff9f-59d3-4a13-a05b-3cde82d02442.jpeg",
-             "audio": "http://localhost:8011/uploads/movies/eeb77f0b-8a8c-42f6-b26e-9a215c2b5e19.mp3",
-             "priceWithAdd": "20",
-             "priceWithoutAdd": "10",
-             "genreId": 5,
-             "createdAt": "2021-01-01T12:04:04.000Z",
-             "updatedAt": "2021-01-01T12:04:04.000Z"
-         },
-             "code": 1
-         },
-             "priority": "high"
-         }*/
 
         /*{body=ani Sent You a Message, data={"readStatus":0,"created":1622098609,
             "groupId":0,"chatConstantId":22,"deletedId":0,
@@ -120,6 +89,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
             "message":"hello bhai 2","senderImage":"",
             "senderId":188,"senderName":"ani","receiverId":181,"messageType":0,"id":567,
             "recieverImage":"b98e0a97-2367-4804-89d5-65d9561e51fb.jpg","updated":1622098609}}*/
+
+        /*{body=rohit sevenn Sent a Message in Khanna, data={"readStatus":0,"created":1622449933,
+            "groupId":40,"chatConstantId":57,"deletedId":0,
+            "recieverName":"",
+            "message":"hello 1122","senderImage":"b98e0a97-2367-4804-89d5-65d9561e51fb.jpg",
+            "senderId":181,"senderName":"rohit sevenn","receiverId":0,"messageType":0,"id":1060,
+            "recieverImage":"","updated":1622449933}, type=4, groupId=40}*/
 
         //showSmallNotification(data1["message"]!!, data1["title"]!!)
 
@@ -134,18 +110,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         //                        )
 
 
-        val intent = Intent(this, MainActivity::class.java)
-                //.putExtra("senderID", id)
-                //.putExtra("senderName", name)
-               // .putExtra("senderImage", image)
-               // .putExtra("userId", userId)
-               // .putExtra("disconnect", userId)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-       // SocketManager.disconnectSocketMain()
+                               val intent1 =  Intent(this, Chat1Activity::class.java)
+                                                          .putExtra("senderID", senderID)
+                                                          .putExtra("senderName", name)
+                                                          .putExtra("senderImage", image)
+                                                          .putExtra("userId", userId)
+                                                          .putExtra("disconnect", userId)
+                                           intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-        val channelId = "Default"
+        val intent = Intent(this, HomeActivity::class.java)
+            .putExtra("groupChat", "true")
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+
+        val pendingIntent = PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_ONE_SHOT)
+        val channelId = getString(R.string.default_notification_channel_id)
 
         val builder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -158,28 +138,31 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
             manager.createNotificationChannel(channel)
         }
 
-        val am: ActivityManager = AppController.mInstance.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val cn: String = am.getRunningTasks(1)[0].toString()
 
-        Log.e("new_message", "==212=====${cn}")
+
         Log.e("new_message", "==212=222====${myId}")
 
         launch(Dispatchers.Main.immediate) {
             myId = DataStoragePreference(AppController.getInstance()).emitStoredValue(preferencesKey<String>("id")).first()
 
             Log.e("new_message", "==212=1111111====${myId}")
+            Log.e("new_message", "==212=324234====${currentChatUser}")
+            Log.e("new_message", "==212=111324234231111====${senderID}")
+            Log.e("new_message", "==212=111324234231111====${myId}")
 
-        Log.e("new_message", "==212=324234====${currentChatUser}")
-        Log.e("new_message", "==212=111324234231111====${id}")
-        Log.e("new_message", "==212=111324234231111====${myId}")
-            if(myChatVisible && id!=currentChatUser && id!=myId ) {
-                manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
-            }
+                if (senderID != myId && senderID != currentChatUser) {
 
+                    if (myChatVisible) {
+                        manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+                    } else {
+                        if (groupId == 0) {
+                            manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+                        }
+                    }
+
+                }
 
         }
-
-
     }
 
     private val manager: NotificationManager?

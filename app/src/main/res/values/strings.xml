@@ -2,7 +2,8 @@
 
     <string name="facebook_app_id">2791584067750180</string>
     <string name="fb_login_protocol_scheme">fb2791584067750180</string>
-
+    <string name="default_notification_channel_id" translatable="false">Sash_fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">Sash</string>
 
     <string name="app_name">Nelyan</string>
     <string name="signup"><u>Sign Up</u></string>
@@ -243,5 +244,6 @@
     <string name="around_me">Around me</string>
     <string name="select_type">Select type</string>
     <string name="search">SEARCH</string>
+    <string name="are_you_sure_to_mute_this_group_notifications"> Are you sure to mute this Group Notifications ?</string>
 
 </resources>

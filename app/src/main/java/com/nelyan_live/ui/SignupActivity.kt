@@ -97,14 +97,15 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         iv_uploader.setOnClickListener(this)
         tv_city.setOnClickListener(this)
 
+        launch (Dispatchers.Main.immediate){
+            deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
-        launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
-        }
+
 
         launch(Dispatchers.Main.immediate) {
 
@@ -215,7 +216,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                     val name = tv_username.text.toString().trim()
                                     val email = tv_userEmail.text.toString()
                                     hitSocialCompleteProfileApi(name, email, type.toString())
-
                                 }
                             }
                         }
@@ -310,16 +310,11 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
-        if (imgPathNormal.isNullOrEmpty()) {
-            if (deviceToken.equals("") || deviceToken == null){
-                appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, "1212313", mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
-            }else{
+        if (imgPathNormal.isEmpty()) {
+
                 appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, deviceToken, mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
 
-            }
-            //signupProgressBar?.showProgressBar()
-
-            Log.e("sadfdfaf","==222222======")
+            Log.e("sadfdfaf","==222222===$deviceToken===")
 
             progressDialog.setProgressDialog()
 
@@ -334,16 +329,12 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             Log.e("sadfdfaf","==111111=====$imgPathNormal")
 
-            if (deviceToken.equals("") || deviceToken == null) {
-                appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, "121321231", mName, mEmail,
-                        mPassword, mType, mSecond, city, lat, longi, photo)
-            }else {
                 appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, deviceToken, mName,
                         mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
             }
             progressDialog.setProgressDialog()
             //signupProgressBar?.showProgressBar()
-        }
+
 
     }
 

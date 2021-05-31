@@ -41,7 +41,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if(intent.hasExtra("groupChat"))
+        {
+            Log.d("fgdssdfsdfsdfsd", "---------${intent.getStringExtra("groupChat")}")
 
+        }
         printKeyHash(this)
 
         try {
@@ -60,8 +64,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 launch(Dispatchers.Main.immediate) {
                     dataStoragePreference = DataStoragePreference(this@MainActivity)
                     dataStoragePreference.save(token, preferencesKey("fcmToken"))
+                    Log.d("newFcmToken", "---------$token")
+
                 }
-                Log.d("newFcmToken", "---------$token")
             })
         } catch (e: Exception) {
             e.printStackTrace()
@@ -121,7 +126,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         } catch (e: Exception) {
             Log.e("Exception", e.toString())
         }
-        Log.d("key_fb","--------------------"+key)
+        Log.d("key_fb", "--------------------$key")
         return key
     }
 

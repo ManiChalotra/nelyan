@@ -82,6 +82,7 @@
                 app:layout_constraintStart_toEndOf="@id/ivSender"/>
 
             <ImageView
+
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 app:layout_constraintTop_toTopOf="@id/tvSender"
@@ -95,7 +96,6 @@
                 />
 
             <TextView
-
                 android:id="@+id/tvSenderTime"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -104,6 +104,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tvSender"
                 android:textSize="8dp"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

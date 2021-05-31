@@ -88,10 +88,12 @@ object BindingAdapter {
             if(diff<0)
             {
                 val hr = SimpleDateFormat("h").format(Date(str.toLong() * 1000))
+                val am_pm = SimpleDateFormat("a").format(Date(str.toLong() * 1000))
                 val min = SimpleDateFormat("mm").format(Date(str.toLong() * 1000))
 
+                Log.e("dsfgasdfasdfadsf", "====$hr==$min==$am_pm=====")
 
-                tvText.text = "${if(hr.toInt()<13){hr}else{(hr.toInt()-12).toString()}}:${min} ${if(hr.toInt()<12){"am"}else {"pm"}}"
+                tvText.text = "${if(hr.toInt()<13){hr}else{(hr.toInt()-12).toString()}}:${min} ${am_pm}"
 
             }
             else {
