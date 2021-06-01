@@ -98,7 +98,11 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         tv_city.setOnClickListener(this)
 
         launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
+            deviceToken = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token")).first()
+
+           // deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
+            Log.e("deviceToken", "==11===$deviceToken=====")
+
         }
     }
 
@@ -311,8 +315,9 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
 
         if (imgPathNormal.isEmpty()) {
+            Log.e("sadfdfaf","==33333===$deviceToken===")
 
-                appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, deviceToken, mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
+            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, deviceToken, mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
 
             Log.e("sadfdfaf","==222222===$deviceToken===")
 
@@ -326,6 +331,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             val photo: MultipartBody.Part?
             photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
 
+            Log.e("sadfdfaf","==44444===$deviceToken===")
 
             Log.e("sadfdfaf","==111111=====$imgPathNormal")
 

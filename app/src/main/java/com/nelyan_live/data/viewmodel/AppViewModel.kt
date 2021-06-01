@@ -131,7 +131,7 @@ class AppViewModel : ViewModel() {
 
     fun observeLogoutResponse(): LiveData<Response<JsonObject>?>? {
         if (loginMutableLiveData == null) {
-            loginMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            loginMutableLiveData = MutableLiveData()
         }
         return loginMutableLiveData
     }

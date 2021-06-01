@@ -130,7 +130,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         ll_google_login.setOnClickListener(this)
 
         launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
+            deviceToken = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token")).first()
         }
 
 
@@ -218,7 +218,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         appViewModel.observeLOginResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    Log.d("loginResponse", "---------" + Gson().toJson(response.body()))
+                    Log.d("" +
+                            "", "---------" + Gson().toJson(response.body()))
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
 

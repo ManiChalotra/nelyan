@@ -525,6 +525,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun hitLogoutApi() {
+
+        Log.d("logoutResponse", "-----1111----" + authorization)
+
         appViewModel.sendLogoutData(security_key, authorization)
         homeProgressBar?.showProgressBar()
     }
@@ -537,7 +540,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     homeProgressBar?.hideProgressBar()
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-                    Log.d("logoutResponse", "---------" + Gson().toJson(response.body()))
+                    Log.d("logoutResponse", "---222------" + Gson().toJson(response.body()))
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 

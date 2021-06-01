@@ -47,16 +47,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
         val dataStoragePreference= DataStoragePreference(AppController.getInstance())
         launch {
-            dataStoragePreference.save(refreshedToken, preferencesKey("device_token"))
+            dataStoragePreference.saveFCM(refreshedToken, preferencesKey("device_token"))
         }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
+        Log.e("new_message", "=======")
         Log.e("new_message", "=======$remoteMessage")
         Log.e("new_message", "=======${remoteMessage.data}")
         var myId =""
-
 
         val data1 = remoteMessage.data
 
@@ -65,7 +65,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.e("new_message", "=======${data1["data"]!!}")
 
         val jsonMain = JSONObject(data1["data"]!!.toString())
-
 
         val senderID  = jsonMain.getString("senderId")
         val name  = jsonMain.getString("senderName")
@@ -101,16 +100,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
         //  Log.e("msg", "onMessageReceived: " + remoteMessage.data["message"])
 
-
-        //                                Intent(view.context, Chat1Activity::class.java)
-        //                                        .putExtra("senderID", listChat[position].senderId)
-        //                                        .putExtra("senderName", listChat[position].senderName)
-        //                                        .putExtra("senderImage", listChat[position].senderImage)
-        //                                        .putExtra("userId", userId)
-        //                        )
-
-
-
                                val intent1 =  Intent(this, Chat1Activity::class.java)
                                                           .putExtra("senderID", senderID)
                                                           .putExtra("senderName", name)
@@ -124,7 +113,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
 
-        val pendingIntent = PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, 0,if(groupId==0){intent1}else{intent}, PendingIntent.FLAG_ONE_SHOT)
         val channelId = getString(R.string.default_notification_channel_id)
 
         val builder = NotificationCompat.Builder(this, channelId)
@@ -179,5 +168,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         private const val TAG = "MyFirebaseMsgService"
          var myChatVisible = true
          var currentChatUser = ""
+
+
+
     }
 }
