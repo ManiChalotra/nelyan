@@ -1,7 +1,9 @@
 package com.nelyan_live.chat
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,6 +14,7 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyan_live.R
+import com.nelyan_live.fullscreen.FullScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,6 +47,24 @@ class ChatVM :ViewModel() {
 
     val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
      val listChat by lazy { ArrayList<ChatData>() }
+
+
+    init {
+
+        chatAdapter.setOnItemClick(object : RecyclerAdapterChat.OnItemClick {
+            override fun onClick(view: View, position: Int, type: String) {
+
+                when (type) {
+                    "fullscreen" -> {
+                        // disconnectSocket()
+
+                        (view.context as Activity).startActivity(
+                            Intent(view.context, FullScreen::class.java)
+                            .putExtra("image",listChat[position].message))
+
+                    }
+                } } }) }
+
 
     fun onClick(view: View, s:String)
     {

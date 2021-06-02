@@ -1,6 +1,7 @@
 package com.nelyan_live.ui
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -92,11 +94,12 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         Log.d("homeAuthKey", "----------")
 
-        authorization = intent?.extras?.getString("authorization").toString()
+       // authorization = intent?.extras?.getString("authorization").toString()
         Log.d("homeAuthKey", "----------$authorization")
 
         launch(Dispatchers.Main.immediate) {
              userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+            authorization = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
              userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
@@ -259,6 +262,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         iv_back!!.setImageResource(R.drawable.ic_menu)
         iv_back!!.visibility = View.VISIBLE
         iv_back!!.setOnClickListener {
+
+            //hideKeyboard
+            val inputManager = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
             mDrawerLayout!!.openDrawer(navigation_view!!)
             mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout,
                     R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -364,10 +372,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem):Boolean {
 
-
-
-
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
+        Log.e("fasfasfa", "======$currentFragment")
 
         if(currentFragment is ChatFrag ) {
             Log.e("fasfasfa", "======ChatFrag")
@@ -398,11 +404,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.msg -> {
                 if (currentFragment !is MessageFragment) {
-                    if(currentFragment is ChatFrag)
-                    {
-                        Log.e("fasfasfa","======detach")
-                        currentFragment.groupChatVM.disconnectSocket()
-                    }
+
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
                 tvTitleToolbar!!.text = "Message"
@@ -526,8 +528,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun hitLogoutApi() {
 
-        Log.d("logoutResponse", "-----1111----" + authorization)
-
+        Log.d("logoutResponse", "-----1111----$authorization")
         appViewModel.sendLogoutData(security_key, authorization)
         homeProgressBar?.showProgressBar()
     }

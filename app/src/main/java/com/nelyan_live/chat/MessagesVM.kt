@@ -74,6 +74,7 @@ class MessagesVM :ViewModel() {
 
         ctx = context
 
+        Log.e("socket", "connectSocket")
 
             try {
                 socket = IO.socket("http://3.13.214.27:1052")
@@ -93,7 +94,16 @@ class MessagesVM :ViewModel() {
                 socket.on("chat_list_data", deleteChat)
                 socket.on("seen_unseen_msg", seenMessages)
 
-                socket.connect()
+                if(!socket.connected()) {
+                    socket.connect()
+                }
+                else
+                {
+                   connectUser()
+                   // getUserChat()
+                }
+
+
 
             } catch (e: Exception) {
                 e.printStackTrace()

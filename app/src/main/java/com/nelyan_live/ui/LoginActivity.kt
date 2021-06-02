@@ -154,7 +154,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 val email = tv_emailLogin.text.toString()
                 val password = tv_passwordLogin.text.toString()
                 if (Validation.checkEmail(email, this)) {
-                    if (Validation.checkPassword(password, this)) {
+                    if (Validation.checkEmptyPassword(password, this)) {
 
                             hitLoginApi(email, password)
                     }
@@ -242,8 +242,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     AllSharedPref.save(this, "auth_key", authKey)
 
                     launch(Dispatchers.IO) {
-                        dataStoragePreference.save(id, preferencesKey("id"))
 
+                        dataStoragePreference.save(id, preferencesKey("id"))
                         dataStoragePreference.save(email, preferencesKey("emailLogin"))
                         dataStoragePreference.save(name, preferencesKey("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey("passwordLogin"))

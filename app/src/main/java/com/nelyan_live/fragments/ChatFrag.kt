@@ -19,6 +19,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -119,6 +120,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //hideKeyboard
+        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
         groupChatVM.groupName = userlocation
         groupChatVM.userId = (view.context as HomeActivity).userId
         groupChatVM.rvChat = activityChatBinding.rvChat
@@ -131,8 +136,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
             Log.e("groupMessageApiData", "-------------$security_key----$authorization----$userlocation----")
 
-
             appViewModel.groupMessageApiData(security_key, authorization, userlocation, "0", "20")
+
         }
         else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))

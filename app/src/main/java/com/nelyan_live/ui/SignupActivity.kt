@@ -348,14 +348,13 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         appViewModel.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
+
                     Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
+
                     progressDialog.hidedialog()
-                    // signupProgressBar?.hideProgressBar()
-                    // here we save credentail for signup
 
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 
@@ -375,7 +374,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     AllSharedPref.save(this, "auth_key", authKey)
 
                     launch(Dispatchers.IO) {
-                        dataStoragePreference.save(id, preferencesKey<String>("id"))
+                        dataStoragePreference.save(id, preferencesKey("id"))
                         dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
                         dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
@@ -422,11 +421,9 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         // for  privacy policy
 
         appViewModel.observePrivacyPolicyResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            //   appViewModel.observePrivacyPolicyResponse()!!.observe(this, Observer { response->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     Log.d("getContent_privacy", "---------" + Gson().toJson(response.body()))
-
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     privacyPolicy_data = jsonObject.getJSONObject("data").get("content").toString()
@@ -435,20 +432,16 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 ErrorBodyResponse(response, this, null)
             }
         })
-
-
-        // complete profile socialLogin api
         appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    Log.d("completeSocialResponse", "---------" + Gson().toJson(response.body()))
+
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
                     progressDialog.hidedialog()
-
 
                     val email = jsonObject.getJSONObject("data").get("email").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
@@ -464,26 +457,22 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     AllSharedPref.save(this, "auth_key", authKey)
 
                     launch(Dispatchers.IO) {
-                        dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
-                        dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
-                        dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
-                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
-                        dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
-                        dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
-                        dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
-                        dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
-                        dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
-                        dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
-
+                        dataStoragePreference.save(email, preferencesKey("emailLogin"))
+                        dataStoragePreference.save(password, preferencesKey("passwordLogin"))
+                        dataStoragePreference.save(type, preferencesKey("typeLogin"))
+                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                        dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
+                        dataStoragePreference.save(authKey, preferencesKey("auth_key"))
+                        dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
+                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                        dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
+                        dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
                     }
 
                     progressDialog.hidedialog()
-
                     OpenActivity(HomeActivity::class.java) {
                         putString("authorization", authKey)
                     }
-
-
                 }
 
             } else {
@@ -495,7 +484,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
-            progressDialog.hidedialog()// signupProgressBar?.hideProgressBar()
+            progressDialog.hidedialog()
         })
     }
 

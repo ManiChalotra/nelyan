@@ -70,6 +70,7 @@
             android:id="@+id/clReceiver"
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
+            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`fullscreen`)}"
             app:layout_constraintTop_toBottomOf="@id/tvDate"
             app:layout_constraintBottom_toTopOf="@id/tvReceiverTime"
             app:layout_constraintEnd_toStartOf="@id/ivReceiver"

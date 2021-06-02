@@ -73,6 +73,7 @@
             app:layout_constraintBottom_toTopOf="@id/tvSenderTime"
             app:layout_constraintStart_toEndOf="@id/ivSender"
             android:background="@drawable/chat"
+            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`fullscreen`)}"
             android:padding="@dimen/_1sdp"
             android:layout_marginStart="@dimen/_12sdp"
             >

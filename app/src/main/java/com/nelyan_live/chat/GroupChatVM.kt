@@ -1,5 +1,6 @@
 package com.nelyan_live.chat
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyan_live.R
+import com.nelyan_live.fullscreen.FullScreen
 import com.nelyan_live.ui.Chat1Activity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -71,6 +73,13 @@ class GroupChatVM :ViewModel() {
                         )
 
                     }
+                    "fullscreen" -> {
+                       // disconnectSocket()
+
+                        (view.context as Activity).startActivity(Intent(view.context,FullScreen::class.java)
+                            .putExtra("image",listChat[position].message))
+
+                    }
                 } } }) }
 
 
@@ -119,7 +128,7 @@ class GroupChatVM :ViewModel() {
         val etReport: EditText = dialog.findViewById(R.id.etReport)
         btnSubmit.setOnClickListener {
 
-            if(etReport.text.toString().isEmpty())
+            if(etReport.text.toString().trim().isEmpty())
             {
                 Toast.makeText(ctx,"please enter message",Toast.LENGTH_SHORT).show()
             }

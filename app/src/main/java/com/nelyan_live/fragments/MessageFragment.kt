@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,6 +38,7 @@ class MessageFragment : Fragment() {
         fragmentMessageBinding.messageVM =messagesVM
 
         messagesVM.userId = (container.context as HomeActivity).userId
+        Log.e("fasfasfa","==MessageFragment====onCreateView")
 
         return fragmentMessageBinding.root
     }
@@ -44,12 +46,16 @@ class MessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("fasfasfa","==MessageFragment====onViewCreated")
+        //hideKeyboard
+        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         messagesVM.connectSocket(view.context)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e("fasfasfa","======onAttach")
+        Log.e("fasfasfa","==MessageFragment====onAttach")
 
         if(context is CommunicationListner)
         {
@@ -63,17 +69,8 @@ class MessageFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("fasfasfa","======onDetach")
-
         listner = null
     }
 
-    override fun onDestroyView() {
-        Log.e("fasfasfa","======fdgfdgfdgdfgfdg")
 
-        //messagesVM.disconnectSocket()
-        super.onDestroyView()
-        Log.e("fasfasfa","======onDestroyView")
-
-    }
 }

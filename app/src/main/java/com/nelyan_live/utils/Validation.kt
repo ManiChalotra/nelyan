@@ -40,7 +40,7 @@ object Validation {
     }
 
      fun checkPassword(password: String, activity: Activity): Boolean {
-        if (!password.isEmpty()) {
+        if (password.isNotEmpty()) {
             if (password.length < 8) {
                 activity.myCustomToast(
                         "Password should be minimum of 8 characters and maximum of 30 characters"
@@ -64,6 +64,17 @@ object Validation {
 
             }
 
+        } else {
+            activity.myCustomToast( "Please enter password")
+
+            // toast("Please enter password")
+        }
+        return false
+
+    }
+     fun checkEmptyPassword(password: String, activity: Activity): Boolean {
+        if (password.isNotEmpty()) {
+                return true
         } else {
             activity.myCustomToast( "Please enter password")
 

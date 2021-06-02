@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.nelyan_live.R
-import com.nelyan_live.ui.*
+import com.nelyan_live.ui.AddActivity
+import com.nelyan_live.ui.BabySitterActivity
+import com.nelyan_live.ui.CommunicationListner
+import com.nelyan_live.ui.TraderActivity
 import com.nelyan_live.utils.OpenActivity
 import com.nelyan_live.utils.myCustomToast
 import kotlinx.android.synthetic.main.activity_pubiler.*
-import java.lang.RuntimeException
 
 class PublisherFrag : Fragment(), View.OnClickListener {
 
@@ -33,6 +36,10 @@ class PublisherFrag : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //hideKeyboard
+        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
         initalizeClicks()
 
@@ -98,7 +105,7 @@ class PublisherFrag : Fragment(), View.OnClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is CommunicationListner){
-            listner = context as CommunicationListner
+            listner = context
         }else{
 
             throw RuntimeException("Home Fragment not Attched")
