@@ -310,10 +310,11 @@
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
                 android:hint="@string/description"
-                android:paddingRight="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_10sdp"
+                android:maxLines="3"/>
 
             <View
                 android:layout_width="match_parent"

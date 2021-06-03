@@ -15,7 +15,7 @@
         android:id="@+id/publier"
         android:enabled="true"
         android:icon="@drawable/publier_icon"
-        android:title="Publier" />
+        android:title="Publisher" />
 
     <item
         android:id="@+id/chat"

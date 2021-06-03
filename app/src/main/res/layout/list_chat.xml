@@ -5,7 +5,7 @@
     <import type="android.view.View"/>
     <variable
         name="model"
-        type="com.nelyan_live.chat.ChatData" />
+        type="com.nelyanlive.chat.ChatData" />
 </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"

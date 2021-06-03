@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.daimajia.swipelayout:library:1.2.0@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/aad9d64844bfcbba47a5b873f1068c3f/jetified-library-1.2.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/aad9d64844bfcbba47a5b873f1068c3f/jetified-library-1.2.0/res" />
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/aad9d64844bfcbba47a5b873f1068c3f/jetified-library-1.2.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/e0caf86ba1ddba6780fae92cbf2e9999/jetified-library-1.2.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/e0caf86ba1ddba6780fae92cbf2e9999/jetified-library-1.2.0/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/e0caf86ba1ddba6780fae92cbf2e9999/jetified-library-1.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.daimajia.swipelayout/library/1.2.0/cd6c57674a319382d83e0b67dd9af85eba58474e/library-1.2.0-javadoc.jar!/" />

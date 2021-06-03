@@ -85,9 +85,16 @@
 
     <EditText
         android:id="@+id/edtDesc"
-        style="@style/SimpleEdittext"
-        android:imeOptions="actionDone"
-        android:hint="@string/description" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        android:fontFamily="@font/regular"
+        android:hint="@string/description"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
+        android:textSize="@dimen/_10sdp"
+        android:maxLines="3"/>
 
     <View
         android:layout_width="match_parent"

@@ -104,6 +104,7 @@
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
                         android:layout_gravity="center"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/user_img"/>
 
                     <TextView

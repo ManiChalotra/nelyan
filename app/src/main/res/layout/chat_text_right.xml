@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="model"
-            type="com.nelyan_live.chat.ChatData" />
+            type="com.nelyanlive.chat.ChatData" />
     </data>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/llReceiver"

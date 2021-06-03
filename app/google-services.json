@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:203646964865:android:a12a0a80a3d863209ba980",
+        "mobilesdk_app_id": "1:203646964865:android:f53a57a13a8254ad9ba980",
         "android_client_info": {
-          "package_name": "com.nelyan_live"
+          "package_name": "com.nelyanlive"
         }
       },
       "oauth_client": [
         {
-          "client_id": "203646964865-ccnvl3r27ofu0ooqeb4n2ktqll83tvp7.apps.googleusercontent.com",
+          "client_id": "203646964865-rr3rfia57rq2nhf7mrgbp3cecvnmg821.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.nelyan_live",
-            "certificate_hash": "50727e0e79a70be603d88083a8035b04221160f2"
+            "package_name": "com.nelyanlive",
+            "certificate_hash": "d3f06549823d60a39a773140bc10ed896ae90d8c"
           }
         },
         {
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "203646964865-udmq5mnj9mrsp8mevbh5tp8osd2tcq96.apps.googleusercontent.com",
+              "client_id": "203646964865-ie0kg3ji47ff24ld4selfbo5itbummki.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

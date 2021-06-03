@@ -4,6 +4,7 @@
     <string name="fb_login_protocol_scheme">fb2791584067750180</string>
     <string name="default_notification_channel_id" translatable="false">Sash_fcm_default_channel</string>
     <string name="default_notification_channel_name" translatable="true">Sash</string>
+    <string name="AUTH_ID">203646964865-ie0kg3ji47ff24ld4selfbo5itbummki.apps.googleusercontent.com</string>
 
     <string name="app_name">Nelyan</string>
     <string name="signup"><u>Sign Up</u></string>
@@ -81,6 +82,7 @@
     <string name="maternal_assistant">Maternal Assistant</string>
     <string name="phone_number">Phone Number</string>
     <string name="maternal_missing_error">Please enter your maternal name</string>
+    <string name="please_enter_name">Please enter  name</string>
     <string name="places_number_error">Please enter number of places</string>
     <string name="phone_number_missing">Please enter phone number</string>
     <string name="address_missing_error">Please select your address</string>
@@ -105,7 +107,7 @@
     <string name="your_city">Your City</string>
     <string name="register">REGISTER</string>
     <string name="or">OR</string>
-    <string name="by_clicking_on_continue">By clicking on continue,</string>
+    <string name="by_clicking_on_continue">By clicking on continue,\t</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="address_error">Please select your address</string>
     <string name="location_missing_error">Please select location</string>
@@ -200,7 +202,7 @@
     <string name="baby_sitter">Baby sitter</string>
     <string name="name_of_child_care">Name of Child care</string>
     <string name="activity_types">Activity Types</string>
-    <string name="to_add_the_post_you_have_to_change_the_from_consultant_type_to_professional_type">To add the post, you have to change the from consultant type to professional type.</string>
+    <string name="to_add_the_post_you_have_to_change_the_from_consultant_type_to_professional_type">To add the post, you need to change from Consultant to Professional.</string>
     <string name="open_settings">Open Settings</string>
     <string name="product_detail">Product Detail</string>
     <string name="add_product_image">Add Product Image</string>

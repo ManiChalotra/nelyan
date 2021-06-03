@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.nelyan_live">
+    package="com.nelyanlive">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -18,7 +18,7 @@
         android:required="false" />
 
     <application
-        android:name=".utils.AppController"
+        android:name="com.nelyanlive.utils.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/app_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".fullscreen.FullScreen"></activity>
+        <activity android:name="com.nelyanlive.fullscreen.FullScreen"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -43,55 +43,55 @@
         </provider>
 
         <activity
-            android:name=".ui.NurserieActivityy"
+            android:name="com.nelyanlive.ui.NurserieActivityy"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.HomeSectorizationActivity"
+            android:name="com.nelyanlive.ui.HomeSectorizationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.HomeChildCareDetailsActivity"
+            android:name="com.nelyanlive.ui.HomeChildCareDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.TraderPublishActivty"
+            android:name="com.nelyanlive.ui.TraderPublishActivty"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.FavouriteActivity"
+            android:name="com.nelyanlive.ui.FavouriteActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.TraderFilterActivity"
+            android:name="com.nelyanlive.ui.TraderFilterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.TraderListingActivity"
+            android:name="com.nelyanlive.ui.TraderListingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.HomeChildCareListActivity"
+            android:name="com.nelyanlive.ui.HomeChildCareListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.ActivityDetailsActivity"
+            android:name="com.nelyanlive.ui.ActivityDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.ActivitiesFilterActivity"
+            android:name="com.nelyanlive.ui.ActivitiesFilterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.ActivitiesListActivity"
+            android:name="com.nelyanlive.ui.ActivitiesListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.MyAddActivity"
+            android:name="com.nelyanlive.ui.MyAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.DrawerActivity"
+            android:name="com.nelyanlive.ui.DrawerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
@@ -100,139 +100,139 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ui.SectroMapActivity"
+            android:name="com.nelyanlive.ui.SectroMapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.DetailActivity"
+            android:name="com.nelyanlive.ui.DetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.MyAlertActivity"
+            android:name="com.nelyanlive.ui.MyAlertActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.TraderPreviewActivity"
+            android:name="com.nelyanlive.ui.TraderPreviewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.TraderActivity"
+            android:name="com.nelyanlive.ui.TraderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.BabySitterActivity"
+            android:name="com.nelyanlive.ui.BabySitterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.MaternalAssistantActivity"
+            android:name="com.nelyanlive.ui.MaternalAssistantActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.NurserieActivity"
+            android:name="com.nelyanlive.ui.NurserieActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.AddActivity"
+            android:name="com.nelyanlive.ui.AddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.SectorizationMapActivity"
+            android:name="com.nelyanlive.ui.SectorizationMapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.HomeChildCareOnMapActivity"
+            android:name="com.nelyanlive.ui.HomeChildCareOnMapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ChatActivity"
+            android:name="com.nelyanlive.ui.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.SectorizationActivity"
+            android:name="com.nelyanlive.ui.SectorizationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.Chat1Activity"
+            android:name="com.nelyanlive.ui.Chat1Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ChildCareFilterActivity"
+            android:name="com.nelyanlive.ui.ChildCareFilterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+        <activity
+            android:name="com.nelyanlive.ui.ActivitiesOnMapActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ActivitiesOnMapActivity"
+            android:name="com.nelyanlive.ui.HomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name="com.nelyanlive.ui.EditActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.EditActivity"
+            android:name="com.nelyanlive.ui.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ForgotPasswordActivity"
+            android:name="com.nelyanlive.ui.WalkthroughActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.WalkthroughActivity"
+            android:name="com.nelyanlive.ui.PubilerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.PubilerActivity"
+            android:name="com.nelyanlive.ui.SignupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.SignupActivity"
+            android:name="com.nelyanlive.ui.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.nelyanlive.ui.RegulationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.RegulationActivity"
+            android:name="com.nelyanlive.ui.SettingsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name="com.nelyanlive.ui.NotificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.NotificationActivity"
+            android:name="com.nelyanlive.ui.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.EditProfileActivity"
+            android:name="com.nelyanlive.ui.ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity
-            android:name=".ui.ContactUsActivity"
+            android:name="com.nelyanlive.ui.ContactUsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".ui.ChangePasswordActivity"
+            android:name="com.nelyanlive.ui.ChangePasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.AboutActivity"
+            android:name="com.nelyanlive.ui.AboutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.PrivacyActivity"
+            android:name="com.nelyanlive.ui.PrivacyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.TermsActivity"
+            android:name="com.nelyanlive.ui.TermsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.nelyanlive.ui.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
@@ -281,7 +281,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".utils.fcm.MyFirebaseMessagingService">
+        <service android:name="com.nelyanlive.utils.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

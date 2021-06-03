@@ -140,7 +140,7 @@
                 android:backgroundTint="@color/black"
                 android:gravity="bottom"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:hint="@string/enter_email"/>
 
             <View

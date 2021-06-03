@@ -11,11 +11,13 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_cross"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:src="@drawable/cross"
+            android:padding="@dimen/_5sdp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/_10sdp"/>
+            android:layout_margin="@dimen/_2sdp"
+            />
 
         <TextView
             android:id="@+id/tv_restiction_message"

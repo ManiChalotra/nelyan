@@ -5,7 +5,7 @@
     <data>
         <variable
             name="messageVM"
-            type="com.nelyan_live.chat.MessagesVM" />
+            type="com.nelyanlive.chat.MessagesVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

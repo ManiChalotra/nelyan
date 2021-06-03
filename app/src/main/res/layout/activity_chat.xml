@@ -6,7 +6,7 @@
     <data>
         <variable
             name="groupChatVM"
-            type="com.nelyan_live.chat.GroupChatVM" />
+            type="com.nelyanlive.chat.GroupChatVM" />
     </data>
 
 
@@ -56,7 +56,6 @@
                 android:minHeight="@dimen/_40sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:inputType="textWebEditText"
                 android:layout_gravity="center"
                 android:fontFamily="@font/regular"
                 android:layout_marginStart="10dp"

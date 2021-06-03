@@ -98,13 +98,14 @@
                     android:gravity="start"
                     android:inputType="text"
                     android:paddingTop="-15dp"
+                    android:paddingBottom="0dp"
+                    android:paddingStart="0dp"
                     android:spinnerMode="dropdown"
                     android:text="@string/select" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_3sdp"
                     android:background="@color/black" />
 
                 <TextView
@@ -124,7 +125,7 @@
                     android:inputType="text"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -170,8 +171,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="-10dp"
                     app:hintEnabled="false"
-
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/grey">
 
@@ -180,6 +181,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
+                        android:paddingBottom="0dp"
+                        android:layout_marginBottom="0dp"
                         android:fontFamily="@font/regular"
                         android:hint="@string/password"
                         android:inputType="textWebPassword"
@@ -209,6 +212,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="-10dp"
+
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/grey">
@@ -217,6 +222,8 @@
                         android:id="@+id/tv_confirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="0dp"
+                        android:layout_marginBottom="0dp"
                         android:background="@null"
                         android:fontFamily="@font/regular"
                         android:hint="@string/confirm_password"
@@ -231,7 +238,6 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/black" />
 
                 <TextView
@@ -364,7 +370,6 @@
                         android:id="@+id/tvTerms"
                         style="@style/CommonTextWrapcontent"
                         android:text="@string/accept"
-                        android:layout_marginStart="@dimen/_5sdp"
                         android:textColor="@color/app"
                         android:textSize="@dimen/_9sdp" />
                 </LinearLayout>

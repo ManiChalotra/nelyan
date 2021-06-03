@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,14 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:paddingBottom="@dimen/_15sdp">
-
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:orientation="vertical">
 
             <ImageView
@@ -56,8 +57,6 @@
             <EditText
                 android:id="@+id/tv_emailLogin"
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="8dp"
                 android:background="@color/transparent"
                 android:gravity="bottom"
@@ -87,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
                 app:hintEnabled="false"
-
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/grey">
 
@@ -138,7 +136,7 @@
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:text="@string/remember_me"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp" />

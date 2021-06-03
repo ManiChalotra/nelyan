@@ -23,7 +23,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.nelyan_live"
+        applicationId "com.nelyanlive"
         minSdkVersion 25
         targetSdkVersion 30
         versionCode 1
