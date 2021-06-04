@@ -49,6 +49,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private  val dataStoragePreference by lazy { DataStoragePreference(this@TraderListingActivity) }
     private var authkey: String?= null
+    var dataString = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,6 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
         setContentView(R.layout.fragment_trader_listing)
         initalizeClicks()
         rvTrader = findViewById(R.id.rv_traderListing)
-
 
         if (intent.extras !=null){
             listType = intent.getStringExtra("type").toString()
@@ -78,14 +78,12 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))
             }
         }
-
     }
 
     private fun initalizeClicks() {
         ivBack.setOnClickListener(this)
         ivMap.setOnClickListener(this)
         tvFilter.setOnClickListener(this)
-
     }
 
     private fun setTraderAdapter(traderDatalist: ArrayList<HomeTraderListData>) {
@@ -101,6 +99,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                     trader_list_progressbar?.hideProgressBar()
                     Log.d("homeTraderListRespone", "-------------" + Gson().toJson(response.body()))
                     val mResponse = response.body().toString()
+                    dataString = response.body().toString()
+
                     val jsonObject = JSONObject(mResponse)
                     val homeTraderResponse =  Gson().fromJson<HomeTraderPostListResponse>(response.body().toString(), HomeTraderPostListResponse::class.java)
                     if (traderDatalist != null) {
@@ -111,7 +111,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                     if (traderDatalist.size == 0) {
                         rvTrader!!.visibility = View.GONE
                         tv_no_trader_list!!.visibility = View.VISIBLE
-                    } else {
+                    }
+                    else {
                         rvTrader!!.visibility = View.VISIBLE
                         tv_no_trader_list!!.visibility = View.GONE
                         setTraderAdapter(traderDatalist)
@@ -145,13 +146,11 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
             }
         })
 
-
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
             trader_list_progressbar?.hideProgressBar()
         })
     }
-
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -159,16 +158,21 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 onBackPressed()
             }
             R.id.ivMap -> {
-                OpenActivity(HomeChildCareOnMapActivity::class.java)
+                if(dataString.isEmpty())
+                {
+                    myCustomToast("Data not loaded yet")
+                }
+                else {
+                    val i = Intent(this, HomeChildCareOnMapActivity::class.java)
+                    i.putExtra("dataString", dataString)
+                    i.putExtra("type", "trader")
+                    startActivity(i)
+                }
             }
             R.id.tvFilter -> {
                 val i = Intent(this, TraderFilterActivity::class.java)
                 startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
-
-            }
-        }
-    }
-
+            } } }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -180,28 +184,33 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 if (traderDatalistss.size == 0) {
                     rvTrader!!.visibility = View.GONE
                     tv_no_trader_list!!.visibility = View.VISIBLE
-                } else {
+                }
+                else {
                     rvTrader!!.visibility = View.VISIBLE
                     tv_no_trader_list!!.visibility = View.GONE
                     setTraderAdapter(traderDatalistss)
                 }
-            }
+            } } }
 
-        }
-    }
-
-    override fun onTraderListItemClickListner(position: Int, postId: String) {
+    override fun onTraderListItemClickListner(
+        position: Int,
+        postId: String,
+        latitude: String,
+        longitude: String
+    ) {
         OpenActivity(TraderPublishActivty::class.java){
             putString("postId", postId)
+            putString("latti", latitude)
+            putString("longi", longitude)
         }
     }
 
-    override fun onFavouriteItemClickListner(position: Int, postId: String, favourite: ImageView) {
+    override fun onFavouriteItemClickListner(position: Int, postID: String, favourite: ImageView) {
 
          ivFavourite = favourite
 
         if (checkIfHasNetwork(this@TraderListingActivity)) {
-            appViewModel.addFavouritePostApiData(security_key, authkey, postId, "3")
+            appViewModel.addFavouritePostApiData(security_key, authkey, postID, "3")
             trader_list_progressbar.showProgressBar()
         } else {
             showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))

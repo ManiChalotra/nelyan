@@ -81,6 +81,8 @@ class HomeChildCareListAdapter(var context: Context, internal var childCareDatal
                 context.OpenActivity(HomeChildCareDetailsActivity::class.java){
                     putString("activityId", homeChildCareList.id.toString())
                     putString("categoryId", homeChildCareList.type.toString())
+                    putString("latti", homeChildCareList.latitude.toString())
+                    putString("longi", homeChildCareList.longitude.toString())
                 }
 
             }

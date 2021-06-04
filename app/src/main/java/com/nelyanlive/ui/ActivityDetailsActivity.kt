@@ -6,9 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,30 +54,23 @@ import kotlin.coroutines.CoroutineContext
 
 class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, OnMapReadyCallback {
 
-    var tvMon: TextView? = null
     var tvTue: TextView? = null
     var tvWed: TextView? = null
     var tvThur: TextView? = null
-    var tvFri: TextView? = null
     var tvSat: TextView? = null
-    var tvSun: TextView? = null
     var iv_msg: ImageView? = null
     var iv_share: ImageView? = null
     var rvActivtiesImages: RecyclerView? = null
     private var shareDialog: ShareDialog? = null
-
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivityDetailsActivity) }
     private var authkey: String? = null
-
     var rc_detailstime: RecyclerView? = null
     var rc_upcomingevents: RecyclerView? = null
     var rvDays: RecyclerView? = null
-    var Recycler_scroll: RecyclerView? = null
     var categoryId = ""
     var postId = ""
     var latitude = ""
     var longitude = ""
-
     var datalisttime = ArrayList<DetailsTimeModal>()
     var daysList : ArrayList<ActivitiesEventsDaysModel> = ArrayList()
     var mMap: GoogleMap? = null
@@ -103,6 +96,33 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         mapFragment!!.getMapAsync(this)
         mapFragment.getMapAsync(this)
 
+
+        ivMapImage.setOnTouchListener(object : View.OnTouchListener {
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when (event!!.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(true)
+                        // Disable touch on transparent view
+                        return false
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(false)
+                        return true
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(true)
+                        return false
+                    }
+                }
+                return true
+            }
+
+
+        })
+
         iv_msg = findViewById(R.id.iv_msg)
         iv_share = findViewById(R.id.iv_share)
 
@@ -122,15 +142,12 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
             categoryId = intent.getStringExtra("categoryId").toString()
             postId = intent.getStringExtra("activityId")!!
         }
-
         launch(Dispatchers.Main.immediate) {
             authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.postDetailsApiData(security_key, authkey, "1", postId, categoryId)
             activity_details_progressbar?.showProgressBar()
-
         }
         checkMvvmResponse()
-
     }
 
     fun dailogshare() {
@@ -138,7 +155,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
-        val ll_1: LinearLayout = dialog!!.findViewById(R.id.ll_public)
 
         dialog!!.ll_twitter_share.setOnClickListener {
             CommonMethodsKotlin.twitterShare(this)
@@ -154,7 +170,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         }
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
-            //  email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>("riteshsaini22@hotmail.com"))
             email.putExtra(Intent.EXTRA_SUBJECT, "Nelyan App")
             email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
                     "https://play.google.com/store/apps/details?id=com.nelyan")
@@ -176,7 +191,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         dialog!!.ll_fv_share.setOnClickListener {
             CommonMethodsKotlin.fbShare(this)
 
-            var content =  ShareLinkContent.Builder()
+            val content =  ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
                     .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan App").build())
                     .build()
@@ -196,15 +211,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.iv_back -> {
-                onBackPressed()
-            }
-            R.id.iv_msg -> {
-
-            }
-            R.id.iv_share -> {
-                dailogshare()
-            }
+            R.id.iv_back -> { onBackPressed() }
+            R.id.iv_msg -> { }
+            R.id.iv_share -> { dailogshare() }
         }
     }
 
@@ -251,7 +260,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 
-
                     tv_activity_title.text = jsonObject.getJSONObject("data").get("nameOfShop").toString()
                     tv_activity_name.text = jsonObject.getJSONObject("data").get("activityname").toString()
                     tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
@@ -264,7 +272,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
 
-
                     val listArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("activityimages")
                     val listArrayAgeGroups: JSONArray = jsonObject.getJSONObject("data").getJSONArray("ageGroups")
                     val listArrayEvents: JSONArray = jsonObject.getJSONObject("data").getJSONArray("events")
@@ -272,8 +279,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     val mSizeOfData: Int = listArray.length()
                     val mSizeOfAgeGroup: Int = listArrayAgeGroups.length()
                     val mSizeOfEvents: Int = listArrayEvents.length()
-
-/*Set Activities Images List in adapter*/
 
                     listActivityimage.clear()
                     for (i in 0 until mSizeOfData) {
@@ -291,8 +296,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         indicator!!.attachToRecyclerView(rvActivtiesImages!!)
                     }
 
-
-/*Set Age Group List in adapter*/
                     if (datalisttime != null) {
                         datalisttime.clear()
                     } else {
@@ -318,9 +321,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     } else {
                         rvDays!!.visibility = View.GONE
                         tv_no_days!!.visibility = View.VISIBLE
-
                     }
-
 
                     for (j in 0 until mSizeOfAgeGroup) {
                         val model = listArrayAgeGroups.getJSONObject(j)
@@ -341,19 +342,17 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         rc_detailstime!!.visibility = View.VISIBLE
                         tv_no_age_group!!.visibility = View.GONE
 
-                    } else {
+                    }
+                    else {
                         rc_detailstime!!.visibility = View.GONE
                         tv_no_age_group!!.visibility = View.VISIBLE
-
                     }
 
-/*Set Upcoming Events List in adapter*/
                     if (listUpcomingEvents != null) {
                         listUpcomingEvents.clear()
                     } else {
                         listUpcomingEvents = ArrayList()
                     }
-
 
                     if (mSizeOfEvents != 0) {
 
@@ -362,9 +361,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         } else {
                             listUpcomingEventsTimings = ArrayList()
                         }
-
-
-
 
                         for (k in 0 until mSizeOfEvents) {
                             val model = listArrayEvents.getJSONObject(k)
@@ -407,15 +403,11 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                                 }
                             }
 
-
-
                             listUpcomingEvents.add(PostDetailsEvents(activityId.toString().toInt(), city.toString(), createdAt.toString(),
                                     description.toString(), listUpcomingEventsTimings, eventId.toString().toInt(), image.toString(), latitude.toString(),
                                     longitude.toString(), name.toString(), price.toString(), status.toString().toInt(),
                                     updatedAt.toString(), userId.toString().toInt()))
                         }
-
-
 
                         val detailsUpcomingAdapter = DetailsUpcomingAdapter(this, this, listUpcomingEvents )
                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -428,7 +420,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     } else {
                         rc_upcomingevents!!.visibility = View.GONE
                         tv_no_upcoming_events!!.visibility = View.VISIBLE
-
                     }
                 }
             } else {
@@ -436,7 +427,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 activity_details_progressbar?.hideProgressBar()
             }
         })
-
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
@@ -449,14 +439,15 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         try {
             if (intent.extras !=null){
-                var latti= intent.getStringExtra("lati")
-                var longi= intent.getStringExtra("longi")
+                val latti= intent.getStringExtra("lati")
+                val longi= intent.getStringExtra("longi")
 
                 val india = LatLng(latti!!.toDouble(), longi!!.toDouble())
                 mMap!!.addMarker(MarkerOptions()
                         .position(india)
                         .title("Activity"))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+              //  mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,10f))
             }
 
 

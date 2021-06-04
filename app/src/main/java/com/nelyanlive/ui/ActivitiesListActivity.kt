@@ -46,13 +46,13 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     var recyclerview: RecyclerView? = null
     var ivFavouritee: ImageView? = null
     var LAUNCH_SECOND_ACTIVITY = 1
+    var dataString = ""
 
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesListActivity) }
     private var authkey: String? = null
-    private var userCityOrZipcode: String? = null
 
     private val job by lazy {
         Job()
@@ -70,9 +70,9 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
-        ivBack!!.setOnClickListener(View.OnClickListener {
+        ivBack!!.setOnClickListener {
             onBackPressed()
-        })
+        }
 
         launch(Dispatchers.Main.immediate) {
             authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
@@ -81,27 +81,27 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
             activity_list_progressbar?.showProgressBar()
-
         }
+
         checkMvvmResponse()
 
-        //   tv_userCityOrZipcode.text = userCityOrZipcode
-
-        tvFilter.setOnClickListener(View.OnClickListener {
-
-           // OpenActivity(FilterActivity::class.java)
-
+        tvFilter.setOnClickListener {
             val i = Intent(this, ActivitiesFilterActivity::class.java)
             startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
-            })
+        }
 
-
-        iv_map!!.setOnClickListener(View.OnClickListener { // navigationbar.setVisibility(View.GONE);
-            val i = Intent(this, ActivitiesOnMapActivity::class.java)
-            /*TODO pass the response of activity list*/
-            i.putExtra("type", listType)
-            startActivity(i)
-        })
+        iv_map!!.setOnClickListener {
+            if(dataString.isEmpty())
+            {
+                myCustomToast("Data not loaded yet")
+            }
+            else {
+                val i = Intent(this, ActivitiesOnMapActivity::class.java)
+                i.putExtra("type", listType)
+                i.putExtra("dataString", dataString)
+                startActivity(i)
+            }
+        }
 
         val orderbylist = arrayOf<String?>(
                 "", "Events in City",
@@ -110,11 +110,11 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
                 this, R.layout.customspinner, orderbylist)
 
-// Setting Adapter to the Spinner
-        orderby!!.adapter = adapter
+           // Setting Adapter to the Spinner
+           orderby!!.adapter = adapter
 
-// Setting OnItemClickListener to the Spinner
-        orderby!!.onItemSelectedListener = this@ActivitiesListActivity
+           // Setting OnItemClickListener to the Spinner
+           orderby!!.onItemSelectedListener = this@ActivitiesListActivity
 
     }
 
@@ -133,13 +133,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     recyclerview!!.visibility = View.VISIBLE
                     tv_no_activities!!.visibility = View.GONE
                     setAdaptor(activitisDatalistss)
-                }
-
-            }
-            if (resultCode === Activity.RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
-        }
+                } } }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
@@ -163,6 +157,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     activity_list_progressbar?.hideProgressBar()
                     Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
                     val mResponse = response.body().toString()
+                    dataString = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
 
@@ -214,11 +209,11 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         })
     }
 
-    override fun onAddFavoriteClick(postId: String, ivFavourite: ImageView) {
+    override fun onAddFavoriteClick(eventID: String, ivFavourite: ImageView) {
         ivFavouritee = ivFavourite
 
         if (checkIfHasNetwork(this@ActivitiesListActivity)) {
-            appViewModel.addFavouritePostApiData(security_key, authkey, postId, "1")
+            appViewModel.addFavouritePostApiData(security_key, authkey, eventID, "1")
             activity_list_progressbar.showProgressBar()
         } else {
             showSnackBar(this@ActivitiesListActivity, getString(R.string.no_internet_error))
@@ -226,12 +221,12 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
     }
 
-    override fun onHomeActivitiesItemClickListner(activityId: String, categoryId: String, latti: String, longi: String) {
+    override fun onHomeActivitiesItemClickListner(activityId: String, categoryId: String, postLatitude: String, postLongitude: String) {
         OpenActivity(ActivityDetailsActivity::class.java) {
             putString("activityId", activityId)
             putString("categoryId", categoryId)
-            putString("lati", latti)
-            putString("longi", longi)
+            putString("lati", postLatitude)
+            putString("longi", postLongitude)
         }
     }
 

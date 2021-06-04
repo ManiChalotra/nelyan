@@ -52,12 +52,13 @@
         />
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nvsMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
         android:background="@color/white"
-        android:clickable="true">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,8 +69,7 @@
                 android:id="@+id/imgslidelayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -111,7 +111,7 @@
                 <TextView
                     android:id="@+id/tv_child_care_name"
                     style="@style/CommonTextWrapcontent"
-                    android:drawableLeft="@drawable/pic_01"
+                    android:drawableStart="@drawable/pic_01"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/semibold"
                     android:text="@string/name_of_child_care"
@@ -137,7 +137,7 @@
                         <View
                             android:layout_width="1dp"
                             android:layout_height="@dimen/_70sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
                         <View
@@ -148,7 +148,7 @@
                         <View
                             android:layout_width="1dp"
                             android:layout_height="@dimen/_40sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
                         <View
@@ -159,7 +159,7 @@
                         <View
                             android:layout_width="1dp"
                             android:layout_height="@dimen/_35sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
                         <View
@@ -170,7 +170,7 @@
                         <View
                             android:layout_width="1dp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
                         <View
@@ -182,7 +182,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:orientation="vertical">
 
                         <TextView
@@ -266,12 +266,12 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9sdp" />
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_90sdp"
-                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_marginStart="@dimen/_1sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_20sdp">
 
                             <fragment
@@ -279,7 +279,14 @@
                                 android:name="com.google.android.gms.maps.SupportMapFragment"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
-                        </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivMapImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                />
+
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -322,6 +329,6 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

@@ -59,7 +59,7 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
             tvNameOfShop.text = homeAcitivityList.nameOfShop
 
             if (homeAcitivityList.activityimages !=null && homeAcitivityList.activityimages.size !=0){
-                Glide.with(context!!).load(image_base_URl+homeAcitivityList.activityimages.get(0).images).
+                Glide.with(context!!).load(image_base_URl+ homeAcitivityList.activityimages[0].images).
                 error(R.mipmap.no_image_placeholder).into(ivActivityImage)
             }
 
@@ -78,7 +78,9 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
 
             llActivityDetails.setOnClickListener{
                 OnCLICK.onHomeActivitiesItemClickListner(homeAcitivityList.id.toString(), homeAcitivityList.categoryId.toString(),
-                    homeAcitivityList.latitude, homeAcitivityList.longitude.toString() )
+                    homeAcitivityList.latitude,
+                    homeAcitivityList.longitude
+                )
 
             }
         }

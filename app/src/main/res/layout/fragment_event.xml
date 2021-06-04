@@ -9,7 +9,6 @@
     android:clickable="true"
     tools:context=".fragments.EventFragment">
 
-    <!-- <include layout="@layout/toolbar"></include>-->
 
     <com.tuyenmonkey.mkloader.MKLoader
         android:layout_width="wrap_content"

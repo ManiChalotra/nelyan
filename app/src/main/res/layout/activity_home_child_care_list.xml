@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/childcare_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:clickable="true">
+    >
 
     <com.tuyenmonkey.mkloader.MKLoader
         android:id="@+id/child_care_list_progressbar"
@@ -19,7 +18,7 @@
         app:mk_type="FishSpinner" />
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/rl_toolbar_root"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -60,7 +59,7 @@
             android:id="@+id/iv_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/location_circle"
@@ -133,7 +132,7 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:src="@drawable/down_arrow" />
 
         </LinearLayout>

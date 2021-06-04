@@ -52,7 +52,7 @@ class HomeChildCareListActivity : AppCompatActivity(),View.OnClickListener, Adap
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private  val dataStoragePreference by lazy { DataStoragePreference(this@HomeChildCareListActivity) }
     private var authkey: String?= null
-
+    var dataString = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,8 +130,16 @@ class HomeChildCareListActivity : AppCompatActivity(),View.OnClickListener, Adap
 
             }
             R.id.iv_map->{
-                OpenActivity(HomeChildCareOnMapActivity::class.java)
+               if(dataString.isEmpty())
+            {
+                myCustomToast("Data not loaded yet")
             }
+            else {
+                val i = Intent(this, HomeChildCareOnMapActivity::class.java)
+                i.putExtra("dataString", dataString)
+                   i.putExtra("type", "childCare")
+                   startActivity(i)
+            }}
 
         }
     }
@@ -200,6 +208,7 @@ class HomeChildCareListActivity : AppCompatActivity(),View.OnClickListener, Adap
                     child_care_list_progressbar?.hideProgressBar()
                     Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                     val mResponse = response.body().toString()
+                     dataString = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     val homeChildcareResponse =  Gson().fromJson<HomeChiildCareREsponse>(response.body().toString(), HomeChiildCareREsponse::class.java)
                     if (childCareDatalist != null) {

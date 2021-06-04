@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -34,7 +35,10 @@ import com.nelyanlive.modals.traderPostDetails.TraderProduct
 import com.nelyanlive.modals.traderPostDetails.Tradersimage
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.alert_share.*
+import kotlinx.android.synthetic.main.fragment_activity_details.*
 import kotlinx.android.synthetic.main.fragment_trader_publish.*
+import kotlinx.android.synthetic.main.fragment_trader_publish.ivMapImage
+import kotlinx.android.synthetic.main.fragment_trader_publish.nvsMain
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.json.JSONArray
@@ -89,6 +93,34 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
         rvTraderImages = findViewById(R.id.rc_trader_images)
         rvDays = findViewById(R.id.rv_shops_timings)
         rvProducts = findViewById(R.id.rv_traderproduct)
+
+
+        ivMapImage.setOnTouchListener(object : View.OnTouchListener {
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when (event!!.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(true)
+                        // Disable touch on transparent view
+                        return false
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(false)
+                        return true
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        nvsMain.requestDisallowInterceptTouchEvent(true)
+                        return false
+                    }
+                }
+                return true
+            }
+
+
+        })
+
 
 
         ivBack!!.setOnClickListener(this)
@@ -362,12 +394,20 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        val india = LatLng(48.946697, 2.153927)
-        mMap!!.addMarker(MarkerOptions()
-                .position(india)
-                .title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
+        try {
+            if (intent.extras !=null){
+                val latti= intent.getStringExtra("latti")
+                val longi= intent.getStringExtra("longi")
+
+                val india = LatLng(latti!!.toDouble(), longi!!.toDouble())
+                mMap!!.addMarker(MarkerOptions()
+                    .position(india)
+                    .title("Activity"))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,10f))
+            }
+        }
+        catch (e: Exception) {
+        }
     }
 
     override fun onClick(v: View?) {

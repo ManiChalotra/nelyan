@@ -116,7 +116,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
                     android:orientation="horizontal">
 
@@ -145,7 +145,7 @@
                 <TextView
                     android:id="@+id/tvForgotPass"
                     style="@style/CommonTextWrapcontent"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Forgot Password?"
@@ -169,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <View
@@ -198,6 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/fb_btn"
                 android:gravity="center"
@@ -207,7 +209,7 @@
                     android:id="@+id/iv_facebookLogin_button"
                     style="@style/CommonTextWrapcontent"
                     android:layout_marginTop="-5dp"
-                    android:drawableLeft="@drawable/fb1"
+                    android:drawableStart="@drawable/fb1"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/semibold"
                     android:text="@string/continue_with_facebook"
@@ -220,6 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/google_btn"
                 android:gravity="center"
@@ -230,7 +233,7 @@
                     style="@style/CommonTextWrapcontent"
                     android:layout_gravity="center"
                     android:layout_marginTop="-5dp"
-                    android:drawableLeft="@drawable/google"
+                    android:drawableStart="@drawable/google"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/semibold"
                     android:gravity="center"
@@ -242,8 +245,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:gravity="center"
                 android:orientation="horizontal">

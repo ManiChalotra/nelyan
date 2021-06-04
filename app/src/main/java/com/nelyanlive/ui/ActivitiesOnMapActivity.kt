@@ -3,63 +3,56 @@ package com.nelyanlive.ui
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.gson.Gson
+import com.google.android.gms.maps.model.*
 import com.nelyanlive.R
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
-import com.nelyanlive.modals.homeactivitylist.Activityimage
-import com.nelyanlive.modals.homeactivitylist.HomeAcitivityResponseData
-import com.nelyanlive.modals.homeactivitylist.HomeActivityResponse
 import com.nelyanlive.utils.*
-import de.hdodenhof.circleimageview.CircleImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_activities_map.*
+import kotlinx.android.synthetic.main.activity_full_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
-class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope, View.OnClickListener {
+class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope, View.OnClickListener,
+    GoogleMap.OnInfoWindowClickListener {
     var mContext: Context? = null
     var ivBack: ImageView? = null
     var ivFilter: ImageView? = null
     var rl_1: RelativeLayout? = null
     var listType: String? = null
-  //  private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
- //   private val activitisImageslist by lazy { ArrayList<Activityimage>() }
-    private var activitisImageslist: ArrayList<Activityimage>? = null
-    private var activitisDatalist: ArrayList<HomeAcitivityResponseData>? = null
-
     var latitude = ""
     var longitude = ""
     lateinit var markerView: View
-
     private var mMap: GoogleMap? = null
     var lat = 0.0
     var lng = 0.0
     var currentLat = "0.0"
     var currentLong = "0.0"
-
+    var dataString = ""
+    val list  = mutableListOf<DataMap>()
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesOnMapActivity) }
@@ -69,16 +62,82 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     }
 
     override fun onPermissionGranted() {
+    }
 
+
+    override fun onInfoWindowClick(marker : Marker) {
+     OpenActivity(ActivityDetailsActivity::class.java) {
+            putString("activityId", list[marker.tag.toString().toInt()].activityId)
+            putString("categoryId", list[marker.tag.toString().toInt()].categoryId)
+            putString("lati", marker.position.latitude.toString())
+         putString("longi", marker.position.longitude.toString())
+        }
     }
 
     override fun onLocationGet(latitude: String?, longitude: String?) {
         currentLat= latitude!!
         currentLong= longitude!!
 
-        Log.e("lat_lng", currentLat+","+currentLong)
+        Log.e("lat_lng", "$currentLat,$currentLong")
     }
 
+    internal inner class CustomInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
+
+        // TextViews with id "title" and "snippet".
+        private val window: View = layoutInflater.inflate(R.layout.custom_info_window, null)
+        //private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
+
+        override fun getInfoWindow(marker: Marker): View {
+
+            render(marker, window)
+            return window
+        }
+
+        override fun getInfoContents(marker: Marker): View? {
+                return null
+        }
+
+        private fun render(marker: Marker, view: View) {
+
+            var url = marker.snippet.toString()
+            url  = url.replaceBeforeLast("###","")
+
+           val ivImage =  view.findViewById<ImageView>(R.id.ivImage)
+
+
+            Picasso.get().load(image_base_URl+ url.substring(3)).resize(150,150)
+                .placeholder(
+                    ContextCompat.getDrawable(
+                        ivImage.context,
+                        R.drawable.placeholder
+                    )!!).into(ivImage)
+
+
+            // Set the title and snippet for the custom info window
+            val title: String? = marker.title
+            val titleUi = view.findViewById<TextView>(R.id.tvTitle)
+
+            if (title != null) {
+                // Spannable string allows us to edit the formatting of the text.
+                titleUi.text = SpannableString(title).apply {
+                    setSpan(ForegroundColorSpan(Color.BLACK), 0, length, 0)
+                }
+            }
+            else {
+                titleUi.text = ""
+            }
+            var snippet: String = marker.snippet.toString().replaceAfterLast("###","")
+            snippet = snippet.substring(0,snippet.length-3)
+            val snippetUi = view.findViewById<TextView>(R.id.tvSubTitle)
+            if (snippet != null && snippet.length > 12) {
+                snippetUi.text = SpannableString(snippet).apply {
+                    setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
+                }
+            } else {
+                snippetUi.text = ""
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,186 +150,106 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         if (intent.extras != null) {
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
-        }
 
+            if(intent.hasExtra("dataString"))
+            {
+                dataString = intent.getStringExtra("dataString")!!
+
+                val jsonObject = JSONObject(dataString)
+
+                val jsonArray = jsonObject.getJSONArray("data")
+                (0 until jsonArray.length()).map {
+                    val json = jsonArray.getJSONObject(it)
+                    if(json.getString("latitude").isNotEmpty() && json.getString("longitude").isNotEmpty()) {
+                        list.add(
+                            DataMap(
+                                LatLng(
+                                    json.getString("latitude").toString().toDouble(),
+                                    json.getString("longitude").toString().toDouble()
+                                ), json.getString("activityname"), json.getString("city")
+                                ,getImageFromArray(json.getJSONArray("activityimages")),
+                                json.getString("categoryId"),json.getString("id")
+                            )
+                        )
+                    }
+
+
+                } }
+        }
         ivBack!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {
-            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                .first()
-        }
+            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first() }
 
+        ivFilter!!.setOnClickListener { onBackPressed() }
 
-        ivFilter!!.setOnClickListener(View.OnClickListener {
-            Log.e("vghgv", "aaaaa")
-            finish()
-            //  AppUtils.gotoFragment(mContext, new ActivityFragment(), R.id.frame_container, false);
-        })
-
-        rl_1!!.setOnClickListener(View.OnClickListener {
+        rl_1!!.setOnClickListener {
             val i = Intent(this@ActivitiesOnMapActivity, ActivityDetailsActivity::class.java)
-            startActivity(i)
-            //AppUtils.gotoFragment(mContext, new ActivityDetailsFragment(), R.id.frame_container, false);
-        })
+            startActivity(i)}
 
-
-
-        markerView = (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                        R.layout.view_custom_marker,
-                        null
-                )
+        markerView = (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.view_custom_marker, null)
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
 
+    private fun getImageFromArray(jsonArray: JSONArray): String {
+        return  if(jsonArray.length()>0) jsonArray.getJSONObject(0).getString("images") else ""
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
+
         mMap = googleMap
-        checkPermissionLocation()
+        Log.e("activityMap","=======2======")
 
-        if (mMap != null) {
-            mMap!!.clear()
+        if(list.isNotEmpty()) {
+            // create bounds that encompass every location we reference
+            val boundsBuilder = LatLngBounds.Builder()
+            // include all places we have markers for on the map
 
-            val sydney = LatLng(currentLat.toDouble(), currentLong.toDouble())
-            mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14f))
-
-
-            if (checkIfHasNetwork(this@ActivitiesOnMapActivity)) {
-                appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
-                activity_list_map_progressbar?.showProgressBar()
-                checkMvvmResponse()
-            } else {
-                showSnackBar(this@ActivitiesOnMapActivity, getString(R.string.no_internet_error))
+            (list.indices).map {
+                boundsBuilder.include(list[it].position)
             }
+
+            val bounds = boundsBuilder.build()
+
+            with(mMap!!) {
+                // Hide the zoom controls as the button panel will cover it.
+                uiSettings!!.isZoomControlsEnabled = false
+
+                // Setting an info window adapter allows us to change the both the contents and
+                setInfoWindowAdapter(CustomInfoWindowAdapter())
+
+                setOnInfoWindowClickListener(this@ActivitiesOnMapActivity)
+
+                // Ideally this string would be localised.
+                setContentDescription("Map with lots of markers.")
+
+                moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
+            }
+
+            // Add lots of markers to the googleMap.
+            addMarkersToMap()
         }
-
-
-/*
-        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        val india = LatLng(48.946697, 2.153927)
-        mMap!!.addMarker(MarkerOptions()
-                .position(india)
-                .title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
-*/
     }
 
-
-    private fun checkMvvmResponse() {
-        appViewModel.observeHomeActivitiesResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    activity_list_map_progressbar?.hideProgressBar()
-                    Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
-
-                    if (activitisDatalist != null) {
-                        activitisDatalist!!.clear()
-                        activitisDatalist!!.addAll(homeAcitivitiesResponse.data)
+    private fun addMarkersToMap() {
 
 
-                        Thread(Runnable {
-                           // activitisImageslist = getUserBitmaps()
-
-                            this@ActivitiesOnMapActivity.runOnUiThread {
-                                activity_list_map_progressbar.hideProgressBar()
-
-                                for (i in activitisDatalist!!.indices) {
-                                    var imagview: CircleImageView = markerView.findViewById(R.id.profile_images)
-
-                                    Glide.with(mContext!!).load(image_base_URl+ activitisDatalist!![i].activityimages[0].images).into(imagview)
-                                   // imagview.setImageBitmap(activitisDatalist!![i].activityimages!![0].)
-
-                                    mMap!!.addMarker(
-                                            MarkerOptions()
-                                                    .position(
-                                                            LatLng(
-                                                                    activitisDatalist!![i].latitude.toDouble(),
-                                                                    activitisDatalist!![i].longitude.toDouble()
-                                                            )
-                                                    )
-                                                    .title(activitisDatalist!![i].nameOfShop)
-                                                    .icon(
-                                                            BitmapDescriptorFactory.fromBitmap(
-                                                                    getMarkerBitmapFromView(
-                                                                            markerView
-                                                                    )
-                                                            )
-                                                    ).snippet("" + i)
-                                    )
-                                }
-
-/*                                val customWindow = CustomInfoWindowForUser2(activity!!, activitisDatalist!!)
-                                mMap!!.setInfoWindowAdapter(customWindow)
-                                mMap!!.setOnInfoWindowClickListener {
-
-
-                                    var intents=Intent(activity,UserPostListActivity::class.java)
-                                    intents.putExtra("userId", activitisDatalist!![Integer.parseInt(it.snippet)].id)
-                                    intents.putExtra("userPhoto", activitisDatalist!![Integer.parseInt(it.snippet)].image)
-
-                                    startActivity(intents)
-                                } */
-                            }
-                        }).start()
-
-
-                    }
-
-                }
-            } else {
-                ErrorBodyResponse(response, this, activity_list_map_progressbar)
-                activity_list_map_progressbar?.hideProgressBar()
-            }
-        })
-
-
-        appViewModel.getException()!!.observe(this, Observer {
-            myCustomToast(it)
-            activity_list_map_progressbar?.hideProgressBar()
-        })
-    }
-
-/*
-    private fun getUserBitmaps(): ArrayList<Activityimage> {
-        for(i in activitisDatalist!!.indices) {
-
-            if (activitisDatalist!![i].activityimages.size == 0) {
-                    activitisDatalist!![i].activityimages[i].bitmap = BitmapFactory.decodeResource(resources, R.mipmap.no_image_placeholder)
-                } else {
-                    activitisDatalist!![i].bitmap = getBitmapFromURL(image_base_URl + activitisDatalist!![i].activityimages.get(0).images)
-                }
+        // place markers for each of the defined locations
+        (list.indices).map {
+            mMap!!.addMarker(
+                MarkerOptions()
+                    .position(list[it].position)
+                    .title(list[it].title)
+                    .snippet(list[it].snippet+"###"+list[it].url)
+                    .icon(BitmapDescriptorFactory.defaultMarker())
+                    .infoWindowAnchor(0.5F, 0F)
+                    .draggable(false)
+                    .zIndex(it.toFloat())).tag = it.toString()
 
         }
-
-        return activitisDatalist!!
     }
-*/
-
-
-    private fun getMarkerBitmapFromView(view: View): Bitmap {
-
-
-//        mMarkerImageView.setImageBitmap(bitmap);
-        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
-        view.buildDrawingCache()
-        var returnedBitmap: Bitmap = Bitmap.createBitmap(
-                view.measuredWidth, view.measuredHeight,
-                Bitmap.Config.ARGB_8888
-        )
-        var canvas: Canvas = Canvas(returnedBitmap)
-        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN)
-        var drawable: Drawable = view.background
-        if (drawable != null)
-            drawable.draw(canvas)
-        view.draw(canvas)
-        return returnedBitmap
-
-    }
-
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -278,8 +257,17 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.ivBack->{
-
+                onBackPressed()
             }
         }
     }
 }
+
+class DataMap(
+    val position: LatLng,
+    val title: String = "",
+    val snippet: String = "",
+    val url: String = "",
+    val categoryId: String = "",
+    val activityId: String = ""
+    )
