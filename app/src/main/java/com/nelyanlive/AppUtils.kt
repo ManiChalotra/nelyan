@@ -16,7 +16,7 @@ object AppUtils {
             val oldFragment = mContext.supportFragmentManager.findFragmentById(frame_container)
             transaction.replace(frame_container, fragment!!)
             transaction.addToBackStack(null)
-            transaction.hide(Objects.requireNonNull(oldFragment)!!)
+            transaction.hide(oldFragment!!)
         } else {
             transaction.replace(frame_container, fragment!!)
         }
