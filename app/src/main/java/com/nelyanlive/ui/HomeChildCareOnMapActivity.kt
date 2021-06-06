@@ -61,7 +61,7 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                                 LatLng(
                                     json.getString("latitude").toString().toDouble(),
                                     json.getString("longitude").toString().toDouble()
-                                ), json.getString(if(type=="childCare"){"type"}else{"nameOfShop"}), json.getString("city")
+                                ), json.getString(if(type=="childCare"){"name"}else{"nameOfShop"}), json.getString("city")
                                 ,getImageFromArray(json.getJSONArray(if(type=="childCare"){"ChildCareImages"}else{"tradersimages"})),
                                 json.getString(if(type=="childCare"){"type"}else{"typeofTraderId"}),json.getString("id")
                             ))
