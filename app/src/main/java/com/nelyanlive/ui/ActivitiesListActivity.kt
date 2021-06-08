@@ -1,6 +1,5 @@
 package com.nelyanlive.ui
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -86,8 +85,23 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         checkMvvmResponse()
 
         tvFilter.setOnClickListener {
-            val i = Intent(this, ActivitiesFilterActivity::class.java)
-            startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+
+            if(tvFilter.text=="Filter") {
+                val i = Intent(this, ActivitiesFilterActivity::class.java).putExtra("name", "Activity")
+                startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+            }
+            else
+            {
+                tvFilter.text="Filter"
+                launch(Dispatchers.Main.immediate) {
+                    authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                        .first()
+                    tv_userCityOrZipcode.text =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                    appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
+                    activity_list_progressbar?.showProgressBar()
+                }
+            }
         }
 
         iv_map!!.setOnClickListener {
@@ -121,19 +135,31 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if (resultCode == 1213) {
 
-        if (requestCode === LAUNCH_SECOND_ACTIVITY) {
-            if (resultCode === Activity.RESULT_OK) {
-                val activitisDatalistss: ArrayList<HomeAcitivityResponseData> = data!!.getSerializableExtra("filteredActivitisDatalist") as ArrayList<HomeAcitivityResponseData>
+                tvFilter.text="Clear Filter"
 
-                if (activitisDatalistss.size == 0) {
-                    recyclerview!!.visibility = View.GONE
-                    tv_no_activities!!.visibility = View.VISIBLE
+                val returnName = data!!.getStringExtra("name")
+                val returnLocation = data.getStringExtra("location")
+                val returnDistance = data.getStringExtra("distance")
+                val returnLat = data.getStringExtra("latitude")
+                val returnlng = data.getStringExtra("longitude")
+                val typeId = data.getStringExtra("typeId")
+
+                if (checkIfHasNetwork(this)) {
+                    launch(Dispatchers.Main.immediate) {
+                      val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                        appViewModel.sendFilterActivityListData(security_key, authKey, returnLat!!, returnlng, returnDistance!!, returnName,typeId,
+                            returnLocation!! )
+                        activity_list_progressbar?.showProgressBar()
+
+                    }
                 } else {
-                    recyclerview!!.visibility = View.VISIBLE
-                    tv_no_activities!!.visibility = View.GONE
-                    setAdaptor(activitisDatalistss)
-                } } }
+                    showSnackBar(this, getString(R.string.no_internet_error))
+                }
+            }
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
@@ -161,7 +187,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     val jsonObject = JSONObject(mResponse)
                     val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
 
-
                     if (activitisDatalist != null) {
                         activitisDatalist.clear()
                         activitisDatalist.addAll(homeAcitivitiesResponse.data)
@@ -177,6 +202,36 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 }
             } else {
                 ErrorBodyResponse(response, this, activity_list_progressbar)
+                activity_list_progressbar?.hideProgressBar()
+            }
+        })
+
+        appViewModel.observeFilterActivityListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    activity_list_progressbar?.hideProgressBar()
+                    Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
+                    val mResponse = response.body().toString()
+                    dataString = response.body().toString()
+                    val jsonObject = JSONObject(mResponse)
+                    val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
+
+                    if (activitisDatalist != null) {
+                        activitisDatalist.clear()
+                        activitisDatalist.addAll(homeAcitivitiesResponse.data)
+                    }
+                    if (activitisDatalist.size == 0) {
+                        recyclerview!!.visibility = View.GONE
+                        tv_no_activities!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        recyclerview!!.visibility = View.VISIBLE
+                        tv_no_activities!!.visibility = View.GONE
+                        setAdaptor(activitisDatalist)
+                    }
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
                 activity_list_progressbar?.hideProgressBar()
             }
         })
@@ -215,10 +270,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         if (checkIfHasNetwork(this@ActivitiesListActivity)) {
             appViewModel.addFavouritePostApiData(security_key, authkey, eventID, "1")
             activity_list_progressbar.showProgressBar()
-        } else {
+        }
+        else {
             showSnackBar(this@ActivitiesListActivity, getString(R.string.no_internet_error))
         }
-
     }
 
     override fun onHomeActivitiesItemClickListner(activityId: String, categoryId: String, postLatitude: String, postLongitude: String) {

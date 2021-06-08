@@ -11,7 +11,7 @@ import com.nelyanlive.R
 import com.nelyanlive.ui.Chat1Activity
 
 class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter.RecyclerViewHolder>() {
-    var inflater: LayoutInflater
+    var inflater: LayoutInflater = LayoutInflater.from(context)
     var rl_1: RelativeLayout? = null
 
     inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
@@ -20,7 +20,14 @@ class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter
         val v = inflater.inflate(R.layout.list_message, parent, false)
         val viewHolder = RecyclerViewHolder(v)
         rl_1 = v.findViewById(R.id.rl_1)
-        rl_1!!.setOnClickListener({ context.startActivity(Intent(context, Chat1Activity::class.java)) })
+        rl_1!!.setOnClickListener {
+            context.startActivity(
+                Intent(
+                    context,
+                    Chat1Activity::class.java
+                )
+            )
+        }
         return viewHolder
     }
 
@@ -29,7 +36,4 @@ class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter
         return 5
     }
 
-    init {
-        inflater = LayoutInflater.from(context)
-    }
 }

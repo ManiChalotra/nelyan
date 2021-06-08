@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:clickable="true"
     android:id="@+id/frame_container"
     tools:context=".ui.ActivitiesListActivity">
 
@@ -21,7 +20,7 @@
         />
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/rl_toolbar_root"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"

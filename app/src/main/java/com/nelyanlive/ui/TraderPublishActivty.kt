@@ -67,19 +67,18 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
     
     var latitude = ""
     var longitude = ""
-
+    var userId = ""
     var datalistDays = ArrayList<TraderDaysTiming>()
 
     var dialog: Dialog? = null
     private var listTradersimage = ArrayList<Tradersimage>()
     private var listTraderProduct = ArrayList<TraderProduct>()
 
-
     private val job by lazy {
         Job()
     }
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
 
+    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +93,9 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
         rvDays = findViewById(R.id.rv_shops_timings)
         rvProducts = findViewById(R.id.rv_traderproduct)
 
-
+        launch(Dispatchers.Main.immediate) {
+             userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+        }
         ivMapImage.setOnTouchListener(object : View.OnTouchListener {
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -117,16 +118,9 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                 }
                 return true
             }
-
-
         })
-
-
-
         ivBack!!.setOnClickListener(this)
         ivShare!!.setOnClickListener(this)
-
-
 
         if (intent.extras !=null){
             postID= intent.getStringExtra("postId")!!
@@ -139,12 +133,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
             trader_details_progressbar?.showProgressBar()
 
         }
-
          checkMvvmResponse()
-
-
-
-
 
     }
 
@@ -173,11 +162,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     "https://play.google.com/store/apps/details?id=com.nelyan")
             email.setPackage("com.google.android.gm")
             email.type = "message/rfc822"
-            try {
-                startActivity(email)
-            } catch (ex: ActivityNotFoundException) {
-                myCustomToast( getString(R.string.gmail_not_error))
-            }
+            try { startActivity(email) }
+            catch (ex: ActivityNotFoundException) { myCustomToast( getString(R.string.gmail_not_error)) }
 
             dialog!!.dismiss()
         }
@@ -197,7 +183,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
             try {
                 shareDialog!!.show(content) // Show ShareDialog
 
-            } catch (ex: ActivityNotFoundException) {
+            }
+            catch (ex: ActivityNotFoundException) {
                 Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
             }
 
@@ -218,12 +205,12 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     trader_details_progressbar?.hideProgressBar()
                     Log.d("postDetailsResponse", "-------------" + Gson().toJson(response.body()))
 
+
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-
+                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
-
 
                     tv_shop_name.text = jsonObject.getJSONObject("data").get("nameOfShop").toString()
 
@@ -261,7 +248,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
 
-
                     val listArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("tradersimages")
                     val listArrayTraderDaysTimings: JSONArray = jsonObject.getJSONObject("data").getJSONArray("traderDaysTimings")
                     val listArrayProducts: JSONArray = jsonObject.getJSONObject("data").getJSONArray("traderProducts")
@@ -275,7 +261,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                     if (listTradersimage != null) {
                         listTradersimage.clear()
-                    } else {
+                    }
+                    else {
                         listTradersimage = ArrayList()
                     }
                     for (i in 0 until mSizeOfData) {
@@ -296,12 +283,11 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         rvTraderImages!!.adapter = traderDetailsImageAdapter
                         indicator!!.attachToRecyclerView(rvTraderImages!!)
                     }
-
-
 /*Set Age Group List in adapter*/
                     if (datalistDays != null) {
                         datalistDays.clear()
-                    } else {
+                    }
+                    else {
                         datalistDays = ArrayList()
                     }
 
@@ -331,22 +317,20 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         rvDays!!.visibility = View.VISIBLE
                         tv_trader_no_days!!.visibility = View.GONE
 
-                    } else {
+                    }
+                    else {
                         rvDays!!.visibility = View.GONE
                         tv_trader_no_days!!.visibility = View.VISIBLE
 
                     }
 
-
-
-
 /*Set Product Deatils List in adapter*/
                     if (listTraderProduct != null) {
                         listTraderProduct.clear()
-                    } else {
+                    }
+                    else {
                         listTraderProduct = ArrayList()
                     }
-
 
                     if (mSizeOfProducts != 0) {
 
@@ -372,7 +356,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         rvProducts!!.visibility = View.VISIBLE
                         tv_trader_no_product!!.visibility = View.GONE
 
-                    } else {
+                    }
+                    else {
                         rvProducts!!.visibility = View.GONE
                         tv_trader_no_product!!.visibility = View.VISIBLE
 
@@ -389,6 +374,25 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
             myCustomToast(it)
             trader_details_progressbar?.hideProgressBar()
         })
+    }
+
+    private fun setUserData(jsonObject: JSONObject) {
+
+
+            if(userId!=jsonObject.getString("id")) {
+                tvMessage.visibility = View.VISIBLE
+                ivMessage.visibility = View.VISIBLE
+                ivMessage.setOnClickListener {
+                startActivity(
+                    Intent(this@TraderPublishActivty, Chat1Activity::class.java)
+                        .putExtra("senderID", jsonObject.getString("id"))
+                        .putExtra("senderName", jsonObject.getString("name"))
+                        .putExtra("senderImage", jsonObject.getString("image"))
+                        .putExtra("userId", userId)
+                )
+                }
+
+    }
     }
 
 

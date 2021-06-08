@@ -85,7 +85,7 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     fun setFavouriteEventAdaptor(datalist: ArrayList<FavouriteEvent>) {
-        myFavoriteEventsAdapter = MyFavoriteEventsAdapter(mContext, datalist, this)
+        myFavoriteEventsAdapter = MyFavoriteEventsAdapter(datalist, this)
         rv_my_favourite!!.layoutManager = LinearLayoutManager(mContext)
         rv_my_favourite!!.adapter = myFavoriteEventsAdapter
     }
@@ -139,9 +139,7 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                                tv_no_fav!!.visibility = View.GONE
                                setFavouritePostAdaptor(favouritePostlist)
                            }
-
                        }
-
                    }
                } else {
                    ErrorBodyResponse(response, this, myfav_progressBar)
@@ -153,51 +151,10 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                e.printStackTrace()}
         })
 
-        appViewModel.observeAddFavouriteApiResponse()!!.observe(this, Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("addFavouriteResBody", "----------" + Gson().toJson(response.body()))
-                myfav_progressBar?.hideProgressBar()
-                val mResponse = response.body().toString()
-                val jsonObject = JSONObject(mResponse)
-
-                val message = jsonObject.get("msg").toString()
-                if (selectedFavType == "Event"){
-                    if (message == "You marked this Post as Your Favourite"){
-                        myCustomToast("You marked this post as your favourite")
-
-                        ivFavouriteeEvent!!.setImageResource(R.drawable.heart)
-                    }else {
-                        myCustomToast("You removed this post from your favourite")
-
-                        ivFavouriteeEvent!!.setImageResource(R.drawable.heart_purple)
-                    }
-
-                } else if (selectedFavType == "Ads"){
-                    if (message == "You marked this Post as Your Favourite"){
-                        myCustomToast("You marked this post as your favourite")
-                        ivFavouriteePost!!.setImageResource(R.drawable.heart)
-                    }else {
-                        myCustomToast("You removed this post from your favourite")
-                        ivFavouriteePost!!.setImageResource(R.drawable.heart_purple)
-                    }
-
-                }
-
-
-
-
-            } else {
-                ErrorBodyResponse(response, this, myfav_progressBar)
-                myfav_progressBar?.hideProgressBar()
-            }
-        })
-
-
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             this.myCustomToast(it)
             myfav_progressBar?.hideProgressBar()
         })
-
     }
 
 
@@ -256,10 +213,6 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         ivFavouriteePost=ivFavourite
         if (checkIfHasNetwork(this@FavouriteActivity)) {
             appViewModel.addFavouritePostApiData(security_key, authorization, postId, postType)
-
-            Log.e("dasfsdff","========$position==$ivFavourite")
-
-         //   myfav_progressBar.showProgressBar()
             selectedFavType= "Ads"
 
         } else {
@@ -276,7 +229,7 @@ class FavouriteActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         if (checkIfHasNetwork(this@FavouriteActivity)) {
             appViewModel.addFavouriteApiData(security_key, authorization, eventId)
             selectedFavType = "Event"
-            myfav_progressBar.showProgressBar()//  loginProgressBar?.showProgressBar()
+           // myfav_progressBar.showProgressBar()
         } else {
             showSnackBar(this@FavouriteActivity, getString(R.string.no_internet_error))
         }

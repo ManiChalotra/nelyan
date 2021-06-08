@@ -190,14 +190,11 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
             var snippet: String = marker.snippet.toString().replaceAfterLast("###","")
             snippet = snippet.substring(0,snippet.length-3)
             val snippetUi = view.findViewById<TextView>(R.id.tvSubTitle)
-            if (snippet != null && snippet.length > 12) {
+
                 snippetUi.text = SpannableString(snippet).apply {
                     setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
                 }
-            }
-            else {
-                snippetUi.text = ""
-            }
+
         }
     }
     private fun getImageFromArray(jsonArray: JSONArray): String {

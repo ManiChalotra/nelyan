@@ -40,8 +40,11 @@ import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.modals.postDetails.PostDetailsEvents
 import com.nelyanlive.modals.postDetails.PostDetailsEventstiming
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.activity_home_child_care_details.*
 import kotlinx.android.synthetic.main.alert_share.*
 import kotlinx.android.synthetic.main.fragment_activity_details.*
+import kotlinx.android.synthetic.main.fragment_activity_details.ivMapImage
+import kotlinx.android.synthetic.main.fragment_activity_details.nvsMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -69,6 +72,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
     var rvDays: RecyclerView? = null
     var categoryId = ""
     var postId = ""
+    var userId = ""
     var latitude = ""
     var longitude = ""
     var datalisttime = ArrayList<DetailsTimeModal>()
@@ -96,6 +100,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         mapFragment!!.getMapAsync(this)
         mapFragment.getMapAsync(this)
 
+        launch(Dispatchers.Main.immediate) {
+            userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+        }
 
         ivMapImage.setOnTouchListener(object : View.OnTouchListener {
 
@@ -256,6 +263,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
+                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
@@ -455,6 +463,24 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
         }
     }
+
+    private fun setUserData(jsonObject: JSONObject) {
+
+
+        if(userId!=jsonObject.getString("id")) {
+            iv_msg!!.setOnClickListener {
+                startActivity(
+                    Intent(this, Chat1Activity::class.java)
+                        .putExtra("senderID", jsonObject.getString("id"))
+                        .putExtra("senderName", jsonObject.getString("name"))
+                        .putExtra("senderImage", jsonObject.getString("image"))
+                        .putExtra("userId", userId)
+                )
+            }
+
+        }
+    }
+
 
 
     override val coroutineContext: CoroutineContext

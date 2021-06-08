@@ -296,7 +296,7 @@ class AppViewModel : ViewModel() {
 
     fun observeAddFavouriteApiResponse(): LiveData<Response<JsonObject>?>? {
         if (addFavouriteMutableLiveData == null) {
-            addFavouriteMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            addFavouriteMutableLiveData = MutableLiveData()
         }
         return addFavouriteMutableLiveData
     }
@@ -422,7 +422,7 @@ class AppViewModel : ViewModel() {
 
     fun observeAddFavouritePostApiResponse(): LiveData<Response<JsonObject>?>? {
         if (addFavouritePostMutableLiveData == null) {
-            addFavouritePostMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            addFavouritePostMutableLiveData = MutableLiveData()
         }
         return addFavouritePostMutableLiveData
     }
@@ -447,7 +447,7 @@ class AppViewModel : ViewModel() {
 
     fun observePostDetailApiResponse(): LiveData<Response<JsonObject>?>? {
         if (postDetailsMutableLiveData == null) {
-            postDetailsMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            postDetailsMutableLiveData = MutableLiveData()
         }
         return postDetailsMutableLiveData
     }
@@ -1021,8 +1021,8 @@ class AppViewModel : ViewModel() {
     }
 
     fun sendFilterActivityListData(securityKey: String?, authkey: String, latitude: String, longitude:String?, distance: String,
-                                   name: String?, address: String ) {
-        JsonPlaceHolder().activityFilter_Api(securityKey, authkey, latitude, longitude,distance, name, address )
+                                   name: String?,typeId: String?, address: String ) {
+        JsonPlaceHolder().activityFilter_Api(securityKey, authkey, latitude, longitude,distance, name,typeId, address )
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
@@ -1047,8 +1047,8 @@ class AppViewModel : ViewModel() {
     }
 
     fun sendFilterTraderListData(securityKey: String?, authkey: String, latitude: String, longitude:String?, distance: String,
-                                   name: String?, address: String ) {
-        JsonPlaceHolder().traderFilter_Api(securityKey, authkey, latitude, longitude,distance, name, address )
+                                   name: String?,typeId: String?, address: String ) {
+        JsonPlaceHolder().traderFilter_Api(securityKey, authkey, latitude, longitude,distance, name,typeId, address )
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
@@ -1124,8 +1124,8 @@ class AppViewModel : ViewModel() {
     }
 
     fun sendFilterEventListData(securityKey: String?, authKey:String?, lati: String?, longi: String?, distance: String?,
-                                name: String?, date: String?, address: String?) {
-        JsonPlaceHolder().getEventFilter(securityKey, authKey, lati, longi, distance, name, date, address)
+                                name: String?,  address: String?) {
+        JsonPlaceHolder().getEventFilter(securityKey, authKey, lati, longi, distance, name,  address)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage

@@ -48,7 +48,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
     var rc: RecyclerView? = null
     var rvChildcareImages: RecyclerView? = null
-    var iv_msg: ImageView? = null
     var ivBack: ImageView? = null
     var ivShare: ImageView? = null
     var btnModify: Button? = null
@@ -57,9 +56,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
     var mMap: GoogleMap? = null
     var tvTitle: TextView? = null
     var indicator: ScrollingPagerIndicator? = null
-/*
-    var datalist = ArrayList<DetailsImageModal>()
-*/
+
     var categoryId=""
     var postId=""
 
@@ -75,6 +72,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
     var latitude = ""
     var longitude = ""
+    var userId = ""
     private var listChildCareimage = ArrayList<ChildCareImage>()
 
 
@@ -86,7 +84,9 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         mapFragment!!.getMapAsync(this)
 
 
-
+        launch(Dispatchers.Main.immediate) {
+            userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+        }
         ivMapImage.setOnTouchListener(object : View.OnTouchListener {
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -143,22 +143,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
         checkMvvmResponse()
 
-
-        /* val lm = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-         rc!!.setLayoutManager(lm)
-         datalist.add(DetailsImageModal(R.drawable.img_1))
-         datalist.add(DetailsImageModal(R.drawable.img_4))
-         datalist.add(DetailsImageModal(R.drawable.img_1))
-         datalist.add(DetailsImageModal(R.drawable.img_4))
-         datalist.add(DetailsImageModal(R.drawable.img_1))
- */
-
-
-        /*val ad = DetailsImageAdapter(this, datalist)
-        rc!!.setAdapter(ad)
-        indicator!!.attachToRecyclerView(rc!!)
-*/
-
     }
 
 
@@ -206,7 +190,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         dialog!!.ll_fv_share.setOnClickListener {
         CommonMethodsKotlin.fbShare(this)
 
-            var content =  ShareLinkContent.Builder()
+            val content =  ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
                     .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan App").build())
                     .build()
@@ -217,20 +201,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
             } catch (ex: ActivityNotFoundException) {
                 Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
             }
-
-/*
-            var content =  ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
-                    .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan.. social app.  ").build())
-                    .build()
-
-            try {
-                shareDialog!!.show(content) // Show ShareDialog
-
-            } catch (ex: ActivityNotFoundException) {
-                myCustomToast( getString(R.string.facebook_not_error))
-            }
-*/
             dialog!!.dismiss()
         }
         dialog!!.show()
@@ -248,6 +218,8 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
+
+                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
@@ -319,6 +291,25 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
             myCustomToast(it)
             childcare_details_progressbar?.hideProgressBar()
         })
+    }
+
+    private fun setUserData(jsonObject: JSONObject) {
+
+
+        if(userId!=jsonObject.getString("id")) {
+            tvMessage.visibility = View.VISIBLE
+            iv_msg.visibility = View.VISIBLE
+            iv_msg.setOnClickListener {
+                startActivity(
+                    Intent(this, Chat1Activity::class.java)
+                        .putExtra("senderID", jsonObject.getString("id"))
+                        .putExtra("senderName", jsonObject.getString("name"))
+                        .putExtra("senderImage", jsonObject.getString("image"))
+                        .putExtra("userId", userId)
+                )
+            }
+
+        }
     }
 
 

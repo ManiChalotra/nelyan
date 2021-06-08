@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
-    android:clickable="true"
     tools:context=".fragments.EventFragment">
-
 
     <com.tuyenmonkey.mkloader.MKLoader
         android:layout_width="wrap_content"
@@ -21,57 +20,11 @@
         app:mk_color="@color/colorPrimary"
         />
 
-
-    <RelativeLayout
-        android:id="@+id/rl_toolbar_root"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/white"
-        android:visibility="gone"
-        >
-
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="@dimen/_12sdp"
-            android:src="@drawable/left_arrow"
-            android:visibility="visible" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-            <TextView
-                style="@style/HeaderText"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="Upcoming Event"/>
-            <TextView
-                style="@style/HeaderText"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="Maisons-Laffitle"/>
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_bell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="@dimen/_12sdp"
-            android:src="@drawable/location_circle"
-            android:visibility="visible" />
-
-    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_below="@+id/rl_toolbar_root"
         android:layout_marginRight="@dimen/_10sdp"
         android:orientation="horizontal">
 
@@ -88,12 +41,14 @@
             android:paddingBottom="@dimen/_2sdp"
             android:text="Filter"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_10sdp"
+            />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></View>
+            android:layout_weight="1"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,7 +75,6 @@
                 android:layout_gravity="start"
                 android:paddingTop="-15dp"
                 android:background="@android:color/transparent"
-
                 android:gravity="start"
                 android:spinnerMode="dropdown"
                 />
@@ -128,7 +82,7 @@
             <ImageView
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_gravity="center"
                 android:src="@drawable/down_arrow" />
 
@@ -144,7 +98,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_event"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
 
         <TextView
             android:id="@+id/tv_no_event"

@@ -45,7 +45,6 @@ import kotlin.coroutines.CoroutineContext
 class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope, DayTimeRepeatAdapter.OnDayTimeRecyclerViewItemClickListner,
         ProductDetailRepeatAdapter.ProductRepeatListener {
 
-
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private var IMAGE_SELECTED_TYPE = ""
     private var IS_IMAGE_SELECTED = ""
@@ -60,7 +59,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private var productDetailsGroup: JSONArray = JSONArray()
     private var media: JSONArray = JSONArray()
 
-
     // dialo for progress
     private var progressDialog = ProgressDialog(this)
 
@@ -70,7 +68,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
-
 
     private var cityName = ""
     private var cityLatitude = ""
@@ -89,15 +86,11 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private var imagePathList = ArrayList<MultipartBody.Part>()
     private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
-
     var imageVideoUrlListing = arrayListOf("", "", "", "", "")
 
     private var imageVideoListPosition = -1
     private var selectedUrlListing: ArrayList<String> = ArrayList()
     private var savedaddEventImagesData = false
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +98,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         initalizeClicks()
         rvDayTime = findViewById(R.id.rvDayTime)
         rvProductDetails = findViewById(R.id.rv_product_details)
-
 
         countycode.setOnCountryChangeListener {
             countryCodee = countycode.selectedCountryCode.toString()
@@ -118,7 +110,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this@TraderActivity )
         rvProductDetails!!.layoutManager = LinearLayoutManager(this)
         rvProductDetails!!.adapter = productDetailRepeatAdapter
-
 
         hitTypeTradeActivity_Api()
         traderTypeResponse()
@@ -168,8 +159,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
                 cityName = place.name.toString()
@@ -181,20 +172,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
-            else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
+            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
                 Log.i("dddddd", status.statusMessage.toString())
             }
-            else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
-            }
         }
-
-
     }
-
 
     private fun makeJsonArray() {
         // for age group listing cards
@@ -207,7 +191,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             json.put("secondEndTime", dayTimeModelArrayList[i].secondEndtime)
             selectDayGroup.put(json)
         }
-
     }
 
     private fun makeProductJsonArray() {
@@ -220,7 +203,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             json.put("description", productDetailDataModelArrayList[i].description)
             productDetailsGroup.put(json)
         }
-
     }
 
     private fun gettingURLOfEventImages() {
@@ -231,18 +213,17 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         for (i in 0 until productDetailDataModelArrayList.size) {
             val media = productDetailDataModelArrayList[i].image
             if (!media.isNullOrEmpty()) {
-                var mfile: File? = null
+                var mfile: File?
                 mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-                var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+                val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                var photo: MultipartBody.Part?
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
                 imagePathList2.clear()
                 imagePathList2.add(photo)
             }
         }
 
         Log.d("imagePathLsiting", "-------------" + imagePathList2.size)
-
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
         appViewModel.sendUploadImageData(type, users, imagePathList2)
@@ -254,26 +235,35 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
             appViewModel.sendTraderTypeTraderData(security_key, authkey)
-        } else {
+        }
+        else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
         }
     }
 
     private fun hitFinalTraderPostApi() {
-        if (traderType == "Doctor") {
-            traderTypeId = "15"
-        } else if (traderType == "Food Court") {
-            traderTypeId = "16"
-        } else if (traderType == "Plant Nursury") {
-            traderTypeId = "17"
-        } else if (traderType == "Tutor Mathematics") {
-            traderTypeId = "18"
-        } else if (traderType == "Gym Trainer") {
-            traderTypeId = "19"
-        } else if (traderType == "Yoga Trainer") {
-            traderTypeId = "20"
-        } else if (traderType == "Gadget Repair") {
-            traderTypeId = "21"
+        when (traderType) {
+            "Doctor" -> {
+                traderTypeId = "15"
+            }
+            "Food Court" -> {
+                traderTypeId = "16"
+            }
+            "Plant Nursury" -> {
+                traderTypeId = "17"
+            }
+            "Tutor Mathematics" -> {
+                traderTypeId = "18"
+            }
+            "Gym Trainer" -> {
+                traderTypeId = "19"
+            }
+            "Yoga Trainer" -> {
+                traderTypeId = "20"
+            }
+            "Gadget Repair" -> {
+                traderTypeId = "21"
+            }
         }
 
         if (checkIfHasNetwork(this@TraderActivity)) {
@@ -282,9 +272,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                     et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
                     cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
                     productDetailsGroup.toString(), media.toString())
-        } else {
+        }
+        else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
-
         }
     }
 
@@ -316,7 +306,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             } else {
 
                 imageVideoListPosition += 1
-
                 if (imageVideoListPosition <= selectedUrlListing.size) {
                     hitApiForBannerImages(imageVideoListPosition)
                 }
@@ -332,7 +321,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         }
     }
 
-
     private fun traderTypeResponse() {
 
         appViewModel.observeActivityTypeTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
@@ -344,7 +332,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                     val arrayAdapter1 = ArrayAdapter<Any?>(this, R.layout.customspinner, res.data)
                     trader_type.adapter = arrayAdapter1
                 }
-            } else {
+            }
+            else
+            {
                 ErrorBodyResponse(response, this, null)
             }
         })
@@ -383,7 +373,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                             }
 
                         } else {
-                            // response for addevent images data
+                            // response for addEvent images data
                             if (addEventUrlListingResponse != null) {
                                 addEventUrlListingResponse.clear()
                             }
@@ -428,8 +418,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     }
 
-
-
     private fun isValid(): Boolean {
         traderType = trader_type.selectedItem.toString()
         var check = false
@@ -458,7 +446,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         return string == null || string == "null" || string.isEmpty()
     }
 
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ivBack -> {
@@ -480,6 +467,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 showPlacePicker()
             }
             R.id.btn_trader_submit -> {
+
                 val shopName = et_trader_shop_name.text.toString()
                 traderType = trader_type.selectedItem.toString()
                 val description = et_description_trader.text.toString()
@@ -508,29 +496,23 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                         if (email.isEmpty()) {
                                             myCustomToast(getString(R.string.email_address_missing))
                                         } else {
-
                                             when {
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay.isNullOrEmpty() -> {
                                                     myCustomToast("Please select day")
                                                 }
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstStarttime.isNullOrEmpty() -> {
                                                     myCustomToast("Please select morning time")
-
                                                 }
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstEndtime.isNullOrEmpty() -> {
                                                     myCustomToast("Please select morning time")
-
                                                 }
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime.isNullOrEmpty() -> {
                                                     myCustomToast("Please select evening time")
-
                                                 }
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime.isNullOrEmpty() -> {
                                                     myCustomToast("Please select evening time")
-
                                                 }
                                                 else -> {
-
                                                     when {
                                                         productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image.isNullOrEmpty() -> {
                                                             myCustomToast("Please select image")
@@ -544,18 +526,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                         productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description.isNullOrEmpty() -> {
                                                             myCustomToast("Please enter description")
                                                         }
-
                                                         else -> {
 
                                                             if (selectedUrlListing.size == urlListingFromResponse.size) {
                                                                 selectedUrlListing.clear()
                                                                 urlListingFromResponse.clear()
                                                             }
-
                                                             // for check upper images url from response
                                                             Log.d("imageVideoListSize", "-----------$imageVideoUrlListing")
-
-
                                                             // rotating loop
                                                             for (i in 0 until imageVideoUrlListing.size) {
                                                                 val media = imageVideoUrlListing[i]
@@ -563,46 +541,30 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                                     selectedUrlListing.add(media)
                                                                 }
                                                             }
-
                                                             hitApiForBannerImages(0)
-                                                        }
-                                                    }
 
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    }
+                                                        } } } } } } } } } } } } } }
 
     override fun getRealImagePath(imgPath: String?) {
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
                 setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing.set(0, imgPath.toString())
+                imageVideoUrlListing[0] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
 
             "2" -> {
                 setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing.set(1, imgPath.toString())
+                imageVideoUrlListing[1] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
+
             "3" -> {
                 setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing.set(2, imgPath.toString())
+                imageVideoUrlListing[2] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
@@ -637,7 +599,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
     }
 
-
     private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
 
         if (imgpath.contains(".mp4")) {
@@ -652,7 +613,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     }
 
     override fun dayTimeAdd(list: java.util.ArrayList<DayTimeModel>, position: Int) {
-
 
         when {
             dayTimeModelArrayList[list.size-1].selectedDay.isNullOrEmpty() -> {
@@ -685,7 +645,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     }
 
     override fun onITEEMClick(productDetailDataModellist: java.util.ArrayList<ProductDetailDataModel>, pos: Int) {
-
 
         productDetailDataModelArrayList.add(ProductDetailDataModel("", "", "", ""))
                 productDetailRepeatAdapter.notifyDataSetChanged()

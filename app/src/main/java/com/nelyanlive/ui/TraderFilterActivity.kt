@@ -20,12 +20,20 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.nelyanlive.R
+import com.nelyanlive.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderListData
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderPostListResponse
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.activity_trader.*
+import kotlinx.android.synthetic.main.fragment_child_care.*
 import kotlinx.android.synthetic.main.fragment_trade_filter.*
+import kotlinx.android.synthetic.main.fragment_trade_filter.et_location
+import kotlinx.android.synthetic.main.fragment_trade_filter.et_name
+import kotlinx.android.synthetic.main.fragment_trade_filter.ivBack
+import kotlinx.android.synthetic.main.fragment_trade_filter.ll_public
+import kotlinx.android.synthetic.main.fragment_trade_filter.trader_type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -40,6 +48,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
 
     private var latitudee = ""
     private var longitudee = ""
+    private var typeId = ""
     private val job by lazy {
         Job()
     }
@@ -72,14 +81,21 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         trader_type!!.onItemSelectedListener = this@TraderFilterActivity
         val km = arrayOf<String?>(
                 "", "0KM", "5KM", "10KM", "15KM", "20KM",
-                "25KM", "30KM"
-        )
+                "25KM", "30KM")
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
                 this, R.layout.size_customspinner, km)
         spinner_trader_distance!!.adapter = adapter1
         spinner_trader_distance!!.onItemSelectedListener = this@TraderFilterActivity
-
         checkMvvmResponse()
+
+        if (checkIfHasNetwork(this)) {
+            val authkey = AllSharedPref.restoreString(this, "auth_key")
+            appViewModel.sendTraderTypeTraderData(security_key, authkey)
+        }
+        else
+        {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
 
     }
     private  fun initalizeClicks(){
@@ -90,54 +106,59 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
 
     }
 
-    private fun hitFilterTrader_Api() {
-        if (checkIfHasNetwork(this@TraderFilterActivity)) {
-            launch(Dispatchers.Main.immediate) {
-                authKey =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                appViewModel.sendFilterTraderListData(security_key, authKey, latitudee, longitudee,
-                    distance, et_name.text.toString().trim(),
-                        et_location.text.toString().trim() )
-                trader_filter_progressbar?.showProgressBar()
 
-            }
-        } else {
-            showSnackBar(this@TraderFilterActivity, getString(R.string.no_internet_error))
-        }
-
-    }
-
+    val traderType: MutableList<String?> = mutableListOf()
+    val traderID: MutableList<String?> = mutableListOf()
 
     private fun checkMvvmResponse() {
-        appViewModel.observeFilterTraderListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+
+        appViewModel.observeActivityTypeTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    trader_filter_progressbar?.hideProgressBar()
-
                     val jsonObject = JSONObject(response.body().toString())
-                    var jsonArray = jsonObject.getJSONArray("data")
-                    val homeTraderListResponse = Gson().fromJson<HomeTraderPostListResponse>(response.body().toString(), HomeTraderPostListResponse::class.java)
-
-                    if (traderDatalist != null) {
-                        traderDatalist.clear()
-                        traderDatalist.addAll(homeTraderListResponse.data)
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    traderType.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("name").toString()
+                        val id = jsonArray.getJSONObject(i).get("id").toString()
+                        traderType.add(name)
+                        traderID.add(id)
                     }
-                    val returnIntent = Intent()
-                    returnIntent.putExtra("filteredTraderDatalist", traderDatalist)
-                    setResult(Activity.RESULT_OK, returnIntent)
-                    finish()
-                }
-            } else {
+
+                    val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
+                    trader_type.adapter = arrayAdapter1
+
+                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            typeId = if(position!=0) {
+                                traderID[position]!!
+                            } else {
+                                ""
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            //TODO("Not yet implemented")
+                        }
+                    }
+
+                } }
+            else
+            {
                 ErrorBodyResponse(response, this, null)
-                trader_filter_progressbar?.hideProgressBar()
             }
         })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
                 //  city = place.name.toString()
                 et_location.text = place.name.toString()
@@ -149,16 +170,13 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
 
-            else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
+            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
                 Log.i("dddddd", status.statusMessage.toString())
             }
 
-            else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
-            }
+
         }
     }
 
@@ -190,13 +208,30 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
                 onBackPressed()
             }
             R.id.ll_public->{
-              //  dailogLocation()
+                launch(Dispatchers.Main.immediate) {
+                    et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                    latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                    longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                }
             }
             R.id.btnFilter->{
                 if (et_location.text.isNullOrEmpty()){
                     myCustomToast(getString(R.string.location_missing_error))
-                }else {
-                    hitFilterTrader_Api()
+                }
+                else {
+
+                    val intent = Intent()
+                        .putExtra("name",et_name.text.toString().trim())
+                        .putExtra("latitude",latitudee)
+                        .putExtra("longitude",longitudee)
+                        .putExtra("distance",distance)
+                        .putExtra("typeId",typeId)
+                        .putExtra("location",et_location.text.toString().trim())
+
+                    setResult(1215,intent)
+                    onBackPressed()
+
+                   // hitFilterTrader_Api()
                 }
             }
             R.id.et_location->{
@@ -206,26 +241,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         }
     }
 
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    fun dailogLocation() {
-       val  dialog = Dialog(this)
-        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setContentView(R.layout.alert_location)
-        dialog.setCancelable(true)
-        val rlYes: RelativeLayout
-        val rlNo: RelativeLayout
-        rlNo = dialog.findViewById(R.id.rlNo)
-        rlNo.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
-            dialog.dismiss()
-        }
-        rlYes = dialog.findViewById(R.id.rlYes)
-        rlYes.setOnClickListener { dialog.dismiss() }
-        dialog.show()
-    }
-
-
 
 }

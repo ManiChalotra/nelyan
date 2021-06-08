@@ -462,12 +462,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     imgPath = getPath(mContext, Uri.parse(imgPath)).toString()
 
                     setImage(imgPath)
-
-
-                   // getRealImagePath(imgPath)
-                    /*CropImage.activity(Uri.parse(imgPath))
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(mActivity)*/
                 }
 
 

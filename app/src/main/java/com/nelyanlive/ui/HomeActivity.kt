@@ -155,16 +155,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
 
                 if (intent.hasExtra("chat")) {
-
-                        Log.d("homeAuthKey====", "----------$userId")
-
                         userId = intent.getStringExtra("chat")!!
-                    Log.d("homeAuthKey==22==", "----------$userId")
-
                     bottomNavigationBar.selectedItemId = R.id.msg
-                       // fragment = MessageFragment()
-                       // loadFragment(fragment)
-
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "map") {
@@ -462,15 +454,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     ivToolBarImage!!.visibility = View.GONE
                     tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
-                    iv_bell!!.setOnClickListener {
-                        val intent = Intent(this@HomeActivity, ActivitiesOnMapActivity::class.java)
-                        intent.putExtra("event", "activity")
-                        startActivity(intent)
-                    }
-                    fragment = EventFragment()
+                    fragment = EventFragment(userlat, userlong)
                     loadFragment(fragment)
-                }
-            }
+                } }
         }
 
         return true

@@ -218,6 +218,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <TextView
+                            android:id="@+id/tvMessage"
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="MESSAGES"

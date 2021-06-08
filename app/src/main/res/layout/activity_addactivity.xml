@@ -237,7 +237,6 @@
                     android:dropDownSelector="@drawable/down_arrow"
                     android:fontFamily="@font/regular"
                     android:gravity="start"
-                    android:hint="Date Added"
                     android:inputType="text"
                     android:spinnerMode="dropdown"
                     android:textColor="@color/black"

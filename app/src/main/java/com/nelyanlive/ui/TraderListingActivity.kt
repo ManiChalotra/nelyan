@@ -1,7 +1,5 @@
 package com.nelyanlive.ui
 
-
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +19,11 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderListData
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderPostListResponse
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.activity_home_child_care_list.*
+import kotlinx.android.synthetic.main.fragment_trade_filter.*
 import kotlinx.android.synthetic.main.fragment_trader_listing.*
+import kotlinx.android.synthetic.main.fragment_trader_listing.ivBack
+import kotlinx.android.synthetic.main.fragment_trader_listing.tvFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,7 +44,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
 
     private var traderListingAdapter: TraderListingAdapter? = null
     private var rvTrader: RecyclerView? = null
-    var LAUNCH_SECOND_ACTIVITY = 1
+    var LAUNCH_SECOND_ACTIVITY = 3
 
     private val traderDatalist by lazy { ArrayList<HomeTraderListData>() }
 
@@ -50,7 +52,6 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
     private  val dataStoragePreference by lazy { DataStoragePreference(this@TraderListingActivity) }
     private var authkey: String?= null
     var dataString = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,17 +65,15 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
         }
 
         launch (Dispatchers.Main.immediate){
-            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                .first()
-            tv_city_zipcode.text =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            tv_city_zipcode.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
 
             if (checkIfHasNetwork(this@TraderListingActivity)) {
                 appViewModel.sendHomeActivitiesData(security_key,authkey, listType)
                 trader_list_progressbar?.showProgressBar()
                 checkMvvmResponse()
-
-            } else {
+            }
+            else {
                 showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))
             }
         }
@@ -120,6 +119,35 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 }
             } else {
                 ErrorBodyResponse(response, this, trader_list_progressbar)
+            }
+        })
+        appViewModel.observeFilterTraderListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    trader_list_progressbar?.hideProgressBar()
+                    Log.d("homeTraderListRespone", "-------------" + Gson().toJson(response.body()))
+                    val mResponse = response.body().toString()
+                    dataString = response.body().toString()
+
+                    val jsonObject = JSONObject(mResponse)
+                    val homeTraderResponse =  Gson().fromJson<HomeTraderPostListResponse>(response.body().toString(), HomeTraderPostListResponse::class.java)
+                    if (traderDatalist != null) {
+                        traderDatalist.clear()
+                        traderDatalist.addAll(homeTraderResponse.data)
+                    }
+                    if (traderDatalist.size == 0) {
+                        rvTrader!!.visibility = View.GONE
+                        tv_no_trader_list!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        rvTrader!!.visibility = View.VISIBLE
+                        tv_no_trader_list!!.visibility = View.GONE
+                        setTraderAdapter(traderDatalist)
+                    }
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
+                trader_list_progressbar?.hideProgressBar()
             }
         })
 
@@ -170,25 +198,55 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 }
             }
             R.id.tvFilter -> {
-                val i = Intent(this, TraderFilterActivity::class.java)
-                startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+                if (tvFilter.text == "Filter") {
+                    val i = Intent(this, TraderFilterActivity::class.java)
+                    startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+                }
+                else
+                {
+                    tvFilter.text = "Filter"
+                    launch (Dispatchers.Main.immediate){
+                        authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                        tv_city_zipcode.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+
+                        if (checkIfHasNetwork(this@TraderListingActivity)) {
+                            appViewModel.sendHomeActivitiesData(security_key,authkey, listType)
+                            trader_list_progressbar?.showProgressBar()
+                            checkMvvmResponse()
+                        }
+                        else {
+                            showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))
+                        }
+                    }
+
+                }
             } } }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode === LAUNCH_SECOND_ACTIVITY) {
-            if (resultCode === Activity.RESULT_OK) {
-                val traderDatalistss: ArrayList<HomeTraderListData> = data!!.getSerializableExtra("filteredTraderDatalist") as ArrayList<HomeTraderListData>
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if (resultCode == 1215) {
+                tvFilter.text = "Clear Filter"
+                val returnName = data!!.getStringExtra("name")
+                val returnLocation = data.getStringExtra("location")
+                val returnDistance = data.getStringExtra("distance")
+                val returnLat = data.getStringExtra("latitude")
+                val returnlng = data.getStringExtra("longitude")
+                val typeId = data.getStringExtra("typeId")
 
-                if (traderDatalistss.size == 0) {
-                    rvTrader!!.visibility = View.GONE
-                    tv_no_trader_list!!.visibility = View.VISIBLE
-                }
-                else {
-                    rvTrader!!.visibility = View.VISIBLE
-                    tv_no_trader_list!!.visibility = View.GONE
-                    setTraderAdapter(traderDatalistss)
+
+                if (checkIfHasNetwork(this)) {
+                    launch(Dispatchers.Main.immediate) {
+                       val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                        appViewModel.sendFilterTraderListData(security_key, authKey, returnLat!!, returnlng,
+                            returnDistance!!, returnName,typeId,
+                            returnLocation!! )
+                        trader_list_progressbar?.showProgressBar()
+
+                    }
+                } else {
+                    showSnackBar(this, getString(R.string.no_internet_error))
                 }
             } } }
 

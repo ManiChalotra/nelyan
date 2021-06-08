@@ -127,7 +127,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
                 requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
                 {putString("type","2")}
             }
-
             2->{
                 val i = Intent(requireActivity(), TraderListingActivity::class.java)
                 i.putExtra("type","3")

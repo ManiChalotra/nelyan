@@ -8,5 +8,6 @@ data class FavouriteEvent(
         val eventId: Int,
         val id: Int,
         val updatedAt: String,
-        val userId: Int
+        val userId: Int,
+        val image: Int
 )

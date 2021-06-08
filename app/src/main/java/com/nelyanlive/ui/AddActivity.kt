@@ -528,11 +528,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 ageGroupRepeatAdapter.notifyDataSetChanged()
             }
         }
-
-
-
-
-
     }
 
     override fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView) {
@@ -573,7 +568,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         val name = jsonArray.getJSONObject(i).get("name").toString()
                         country.add(name)
                     }
-                    val arrayAdapte1 = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
+                    val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, country as List<Any?>)
                     trader_type.adapter = arrayAdapte1
                 }
             } else {

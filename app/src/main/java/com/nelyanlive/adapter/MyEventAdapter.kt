@@ -8,18 +8,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.modals.HomeEventModel
 import com.nelyanlive.utils.image_base_URl
-/*import com.nelyan_live.utils.image_url_local*/
 import java.util.*
 
 class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayList<HomeEventModel>,
                      internal var OnCLICK: OnEventItemClickListner) : RecyclerView.Adapter<MyEventAdapter.Vh>() {
-    var a: Activity
+    var a: Activity = activity
     var context: Context? = null
     var rl_1: RelativeLayout? = null
 
@@ -32,20 +32,6 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
     override fun onBindViewHolder(holder: Vh, position: Int) {
 
         holder.bindMethod(datalist[position])
-
-       /* holder.eimg.setImageResource(datalist[position].img)
-        holder.ename.text = datalist[position].eventName
-        holder.eloc.text = datalist[position].eventLocation
-        holder.edate.text = datalist[position].eventDate
-        holder.etime.text = datalist[position].eventTime
-        holder.etimetwo.text = datalist[position].eventTimeSecond
-        holder.eprice.text = datalist[position].eventPrice.toString()
-        holder.edesc.text = datalist[position].eventDesc
-        holder.itemView.setOnClickListener {
-           context?.OpenActivity(ActivityDetailsActivity::class.java)
-            // AppUtils.gotoFragment(a, ActivityDetailsFragment(), R.id.frame_container, true)
-
-        }*/
     }
 
     override fun getItemCount(): Int {
@@ -64,7 +50,6 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
         lateinit var edesc: TextView
         lateinit var eimg: ImageView
         lateinit var ivEventFav: ImageView
-
 
         fun bindMethod(eventList: HomeEventModel) {
 
@@ -87,21 +72,16 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             eEnddate.text = context!!.getString(R.string.end_date1)+" "+eventList.eventEndDate
             etime.text = context!!.getString(R.string.start_time1)+" "+eventList.eventStartTime
             etimetwo.text = context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
-            eprice.text = eventList.eventPrice.toString()
+            eprice.text = eventList.eventPrice
             edesc.text = eventList.eventDesc
 
-
             ivEventFav.setOnClickListener {
-                OnCLICK.onAddFavoriteClick(eventList.id.toString(), ivEventFav)
+                OnCLICK.onAddFavoriteClick(eventList.id, ivEventFav)
 
             }
+            ivEventFav.setImageDrawable(ContextCompat.getDrawable(ivEventFav.context,if(eventList.isFav=="1"){R.drawable.heart}else{R.drawable.heart_purple}))
+
         }
-
-    }
-
-    init {
-        a = activity
-        this.datalist = datalist
     }
 
     interface OnEventItemClickListner {

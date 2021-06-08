@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:clickable="true"
     tools:context=".ui.ActivitiesFilterActivity">
 
     <RelativeLayout
@@ -17,12 +16,13 @@
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
         <TextView
+            android:id="@+id/tvName"
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:text="@string/activity"
@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:orientation="vertical">
@@ -65,10 +65,10 @@
                     android:id="@+id/et_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="60"
                     android:backgroundTint="@color/transparent"
-                    android:drawableRight="@drawable/blk_cross"
+                    android:drawableEnd="@drawable/blk_cross"
                     android:fontFamily="@font/regular"
                     android:hint="@string/enter_name"
                     android:maxLines="1"
@@ -110,7 +110,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_weight="60"
                     android:background="@color/black" />
 
@@ -136,7 +136,7 @@
 
                 <TextView
                     style="@style/CommonTextWrapcontent"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="Around me"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
@@ -161,7 +161,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:backgroundTint="@color/transparent"
                     android:hint="@string/enter_location"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -171,6 +171,54 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/tvType"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/semibold"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/type_of_activity" />
+
+            <LinearLayout
+                android:id="@+id/llType"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/traderType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:autofillHints="date"
+                    android:dropDownSelector="@drawable/down_arrow"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:inputType="text"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_10sdp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewType"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@color/black" />
+
+
+
 
             <TextView
                 style="@style/CommonTextWrapcontent"
@@ -185,7 +233,7 @@
                 style="@style/CommonTextMatchparent"
                 android:layout_marginTop="5dp"
                 android:background="@color/transparent"
-                android:drawableRight="@drawable/calendar_icon"
+                android:drawableEnd="@drawable/calendar_icon"
                 android:hint="Events by Date"
                 android:visibility="gone"
                 android:maxLines="1"
@@ -205,9 +253,7 @@
                 android:text="@string/type_of_activities"
                 android:textColor="@color/black"
                 android:visibility="gone"
-                android:textSize="@dimen/_12sdp"
-
- />
+                android:textSize="@dimen/_12sdp"/>
 
             <Spinner
                 android:id="@+id/trader_type"
@@ -236,7 +282,6 @@
             <Button
                 android:id="@+id/btnFilter"
                 style="@style/Button"
-                android:layout_alignParentBottom="true"
                 android:layout_marginTop="@dimen/_70sdp"
                 android:background="@drawable/btn"
                 android:textAllCaps="true"

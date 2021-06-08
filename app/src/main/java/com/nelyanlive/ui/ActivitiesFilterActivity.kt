@@ -25,7 +25,9 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyanlive.modals.homeactivitylist.HomeActivityResponse
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.filter_activity.*
+import kotlinx.android.synthetic.main.filter_activity.trader_type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -50,6 +52,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
     private var mDay = 0
     private var latitudee = ""
     private var longitudee = ""
+    private var typeId = ""
     private val job by lazy {
         Job()
     }
@@ -73,11 +76,16 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filter_activity)
 
+        if(intent.hasExtra("name"))
+        {
+            tvName.text = intent.getStringExtra("name")
+        }
+
         ivBack = findViewById(R.id.ivBack)
 
-        ivBack!!.setOnClickListener(View.OnClickListener { // getActivity().onBackPressed();
+        ivBack!!.setOnClickListener {
             onBackPressed()
-        })
+        }
 
         val c = Calendar.getInstance()
         mYear = c[Calendar.YEAR]
@@ -86,41 +94,31 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         tvCal = findViewById(R.id.tv_cal)
         tvCal!!.setOnClickListener(this)
         ll_1 = findViewById(R.id.ll_public)
-        ll_1!!.setOnClickListener(View.OnClickListener { dailogLocation() })
+        ll_1!!.setOnClickListener { dailogLocation() }
         btnFilter = findViewById(R.id.btnFilter)
         activityTypes = findViewById(R.id.trader_type)
 
         et_location.setOnClickListener(this)
         btnFilter!!.setOnClickListener(this)
 
-
-        /*val genderlist = arrayOf<String?>(
-                "",
-                "Sport", "Cultural", "Languages")
-        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                this, R.layout.customspinner, genderlist)
-        activityTypes!!.setAdapter(adapter)
-        activityTypes!!.setOnItemSelectedListener(this@FilterActivity)
-      */
         orderby1 = findViewById(R.id.spinner_dayss)
-        val km = arrayOf<String?>(
-                "", "0KM",
-                "5KM", "10KM", "15KM", "20KM", "25KM", "30KM"
-        )
+        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM")
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
                 this, R.layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
          distance= orderby1!!.selectedItem.toString()
 
-        /*try {
-            Field popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
-            ListPopupWindow popupWindow = (ListPopupWindow) popup.get(orderby1);
-            popupWindow.setHeight(50);
-        }
-        catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
-            Log.e("sjhj","jsbhj"+e);
-        }*/orderby1!!.onItemSelectedListener = this@ActivitiesFilterActivity
+       orderby1!!.onItemSelectedListener = this@ActivitiesFilterActivity
+
+        if(tvName.text !="Event")
+        {
+            viewType.visibility = View.VISIBLE
+            tvType.visibility = View.VISIBLE
+            llType.visibility = View.VISIBLE
+        launch(Dispatchers.Main.immediate) {
+            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            appViewModel.sendActivityTypeData(security_key, authKey)
+        }}
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
@@ -130,24 +128,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         super.onResume()
         checkMvvmResponse()
     }
-
-
-    private fun hitFilterActivity_Api() {
-        if (checkIfHasNetwork(this@ActivitiesFilterActivity)) {
-            launch(Dispatchers.Main.immediate) {
-                authKey =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                appViewModel.sendFilterActivityListData(security_key, authKey, latitudee, longitudee, distance!!, et_name.text.toString().trim(),
-                        et_location.text.toString().trim() )
-                activity_filter_progressbar?.showProgressBar()
-
-            }
-        } else {
-            showSnackBar(this@ActivitiesFilterActivity, getString(R.string.no_internet_error))
-        }
-
-    }
-
 
     private fun dateDialog() {
         val listener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> tvCal!!.text = dayOfMonth.toString() +
@@ -179,22 +159,67 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
 
 
     fun dailogLocation() {
-        dialog = Dialog(this)
+       /* dialog = Dialog(this)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_location)
         dialog!!.setCancelable(true)
-        val rlYes: RelativeLayout
-        val rlNo: RelativeLayout
-        rlNo = dialog!!.findViewById(R.id.rlNo)
-        rlNo.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
+        rlNo.setOnClickListener {
             dialog!!.dismiss()
         }
-        rlYes = dialog!!.findViewById(R.id.rlYes)
+        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener { dialog!!.dismiss() }
-        dialog!!.show()
+        dialog!!.show()*/
+
+
+        //fetch current address
+        launch(Dispatchers.Main.immediate) {
+            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+        }
+
     }
+    val category: ArrayList<String?> = ArrayList()
+    val categoryId: ArrayList<String?> = ArrayList()
 
     private fun checkMvvmResponse() {
+
+        appViewModel.observeActivityTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+                    val jsonObject = JSONObject(response.body().toString())
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    category.add("")
+                    categoryId.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("name").toString()
+                        val id = jsonArray.getJSONObject(i).get("id").toString()
+                        category.add(name)
+                        categoryId.add(id)
+                    }
+                    val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
+                    traderType.adapter = arrayAdapte1
+                    traderType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            typeId = if(position!=0) { categoryId[position]!! } else { "" }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            //TODO("Not yet implemented")
+                        }
+                    }
+                }
+            } else {
+                ErrorBodyResponse(response, this, null)
+            }
+        })
+
         appViewModel.observeFilterActivityListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
@@ -220,21 +245,11 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         })
     }
 
-/*
-    override fun onPermissionGranted() {
-
-    }
-
-    override fun onLocationGet(latitude: String?, longitude: String?) {
-        latitudee=latitude!!
-        longitudee=longitude!!
-    }
-*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
               //  city = place.name.toString()
                 et_location.text = place.name.toString()
@@ -246,19 +261,11 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
 
-            else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
+            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
                 Log.i("dddddd", status.statusMessage.toString())
-            }
-
-            else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
-            }
-        }
-    }
-
+            } } }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -271,19 +278,36 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
             R.id.btnFilter ->{
                 if (et_location.text.isNullOrEmpty()){
                   myCustomToast(getString(R.string.location_missing_error))
-                }else {
-                    hitFilterActivity_Api()
                 }
-                /*  val intent = Intent()
-                  intent.putExtra("name", et_name.text.toString().trim())
-                  intent.putExtra("distance", orderby1!!.selectedItem.toString().trim())
-                  intent.putExtra("location", et_location.text.toString().trim())
-                  intent.putExtra("date", tv_cal.text.toString().trim())
-                  intent.putExtra("lat", latitude)
-                  intent.putExtra("lng", longitude)
-                  setResult(Activity.RESULT_OK, intent)
-                  finish()
-  */
+                else {
+                    when (tvName.text) {
+                        "Event" -> {
+
+                            val intent = Intent().putExtra("name",et_name.text.toString())
+                                .putExtra("latitude",latitudee)
+                                .putExtra("longitude",longitudee)
+                                .putExtra("distance",distance)
+                                .putExtra("location",et_location.text.toString())
+
+                            setResult(1212,intent)
+                            onBackPressed()
+                        }
+                        "Activity" -> {
+                            val intent = Intent().putExtra("name",et_name.text.toString())
+                                .putExtra("latitude",latitudee)
+                                .putExtra("longitude",longitudee)
+                                .putExtra("distance",distance)
+                                .putExtra("typeId",typeId)
+                                .putExtra("location",et_location.text.toString())
+
+                            setResult(1213,intent)
+                            onBackPressed()
+                        }
+                        else -> {
+                           // hitFilterActivity_Api()
+                        }
+                    }
+                }
             }
         }
     }
