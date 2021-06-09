@@ -2,10 +2,12 @@ package com.nelyanlive.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.modals.HomeEventModel
+import com.nelyanlive.ui.ActivityDetailsActivity
+import com.nelyanlive.utils.OpenActivity
 import com.nelyanlive.utils.image_base_URl
 import java.util.*
 
@@ -50,10 +54,12 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
         lateinit var edesc: TextView
         lateinit var eimg: ImageView
         lateinit var ivEventFav: ImageView
+        lateinit var llEvent: LinearLayout
 
         fun bindMethod(eventList: HomeEventModel) {
 
             ename = itemView.findViewById(R.id.tv_eventname)
+            llEvent = itemView.findViewById(R.id.llEvent)
             eloc = itemView.findViewById(R.id.tv_eventloc)
             eStartdate = itemView.findViewById(R.id.tv_eventStartdate)
             eEnddate = itemView.findViewById(R.id.tv_eventEnddate)
@@ -75,6 +81,18 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             eprice.text = eventList.eventPrice
             edesc.text = eventList.eventDesc
 
+            llEvent.setOnClickListener {
+
+
+
+                context?.OpenActivity(ActivityDetailsActivity::class.java) {
+                    putString("activityId",eventList.activityId )
+                    putString("categoryId","")
+                    putString("lati", eventList.latitude)
+                    putString("longi",eventList.longitude)
+                }
+
+            }
             ivEventFav.setOnClickListener {
                 OnCLICK.onAddFavoriteClick(eventList.id, ivEventFav)
 

@@ -490,12 +490,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                 if (address.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
-                                    if (phone.isEmpty()) {
-                                        myCustomToast(getString(R.string.phone_number_missing))
-                                    } else {
+                                   // if (phone.isEmpty()) {
+                                   //     myCustomToast(getString(R.string.phone_number_missing))
+                                  //  } else {
                                         if (email.isEmpty()) {
                                             myCustomToast(getString(R.string.email_address_missing))
-                                        } else {
+                                        }
+                                        else {
                                             when {
                                                 dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay.isNullOrEmpty() -> {
                                                     myCustomToast("Please select day")
@@ -543,7 +544,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                             }
                                                             hitApiForBannerImages(0)
 
-                                                        } } } } } } } } } } } } } }
+                                                        } } } } }
+                               // }
+                            } } } } } } } }
 
     override fun getRealImagePath(imgPath: String?) {
         when (IMAGE_SELECTED_TYPE) {

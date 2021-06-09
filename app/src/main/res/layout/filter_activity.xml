@@ -56,6 +56,57 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:src="@drawable/around_me_icon" />
+
+                <TextView
+                    style="@style/CommonTextWrapcontent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text="Around me"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:src="@drawable/location_grey" />
+
+                <TextView
+                    android:id="@+id/et_location"
+                    style="@style/SimpleEdittext"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:backgroundTint="@color/transparent"
+                    android:hint="@string/enter_location"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/black" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
@@ -121,56 +172,6 @@
                     android:background="@color/black" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_public"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_14sdp"
-                    android:layout_height="@dimen/_14sdp"
-                    android:src="@drawable/around_me_icon" />
-
-                <TextView
-                    style="@style/CommonTextWrapcontent"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:text="Around me"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:src="@drawable/location_grey" />
-
-                <TextView
-                    android:id="@+id/et_location"
-                    style="@style/SimpleEdittext"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:backgroundTint="@color/transparent"
-                    android:hint="@string/enter_location"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/black" />
 
             <TextView
                 android:id="@+id/tvType"

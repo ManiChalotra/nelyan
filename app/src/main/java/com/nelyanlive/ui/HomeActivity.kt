@@ -185,7 +185,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nurFrag") {
-
                         OpenActivity(HomeChildCareDetailsActivity::class.java)
                     }
                 }
@@ -454,7 +453,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     ivToolBarImage!!.visibility = View.GONE
                     tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
-                    fragment = EventFragment(userlat, userlong)
+                    fragment = EventFragment(userlat, userlong,userlocation)
                     loadFragment(fragment)
                 } }
         }

@@ -371,6 +371,7 @@
 
 
                     <TextView
+                        android:id="@+id/tvPhoneTrader"
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_10sdp"

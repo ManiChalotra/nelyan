@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.nelyanlive.R
+import com.nelyanlive.utils.OpenActivity
 import com.nelyanlive.utils.image_base_URl
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_child_care.*
@@ -74,44 +75,47 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
 
         mMap = googleMap
 
-        // create bounds that encompass every location we reference
-        val boundsBuilder = LatLngBounds.Builder()
-        // include all places we have markers for on the map
+        if(list.isEmpty())
+        {}
+        else {
+            // create bounds that encompass every location we reference
+            val boundsBuilder = LatLngBounds.Builder()
+            // include all places we have markers for on the map
 
-        (list.indices).map {
-            boundsBuilder.include(list[it].position)
+            (list.indices).map {
+                boundsBuilder.include(list[it].position)
+            }
+
+            val bounds = boundsBuilder.build()
+
+            with(mMap!!) {
+                // Hide the zoom controls as the button panel will cover it.
+                uiSettings!!.isZoomControlsEnabled = false
+
+                // Setting an info window adapter allows us to change the both the contents and
+                setInfoWindowAdapter(ChildCareInfoWindowAdapter())
+
+                setOnInfoWindowClickListener(this@EventsOnMapActivity)
+
+                // Ideally this string would be localised.
+                setContentDescription("Map with lots of markers.")
+
+                moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
+            }
+
+            // Add lots of markers to the googleMap.
+            addMarkersToMap()
         }
-
-        val bounds = boundsBuilder.build()
-
-        with(mMap!!) {
-            // Hide the zoom controls as the button panel will cover it.
-            uiSettings!!.isZoomControlsEnabled = false
-
-            // Setting an info window adapter allows us to change the both the contents and
-            setInfoWindowAdapter(ChildCareInfoWindowAdapter())
-
-            setOnInfoWindowClickListener(this@EventsOnMapActivity)
-
-            // Ideally this string would be localised.
-            setContentDescription("Map with lots of markers.")
-
-            moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
-        }
-
-        // Add lots of markers to the googleMap.
-        addMarkersToMap()
-
     }
 
     override fun onInfoWindowClick(marker: Marker) {
 
-       /* OpenActivity(ActivityDetailsActivity::class.java) {
+        OpenActivity(ActivityDetailsActivity::class.java) {
             putString("activityId", list[marker.tag.toString().toInt()].activityId)
             putString("categoryId", list[marker.tag.toString().toInt()].categoryId)
             putString("lati", marker.position.latitude.toString())
             putString("longi", marker.position.longitude.toString())
-        }*/
+        }
 
     }
 

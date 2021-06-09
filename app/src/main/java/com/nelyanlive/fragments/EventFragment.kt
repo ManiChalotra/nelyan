@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.tookbar.*
 import org.json.JSONObject
 
-class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
+class EventFragment(var userlat: String, var userlong: String,var userlocation: String) : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
 
     private var listner: CommunicationListner? = null
 
@@ -81,16 +81,12 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                 tvFilter!!.text="Filter"
                 if (checkIfHasNetwork(requireActivity())) {
                     authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
-                    appViewModel.sendEventListData(security_key, authkey, userlat, userlong)
+                    appViewModel.sendFilterEventListData(security_key, authkey, userlat, userlong,"",
+                        "",  userlocation)
                     eventProgressBar?.showProgressBar()
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
-                }
-
-            }
-        }
-
-        //(mContext as HomeActivity).iv_bell!!.setImageResource(R.drawable.location_circle)
+                } } }
 
         val LM = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rc!!.layoutManager = LM
@@ -142,8 +138,6 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
 
-                Log.d("homeEventResponse", "-------$returnName---$returnLocation---$returnDistance---$returnLat-----$returnlng------")
-
                 if (checkIfHasNetwork(requireActivity())) {
                      authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
                      appViewModel.sendFilterEventListData(security_key, authkey, returnLat, returnlng,returnDistance,
@@ -159,11 +153,13 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
     private fun eventListAPI() {
         if (checkIfHasNetwork(requireActivity())) {
              authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
-            appViewModel.sendEventListData(security_key, authkey, userlat, userlong)
+            appViewModel.sendFilterEventListData(security_key, authkey, userlat, userlong,"",
+                "",  userlocation)
             eventProgressBar?.showProgressBar()
         } else {
             showSnackBar(requireActivity(), getString(R.string.no_internet_error))
         }
+
     }
 
     private fun setAdaptor(datalist: ArrayList<HomeEventModel>) {
@@ -199,6 +195,7 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                         val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
                         val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
                         val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+                        val activityId = jsonObject.getJSONArray("data").getJSONObject(i).get("activityId").toString()
 
                         if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
                             val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
@@ -210,11 +207,13 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                             val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                     .getJSONObject(0).get("endTime").toString()
                             datalist.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
-                                    description, isFav))
-                        } else {
+                                    description, isFav,activityId,latitude,longitude))
+                        }
+                        else {
                             datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
-                                    price, description, isFav))
-                        } }
+                                    price, description, isFav,activityId, latitude, longitude))
+                        }
+                    }
 
                     if (mSizeOfData == 0) {
                         rc!!.visibility = View.GONE
@@ -278,6 +277,7 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                             val longitude = jsonObject.getJSONArray("data").getJSONObject(i).get("longitude").toString()
                             val price = jsonObject.getJSONArray("data").getJSONObject(i).get("price").toString()
                             val city = jsonObject.getJSONArray("data").getJSONObject(i).get("city").toString()
+                            val activityId = jsonObject.getJSONArray("data").getJSONObject(i).get("activityId").toString()
 
                             if (jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").length() != 0) {
                                 val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
@@ -289,11 +289,11 @@ class EventFragment(var userlat: String, var userlong: String) : Fragment(), OnI
                                 val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                         .getJSONObject(0).get("endTime").toString()
                                 datalist.add(HomeEventModel(id, image, name, city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price,
-                                        description, isFav))
+                                        description, isFav, activityId, latitude, longitude))
                             }
                             else {
                                 datalist.add(HomeEventModel(id, image, name, city, "", "", "", "",
-                                        price, description, isFav))
+                                        price, description, isFav, activityId, latitude, longitude))
                             }
                         }
 

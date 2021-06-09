@@ -37,7 +37,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CoroutineScope, View.OnClickListener {
+class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener {
 
     var btnFilter: Button? = null
     var tvCal: TextView? = null
@@ -53,17 +53,12 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
     private var latitudee = ""
     private var longitudee = ""
     private var typeId = ""
-    private val job by lazy {
-        Job()
-    }
+    private val job by lazy { Job() }
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
-    private val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
-    }
+    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private var authKey = ""
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesFilterActivity) }
-
 
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
@@ -77,16 +72,12 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         setContentView(R.layout.filter_activity)
 
         if(intent.hasExtra("name"))
-        {
-            tvName.text = intent.getStringExtra("name")
-        }
+        { tvName.text = intent.getStringExtra("name")}
 
         ivBack = findViewById(R.id.ivBack)
 
-        ivBack!!.setOnClickListener {
-            onBackPressed()
-        }
-
+        ivBack!!.setOnClickListener { onBackPressed() }
+        checkMvvmResponse()
         val c = Calendar.getInstance()
         mYear = c[Calendar.YEAR]
         mMonth = c[Calendar.MONTH]
@@ -103,12 +94,26 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
 
         orderby1 = findViewById(R.id.spinner_dayss)
         val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM")
+        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30")
+
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
                 this, R.layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
-         distance= orderby1!!.selectedItem.toString()
 
-       orderby1!!.onItemSelectedListener = this@ActivitiesFilterActivity
+       orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+           override fun onItemSelected(
+               parent: AdapterView<*>?,
+               view: View?,
+               position: Int,
+               id: Long
+           ) {
+               distance = if(km[position].isNullOrBlank()){""}else{kmValue[position]!!}
+           }
+
+           override fun onNothingSelected(parent: AdapterView<*>?) {
+               // TODO("Not yet implemented")
+           }
+       }
 
         if(tvName.text !="Event")
         {
@@ -118,16 +123,12 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendActivityTypeData(security_key, authKey)
-        }}
-    }
+        }} }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onResume() {
         super.onResume()
-        checkMvvmResponse()
-    }
+         }
 
     private fun dateDialog() {
         val listener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> tvCal!!.text = dayOfMonth.toString() +
@@ -145,7 +146,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         // Create a new Places client instance.
         val placesClient: PlacesClient = Places.createClient(this@ActivitiesFilterActivity)
         // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = Arrays.asList(
+        val fields: List<Place.Field> = listOf(
                 Place.Field.ID,
                 Place.Field.NAME,
                 Place.Field.ADDRESS,
@@ -156,7 +157,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
     }
-
 
     fun dailogLocation() {
        /* dialog = Dialog(this)
@@ -190,6 +190,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
                 if (response.body() != null) {
                     val jsonObject = JSONObject(response.body().toString())
                     val jsonArray = jsonObject.getJSONArray("data")
+                    category.clear()
+                    categoryId.clear()
                     category.add("")
                     categoryId.add("")
                     for (i in 0 until jsonArray.length()) {
@@ -227,7 +229,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
 
                     val jsonObject = JSONObject(response.body().toString())
                     var jsonArray = jsonObject.getJSONArray("data")
-                    val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(response.body().toString(), HomeActivityResponse::class.java)
+                    val homeAcitivitiesResponse = Gson().fromJson(response.body().toString(), HomeActivityResponse::class.java)
 
                     if (activitisDatalist != null) {
                         activitisDatalist.clear()
@@ -244,7 +246,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), AdapterView.OnItemSelected
             }
         })
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

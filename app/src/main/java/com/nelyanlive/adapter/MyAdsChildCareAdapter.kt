@@ -49,7 +49,6 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
                 Log.e("Dot Click", "Clikkceckk")
                 callPopup(ivDot, adapterPosition, myadsList.id)
 
-
             }
 
             tvActivityname.text= myadsList.name
@@ -101,7 +100,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         popupWindow!!.isOutsideTouchable = true
 
 
-        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.RIGHT)
+        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.END)
 
         editt.setOnClickListener {
             deleteEditListner.onEditAdClick(adapterPosition, adId.toString())

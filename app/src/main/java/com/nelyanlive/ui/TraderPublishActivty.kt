@@ -208,7 +208,9 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    if(!jsonObject.getJSONObject("data").isNull("user")) {
+                        setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    }
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
 
@@ -238,8 +240,18 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         }
                     }
                     tv_trader_desc.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_trader_phone.text = jsonObject.getJSONObject("data").get("country_code").toString() + "-" +
-                            jsonObject.getJSONObject("data").get("phone").toString()
+
+                    if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
+                        tv_trader_phone.text =
+                            jsonObject.getJSONObject("data").get("country_code").toString() + "-" +
+                                    jsonObject.getJSONObject("data").get("phone").toString()
+
+                    }
+                    else
+                    {
+                        tv_trader_phone.visibility = View.GONE
+                        tvPhoneTrader.visibility = View.GONE
+                    }
                     tv_trader_email.text = jsonObject.getJSONObject("data").get("email").toString()
                     tv_website.text = jsonObject.getJSONObject("data").get("website").toString()
                     tv_trader_address.text = jsonObject.getJSONObject("data").get("address").toString() +" "+

@@ -91,21 +91,28 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
         // Setting OnItemClickListener to the Spinner
         trader_type!!.onItemSelectedListener = this@HomeChildCareListActivity
 
-        launch(Dispatchers.Main.immediate) {
-            authkey =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-            tv_userCityOrZipcode.text =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-
-            if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
-                appViewModel.sendHomeActivitiesData(security_key, authkey, listType)
-                child_care_list_progressbar?.showProgressBar()
-                checkMvvmResponse()
-
-            } else {
-                showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
-            }
+        if (checkIfHasNetwork(this)) {
+            launch(Dispatchers.Main.immediate) {
+                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                appViewModel.sendChildCareFilterData(
+                    security_key,
+                    authKey,
+                    latitudee,
+                    longitudee,
+                    "",
+                    "",
+                    location,
+                    ""
+                )
+                child_care_list_progressbar?.hideProgressBar() }
         }
+        else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
+        checkMvvmResponse()
     }
 
     private fun setChildcareAdapter(childCareDatalist: ArrayList<HomeChildCareeData>) {
@@ -133,25 +140,34 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     val i = Intent(this, ChildCareFilterActivity::class.java)
                     startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
                 } else {
-                    tvFilter.text = "Filter"
-                    launch(Dispatchers.Main.immediate) {
-                        authkey =
-                            dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                                .first()
-                        tv_userCityOrZipcode.text =
-                            dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
 
-                        if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
-                            appViewModel.sendHomeActivitiesData(security_key, authkey, listType)
-                            child_care_list_progressbar?.showProgressBar()
-                            checkMvvmResponse()
-                        } else {
-                            showSnackBar(
-                                this@HomeChildCareListActivity,
-                                getString(R.string.no_internet_error)
+                    if (checkIfHasNetwork(this)) {
+                        tvFilter.text = "Filter"
+                        launch(Dispatchers.Main.immediate) {
+                            val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                            val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                            val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                            val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+
+                            appViewModel.sendChildCareFilterData(
+                                security_key,
+                                authKey,
+                                latitudee,
+                                longitudee,
+                                "",
+                                "",
+                                location,
+                                ""
                             )
-                        }
+                            child_care_list_progressbar?.hideProgressBar() }
                     }
+                    else {
+                        showSnackBar(this, getString(R.string.no_internet_error))
+                    }
+
+
+
+
                 }
             }
             R.id.iv_map -> {
@@ -180,6 +196,10 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 val returnlng = data.getStringExtra("longitude")
                 val childCareType = data.getStringExtra("childCareType")
 
+                Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$childCareType===")
+
+
+
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
@@ -195,12 +215,12 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             returnLocation!!,
                             childCareType!!
                         )
-                        child_care_list_progressbar?.hideProgressBar()
-                    }
+                        child_care_list_progressbar?.hideProgressBar() }
                 }
                 else {
                     showSnackBar(this, getString(R.string.no_internet_error))
-                } } } }
+                }
+            } } }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
 
@@ -261,7 +281,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
                         val jsonObject = JSONObject(mResponse)
-                        val homeChildcareResponse = Gson().fromJson<HomeChiildCareREsponse>(
+                        val homeChildcareResponse = Gson().fromJson(
                             response.body().toString(),
                             HomeChiildCareREsponse::class.java
                         )

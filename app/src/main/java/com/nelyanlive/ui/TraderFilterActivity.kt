@@ -2,7 +2,6 @@ package com.nelyanlive.ui
 
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,22 +17,11 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.gson.Gson
 import com.nelyanlive.R
-import com.nelyanlive.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
-import com.nelyanlive.modals.hometraderpostlist.HomeTraderListData
-import com.nelyanlive.modals.hometraderpostlist.HomeTraderPostListResponse
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.activity_trader.*
-import kotlinx.android.synthetic.main.fragment_child_care.*
 import kotlinx.android.synthetic.main.fragment_trade_filter.*
-import kotlinx.android.synthetic.main.fragment_trade_filter.et_location
-import kotlinx.android.synthetic.main.fragment_trade_filter.et_name
-import kotlinx.android.synthetic.main.fragment_trade_filter.ivBack
-import kotlinx.android.synthetic.main.fragment_trade_filter.ll_public
-import kotlinx.android.synthetic.main.fragment_trade_filter.trader_type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -43,7 +31,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterView.OnItemSelectedListener, CoroutineScope
+class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 {
 
     private var latitudee = ""
@@ -52,12 +40,10 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
     private val job by lazy {
         Job()
     }
-    private val traderDatalist by lazy { ArrayList<HomeTraderListData>() }
 
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
-    private var authKey = ""
     var distance: String= ""
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@TraderFilterActivity) }
@@ -74,18 +60,25 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         setContentView(R.layout.fragment_trade_filter)
         initalizeClicks()
 
-        val genderlist = arrayOf<String?>("", "Sport", "Cultural", "Languages")
-        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                this, R.layout.customspinner, genderlist)
-        trader_type!!.adapter = adapter
-        trader_type!!.onItemSelectedListener = this@TraderFilterActivity
-        val km = arrayOf<String?>(
-                "", "0KM", "5KM", "10KM", "15KM", "20KM",
-                "25KM", "30KM")
-        val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                this, R.layout.size_customspinner, km)
+
+        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM")
+        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30")
+        val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.size_customspinner, km)
         spinner_trader_distance!!.adapter = adapter1
-        spinner_trader_distance!!.onItemSelectedListener = this@TraderFilterActivity
+        spinner_trader_distance!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+              distance = if(km[position].isNullOrBlank()){""}else{kmValue[position]!!}
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+               // TODO("Not yet implemented")
+            }
+        }
         checkMvvmResponse()
 
         if (checkIfHasNetwork(this)) {
@@ -118,6 +111,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
                     val jsonObject = JSONObject(response.body().toString())
                     val jsonArray = jsonObject.getJSONArray("data")
                     traderType.add("")
+                    traderID.add("")
                     for (i in 0 until jsonArray.length()) {
                         val name = jsonArray.getJSONObject(i).get("name").toString()
                         val id = jsonArray.getJSONObject(i).get("id").toString()
@@ -180,7 +174,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         }
     }
 
-
     private fun showPlacePicker() {
         // Initialize Places.
         Places.initialize(
@@ -241,7 +234,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener,AdapterVi
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
 
 }

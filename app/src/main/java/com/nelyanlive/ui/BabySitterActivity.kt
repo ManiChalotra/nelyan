@@ -43,7 +43,6 @@ import kotlin.coroutines.CoroutineContext
 class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
-    var mediaArrayBody: ArrayList<MultipartBody.Part> = ArrayList()
 
 
     private var IMAGE_SELECTED_TYPE = ""
@@ -68,14 +67,9 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     private var imageVideoListPosition = -1
 
-    private var savedaddEventImagesData = false
 
     private var imagePathList = ArrayList<MultipartBody.Part>()
-    private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
-    private lateinit var listAddEventDataModel: ArrayList<ModelPOJO.AddEventDataModel>
-
-    // dialo for progress
     private var progressDialog = ProgressDialog(this)
 
     override val coroutineContext: CoroutineContext
@@ -182,12 +176,14 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             if (placeSpin.isEmpty()) {
                                 myCustomToast(getString(R.string.places_number_error))
                             } else {
-                                if (phoneNumber.isEmpty()) {
-                                    myCustomToast(getString(R.string.phone_number_missing))
-                                } else {
+                              //  if (phoneNumber.isEmpty()) {
+                              //      myCustomToast(getString(R.string.phone_number_missing))
+                              //  }
+                         //   else {
                                     if (address_baby_sitter.isEmpty()) {
                                         myCustomToast(getString(R.string.address_missing_error))
-                                    } else {
+                                    }
+                                    else {
                                         if (descp_baby_sitter.isEmpty()) {
                                             myCustomToast(getString(R.string.description_missing))
                                         } else {
@@ -232,7 +228,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             }
                                         }
                                     }
-                                }
+                              //  }
                             }
                         }
 
@@ -339,7 +335,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
     private fun checkMvvmResponse() {
-        Log.e("going", "messsaaaa")
 
         appViewModel.observeChildCareTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {

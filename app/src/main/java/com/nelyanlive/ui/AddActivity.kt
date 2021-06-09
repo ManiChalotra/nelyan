@@ -94,8 +94,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     var imageVideoUrlListing = arrayListOf("", "", "", "", "")
 
     private var imageVideoListPosition = -1
-    private var selectedUrlListing: ArrayList<String> = ArrayList()
-    private var savedaddEventImagesData = false
 
     //saving values variables
     private var activity_type = ""
@@ -172,8 +170,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         // clicks for buttons
         btnSubmit.setOnClickListener(this)
         ivBack.setOnClickListener(this)
-        //   et_addressActivity.isFocusable = false
-        // et_addressActivity.isFocusableInTouchMode = false
         et_addressActivity.setOnClickListener(this)
 
     }
@@ -225,12 +221,14 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 if (description.isEmpty()) {
                                     myCustomToast(getString(R.string.description_missing))
                                 } else {
-                                    if (phone.isEmpty()) {
-                                        myCustomToast(getString(R.string.phone_number_missing))
-                                    } else {
+                                    //if (phone.isEmpty()) {                                        //comment when phone set from backend
+                                    //    myCustomToast(getString(R.string.phone_number_missing))  //comment when phone set from backend
+                                   // }                                                            //comment when phone set from backend
+                                   // else {                                                       //comment when phone set from backend
                                         if (address.isEmpty()) {
                                             myCustomToast(getString(R.string.address_missing_error))
-                                        } else {
+                                        }
+                                        else {
                                             // adding values
                                             activity_type = trader_type.selectedItem.toString()
 
@@ -261,9 +259,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                             messagee = message
                                             phonee = phone
 
-
-
-
                                             // for check upper images url from response
                                             Log.d("selectedImages", "-----------$selectedImags")
                                             Log.d("selectedImages", "-----------$listAgeGroupDataModel")
@@ -276,7 +271,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                     lastPos += 1
                                                 }
                                             }
-
 
                                             when {
                                                 listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
@@ -291,14 +285,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                              //hitApiForBannerImages(0)
 
                                         }
-                                    }
+                                 //   }                                                            //comment when phone set from backend
                                 }
-
-                            }
-                        }
-                    }
-                }
-            }
+                            } } } } }
 
             R.id.ivBack -> {
                 onBackPressed()
@@ -306,25 +295,21 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             R.id.et_addressActivity -> {
                 showPlacePicker()
             }
-        }
-    }
+        } }
 
     private fun hitApiForBannerImages(position: Int) {
 
         imageVideoListPosition = position
 
-
-
             val media = selectedImags[imageVideoListPosition]
 
             if (!media.isNullOrEmpty()) {
 
-
                 val mfile: File?
                 mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
                 val photo: MultipartBody.Part?
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
                 imagePathList.clear()
                 imagePathList.add(photo)
                 val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -333,45 +318,13 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 appViewModel.sendUploadImageData(type, users, imagePathList)
                 progressDialog.setProgressDialog()
             }
-
             else {
-
                 imageVideoListPosition += 1
-
                 if (imageVideoListPosition < 4) {
                     hitApiForBannerImages(imageVideoListPosition)
                 }
             }
-
-      //  }
-
     }
-
-
-    private fun gettingURLOfEventImages() {
-        imagePathList2.clear()
-
-        for (i in 0 until listAddEventDataModel.size) {
-            val media = listAddEventDataModel[i].image
-            if (!media.isNullOrEmpty()) {
-                var mfile: File? = null
-                mfile = File(media)
-                val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-                var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
-                imagePathList2.add(photo)
-            }
-        }
-
-        Log.d("imagePathLsiting", "-------------" + imagePathList2.size)
-
-        val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-        appViewModel.sendUploadImageData(type, users, imagePathList2)
-
-    }
-
-
 
     private fun showPlacePicker() {
         Places.initialize(applicationContext, googleMapKey)
@@ -398,12 +351,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            when {
-                resultCode === Activity.RESULT_OK -> {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
                     val place = Autocomplete.getPlaceFromIntent(data!!)
                     cityAddress = place.address.toString()
-                    et_addressActivity.text = cityAddress.toString()
+                    et_addressActivity.text = cityAddress
                     cityName = place.name.toString()
                     // cityID = place.id.toString()
                     addressLatitude = place.latLng?.latitude.toString()
@@ -411,14 +364,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
                     Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
                 }
-                resultCode === AutocompleteActivity.RESULT_ERROR -> {
+                AutocompleteActivity.RESULT_ERROR -> {
                     // TODO: Handle the error.
                     val status: Status = Autocomplete.getStatusFromIntent(data!!)
                     Log.i("dddddd", status.statusMessage.toString())
-                }
-                resultCode === Activity.RESULT_CANCELED -> {
-                    // The user canceled the operation.
-                    Log.i("dddddd", "-------Operation is cancelled ")
                 }
             }
         } else if (requestCode == addEventRequestcode) {
@@ -429,11 +378,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             // cityID = place.id.toString()
             cityLatitude = place.latLng?.latitude.toString()
             cityLongitude = place.latLng?.longitude.toString()
-
             updateEventList[pos].lati = cityLatitude
             updateEventList[pos].city = cityName
             updateEventList[pos].longi = cityLongitude
-
             addEventRepeatAdapter.notifyDataSetChanged()
 
         }
@@ -487,7 +434,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
         when (IMAGE_SELECTED_TYPE) {
             "1" -> {
-                //    imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
+                // imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video1)
             }
             "2" -> {
@@ -524,7 +471,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             listAgeGroupDataModel[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
             listAgeGroupDataModel[list.size-1].timeTo.isNullOrEmpty() -> { myCustomToast("please select To Time in previous data")}
             else -> {  list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
-                // imageList.add(ModelPOJO.EventImage(""))
                 ageGroupRepeatAdapter.notifyDataSetChanged()
             }
         }
@@ -534,7 +480,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         updateEventList = list
         pos = position
         showPlacePickerForAddEvent()
-
     }
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
@@ -614,7 +559,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
                             }
 
-
                             // now making json format for upper images media
                             for (i in 0 until urlListingFromResponse.size) {
                                 val json = JSONObject()
@@ -628,13 +572,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     addEventUrlListingResponse.add(element.image.toString())
                                 }
 
-
                                 for (i in 0 until listAddEventDataModel.size) {
                                     val json = JSONObject()
                                     json.put("image", addEventUrlListingResponse[i])
                                     json.put("name", listAddEventDataModel[i].name.toString())
                                     json.put("file_type", "image")
-                                    // for(j in 0 .. i){
                                     json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
                                     json.put("date_to", listAddEventDataModel[i].dateTo.toString())
                                     json.put("time_from", listAddEventDataModel[i].timeFrom.toString())
@@ -644,7 +586,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     json.put("city", listAddEventDataModel[i].city.toString())
                                     json.put("lat", listAddEventDataModel[i].lati.toString())
                                     json.put("lng", listAddEventDataModel[i].longi.toString())
-                                    //}
                                     addEvent.put(json)
                                 }
                             }
@@ -667,10 +608,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         else {
                             if (imageVideoListPosition != lastPos - 1) {
                                 urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
-                                // if (imageVideoListPosition <= 4) {
                                 imageVideoListPosition += 1
                                 hitApiForBannerImages(imageVideoListPosition)
-                                //}
 
                             } else {
                                 // response for addevent images data
@@ -679,14 +618,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
                                 }
 
-
                                 // now making json format for upper images media
                                 for (i in 0 until urlListingFromResponse.size) {
                                     val json = JSONObject()
                                     json.put("image", urlListingFromResponse[i])
                                     media.put(json)
                                 }
-
                                 // json format for addEvent
                                 if (event) {
                                     for (element in response.body()!!.data!!) {
@@ -699,7 +636,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                         json.put("image", addEventUrlListingResponse[i])
                                         json.put("name", listAddEventDataModel[i].name.toString())
                                         json.put("file_type", "image")
-                                        // for(j in 0 .. i){
                                         json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
                                         json.put("date_to", listAddEventDataModel[i].dateTo.toString())
                                         json.put("time_from", listAddEventDataModel[i].timeFrom.toString())
@@ -709,12 +645,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                         json.put("city", listAddEventDataModel[i].city.toString())
                                         json.put("lat", listAddEventDataModel[i].lati.toString())
                                         json.put("lng", listAddEventDataModel[i].longi.toString())
-                                        //}
                                         addEvent.put(json)
                                     }
                                 }
 
-                                // for age group listing cards
                                 for (i in 0 until listAgeGroupDataModel.size) {
                                     val json = JSONObject()
                                     json.put("age_from", listAgeGroupDataModel[i].ageFrom)
@@ -730,12 +664,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 hitFinallyActivityAddPostApi()
                             }
                         }
-
-                        Log.e("urlListt", "-------------$urlListingFromResponse")
-                        Log.d("addEventUrlListing", "-------------$addEventUrlListingResponse")
-
                     }
-                } else {
+                }
+                else {
                     ErrorBodyResponse(response, this, null)
                 }
             }
@@ -745,15 +676,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             myCustomToast(it)
             progressDialog.hidedialog()
         })
-
     }
 
     private fun hitFinallyActivityAddPostApi() {
 
         Log.d("datahtgfhtyhty=====", "-----1111-----${ageGroup.length()}------${addEvent.length()}---")
-
-
-        //Toast.makeText(this,"====--${ageGroup.length()}------${addEvent.length()}--====",Toast.LENGTH_SHORT).show()
 
         if(ageGroup.length()>0 && addEvent.length()>0)
         {
@@ -784,18 +711,17 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                             addEvent.toString(), media.toString(), countryCodee,"1")
                 }
             }
-
         }
-
-
-        //   progressDialog.setProgressDialog()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
-    }
+        job.cancel() }
+
+   /* data class AddActivityData(var imageList: MutableList<String> = mutableListOf(),var activityType : String ="",
+                               var shopName : String ="",var activityName : String ="",var description : String ="",
+                               var phone : String ="",var address : String ="",var ageList: MutableList<AgeData> = mutableListOf()
+                               ,var ageList: MutableList<AgeData> = mutableListOf())*/
 
 
 }

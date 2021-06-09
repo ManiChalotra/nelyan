@@ -236,6 +236,7 @@
                             android:visibility="gone" />
 
                         <TextView
+                            android:id="@+id/tvPhone"
                             style="@style/CommonTextWrapcontent"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"

@@ -77,35 +77,36 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
+        if(list.isNotEmpty()) {
+            // create bounds that encompass every location we reference
+            val boundsBuilder = LatLngBounds.Builder()
+            // include all places we have markers for on the map
 
-        // create bounds that encompass every location we reference
-        val boundsBuilder = LatLngBounds.Builder()
-        // include all places we have markers for on the map
+            (list.indices).map {
+                boundsBuilder.include(list[it].position)
+            }
 
-        (list.indices).map {
-            boundsBuilder.include(list[it].position)
+            val bounds = boundsBuilder.build()
+
+            with(mMap!!) {
+                // Hide the zoom controls as the button panel will cover it.
+                uiSettings!!.isZoomControlsEnabled = false
+
+                // Setting an info window adapter allows us to change the both the contents and
+                setInfoWindowAdapter(ChildCareInfoWindowAdapter())
+
+                setOnInfoWindowClickListener(this@HomeChildCareOnMapActivity)
+
+                // Ideally this string would be localised.
+                setContentDescription("Map with lots of markers.")
+
+                moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
+            }
+
+            // Add lots of markers to the googleMap.
+            addMarkersToMap()
+
         }
-
-        val bounds = boundsBuilder.build()
-
-        with(mMap!!) {
-            // Hide the zoom controls as the button panel will cover it.
-            uiSettings!!.isZoomControlsEnabled = false
-
-            // Setting an info window adapter allows us to change the both the contents and
-            setInfoWindowAdapter(ChildCareInfoWindowAdapter())
-
-            setOnInfoWindowClickListener(this@HomeChildCareOnMapActivity)
-
-            // Ideally this string would be localised.
-            setContentDescription("Map with lots of markers.")
-
-            moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
-        }
-
-        // Add lots of markers to the googleMap.
-        addMarkersToMap()
-
     }
 
     override fun onInfoWindowClick(marker: Marker) {

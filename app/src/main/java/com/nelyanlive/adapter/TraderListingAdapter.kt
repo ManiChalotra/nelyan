@@ -67,11 +67,21 @@ class TraderListingAdapter(var context: Context, internal var traderPostList: Ar
 
             tvEmail.text = traderPostList.email
             tvTraderdesc.text = traderPostList.description
-            phone.text = traderPostList.country_code+"-"+traderPostList.phone
+            if(traderPostList.phone.isNotBlank())
+            {
+                phone.text = traderPostList.country_code+"-"+traderPostList.phone
+
+            }
+            else
+            {
+                phone.visibility = View.GONE
+
+            }
+
             tvAddress.text = traderPostList.address+" "+traderPostList.city
 
             if (traderPostList.tradersimages.size >0)
-            Glide.with(context).load(image_base_URl+traderPostList.tradersimages.get(0).images).error(R.mipmap.no_image_placeholder).into(ivTraderImage)
+            Glide.with(context).load(image_base_URl+ traderPostList.tradersimages[0].images).error(R.mipmap.no_image_placeholder).into(ivTraderImage)
             else
                 ivTraderImage.setImageResource(R.mipmap.no_image_placeholder)
 

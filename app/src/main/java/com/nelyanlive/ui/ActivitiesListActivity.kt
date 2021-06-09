@@ -69,17 +69,25 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
+
         ivBack!!.setOnClickListener {
             onBackPressed()
         }
 
-        launch(Dispatchers.Main.immediate) {
-            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                .first()
-            tv_userCityOrZipcode.text =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
-            activity_list_progressbar?.showProgressBar()
+        if (checkIfHasNetwork(this)) {
+            //tvFilter.text="Filter"
+            launch(Dispatchers.Main.immediate) {
+                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                appViewModel.sendFilterActivityListData(security_key, authKey, latitudee, longitudee, "", "","",
+                    location )
+                activity_list_progressbar?.showProgressBar()
+
+            }
+        } else {
+            showSnackBar(this, getString(R.string.no_internet_error))
         }
 
         checkMvvmResponse()
@@ -92,14 +100,21 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             }
             else
             {
-                tvFilter.text="Filter"
-                launch(Dispatchers.Main.immediate) {
-                    authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                        .first()
-                    tv_userCityOrZipcode.text =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                    appViewModel.sendHomeActivitiesData(security_key, authkey, "1")
-                    activity_list_progressbar?.showProgressBar()
+
+                if (checkIfHasNetwork(this)) {
+                    tvFilter.text="Filter"
+                    launch(Dispatchers.Main.immediate) {
+                        val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                       val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                       val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                       val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                        appViewModel.sendFilterActivityListData(security_key, authKey, latitudee, longitudee, "", "","",
+                            location )
+                        activity_list_progressbar?.showProgressBar()
+
+                    }
+                } else {
+                    showSnackBar(this, getString(R.string.no_internet_error))
                 }
             }
         }
@@ -146,6 +161,9 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
+
+                Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
+
 
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {

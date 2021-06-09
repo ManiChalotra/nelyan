@@ -18,17 +18,11 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
-import com.nelyanlive.modals.homechildcare.HomeChiildCareREsponse
-import com.nelyanlive.modals.homechildcare.HomeChildCareeData
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.filter_activity.*
 import kotlinx.android.synthetic.main.fragment_child_care.*
-import kotlinx.android.synthetic.main.fragment_child_care.et_location
-import kotlinx.android.synthetic.main.fragment_child_care.et_name
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,7 +32,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, CoroutineScope, View.OnClickListener {
+class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnClickListener {
 
     var btnSearch: Button? = null
     var dialog: Dialog? = null
@@ -58,11 +52,9 @@ class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
     private val job by lazy {
         Job()
     }
-    private val childCareeDatalist by lazy { ArrayList<HomeChildCareeData>() }
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
 
-    private var authKey = ""
     private val dataStoragePreference by lazy { DataStoragePreference(this@ChildCareFilterActivity) }
 
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
@@ -80,13 +72,21 @@ class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
             onBackPressed()
         }
 
+        if (checkIfHasNetwork(this)) {
+            launch(Dispatchers.Main.immediate) {
+              val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                appViewModel.sendChildCareTypeData(security_key, authKey)
+            }
+        } else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+
+        }
+
         val c = Calendar.getInstance()
         mYear = c[Calendar.YEAR]
         mMonth = c[Calendar.MONTH]
         mDay = c[Calendar.DAY_OF_MONTH]
-        ll_1 = findViewById(R.id.ll_public)
         ll_0 = findViewById(R.id.ll_0)
-        ll_1!!.setOnClickListener { dailogLocation() }
         ll_0!!.setOnClickListener {
 
             launch(Dispatchers.Main.immediate) {
@@ -96,53 +96,35 @@ class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
             }
         }
         btnSearch = findViewById(R.id.btnSearch)
-        childCareTypes = findViewById(R.id.spinner_childcare_type)
+        childCareTypes = findViewById(R.id.childType)
 
         et_location.setOnClickListener(this)
         btnSearch!!.setOnClickListener(this)
 
         orderby1 = findViewById(R.id.spinner_dayss)
         val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM")
+        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30")
+
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
-         distance= orderby1!!.selectedItem.toString()
 
-        val childCareTypesList = arrayOf<String?>("", getString(R.string.nursery), getString((R.string.maternal_assistant)), getString(R.string.baby_sitter))
-        val adapter0: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, childCareTypesList)
-        childCareTypes!!.adapter = adapter0
+        orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                distance = if(km[position].isNullOrBlank()){""}else{kmValue[position]!!}
+            }
 
-        when {
-            childCareTypes!!.selectedItem.toString() == getString(R.string.nursery) -> {
-                childcareTypesId= "1"
-            }
-            childCareTypes!!.selectedItem.toString() == getString(R.string.maternal_assistant) -> {
-                childcareTypesId= "2"
-            }
-            childCareTypes!!.selectedItem.toString() == getString(R.string.baby_sitter) -> {
-                childcareTypesId= "3"
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // TODO("Not yet implemented")
             }
         }
-        orderby1!!.onItemSelectedListener = this@ChildCareFilterActivity
+        checkMvvmResponse()
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    override fun onResume() {
-        super.onResume()
-        checkMvvmResponse() }
-
-    private fun hitFilterActivity_Api() {
-        if (checkIfHasNetwork(this@ChildCareFilterActivity)) {
-            launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                appViewModel.sendChildCareFilterData(security_key, authKey, latitudee, longitudee, distance!!, et_name.text.toString().trim(),et_location.text.toString().trim(), childcareTypesId)
-                childcare_filter_progressbar?.showProgressBar()}
-        }
-        else {
-            showSnackBar(this@ChildCareFilterActivity, getString(R.string.no_internet_error))
-        }
-    }
 
     private fun showPlacePicker() {
         // Initialize Places.
@@ -161,42 +143,51 @@ class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
 
     }
 
-    fun dailogLocation() {
-        dialog = Dialog(this)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_location)
-        dialog!!.setCancelable(true)
-        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
-        rlNo.setOnClickListener {
-            dialog!!.dismiss() }
-        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
-        rlYes.setOnClickListener { dialog!!.dismiss() }
-        dialog!!.show()
-    }
+
+
+
+    val childCareType: ArrayList<String?> = ArrayList()
+    val childCareTypeId: ArrayList<String?> = ArrayList()
 
     private fun checkMvvmResponse() {
-        appViewModel.observeFilterChildCareListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeChildCareTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    childcare_filter_progressbar?.hideProgressBar()
                     val jsonObject = JSONObject(response.body().toString())
-                    var jsonArray = jsonObject.getJSONArray("data")
-                    val homeChildCareResponse = Gson().fromJson<HomeChiildCareREsponse>(response.body().toString(), HomeChiildCareREsponse::class.java)
-
-                    if (childCareeDatalist != null) {
-                        childCareeDatalist.clear()
-                        childCareeDatalist.addAll(homeChildCareResponse.data)
-                        Log.e("chiiii", childCareeDatalist.size.toString())
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    childCareType.clear()
+                    childCareTypeId.clear()
+                    childCareType.add("")
+                    childCareTypeId.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("categoryName").toString()
+                        val id = jsonArray.getJSONObject(i).get("id").toString()
+                        childCareType.add(name)
+                        childCareTypeId.add(id)
                     }
+                    val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<String>(this, R.layout.customspinner, childCareType )
+                    childCareTypes!!.adapter = arrayAdapter
+                    childCareTypes!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            childcareTypesId = if(position!=0) {
+                                childCareTypeId[position]!!
+                            } else {
+                                ""
+                            }
+                        }
 
-                    val returnIntent = Intent()
-                    returnIntent.putExtra("filteredChildCareDatalist", childCareeDatalist)
-                    setResult(Activity.RESULT_OK, returnIntent)
-                    finish()
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            //TODO("Not yet implemented")
+                        }
+                    }
                 }
             } else {
                 ErrorBodyResponse(response, this, null)
-                childcare_filter_progressbar?.hideProgressBar()
             }
         })
     }
@@ -244,7 +235,6 @@ class ChildCareFilterActivity : AppCompatActivity(), AdapterView.OnItemSelectedL
                     setResult(1214,intent)
                     onBackPressed()
 
-                   // hitFilterActivity_Api()
                 }
             }
         }

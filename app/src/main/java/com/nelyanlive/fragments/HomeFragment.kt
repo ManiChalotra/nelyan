@@ -68,7 +68,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
             val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
-
         val authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
         Log.d("authorization", "---------------$authkey")
         appViewModel.sendHOmeCategoryData(security_key, authkey)
@@ -120,7 +119,9 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
             0->{
                 requireActivity().OpenActivity(ActivitiesListActivity::class.java)
-                {putString("type","1")}
+                {
+                    putString("type","1")
+                }
             }
 
             1->{

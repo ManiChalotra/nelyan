@@ -88,7 +88,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
             userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
         }
         ivMapImage.setOnTouchListener(object : View.OnTouchListener {
-
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 when (event!!.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -96,12 +95,10 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                         // Disable touch on transparent view
                         return false
                     }
-
                     MotionEvent.ACTION_UP -> {
                         nvsMain.requestDisallowInterceptTouchEvent(false)
                         return true
                     }
-
                     MotionEvent.ACTION_MOVE -> {
                         nvsMain.requestDisallowInterceptTouchEvent(true)
                         return false
@@ -109,7 +106,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                 }
                 return true
             }
-
 
         })
 
@@ -132,27 +128,21 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
             postId = intent.getStringExtra("activityId")!!
         }
 
-
         launch(Dispatchers.Main.immediate) {
             authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
                 .first()
             appViewModel.postDetailsApiData(security_key, authkey, "2", postId, "2")
             childcare_details_progressbar?.showProgressBar()
-
         }
-
         checkMvvmResponse()
 
     }
-
 
     fun dailogshare() {
         dialog = Dialog(this)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_share)
         dialog!!.setCancelable(true)
-        val ll_1: LinearLayout
-        ll_1 = dialog!!.findViewById(R.id.ll_public)
 
         dialog!!.ll_twitter_share.setOnClickListener {
              CommonMethodsKotlin.twitterShare(this)
@@ -168,7 +158,6 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         }
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
-            //  email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>("riteshsaini22@hotmail.com"))
             email.putExtra(Intent.EXTRA_SUBJECT, "Nelyan App")
             email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
                     "https://play.google.com/store/apps/details?id=com.nelyan")
@@ -219,7 +208,9 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
 
-                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    if(!jsonObject.getJSONObject("data").isNull("user")) {
+                        setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    }
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
@@ -227,8 +218,19 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                     tv_child_care_name.text = jsonObject.getJSONObject("data").get("name").toString()
                     tv_child_care_description.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_available_place.text = jsonObject.getJSONObject("data").get("availableplace").toString()
-                    tv_childcare_phone.text = jsonObject.getJSONObject("data").get("countryCode").toString() + "-" +
-                            jsonObject.getJSONObject("data").get("phone").toString()
+
+                    //tvPhone
+                    if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
+                        tv_childcare_phone.text = jsonObject.getJSONObject("data").get("countryCode").toString() + "-" +
+                                    jsonObject.getJSONObject("data").get("phone").toString()
+
+                    }
+                    else
+                    {
+                        tvPhone.visibility = View.GONE
+                        tv_childcare_phone.visibility = View.GONE
+
+                    }
                     tv_child_care_address.text = jsonObject.getJSONObject("data").get("city").toString()
 
                     var childcareTypeId= jsonObject.getJSONObject("data").get("ChildcareType").toString()
@@ -237,22 +239,9 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
 
-/*
-                    if (childcareTypeId.equals("1")) {
-                        tv_trader_type.text = this.getString(R.string.doctor)
-                    } else if (childcareTypeId.equals("2")) {
-                        tv_trader_type.text = this.getString(R.string.food_court)
-                    } else if (childcareTypeId.equals("3")) {
-                        tv_trader_type.text = this.getString(R.string.plant_nursury)
-                    }
-*/
 
                     val listArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("ChildCareImages")
                     val mSizeOfData: Int = listArray.length()
-
-
-/*Set Trader Images List in adapter*/
-
 
                     if (listChildCareimage != null) {
                         listChildCareimage.clear()
@@ -277,15 +266,12 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                         indicator!!.attachToRecyclerView(rvChildcareImages!!)
                     }
 
-
-
                 }
             } else {
                 ErrorBodyResponse(response, this, childcare_details_progressbar)
                 childcare_details_progressbar?.hideProgressBar()
             }
         })
-
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)

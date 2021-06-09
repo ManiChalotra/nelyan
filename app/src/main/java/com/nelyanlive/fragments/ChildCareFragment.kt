@@ -29,14 +29,14 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
     var orderby1: Spinner? = null
     var spin1: Spinner? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         v = inflater.inflate(layout.fragment_child_care, container, false)
         mContext = activity
         ivBack = v.findViewById(R.id.ivBack)
         ll_0 = v.findViewById(R.id.ll_0)
-        ll_0!!.setOnClickListener(View.OnClickListener { dailogLocation() })
-        ivBack!!.setOnClickListener(View.OnClickListener {
+        ll_0!!.setOnClickListener { dailogLocation() }
+        ivBack!!.setOnClickListener {
             try {
                 val bundle = arguments
                 if (bundle!!.getString("child") == "childcare") {
@@ -51,14 +51,14 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
                 val f = fm.findFragmentById(R.id.frame_container)
                 fm.popBackStack()
             }
-        })
-        spin1 = v.findViewById(R.id.spinner_childcare_type)
+        }
+        spin1 = v.findViewById(R.id.childType)
         btnSearch = v.findViewById(R.id.btnSearch)
-        btnSearch!!.setOnClickListener(View.OnClickListener {
+        btnSearch!!.setOnClickListener {
             val fm = requireActivity().supportFragmentManager
             val f = fm.findFragmentById(R.id.frame_container)
             fm.popBackStack()
-        })
+        }
         orderby1 = v.findViewById(R.id.spinner_dayss)
         val km = arrayOf<String?>(
                 "", "OKM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM"
@@ -67,7 +67,7 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
             requireActivity(), layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
         orderby1!!.onItemSelectedListener = this@ChildCareFragment
-        spin1 = v.findViewById(R.id.spinner_childcare_type)
+        spin1 = v.findViewById(R.id.childType)
         val spi = arrayOf<String?>(
                 "", "crèche",
                 "maternal assistant ", "babysitter")
@@ -86,13 +86,11 @@ class ChildCareFragment : Fragment(), OnItemSelectedListener, OnHomeActivitiesRe
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(layout.alert_location)
         dialog!!.setCancelable(true)
-        val rlYes: RelativeLayout
-        val rlNo: RelativeLayout
-        rlNo = dialog!!.findViewById(R.id.rlNo)
+        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
             dialog!!.dismiss()
         }
-        rlYes = dialog!!.findViewById(R.id.rlYes)
+        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
     }

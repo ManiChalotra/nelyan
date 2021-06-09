@@ -39,7 +39,6 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
         Job()
     }
     lateinit var ivFavourite :ImageView
-
     private var listType: String? = null
 
     private var traderListingAdapter: TraderListingAdapter? = null
@@ -64,19 +63,24 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
 
-        launch (Dispatchers.Main.immediate){
-            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-            tv_city_zipcode.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+        if (checkIfHasNetwork(this)) {
+            launch(Dispatchers.Main.immediate) {
+                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
-            if (checkIfHasNetwork(this@TraderListingActivity)) {
-                appViewModel.sendHomeActivitiesData(security_key,authkey, listType)
+                appViewModel.sendFilterTraderListData(security_key, authKey, latitudee, longitudee,
+                    "", "","",
+                    location )
+
                 trader_list_progressbar?.showProgressBar()
-                checkMvvmResponse()
-            }
-            else {
-                showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))
             }
         }
+        else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
+        checkMvvmResponse()
     }
 
     private fun initalizeClicks() {
@@ -205,18 +209,22 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 else
                 {
                     tvFilter.text = "Filter"
-                    launch (Dispatchers.Main.immediate){
-                        authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                        tv_city_zipcode.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                    if (checkIfHasNetwork(this)) {
+                        launch(Dispatchers.Main.immediate) {
+                            val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                            val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                            val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                            val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
-                        if (checkIfHasNetwork(this@TraderListingActivity)) {
-                            appViewModel.sendHomeActivitiesData(security_key,authkey, listType)
+                            appViewModel.sendFilterTraderListData(security_key, authKey, latitudee, longitudee,
+                                "", "","",
+                                location )
+
                             trader_list_progressbar?.showProgressBar()
-                            checkMvvmResponse()
                         }
-                        else {
-                            showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))
-                        }
+                    }
+                    else {
+                        showSnackBar(this, getString(R.string.no_internet_error))
                     }
 
                 }
@@ -236,6 +244,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 val typeId = data.getStringExtra("typeId")
 
 
+                Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
+
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                        val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
@@ -245,7 +255,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                         trader_list_progressbar?.showProgressBar()
 
                     }
-                } else {
+                }
+                else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
             } } }

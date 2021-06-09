@@ -263,7 +263,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-                    setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    if(!jsonObject.getJSONObject("data").isNull("user")) {
+                        setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                    }
 
                     val message = jsonObject.get("msg").toString()
                     myCustomToast(message)
@@ -273,8 +275,20 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_phntxt.text = jsonObject.getJSONObject("data").get("country_code").toString() + "-" + jsonObject.getJSONObject("data").get("phone").toString()
-                    tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
+
+                    if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
+                        tv_phn.visibility = View.VISIBLE
+                        tv_phntxt.visibility = View.VISIBLE
+                        tv_phntxt.text = jsonObject.getJSONObject("data").get("country_code")
+                            .toString() + "-" + jsonObject.getJSONObject("data").get("phone")
+                            .toString()
+                    }
+                    else
+                    {
+                        tv_phn.visibility = View.GONE
+                        tv_phntxt.visibility = View.GONE
+                    }
+                        tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
                     tv_actvity_address.text = jsonObject.getJSONObject("data").get("address").toString()
 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()

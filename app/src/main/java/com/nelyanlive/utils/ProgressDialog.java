@@ -112,8 +112,6 @@ public class ProgressDialog {
             dialog.getWindow().setAttributes(layoutParams);
             dialog.setCancelable(false);
         }
-        
-
     }
 
     public void hidedialog() {
