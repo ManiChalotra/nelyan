@@ -111,7 +111,6 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
     private var shop_name = ""
     private var activity_name = ""
     private var descp = ""
-    private var messagee = ""
     private var phonee = ""
     private var countryCodee = ""
 
@@ -139,11 +138,7 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
 
         trader_type.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                if (selectedItem == "Add new category") {
-                    // do your stuff
-                }
-            } // to close the onItemSelected
+            }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 hitTypeActivity_Api()
@@ -151,10 +146,6 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
             }
         }
 
-/*
-        trader_type.setOnItemClickListener { parent, view, position, id ->
-            hitTypeActivity_Api()
-        }*/
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
@@ -177,19 +168,19 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
 
             activity_typeId = intent.getStringExtra("activityTypeId").toString()
 
-            if (activity_typeId.equals("5")) {
+            if (activity_typeId == "5") {
                 activity_type = getString(R.string.sports)
 
-            } else if (activity_typeId.equals("9")) {
+            } else if (activity_typeId == "9") {
                 activity_type = getString(R.string.dance)
 
-            } else if (activity_typeId.equals("10")) {
+            } else if (activity_typeId == "10") {
                 activity_type = getString(R.string.drawing)
 
-            } else if (activity_typeId.equals("11")) {
+            } else if (activity_typeId == "11") {
                 activity_type = getString(R.string.zumba)
 
-            } else if (activity_typeId.equals("13")) {
+            } else if (activity_typeId == "13") {
                 activity_type = getString(R.string.tutor_mother_subject)
 
             }
@@ -210,24 +201,27 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
             activityimageList = intent.getParcelableArrayListExtra<ActivityimageMyAds>("activityimagesList")!!
 
             if (!activityimageList.isNullOrEmpty()) {
-                if (activityimageList.size == 1) {
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
+                when (activityimageList.size) {
+                    1 -> {
+                        Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
 
-                } else if (activityimageList.size == 2) {
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
-                    Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                    }
+                    2 -> {
+                        Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                        Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
 
-                } else if (activityimageList.size == 3) {
-                    Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg)
-                    Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
-                    Glide.with(this).load(image_base_URl + activityimageList.get(2).images).error(R.mipmap.no_image_placeholder).into(ivImg2)
+                    }
+                    3 -> {
+                        Glide.with(this).load(image_base_URl + activityimageList.get(0).images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                        Glide.with(this).load(image_base_URl + activityimageList.get(1).images).error(R.mipmap.no_image_placeholder).into(ivImg2)
+                        Glide.with(this).load(image_base_URl + activityimageList.get(2).images).error(R.mipmap.no_image_placeholder).into(ivImg3)
 
+                    }
                 }
             }
 
 
-            /* ageGroupEditAdapter = AgeGroupEditAdapter(this, activityimageList, this)
-             rvAgeGroup!!.adapter = ageGroupEditAdapter*/
+
         }
 
         if (this::listAgeGroupDataModel.isInitialized) {
@@ -254,24 +248,20 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
 
 
         // clicks for images
-        rlImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
-        ivplus.setOnClickListener(this)
 
         // clicks for buttons
         btnSubmit.setOnClickListener(this)
         ivBack.setOnClickListener(this)
-        //   et_addressActivity.isFocusable = false
-        // et_addressActivity.isFocusableInTouchMode = false
         et_addressActivity.setOnClickListener(this)
 
     }
 
     override fun getCurrentData(list: ArrayList<AgeGroupMyAds>, position: Int) {
         listAgeGroupDataModel = list
-        for (i in 0..listAgeGroupDataModel.size - 1) {
+        for (i in 0 until listAgeGroupDataModel.size) {
             val json = JSONObject()
             json.put("age_from", listAgeGroupDataModel[i].ageFrom)
             json.put("age_to", listAgeGroupDataModel[i].ageTo)
@@ -285,22 +275,21 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
     override fun currentEventDataList(list: java.util.ArrayList<EventMyAds>, position: Int) {
         listAddEventDataModel = list
 
-        for (i in 0..listAddEventDataModel.size - 1) {
+        for (i in 0 until listAddEventDataModel.size) {
             val json = JSONObject()
             json.put("image", listAddEventDataModel[i].image)
-            json.put("name", listAddEventDataModel[i].name.toString())
+            json.put("name", listAddEventDataModel[i].name)
             json.put("file_type", "image")
-            // for(j in 0 .. i){
-            json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
-            json.put("date_to", listAddEventDataModel[i].dateTo.toString())
-            json.put("time_from", listAddEventDataModel[i].startTime.toString())
-            json.put("time_to", listAddEventDataModel[i].endTime.toString())
-            json.put("description", listAddEventDataModel[i].description.toString())
-            json.put("price", listAddEventDataModel[i].price.toString())
-            json.put("city", listAddEventDataModel[i].city.toString())
-            json.put("lat", listAddEventDataModel[i].latitude.toString())
-            json.put("lng", listAddEventDataModel[i].longitude.toString())
-            //}
+            json.put("date_from", listAddEventDataModel[i].dateFrom)
+            json.put("date_to", listAddEventDataModel[i].dateTo)
+            json.put("time_from", listAddEventDataModel[i].startTime)
+            json.put("time_to", listAddEventDataModel[i].endTime)
+            json.put("description", listAddEventDataModel[i].description)
+            json.put("price", listAddEventDataModel[i].price)
+            json.put("city", listAddEventDataModel[i].city)
+            json.put("lat", listAddEventDataModel[i].latitude)
+            json.put("lng", listAddEventDataModel[i].longitude)
+
             addEvent.put(json)
         }
 
@@ -309,39 +298,32 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.rlImg -> {
+
+            R.id.ivImg1 -> {
                 IMAGE_SELECTED_TYPE = "1"
                 checkPermission(this)
             }
-            R.id.ivImg1 -> {
+            R.id.ivImg2 -> {
                 IMAGE_SELECTED_TYPE = "2"
                 checkPermission(this)
             }
-            R.id.ivImg2 -> {
+            R.id.ivImg3 -> {
                 IMAGE_SELECTED_TYPE = "3"
                 checkPermission(this)
             }
-            R.id.ivImg3 -> {
-                IMAGE_SELECTED_TYPE = "4"
-                checkPermission(this)
-            }
-            R.id.ivplus -> {
-                IMAGE_SELECTED_TYPE = "5"
-                checkPermission(this)
-            }
+
             R.id.btnSubmit -> {
                 val shopName = et_shopName.text.toString()
                 val activityName = et_activityName.text.toString()
                 val description = et_description.text.toString()
                 val phone = et_phone.text.toString()
                 val address = et_addressActivity.text.toString()
-                val message = et_message.text.toString()
 
 //                if (IS_IMAGE_SELECTED.equals("")) {
 //                    myCustomToast(getString(R.string.media_missing_error))
 //                } else {
                 val activityType = trader_type?.selectedItem?.toString()?:""
-                if (activityType.equals("") || activityType.equals(getString(R.string.select))) {
+                if (activityType == "" || activityType == getString(R.string.select)) {
                     myCustomToast(getString(R.string.activity_type_missing_error))
                 } else {
                     if (shopName.isEmpty()) {
@@ -364,7 +346,6 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
                                         shop_name = shopName
                                         activity_name = activityName
                                         descp = description
-                                        messagee = message
                                         phonee = phone
 
                                         if (activity_type.equals(getString(R.string.sports))) {
@@ -465,30 +446,6 @@ class EditActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLi
 
 
                                         }
-                                        /*
-if (checkedEvent) {
-  if (selectedUrlListing.size.equals(urlListingFromResponse.size)) {
-      // taking image url from uploadimage api response
-      imagePathList!!.clear()
-
-      checkAddEventImages = true
-      gettingURLOfEventImages()
-      if (imagePathList.size.equals(addEventUrlListingResponse.size)) {
-          // for age group listing cards
-          for (i in 0..listAgeGroupDataModel.size - 1) {
-              val json = JSONObject()
-              json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-              json.put("age_to", listAgeGroupDataModel[i].ageTo)
-              json.put("days", listAgeGroupDataModel[i].days)
-              json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-              json.put("time_to", listAgeGroupDataModel[i].timeTo)
-              ageGroup.put(json)
-          }
-
-          hitApi(activityType, shopName, activityName, description, message, phone, cityAddress, cityLatitude, cityLongitude, cityName)
-      }
-  }
-}*/
 
                                     }
                                 }
@@ -497,7 +454,6 @@ if (checkedEvent) {
                         }
                     }
                 }
-                /*}*/
             }
 
             R.id.ivBack -> {
@@ -656,59 +612,37 @@ if (checkedEvent) {
 
     override fun getRealImagePath(imgPath: String?) {
 
-        Log.d("selectedImagePath", "-------" + imgPath)
+        Log.d("selectedImagePath", "-------$imgPath")
         when (IMAGE_SELECTED_TYPE) {
 
             "1" -> {
-                setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing.set(0, imgPath.toString())
+                setImageOnTab(imgPath, ivImg1)
+                imageVideoUrlListing[0] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
             "2" -> {
-                setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing.set(1, imgPath.toString())
+                setImageOnTab(imgPath, ivImg2)
+                imageVideoUrlListing[1] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
             "3" -> {
-                setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing.set(2, imgPath.toString())
+                setImageOnTab(imgPath, ivImg3)
+                imageVideoUrlListing[2] = imgPath.toString()
                 IMAGE_SELECTED_TYPE = ""
                 IS_IMAGE_SELECTED = "1"
             }
 
-            else -> {
-                // here we getting the add event image photo path
-                /*  listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
-                  Log.d("lisufjdhf", "-----------" + listAddEventDataModel.toString())
-                  eventEditAdapter.notifyDataSetChanged()
-              */
-            }
+
 
         }
-        Log.d("imageVideoListSize", "-----------" + imageVideoUrlListing)
+        Log.d("imageVideoListSize", "-----------$imageVideoUrlListing")
     }
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
         Log.d("getimage", "---------" + imgPATH.toString())
 
-        when (IMAGE_SELECTED_TYPE) {
-            "1" -> {
-                //    imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video1)
-            }
-            "2" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video2)
-
-            }
-            "3" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video3)
-
-            }
-
-
-        }
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
     }
 

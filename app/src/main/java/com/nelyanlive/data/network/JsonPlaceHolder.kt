@@ -240,7 +240,6 @@ interface JsonPlaceHolder {
                                  @Field("shop_name") shop_name: String,
                                  @Field("activity_name") activity_name: String,
                                  @Field("description") description: String,
-                                 /*@Field("message") message: String,*/
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
@@ -248,6 +247,26 @@ interface JsonPlaceHolder {
                                  @Field("longitude") longitude: String,
                                  //@Field("ageGroup") ageGroup: String,// sending json Array
                                  //@Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("media") media: String,// send json Array
+                                 @Field("country_code") country_code: String
+    ): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun get_addPOSt_without_age_Activity_Api(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                 //@Field("ageGroup") ageGroup: String,// sending json Array
+                                 @Field("addEvent") addEvent: String,// sending json Array
                                  @Field("media") media: String,// send json Array
                                  @Field("country_code") country_code: String
     ): Call<JsonObject>

@@ -12,7 +12,7 @@ import com.nelyanlive.modals.hometraderpostlist.HomeTraderListData
 import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.item_trader_listing.view.*
 
-class TraderListingAdapter(var context: Context, internal var traderPostList: ArrayList<HomeTraderListData>, var listner: OnTraderItemClickListner) : RecyclerView.Adapter<TraderListingAdapter.MyViewHolder>() {
+class TraderListingAdapter(var context: Context, private var traderPostList: ArrayList<HomeTraderListData>, var listner: OnTraderItemClickListner) : RecyclerView.Adapter<TraderListingAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_trader_listing, parent, false), listner)

@@ -102,12 +102,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-          //  Glide.with(this@HomeActivity).load(from_admin_image_base_URl + userImage).error(R.drawable.user_img).into(ivHomeUserpic!!)
+
             Log.e("dataHome ------", "---111-------$userlocation------$userlat------$userlong----")
             Log.e("dataHome ------", "---111-------$userId------$userName------$userImage----")
             Log.e("dataHome ------", "---111-------$userId------$userName------$userType----")
 
-            //if(userImage.conta)
             Picasso.get().load(from_admin_image_base_URl + userImage)
                     .placeholder(ContextCompat.getDrawable(
                             ivHomeUserpic!!.context,
@@ -147,11 +146,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
                         Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
-
                         bottomNavigationBar.selectedItemId = R.id.chat
                     }
-
-
                 }
 
                 if (intent.hasExtra("chat")) {
@@ -234,12 +230,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 fragment = HomeFragment()
                 loadFragment(fragment)
             }
-
-
-
     }
-
-
 
     private fun initalize() {
         tvLog.setOnClickListener(this)
@@ -253,7 +244,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         iv_back!!.visibility = View.VISIBLE
         iv_back!!.setOnClickListener {
 
-            //hideKeyboard
             val inputManager = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
@@ -326,18 +316,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
-            }
-        }
-
-    }
+            } } }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tvLog -> {
                 mDrawerLayout!!.closeDrawers()
                 showLog()
-            }
-        }
+            } }
     }
 
     fun consultantUserDialogMethod() {
@@ -347,15 +333,12 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         consultantUserDialog!!.setCancelable(false)
         consultantUserDialog!!.setCanceledOnTouchOutside(false)
 
-        consultantUserDialog!!.iv_cross.setOnClickListener {
-            consultantUserDialog!!.dismiss()
-        }
+        consultantUserDialog!!.iv_cross.setOnClickListener { consultantUserDialog!!.dismiss() }
         consultantUserDialog!!.rl_open_settings.setOnClickListener {
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
                 consultantUserDialog!!.dismiss()
-            }
-        }
+            } }
 
         consultantUserDialog!!.show()
     }
@@ -429,12 +412,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             loadFragment(fragment)
                         }
 
-                        else {
-                            consultantUserDialogMethod()
-                        }
-                    }
-
-                }
+                        else { consultantUserDialogMethod() }
+                    } }
             }
             R.id.chat -> {
                 if (currentFragment !is ChatFrag) {
@@ -463,8 +442,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun loadFragment(fragment: Fragment): Boolean {
 
-
-
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, fragment)
@@ -479,9 +456,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         dialog!!.setContentView(R.layout.alert_logout)
         dialog!!.setCancelable(true)
         val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
-        rlYes.setOnClickListener {
-            hitLogoutApi()
-        }
+        rlYes.setOnClickListener { hitLogoutApi() }
         val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
@@ -495,7 +470,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (doubleBackToExitPressedOnce) {
                 finishAffinity()
                 return
-            } else {
+            }
+            else {
                 myCustomToast("press once again to exit from the App.")
             }
             doubleBackToExitPressedOnce = true

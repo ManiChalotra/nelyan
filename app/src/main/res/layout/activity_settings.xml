@@ -28,9 +28,9 @@
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
         <TextView
@@ -65,13 +65,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -83,33 +83,13 @@
                         android:id="@+id/iv_notification_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:gravity="center_vertical"
                         android:theme="@style/Color1SwitchStyle"
                         android:thumb="@drawable/thumb"
                         app:track="@drawable/switch_track" />
-
-                    <!-- <ImageView
-                         android:id="@+id/toggle"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_alignParentRight="true"
-                         android:layout_marginRight="@dimen/_5sdp"
-                         android:layout_centerInParent="true"
-                         android:src="@drawable/tab_on"/>
-
-                     <ImageView
-                         android:id="@+id/toggle_off"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_centerInParent="true"
-                         android:layout_marginRight="@dimen/_5sdp"
-                         android:visibility="gone"
-                         android:layout_alignParentRight="true"
-                         android:src="@drawable/tab_off"/>
-     -->
 
                 </RelativeLayout>
             </LinearLayout>
@@ -126,14 +106,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_user_type"
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -146,31 +126,24 @@
                         android:id="@+id/iv_professional_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:gravity="center_vertical"
                         android:theme="@style/Color1SwitchStyle"
                         android:thumb="@drawable/thumb"
                         app:track="@drawable/switch_track" />
 
-                    <!--<ImageView
-                        android:id="@+id/On"
-                        android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="6dp"
-                        android:src="@drawable/tab_on" />
+
                     <ImageView
                         android:id="@+id/Of"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:visibility="gone"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/tab_off"/>-->
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/tab_off"/>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -186,13 +159,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -203,9 +176,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
@@ -222,13 +195,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -239,9 +212,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
@@ -258,13 +231,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -275,9 +248,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
@@ -294,13 +267,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"
@@ -311,9 +284,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
@@ -330,8 +303,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -347,9 +320,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
@@ -366,13 +339,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bold"
                         android:gravity="center"

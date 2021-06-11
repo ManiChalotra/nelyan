@@ -111,7 +111,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
             if (user_type != null) {
                 if (user_type == "1") {
                     tv_user_type.text = getString(R.string.switch_as_a_professional)
-                    iv_professional_switch.isChecked = true
+                    iv_professional_switch.isChecked = false
                 } else {
                     tv_user_type.text = getString(R.string.switch_as_a_consultant)
                     iv_professional_switch.isChecked = false
@@ -227,9 +227,11 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                         val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
                         Log.d("observeSwitchUserResponse---", "--------$userType2-" )
 
-                            if (dataObj.getString("type") == "1") {tv_user_type.text = getString(R.string.switch_as_a_professional)}
+                            /*if (dataObj.getString("type") == "1") {
+                                tv_user_type.text = getString(R.string.switch_as_a_professional)}
                             else
-                            { tv_user_type.text = getString(R.string.switch_as_a_consultant)}
+                            {
+                                tv_user_type.text = getString(R.string.switch_as_a_consultant)}*/
 
                      }
                 }

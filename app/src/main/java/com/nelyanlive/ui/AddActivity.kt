@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -51,8 +50,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
 
-    private var IMAGE_SELECTED_TYPE = ""
-    private var IS_IMAGE_SELECTED = ""
+    private var imageSelectedType = ""
+    private var isImageSelected = false
 
     private val job by lazy { kotlinx.coroutines.Job() }
 
@@ -60,10 +59,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
-    private val PLACE_PICKER_REQUEST = 1
-    private val addEventRequestcode = 2
+    private val placePickRequestCode = 1
+    private val addEventRequestCode = 2
     private var imagePathList = ArrayList<MultipartBody.Part>()
-    private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
     // json Array
     private var ageGroup: JSONArray = JSONArray()
@@ -74,8 +72,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var progressDialog = ProgressDialog(this)
 
     // initalize the variables
-    private lateinit var listAgeGroupDataModel: ArrayList<ModelPOJO.AgeGroupDataModel>
-    private lateinit var listAddEventDataModel: ArrayList<ModelPOJO.AddEventDataModel>
+    private lateinit var listAge: ArrayList<ModelPOJO.AgeGroupDataModel>
+    private lateinit var listEvent: ArrayList<ModelPOJO.AddEventDataModel>
     private lateinit var ageGroupRepeatAdapter: AgeGroupRepeatAdapter
     private lateinit var addEventRepeatAdapter: EventRepeatAdapter
 
@@ -87,25 +85,24 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var addressLatitude = ""
     private var addressLongitude = ""
 
+    var ageErrorNumber = 0
+    var eventErrorNumber = 0
+    private var event = false
+    private var age = false
+
     private var eventPhotoPosition = 0
     private var urlListingFromResponse: ArrayList<String> = ArrayList()
     private var addEventUrlListingResponse: ArrayList<String> = ArrayList()
 
-    var imageVideoUrlListing = arrayListOf("", "", "", "", "")
-
     private var imageVideoListPosition = -1
 
-    //saving values variables
-    private var activity_type = ""
-    private var activity_typeId = ""
+    private var activityTypeId = ""
 
-    private var shop_name = ""
-    private var activity_name = ""
+    private var shopName = ""
+    private var activityName = ""
     private var descp = ""
-    private var messagee = ""
     private var phonee = ""
     private var countryCodee = "+33"
-    private var event = false
     private var lastPos = 0
 
     private lateinit var updateEventList: ArrayList<ModelPOJO.AddEventDataModel>
@@ -114,25 +111,26 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-   var selectedImags = arrayListOf("", "", "", "")
+   private var selectedImages = mutableListOf("", "", "","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addactivity)
-        initalizeclicks()
+        initalizeClicks()
         checkMvvmResponse()
+        
 
         countycode.setOnCountryChangeListener {
             countryCodee = countycode.selectedCountryCode.toString()
         }
 
-        ageGroupRepeatAdapter = AgeGroupRepeatAdapter(this, listAgeGroupDataModel, this)
+        ageGroupRepeatAdapter = AgeGroupRepeatAdapter(this, listAge, this)
         rvAgeGroup!!.adapter = ageGroupRepeatAdapter
 
-        addEventRepeatAdapter = EventRepeatAdapter(this, listAddEventDataModel, this)
+        addEventRepeatAdapter = EventRepeatAdapter(this, listEvent, this)
         rvEvent!!.adapter = addEventRepeatAdapter
 
-        hitTypeActivity_Api()
+        hitTypeActivity()
 
     }
 
@@ -140,32 +138,32 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-    private fun initalizeclicks() {
+    private fun initalizeClicks() {
 
         // initalize the lists
-        if (this::listAgeGroupDataModel.isInitialized) {
-            listAgeGroupDataModel.clear()
+        if (this::listAge.isInitialized) {
+            listAge.clear()
 
         } else {
-            listAgeGroupDataModel = ArrayList()
-            listAgeGroupDataModel.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
+            listAge = ArrayList()
+            listAge.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
         }
 
-        if (this::listAddEventDataModel.isInitialized) {
-            listAddEventDataModel.clear()
+        if (this::listEvent.isInitialized) {
+            listEvent.clear()
 
-        } else {
-            listAddEventDataModel = ArrayList()
-            listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "",
+        } 
+        else {
+            listEvent = ArrayList()
+            listEvent.add(ModelPOJO.AddEventDataModel("", "", "", "", "",
                     "", "", "", "", "", ""))
         }
 
         // clicks for images
-        rlImg.setOnClickListener(this)
+        ivImg3.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
-        ivplus.setOnClickListener(this)
 
         // clicks for buttons
         btnSubmit.setOnClickListener(this)
@@ -176,39 +174,30 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.rlImg -> {
+            R.id.ivImg3 -> {
 
-                IMAGE_SELECTED_TYPE = "3"
+                imageSelectedType = "3"
                 checkPermission(this)
             }
             R.id.ivImg1 -> {
-                IMAGE_SELECTED_TYPE = "1"
+                imageSelectedType = "1"
                 checkPermission(this)
             }
             R.id.ivImg2 -> {
-                IMAGE_SELECTED_TYPE = "2"
+                imageSelectedType = "2"
                 checkPermission(this)
             }
-            R.id.ivImg3 -> {
-                IMAGE_SELECTED_TYPE = "4"
-                checkPermission(this)
-            }
-            R.id.ivplus -> {
-                IMAGE_SELECTED_TYPE = "5"
-                checkPermission(this)
-            }
-            R.id.btnSubmit -> {
-                val shopName = et_shopName.text.toString()
-                val activityName = et_activityName.text.toString()
-                val description = et_description.text.toString()
-                val phone = et_phone.text.toString()
-                val address = et_addressActivity.text.toString()
-                val message = et_message.text.toString()
 
-                if (IS_IMAGE_SELECTED == "") {
+            R.id.btnSubmit -> {
+                 shopName = et_shopName.text.toString()
+                 activityName = et_activityName.text.toString()
+                 descp = et_description.text.toString()
+                 phonee = et_phone.text.toString()
+                val activityType = trader_type.selectedItem.toString()
+
+                if (!isImageSelected) {
                     myCustomToast(getString(R.string.media_missing_error))
                 } else {
-                    val activityType = trader_type.selectedItem.toString()
                     if (activityType == "" || activityType == getString(R.string.select)) {
                         myCustomToast(getString(R.string.activity_type_missing_error))
                     } else {
@@ -218,98 +207,140 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                             if (activityName.isEmpty()) {
                                 myCustomToast(getString(R.string.activity_name_missing_error))
                             } else {
-                                if (description.isEmpty()) {
+                                if (descp.isEmpty()) {
                                     myCustomToast(getString(R.string.description_missing))
                                 } else {
-                                    //if (phone.isEmpty()) {                                        //comment when phone set from backend
-                                    //    myCustomToast(getString(R.string.phone_number_missing))  //comment when phone set from backend
-                                   // }                                                            //comment when phone set from backend
-                                   // else {                                                       //comment when phone set from backend
-                                        if (address.isEmpty()) {
+                                        if (et_addressActivity.text.toString().isEmpty()) {
                                             myCustomToast(getString(R.string.address_missing_error))
                                         }
                                         else {
                                             // adding values
-                                            activity_type = trader_type.selectedItem.toString()
 
-                                            when (activity_type) {
+                                            when (activityType) {
                                                 getString(R.string.sports) -> {
-                                                    activity_typeId = "5"
+                                                    activityTypeId = "5"
                                                 }
                                                 getString(R.string.dance) -> {
-                                                    activity_typeId = "9"
+                                                    activityTypeId = "9"
                                                 }
                                                 getString(R.string.drawing) -> {
-                                                    activity_typeId = "10"
+                                                    activityTypeId = "10"
                                                 }
                                                 getString(R.string.zumba) -> {
-                                                    activity_typeId = "11"
+                                                    activityTypeId = "11"
                                                 }
                                                 getString(R.string.tutor_mother_subject) -> {
-                                                    activity_typeId = "13"
+                                                    activityTypeId = "13"
                                                 }
-
-
-
                                             }
 
-                                            shop_name = shopName
-                                            activity_name = activityName
-                                            descp = description
-                                            messagee = message
-                                            phonee = phone
 
                                             // for check upper images url from response
-                                            Log.d("selectedImages", "-----------$selectedImags")
-                                            Log.d("selectedImages", "-----------$listAgeGroupDataModel")
+                                            Log.d("selectedImages", "-----------$selectedImages")
+                                            Log.d("selectedImages", "-----------$listAge")
 
 
-                                            for(i in 0 until selectedImags.size)
+                                            for(i in 0 until selectedImages.size)
                                             {
-                                                if(selectedImags[i].isNotEmpty())
+                                                if(selectedImages[i].isNotEmpty())
                                                 {
                                                     lastPos += 1
                                                 }
                                             }
 
-                                            when {
-                                                listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
-                                                listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageTo.isNullOrEmpty() -> { myCustomToast("please fill age Group to in previous data")}
-                                                listAgeGroupDataModel[listAgeGroupDataModel.size-1].days.isNullOrEmpty() -> { myCustomToast("please select days in previous data")}
-                                                listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
-                                                listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeTo.isNullOrEmpty() -> { myCustomToast("please select To Time in previous data")}
-                                                else -> {
+                                            var ageErrorString = ""
+                                            ageErrorNumber = 0
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageFrom,ageErrorString,"please fill age Group form in previous data",1)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageTo,ageErrorString,"please fill age Group to in previous data",2)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].days,ageErrorString,"please select days in previous data",3)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeFrom,ageErrorString,"please select From Time in previous data",4)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeTo,ageErrorString,"please select To Time in previous data",5)
+
+                                            var eventErrorString = ""
+                                            eventErrorNumber = 0
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].image,eventErrorString,"please select image in previous data",1)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].name,eventErrorString,"please fill Event name in previous data",2)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateFrom,eventErrorString,"please select From Date in previous data",3)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateTo,eventErrorString,"please select To Date in previous data",4)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeFrom,eventErrorString,"please select From Time in previous data",5)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeTo,eventErrorString,"please select To Time in previous data",6)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].description,eventErrorString,"please fill description in previous data",7)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].price,eventErrorString,"please fill price in previous data",8)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].city,eventErrorString,"please fill city in previous data",9)
+
+                                            Log.e("dsfasdfsadf","===============$ageErrorString=========$ageErrorNumber")
+                                            
+
+                                            if(ageErrorNumber!=0 && ageErrorString.isNotEmpty())
+                                            {
+                                                myCustomToast(ageErrorString)
+                                            }
+                                            else
+                                            {
+                                                if(eventErrorNumber!=0 && eventErrorString.isNotEmpty())
+                                                {
+                                                    myCustomToast(eventErrorString)
+                                                }
+                                                else
+                                                {
                                                     hitApiForBannerImages(0)
                                                 }
                                             }
-                                             //hitApiForBannerImages(0)
-
-                                        }
-                                 //   }                                                            //comment when phone set from backend
-                                }
-                            } } } } }
+                                        } } } } } } }
 
             R.id.ivBack -> {
                 onBackPressed()
             }
             R.id.et_addressActivity -> {
-                showPlacePicker()
+                showPlacePicker(placePickRequestCode)
             }
         } }
 
+    private fun getAgeError(ageFrom: String?, ageErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            ageFrom.isNullOrBlank() -> when {
+                ageErrorString.isBlank() -> {
+                    s
+                }
+                else -> ageErrorString
+            }
+            else -> {
+                age = true
+                ageErrorNumber =i
+                ageErrorString
+            }
+        }
+    }
+    private fun getEventError(ageFrom: String?, eventErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            ageFrom.isNullOrBlank() -> when {
+                eventErrorString.isBlank() -> {
+                    s
+                }
+                else -> eventErrorString
+            }
+            else -> {
+
+                eventErrorNumber =i
+                eventErrorString
+            }
+        }
+    }
     private fun hitApiForBannerImages(position: Int) {
 
         imageVideoListPosition = position
 
-            val media = selectedImags[imageVideoListPosition]
+            val media = selectedImages[imageVideoListPosition]
 
             if (!media.isNullOrEmpty()) {
 
-                val mfile: File?
-                mfile = File(media)
-                val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+                val mFile: File?
+                mFile = File(media)
+                val imageFile: RequestBody = mFile.asRequestBody("image/*".toMediaTypeOrNull())
                 val photo: MultipartBody.Part?
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
+                photo = MultipartBody.Part.createFormData("image", mFile.name, imageFile)
                 imagePathList.clear()
                 imagePathList.add(photo)
                 val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -325,151 +356,91 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 }
             }
     }
-
-    private fun showPlacePicker() {
+    private fun showPlacePicker(requestCode: Int) {
         Places.initialize(applicationContext, googleMapKey)
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this)
-        // Set the fields to specify which types of place data to return.
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
-        startActivityForResult(intent, PLACE_PICKER_REQUEST)
-
-    }
-
-    private fun showPlacePickerForAddEvent() {
-        // Initialize Places.
-        Places.initialize(applicationContext, googleMapKey)
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this)
-        // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
-        startActivityForResult(intent, addEventRequestcode)
-
+        startActivityForResult(intent, requestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            when (resultCode) {
-                Activity.RESULT_OK -> {
-                    val place = Autocomplete.getPlaceFromIntent(data!!)
-                    cityAddress = place.address.toString()
-                    et_addressActivity.text = cityAddress
-                    cityName = place.name.toString()
-                    // cityID = place.id.toString()
-                    addressLatitude = place.latLng?.latitude.toString()
-                    addressLongitude = place.latLng?.longitude.toString()
 
-                    Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-                }
-                AutocompleteActivity.RESULT_ERROR -> {
-                    // TODO: Handle the error.
-                    val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                    Log.i("dddddd", status.statusMessage.toString())
-                }
-            }
-        } else if (requestCode == addEventRequestcode) {
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    placePickRequestCode -> {
+                        val place = Autocomplete.getPlaceFromIntent(data!!)
+                        cityAddress = place.address.toString()
+                        et_addressActivity.text = cityAddress
+                        cityName = place.name.toString()
+                        addressLatitude = place.latLng?.latitude.toString()
+                        addressLongitude = place.latLng?.longitude.toString()
+                    }
+                    addEventRequestCode -> {
 
-            val place = Autocomplete.getPlaceFromIntent(data!!)
-         //   cityAddress = place.address.toString()
-            cityName = place.name.toString()
-            // cityID = place.id.toString()
-            cityLatitude = place.latLng?.latitude.toString()
-            cityLongitude = place.latLng?.longitude.toString()
-            updateEventList[pos].lati = cityLatitude
-            updateEventList[pos].city = cityName
-            updateEventList[pos].longi = cityLongitude
-            addEventRepeatAdapter.notifyDataSetChanged()
+                        val place = Autocomplete.getPlaceFromIntent(data!!)
+                        cityName = place.name.toString()
+                        cityLatitude = place.latLng?.latitude.toString()
+                        cityLongitude = place.latLng?.longitude.toString()
+                        updateEventList[pos].lati = cityLatitude
+                        updateEventList[pos].city = cityName
+                        updateEventList[pos].longi = cityLongitude
+                        addEventRepeatAdapter.notifyDataSetChanged()
 
-        }
+                    } } } }
     }
-
 
     override fun getRealImagePath(imgPath: String?) {
 
         Log.d("selectedImagePath", "-------$imgPath")
-        when (IMAGE_SELECTED_TYPE) {
+        when (imageSelectedType) {
 
             "1" -> {
                 setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing[0] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-                selectedImags[0] =imgPath.toString()
+                imageSelectedType = ""
+                isImageSelected = true
+                selectedImages[0] =imgPath.toString()
             }
             "2" -> {
                 setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing[1] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-                selectedImags[1] =imgPath.toString()
+                imageSelectedType = ""
+                isImageSelected = true
+                selectedImages[1] =imgPath.toString()
 
             }
             "3" -> {
-                setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing[2] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-                selectedImags[2] =imgPath.toString()
+                setImageOnTab(imgPath, ivImg3)
+                imageSelectedType = ""
+                isImageSelected = true
+                selectedImages[2] =imgPath.toString()
 
             }
             else -> {
                 // here we getting the add event image photo path
                 event = true
-                selectedImags[3] =imgPath.toString()
+                selectedImages[3] =imgPath.toString()
 
-                listAddEventDataModel[eventPhotoPosition].image = imgPath.toString()
-                Log.d("lisufjdhf", "-----------$listAddEventDataModel")
+                listEvent[eventPhotoPosition].image = imgPath.toString()
+                Log.e("lisufjdhf", "-----------$listEvent")
                 addEventRepeatAdapter.notifyDataSetChanged()
-            }
 
-        }
-        Log.d("imageVideoListSize", "-----------$imageVideoUrlListing")
-    }
+            } } }
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
-        Log.d("getimage", "---------" + imgPATH.toString())
-
-        when (IMAGE_SELECTED_TYPE) {
-            "1" -> {
-                // imageview?.setScaleType(ImageView.ScaleType.FIT_XY)
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video1)
-            }
-            "2" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video2)
-
-            }
-            "3" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video3)
-
-            }
-
-        }
+        Log.e("getimage", "---------" + imgPATH.toString())
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
-    }
-
-    private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
-
-        if (imgpath.contains(".mp4")) {
-            videoButton.visibility = View.VISIBLE
-        } else {
-            videoButton.visibility = View.GONE
-        }
     }
 
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
         Log.d("listtAgrGroup", "--------$list")
-        //
-
         when {
-            listAgeGroupDataModel[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
-            listAgeGroupDataModel[list.size-1].ageTo.isNullOrEmpty() -> { myCustomToast("please fill age Group to in previous data")}
-            listAgeGroupDataModel[list.size-1].days.isNullOrEmpty() -> { myCustomToast("please select days in previous data")}
-            listAgeGroupDataModel[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
-            listAgeGroupDataModel[list.size-1].timeTo.isNullOrEmpty() -> { myCustomToast("please select To Time in previous data")}
+            listAge[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
+            listAge[list.size-1].ageTo.isNullOrEmpty() -> { myCustomToast("please fill age Group to in previous data")}
+            listAge[list.size-1].days.isNullOrEmpty() -> { myCustomToast("please select days in previous data")}
+            listAge[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
+            listAge[list.size-1].timeTo.isNullOrEmpty() -> { myCustomToast("please select To Time in previous data")}
             else -> {  list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
                 ageGroupRepeatAdapter.notifyDataSetChanged()
             }
@@ -479,22 +450,33 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     override fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView) {
         updateEventList = list
         pos = position
-        showPlacePickerForAddEvent()
+        showPlacePicker(addEventRequestCode)
     }
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
-        listAddEventDataModel.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
+        when {
+            listEvent[list.size-1].image.isNullOrEmpty() -> { myCustomToast("please select image in previous data") }
+            listEvent[list.size-1].name.isNullOrEmpty() -> { myCustomToast("please fill Event name in previous data")}
+            listEvent[list.size-1].dateFrom.isNullOrEmpty() -> { myCustomToast("please select From Date in previous data")}
+            listEvent[list.size-1].dateTo.isNullOrEmpty() -> { myCustomToast("please select To Date in previous data")}
+            listEvent[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
+            listEvent[list.size-1].timeTo.isEmpty() -> { myCustomToast("please select To Time in previous data")}
+            listEvent[list.size-1].description.isNullOrEmpty() -> { myCustomToast("please fill description in previous data")}
+            listEvent[list.size-1].price.isNullOrEmpty() -> { myCustomToast("please fill price in previous data")}
+            listEvent[list.size-1].city.isNullOrEmpty() -> { myCustomToast("please fill city in previous data")}
+            else -> {  list.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
                 "", "", "", "", ""))
-        addEventRepeatAdapter.notifyDataSetChanged()
+                addEventRepeatAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun addCameraGelleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
-        // for adding event image on card
         eventPhotoPosition = position
         checkPermission(this)
     }
 
-    private fun hitTypeActivity_Api() {
+    private fun hitTypeActivity() {
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendActivityTypeData(security_key, authKey)
@@ -513,8 +495,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         val name = jsonArray.getJSONObject(i).get("name").toString()
                         country.add(name)
                     }
-                    val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, country as List<Any?>)
-                    trader_type.adapter = arrayAdapte1
+                    val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, country as List<Any?>)
+                    trader_type.adapter = arrayAdapter1
                 }
             } else {
                 ErrorBodyResponse(response, this, null)
@@ -525,18 +507,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
-                if (response.body() != null) {
-                    response.body()
                     progressDialog.hidedialog()
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val postid = jsonObject.getJSONObject("data").get("postId").toString()
-                    val categoryId = jsonObject.getJSONObject("data").get("categoryId").toString()
                     finishAffinity()
-
                     OpenActivity(HomeActivity::class.java)
-
-                }
+               
             } else {
                 progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
@@ -546,7 +520,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         // for imageUpload api
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
-                //progressDialog.hidedialog()
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
@@ -572,35 +545,37 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     addEventUrlListingResponse.add(element.image.toString())
                                 }
 
-                                for (i in 0 until listAddEventDataModel.size) {
+                                for (i in 0 until listEvent.size) {
                                     val json = JSONObject()
                                     json.put("image", addEventUrlListingResponse[i])
-                                    json.put("name", listAddEventDataModel[i].name.toString())
+                                    json.put("name", listEvent[i].name.toString())
                                     json.put("file_type", "image")
-                                    json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
-                                    json.put("date_to", listAddEventDataModel[i].dateTo.toString())
-                                    json.put("time_from", listAddEventDataModel[i].timeFrom.toString())
-                                    json.put("time_to", listAddEventDataModel[i].timeTo.toString())
-                                    json.put("description", listAddEventDataModel[i].description.toString())
-                                    json.put("price", listAddEventDataModel[i].price.toString())
-                                    json.put("city", listAddEventDataModel[i].city.toString())
-                                    json.put("lat", listAddEventDataModel[i].lati.toString())
-                                    json.put("lng", listAddEventDataModel[i].longi.toString())
+                                    json.put("date_from", listEvent[i].dateFrom.toString())
+                                    json.put("date_to", listEvent[i].dateTo.toString())
+                                    json.put("time_from", listEvent[i].timeFrom.toString())
+                                    json.put("time_to", listEvent[i].timeTo)
+                                    json.put("description", listEvent[i].description.toString())
+                                    json.put("price", listEvent[i].price.toString())
+                                    json.put("city", listEvent[i].city.toString())
+                                    json.put("lat", listEvent[i].lati.toString())
+                                    json.put("lng", listEvent[i].longi.toString())
                                     addEvent.put(json)
                                 }
                             }
 
                             // for age group listing cards
-                            for (i in 0 until listAgeGroupDataModel.size) {
-                                val json = JSONObject()
-                                json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-                                json.put("age_to", listAgeGroupDataModel[i].ageTo)
-                                json.put("days", listAgeGroupDataModel[i].days)
-                                json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                ageGroup.put(json)
+                            if(age) {
+                                for (i in 0 until listAge.size) {
+                                    val json = JSONObject()
+                                    json.put("age_from", listAge[i].ageFrom)
+                                    json.put("age_to", listAge[i].ageTo)
+                                    json.put("days", listAge[i].days)
+                                    json.put("time_from", listAge[i].timeFrom)
+                                    json.put("time_to", listAge[i].timeTo)
+                                    json.put("time_to", listAge[i].timeTo)
+                                    json.put("time_to", listAge[i].timeTo)
+                                    ageGroup.put(json)
+                                }
                             }
 
                             hitFinallyActivityAddPostApi()
@@ -631,34 +606,36 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     }
 
 
-                                    for (i in 0 until listAddEventDataModel.size) {
+                                    for (i in 0 until listEvent.size) {
                                         val json = JSONObject()
                                         json.put("image", addEventUrlListingResponse[i])
-                                        json.put("name", listAddEventDataModel[i].name.toString())
+                                        json.put("name", listEvent[i].name.toString())
                                         json.put("file_type", "image")
-                                        json.put("date_from", listAddEventDataModel[i].dateFrom.toString())
-                                        json.put("date_to", listAddEventDataModel[i].dateTo.toString())
-                                        json.put("time_from", listAddEventDataModel[i].timeFrom.toString())
-                                        json.put("time_to", listAddEventDataModel[i].timeTo.toString())
-                                        json.put("description", listAddEventDataModel[i].description.toString())
-                                        json.put("price", listAddEventDataModel[i].price.toString())
-                                        json.put("city", listAddEventDataModel[i].city.toString())
-                                        json.put("lat", listAddEventDataModel[i].lati.toString())
-                                        json.put("lng", listAddEventDataModel[i].longi.toString())
+                                        json.put("date_from", listEvent[i].dateFrom.toString())
+                                        json.put("date_to", listEvent[i].dateTo.toString())
+                                        json.put("time_from", listEvent[i].timeFrom.toString())
+                                        json.put("time_to", listEvent[i].timeTo)
+                                        json.put("description", listEvent[i].description.toString())
+                                        json.put("price", listEvent[i].price.toString())
+                                        json.put("city", listEvent[i].city.toString())
+                                        json.put("lat", listEvent[i].lati.toString())
+                                        json.put("lng", listEvent[i].longi.toString())
                                         addEvent.put(json)
                                     }
                                 }
 
-                                for (i in 0 until listAgeGroupDataModel.size) {
-                                    val json = JSONObject()
-                                    json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-                                    json.put("age_to", listAgeGroupDataModel[i].ageTo)
-                                    json.put("days", listAgeGroupDataModel[i].days)
-                                    json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-                                    json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                    json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                    json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                    ageGroup.put(json)
+                                if(age) {
+                                    for (i in 0 until listAge.size) {
+                                        val json = JSONObject()
+                                        json.put("age_from", listAge[i].ageFrom)
+                                        json.put("age_to", listAge[i].ageTo)
+                                        json.put("days", listAge[i].days)
+                                        json.put("time_from", listAge[i].timeFrom)
+                                        json.put("time_to", listAge[i].timeTo)
+                                        json.put("time_to", listAge[i].timeTo)
+                                        json.put("time_to", listAge[i].timeTo)
+                                        ageGroup.put(json)
+                                    }
                                 }
 
                                 hitFinallyActivityAddPostApi()
@@ -687,18 +664,17 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
             Log.d("data =====", "-----2222--------")
 
-            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activity_typeId, shop_name, activity_name,
+            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
                     descp, phonee, cityAddress, cityName, addressLatitude, addressLongitude, ageGroup.toString(),
                     addEvent.toString(), media.toString(), countryCodee,"0")
         }
         else
         {
-            if(!event && ageGroup.length() ==0)
+            if(!event && ageGroup.length()==0)
             {
 
-                Log.d("data =====", "-----3333--------")
 
-                appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activity_typeId, shop_name, activity_name,
+                appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
                         descp, phonee, cityAddress, cityName, addressLatitude, addressLongitude, ageGroup.toString(),
                         addEvent.toString(), media.toString(), countryCodee,"2")
             }
@@ -706,9 +682,15 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             {
                 if(!event && ageGroup.length() !=0)
                 {
-                    appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activity_typeId, shop_name, activity_name,
+                    appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
                             descp, phonee, cityAddress, cityName, addressLatitude, addressLongitude, ageGroup.toString(),
                             addEvent.toString(), media.toString(), countryCodee,"1")
+                }
+                else if(event && ageGroup.length() ==0)
+                {
+                    appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
+                        descp, phonee, cityAddress, cityName, addressLatitude, addressLongitude, ageGroup.toString(),
+                        addEvent.toString(), media.toString(), countryCodee,"3")
                 }
             }
         }
@@ -716,12 +698,26 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel() }
+        job.cancel()
+    }
 
-   /* data class AddActivityData(var imageList: MutableList<String> = mutableListOf(),var activityType : String ="",
+
+
+
+    data class AgeData(var ageFrom : String ="", var ageTo : String ="",
+                       var day : String ="", var timeFrom : String ="",
+                       var timeTo : String ="")
+
+    data class EventData(var eventImage : String ="", var eventName : String ="",
+                       var dateFrom : String ="", var dateTo : String ="",
+                       var timeFrom : String ="",var timeTo : String =""
+                       ,var description : String ="",var price : String =""
+                       ,var city : String ="")
+
+    data class AddActivityData(var imageList: MutableList<String> = mutableListOf(),var activityType : String ="",
                                var shopName : String ="",var activityName : String ="",var description : String ="",
                                var phone : String ="",var address : String ="",var ageList: MutableList<AgeData> = mutableListOf()
-                               ,var ageList: MutableList<AgeData> = mutableListOf())*/
+                               ,var eventList: MutableList<EventData> = mutableListOf())
 
 
 }
