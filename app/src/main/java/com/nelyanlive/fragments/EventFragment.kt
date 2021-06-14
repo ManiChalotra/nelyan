@@ -1,7 +1,12 @@
 package com.nelyanlive.fragments
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,25 +15,32 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.R.layout
 import com.nelyanlive.adapter.MyEventAdapter
+import com.nelyanlive.current_location.GPSTracker
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.modals.HomeEventModel
-import com.nelyanlive.ui.ActivitiesFilterActivity
-import com.nelyanlive.ui.CommunicationListner
-import com.nelyanlive.ui.EventsOnMapActivity
-import com.nelyanlive.ui.HomeActivity
+import com.nelyanlive.ui.*
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.fragment_activity_list.*
+import kotlinx.android.synthetic.main.fragment_activity_list.frame_container
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_trader_listing.*
 import kotlinx.android.synthetic.main.tookbar.*
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+
+private const val PERMISSIONS_REQUEST_CODE = 34
+
 
 class EventFragment(var userlat: String, var userlong: String,var userlocation: String) : Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
 
@@ -51,18 +63,71 @@ class EventFragment(var userlat: String, var userlong: String,var userlocation: 
     var dataString = ""
     private val datalist by lazy { ArrayList<HomeEventModel>() }
 
+    private var gpsTracker: GPSTracker? = null
+    private var latitude: Double = 42.6026
+    private var longitude: Double = 20.9030
+    private var locality: String = ""
+
+
+
     override fun onResume() {
         super.onResume()
         if (listner != null) {
             listner!!.onFargmentActive(5)
         }
+                gpsTracker = GPSTracker(mContext)
+                if (tvFilter!!.text == "Filter") {
+                    if (!gpsTracker!!.canGetLocation()) {
+                        Log.e("location_changed", "==1=iff==" + gpsTracker!!.canGetLocation())
+                        gpsTracker!!.showSettingsAlert()
+
+                    } else {
+                        Log.e("location_changed", "==2=iff==" + gpsTracker!!.canGetLocation())
+                        val gpsTracker = GPSTracker(mContext)
+                        latitude = gpsTracker.latitude
+                        longitude = gpsTracker.longitude
+                        Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                        if (latitude != 0.0) {
+                            val geocoder = Geocoder(mContext, Locale.getDefault())
+                            var list = listOf<Address>()
+
+                            list = geocoder.getFromLocation(latitude, longitude, 1)
+
+                            Log.e("location_changed", "==home==Foreground address: ${list[0].locality}==")
+                           // tv_city_zipcode.text = list[0].locality
+                            (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + list[0].locality
+
+                            locality = list[0].locality
+        if (checkIfHasNetwork(requireActivity())) {
+            authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
+            appViewModel.sendFilterEventListData(security_key, authkey,
+                latitude.toString(), longitude.toString(),"",
+                "",  locality)
+            eventProgressBar?.showProgressBar()
+        } else {
+            showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+        }
+
+                        }
+                    }
+                }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         v = inflater.inflate(layout.fragment_event, container, false)
         mContext = requireActivity()
+        if (foregroundPermissionApproved()) {
+            val subscribeToLocationUpdates = HomeActivity.locationService?.subscribeToLocationUpdates()
 
+            Log.e("location_changed", "=========$subscribeToLocationUpdates======")
+
+            if (subscribeToLocationUpdates != null) subscribeToLocationUpdates else Log.e("location_changed", "Service Not Bound")
+        }
+        else {
+            requestPermissions()
+        }
         orderby = v.findViewById(R.id.trader_type)
         tvNoEvent = v.findViewById(R.id.tv_no_event)
         rc = v.findViewById(R.id.rc_event)
@@ -86,7 +151,9 @@ class EventFragment(var userlat: String, var userlong: String,var userlocation: 
                     eventProgressBar?.showProgressBar()
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
-                } } }
+                }
+            }
+        }
 
         val LM = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rc!!.layoutManager = LM
@@ -114,6 +181,44 @@ class EventFragment(var userlat: String, var userlong: String,var userlocation: 
         return v
     }
 
+    private fun requestPermissions() {
+        val provideRationale = foregroundPermissionApproved()
+
+        // If the user denied a previous request, but didn't check "Don't ask again", provide
+        // additional rationale.
+        if (provideRationale) {
+            Snackbar.make(
+                frame_container,
+                R.string.permission,
+                Snackbar.LENGTH_LONG
+            )
+                .setAction(R.string.ok) {
+                    // Request permission
+                    ActivityCompat.requestPermissions(
+                        (mContext as Activity),
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        PERMISSIONS_REQUEST_CODE
+                    )
+                }
+                .show()
+        } else {
+            Log.d("TAG", "Request foreground only permission")
+            ActivityCompat.requestPermissions(
+                (mContext as Activity),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun foregroundPermissionApproved(): Boolean {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+            (mContext as Activity),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
+
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -121,7 +226,7 @@ class EventFragment(var userlat: String, var userlong: String,var userlocation: 
         super.onViewCreated(view, savedInstanceState)
         val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        eventListAPI()
+        //eventListAPI()
         checkMvvmResponse()
     }
 
@@ -137,6 +242,7 @@ class EventFragment(var userlat: String, var userlong: String,var userlocation: 
                 val returnDistance = data.getStringExtra("distance")
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
+                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
 
                 if (checkIfHasNetwork(requireActivity())) {
                      authkey = AllSharedPref.restoreString(requireContext(), "auth_key")

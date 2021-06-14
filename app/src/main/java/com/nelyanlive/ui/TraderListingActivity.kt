@@ -1,36 +1,43 @@
 package com.nelyanlive.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.TraderListingAdapter
+import com.nelyanlive.current_location.GPSTracker
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderListData
 import com.nelyanlive.modals.hometraderpostlist.HomeTraderPostListResponse
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.activity_home_child_care_list.*
-import kotlinx.android.synthetic.main.fragment_trade_filter.*
 import kotlinx.android.synthetic.main.fragment_trader_listing.*
-import kotlinx.android.synthetic.main.fragment_trader_listing.ivBack
-import kotlinx.android.synthetic.main.fragment_trader_listing.tvFilter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+
+private const val PERMISSIONS_REQUEST_CODE = 34
 
 class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderListingAdapter.OnTraderItemClickListner, CoroutineScope {
 
@@ -52,6 +59,60 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
     private var authkey: String?= null
     var dataString = ""
 
+    private var gpsTracker: GPSTracker? = null
+    private var latitude: Double = 42.6026
+    private var longitude: Double = 20.9030
+    private var locality: String = ""
+
+    override fun onResume() {
+                super.onResume()
+               gpsTracker = GPSTracker(this)
+
+        if (tvFilter.text == "Filter") {
+            if (!gpsTracker!!.canGetLocation()) {
+                Log.e("location_changed", "==1=iff==" + gpsTracker!!.canGetLocation())
+                gpsTracker!!.showSettingsAlert()
+
+            } else {
+                Log.e("location_changed", "==2=iff==" + gpsTracker!!.canGetLocation())
+                val gpsTracker = GPSTracker(this)
+                latitude = gpsTracker.latitude
+                longitude = gpsTracker.longitude
+                Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                if (latitude != 0.0) {
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    var list = listOf<Address>()
+
+                    list = geocoder.getFromLocation(latitude, longitude, 1)
+
+                    Log.e("location_changed", "==home==Foreground address: ${list[0].locality}==")
+                    tv_city_zipcode.text = list[0].locality
+                    locality = list[0].locality
+                    if (checkIfHasNetwork(this)) {
+                        launch(Dispatchers.Main.immediate) {
+                            val authKey =
+                                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                    .first()
+
+                            appViewModel.sendFilterTraderListData(
+                                security_key, authKey,
+                                latitude.toString(), longitude.toString(),
+                                "", "", "",
+                                locality
+                            )
+
+                            trader_list_progressbar?.showProgressBar()
+                        }
+                    } else {
+                        showSnackBar(this, getString(R.string.no_internet_error))
+                    }
+
+                }
+            }
+        }
+                }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_trader_listing)
@@ -63,25 +124,59 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
 
-        if (checkIfHasNetwork(this)) {
-            launch(Dispatchers.Main.immediate) {
-                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+        //current location
+        if (foregroundPermissionApproved()) {
+            val subscribeToLocationUpdates = HomeActivity.locationService?.subscribeToLocationUpdates()
 
-                appViewModel.sendFilterTraderListData(security_key, authKey, latitudee, longitudee,
-                    "", "","",
-                    location )
+            Log.e("location_changed", "=========$subscribeToLocationUpdates======")
 
-                trader_list_progressbar?.showProgressBar()
-            }
+            if (subscribeToLocationUpdates != null) subscribeToLocationUpdates else Log.e("location_changed", "Service Not Bound")
         }
         else {
-            showSnackBar(this, getString(R.string.no_internet_error))
+            requestPermissions()
         }
+
         checkMvvmResponse()
     }
+
+
+    private fun requestPermissions() {
+        val provideRationale = foregroundPermissionApproved()
+
+        // If the user denied a previous request, but didn't check "Don't ask again", provide
+        // additional rationale.
+        if (provideRationale) {
+            Snackbar.make(
+                frame_container,
+                R.string.permission,
+                Snackbar.LENGTH_LONG
+            )
+                .setAction(R.string.ok) {
+                    // Request permission
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        PERMISSIONS_REQUEST_CODE
+                    )
+                }
+                .show()
+        } else {
+            Log.d("TAG", "Request foreground only permission")
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun foregroundPermissionApproved(): Boolean {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
+
 
     private fun initalizeClicks() {
         ivBack.setOnClickListener(this)
@@ -212,13 +307,12 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                     if (checkIfHasNetwork(this)) {
                         launch(Dispatchers.Main.immediate) {
                             val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                            val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                            val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                            val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                            tv_city_zipcode.text = locality
 
-                            appViewModel.sendFilterTraderListData(security_key, authKey, latitudee, longitudee,
+                            appViewModel.sendFilterTraderListData(security_key, authKey,
+                                latitude.toString(), longitude.toString(),
                                 "", "","",
-                                location )
+                                locality )
 
                             trader_list_progressbar?.showProgressBar()
                         }
@@ -242,7 +336,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener, TraderL
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
-
+                tv_city_zipcode.text = data.getStringExtra("location")
 
                 Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
 

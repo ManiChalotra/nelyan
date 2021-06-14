@@ -1,7 +1,11 @@
 package com.nelyanlive.ui
 
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,14 +13,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.HomeChildCareListAdapter
+import com.nelyanlive.current_location.GPSTracker
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homechildcare.HomeChiildCareREsponse
@@ -37,7 +44,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+private const val PERMISSIONS_REQUEST_CODE = 34
 
 class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     AdapterView.OnItemSelectedListener,
@@ -63,12 +73,81 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     private var authkey: String? = null
     var dataString = ""
 
+    private var gpsTracker: GPSTracker? = null
+    private var latitude: Double = 42.6026
+    private var longitude: Double = 20.9030
+    private var locality: String = ""
+
+    override fun onResume() {
+            super.onResume()
+           gpsTracker = GPSTracker(this)
+        if((tvFilter.text=="Filter")) {
+            if (!gpsTracker!!.canGetLocation()) {
+                Log.e("location_changed", "==1=iff==" + gpsTracker!!.canGetLocation())
+                gpsTracker!!.showSettingsAlert()
+
+            } else {
+                Log.e("location_changed", "==2=iff==" + gpsTracker!!.canGetLocation())
+                val gpsTracker = GPSTracker(this)
+                latitude = gpsTracker.latitude
+                longitude = gpsTracker.longitude
+                Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                if (latitude != 0.0) {
+                    val geocoder = Geocoder(this@HomeChildCareListActivity, Locale.getDefault())
+                    var list = listOf<Address>()
+
+                    list = geocoder.getFromLocation(latitude, longitude, 1)
+
+                    Log.e("location_changed", "==home==Foreground address: ${list[0].locality}==")
+                    tv_userCityOrZipcode.text = list[0].locality
+                    locality = list[0].locality
+                    if (checkIfHasNetwork(this)) {
+                        launch(Dispatchers.Main.immediate) {
+                            val authKey =
+                                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                    .first()
+                            appViewModel.sendChildCareFilterData(
+                                security_key,
+                                authKey,
+                                latitude.toString(),
+                                longitude.toString(),
+                                "",
+                                "",
+                                locality,
+                                ""
+                            )
+                            child_care_list_progressbar?.hideProgressBar()
+                        }
+                    } else {
+                        showSnackBar(this, getString(R.string.no_internet_error))
+                    }
+
+                }
+            }
+        }
+            }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_child_care_list)
         initalizeClicks()
 
         recyclerview = findViewById(R.id.recyclerview)
+
+
+        //current location
+        if (foregroundPermissionApproved()) {
+            val subscribeToLocationUpdates = HomeActivity.locationService?.subscribeToLocationUpdates()
+
+            Log.e("location_changed", "=========$subscribeToLocationUpdates======")
+
+            if (subscribeToLocationUpdates != null) subscribeToLocationUpdates else Log.e("location_changed", "Service Not Bound")
+        }
+        else {
+            requestPermissions()
+        }
+
 
         if (intent.extras != null) {
             listType = intent.getStringExtra("type").toString()
@@ -91,29 +170,49 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
         // Setting OnItemClickListener to the Spinner
         trader_type!!.onItemSelectedListener = this@HomeChildCareListActivity
 
-        if (checkIfHasNetwork(this)) {
-            launch(Dispatchers.Main.immediate) {
-                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-                appViewModel.sendChildCareFilterData(
-                    security_key,
-                    authKey,
-                    latitudee,
-                    longitudee,
-                    "",
-                    "",
-                    location,
-                    ""
-                )
-                child_care_list_progressbar?.hideProgressBar() }
-        }
-        else {
-            showSnackBar(this, getString(R.string.no_internet_error))
-        }
+
         checkMvvmResponse()
     }
+
+
+
+    private fun requestPermissions() {
+        val provideRationale = foregroundPermissionApproved()
+
+        // If the user denied a previous request, but didn't check "Don't ask again", provide
+        // additional rationale.
+        if (provideRationale) {
+            Snackbar.make(
+                frame_container,
+                R.string.permission,
+                Snackbar.LENGTH_LONG
+            )
+                .setAction(R.string.ok) {
+                    // Request permission
+                    ActivityCompat.requestPermissions(
+                        this@HomeChildCareListActivity,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        PERMISSIONS_REQUEST_CODE
+                    )
+                }
+                .show()
+        } else {
+            Log.d("TAG", "Request foreground only permission")
+            ActivityCompat.requestPermissions(
+                this@HomeChildCareListActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun foregroundPermissionApproved(): Boolean {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
+
 
     private fun setChildcareAdapter(childCareDatalist: ArrayList<HomeChildCareeData>) {
         homeChildCareListAdapter = HomeChildCareListAdapter(this, childCareDatalist, this)
@@ -145,18 +244,17 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         tvFilter.text = "Filter"
                         launch(Dispatchers.Main.immediate) {
                             val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                            val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                            val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                            val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+
+                            tv_userCityOrZipcode.text = locality
 
                             appViewModel.sendChildCareFilterData(
                                 security_key,
                                 authKey,
-                                latitudee,
-                                longitudee,
+                                latitude.toString(),
+                                longitude.toString(),
                                 "",
                                 "",
-                                location,
+                                locality,
                                 ""
                             )
                             child_care_list_progressbar?.hideProgressBar() }
@@ -195,7 +293,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val childCareType = data.getStringExtra("childCareType")
-
+                tv_userCityOrZipcode.text = data.getStringExtra("location")
                 Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$childCareType===")
 
 

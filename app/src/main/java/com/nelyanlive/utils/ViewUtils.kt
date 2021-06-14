@@ -266,8 +266,7 @@ fun failureMethod(
 }
 
 fun checkIfHasNetwork(activity: Activity): Boolean {
-    val cm =
-            (activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val cm =(activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = cm.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
 

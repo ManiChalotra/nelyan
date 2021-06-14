@@ -1,8 +1,14 @@
 package com.nelyanlive.ui
 
+import android.Manifest
 import android.app.Dialog
-import android.content.Intent
+import android.content.*
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -10,14 +16,20 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ActivityListAdapter
+import com.nelyanlive.current_location.GPSTracker
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homeactivitylist.HomeAcitivityResponseData
@@ -30,11 +42,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
+private const val PERMISSIONS_REQUEST_CODE = 34
 
 class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
-        ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner, CoroutineScope {
+        ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner, CoroutineScope{
 
     var iv_map: ImageView? = null
     var ivBack: ImageView? = null
@@ -46,6 +61,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     var ivFavouritee: ImageView? = null
     var LAUNCH_SECOND_ACTIVITY = 1
     var dataString = ""
+    var enabled = false
 
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -57,6 +73,57 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         Job()
     }
 
+    private var gpsTracker: GPSTracker? = null
+    private var latitude: Double = 42.6026
+    private var longitude: Double = 20.9030
+    private var locality: String = ""
+
+    override fun onResume() {
+        super.onResume()
+       gpsTracker = GPSTracker(this)
+
+        if((tvFilter.text=="Filter")) {
+            if (!gpsTracker!!.canGetLocation()) {
+                Log.e("location_changed", "==1=iff==" + gpsTracker!!.canGetLocation())
+                gpsTracker!!.showSettingsAlert()
+
+            } 
+            else {
+                Log.e("location_changed", "==2=iff==" + gpsTracker!!.canGetLocation())
+                val gpsTracker = GPSTracker(this)
+                latitude = gpsTracker.latitude
+                longitude = gpsTracker.longitude
+                Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                if (latitude != 0.0) {
+                    val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
+                    var list = listOf<Address>()
+
+                    list = geocoder.getFromLocation(latitude, longitude, 1)
+
+                    Log.e("location_changed", "==home==Foreground address: ${list[0].locality}==")
+                    locality =list[0].locality
+                    tv_userCityOrZipcode.text = list[0].locality
+                    if (checkIfHasNetwork(this)) {
+                        launch(Dispatchers.Main.immediate) {
+                            val authKey =
+                                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                    .first()
+                            appViewModel.sendFilterActivityListData(
+                                security_key, authKey,
+                                latitude.toString(), longitude.toString(), "", "", "",
+                                locality
+                            )
+                            activity_list_progressbar?.showProgressBar()
+                        }
+                    } else {
+                        showSnackBar(this, getString(R.string.no_internet_error))
+                    }
+
+                }
+            }
+        }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_activity_list)
@@ -65,6 +132,19 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         iv_map = findViewById(R.id.iv_map)
         recyclerview = findViewById(R.id.rv_home_activities)
 
+         //current location
+        if (foregroundPermissionApproved()) {
+                val subscribeToLocationUpdates = HomeActivity.locationService?.subscribeToLocationUpdates()
+
+                Log.e("location_changed", "=========$subscribeToLocationUpdates======")
+
+                if (subscribeToLocationUpdates != null) subscribeToLocationUpdates else Log.e("location_changed", "Service Not Bound")
+            }
+            else {
+                requestPermissions()
+            }
+
+
         if (intent.extras != null) {
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
@@ -72,23 +152,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
         ivBack!!.setOnClickListener {
             onBackPressed()
+
         }
 
-        if (checkIfHasNetwork(this)) {
-            //tvFilter.text="Filter"
-            launch(Dispatchers.Main.immediate) {
-                val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-                appViewModel.sendFilterActivityListData(security_key, authKey, latitudee, longitudee, "", "","",
-                    location )
-                activity_list_progressbar?.showProgressBar()
 
-            }
-        } else {
-            showSnackBar(this, getString(R.string.no_internet_error))
-        }
 
         checkMvvmResponse()
 
@@ -105,11 +172,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     tvFilter.text="Filter"
                     launch(Dispatchers.Main.immediate) {
                         val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-                       val location  =   dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                       val latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                       val longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-                        appViewModel.sendFilterActivityListData(security_key, authKey, latitudee, longitudee, "", "","",
-                            location )
+                        appViewModel.sendFilterActivityListData(security_key, authKey,
+                            latitude.toString(), longitude.toString(), "", "","",
+                            locality )
+                        tv_userCityOrZipcode.text = locality
                         activity_list_progressbar?.showProgressBar()
 
                     }
@@ -136,17 +202,48 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 "", "Events in City",
                 "Date Added",
                 "Distance")
-        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                this, R.layout.customspinner, orderbylist)
-
+        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, orderbylist)
            // Setting Adapter to the Spinner
            orderby!!.adapter = adapter
-
            // Setting OnItemClickListener to the Spinner
            orderby!!.onItemSelectedListener = this@ActivitiesListActivity
+    }
+    private fun requestPermissions() {
+        val provideRationale = foregroundPermissionApproved()
 
+        // If the user denied a previous request, but didn't check "Don't ask again", provide
+        // additional rationale.
+        if (provideRationale) {
+            Snackbar.make(
+                frame_container,
+                R.string.permission,
+                Snackbar.LENGTH_LONG
+            )
+                .setAction(R.string.ok) {
+                    // Request permission
+                    ActivityCompat.requestPermissions(
+                        this@ActivitiesListActivity,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        PERMISSIONS_REQUEST_CODE
+                    )
+                }
+                .show()
+        } else {
+            Log.d("TAG", "Request foreground only permission")
+            ActivityCompat.requestPermissions(
+                this@ActivitiesListActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_CODE
+            )
+        }
     }
 
+    private fun foregroundPermissionApproved(): Boolean {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -161,7 +258,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
-
+                tv_userCityOrZipcode.text = data.getStringExtra("location")
                 Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
 
 
@@ -302,6 +399,12 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             putString("longi", postLongitude)
         }
     }
+
+
+
+
+
+
 
 }
 

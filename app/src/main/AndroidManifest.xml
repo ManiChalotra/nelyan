@@ -297,6 +297,16 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+
+
+        <service
+            android:name=".current_location.LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location"
+            />
+
+
     </application>
 
 </manifest>

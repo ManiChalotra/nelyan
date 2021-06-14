@@ -248,4 +248,11 @@
     <string name="search">SEARCH</string>
     <string name="are_you_sure_to_mute_this_group_notifications"> Are you sure to mute this Group Notifications ?</string>
 
+    <!--//location-->
+    <string name="permission">Location permission needed for core functionality</string>
+
+    <string name="gps_settings">GPS Settings</string>
+    <string name="gps_settings_desc">Please enable GPS settings</string>
+
+
 </resources>

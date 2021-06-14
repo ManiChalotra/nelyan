@@ -1,11 +1,16 @@
 package com.nelyanlive.ui
 
+import android.Manifest
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
+import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
@@ -16,16 +21,21 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.nelyanlive.R
+import com.nelyanlive.current_location.LocationService
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.fragments.*
@@ -41,6 +51,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener
@@ -89,8 +100,42 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+
+    companion object{
+        var locationService: LocationService? = null
+
+    }
+
+    //current location
+    // Provides location updates for while-in-use feature.
+    private lateinit var sharedPreferences: SharedPreferences
+    private var foregroundOnlyLocationServiceBound = false
+    private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
+    private lateinit var homeFusedLocation: FusedLocationProviderClient
+
+
+
+    //current location
+    private val foregroundOnlyServiceConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            val binder = service as LocationService.LocalBinder
+            locationService = binder.service
+            foregroundOnlyLocationServiceBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            locationService = null
+            foregroundOnlyLocationServiceBound = false
+        }
+    }
+
+
+
     override fun onResume() {
         super.onResume()
+        Log.e("location_changed", "onResume")
+
         Log.d("homeAuthKey", "----------$authorization")
 
         launch(Dispatchers.Main.immediate) {
@@ -115,13 +160,82 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             tvUserName!!.text = userName
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            foregroundOnlyBroadcastReceiver,
+            IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
     }
+
+
+    override fun onStart() {
+        super.onStart()
+        val serviceIntent = Intent(this, LocationService::class.java)
+        bindService(serviceIntent, foregroundOnlyServiceConnection, Context.BIND_AUTO_CREATE)
+
+    }
+
+    override fun onPause() {
+        Log.e("location_changed", "onPause")
+
+        /*LocalBroadcastManager.getInstance(this).unregisterReceiver(
+            foregroundOnlyBroadcastReceiver
+        )*/
+
+        super.onPause()
+    }
+
+    override fun onStop() {
+        if (foregroundOnlyLocationServiceBound) {
+            unbindService(foregroundOnlyServiceConnection)
+            foregroundOnlyLocationServiceBound = false
+        }
+        super.onStop()
+    }
+
+    //location
+    private inner class ForegroundOnlyBroadcastReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val location = intent.getParcelableExtra<Location>(
+                LocationService.EXTRA_LOCATION
+            )
+
+            if (location != null) {
+                Log.e("location_changed", "Foreground location: ${location.latitude}==${location.longitude}")
+
+            val geocoder =  Geocoder(this@HomeActivity, Locale.getDefault())
+            var list  = listOf<Address>()
+
+                list  = geocoder.getFromLocation(location.latitude,location.longitude,1)
+
+                Log.e("location_changed", "Foreground address: ${list[0].locality}==")
+
+            }
+        }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        homeFusedLocation = LocationServices.getFusedLocationProviderClient(this)
+
+        if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            homeFusedLocation.lastLocation.addOnSuccessListener {
+                    location : Location? ->
+                Log.e("location_changed", "==home=====${location}=======")
+
+            }
+        }
+
         initalize()
         checkMvvmresponse()
+
+        //location
+        foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
+        sharedPreferences = getSharedPreferences("preference_file_key", Context.MODE_PRIVATE)
 
         navigationbar = findViewById(R.id.navigationbar)
         tvTitleToolbar = findViewById(R.id.tvTitleToolbar)
