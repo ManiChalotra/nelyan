@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -325,102 +325,6 @@
                             android:textSize="@dimen/_14sdp" />
 
 
-                        <!--<TextView
-                            android:id="@+id/tvMon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/selected_outlinbg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="MON"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/tvTue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="TUE"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvWed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="WED"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvThur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="THU"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvFri"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="FRI"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvSat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="SAT"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvSun"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/text_outlinebg"
-                            android:fontFamily="@font/regular"
-                            android:paddingLeft="2dp"
-                            android:paddingTop="3dp"
-                            android:paddingRight="2dp"
-                            android:paddingBottom="3dp"
-                            android:text="SUN"
-                            android:textColor="@color/black" />-->
 
                     </LinearLayout>
 

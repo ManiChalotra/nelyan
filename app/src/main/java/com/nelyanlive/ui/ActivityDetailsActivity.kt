@@ -59,7 +59,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
     var tvTue: TextView? = null
     var tvWed: TextView? = null
-    var tvThur: TextView? = null
     var tvSat: TextView? = null
     var iv_msg: ImageView? = null
     var iv_share: ImageView? = null
@@ -221,6 +220,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
             R.id.iv_back -> { onBackPressed() }
             R.id.iv_msg -> { }
             R.id.iv_share -> { dailogshare() }
+
         }
     }
 
@@ -234,32 +234,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     activity_details_progressbar?.hideProgressBar()
                     Log.d("postDetailsResponse", "-------------" + Gson().toJson(response.body()))
 
-                    //{"success":1,"code":200,"msg":"Post Details","data":
-                    // {"id":103,"userId":179,"categoryId":1,"typeofActivityId":5,"activityname":"Bill Activity",
-                    // "nameOfShop":"dance Indian movies","description":"Bill Activity","adMsg":"dance Indian movies",
-                    // "phone":"8407970000","country_code":"54","address":"Beas, Punjab, India","city":"Jaipur","latitude":"",
-                    // "longitude":"75.2869121","isPublished":0,"status":1,"createdAt":"2021-05-13T14:30:35.000Z",
-                    // "updatedAt":"2021-05-17T08:05:00.000Z",
-                    // "activityimages":[{"id":189,"activityId":103,
-                    // "images":"/uploads/users/1621238500503-file.jpg","mediaType":1}],"ageGroups":[{"id":129,
-                    // "eventId":0,"activityPostId":103,"ageFrom":"80","ageTo":"90","days":"Wednesday",
-                    // "timeFrom":"14:58","timeTo":"19:58","createdAt":"2021-05-17T08:05:00.000Z",
-                    // "updatedAt":"2021-05-17T08:05:00.000Z"}],
-                    // "events":[{"id":154,"userId":179,
-                    // "activityId":103,"name":"evening tym","description":"description drawing event",
-                    // "price":"80","city":"Kabul","latitude":"34.5553494","longitude":"69.207486",
-                    // "image":"/uploads/users/1620916234997-file.jpg","status":1,"createdAt":"2021-05-17T08:05:00.000Z",
-                    // "updatedAt":"2021-05-17T08:05:00.000Z",
-                    // "eventstimings":[{"id":92,"eventId":154,
-                    // "activityId":103,"dateFrom":"13/05/2021","dateTo":"22/05/2021","startTime":"19:59",
-                    // "endTime":"22:59","createdAt":"2021-05-17T08:05:00.000Z","updatedAt":"2021-05-17T08:05:00.000Z"}]},
-                    // {"id":155,"userId":179,"activityId":103,"name":"evening tym","description":"description drawing shop",
-                    // "price":"90","city":"Jaipur","latitude":"26.9124336","longitude":"75.7872709",
-                    // "image":"/uploads/users/1620916234997-file.jpg","status":1,"createdAt":"2021-05-17T08:05:00.000Z",
-                    // "updatedAt":"2021-05-17T08:05:00.000Z",
-                    // "eventstimings":[{"id":93,"eventId":155,"activityId":103,
-                    // "dateFrom":"13/05/2021","dateTo":"22/05/2021","startTime":"19:59","endTime":"22:59",
-                    // "createdAt":"2021-05-17T08:05:00.000Z","updatedAt":"2021-05-17T08:05:00.000Z"}]}]}}
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
@@ -468,8 +442,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 mMap!!.addMarker(MarkerOptions()
                         .position(india)
                         .title("Activity"))
-              //  mMap!!.moveCamera(CameraUpdateFactory.newLatLng(india))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,10f))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,15f))
             }
 
 

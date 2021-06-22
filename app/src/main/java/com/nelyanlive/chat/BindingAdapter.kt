@@ -225,13 +225,6 @@ object BindingAdapter {
                     ivImage.context,
                     R.drawable.placeholder
             )!!).into(ivImage)
-                   /* Glide.with(ivImage.context).load("http://3.13.214.27:1052/uploads/users/$str").dontTransform()
-                            .override(100, 100).placeholder(
-                                    ContextCompat.getDrawable(
-                                            ivImage.context,
-                                            R.drawable.placeholder
-                                    )
-                            ).into(ivImage)*/
 
         }
         else
@@ -255,13 +248,6 @@ object BindingAdapter {
                     ivImage.context,
                     R.drawable.placeholder
             )!!).into(ivImage)
-                   /* Glide.with(ivImage.context).load("http://3.13.214.27:1052/uploads/users/$str").dontTransform()
-                            .override(100, 100).placeholder(
-                                    ContextCompat.getDrawable(
-                                            ivImage.context,
-                                            R.drawable.placeholder
-                                    )
-                            ).into(ivImage)*/
 
         }
         else

@@ -74,8 +74,6 @@ class GroupChatVM :ViewModel() {
 
                     }
                     "fullscreen" -> {
-                       // disconnectSocket()
-
                         (view.context as Activity).startActivity(Intent(view.context,FullScreen::class.java)
                             .putExtra("image",listChat[position].message))
 
@@ -335,11 +333,6 @@ class GroupChatVM :ViewModel() {
         Log.e("socket", "chat    reportUser")
         Log.e("socket", it[0].toString())
 
-        //{
-        //  "success_message": "Report Added Successfully"
-        //}
-
-        val json = JSONObject(it[0].toString())
         GlobalScope.launch {
 
             withContext(Dispatchers.Main) {

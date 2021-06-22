@@ -9,12 +9,9 @@ import android.widget.EditText
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nelyanlive.R
 import com.nelyanlive.data.viewmodel.AppViewModel
@@ -38,7 +35,8 @@ import kotlin.coroutines.CoroutineContext
 
 class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope {
     private val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
     }
 
     private val dataStoragePreference by lazy {
@@ -54,8 +52,8 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     private var utilization = ""
     private var latitude = ""
     private var longitude = ""
-    private var authkey = ""
-    private  var imggPathh= ""
+    private var authKey = ""
+    private var imgPath = ""
 
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
@@ -67,52 +65,49 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
 
     override fun getRealImagePath(imgPath: String?) {
-        imggPathh = imgPath.toString()
-        //Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
-        Glide.with(this).load(imgPath).into(iv_profileEdit)
-        Log.d("getEditPhotoPath", "----------$imgPath")
+        this.imgPath = imgPath.toString()
+        Glide.with(this).load(this.imgPath).into(iv_profileEdit)
+        Log.d("getEditPhotoPath", "----------${this.imgPath}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-        initalize()
+        initialize()
         checkMvvmResponse()
-        Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + intent?.extras?.getString("userImage").toString()).error(R.mipmap.ic_user_place)
-                .into(iv_profileEdit)
+        Glide.with(this@EditProfileActivity).asBitmap().circleCrop()
+            .load(from_admin_image_base_URl + intent?.extras?.getString("userImage").toString())
+            .error(R.mipmap.ic_user_place)
+            .into(iv_profileEdit)
 
         if (imagePathCreated.isEmpty()) {
             imagePathCreated = intent?.extras?.getString("userImage").toString()
             name = intent?.extras?.getString("userName").toString()
             email = intent?.extras?.getString("userEmail").toString()
             city = intent?.extras?.getString("userCity").toString()
-            utilization = intent?.extras?.getString("userUtilization").toString()
-            authkey = intent?.extras?.getString("authorization").toString()
+            authKey = intent?.extras?.getString("authorization").toString()
 
-            Log.d("getPatttthhhh", "---onResume----" + imagePathCreated)
-            //2021-05-21 13:15:00.732 25708-25708/com.nelyan_live I/dddddd: Place: Ludhiana, ChIJfVo0YnSDGjkREAbGjjQCEWg,Ludhiana, Punjab, India,lat/lng: (30.900965,75.8572758)
-
-            //2021-05-21 13:15:00.733 25708-25708/com.nelyan_live D/getPatttthhhh: ---onResume----
-
-            /*Glide.with(this@EditProfileActivity).asBitmap().circleCrop().load(from_admin_image_base_URl + imagePathCreated).error(R.mipmap.ic_user_place)
-                    .into(iv_profileEdit)*/
+            Log.d("getPath", "---onResume----$imagePathCreated")
 
             et_nameEditProfile.setText(name); setFocusEditText(et_nameEditProfile)
             tv_emailEditProfile.text = email
             et_cityEditProfile.setText(city); setFocusEditText(et_cityEditProfile)
-            et_utilizationEditProfile.setText(utilization); setFocusEditText(et_utilizationEditProfile)
 
         }
 
         launch(Dispatchers.Main.immediate) {
-            latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-            longitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+            latitude =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                    .first()
+            longitude =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                    .first()
         }
 
 
     }
 
-    private fun initalize() {
+    private fun initialize() {
         ivBack.setOnClickListener(this)
         ivPlus.setOnClickListener(this)
         btnSave.setOnClickListener(this)
@@ -130,7 +125,6 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             R.id.btnSave -> {
                 val name = et_nameEditProfile.text.toString()
                 val email = tv_emailEditProfile.text.toString()
-                val utilization = et_utilizationEditProfile.text.toString()
                 val city = et_cityEditProfile.text.toString()
 
                 if (Validation.checkName(name, this)) {
@@ -138,18 +132,8 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
                         if (city.isEmpty()) {
                             myCustomToast(getString(R.string.city_missing_error))
                         } else {
-                            if(utilization.isEmpty()) {
-                                myCustomToast(getString(R.string.utilization_missing_error))
-                            }
-                            else
-                            {
-                                hitEditProfileApi(name,email,city,utilization)
-                            }
-                        }
-                    }
-                }
-
-
+                                hitEditProfileApi(name, city, utilization)
+                        } } }
             }
             R.id.et_cityEditProfile -> {
                 showPlacePicker()
@@ -158,26 +142,42 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
         }
     }
 
-    private fun hitEditProfileApi(name: String, email: String, city: String, utilization: String) {
+    private fun hitEditProfileApi(name: String, city: String, utilization: String) {
         val mName = name.toRequestBody("text/plain".toMediaTypeOrNull())
-        val mEmail = email.toRequestBody("text/plain".toMediaTypeOrNull())
         val mCity = city.toRequestBody("text/plain".toMediaTypeOrNull())
         val mUtilization = utilization.toRequestBody("text/plain".toMediaTypeOrNull())
         val mLatitude = latitude.toRequestBody("text/plain".toMediaTypeOrNull())
         val mLongitude = longitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
-        if (imggPathh.isEmpty()) {
+        if (imgPath.isEmpty()) {
             // without image
-            appViewModel.sendEditProfileApiWithoutImageData(security_key, authkey, mName, mCity, mLatitude, mLongitude, mUtilization)
+            appViewModel.sendEditProfileApiWithoutImageData(
+                security_key,
+                authKey,
+                mName,
+                mCity,
+                mLatitude,
+                mLongitude,
+                mUtilization
+            )
         } else {
             // with image
-            var mfile: File? = null
-            mfile = File(imggPathh)
-            val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-            var photo: MultipartBody.Part? = null
-            photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
-            appViewModel.sendEditProfileApiWithImageData(security_key, authkey, mName, mCity, mLatitude, mLongitude, mUtilization, photo)
+            val mFile: File?
+            mFile = File(imgPath)
+            val imageFile: RequestBody = mFile.asRequestBody("image/*".toMediaTypeOrNull())
+            val photo: MultipartBody.Part?
+            photo = MultipartBody.Part.createFormData("image", mFile.name, imageFile)
+            appViewModel.sendEditProfileApiWithImageData(
+                security_key,
+                authKey,
+                mName,
+                mCity,
+                mLatitude,
+                mLongitude,
+                mUtilization,
+                photo
+            )
         }
 
         editProfileProgressBar?.showProgressBar()
@@ -185,42 +185,48 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     }
 
     private fun checkMvvmResponse() {
-        appViewModel.observeEditProfileResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    editProfileProgressBar?.hideProgressBar()
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val message = jsonObject.get("msg").toString()
+        appViewModel.observeEditProfileResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        editProfileProgressBar?.hideProgressBar()
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        val message = jsonObject.get("msg").toString()
 
 
-                    Log.i("observeEditProfileResponse  ", "-------$jsonObject")
+                        Log.i("observeEditProfileResponse  ", "-------$jsonObject")
 
-                    val name = jsonObject.getJSONObject("data").get("name").toString()
-                    val image = jsonObject.getJSONObject("data").get("image").toString()
-                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
-                    val lat = jsonObject.getJSONObject("data").get("lat").toString()
-                    val long = jsonObject.getJSONObject("data").get("lng").toString()
+                        val name = jsonObject.getJSONObject("data").get("name").toString()
+                        val image = jsonObject.getJSONObject("data").get("image").toString()
+                        val cityOrZipcode =
+                            jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val lat = jsonObject.getJSONObject("data").get("lat").toString()
+                        val long = jsonObject.getJSONObject("data").get("lng").toString()
 
-                    launch(Dispatchers.Main.immediate) {
-                        dataStoragePreference.save(name, preferencesKey("nameLogin"))
-                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
-                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
-                        dataStoragePreference.save(lat, preferencesKey("latitudeLogin"))
-                        dataStoragePreference.save(long, preferencesKey("longitudeLogin"))
-                        Log.d("userlocation======", dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first())
+                        launch(Dispatchers.Main.immediate) {
+                            dataStoragePreference.save(name, preferencesKey("nameLogin"))
+                            dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                            dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                            dataStoragePreference.save(lat, preferencesKey("latitudeLogin"))
+                            dataStoragePreference.save(long, preferencesKey("longitudeLogin"))
+                            Log.d(
+                                "userLocation======",
+                                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                                    .first()
+                            )
 
 
+                        }
+
+                        myCustomToast(message)
+                        onBackPressed()
                     }
 
-                    myCustomToast(message)
-                    onBackPressed()
+                } else {
+                    ErrorBodyResponse(response, this@EditProfileActivity, editProfileProgressBar)
                 }
-
-            } else {
-                ErrorBodyResponse(response, this@EditProfileActivity, editProfileProgressBar)
-            }
-        })
+            })
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
             editProfileProgressBar?.hideProgressBar()
@@ -228,56 +234,43 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     }
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(
-                applicationContext,
-                googleMapKey
+            applicationContext,
+            googleMapKey
         )
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this@EditProfileActivity)
-        // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = Arrays.asList(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
+        val fields: List<Place.Field> = listOf(
+            Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG
         )
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this@EditProfileActivity)
+            .build(this@EditProfileActivity)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
-                val place = Autocomplete.getPlaceFromIntent(data!!)
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                city = place.name.toString()
-                et_cityEditProfile.setText(city)
+                    city = place.name.toString()
+                    et_cityEditProfile.setText(city)
 
-                // cityID = place.id.toString()
-                latitude = place.latLng?.latitude.toString()
-                longitude = place.latLng?.longitude.toString()
+                    latitude = place.latLng?.latitude.toString()
+                    longitude = place.latLng?.longitude.toString()
 
-                Log.i(
-                        "dddddd",
+                    Log.i(
+                        "d",
                         "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
-                )
-            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            } else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
+                    )
+                }
             }
         }
-
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -290,8 +283,5 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
         editText.setSelection(pos)
     }
 
-    /* override fun selectedImage(var1: Bitmap, var2: String) {
-         ivImg!!.setImageBitmap(var1)
-     }*/
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,9 +18,7 @@
         app:mk_color="@color/colorPrimary"
         app:mk_type="FishSpinner" />
 
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,9 +32,9 @@
                 android:id="@+id/ivBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:src="@drawable/left_arrow" />
 
             <TextView
@@ -88,7 +87,7 @@
                         android:layout_height="@dimen/_30sdp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginRight="@dimen/_70sdp"
+                        android:layout_marginEnd="@dimen/_70sdp"
                         android:layout_marginBottom="@dimen/_20sdp"
                         android:src="@drawable/plus"
                         android:visibility="gone" />
@@ -113,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
                         android:text="Edit"
                         android:textSize="@dimen/_10sdp" />
 
@@ -123,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
                         android:text="Delete"
                         android:textSize="@dimen/_10sdp" />
 
@@ -143,12 +142,6 @@
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
-                <!--
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:background="@color/black"/>-->
                 <TextView
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_15sdp"
@@ -163,11 +156,7 @@
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
-                <!--   <View
-                       android:layout_width="match_parent"
-                       android:layout_height="1dp"
-                       android:layout_marginTop="@dimen/_5sdp"
-                       android:background="@color/black"/>-->
+
                 <TextView
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_15sdp"
@@ -182,30 +171,12 @@
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
-                <!--  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="1dp"
-                      android:layout_marginTop="@dimen/_5sdp"
-                      android:background="@color/black"/>-->
-                <TextView
-                    style="@style/CommonTextMatchparent"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:text="@string/types_of_utilisation"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/_10sdp" />
 
-                <TextView
-                    android:id="@+id/tv_utilizationProfile"
-                    style="@style/CommonTextMatchparent"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp" />
+
 
                 <Button
                     android:id="@+id/btnEdit"
                     style="@style/Button"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/_40sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:background="@drawable/btn"
@@ -218,7 +189,6 @@
 
     </RelativeLayout>
 
-    <!--    </ScrollView>-->
 
 
 </RelativeLayout>

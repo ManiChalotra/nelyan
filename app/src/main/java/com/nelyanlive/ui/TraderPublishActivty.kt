@@ -419,7 +419,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                 mMap!!.addMarker(MarkerOptions()
                     .position(india)
                     .title("Activity"))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,10f))
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,15f))
             }
         }
         catch (e: Exception) {

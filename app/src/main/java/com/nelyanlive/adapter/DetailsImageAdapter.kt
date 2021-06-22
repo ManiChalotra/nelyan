@@ -1,6 +1,7 @@
 package com.nelyanlive.adapter
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,39 +12,37 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.adapter.DetailsImageAdapter.Vh
+import com.nelyanlive.fullscreen.FullScreen
 import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.utils.image_base_URl
 
-class DetailsImageAdapter(activityDetailsActivity: FragmentActivity, datalist: ArrayList<Activityimage>) : RecyclerView.Adapter<Vh>() {
-    var a: Activity
-    var datalist: ArrayList<Activityimage>
+class DetailsImageAdapter(activityDetailsActivity: FragmentActivity,var dataList: ArrayList<Activityimage>) : RecyclerView.Adapter<Vh>() {
+    var a: Activity = activityDetailsActivity
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_detailsimg, parent, false)
         return Vh(v)
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------"+ datalist[position].images)
-        Glide.with(a).asBitmap().load(image_base_URl+datalist.get(position).images).into(holder.img)
+        Log.d("serverImages", "------------------------------"+ dataList[position].images)
+        Glide.with(a).asBitmap().load(image_base_URl+ dataList[position].images).into(holder.img)
+
+        holder.img.setOnClickListener { (holder.img.context as Activity).startActivity(
+            Intent(holder.img.context,
+                FullScreen::class.java)
+                .putExtra("productImage",image_base_URl+ dataList[position].images)) }
+
 
     }
 
     override fun getItemCount(): Int {
-        return datalist.size
+        return dataList.size
     }
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var img: ImageView
+        var img: ImageView = itemView.findViewById(R.id.detailsimg)
         var videoPic: ImageView? = null
 
-        init {
-            img = itemView.findViewById(R.id.detailsimg)
-            // videoPic= itemView.findViewById(R.id.iv_videoicon);
-        }
     }
 
-    init {
-        a = activityDetailsActivity
-        this.datalist = datalist
-    }
 }

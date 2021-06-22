@@ -1,11 +1,7 @@
 package com.nelyanlive.ui
 
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,17 +9,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.HomeChildCareListAdapter
-import com.nelyanlive.current_location.GPSTracker
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homechildcare.HomeChiildCareREsponse
@@ -47,7 +40,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
-private const val PERMISSIONS_REQUEST_CODE = 34
+
 
 class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     AdapterView.OnItemSelectedListener,
@@ -73,35 +66,27 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     private var authkey: String? = null
     var dataString = ""
 
-    private var gpsTracker: GPSTracker? = null
-    private var latitude: Double = 42.6026
-    private var longitude: Double = 20.9030
+    private var latitude: String = "42.6026"
+    private var longitude: String = "20.9030"
     private var locality: String = ""
 
     override fun onResume() {
             super.onResume()
-           gpsTracker = GPSTracker(this)
         if((tvFilter.text=="Filter")) {
-            if (!gpsTracker!!.canGetLocation()) {
-                Log.e("location_changed", "==1=iff==" + gpsTracker!!.canGetLocation())
-                gpsTracker!!.showSettingsAlert()
-
-            } else {
-                Log.e("location_changed", "==2=iff==" + gpsTracker!!.canGetLocation())
-                val gpsTracker = GPSTracker(this)
-                latitude = gpsTracker.latitude
-                longitude = gpsTracker.longitude
+            launch(Dispatchers.Main.immediate) {
+                latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                latitude =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                        .first()
+                locality =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                        .first()
                 Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
-                if (latitude != 0.0) {
-                    val geocoder = Geocoder(this@HomeChildCareListActivity, Locale.getDefault())
-                    var list = listOf<Address>()
+                if (latitude != "0.0") {
 
-                    list = geocoder.getFromLocation(latitude, longitude, 1)
 
-                    Log.e("location_changed", "==home==Foreground address: ${list[0].locality}==")
-                    tv_userCityOrZipcode.text = list[0].locality
-                    locality = list[0].locality
-                    if (checkIfHasNetwork(this)) {
+                    tv_userCityOrZipcode.text = locality
+                    if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
                         launch(Dispatchers.Main.immediate) {
                             val authKey =
                                 dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
@@ -109,8 +94,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             appViewModel.sendChildCareFilterData(
                                 security_key,
                                 authKey,
-                                latitude.toString(),
-                                longitude.toString(),
+                                latitude,
+                                longitude,
                                 "",
                                 "",
                                 locality,
@@ -119,10 +104,10 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             child_care_list_progressbar?.hideProgressBar()
                         }
                     } else {
-                        showSnackBar(this, getString(R.string.no_internet_error))
+                        showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
                     }
-
                 }
+
             }
         }
             }
@@ -135,84 +120,28 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
 
         recyclerview = findViewById(R.id.recyclerview)
 
-
-        //current location
-        if (foregroundPermissionApproved()) {
-            val subscribeToLocationUpdates = HomeActivity.locationService?.subscribeToLocationUpdates()
-
-            Log.e("location_changed", "=========$subscribeToLocationUpdates======")
-
-            if (subscribeToLocationUpdates != null) subscribeToLocationUpdates else Log.e("location_changed", "Service Not Bound")
-        }
-        else {
-            requestPermissions()
-        }
-
-
         if (intent.extras != null) {
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
 
         // for setting order module listing
-        val genderlist = arrayOf<String?>(
+        val genderList = arrayOf<String?>(
             "",
             "Date Added",
-            "Avilable Place",
+            "Available Place",
             "Distance"
         )
         val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
-            this, R.layout.customspinner, genderlist
+            this, R.layout.customspinner, genderList
         )
 
         // Setting Adapter to the Spinner
         trader_type!!.adapter = adapter
         // Setting OnItemClickListener to the Spinner
         trader_type!!.onItemSelectedListener = this@HomeChildCareListActivity
-
-
         checkMvvmResponse()
     }
-
-
-
-    private fun requestPermissions() {
-        val provideRationale = foregroundPermissionApproved()
-
-        // If the user denied a previous request, but didn't check "Don't ask again", provide
-        // additional rationale.
-        if (provideRationale) {
-            Snackbar.make(
-                frame_container,
-                R.string.permission,
-                Snackbar.LENGTH_LONG
-            )
-                .setAction(R.string.ok) {
-                    // Request permission
-                    ActivityCompat.requestPermissions(
-                        this@HomeChildCareListActivity,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        PERMISSIONS_REQUEST_CODE
-                    )
-                }
-                .show()
-        } else {
-            Log.d("TAG", "Request foreground only permission")
-            ActivityCompat.requestPermissions(
-                this@HomeChildCareListActivity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_CODE
-            )
-        }
-    }
-
-    private fun foregroundPermissionApproved(): Boolean {
-        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    }
-
 
     private fun setChildcareAdapter(childCareDatalist: ArrayList<HomeChildCareeData>) {
         homeChildCareListAdapter = HomeChildCareListAdapter(this, childCareDatalist, this)
@@ -250,8 +179,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             appViewModel.sendChildCareFilterData(
                                 security_key,
                                 authKey,
-                                latitude.toString(),
-                                longitude.toString(),
+                                latitude,
+                                longitude,
                                 "",
                                 "",
                                 locality,
@@ -262,10 +191,6 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     else {
                         showSnackBar(this, getString(R.string.no_internet_error))
                     }
-
-
-
-
                 }
             }
             R.id.iv_map -> {
@@ -351,13 +276,10 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
-                        val jsonObject = JSONObject(mResponse)
                         val homeChildcareResponse = Gson().fromJson<HomeChiildCareREsponse>(
                             response.body().toString(), HomeChiildCareREsponse::class.java)
-                        if (childCareDatalist != null) {
-                            childCareDatalist.clear()
-                            childCareDatalist.addAll(homeChildcareResponse.data)
-                        }
+                        childCareDatalist.clear()
+                        childCareDatalist.addAll(homeChildcareResponse.data)
                         if (childCareDatalist.size == 0) {
                             recyclerview!!.visibility = View.GONE
                             tv_no_childcare!!.visibility = View.VISIBLE
@@ -378,15 +300,12 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
-                        val jsonObject = JSONObject(mResponse)
                         val homeChildcareResponse = Gson().fromJson(
                             response.body().toString(),
                             HomeChiildCareREsponse::class.java
                         )
-                        if (childCareDatalist != null) {
-                            childCareDatalist.clear()
-                            childCareDatalist.addAll(homeChildcareResponse.data)
-                        }
+                        childCareDatalist.clear()
+                        childCareDatalist.addAll(homeChildcareResponse.data)
 
                         if (childCareDatalist.size == 0) {
                             recyclerview!!.visibility = View.GONE

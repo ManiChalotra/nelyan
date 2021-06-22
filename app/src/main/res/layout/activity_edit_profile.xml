@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -67,12 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center">
-                        <!--<ImageView
-                            android:id="@+id/ivImg"
-                            android:padding="@dimen/_15sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"/>-->
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_profileEdit"
                             android:layout_width="@dimen/_140sdp"
@@ -164,35 +160,8 @@
                     android:textColorHint="@color/grey"
                     android:textSize="@dimen/_15sdp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/black" />
 
-                <TextView
-                    style="@style/CommonTextMatchparent"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:text="@string/types_of_utilisation"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/_10sdp" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_utilizationEditProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:fontFamily="@font/semibold"
-                    android:hint="@string/enter_utilisation"
-                    android:textColor="@color/black"
-                    android:background="@android:color/transparent"
-                    android:textColorHint="@color/grey"
-                    android:maxLines="1"
-                    android:backgroundTint="@color/black"
-                    android:gravity="bottom"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textSize="@dimen/_15sdp" />
 
                 <View
                     android:layout_width="match_parent"

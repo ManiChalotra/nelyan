@@ -101,7 +101,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         if (context is CommunicationListner) {
             listner = context
         } else {
-            throw RuntimeException("Home Fragment not Attched")
+            throw RuntimeException("Home Fragment not Attached")
         }
     }
 

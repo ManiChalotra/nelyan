@@ -250,7 +250,6 @@
 
     <!--//location-->
     <string name="permission">Location permission needed for core functionality</string>
-
     <string name="gps_settings">GPS Settings</string>
     <string name="gps_settings_desc">Please enable GPS settings</string>
 

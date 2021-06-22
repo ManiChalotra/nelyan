@@ -14,7 +14,6 @@ import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.MyHomeAdapter
 import com.nelyanlive.data.viewmodel.AppViewModel
-import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.HomeModal
 import com.nelyanlive.ui.ActivitiesListActivity
 import com.nelyanlive.ui.CommunicationListner
@@ -38,15 +37,14 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
     private val job = Job()
 
-    private  val dataStoragePreference by lazy { DataStoragePreference(requireContext()) }
 
-    private  var listner:CommunicationListner?= null
+    private  var listener:CommunicationListner?= null
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
 
-    private val datalist by lazy { ArrayList<HomeModal>() }
+    private val dataList by lazy { ArrayList<HomeModal>() }
 
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -56,27 +54,27 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
     override fun onResume() {
         super.onResume()
-        if(listner!= null){
-            listner!!.onFargmentActive(1)
+        if(listener!= null){
+            listener!!.onFargmentActive(1)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initalize()
+        initialize()
            //hideKeyboard
             val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
-        val authkey = AllSharedPref.restoreString(requireContext(), "auth_key")
-        Log.d("authorization", "---------------$authkey")
-        appViewModel.sendHOmeCategoryData(security_key, authkey)
+        val authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+        Log.d("authorization", "---------------$authKey")
+        appViewModel.sendHOmeCategoryData(security_key, authKey)
         homeFargProgressBar?.showProgressBar()
         checkMvvmResponse()
 
     }
 
-    private fun initalize() {
+    private fun initialize() {
         iv_back.setOnClickListener(this)
     }
 
@@ -91,17 +89,15 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
                     val listArray = jsonObject.getJSONArray("data")
                     val mSizeOfData = listArray.length()
 
-                    if (datalist != null) {
-                        datalist.clear()
-                    }
+                    dataList.clear()
 
                     for (i in 0 until mSizeOfData) {
                         val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
                         val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
-                        datalist.add(HomeModal(image, name))
+                        dataList.add(HomeModal(image, name))
                     }
 
-                    rv_home?.adapter = MyHomeAdapter(requireActivity(), datalist, this@HomeFragment)
+                    rv_home?.adapter = MyHomeAdapter(requireActivity(), dataList, this@HomeFragment)
                 }
             } else {
                 ErrorBodyResponse(response, requireActivity(), homeFargProgressBar)
@@ -136,7 +132,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
             3->{
                 requireActivity().OpenActivity(TraderListingActivity::class.java){putString("type","4")}
-              //  AppUtils.gotoFragment(requireActivity(), TraderListingFragment(), R.id.frame_container, false)
             }
 
         }
@@ -156,16 +151,16 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is CommunicationListner){
-            listner = context
+            listener = context
         }else{
 
-throw RuntimeException("Home Fragment not Attched")
+throw RuntimeException("Home Fragment not Attached")
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        listner = null
+        listener = null
     }
 
     override fun onDestroy() {

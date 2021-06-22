@@ -36,9 +36,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
     private  var name = ""
     private  var email = ""
     private  var city = ""
-    private  var utilization = ""
     private  var dataReady = false
-    private  var authkey = ""
+    private  var authKey = ""
 
 
 
@@ -49,8 +48,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
         super.onResume()
 
         launch (Dispatchers.Main.immediate){
-             authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-            appViewModel.sendprofileApiData(security_key,authkey)
+             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            appViewModel.sendprofileApiData(security_key,authKey)
             profileProgressBar?.showProgressBar()
             imageViewProgressBar?.showProgressBar()
             checkMvvmResponse()
@@ -61,44 +60,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        initalize()
+        initialize()
         btnEdit.visibility = View.GONE
 
-
-        /*  tvEdit!!.setOnClickListener(View.OnClickListener {
-              val i = Intent(this@ProfileActivity, EditProfileActivity::class.java)
-              startActivity(i)
-          })
-
-          tvDelete!!.setOnClickListener(View.OnClickListener { delDialog() })
-  */
-
-        /*ivPlus!!.setOnClickListener(View.OnClickListener {
-            if (ll_1!!.getVisibility() == View.VISIBLE) {
-                // Its visible
-                ll_1!!.setVisibility(View.GONE)
-            } else {
-                // Either gone or invisible
-                ll_1!!.setVisibility(View.VISIBLE)
-            }
-        })*/
-
     }
 
-   /* fun delDialog() {
-       val  dialog = Dialog(this)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_chat_delete)
-        dialog!!.setCancelable(true)
-        val rl_1: RelativeLayout
-        rl_1 = dialog!!.findViewById(R.id.rl_1)
-        rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
-            dialog!!.dismiss()
-        }
-        dialog!!.show()
-
-    }
-*/
 
     
     private  fun checkMvvmResponse(){
@@ -113,13 +79,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                    name = jsonObject.getJSONObject("data").get("name").toString()
                     email = jsonObject.getJSONObject("data").get("email").toString()
                     city = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
-                     utilization = jsonObject.getJSONObject("data").get("utilization").toString()
 
                    Glide.with(this).asBitmap().load(from_admin_image_base_URl + image).error(R.mipmap.ic_user_place).into(iv_userProfile)
                    tv_usernameProfile.text = name
                    tv_emailProfile.text = email
                    tv_cityProfile.text = city
-                   tv_utilizationProfile.text = utilization
 
                    profileProgressBar.hideProgressBar()
                    imageViewProgressBar.hideProgressBar()
@@ -138,7 +102,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
        })
    }
 
-    private  fun initalize(){
+    private  fun initialize(){
         btnEdit.setOnClickListener(this)
         ivBack.setOnClickListener(this)
     }
@@ -152,8 +116,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                         putString("userName", name)
                         putString("userEmail", email)
                         putString("userCity", city)
-                        putString("userUtilization", utilization)
-                        putString("authorization", authkey)
+                        putString("authorization", authKey)
                     }
                 }else{
                     myCustomToast("Please wait for a while to load all data from server ")
