@@ -21,7 +21,6 @@ import com.nelyanlive.R
 import com.nelyanlive.data.network.responsemodels.ImageUploadApiResponseModel
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
-import com.nelyanlive.modals.ModelPOJO
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.coroutines.CoroutineScope
@@ -212,7 +211,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                                             // rotating loop
                                             for (i in 0 until imageVideoUrlListing.size) {
-                                                val media = imageVideoUrlListing.get(i)
+                                                val media = imageVideoUrlListing[i]
                                                 if (!media.isEmpty()) {
                                                     selectedUrlListing.add(media)
                                                 }

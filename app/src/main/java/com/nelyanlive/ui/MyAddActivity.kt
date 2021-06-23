@@ -308,9 +308,23 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     }
 
 
-    override fun onEditAdClick(position: Int, adID: String?) {
-
+    override fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String, description: String, countryCode: String,
+                               phoneNumber: String, city: String, childCareImageList: ArrayList<ChildCareImageMyAds>, lattude: String, longitude:String) {
+        val intent = Intent(this, EditBabySitterActivity::class.java)
+        intent.putExtra("adID", adID)
+        intent.putExtra("childType", childTypeId)
+        intent.putExtra("name", name)
+        intent.putExtra("noofplaces", noofplaces)
+        intent.putExtra("description", description)
+        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("city", city)
+        intent.putExtra("childCareImageList", childCareImageList)
+        intent.putExtra("latitude", lattude)
+        intent.putExtra("longitude", longitude)
+        startActivity(intent)
     }
+
 
     override fun onActivitiesDeleteAdClick(position: Int, adID: String?) {
         categoryId="1"

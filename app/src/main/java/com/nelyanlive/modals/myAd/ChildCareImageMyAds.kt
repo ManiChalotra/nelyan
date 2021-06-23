@@ -1,4 +1,5 @@
 package com.nelyanlive.modals.myAd
+import java.io.Serializable
 
 data class ChildCareImageMyAds(
    /* val createdAt: String,*/
@@ -6,4 +7,4 @@ data class ChildCareImageMyAds(
     val image: String,
     val postId: Int
     /*val updatedAt: String*/
-)
+):Serializable

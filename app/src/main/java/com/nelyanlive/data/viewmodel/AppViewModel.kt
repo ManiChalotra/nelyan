@@ -1000,6 +1000,40 @@ class AppViewModel : ViewModel() {
                 })
     }
 
+
+
+    // edit post Maternal Assistant api
+
+    private var editMaternalPostMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observe_editMaternalPost_Response(): LiveData<Response<JsonObject>?>? {
+        if (editMaternalPostMutableLiveData == null) {
+            editMaternalPostMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return editMaternalPostMutableLiveData
+    }
+
+    fun editMaternalPost_Data(securityKey: String?,authkey:String?, type: String, childCareTypeId: String,  maternalName:String, email: String,
+                              website: String, noOfPlaces:String, countryCode:String, phone:String, address:String, description:String, city:String,
+                              latitude:String, longitude:String/*,  media:String*/, image1:String, image2:String,
+                              image3:String, postid:String) {
+        JsonPlaceHolder().editMaternalPost_Api(securityKey, authkey,type, childCareTypeId, maternalName, email, website, noOfPlaces, countryCode, phone,
+            address, description, city,latitude,longitude,image1, image2, image3, postid)
+            .enqueue(object : retrofit2.Callback<JsonObject> {
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                }
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    editMaternalPostMutableLiveData?.value = response
+                }
+            })
+    }
+
+
+
     // social Login api
 
     private var socialLoginMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null

@@ -9,10 +9,10 @@ data class GetChildcarePostMyAds(
         /*val createdAt: String,*/
         val description: String,
         val id: Int,
-       /* val ispublished: Int,
+       /* val ispublished: Int,*/
         val latitude: String,
         val longitude: String,
-       */
+
         val name: String,
         val phone: String,
         /*val status: Int,*/
