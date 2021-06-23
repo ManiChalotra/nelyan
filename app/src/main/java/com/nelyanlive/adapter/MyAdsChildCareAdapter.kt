@@ -21,10 +21,8 @@ import com.nelyanlive.utils.image_base_URl
 class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelist: ArrayList<GetChildcarePostMyAds>, internal var deleteEditListner: OnDeleteEditClickListner) :
         RecyclerView.Adapter<MyAdsChildCareAdapter.RecyclerViewHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
-    var dialog: Dialog? = null
     private var popupWindow: PopupWindow? = null
     var dialog1: Dialog? = null
-    var isMenuOpend = "0"
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -57,9 +55,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
             tvMsg.text = context.getString(R.string.available_place)+" "+myadsList.availableplace.toString()
 
-            val childcareTypeId= myadsList.ChildcareType.toString()
-
-            when (childcareTypeId) {
+            when (myadsList.ChildcareType.toString()) {
                 "1" -> {
                     tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.nursery)
                 }
@@ -100,7 +96,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         popupWindow!!.isOutsideTouchable = true
 
 
-        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.END)
+        popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.END)
 
         editt.setOnClickListener {
             deleteEditListner.onEditAdClick(adapterPosition, adId.toString())
@@ -110,7 +106,6 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         deletee.setOnClickListener {
             deleteEditListner.onChildCareDeleteAdClick(adapterPosition, adId.toString() )
             popupWindow!!.dismiss()
-
         }
 
     }
@@ -138,7 +133,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         val rl_1: RelativeLayout = dialog1!!.findViewById(R.id.rl_1)
         val tvMessage = dialog1!!.findViewById<TextView>(R.id.tvMessage)
         tvMessage.text = "Are you sure want to\n delete my add?"
-        rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
+        rl_1.setOnClickListener {
             dialog1!!.dismiss()
         }
         dialog1!!.show()

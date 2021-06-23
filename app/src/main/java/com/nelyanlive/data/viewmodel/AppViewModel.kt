@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
-import com.meherr.mehar.data.network.JsonPlaceHolder
+import com.nelyanlive.data.network.JsonPlaceHolder
 import com.nelyanlive.data.network.responsemodels.ImageUploadApiResponseModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

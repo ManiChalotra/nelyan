@@ -86,7 +86,7 @@ class MyAdsTraderAdapter(var context: Context, private var myadsTraderlist: Arra
             tvAddress.text = myadsList.address
 
             if (myadsList.tradersimages.size >0)
-                Glide.with(context).load(image_base_URl+myadsList.tradersimages.get(0).images).error(R.mipmap.no_image_placeholder).into(ivTraderImage)
+                Glide.with(context).load(image_base_URl+ myadsList.tradersimages[0].images).error(R.mipmap.no_image_placeholder).into(ivTraderImage)
             else
                 ivTraderImage.setImageResource(R.mipmap.no_image_placeholder)
 
@@ -112,7 +112,7 @@ class MyAdsTraderAdapter(var context: Context, private var myadsTraderlist: Arra
         popupWindow!!.isOutsideTouchable = true
 
 
-        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.RIGHT)
+        popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.RIGHT)
 
         editt.setOnClickListener {
             popupWindow!!.dismiss()

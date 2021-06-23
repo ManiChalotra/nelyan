@@ -180,7 +180,7 @@ class GroupChatVM :ViewModel() {
         {
             json.put("senderId", userId)
             json.put("groupName", groupName)
-            json.put("messageType", 0)
+            json.put("messageType", 0)//1406
             json.put("message", message.get().toString())
 
             Log.e("socket","=======$json")
@@ -423,17 +423,24 @@ class GroupChatVM :ViewModel() {
         Log.e("socket", "chat    deleteData")
         Log.e("socket", it[0].toString())
 
-        //{
-        //  "success_message": "Report Added Successfully"
-        //}
+        //{"messageId":"1403"}
 
         val json = JSONObject(it[0].toString())
         GlobalScope.launch {
 
             withContext(Dispatchers.Main) {
-                Toast.makeText(ctx, json.getString("success_message"), Toast.LENGTH_SHORT).show()
+                for (i in 0 until listChat.size) {
+                    if (listChat[i].id == json.getString("messageId")) {
+                        listChat.removeAt(i)
+                        groupChatAdapter.removeAtPosition(i)
+                        groupChatAdapter.notifyItemRangeChanged(i, listChat.size)
+                    }
+                }
 
             }}
+
+
+
     }
 
     private fun connectUser() {

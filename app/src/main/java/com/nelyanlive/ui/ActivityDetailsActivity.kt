@@ -445,7 +445,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,15f))
             }
 
-
         } catch (e: Exception) {
 
         }

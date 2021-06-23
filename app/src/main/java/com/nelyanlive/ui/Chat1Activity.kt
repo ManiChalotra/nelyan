@@ -53,7 +53,6 @@ class Chat1Activity :  OpenCameraGallery() {
 
         if (intent.hasExtra("senderID")) {
 
-
             chatVM.senderID = intent.getStringExtra("senderID")!!
             chatVM.senderName.set(intent.getStringExtra("senderName")!!)
             chatVM.senderImage.set(intent.getStringExtra("senderImage")!!)
@@ -70,8 +69,6 @@ class Chat1Activity :  OpenCameraGallery() {
                 } }
             }
         }
-
-
     }
 
     override fun onBackPressed() {
@@ -85,8 +82,6 @@ class Chat1Activity :  OpenCameraGallery() {
 
     override fun onResume() {
         super.onResume()
-        Log.e("ssdfdsfsd","=====${intent.getStringExtra("senderID")}")
-
         MyFirebaseMessagingService.currentChatUser = intent.getStringExtra("senderID")!!
     }
 
@@ -95,22 +90,16 @@ class Chat1Activity :  OpenCameraGallery() {
         MyFirebaseMessagingService.currentChatUser = ""
     }
 
-
     override fun getRealImagePath(imgPath: String?) {
-        Log.d("selectedImagePath", "-------$imgPath")
         setImage(imgPath)
     }
-
 
     private var imagePathList = ArrayList<MultipartBody.Part>()
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
 
-
     private var progressDialog = ProgressDialog(this)
-
-
 
     var setImage = ""
     var setImageTrue = false
@@ -118,9 +107,9 @@ class Chat1Activity :  OpenCameraGallery() {
 
         val mfile: File?
         mfile = File(imgPath!!)
-        val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+        val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
         val photo: MultipartBody.Part?
-        photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+        photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
         imagePathList.clear()
         imagePathList.add(photo)
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -130,8 +119,6 @@ class Chat1Activity :  OpenCameraGallery() {
 
         appViewModel.sendUploadImageData(type, users, imagePathList)
         progressDialog.setProgressDialog()
-
-
 
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
@@ -143,9 +130,8 @@ class Chat1Activity :  OpenCameraGallery() {
                         Log.e("urlListt", "--------${response.body()!!.data!![0].image.toString()}---")
 
                         var str  = response.body()!!.data!![0].image.toString()
-                        var fileName  = response.body()!!.data!![0].fileName.toString()
-                    str =     str.replaceBeforeLast("/","")
-                       // fileName =     fileName.removeSuffix("/")
+                        val fileName  = response.body()!!.data!![0].fileName.toString()
+                    str = str.replaceBeforeLast("/","")
 
                         Log.e("urlListt", "--------${fileName}---")
                         Log.e("urlListt", "--------${setImage.substring(1)}---")
@@ -166,16 +152,6 @@ class Chat1Activity :  OpenCameraGallery() {
 
             }
         })
-
-
-        //chatVM.
-        /*{
-            "senderId":"183",
-            "receiverId":"184",
-            "messageType":"1",
-            "message":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/7QCcUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAIAcAigAYkZCTUQwMTAwMGFhMDBkMDAwMDNmN2IwMDAwNzM3ODAxMDBlODg4MDEwMDBiOTcwMTAwNjExNzAzMDBiMWY2MDQwMGJiMGMwNTAwZGEyMzA1MDBkZjM5MDUwMDNjMzEwODAwHAJnABRPbVFocnRUUEJTeDZ5WWdiX2hxNP/iC/hJQ0NfUFJPRklMRQABAQAAC+gAAAAAAgAAAG1udHJSR0IgWFlaIAfZAAMAGwAVACQAH2Fjc3AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAD21gABAAAAANMtAAAAACn4Pd6v8lWueEL65MqDOQ0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGRlc2MAAAFEAAAAeWJYWVoAAAHAAAAAFGJUUkMAAAHUAAAIDGRtZGQAAAngAAAAiGdYWVoAAApoAAAAFGdUUkMAAAHUAAAIDGx1bWkAAAp8AAAAFG1lYXMAAAqQAAAAJGJrcHQAAAq0AAAAFHJYWVoAAArIAAAAFHJUUkMAAAHUAAAIDHRlY2gAAArcAAAADHZ1ZWQAAAroAAAAh3d0cHQAAAtwAAAAFGNwcnQAAAuEAAAAN2NoYWQAAAu8AAAALGRlc2MAAAAAAAAAH3NSR0IgSUVDNjE5NjYtMi0xIGJsYWNrIHNjYWxlZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYWVogAAAAAAAAJKAAAA",
-            "extension":"jpeg"
-        }*/
     }
 
 

@@ -18,39 +18,39 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAds>, var listner: OnAGeGroupRecyclerViewItemClickListner)
+class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAds>, var listener: OnAGeGroupRecyclerViewItemClickListner)
     : RecyclerView.Adapter<AgeGroupEditAdapter.AgeGroupRepeatViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgeGroupRepeatViewHolder {
-        return AgeGroupRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false), listner)
+        return AgeGroupRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false), listener)
     }
 
     override fun onBindViewHolder(holder: AgeGroupRepeatViewHolder, position: Int) {
-        holder.initalize(list, position)
+        holder.initialize(list, position)
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class AgeGroupRepeatViewHolder(itemView: View, var listner: OnAGeGroupRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
-        var addButton = itemView.tvAddMore
-        var ageFrom = itemView.edtAgeFrom
-        var ageTo = itemView.edtAgeTo
-        var days = itemView.spinner_dayss
-        var timeFrom = itemView.tv_mornning_fromtime
-        var timeTo = itemView.tv_morning_totime
+    inner class AgeGroupRepeatViewHolder(itemView: View, var listener: OnAGeGroupRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
+        private var addButton = itemView.tvAddMore!!
+        var ageFrom = itemView.edtAgeFrom!!
+        var ageTo = itemView.edtAgeTo!!
+        var days = itemView.spinner_dayss!!
+        var timeFrom = itemView.tv_mornning_fromtime!!
+        var timeTo = itemView.tv_morning_totime!!
 
-        fun initalize(list: ArrayList<AgeGroupMyAds>, position: Int) {
+        fun initialize(list: ArrayList<AgeGroupMyAds>, position: Int) {
             addButton.visibility = View.GONE
-            timeFrom.text = list.get(position).timeFrom
-            timeTo.text = list.get(position).timeTo
-            ageFrom.setText(list.get(position).ageFrom)
-            ageTo.setText(list.get(position).ageTo)
+            timeFrom.text = list[position].timeFrom
+            timeTo.text = list[position].timeTo
+            ageFrom.setText(list[position].ageFrom)
+            ageTo.setText(list[position].ageTo)
 
             // setting the spinner for days
-            var day: ArrayList<String> = ArrayList()
+            val day: ArrayList<String> = ArrayList()
             day.add("")
             day.add("Monday")
             day.add("Tuesday")
@@ -60,9 +60,9 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
             day.add("Saturday")
             day.add("Sunday")
 
-            var modeAdaptercity = ArrayAdapter(context, R.layout.customspinner, day)
-            days.adapter = modeAdaptercity
-            var spinnerPosition: Int = modeAdaptercity.getPosition(list.get(position).days)
+            val modeAdapterCity = ArrayAdapter(context, R.layout.customspinner, day)
+            days.adapter = modeAdapterCity
+            val spinnerPosition: Int = modeAdapterCity.getPosition(list[position].days)
             days.setSelection(spinnerPosition)
 
 
@@ -89,14 +89,11 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 }
             })
 
-            var name = ""
-            // setting the data in spinner
+            var name: String
             days.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
-                    // your code here
                     name = parentView?.getItemAtPosition(pos).toString()
-                    // context.toast(name)
-                    list[position].days = name.toString()
+                    list[position].days = name
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -105,28 +102,25 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
             }
 
             timeFrom.setOnClickListener {
-                var mcurrentTime = Calendar.getInstance()
-                var hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                var minute = mcurrentTime[Calendar.MINUTE]
-                var mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                  //  timeFrom.text = "$selectedHour:$selectedMinute"
+                val mCurrentTime = Calendar.getInstance()
+                val hour = mCurrentTime[Calendar.HOUR_OF_DAY]
+                val minute = mCurrentTime[Calendar.MINUTE]
+                val mTimePicker =
+                    TimePickerDialog(context, { _, selectedHour, selectedMinute ->
                     timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeFrom = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true) 
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
 
-            listner.getCurrentData(list, position)
+            listener.getCurrentData(list, position)
 
             timeTo.setOnClickListener {
-                var mcurrentTime = Calendar.getInstance()
-                var hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-                var minute = mcurrentTime[Calendar.MINUTE]
-                var mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                 //   timeTo.text = "$selectedHour:$selectedMinute"
+                val mCurrentTime = Calendar.getInstance()
+                val hour = mCurrentTime[Calendar.HOUR_OF_DAY]
+                val minute = mCurrentTime[Calendar.MINUTE]
+                val mTimePicker = TimePickerDialog(context, { _, selectedHour, selectedMinute ->
                     timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeTo = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
@@ -134,111 +128,18 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 mTimePicker.show()
             }
 
-            // button for adding new layout
             addButton.setOnClickListener {
                 ageFrom.clearFocus()
                 ageTo.clearFocus()
                 days.clearFocus()
-                listner.addAgeGroupItem(list, position)
+                listener.addAgeGroupItem(list, position)
             }
         }
     }
-
-
-    /*  var edtAgeFrom: EditText
-      var edtAgeTo: EditText
-      var orderby1: Spinner
-      var edClo: TextView
-      var edClo1: TextView
-      var tvAddMore: TextView
-      fun bind(pos: Int) {
-          if (pos == returnItemView - 1) {
-              tvAddMore.visibility = View.VISIBLE
-          } else {
-              tvAddMore.visibility = View.GONE
-          }
-          try {
-              edtAgeFrom.setText(SelectededtAgeFrom[pos.toString()])
-              edtAgeTo.setText(SelectededtAgeTo[pos.toString()])
-              edClo.text = SelectedTIMEedClo[pos.toString()]
-              edClo1.text = SelectedTIMEedClo1[pos.toString()]
-          } catch (e: Exception) {
-          }
-          tvAddMore.setOnClickListener { view ->
-              hideKeyboard(context, view)
-              returnItemView = returnItemView + 1
-              SelectededtAgeFrom[pos.toString()] = edtAgeFrom.text.toString()
-              SelectededtAgeTo[pos.toString()] = edtAgeTo.text.toString()
-              SelectedTIMEedClo[pos.toString()] = edClo.text.toString()
-              SelectedTIMEedClo1[pos.toString()] = edClo1.text.toString()
-              notifyDataSetChanged()
-          }
-          edClo.setOnClickListener {
-              var mcurrentTime = Calendar.getInstance()
-              var hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-              var minute = mcurrentTime[Calendar.MINUTE]
-              var mTimePicker: TimePickerDialog
-              mTimePicker = TimePickerDialog(context, OnTimeSetListener { timePicker, selectedHour, selectedMinute -> edClo.text = "$selectedHour:$selectedMinute" }, hour, minute, true) //Yes 24 hour time
-              mTimePicker.setTitle("Select Time")
-              mTimePicker.show()
-          }
-          edClo1.setOnClickListener {
-              var mcurrentTime = Calendar.getInstance()
-              var hour = mcurrentTime[Calendar.HOUR_OF_DAY]
-              var minute = mcurrentTime[Calendar.MINUTE]
-              var mTimePicker: TimePickerDialog
-              mTimePicker = TimePickerDialog(context, OnTimeSetListener { timePicker, selectedHour, selectedMinute -> edClo1.text = "$selectedHour:$selectedMinute" }, hour, minute, true) //Yes 24 hour time
-              mTimePicker.setTitle("Select Time")
-              mTimePicker.show()
-          }
-          days = ArrayList()
-          days.add("")
-          days.add("Monday")
-          days.add("Tuesday")
-          days.add("Wednesday")
-          days.add("Thursday")
-          days.add("Friday")
-          days.add("Saturday")
-          days.add("Sunday")
-          var modeAdaptercity = ArrayAdapter(context, R.layout.customspinner, days)
-          orderby1.adapter = modeAdaptercity
-          try {
-              orderby1.setSelection(Selectedmonth[pos.toString()]!!.toInt())
-          } catch (e: Exception) {
-          }
-          orderby1.onItemSelectedListener = object : OnItemSelectedListener {
-              override fun onItemSelected(adapterView: AdapterView<*>?, view: View, jj: Int, l: Long) {
-                  hideKeyboard(context, view)
-                  Selectedmonth[pos.toString()] = jj.toString()
-              }
-
-              override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-          }
-      }
-
-      init {
-          edtAgeFrom = itemView.findViewById(R.id.edtAgeFrom)
-          edtAgeTo = itemView.findViewById(R.id.edtAgeTo)
-          orderby1 = itemView.findViewById(R.id.orderby1)
-          edClo = itemView.findViewById(R.id.edClo)
-          edClo1 = itemView.findViewById(R.id.edClo1)
-          tvAddMore = itemView.findViewById(R.id.tvAddMore)
-      }*/
-
 
     interface OnAGeGroupRecyclerViewItemClickListner {
         fun addAgeGroupItem(list: ArrayList<AgeGroupMyAds>, position: Int)
         fun getCurrentData(list: ArrayList<AgeGroupMyAds>, position: Int)
 
     }
-
-    /*   companion object {
-           fun hideKeyboard(context: Context, view: View?) {
-               if (view != null) {
-                   var imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                   imm.hideSoftInputFromWindow(view.windowToken, 0)
-               }
-           }
-       }*/
-
 }

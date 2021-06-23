@@ -36,12 +36,14 @@
 
     <ImageView
         android:id="@+id/iv_bell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone"
         android:padding="@dimen/_12sdp"
-        android:src="@drawable/notification_icon" />
+        android:src="@drawable/mute"
+        />
 
 </RelativeLayout>

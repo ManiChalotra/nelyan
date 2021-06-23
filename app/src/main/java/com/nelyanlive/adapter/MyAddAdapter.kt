@@ -57,7 +57,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
             tvActivityname.text = myadsList.activityname
             tvDescription.text = myadsList.description
-            tvAddress.text = myadsList.address +" "+myadsList.city
+            tvAddress.text = myadsList.address
             tvNameOfShop.text = myadsList.nameOfShop
 
 
@@ -88,7 +88,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         popupWindow!!.isTouchable = true
         popupWindow!!.isOutsideTouchable = true
 
-        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.END)
+        popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.END)
 
         editt.setOnClickListener {
             activitiesDeleteEditListener.onEditActivitiesAdClick(adapterPosition, adId.toString(), typeofActivityId.toString(), nameOfShop, activityname,

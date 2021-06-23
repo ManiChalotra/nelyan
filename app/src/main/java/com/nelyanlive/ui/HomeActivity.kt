@@ -4,9 +4,8 @@ import android.Manifest
 import android.app.Dialog
 import android.content.*
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Color
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -65,7 +64,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         DataStoragePreference(this)
     }
 
-    var navigationbar: BottomNavigationView? = null
     var a = 1
     var doubleBackToExitPressedOnce = false
     var navigation_view: NavigationView? = null
@@ -106,8 +104,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     }
 
-    //current location
-    // Provides location updates for while-in-use feature.
     private lateinit var sharedPreferences: SharedPreferences
     private var foregroundOnlyLocationServiceBound = false
     private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
@@ -115,7 +111,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 
 
-    //current location
     private val foregroundOnlyServiceConnection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -134,7 +129,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onResume() {
         super.onResume()
-        Log.e("location_changed", "onResume")
 
         Log.d("homeAuthKey", "----------$authorization")
 
@@ -148,9 +142,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
 
-            Log.e("dataHome ------", "---111-------$userlocation------$userlat------$userlong----")
-            Log.e("dataHome ------", "---111-------$userId------$userName------$userImage----")
-            Log.e("dataHome ------", "---111-------$userId------$userName------$userType----")
 
             Picasso.get().load(from_admin_image_base_URl + userImage)
                     .placeholder(ContextCompat.getDrawable(
@@ -174,16 +165,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     }
 
-    override fun onPause() {
-        Log.e("location_changed", "onPause")
-
-        /*LocalBroadcastManager.getInstance(this).unregisterReceiver(
-            foregroundOnlyBroadcastReceiver
-        )*/
-
-        super.onPause()
-    }
-
     override fun onStop() {
         if (foregroundOnlyLocationServiceBound) {
             unbindService(foregroundOnlyServiceConnection)
@@ -192,29 +173,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onStop()
     }
 
-    //location
     private inner class ForegroundOnlyBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val location = intent.getParcelableExtra<Location>(
-                LocationService.EXTRA_LOCATION
-            )
-
-            if (location != null) {
-                Log.e("location_changed", "Foreground location: ${location.latitude}==${location.longitude}")
-
-            val geocoder =  Geocoder(this@HomeActivity, Locale.getDefault())
-            var list  = listOf<Address>()
-
-                list  = geocoder.getFromLocation(location.latitude,location.longitude,1)
-
-                Log.e("location_changed", "Foreground address: ${list[0].locality}==")
-
-            }
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -237,7 +200,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
         sharedPreferences = getSharedPreferences("preference_file_key", Context.MODE_PRIVATE)
 
-        navigationbar = findViewById(R.id.navigationbar)
         tvTitleToolbar = findViewById(R.id.tvTitleToolbar)
         ivToolBarImage = findViewById(R.id.ivToolBarImage)
         iv_bell = findViewById(R.id.iv_bell)
@@ -479,12 +441,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             R.id.home -> {
                 if (currentFragment !is HomeFragment) {
-                    iv_bell!!.setImageResource(R.drawable.notification_icon)
+                    iv_bell!!.visibility = View.GONE
                     tvTitleToolbar!!.visibility = View.GONE
                     ivToolBarImage!!.visibility = View.VISIBLE
-                    iv_bell!!.setOnClickListener {
-                        val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                        startActivity(i) }
+
                     fragment = HomeFragment()
                     loadFragment(fragment)
                 }
@@ -495,11 +455,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
                 tvTitleToolbar!!.text = "Message"
-                iv_bell!!.setImageResource(R.drawable.notification_icon)
-                iv_bell!!.setOnClickListener {
-                    val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                    startActivity(i)
-                }
+                iv_bell!!.visibility = View.GONE
                 fragment = MessageFragment()
                     loadFragment(fragment)
             }
@@ -513,11 +469,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
                             tvTitleToolbar!!.text = "Publisher"
-                            iv_bell!!.setImageResource(R.drawable.notification_icon)
-                            iv_bell!!.setOnClickListener {
-                                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                                startActivity(i)
-                            }
+                            iv_bell!!.visibility = View.GONE
                             val bundle = Bundle()
                             val frag = PublisherFrag()
                             bundle.putString("authorization", authorization)
@@ -525,7 +477,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             fragment = frag
                             loadFragment(fragment)
                         }
-
                         else { consultantUserDialogMethod() }
                     } }
             }
@@ -534,8 +485,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
                     tvTitleToolbar!!.text = userlocation
-                    iv_bell!!.setImageResource(R.drawable.tab_on)
-
                     fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
                     loadFragment(fragment)
                 }
@@ -546,6 +495,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     ivToolBarImage!!.visibility = View.GONE
                     tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
+                    iv_bell!!.imageTintList = null
                     fragment = EventFragment(userlat, userlong,userlocation)
                     loadFragment(fragment)
                 } }
@@ -555,7 +505,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun loadFragment(fragment: Fragment): Boolean {
-
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, fragment)
@@ -593,13 +542,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         else {
                 loadFragment(HomeFragment())
-                iv_bell!!.setImageResource(R.drawable.notification_icon)
+                iv_bell!!.visibility = View.GONE
                 tvTitleToolbar!!.visibility = View.GONE
                 ivToolBarImage!!.visibility = View.VISIBLE
-                iv_bell!!.setOnClickListener {
-                    val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-                    startActivity(i)
-                }
                 supportFragmentManager.popBackStack()
             }
 

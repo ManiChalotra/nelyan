@@ -1,4 +1,4 @@
-package com.meherr.mehar.data.network
+package com.nelyanlive.data.network
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
