@@ -777,7 +777,7 @@ class AppViewModel : ViewModel() {
     private var activityTypeTraderMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
     fun observeActivityTypeTraderResponse(): LiveData<Response<JsonObject>?>? {
         if (activityTypeTraderMutableLiveData == null) {
-            activityTypeTraderMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+            activityTypeTraderMutableLiveData = MutableLiveData()
         }
         return activityTypeTraderMutableLiveData
     }
@@ -941,6 +941,40 @@ class AppViewModel : ViewModel() {
                     }
                 })
     }
+
+
+    // edit post Trader api
+
+    private var editPostTraderMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    fun observeEditPostTraderResponse(): LiveData<Response<JsonObject>?>? {
+        if (editPostTraderMutableLiveData == null) {
+            editPostTraderMutableLiveData = MutableLiveData<Response<JsonObject>?>()
+        }
+        return editPostTraderMutableLiveData
+    }
+
+    fun send_editPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
+                                description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
+                                email:String, website:String, selectDay:String, productDetail:String, image1:String,
+                                image2:String, image3: String, postId: String) {
+        JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+            latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
+            .enqueue(object : retrofit2.Callback<JsonObject> {
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                }
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    editPostTraderMutableLiveData?.value = response
+                }
+            })
+    }
+
+
+
+
 
     // add post Nursery api
 

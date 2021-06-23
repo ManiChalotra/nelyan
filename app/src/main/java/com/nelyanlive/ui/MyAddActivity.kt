@@ -362,7 +362,25 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
     }
 
-    override fun onEditTraderAdClick(position: Int, adID: String?) {
+
+    override fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String, description: String, countryCode: String,
+                                     phoneNumber: String, address: String, email: String, website: String, traderImageList: ArrayList<TradersimageMyAds>,
+                                     daytimeList: ArrayList<TraderDaysTimingMyAds>, traderProductList: ArrayList<TraderProductMyAds>) {
+        var intent = Intent(this, EditTraderActivity::class.java)
+        intent.putExtra("adID", adID)
+        intent.putExtra("traderTypeId", traderTypeId)
+        intent.putExtra("nameofShop", nameofShop)
+        intent.putExtra("description", description)
+        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("address", address)
+        intent.putExtra("email", email)
+        intent.putExtra("website", website)
+        intent.putExtra("traderImageList", traderImageList)
+        intent.putExtra("daytimeList", daytimeList)
+        intent.putExtra("traderProductList", traderProductList)
+        startActivity(intent)
 
     }
+
 }

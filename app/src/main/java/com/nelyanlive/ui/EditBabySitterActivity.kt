@@ -147,12 +147,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             cityLongitude = intent.getStringExtra("longitude").toString()
             cityAddress = intent.getStringExtra("city").toString()
 
-
             hitChildCareType_Api()
-
-
-
-
 
 
             childimageList = ArrayList()
@@ -189,7 +184,6 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 launch(Dispatchers.Main.immediate) {
                     authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
                 }
-
             }
         }
 

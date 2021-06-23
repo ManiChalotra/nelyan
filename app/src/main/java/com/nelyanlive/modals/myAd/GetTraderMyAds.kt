@@ -11,15 +11,15 @@ data class GetTraderMyAds(
         val description: String,
         val email: String,
         val id: Int,
-        /*val isPublished: Int,
+        /*val isPublished: Int,*/
         val latitude: String,
-        val longitude: String,*/
+        val longitude: String,
         val nameOfShop: String,
         val phone: String,
-        /*val status: Int,
+        /*val status: Int,*/
         val traderDaysTimings: ArrayList<TraderDaysTimingMyAds>,
         val traderProducts: ArrayList<TraderProductMyAds>,
-        */val tradername: String,
+        val tradername: String,
         val tradersimages: ArrayList<TradersimageMyAds>,
         val typeofTraderId: Int,
         /*val updatedAt: String,*/
