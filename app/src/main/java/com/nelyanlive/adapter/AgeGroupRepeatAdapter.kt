@@ -18,7 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AgeGroupDataModel>, var listner: OnAGeGroupRecyclerViewItemClickListner)
+class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AgeGroupDataModel>, var listner: OnAgeGroupRecyclerViewItemClickListener)
     : RecyclerView.Adapter<AgeGroupRepeatAdapter.AgeGroupRepeatViewHolder>() {
 
 
@@ -34,7 +34,7 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
         return list.size
     }
 
-    inner class AgeGroupRepeatViewHolder(itemView: View, var listner: OnAGeGroupRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
+    inner class AgeGroupRepeatViewHolder(itemView: View, var listner: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val addButton = itemView.tvAddMore
 
         val ageFrom = itemView.edtAgeFrom
@@ -221,7 +221,7 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
       }*/
 
 
-    interface OnAGeGroupRecyclerViewItemClickListner {
+    interface OnAgeGroupRecyclerViewItemClickListener {
         fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int)
 
     }

@@ -13,7 +13,7 @@ data class EventMyAds(
         var startTime: String,
         var endTime: String,
         val id: Int,
-        val image: String,
+        var image: String,
         var latitude: String,
         var longitude: String,
         val name: String,

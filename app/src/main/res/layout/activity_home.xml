@@ -125,7 +125,7 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingStart="@dimen/_20sdp"
                         android:text="Home"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
@@ -135,7 +135,7 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingStart="@dimen/_20sdp"
                         android:text="@string/my_ads"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />

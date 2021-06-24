@@ -18,7 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAds>, var listener: OnAGeGroupRecyclerViewItemClickListner)
+class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAds>, var listener: OnAgeGroupRecyclerViewItemClickListener)
     : RecyclerView.Adapter<AgeGroupEditAdapter.AgeGroupRepeatViewHolder>() {
 
 
@@ -34,7 +34,7 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
         return list.size
     }
 
-    inner class AgeGroupRepeatViewHolder(itemView: View, var listener: OnAGeGroupRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
+    inner class AgeGroupRepeatViewHolder(itemView: View, var listener: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
         private var addButton = itemView.tvAddMore!!
         var ageFrom = itemView.edtAgeFrom!!
         var ageTo = itemView.edtAgeTo!!
@@ -43,13 +43,11 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
         var timeTo = itemView.tv_morning_totime!!
 
         fun initialize(list: ArrayList<AgeGroupMyAds>, position: Int) {
-            addButton.visibility = View.GONE
             timeFrom.text = list[position].timeFrom
             timeTo.text = list[position].timeTo
             ageFrom.setText(list[position].ageFrom)
             ageTo.setText(list[position].ageTo)
 
-            // setting the spinner for days
             val day: ArrayList<String> = ArrayList()
             day.add("")
             day.add("Monday")
@@ -62,12 +60,8 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
 
             val modeAdapterCity = ArrayAdapter(context, R.layout.customspinner, day)
             days.adapter = modeAdapterCity
-            val spinnerPosition: Int = modeAdapterCity.getPosition(list[position].days)
-            days.setSelection(spinnerPosition)
+            days.setSelection(modeAdapterCity.getPosition(list[position].days))
 
-
-
-            // add text watcher  for age from
             ageFrom.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].ageFrom = s.toString()
@@ -89,15 +83,12 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 }
             })
 
-            var name: String
             days.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
-                    name = parentView?.getItemAtPosition(pos).toString()
-                    list[position].days = name
+                    list[position].days = parentView?.getItemAtPosition(pos).toString()
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
-                    // your code here
                 }
             }
 
@@ -114,7 +105,6 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 mTimePicker.show()
             }
 
-            listener.getCurrentData(list, position)
 
             timeTo.setOnClickListener {
                 val mCurrentTime = Calendar.getInstance()
@@ -123,7 +113,7 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 val mTimePicker = TimePickerDialog(context, { _, selectedHour, selectedMinute ->
                     timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeTo = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle("Select Time")
                 mTimePicker.show()
             }
@@ -137,9 +127,8 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
         }
     }
 
-    interface OnAGeGroupRecyclerViewItemClickListner {
+    interface OnAgeGroupRecyclerViewItemClickListener {
         fun addAgeGroupItem(list: ArrayList<AgeGroupMyAds>, position: Int)
-        fun getCurrentData(list: ArrayList<AgeGroupMyAds>, position: Int)
 
     }
 }

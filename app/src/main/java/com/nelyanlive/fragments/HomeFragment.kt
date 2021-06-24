@@ -105,8 +105,12 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
         })
 
         appViewModel.getException()!!.observe(requireActivity(), androidx.lifecycle.Observer {
-            requireActivity().myCustomToast(it)
-            homeFargProgressBar?.hideProgressBar()
+            try {
+                requireActivity().myCustomToast(it)
+                homeFargProgressBar?.hideProgressBar()
+            }
+            catch (e:Exception)
+            {e.printStackTrace()}
         })
     }
 

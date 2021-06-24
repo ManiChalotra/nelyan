@@ -366,7 +366,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     override fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String, description: String, countryCode: String,
                                      phoneNumber: String, address: String, email: String, website: String, traderImageList: ArrayList<TradersimageMyAds>,
                                      daytimeList: ArrayList<TraderDaysTimingMyAds>, traderProductList: ArrayList<TraderProductMyAds>) {
-        var intent = Intent(this, EditTraderActivity::class.java)
+        val intent = Intent(this, EditTraderActivity::class.java)
         intent.putExtra("adID", adID)
         intent.putExtra("traderTypeId", traderTypeId)
         intent.putExtra("nameofShop", nameofShop)

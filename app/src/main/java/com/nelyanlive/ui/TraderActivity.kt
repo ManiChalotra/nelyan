@@ -653,7 +653,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 productDetailRepeatAdapter.notifyDataSetChanged()
     }
 
-    override fun addCameraGelleryImage(list: ArrayList<ProductDetailDataModel>, position: Int) {
+    override fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, position: Int) {
         productPhotoPosition = position
         checkPermission(this)
     }

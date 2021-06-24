@@ -288,8 +288,10 @@ interface JsonPlaceHolder {
                                  @Field("longitude") longitude: String,
                                  @Field("ageGroup") ageGroup: String,// sending json Array
                                  @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,// send json Array
-                                 @Field("country_code") country_code: String
+                                 @Field("country_code") country_code: String,
+                                 @Field("image1") image1: String,
+                                 @Field("image2") image2: String,
+                                 @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("addPost")
@@ -508,6 +510,10 @@ interface JsonPlaceHolder {
     fun getGroupMessagesNotification(@Header("security_key") securityKey: String?,
                          @Header("auth_key") authKey: String?,
                          @Field("groupId") groupId: String?): Call<JsonObject>
+
+    @GET("getMessageStatus")
+    fun getBadgeStatus(@Header("security_key") securityKey: String?,
+                         @Header("auth_key") authKey: String?): Call<JsonObject>
 
     @PUT("group_noification_status")
     @FormUrlEncoded

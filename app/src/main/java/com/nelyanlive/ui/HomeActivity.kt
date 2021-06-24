@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Dialog
 import android.content.*
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -141,7 +141,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-
+            callBadgeService(authorization)
 
             Picasso.get().load(from_admin_image_base_URl + userImage)
                     .placeholder(ContextCompat.getDrawable(
@@ -152,9 +152,47 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             tvUserName!!.text = userName
         }
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-            foregroundOnlyBroadcastReceiver,
-            IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
+
+
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(foregroundOnlyBroadcastReceiver, IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
+    }
+
+    private fun callBadgeService(authorization: String) {
+        if (checkIfHasNetwork(this)) {
+            Log.d("homeAuthKey--11---", "----------$authorization----$security_key")
+
+            appViewModel.badgeApiData(security_key, authorization)
+        }
+        else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
+
+        appViewModel.observeBadgeApiResponse()!!.observe(this, Observer { response ->
+
+
+            if (response!!.isSuccessful && response.code() == 200) {
+                if (response.body() != null) {
+
+                    //{"success":1,"code":200,"msg":"My Message Status","data":{"status":1}}
+                    Log.e("observeBadgeApiResponse", "-------------" + Gson().toJson(response.body()))
+                    val jsonMain = JSONObject(response.body().toString())
+                    Log.e("socket===", jsonMain.toString())
+
+                    val data  = jsonMain.getJSONObject("data")
+                    val status  = data.getString("status")
+
+                    if(status=="1") ivBadge.visibility = View.VISIBLE
+
+                }
+
+            } else {
+
+                Toast.makeText(this, "something dfsdfsd   went wrong", Toast.LENGTH_SHORT).show()
+
+            }
+        })
+
     }
 
 
@@ -210,7 +248,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bottomNavigationBar.setOnNavigationItemSelectedListener(this)
         setDrawerClicks()
         setToolBarClicks()
-
             try {
 
 
@@ -450,6 +487,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
             R.id.msg -> {
+                ivBadge.visibility = View.GONE
                 if (currentFragment !is MessageFragment) {
 
                 tvTitleToolbar!!.visibility = View.VISIBLE

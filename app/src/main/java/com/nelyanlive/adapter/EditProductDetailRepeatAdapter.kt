@@ -60,7 +60,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
             edtProductPrice.setText("$"+ list[position].price)
 
             ivCam.setOnClickListener{
-                productRepeatListener.addCameraGelleryImage(list, position)
+                productRepeatListener.addCameraGalleryImage(list, position)
             }
 
 
@@ -109,7 +109,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
 
     interface ProductRepeatListener {
         fun onITEEMClick(list: ArrayList<TraderProductMyAds>, pos: Int)
-        fun addCameraGelleryImage(list: ArrayList<TraderProductMyAds>, pos: Int)
+        fun addCameraGalleryImage(list: ArrayList<TraderProductMyAds>, pos: Int)
 
     }
 }

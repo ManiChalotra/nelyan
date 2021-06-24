@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AddEventDataModel>,
-                         var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.Adapter<EventRepeatAdapter.EventRepeatViewHolder>() 
+                         var listner: OnEventRecyclerViewItemClickListener) : RecyclerView.Adapter<EventRepeatAdapter.EventRepeatViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventRepeatViewHolder {
@@ -36,7 +36,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         return list.size
     }
 
-    inner class EventRepeatViewHolder(itemView: View, var listner: OnEventRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
+    inner class EventRepeatViewHolder(itemView: View, var listner: OnEventRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         val addButton = itemView.tvAddMore
         val image = itemView.ivEventimage
@@ -72,11 +72,11 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             city.text = list.get(position).city
 
             image.setOnClickListener{
-                listner.addCameraGelleryImage(list, position)
+                listner.addCameraGalleryImage(list, position)
             }
 
             city.setOnClickListener {
-                listner.cityinAddEvent(list, position, city)
+                listner.cityAddEvent(list, position, city)
 
             }
 
@@ -228,10 +228,10 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         }
     }
 
-    interface OnEventRecyclerViewItemClickListner {
+    interface OnEventRecyclerViewItemClickListener {
         fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
-        fun addCameraGelleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
-        fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView)
+        fun addCameraGalleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
+        fun cityAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView)
     }
 }
 

@@ -24,14 +24,11 @@ import com.nelyanlive.R
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.ui.LoginActivity
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 val base_URL = "http://3.13.214.27:1052/api/"
-//val base_URL = "http://192.168.1.125:1052/api/"  //this is local host url
-
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
 val InVALID_AUTH_TOEKN = "Invalid Auth Token"
@@ -43,22 +40,8 @@ val image_base_URl = "http://3.13.214.27:1052"
 val FOR_FACEBOOK_TYPE = "2"
 val FOR_GOOGLE_TYPE = "1"
 
-private lateinit var dataStoragePreference: DataStoragePreference
-private var job = Job()
-
-/*
-override val coroutineContext: CoroutineContext
-    get() = Dispatchers.Main + job
-*/
-
-
-//val image_url_local= "http://192.168.1.125:1052/"
-var OAUTH_GOOGLE_CLIENT_ID = "679915298408-s8dalhfhf8d3tecve1vdjtlo1uttm3u1.apps.googleusercontent.com"
-
-/*error message key*/
 val MESSAGE = "msg"
 
-// initalize the viewModel instance
 fun isUserNameValid(username: String): Boolean {
     //val p:Pattern=  Pattern.compile("^[ a-zA-Z0-9._-]{3,}\$")
     val p: Pattern = Pattern.compile("^[a-zA-Z\\s]*\$")

@@ -590,9 +590,9 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
         val mfile: File?
         mfile = File(imgPath!!)
-        val imageFile: RequestBody? = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+        val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
         val photo: MultipartBody.Part?
-        photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile!!)
+        photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
         imagePathList.clear()
         imagePathList.add(photo)
         setImage = imgPath.replaceBeforeLast("/","")

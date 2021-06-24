@@ -164,10 +164,8 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         popupWindow!!.isOutsideTouchable = true
 
 
-        popupWindow!!.showAsDropDown(ivDot, -300, 0, Gravity.RIGHT)
-/*fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
-                                    description: String, countryCode: String, phoneNumber: String, address: String, city: String,
-                                    childCareImageList : ArrayList<ChildCareImageMyAds>)*/
+        popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.END)
+
         editt.setOnClickListener {
             deleteEditListner.onEditAdClick(adapterPosition, id.toString(), childcareType.toString(), name, availableplace.toString(),
                 description, countryCode, phone, city, childCareImages, latitude, longitude)

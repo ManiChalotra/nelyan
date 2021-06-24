@@ -13,11 +13,9 @@ import android.widget.TextView
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.nelyanlive.R
@@ -43,8 +41,8 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener,
-        CoroutineScope, AgeGroupRepeatAdapter.OnAGeGroupRecyclerViewItemClickListner,
-        EventRepeatAdapter.OnEventRecyclerViewItemClickListner {
+        CoroutineScope, AgeGroupRepeatAdapter.OnAgeGroupRecyclerViewItemClickListener,
+        EventRepeatAdapter.OnEventRecyclerViewItemClickListener {
 
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
@@ -447,7 +445,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         }
     }
 
-    override fun cityinAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView) {
+    override fun cityAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView) {
         updateEventList = list
         pos = position
         showPlacePicker(addEventRequestCode)
@@ -471,7 +469,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         }
     }
 
-    override fun addCameraGelleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
+    override fun addCameraGalleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
         eventPhotoPosition = position
         checkPermission(this)
     }

@@ -56,7 +56,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
             edtProductPrice.setText(list[position].productPrice)
 
             ivCam.setOnClickListener{
-                productRepeatListener.addCameraGelleryImage(list, position)
+                productRepeatListener.addCameraGalleryImage(list, position)
             }
 
             tvAdd.setOnClickListener {
@@ -102,7 +102,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
 
     interface ProductRepeatListener {
         fun onITEEMClick(list: ArrayList<ProductDetailDataModel>, pos: Int)
-        fun addCameraGelleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int)
+        fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int)
 }
 
 

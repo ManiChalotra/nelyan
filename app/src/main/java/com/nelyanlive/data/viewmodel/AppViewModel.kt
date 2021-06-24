@@ -1,5 +1,6 @@
 package com.nelyanlive.data.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -367,6 +368,36 @@ class AppViewModel : ViewModel() {
                 })
     }
 
+    // get Badge api
+    private var badgeMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+
+    fun observeBadgeApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (badgeMutableLiveData == null) {
+            badgeMutableLiveData = MutableLiveData()
+        }
+        return badgeMutableLiveData
+    }
+
+    fun badgeApiData(securityKey: String?,authKey:String? ) {
+        JsonPlaceHolder().getBadgeStatus(securityKey, authKey)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+                        Log.e("observeBadgeApiResponse", "-ttt----$t--------" )
+
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        Log.e("observeBadgeApiResponse", "--ress---$response--------" )
+
+                        badgeMutableLiveData?.value = response
+                    }
+                })
+    }
+
     // change Group Notification check api
     private var changeGroupNotifyMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 
@@ -674,7 +705,7 @@ class AppViewModel : ViewModel() {
 
     fun observeUploadImageResponse(): LiveData<Response<ImageUploadApiResponseModel>?>? {
         if (imageUploadMutableLiveData == null) {
-            imageUploadMutableLiveData = MutableLiveData<Response<ImageUploadApiResponseModel>?>()
+            imageUploadMutableLiveData = MutableLiveData()
         }
         return imageUploadMutableLiveData
     }
@@ -898,9 +929,9 @@ class AppViewModel : ViewModel() {
 
     fun send_editActivity_Data(securityKey: String?,authkey:String?, postId: String, type: String, activityType:String, shopname:String, activityName:String,
                                   description:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                                  ageGroup:String, addEvent:String, media:String, country_code:String) {
-        JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,/*message,*/phone,address,city,
-                latitude,longitude,ageGroup,addEvent,media, country_code)
+                                  ageGroup:String, addEvent:String,  country_code:String,  img1:String,  img2:String,  img3:String) {
+        JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+                latitude,longitude,ageGroup,addEvent, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage

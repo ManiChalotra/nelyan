@@ -589,7 +589,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         productDetailRepeatAdapter.notifyDataSetChanged()
     }
 
-    override fun addCameraGelleryImage(list: java.util.ArrayList<TraderProductMyAds>, pos: Int) {
+    override fun addCameraGalleryImage(list: java.util.ArrayList<TraderProductMyAds>, pos: Int) {
         productPhotoPosition = pos
         IMAGE_SELECTED_TYPE = "4"
         checkPermission(this)

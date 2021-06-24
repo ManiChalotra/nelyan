@@ -52,7 +52,21 @@
         android:id="@+id/tab2"
         android:layout_height="match_parent">
 
+
+        <ImageView
+            android:id="@+id/ivBadge"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/ivChat"
+            app:layout_constraintStart_toEndOf="@id/ivChat"
+            android:background="@drawable/custom_thumb"
+            android:backgroundTint="@color/colorAccent"
+            android:visibility="gone"
+            />
+
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/ivChat"
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
             app:layout_constraintTop_toTopOf="parent"
