@@ -52,7 +52,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             .create(AppViewModel::class.java)
     }
     private val dataStoragePreference by lazy { DataStoragePreference(this@TraderListingActivity) }
-    private var authkey: String? = null
+    private var authKey: String? = ""
     var dataString = ""
 
     private var latitude: String = "42.6026"
@@ -328,7 +328,13 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
         ivFavourite = favourite
 
         if (checkIfHasNetwork(this@TraderListingActivity)) {
-            appViewModel.addFavouritePostApiData(security_key, authkey, postID, "3")
+
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                    .first()
+
+                appViewModel.addFavouritePostApiData(security_key, authKey, postID, "3")
+            }
             trader_list_progressbar.showProgressBar()
         } else {
             showSnackBar(this@TraderListingActivity, getString(R.string.no_internet_error))

@@ -39,6 +39,7 @@ import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.fragments.*
 import com.nelyanlive.utils.*
+import com.nelyanlive.utils.fcm.MyFirebaseMessagingService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.alert_add_post_restiction.*
@@ -220,6 +221,19 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        MyFirebaseMessagingService.chatNotifyLive.observe(this, Observer {
+
+            if(it.equals("true"))
+            {
+                ivBadge.visibility = View.VISIBLE
+            }
+            else
+            {
+                ivBadge.visibility = View.GONE
+            }
+        })
+
 
         homeFusedLocation = LocationServices.getFusedLocationProviderClient(this)
 

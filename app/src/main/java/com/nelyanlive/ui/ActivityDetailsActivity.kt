@@ -248,7 +248,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     tv_activity_name.text = jsonObject.getJSONObject("data").get("activityname").toString()
                     tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
+                    tvWebsite.text = jsonObject.getJSONObject("data").get("website").toString()
 
                     if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
                         tv_phn.visibility = View.VISIBLE
@@ -438,11 +438,15 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 val latti= intent.getStringExtra("lati")
                 val longi= intent.getStringExtra("longi")
 
-                val india = LatLng(latti!!.toDouble(), longi!!.toDouble())
-                mMap!!.addMarker(MarkerOptions()
-                        .position(india)
-                        .title("Activity"))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,15f))
+                if(!latti.isNullOrBlank()) {
+                    val india = LatLng(latti.toDouble(), longi!!.toDouble())
+                    mMap!!.addMarker(
+                        MarkerOptions()
+                            .position(india)
+                            .title("Activity")
+                    )
+                    mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india, 15f))
+                }
             }
 
         } catch (e: Exception) {

@@ -55,13 +55,13 @@
 
         <ImageView
             android:id="@+id/ivBadge"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@id/ivChat"
             app:layout_constraintStart_toEndOf="@id/ivChat"
             android:background="@drawable/custom_thumb"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/red"
             android:visibility="gone"
             />
 

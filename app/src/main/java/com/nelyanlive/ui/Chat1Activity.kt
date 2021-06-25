@@ -73,6 +73,7 @@ class Chat1Activity :  OpenCameraGallery() {
 
     override fun onBackPressed() {
         chatVM.disconnectSocket()
+        MyFirebaseMessagingService.chatNotification.value ="false"
         super.onBackPressed()
         OpenActivity(HomeActivity::class.java){
             putString("chat", userId)

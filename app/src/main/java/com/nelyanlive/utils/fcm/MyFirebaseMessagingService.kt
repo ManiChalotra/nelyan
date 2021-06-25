@@ -9,6 +9,8 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.datastore.preferences.core.preferencesKey
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.nelyanlive.R
@@ -138,6 +140,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
             Log.e("new_message", "==212=324234====${currentChatUser}")
             Log.e("new_message", "==212=111324234231111====${senderID}")
             Log.e("new_message", "==212=111324234231111====${myId}")
+            Log.e("new_message", "==212=111324234231111==564==${groupId}")
+
+            if (groupId == 0) {
+
+                chatNotification.value ="true"
+            }
 
                 if (senderID != myId && senderID != currentChatUser) {
 
@@ -145,6 +153,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
                         manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
                     } else {
                         if (groupId == 0) {
+
                             manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
                         }
                     }
@@ -168,8 +177,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         private const val TAG = "MyFirebaseMsgService"
          var myChatVisible = true
          var currentChatUser = ""
-
-
+        var chatNotification : MutableLiveData<String> = MutableLiveData()
+        var chatNotifyLive : LiveData<String> = chatNotification
 
     }
 }

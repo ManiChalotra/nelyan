@@ -843,13 +843,13 @@ class AppViewModel : ViewModel() {
     }
 
     fun send_addPostActivity_Data(securityKey: String?,authkey:String?, type: String, activityType:String, shopname:String, activityName:String,
-                                  description:String,  phone:String, address:String, city:String, latitude:String, longitude:String,
+                                  description:String,  phone:String, address:String, city:String,website:String, latitude:String, longitude:String,
                                   ageGroup:String, addEvent:String, media:String, country_code:String, typeEmpty:String) {
 
         when(typeEmpty)
         {
             "0"->{
-                JsonPlaceHolder().get_addPOSt_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,
+                JsonPlaceHolder().get_addPOSt_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,website,
                         latitude,longitude,ageGroup,addEvent,media, country_code)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -864,7 +864,7 @@ class AppViewModel : ViewModel() {
                         })
             }
             "1"->{
-                JsonPlaceHolder().get_addPOSt_withoutevent_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,
+                JsonPlaceHolder().get_addPOSt_withoutevent_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,website,
                         latitude,longitude,ageGroup,media, country_code)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -879,7 +879,7 @@ class AppViewModel : ViewModel() {
                         })
             }
             "2"->{
-                JsonPlaceHolder().get_addPOSt_withoutevent_age_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,
+                JsonPlaceHolder().get_addPOSt_withoutevent_age_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,website,
                         latitude,longitude,media, country_code)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -894,7 +894,7 @@ class AppViewModel : ViewModel() {
                         })
             }
             "3"->{
-                JsonPlaceHolder().get_addPOSt_without_age_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,
+                JsonPlaceHolder().get_addPOSt_without_age_Activity_Api(securityKey, authkey,type, activityType, shopname, activityName, description,phone,address,city,website,
                         latitude,longitude,addEvent,media, country_code)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -929,7 +929,64 @@ class AppViewModel : ViewModel() {
 
     fun send_editActivity_Data(securityKey: String?,authkey:String?, postId: String, type: String, activityType:String, shopname:String, activityName:String,
                                   description:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                                  ageGroup:String, addEvent:String,  country_code:String,  img1:String,  img2:String,  img3:String) {
+                                  ageGroup:String, addEvent:String,  country_code:String,  img1:String,  img2:String,  img3:String,  typeEmpty:String) {
+        when(typeEmpty)
+        {
+            "1"->{JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+                latitude,longitude,ageGroup,addEvent, country_code,img1,img2,img3)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editActivityMutableLiveData?.value = response
+                    }
+                })}
+            "2"->{JsonPlaceHolder().editMyaddActivitywithoutAge(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+                latitude,longitude,addEvent, country_code,img1,img2,img3)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editActivityMutableLiveData?.value = response
+                    }
+                })}
+            "3"->{JsonPlaceHolder().editMyaddActivitywithoutEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+                latitude,longitude,ageGroup, country_code,img1,img2,img3)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editActivityMutableLiveData?.value = response
+                    }
+                })}
+            "4"->{JsonPlaceHolder().editMyaddActivitywithoutAgeEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+                latitude,longitude, country_code,img1,img2,img3)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editActivityMutableLiveData?.value = response
+                    }
+                })}
+
+        }
+
         JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
                 latitude,longitude,ageGroup,addEvent, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
@@ -987,20 +1044,39 @@ class AppViewModel : ViewModel() {
     fun send_editPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
                                 description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
                                 email:String, website:String, selectDay:String, productDetail:String, image1:String,
-                                image2:String, image3: String, postId: String) {
-        JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
-            latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
-            .enqueue(object : retrofit2.Callback<JsonObject> {
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
-                }
-                override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
-                ) {
-                    editPostTraderMutableLiveData?.value = response
-                }
-            })
+                                image2:String, image3: String, postId: String,emptyType:String) {
+
+        when(emptyType)
+        {
+            "1"->{JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editPostTraderMutableLiveData?.value = response
+                    }
+                })}
+            "2"->{JsonPlaceHolder().editTraderPost_ApiWitoutProduct(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                latitude,longitude, email, website, selectDay, image1, image2, image3, postId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editPostTraderMutableLiveData?.value = response
+                    }
+                })}
+        }
+
+
     }
 
 

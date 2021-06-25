@@ -198,10 +198,10 @@ interface JsonPlaceHolder {
                                  @Field("shop_name") shop_name: String,
                                  @Field("activity_name") activity_name: String,
                                  @Field("description") description: String,
-                                 /*@Field("message") message: String,*/
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
+                                 @Field("website") website: String,
                                  @Field("latitude") latitude: String,
                                  @Field("longitude") longitude: String,
                                  @Field("ageGroup") ageGroup: String,// sending json Array
@@ -219,15 +219,15 @@ interface JsonPlaceHolder {
                                  @Field("shop_name") shop_name: String,
                                  @Field("activity_name") activity_name: String,
                                  @Field("description") description: String,
-                                 /*@Field("message") message: String,*/
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
+                                 @Field("website") website: String,
                                  @Field("latitude") latitude: String,
                                  @Field("longitude") longitude: String,
-                                 @Field("ageGroup") ageGroup: String,// sending json Array
+                                 @Field("ageGroup") ageGroup: String,
                                  //@Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,// send json Array
+                                 @Field("media") media: String,
                                  @Field("country_code") country_code: String
     ): Call<JsonObject>
 
@@ -243,6 +243,7 @@ interface JsonPlaceHolder {
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
+                                 @Field("website") website: String,
                                  @Field("latitude") latitude: String,
                                  @Field("longitude") longitude: String,
                                  //@Field("ageGroup") ageGroup: String,// sending json Array
@@ -263,6 +264,7 @@ interface JsonPlaceHolder {
                                  @Field("phone") phone: String,
                                  @Field("address") address: String,
                                  @Field("city") city: String,
+                                 @Field("website") website: String,
                                  @Field("latitude") latitude: String,
                                  @Field("longitude") longitude: String,
                                  //@Field("ageGroup") ageGroup: String,// sending json Array
@@ -288,6 +290,75 @@ interface JsonPlaceHolder {
                                  @Field("longitude") longitude: String,
                                  @Field("ageGroup") ageGroup: String,// sending json Array
                                  @Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("country_code") country_code: String,
+                                 @Field("image1") image1: String,
+                                 @Field("image2") image2: String,
+                                 @Field("image3") image3: String
+    ): Call<JsonObject>
+
+    @POST("edit_myadd")
+    @FormUrlEncoded
+    fun editMyaddActivitywithoutEvent(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("postId") postId: String,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                 @Field("ageGroup") ageGroup: String,// sending json Array
+                                // @Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("country_code") country_code: String,
+                                 @Field("image1") image1: String,
+                                 @Field("image2") image2: String,
+                                 @Field("image3") image3: String
+    ): Call<JsonObject>
+
+    @POST("edit_myadd")
+    @FormUrlEncoded
+    fun editMyaddActivitywithoutAge(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("postId") postId: String,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                // @Field("ageGroup") ageGroup: String,// sending json Array
+                                 @Field("addEvent") addEvent: String,// sending json Array
+                                 @Field("country_code") country_code: String,
+                                 @Field("image1") image1: String,
+                                 @Field("image2") image2: String,
+                                 @Field("image3") image3: String
+    ): Call<JsonObject>
+
+    @POST("edit_myadd")
+    @FormUrlEncoded
+    fun editMyaddActivitywithoutAgeEvent(@Header("security_key") securityKey: String?,
+                                 @Header("auth_key") auth_key: String?,
+                                 @Field("postId") postId: String,
+                                 @Field("type") type: String,
+                                 @Field("activity_type") activity_type: String,
+                                 @Field("shop_name") shop_name: String,
+                                 @Field("activity_name") activity_name: String,
+                                 @Field("description") description: String,
+                                 @Field("phone") phone: String,
+                                 @Field("address") address: String,
+                                 @Field("city") city: String,
+                                 @Field("latitude") latitude: String,
+                                 @Field("longitude") longitude: String,
+                                // @Field("ageGroup") ageGroup: String,// sending json Array
+                                 //@Field("addEvent") addEvent: String,// sending json Array
                                  @Field("country_code") country_code: String,
                                  @Field("image1") image1: String,
                                  @Field("image2") image2: String,
@@ -399,6 +470,32 @@ interface JsonPlaceHolder {
                            @Field("website") website: String,
                            @Field("selectDay") selectDay: String,// sending json Array
                            @Field("productDetail") productDetail: String,
+                           @Field("image1") image1: String,
+                           @Field("image2") image2: String,
+                           @Field("image3") image3: String,
+                           @Field("postId") postId: String
+
+    ): Call<JsonObject>
+
+
+    @FormUrlEncoded
+    @POST("edit_myadd")
+    fun editTraderPost_ApiWitoutProduct(@Header("security_key") securityKey: String?,
+                           @Header("auth_key") auth_key: String?,
+                           @Field("type") type: String,
+                           @Field("trader_type") traderType: String,
+                           @Field("shop_name") shop_name: String,
+                           @Field("description") description: String,
+                           @Field("country_code") country_code: String,
+                           @Field("phone") phone: String,
+                           @Field("address") address: String,
+                           @Field("city") city: String,
+                           @Field("latitude") latitude: String,
+                           @Field("longitude") longitude: String,
+                           @Field("email") email: String,
+                           @Field("website") website: String,
+                           @Field("selectDay") selectDay: String,// sending json Array
+                           //@Field("productDetail") productDetail: String,
                            @Field("image1") image1: String,
                            @Field("image2") image2: String,
                            @Field("image3") image3: String,

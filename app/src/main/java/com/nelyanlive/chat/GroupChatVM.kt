@@ -384,7 +384,7 @@ class GroupChatVM :ViewModel() {
                     json.getString("senderId"),
                     json.getString("receiverId"),
                     "",
-                    "",
+                json.getString("groupId"),
                     json.getString("message"),
                     json.getString("readStatus"),
                     json.getString("messageType"),

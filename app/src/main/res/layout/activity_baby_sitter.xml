@@ -200,36 +200,6 @@
                     android:visibility="gone" />
 
             </RelativeLayout>
-            <!--    <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_10sdp">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-
-                        android:id="@+id/Recycler_scroll">
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                        android:id="@+id/indicator"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_centerInParent="true"
-                        android:layout_below="@+id/Recycler_scroll"
-                        app:spi_dotColor="@color/grey"
-                        app:spi_dotSize="@dimen/_6sdp"
-                        app:spi_dotSelectedSize="@dimen/_6sdp"
-                        app:spi_dotSelectedColor="@color/colorPrimaryDark"/>
-                </RelativeLayout>-->
-
-
-
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_15sdp"

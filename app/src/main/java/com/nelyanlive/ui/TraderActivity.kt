@@ -164,9 +164,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
                 cityName = place.name.toString()
-                tv_address.text = cityName.toString()
+                tv_address.text = cityName
 
-                // cityID = place.id.toString()
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
 
@@ -409,12 +408,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             }
         })
 
-
-
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
         })
-
 
     }
 

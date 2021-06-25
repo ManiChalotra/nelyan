@@ -63,7 +63,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             .create(AppViewModel::class.java)
     }
     private val dataStoragePreference by lazy { DataStoragePreference(this@HomeChildCareListActivity) }
-    private var authkey: String? = null
+    private var authKey: String? = ""
     var dataString = ""
 
     private var latitude: String = "42.6026"
@@ -257,7 +257,11 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     override fun onAddFavoriteClick(position: Int, postId: String?, ivFavourite: ImageView) {
         ivFavouritee = ivFavourite
         if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
-            appViewModel.addFavouritePostApiData(security_key, authkey, postId, "2")
+
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                appViewModel.addFavouritePostApiData(security_key, authKey, postId, "2")
+            }
             child_care_list_progressbar.showProgressBar()
         } else {
             showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))

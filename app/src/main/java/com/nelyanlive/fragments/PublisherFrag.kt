@@ -19,12 +19,12 @@ import kotlinx.android.synthetic.main.activity_pubiler.*
 class PublisherFrag : Fragment(), View.OnClickListener {
 
     private var type = ""
-    private  var listner: CommunicationListner?= null
+    private  var listener: CommunicationListner?= null
 
     override fun onResume() {
         super.onResume()
-        if(listner!= null){
-            listner!!.onFargmentActive(3)
+        if(listener!= null){
+            listener!!.onFargmentActive(3)
         }
     }
 
@@ -41,7 +41,7 @@ class PublisherFrag : Fragment(), View.OnClickListener {
         val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
-        initalizeClicks()
+        initializeClicks()
 
         radioGroup.setOnCheckedChangeListener { _, optionId ->
             run {
@@ -62,7 +62,7 @@ class PublisherFrag : Fragment(), View.OnClickListener {
     }
 
 
-    private fun initalizeClicks() {
+    private fun initializeClicks() {
         btnSubmit.setOnClickListener(this)
     }
 
@@ -91,15 +91,14 @@ class PublisherFrag : Fragment(), View.OnClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is CommunicationListner){
-            listner = context
+            listener = context
         }else{
-
-            throw RuntimeException("Home Fragment not Attched")
+            throw RuntimeException("Home Fragment not Attached")
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        listner = null
+        listener = null
     }
 }

@@ -1,7 +1,6 @@
 package com.nelyanlive.adapter
 
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.content.Context
 import android.text.Editable
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.modals.ModelPOJO
+import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.item_event_add_more.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -38,10 +38,10 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
 
     inner class EventRepeatViewHolder(itemView: View, var listner: OnEventRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
-        val addButton = itemView.tvAddMore
-        val image = itemView.ivEventimage
-        val name = itemView.edtEventName
-        val dateFrom = itemView.tv_cal
+        val addButton = itemView.tvAddMore!!
+        val image = itemView.ivEventimage!!
+        val name = itemView.edtEventName!!
+        val dateFrom = itemView.tv_cal!!
         val dateTo = itemView.tvCal1
         val timeFrom = itemView.edClo2
         val timeTo = itemView.edClo3
@@ -60,16 +60,16 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         fun initalize(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
 
             // setting data  here
-            Glide.with(context).asBitmap().load(list.get(position).image).into(image)
-            name.setText(list.get(position).name)
-            description.setText(list.get(position).description)
-            price.setText(list.get(position).price)
+            Glide.with(context).asBitmap().load(image_base_URl+list[position].image).into(image)
+            name.setText(list[position].name)
+            description.setText(list[position].description)
+            price.setText(list[position].price)
 
-            dateFrom.text = list.get(position).dateFrom
-            dateTo.text = list.get(position).dateTo
-            timeFrom.text = list.get(position).timeFrom
-            timeTo.text = list.get(position).timeTo
-            city.text = list.get(position).city
+            dateFrom.text = list[position].dateFrom
+            dateTo.text = list[position].dateTo
+            timeFrom.text = list[position].timeFrom
+            timeTo.text = list[position].timeTo
+            city.text = list[position].city
 
             image.setOnClickListener{
                 listner.addCameraGalleryImage(list, position)
@@ -94,12 +94,11 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-//                    timeFrom.text = "$selectedHour:$selectedMinute"
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeFrom = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
@@ -108,12 +107,11 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                   // timeTo.text = "$selectedHour:$selectedMinute"
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeTo = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
@@ -165,44 +163,44 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             val mYear: Int
             val mMonth: Int
             val mDay: Int
-            val mcurrentDate = Calendar.getInstance()
-            mYear = mcurrentDate[Calendar.YEAR]
-            mMonth = mcurrentDate[Calendar.MONTH]
-            mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
+            val currentDate = Calendar.getInstance()
+            mYear = currentDate[Calendar.YEAR]
+            mMonth = currentDate[Calendar.MONTH]
+            mDay = currentDate[Calendar.DAY_OF_MONTH]
 
 
-            val mDatePicker = DatePickerDialog(context, OnDateSetListener { datepicker, selectedyear, selectedmonth, selectedday ->
-                        if (selectedday.toString().length == 1)
-                            day = "0$selectedday"
-                        else
-                            day = selectedday.toString()
+            val mDatePicker = DatePickerDialog(context,
+                { datepicker, selectedyear, selectedmonth, selectedday ->
+                            day = if (selectedday.toString().length == 1)
+                                "0$selectedday"
+                            else
+                                selectedday.toString()
+    
+                    month = if ((selectedmonth + 1).toString().length == 1)
+                        "0" + (selectedmonth + 1).toString()
+                    else (selectedmonth + 1).toString()
+    
+                            year = selectedyear.toString()
+    
+                            date_timestamp = calDateToTimeStamp(
+                                "$day-$month-$year"
+                            ).toString()
+                            select_date = "$day/$month/$selectedyear"
+    
+    
+                    when (type) {
+                        "1" -> {
+                            list[position].dateFrom = select_date
+                            notifyDataSetChanged()
+                        }
 
-                        if ((selectedmonth + 1).toString().length == 1)
-                            month = "0" + (selectedmonth + 1).toString()
-                        else month = (selectedmonth + 1).toString()
+                        "2" -> {
+                            list[position].dateTo = select_date
+                            notifyDataSetChanged()
 
-                        year = selectedyear.toString()
-
-                        date_timestamp = calenderDateToTimeStamp(
-                                day + "-" + month + "-" + year,
-                                "dd-MM-yyyy"
-                        ).toString()
-                        Log.e("day", day.toString())
-                        Log.e("month", month.toString())
-                        Log.e("year", selectedyear.toString())
-                        Log.e("date_timestamp", date_timestamp)
-                        select_date = day + "/" + month + "/" + selectedyear
-
-
-                if (type.equals("1")){
-                    list.get(position).dateFrom = select_date
-                    notifyDataSetChanged()
-                } else if (type.equals("2")){
-                    list.get(position).dateTo = select_date
-                    notifyDataSetChanged()
-
-                }
-                    }, mYear, mMonth, mDay
+                        }
+                    }
+                        }, mYear, mMonth, mDay
             )
             mDatePicker.datePicker.minDate = System.currentTimeMillis()
             if (!mDatePicker.isShowing) {
@@ -211,20 +209,20 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         }
 
 
-        fun calenderDateToTimeStamp(str_date: String?, date_formate: String?): Long {
-            var time_stamp = java.lang.Long.valueOf(0)
+        private fun calDateToTimeStamp(strDate: String?): Long {
+            var timeStamp = java.lang.Long.valueOf(0)
             try {
-                val formatter = SimpleDateFormat(date_formate)
+                val formatter = SimpleDateFormat("dd-MM-yyyy")
                 //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                val date: Date = formatter.parse(str_date)
-                time_stamp = date.time
+                val date: Date = formatter.parse(strDate)
+                timeStamp = date.time
             } catch (ex: ParseException) {
                 ex.printStackTrace()
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
-            time_stamp = time_stamp / 1000
-            return time_stamp
+            timeStamp /= 1000
+            return timeStamp
         }
     }
 
@@ -232,6 +230,8 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
         fun addCameraGalleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
         fun cityAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView)
+        fun eventDataSet(type:String,value:String, position: Int )
+
     }
 }
 

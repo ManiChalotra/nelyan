@@ -45,7 +45,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         AppViewModel::class.java) }
 
 
-    private var IMAGE_SELECTED_TYPE = ""
+    private var imageSelectedType = ""
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
     private var media: JSONArray = JSONArray()
@@ -62,9 +62,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     private var selectedUrlListing: ArrayList<String> = ArrayList()
     private var urlListingFromResponse: ArrayList<String> = ArrayList()
     var imageVideoUrlListing = arrayListOf("", "", "", "", "")
-
-
-
+    
     private var imagePathList = ArrayList<MultipartBody.Part>()
 
     // dialo for progress
@@ -85,33 +83,22 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     var image1: String=""
     var image2: String=""
     var image3: String=""
-    var modelTypes:MutableList<ChildCareTypeRespone.Data>? =null
 
-    var clickImg1: Boolean= false
-    var clickImg2: Boolean= false
-    var clickImg3: Boolean= false
     private var postID = ""
     private lateinit var childimageList: ArrayList<ChildCareImageMyAds>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_baby_sitter)
-        modelTypes = ArrayList()
 
         initalizeClicks()
         childimageList = ArrayList()
 
         sp_child_care_type.visibility = View.VISIBLE
 
-
-
-
-
-
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
         }
-
     }
 
     private fun hitChildCareType_Api() {
@@ -157,15 +144,12 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 when (childimageList.size) {
                     1 -> {
                         image1 = childimageList[0].image
-                        image2 = ""
-                        image3 = ""
                         Glide.with(this).load(image_base_URl + childimageList[0].image).error(R.mipmap.no_image_placeholder).into(ivImg1)
 
                     }
                     2 -> {
                         image1 = childimageList[0].image
                         image2 = childimageList[1].image
-                        image3 = ""
                         Glide.with(this).load(image_base_URl + childimageList[0].image).error(R.mipmap.no_image_placeholder).into(ivImg1)
                         Glide.with(this).load(image_base_URl + childimageList[1].image).error(R.mipmap.no_image_placeholder).into(ivImg2)
 
@@ -190,8 +174,6 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
-        ivImg3.setOnClickListener(this)
-        ivplus.setOnClickListener(this)
         ivBackBabaySitter.setOnClickListener(this)
         btnSubmitBabySitter.setOnClickListener(this)
 
@@ -210,24 +192,15 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         when (v!!.id) {
 
             R.id.ivImg1 -> {
-                clickImg1 = true
-                clickImg2 = false
-                clickImg3 = false
-                IMAGE_SELECTED_TYPE = "1"
+                imageSelectedType = "1"
                 checkPermission(this)
             }
             R.id.ivImg2 -> {
-                clickImg1 = false
-                clickImg2 = true
-                clickImg3 = false
-                IMAGE_SELECTED_TYPE = "2"
+                imageSelectedType = "2"
                 checkPermission(this)
             }
             R.id.ivImg -> {
-                clickImg1 = false
-                clickImg2 = false
-                clickImg3 = true
-                IMAGE_SELECTED_TYPE = "3"
+                imageSelectedType = "3"
                 checkPermission(this)
             }
             R.id.ivBackBabaySitter -> {
@@ -245,17 +218,15 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                     myCustomToast(getString(R.string.child_care_type_missing_error))
                 } else {
                     if (maternalName.isEmpty()) {
-                        myCustomToast(getString(R.string.maternal_missing_error))
+                        myCustomToast(getString(R.string.please_enter_name))
                     } else {
                         if (placeSpin.isEmpty()) {
                             myCustomToast(getString(R.string.places_number_error))
                         } else {
-                            if (phoneNumber.isEmpty()) {
-                                myCustomToast(getString(R.string.phone_number_missing))
-                            } else {
                                 if (address_baby_sitter.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
-                                } else {
+                                }
+                                else {
                                     if (descp_baby_sitter.isEmpty()) {
                                         myCustomToast(getString(R.string.description_missing))
                                     } else {
@@ -286,7 +257,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
 
                                     }
                                 }
-                            }
+
                         }
 
                     }
@@ -304,48 +275,35 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     }
 
     override fun getRealImagePath(imgPath: String?) {
-
-        when (IMAGE_SELECTED_TYPE) {
-            "1" -> {
-                setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing[0] = imgPath.toString()
-                iv_image1.visibility = View.GONE
-            }
-
-            "2" -> {
-                setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing[1] = imgPath.toString()
-            }
-
-            "3" -> {
-                setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing[2] = imgPath.toString()
-            }
-
-        }
-
+        Log.d("selectedImagePath", "-------$imgPath")
+        uploadImageServer(imgPath)
     }
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView) {
         Log.d("getImage", "---------" + imgPATH.toString())
 
         Glide.with(this).asBitmap().load(imgPATH).into(imageview)
-        hitImageUploadApi(imgPATH)
     }
 
 
-    fun hitImageUploadApi(imgPATH: String?) {
-        val mfile: File?
-        mfile = File(imgPATH!!)
-        val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
+    fun uploadImageServer(imgPath: String?) {
+
+        val mFile: File?
+        mFile = File(imgPath!!)
+        val imageFile: RequestBody = mFile.asRequestBody("image/*".toMediaTypeOrNull())
         val photo: MultipartBody.Part?
-        photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
-        imagePathList.add(photo)
+        photo = MultipartBody.Part.createFormData("image", mFile.name, imageFile)
+        imagePathList.add(0,photo)
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
 
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-        appViewModel.sendUploadImageData(type, users, imagePathList)
-        progressDialog.setProgressDialog()
+        if (checkIfHasNetwork(this)) {
+            appViewModel.sendUploadImageData(type, users, imagePathList)
+            progressDialog.setProgressDialog()
+        }
+        else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        }
     }
 
 
@@ -408,45 +366,44 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
 
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
+                progressDialog.hidedialog()
+
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
+                        val image = response.body()!!.data!![0].image.toString()
 
-                        when {
-                            clickImg1 -> {
-                                image1 = response.body()!!.data!![0].image.toString()
+                        when (imageSelectedType) {
+
+                            "1" -> {
+                                image1 = image
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                    .into(ivImg1!!)
+
                             }
-                            clickImg2 -> {
-                                image2 = response.body()!!.data!![0].image.toString()
+                            "2" -> {
+                                image2 = image
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                    .into(ivImg2!!)
                             }
-                            clickImg3 -> {
-                                image3 = response.body()!!.data!![0].image.toString()
+                            "3" -> {
+                                image3 = image
+
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                    .into(ivImg!!)
                             }
-                        }
-
-                        progressDialog.hidedialog()
-
-
-                        if (urlListingFromResponse != null) {
-                            urlListingFromResponse.clear()
-                        } else {
-                            urlListingFromResponse = ArrayList()
-
-                        }
-
-                        var mlist = response.body()!!.data
-                        if (mlist.isNullOrEmpty()) {
-                            mlist = ArrayList()
-                        } else {
-                            makeImageJsonArray(mlist)
 
                         }
+                        imageSelectedType = ""
+
                     }
-                } else {
-                    ErrorBodyResponse(response, this, null)
-                    progressDialog.hidedialog()
+
                 }
             }
+                else {
+
+                    ErrorBodyResponse(response, this, null)
+                }
         })
 
         appViewModel.observe_editMaternalPost_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
@@ -516,7 +473,6 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
         }
 

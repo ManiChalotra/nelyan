@@ -16,7 +16,7 @@ data class EventMyAds(
         var image: String,
         var latitude: String,
         var longitude: String,
-        val name: String,
+        var name: String,
         var price: String,
         val status: Int,
         val updatedAt: String,

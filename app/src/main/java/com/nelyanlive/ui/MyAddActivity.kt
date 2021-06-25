@@ -335,7 +335,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
     override fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String,
                                          nameofActivity: String, description: String, countryCode: String, phoneNumber: String,
-                                         address: String, city: String, ageGroupListMyAds: ArrayList<AgeGroupMyAds>,
+                                         address: String,latti: String,longi: String, city: String, ageGroupListMyAds: ArrayList<AgeGroupMyAds>,
                                          ActivityimagesList: ArrayList<ActivityimageMyAds>, eventMyAdsList: ArrayList<EventMyAds>) {
 
           val intent =Intent(this, EditActivity::class.java)
@@ -347,6 +347,9 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
           intent.putExtra("countryCode", countryCode)
           intent.putExtra("phoneNumber", phoneNumber)
           intent.putExtra("address", address)
+          intent.putExtra("city", city)
+          intent.putExtra("latti", latti)
+          intent.putExtra("longi", longi)
           intent.putParcelableArrayListExtra("ageGroupList", ageGroupListMyAds)
           intent.putParcelableArrayListExtra("activityimagesList", ActivityimagesList)
           intent.putParcelableArrayListExtra("eventMyAdsList", eventMyAdsList)
@@ -364,7 +367,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
 
     override fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String, description: String, countryCode: String,
-                                     phoneNumber: String, address: String, email: String, website: String, traderImageList: ArrayList<TradersimageMyAds>,
+                                     phoneNumber: String, address: String,city: String,lati: String,longi: String, email: String, website: String, traderImageList: ArrayList<TradersimageMyAds>,
                                      daytimeList: ArrayList<TraderDaysTimingMyAds>, traderProductList: ArrayList<TraderProductMyAds>) {
         val intent = Intent(this, EditTraderActivity::class.java)
         intent.putExtra("adID", adID)
@@ -374,6 +377,9 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
         intent.putExtra("countryCode", countryCode)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("address", address)
+        intent.putExtra("city", city)
+        intent.putExtra("lati", lati)
+        intent.putExtra("longi", longi)
         intent.putExtra("email", email)
         intent.putExtra("website", website)
         intent.putExtra("traderImageList", traderImageList)

@@ -101,6 +101,10 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     private val typeListId: ArrayList<String> = ArrayList()
     private var selectedPosition = 0
 
+    var ageErrorNumber = 0
+    var eventErrorNumber = 0
+    private var event = false
+    private var age = false
 
     private lateinit var updateEventList: ArrayList<EventMyAds>
     private var pos = -1
@@ -113,7 +117,6 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
         hitTypeActivityApi()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addactivity)
@@ -125,16 +128,18 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
         }
     }
 
-
-
     private fun initializeClicks() {
 
         if (intent.extras != null) {
-            et_shopName.setText(intent.getStringExtra("nameofShop").toString())
+
+            et_shopName.setText(intent.getStringExtra("nameofShop"))
             et_activityName.setText(intent.getStringExtra("nameofActivity"))
             et_description.setText(intent.getStringExtra("description"))
             et_phone.setText(intent.getStringExtra("phoneNumber"))
             et_addressActivity.text = intent.getStringExtra("address")
+            addressLatitude = intent.getStringExtra("latti")!!
+            cityName = intent.getStringExtra("city")!!
+            addressLongitude = intent.getStringExtra("longi")!!
             countryCodee = intent.getStringExtra("countryCode").toString()
             countycode.setCountryForPhoneCode(countryCodee.toInt())
             postID = intent.getStringExtra("adID").toString()
@@ -231,31 +236,27 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                                         myCustomToast(getString(R.string.address_missing_error))
                                     } else {
 
-                                        //TODO from this
-
-/*
                                         var ageErrorString = ""
                                         ageErrorNumber = 0
-                                        ageErrorString =  getAgeError(listAge[listAge.size-1].ageFrom,ageErrorString,"please fill age Group form in previous data",1)
-                                        ageErrorString =  getAgeError(listAge[listAge.size-1].ageTo,ageErrorString,"please fill age Group to in previous data",2)
-                                        ageErrorString =  getAgeError(listAge[listAge.size-1].days,ageErrorString,"please select days in previous data",3)
-                                        ageErrorString =  getAgeError(listAge[listAge.size-1].timeFrom,ageErrorString,"please select From Time in previous data",4)
-                                        ageErrorString =  getAgeError(listAge[listAge.size-1].timeTo,ageErrorString,"please select To Time in previous data",5)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom,ageErrorString,"please fill age Group form in previous data",1)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageTo,ageErrorString,"please fill age Group to in previous data",2)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].days,ageErrorString,"please select days in previous data",3)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeFrom,ageErrorString,"please select From Time in previous data",4)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeTo,ageErrorString,"please select To Time in previous data",5)
 
                                         var eventErrorString = ""
                                         eventErrorNumber = 0
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].image,eventErrorString,"please select image in previous data",1)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].name,eventErrorString,"please fill Event name in previous data",2)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].dateFrom,eventErrorString,"please select From Date in previous data",3)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].dateTo,eventErrorString,"please select To Date in previous data",4)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].timeFrom,eventErrorString,"please select From Time in previous data",5)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].timeTo,eventErrorString,"please select To Time in previous data",6)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].description,eventErrorString,"please fill description in previous data",7)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].price,eventErrorString,"please fill price in previous data",8)
-                                        eventErrorString =  getEventError(listEvent[listEvent.size-1].city,eventErrorString,"please fill city in previous data",9)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].image,eventErrorString,"please select image in previous data",1)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].name,eventErrorString,"please fill Event name in previous data",2)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateFrom,eventErrorString,"please select From Date in previous data",3)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateTo,eventErrorString,"please select To Date in previous data",4)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].startTime,eventErrorString,"please select From Time in previous data",5)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].endTime,eventErrorString,"please select To Time in previous data",6)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].description,eventErrorString,"please fill description in previous data",7)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].price,eventErrorString,"please fill price in previous data",8)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].city,eventErrorString,"please fill city in previous data",9)
 
                                         Log.e("dsfasdfsadf","===============$ageErrorString=========$ageErrorNumber")
-
 
                                         if(ageErrorNumber!=0 && ageErrorString.isNotEmpty())
                                         {
@@ -269,15 +270,40 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                                             }
                                             else
                                             {
-                                                hitFinallyActivityAddPostApi()
 
-                                                hitApiForBannerImages(0)
+                                                if(age) {
+                                                    ageGroup = JSONArray()
+                                                    for (i in 0 until listAgeGroupDataModel.size) {
+                                                        val json = JSONObject()
+                                                        json.put("age_from", listAgeGroupDataModel[i].ageFrom)
+                                                        json.put("age_to", listAgeGroupDataModel[i].ageTo)
+                                                        json.put("days", listAgeGroupDataModel[i].days)
+                                                        json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                                        json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                                        ageGroup.put(json)
+                                                    }
+                                                }
+                                                if (event) {
+                                                    for (i in 0 until listAddEventDataModel.size) {
+                                                        val json = JSONObject()
+                                                        json.put("image", listAddEventDataModel[i].image)
+                                                        json.put("name", listAddEventDataModel[i].name)
+                                                        json.put("file_type", "image")
+                                                        json.put("date_from", listAddEventDataModel[i].dateFrom)
+                                                        json.put("date_to", listAddEventDataModel[i].dateTo)
+                                                        json.put("time_from", listAddEventDataModel[i].startTime)
+                                                        json.put("time_to", listAddEventDataModel[i].endTime)
+                                                        json.put("description", listAddEventDataModel[i].description)
+                                                        json.put("price", listAddEventDataModel[i].price)
+                                                        json.put("city", listAddEventDataModel[i].city)
+                                                        json.put("lat", listAddEventDataModel[i].latitude)
+                                                        json.put("lng", listAddEventDataModel[i].longitude)
+                                                        addEvent.put(json)
+                                                    }
+                                                }
+                                                hitFinallyActivityAddPostApi()
                                             }
                                         }
-*/
-
-
-
                                     } } } } } } }
 
             R.id.ivBack -> {
@@ -285,6 +311,40 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             }
             R.id.et_addressActivity -> {
                 showPlacePicker(placePickerRequestCode)
+            }
+        }
+    }
+
+
+    private fun getAgeError(ageFrom: String?, ageErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            ageFrom.isNullOrBlank() -> when {
+                ageErrorString.isBlank() -> {
+                    s
+                }
+                else -> ageErrorString
+            }
+            else -> {
+                age = true
+                ageErrorNumber =i
+                ageErrorString
+            }
+        }
+    }
+    private fun getEventError(ageFrom: String?, eventErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            ageFrom.isNullOrBlank() -> when {
+                eventErrorString.isBlank() -> {
+                    s
+                }
+                else -> eventErrorString
+            }
+            else -> {
+                event = true
+                eventErrorNumber =i
+                eventErrorString
             }
         }
     }
@@ -306,7 +366,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         et_addressActivity.text = place.address.toString()
                         cityName = place.name.toString()
                         addressLatitude = place.latLng?.latitude.toString()
-                        addressLatitude = place.latLng?.longitude.toString()
+                        addressLongitude = place.latLng?.longitude.toString()
 
                         Log.i(
                             "dddddd",
@@ -384,15 +444,15 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     override fun onAddEventItem(list: ArrayList<EventMyAds>, position: Int) {
 
         when {
-            listAddEventDataModel[list.size-1].image.isNullOrEmpty() -> { myCustomToast("please select image in previous data") }
-            listAddEventDataModel[list.size-1].name.isNullOrEmpty() -> { myCustomToast("please fill Event name in previous data")}
-            listAddEventDataModel[list.size-1].dateFrom.isNullOrEmpty() -> { myCustomToast("please select From Date in previous data")}
-            listAddEventDataModel[list.size-1].dateTo.isNullOrEmpty() -> { myCustomToast("please select To Date in previous data")}
-            listAddEventDataModel[list.size-1].startTime.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
+            listAddEventDataModel[list.size-1].image.isEmpty() -> { myCustomToast("please select image in previous data") }
+            listAddEventDataModel[list.size-1].name.isEmpty() -> { myCustomToast("please fill Event name in previous data")}
+            listAddEventDataModel[list.size-1].dateFrom.isEmpty() -> { myCustomToast("please select From Date in previous data")}
+            listAddEventDataModel[list.size-1].dateTo.isEmpty() -> { myCustomToast("please select To Date in previous data")}
+            listAddEventDataModel[list.size-1].startTime.isEmpty() -> { myCustomToast("please select From Time in previous data")}
             listAddEventDataModel[list.size-1].endTime.isEmpty() -> { myCustomToast("please select To Time in previous data")}
-            listAddEventDataModel[list.size-1].description.isNullOrEmpty() -> { myCustomToast("please fill description in previous data")}
-            listAddEventDataModel[list.size-1].price.isNullOrEmpty() -> { myCustomToast("please fill price in previous data")}
-            listAddEventDataModel[list.size-1].city.isNullOrEmpty() -> { myCustomToast("please fill city in previous data")}
+            listAddEventDataModel[list.size-1].description.isEmpty() -> { myCustomToast("please fill description in previous data")}
+            listAddEventDataModel[list.size-1].price.isEmpty() -> { myCustomToast("please fill price in previous data")}
+            listAddEventDataModel[list.size-1].city.isEmpty() -> { myCustomToast("please fill city in previous data")}
             else -> {  listAddEventDataModel.add(EventMyAds(0,"","","","","","","",0,"","","","","",0,"",0))
                 eventEditAdapter.notifyDataSetChanged()
             }
@@ -532,9 +592,21 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     }
 
     private fun hitFinallyActivityAddPostApi() {
+
+        var typeEmpty = ""
+        Log.e("sdfadsfdsf","======$event====$age======")
+        when {
+            event && age -> { typeEmpty = "1"   }
+            !age && event -> { typeEmpty = "2" }
+            age && !event -> { typeEmpty = "3" }
+            !age && !event -> { typeEmpty = "4" }
+        }
+
+
+
         appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
             et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
-                addEvent.toString(),countryCodee, image1, image2, image3)
+                addEvent.toString(),countryCodee, image1, image2, image3,typeEmpty)
     }
 
 

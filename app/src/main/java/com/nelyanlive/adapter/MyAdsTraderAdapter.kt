@@ -52,7 +52,7 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
 
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.typeofTraderId, myadsList.nameOfShop, myadsList.description,
-                    myadsList.country_code, myadsList.phone, myadsList.address, myadsList.email, myadsList.website, myadsList.tradersimages,
+                    myadsList.country_code, myadsList.phone, myadsList.address,myadsList.city,myadsList.latitude,myadsList.longitude, myadsList.email, myadsList.website, myadsList.tradersimages,
                     myadsList.traderDaysTimings, myadsList.traderProducts)
             }
 
@@ -97,6 +97,9 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
             llTraderDetails.setOnClickListener {
                 context.OpenActivity(TraderPublishActivty::class.java){
+
+                    Log.e("fafsdfa","=====${myadsList.latitude}=====${myadsList.longitude}=====")
+
                     putString("postId", myadsList.id.toString())
                     putString("latti", myadsList.latitude)
                     putString("longi", myadsList.longitude)
@@ -110,7 +113,7 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
 
     private fun callPopup(ivDot: ImageView, adapterPosition: Int, id: Int, typeofTraderId: Int, nameOfShop: String,
-                          description: String, countryCode: String, phone: String, address: String, email: String, website: String,
+                          description: String, countryCode: String, phone: String, address: String,city: String,lati: String,longi: String, email: String, website: String,
                           tradersimages: ArrayList<TradersimageMyAds>, traderDaysTimings: ArrayList<TraderDaysTimingMyAds>, traderProducts: ArrayList<TraderProductMyAds>) {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
@@ -127,7 +130,7 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
         editt.setOnClickListener {
             popupWindow!!.dismiss()
             deleteEditTradersAdListner.onEditTraderAdClick(adapterPosition, id.toString(), typeofTraderId.toString(), nameOfShop, description.toString(), countryCode,
-                phone, address, email, website, tradersimages, traderDaysTimings, traderProducts)
+                phone, address,city, lati, longi, email, website, tradersimages, traderDaysTimings, traderProducts)
 
 
         }
@@ -158,7 +161,7 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
     interface OnDeleteEditTradersAdClickListner{
         fun onTraderAdDeleteAdClick(position: Int, adID: String?)
         fun onEditTraderAdClick(position: Int, adID: String?, traderTypeId: String, nameofShop: String,
-                                description: String, countryCode: String, phoneNumber: String, address: String, email: String, website: String,
+                                description: String, countryCode: String, phoneNumber: String, address: String,city: String,lati: String,longi: String, email: String, website: String,
                                 traderImageList : ArrayList<TradersimageMyAds>, daytimeList : ArrayList<TraderDaysTimingMyAds>,
                                 traderProductList : ArrayList<TraderProductMyAds>)
     }

@@ -57,7 +57,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             .create(AppViewModel::class.java)
     }
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesListActivity) }
-    private var authkey: String? = null
+    private var authKey: String? = ""
 
     private val job by lazy {
         Job()
@@ -331,7 +331,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         ivFavouritee = ivFavourite
 
         if (checkIfHasNetwork(this@ActivitiesListActivity)) {
-            appViewModel.addFavouritePostApiData(security_key, authkey, eventID, "1")
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                appViewModel.addFavouritePostApiData(security_key, authKey, eventID, "1")
+            }
             activity_list_progressbar.showProgressBar()
         } else {
             showSnackBar(this@ActivitiesListActivity, getString(R.string.no_internet_error))

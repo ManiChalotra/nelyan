@@ -14,5 +14,7 @@ data class GetActivitypostMyAds(
         val typeofActivityId: Int,
         val userId: Int,
         val address: String,
-        val city: String
+        val city: String,
+        val latitude: String,
+        val longitude: String
 )

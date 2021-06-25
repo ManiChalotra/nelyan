@@ -59,7 +59,7 @@
                         android:id="@+id/ivImg1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/photo_two"
+                        android:src="@drawable/ic_photo_one"
                         app:riv_corner_radius="@dimen/_5sdp"
                         android:scaleType="centerCrop"/>
 

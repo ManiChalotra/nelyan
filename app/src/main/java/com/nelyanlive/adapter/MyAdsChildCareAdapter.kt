@@ -99,9 +99,12 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
             llActivityDetails.setOnClickListener{
                 context.OpenActivity(HomeChildCareDetailsActivity::class.java){
+
+                    Log.e("fafsdfa","===HomeChildCareDetailsActivity==${myadsList.latitude}=====${myadsList.longitude}=====")
+
                     putString("activityId", myadsList.id.toString())
                     putString("categoryId", myadsList.type.toString())
-                    putString("lati", myadsList.latitude)
+                    putString("latti", myadsList.latitude)
                     putString("longi", myadsList.longitude)
                 }
 

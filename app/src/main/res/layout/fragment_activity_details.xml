@@ -437,6 +437,48 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_eventdesc" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="25dp"
+                        android:fontFamily="@font/semibold"
+                        android:text="@string/website"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_locationlay" />
+
+
+                    <TextView
+                        android:id="@+id/tvWebsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/underlineweektwo" />
+
+                    <View
+                        android:id="@+id/underlineWeb"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="@dimen/_25sdp"
+                        android:background="@color/grey"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_eventdesc" />
+
+                    <TextView
                         android:id="@+id/upcoming"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
