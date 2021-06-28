@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
+import com.nelyanlive.utils.image_base_URl
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_full_screen.*
 
 class FullScreen : AppCompatActivity() {
 
     var str = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

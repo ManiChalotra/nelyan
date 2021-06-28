@@ -50,7 +50,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.activityname, myadsList.typeofActivityId,
-                        myadsList.nameOfShop, myadsList.description, myadsList.address,myadsList.latitude,myadsList.longitude, myadsList.city, myadsList.country_code,
+                        myadsList.nameOfShop, myadsList.description, myadsList.website, myadsList.address,myadsList.latitude,myadsList.longitude, myadsList.city, myadsList.country_code,
                         myadsList.phone, myadsList.ageGroups, myadsList.events, myadsList.activityimages)
 
             }
@@ -81,7 +81,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
                 } } } }
 
     private fun callPopup(ivDot: ImageView, adapterPosition: Int, adId: Int, activityname: String, typeofActivityId: Int,
-                          nameOfShop: String, description: String, address: String,latti: String,longi: String, city: String, countryCode: String, phone: String,
+                          nameOfShop: String, description: String,website: String, address: String,latti: String,longi: String, city: String, countryCode: String, phone: String,
                           ageGroups: ArrayList<AgeGroupMyAds>, events: ArrayList<EventMyAds>, activityimages: ArrayList<ActivityimageMyAds>)
     {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -97,7 +97,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
         editt.setOnClickListener {
             activitiesDeleteEditListener.onEditActivitiesAdClick(adapterPosition, adId.toString(), typeofActivityId.toString(), nameOfShop, activityname,
-                     description, countryCode, phone, address,latti,longi, city, ageGroups,  activityimages, events )
+                     description,website, countryCode, phone, address,latti,longi, city, ageGroups,  activityimages, events )
             popupWindow!!.dismiss()
         }
 
@@ -142,7 +142,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
     interface OnActivitiesDeleteEditClickListner {
         fun onActivitiesDeleteAdClick(position: Int, adID: String? )
         fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String, nameofActivity: String,
-                                    description: String, countryCode: String, phoneNumber: String, address: String,latti: String,longi: String, city: String,
+                                    description: String,website: String, countryCode: String, phoneNumber: String, address: String,latti: String,longi: String, city: String,
                                     ageGroupListMyAds : ArrayList<AgeGroupMyAds>, ActivityimagesList : ArrayList<ActivityimageMyAds>,
                                     eventMyAdsList : ArrayList<EventMyAds>)
     }

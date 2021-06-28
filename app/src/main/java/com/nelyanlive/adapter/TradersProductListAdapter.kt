@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
 import com.nelyanlive.modals.traderPostDetails.TraderProduct
+import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.item_traders_products.view.*
 import java.util.*
 
@@ -38,7 +39,7 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
 
         fun initalize(list: ArrayList<TraderProduct>, position: Int) {
             // setting data  here
-            Glide.with(context).asBitmap().load(list[position].image).error(R.mipmap.no_image_placeholder).into(image)
+            Glide.with(context).asBitmap().load(image_base_URl+list[position].image).error(R.mipmap.no_image_placeholder).into(image)
             name.text = list[position].title
             tvProductDesc.text = list[position].description
             tvProductPrice.text = list[position].price
@@ -46,7 +47,7 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
             image.setOnClickListener {
                 (image.context as Activity).startActivity(
                     Intent(image.context, FullScreen::class.java)
-                    .putExtra("productImage",list[position].image))
+                    .putExtra("productImage",image_base_URl+list[position].image))
             }
 
         }

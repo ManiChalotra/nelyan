@@ -36,6 +36,16 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
         return list.size
     }
 
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     inner class EventRepeatViewHolder(itemView: View, var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         private val addButton = itemView.tvAddMore!!

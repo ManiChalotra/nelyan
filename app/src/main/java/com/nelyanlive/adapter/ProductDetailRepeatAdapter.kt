@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ProductDetailRepeatAdapter.ProductDetailsRepeatViewHolder
 import com.nelyanlive.modals.ProductDetailDataModel
+import com.nelyanlive.utils.image_base_URl
 import java.util.*
 
 class ProductDetailRepeatAdapter(internal var context: Context, internal var list: ArrayList<ProductDetailDataModel> ,
@@ -22,7 +23,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductDetailsRepeatViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_product_details_repeat, parent, false)
-        return ProductDetailsRepeatViewHolder(view, productRepeatListener)
+        return ProductDetailsRepeatViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductDetailsRepeatViewHolder, position: Int) {
@@ -33,7 +34,15 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
         return list.size
     }
 
-    inner class ProductDetailsRepeatViewHolder(itemView: View, productRepeatListener: ProductRepeatListener) : RecyclerView.ViewHolder(itemView) {
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    inner class ProductDetailsRepeatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvAdd: TextView = itemView.findViewById(R.id.tv_myAdd)
         var edtDesc: EditText = itemView.findViewById(R.id.edtDesc)
         var edtProductTitle: EditText = itemView.findViewById(R.id.edtProductTitle)
@@ -50,7 +59,7 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 tvAdd.visibility = View.GONE
             }
 
-            Glide.with(context).asBitmap().load(list[position].image).into(ivEvent)
+            Glide.with(context).asBitmap().load(image_base_URl+list[position].image).into(ivEvent)
             edtProductTitle.setText(list[position].productTitle)
             edtDesc.setText(list[position].description)
             edtProductPrice.setText(list[position].productPrice)
@@ -63,9 +72,8 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 edtDesc.clearFocus()
                 edtProductPrice.clearFocus()
                 edtProductTitle.clearFocus()
-                productRepeatListener.onITEEMClick(list, position)
+                productRepeatListener.ontraderItemClick(list, position)
             }
-
 
             edtProductTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
@@ -94,14 +102,11 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-
         }
-
     }
 
-
     interface ProductRepeatListener {
-        fun onITEEMClick(list: ArrayList<ProductDetailDataModel>, pos: Int)
+        fun ontraderItemClick(list: ArrayList<ProductDetailDataModel>, pos: Int)
         fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int)
 }
 

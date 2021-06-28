@@ -32,6 +32,12 @@
         android:textColor="@color/black"
         android:text="Message"
         android:gravity="center"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:paddingStart="@dimen/_25sdp"
         android:visibility="gone"/>
 
     <ImageView

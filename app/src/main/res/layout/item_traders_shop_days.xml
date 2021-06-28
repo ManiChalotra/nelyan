@@ -28,12 +28,11 @@
             android:id="@+id/tv_timings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_15sdp"
             android:layout_weight="80"
             android:fontFamily="@font/regular"
             android:text="10:30AM-1PM, 2:30AM-6:30PM"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_9sdp" />
     </LinearLayout>
 
 

@@ -78,7 +78,7 @@ class TraderListingAdapter(var context: Context, private var traderPostList: Arr
 
             }
 
-            tvAddress.text = traderPostList.address+" "+traderPostList.city
+            tvAddress.text = traderPostList.address
 
             if (traderPostList.tradersimages.size >0)
             Glide.with(context).load(image_base_URl+ traderPostList.tradersimages[0].images).error(R.mipmap.no_image_placeholder).into(ivTraderImage)

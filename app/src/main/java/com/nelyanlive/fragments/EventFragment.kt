@@ -69,7 +69,6 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
             if (latitude != "0.0") {
 
-
                 (mContext as HomeActivity).tvTitleToolbar!!.text =
                     getString(R.string.upcoming_events) + "\n" + locality
 

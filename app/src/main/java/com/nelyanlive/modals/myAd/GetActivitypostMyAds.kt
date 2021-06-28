@@ -7,6 +7,7 @@ data class GetActivitypostMyAds(
         val categoryId: Int,
         val country_code: String,
         val description: String,
+        val website: String,
         val events: ArrayList<EventMyAds>,
         val id: Int,
         val nameOfShop: String,

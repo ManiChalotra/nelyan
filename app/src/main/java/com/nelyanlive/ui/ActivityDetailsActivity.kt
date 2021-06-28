@@ -248,6 +248,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     tv_activity_name.text = jsonObject.getJSONObject("data").get("activityname").toString()
                     tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                     tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
+
+
                     tvWebsite.text = jsonObject.getJSONObject("data").get("website").toString()
 
                     if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {

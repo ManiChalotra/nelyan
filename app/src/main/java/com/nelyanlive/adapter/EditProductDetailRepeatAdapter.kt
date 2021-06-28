@@ -63,7 +63,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
                 edtDesc.clearFocus()
                 edtProductPrice.clearFocus()
                 edtProductTitle.clearFocus()
-                productRepeatListener.onITEEMClick(list, position)
+                productRepeatListener.ontraderItemClick(list, position)
             }
 
 
@@ -103,7 +103,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
     }
 
     interface ProductRepeatListener {
-        fun onITEEMClick(list: ArrayList<TraderProductMyAds>, pos: Int)
+        fun ontraderItemClick(list: ArrayList<TraderProductMyAds>, pos: Int)
         fun addCameraGalleryImage(list: ArrayList<TraderProductMyAds>, pos: Int)
 
     }

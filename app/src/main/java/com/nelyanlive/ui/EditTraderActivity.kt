@@ -18,9 +18,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.nelyanlive.R
+import com.nelyanlive.adapter.DayTimeRepeatAdapter
 import com.nelyanlive.adapter.EditProductDetailRepeatAdapter
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
+import com.nelyanlive.modals.DayTimeModel
 import com.nelyanlive.modals.myAd.*
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_trader.*
@@ -41,7 +43,7 @@ import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope,
-    EditProductDetailRepeatAdapter.ProductRepeatListener {
+    EditProductDetailRepeatAdapter.ProductRepeatListener, DayTimeRepeatAdapter.OnDayTimeRecyclerViewItemClickListner {
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(
         AppViewModel::class.java) }
@@ -51,13 +53,16 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
     private lateinit var productDetailRepeatAdapter: EditProductDetailRepeatAdapter
+    private lateinit var dayTimeAdapter: DayTimeRepeatAdapter
     private var countryCodee = "91"
     private var productPhotoPosition = 0
     private var selectDayGroup: JSONArray = JSONArray()
     private var productDetailsGroup: JSONArray = JSONArray()
 
     var productErrorNumber = 0
+    var dayErrornumber = 0
     private var product = false
+    private var dayTime = false
 
     // dialo for progress
     private var progressDialog = ProgressDialog(this)
@@ -73,6 +78,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private var cityLatitude = ""
     private var cityLongitude = ""
     private lateinit var dayTimeModelArrayList: ArrayList<TraderDaysTimingMyAds>
+    private  var dayTimeList: ArrayList<DayTimeModel> = ArrayList()
     private lateinit var productDetailDataModelArrayList: ArrayList<TraderProductMyAds>
     var traderTypeId: String = ""
 
@@ -138,12 +144,38 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             dayTimeModelArrayList = intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
             productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
             productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
-            makeJsonArray()
+           // makeJsonArray()
+
+
             if(productDetailDataModelArrayList.isEmpty()) productDetailDataModelArrayList.add(TraderProductMyAds("",0,"","","",0))
 
             productDetailRepeatAdapter = EditProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this)
             rv_product_details!!.layoutManager = LinearLayoutManager(this)
             rv_product_details!!.adapter = productDetailRepeatAdapter
+
+            dayTimeList = ArrayList()
+            if(dayTimeModelArrayList.isEmpty()) {
+                dayTimeList.add(DayTimeModel("","","","",""))
+            }
+
+            else
+            {
+                for(i in 0 until dayTimeModelArrayList.size)
+                {
+                    dayTimeList.add(
+                            DayTimeModel(
+                                    dayTimeModelArrayList[i].day,
+                                    dayTimeModelArrayList[i].startTime,
+                                    dayTimeModelArrayList[i].endTime,
+                                    dayTimeModelArrayList[i].secondStartTime,
+                                    dayTimeModelArrayList[i].secondEndTime))
+                }
+            }
+
+
+            dayTimeAdapter = DayTimeRepeatAdapter(this, dayTimeList, this)
+            rvDayTime!!.layoutManager = LinearLayoutManager(this)
+            rvDayTime!!.adapter = dayTimeAdapter
 
 
             traderimageList = intent.getSerializableExtra("traderImageList")as ArrayList<TradersimageMyAds>
@@ -217,17 +249,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     }
 
-    private fun makeProductJsonArray() {
-        for (i in 0 until productDetailDataModelArrayList.size) {
-            val json = JSONObject()
-            json.put("image", productDetailDataModelArrayList[i].image)
-            json.put("title", productDetailDataModelArrayList[i].title)
-            json.put("price", productDetailDataModelArrayList[i].price)
-            json.put("description", productDetailDataModelArrayList[i].description)
-            productDetailsGroup.put(json)
-        }
-
-    }
 
 
     private fun hitTypeTradeActivity_Api() {
@@ -427,33 +448,64 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             myCustomToast(getString(R.string.email_address_missing))
                                         } else {
 
+                                            var dayErrorString = ""
+                                            dayErrornumber = 0
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].selectedDay,dayErrorString,"Please select day in previous data",1)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstStarttime,dayErrorString,"Please fill morning time in previous data",2)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstEndtime,dayErrorString,"Please fill morning time in previous data",3)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondStarttime,dayErrorString,"Please fill evening time in previous data",4)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondEndtime,dayErrorString,"Please fill evening time in previous data",5)
+
+
                                             var productErrorString = ""
                                             productErrorNumber = 0
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image,productErrorString,"please select image in previous data",1)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].title,productErrorString,"please fill title in previous data",2)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].price,productErrorString,"please fill price in previous data",3)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description,productErrorString,"please fill description in previous data",4)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image,productErrorString,"Please select image in previous data",1)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].title,productErrorString,"Please fill title in previous data",2)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].price,productErrorString,"Please fill price in previous data",3)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description,productErrorString,"Please fill description in previous data",4)
 
-                                            if(productErrorNumber!=0 && productErrorString.isNotEmpty())
+                                            
+                                            if(dayErrornumber!=0 && dayErrorString.isNotEmpty())
                                             {
-                                                myCustomToast(productErrorString)
+                                                myCustomToast(dayErrorString)
                                             }
-                                            else
-                                            {
-                                                if(product) {
-                                                    productDetailsGroup = JSONArray()
-                                                    for (i in 0 until productDetailDataModelArrayList.size) {
-                                                        val json = JSONObject()
-                                                        json.put("image", productDetailDataModelArrayList[i].image)
-                                                        json.put("title", productDetailDataModelArrayList[i].title)
-                                                        json.put("price", productDetailDataModelArrayList[i].price)
-                                                        json.put("description", productDetailDataModelArrayList[i].description)
-                                                        productDetailsGroup.put(json)
+                                            else {
+
+
+                                                if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
+                                                    myCustomToast(productErrorString)
+                                                } 
+                                                else {
+
+                                                    if (dayTime) {
+                                                        selectDayGroup = JSONArray()
+                                                        for (i in 0 until dayTimeList.size) {
+                                                            val json = JSONObject()
+                                                            json.put("day_name", dayTimeList[i].selectedDay)
+                                                            json.put("time_from", dayTimeList[i].firstStarttime)
+                                                            json.put("time_to", dayTimeList[i].firstEndtime)
+                                                            json.put("secondStartTime", dayTimeList[i].secondStarttime)
+                                                            json.put("secondEndTime", dayTimeList[i].secondEndtime)
+                                                            selectDayGroup.put(json)
+                                                        }
                                                     }
-                                                }
-                                                hitFinalTraderPostApi()
-                                            }
 
+                                                    if (product) {
+                                                        productDetailsGroup = JSONArray()
+                                                        for (i in 0 until productDetailDataModelArrayList.size) {
+                                                            val json = JSONObject()
+                                                            json.put("image", productDetailDataModelArrayList[i].image)
+                                                            json.put("title", productDetailDataModelArrayList[i].title)
+                                                            json.put("price", productDetailDataModelArrayList[i].price)
+                                                            json.put("description", productDetailDataModelArrayList[i].description)
+                                                            productDetailsGroup.put(json)
+                                                        }
+                                                    }
+                                                    hitFinalTraderPostApi()
+                                                }
+
+
+                                            } 
 
                                         }
                                     }
@@ -480,6 +532,23 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 product = true
                 productErrorNumber =i
                 productErrorString
+            }
+        }
+    }
+
+    private fun getDayError(dayFrom: String?, dayErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            dayFrom.isNullOrBlank() -> when {
+                dayErrorString.isBlank() -> {
+                    s
+                }
+                else -> dayErrorString
+            }
+            else -> {
+                dayTime = true
+                productErrorNumber =i
+                dayErrorString
             }
         }
     }
@@ -518,12 +587,12 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
 
-    override fun onITEEMClick(list: ArrayList<TraderProductMyAds>, pos: Int) {
+    override fun ontraderItemClick(list: ArrayList<TraderProductMyAds>, pos: Int) {
         when {
-            productDetailDataModelArrayList[list.size-1].image.isEmpty() -> { myCustomToast("please select image in previous data") }
-            productDetailDataModelArrayList[list.size-1].title.isEmpty() -> { myCustomToast("please fill Title in previous data")}
-            productDetailDataModelArrayList[list.size-1].price.isEmpty() -> { myCustomToast("please fill price in previous data")}
-            productDetailDataModelArrayList[list.size-1].description.isEmpty() -> { myCustomToast("please fill description in previous data")}
+            productDetailDataModelArrayList[list.size-1].image.isEmpty() -> { myCustomToast("Please select image in previous data") }
+            productDetailDataModelArrayList[list.size-1].title.isEmpty() -> { myCustomToast("Please fill Title in previous data")}
+            productDetailDataModelArrayList[list.size-1].price.isEmpty() -> { myCustomToast("Please fill price in previous data")}
+            productDetailDataModelArrayList[list.size-1].description.isEmpty() -> { myCustomToast("Please fill description in previous data")}
             else -> {  productDetailDataModelArrayList.add(TraderProductMyAds("", 0, "", "", "", 0))
                 productDetailRepeatAdapter.notifyDataSetChanged()
             }
@@ -534,6 +603,19 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         productPhotoPosition = pos
         imageSelectedType = "4"
         checkPermission(this)
+    }
+
+    override fun dayTimeAdd(list: java.util.ArrayList<DayTimeModel>, position: Int) {
+        when {
+            dayTimeList[list.size-1].selectedDay!!.isEmpty() -> { myCustomToast("Please select day in previous data") }
+            dayTimeList[list.size-1].firstStarttime!!.isEmpty() -> { myCustomToast("Please fill morning time in previous data")}
+            dayTimeList[list.size-1].firstEndtime!!.isEmpty() -> { myCustomToast("Please fill morning time in previous data")}
+            dayTimeList[list.size-1].secondStarttime!!.isEmpty() -> { myCustomToast("Please fill evening time in previous data")}
+            dayTimeList[list.size-1].secondEndtime!!.isEmpty() -> { myCustomToast("Please fill evening time in previous data")}
+            else -> {  dayTimeList.add(DayTimeModel("","","","",""))
+                dayTimeAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
 

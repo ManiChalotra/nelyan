@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object AppUtils {
@@ -22,4 +24,19 @@ object AppUtils {
         }
         transaction.commit()
     }
+
+
+    fun getFormattedDate(time: String?): String? {
+        var time = time
+        val orignalformat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        var date: Date? = null
+        try {
+            date = orignalformat.parse(time)
+            time = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return time
+    }
+
 }

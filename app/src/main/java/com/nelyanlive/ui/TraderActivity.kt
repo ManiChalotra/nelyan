@@ -5,19 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.nelyanlive.R
@@ -25,7 +22,6 @@ import com.nelyanlive.adapter.DayTimeRepeatAdapter
 import com.nelyanlive.adapter.ProductDetailRepeatAdapter
 import com.nelyanlive.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyanlive.data.viewmodel.AppViewModel
-import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.DayTimeModel
 import com.nelyanlive.modals.ProductDetailDataModel
 import com.nelyanlive.utils.*
@@ -46,11 +42,10 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         ProductDetailRepeatAdapter.ProductRepeatListener {
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
-    private var IMAGE_SELECTED_TYPE = ""
-    private var IS_IMAGE_SELECTED = ""
+    private var imageSelectedType = ""
+    private var isImageSelected = false
 
     private val job by lazy { kotlinx.coroutines.Job() }
-    private val dataStoragePreference by lazy { DataStoragePreference(this) }
     private lateinit var dayTimeRepeatAdapter: DayTimeRepeatAdapter
     private lateinit var productDetailRepeatAdapter: ProductDetailRepeatAdapter
     private var countryCodee = "+33"
@@ -67,35 +62,26 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
-    private val PLACE_PICKER_REQUEST = 1
+    private val placePickerRequest = 1
 
     private var cityName = ""
     private var cityLatitude = ""
     private var cityLongitude = ""
-    private var cityAddress = ""
-
     var rvDayTime: RecyclerView? = null
     var rvProductDetails: RecyclerView? = null
     private lateinit var dayTimeModelArrayList: ArrayList<DayTimeModel>
-    private lateinit var productDetailDataModelArrayList: ArrayList<ProductDetailDataModel>
-    var traderType: String = ""
-    var traderTypeId: String = "15"
+    private lateinit var productArrayList: ArrayList<ProductDetailDataModel>
+    var traderTypeId: String = ""
 
-    private var urlListingFromResponse: ArrayList<String> = ArrayList()
-    private var addEventUrlListingResponse: ArrayList<String> = ArrayList()
     private var imagePathList = ArrayList<MultipartBody.Part>()
-    private var imagePathList2 = ArrayList<MultipartBody.Part>()
 
-    var imageVideoUrlListing = arrayListOf("", "", "", "", "")
+    private var selectedImages = mutableListOf("", "", "")
 
-    private var imageVideoListPosition = -1
-    private var selectedUrlListing: ArrayList<String> = ArrayList()
-    private var savedaddEventImagesData = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader)
-        initalizeClicks()
+        initializeClicks()
         rvDayTime = findViewById(R.id.rvDayTime)
         rvProductDetails = findViewById(R.id.rv_product_details)
 
@@ -107,38 +93,27 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         rvDayTime!!.adapter = dayTimeRepeatAdapter
 
 
-        productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this@TraderActivity )
+        productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productArrayList, this@TraderActivity)
         rvProductDetails!!.layoutManager = LinearLayoutManager(this)
         rvProductDetails!!.adapter = productDetailRepeatAdapter
 
-        hitTypeTradeActivity_Api()
+        hitTypeTradeActivityApi()
         traderTypeResponse()
 
     }
 
-    private fun initalizeClicks() {
+    private fun initializeClicks() {
 
-        if (this::dayTimeModelArrayList.isInitialized) {
-            dayTimeModelArrayList.clear()
-        }
-        else {
-            dayTimeModelArrayList = ArrayList()
-            dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
-        }
+        dayTimeModelArrayList = ArrayList()
+        dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
 
-        if (this::productDetailDataModelArrayList.isInitialized) {
-            productDetailDataModelArrayList.clear()
-        }
-        else {
-            productDetailDataModelArrayList = ArrayList()
-            productDetailDataModelArrayList.add(ProductDetailDataModel("", "", "", "" ))
-        }
+        productArrayList = ArrayList()
+        productArrayList.add(ProductDetailDataModel("", "", "", ""))
+
 
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
-        ivImg3.setOnClickListener(this)
-        ivplus.setOnClickListener(this)
         tv_address.setOnClickListener(this)
         btn_trader_submit.setOnClickListener(this)
         ivBack!!.setOnClickListener(this)
@@ -146,20 +121,16 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     }
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(applicationContext, googleMapKey)
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this)
-        // Set the fields to specify which types of place data to return.
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
-        startActivityForResult(intent, PLACE_PICKER_REQUEST)
+        startActivityForResult(intent, placePickerRequest)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PLACE_PICKER_REQUEST) {
+        if (requestCode == placePickerRequest) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
@@ -171,99 +142,21 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
-            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            }
+
         }
     }
 
-    private fun makeJsonArray() {
-        // for age group listing cards
-        for (i in 0 until dayTimeModelArrayList.size) {
-            val json = JSONObject()
-            json.put("day_name", dayTimeModelArrayList[i].selectedDay)
-            json.put("time_from", dayTimeModelArrayList[i].firstStarttime)
-            json.put("time_to", dayTimeModelArrayList[i].firstEndtime)
-            json.put("secondStartTime", dayTimeModelArrayList[i].secondStarttime)
-            json.put("secondEndTime", dayTimeModelArrayList[i].secondEndtime)
-            selectDayGroup.put(json)
-        }
-    }
 
-    private fun makeProductJsonArray() {
-        // for age group listing cards
-        for (i in 0 until productDetailDataModelArrayList.size) {
-            val json = JSONObject()
-            json.put("image", productDetailDataModelArrayList[i].image)
-            json.put("title", productDetailDataModelArrayList[i].productTitle)
-            json.put("price", productDetailDataModelArrayList[i].productPrice)
-            json.put("description", productDetailDataModelArrayList[i].description)
-            productDetailsGroup.put(json)
-        }
-    }
-
-    private fun gettingURLOfEventImages() {
-        if (imagePathList2 != null) {
-            imagePathList2.clear()
-        }
-
-        for (i in 0 until productDetailDataModelArrayList.size) {
-            val media = productDetailDataModelArrayList[i].image
-            if (!media.isNullOrEmpty()) {
-                var mfile: File?
-                mfile = File(media)
-                val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-                var photo: MultipartBody.Part?
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
-                imagePathList2.clear()
-                imagePathList2.add(photo)
-            }
-        }
-
-        Log.d("imagePathLsiting", "-------------" + imagePathList2.size)
-        val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-        appViewModel.sendUploadImageData(type, users, imagePathList2)
-        progressDialog.setProgressDialog()
-    }
-
-
-    private fun hitTypeTradeActivity_Api() {
+    private fun hitTypeTradeActivityApi() {
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
             appViewModel.sendTraderTypeTraderData(security_key, authkey)
-        }
-        else {
+        } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
         }
     }
 
     private fun hitFinalTraderPostApi() {
-        when (traderType) {
-            "Doctor" -> {
-                traderTypeId = "15"
-            }
-            "Food Court" -> {
-                traderTypeId = "16"
-            }
-            "Plant Nursury" -> {
-                traderTypeId = "17"
-            }
-            "Tutor Mathematics" -> {
-                traderTypeId = "18"
-            }
-            "Gym Trainer" -> {
-                traderTypeId = "19"
-            }
-            "Yoga Trainer" -> {
-                traderTypeId = "20"
-            }
-            "Gadget Repair" -> {
-                traderTypeId = "21"
-            }
-        }
 
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
@@ -271,54 +164,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                     et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
                     cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
                     productDetailsGroup.toString(), media.toString())
-        }
-        else {
+        } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
         }
     }
 
-    private fun hitApiForBannerImages(position: Int) {
+    val type: ArrayList<String> = ArrayList()
+    val typeId: ArrayList<String> = ArrayList()
 
-        imageVideoListPosition = position
-
-        if (imageVideoListPosition <= selectedUrlListing.size - 1) {
-
-            val media = selectedUrlListing[imageVideoListPosition]
-
-            if (!media.isNullOrEmpty()) {
-
-                savedaddEventImagesData = false
-
-                val mfile: File?
-                mfile = File(media)
-                val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
-                var photo: MultipartBody.Part? = null
-                photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
-                imagePathList.clear()
-                imagePathList.add(photo)
-
-                val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
-
-                val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
-                appViewModel.sendUploadImageData(type, users, imagePathList)
-                progressDialog.setProgressDialog()
-            } else {
-
-                imageVideoListPosition += 1
-                if (imageVideoListPosition <= selectedUrlListing.size) {
-                    hitApiForBannerImages(imageVideoListPosition)
-                }
-            }
-
-        } else {
-
-            savedaddEventImagesData = true
-            gettingURLOfEventImages()
-
-
-
-        }
-    }
 
     private fun traderTypeResponse() {
 
@@ -326,14 +179,29 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             if (response!!.isSuccessful && response.code() == 200) {
 
                 if (response.body() != null) {
-
-                    val res = Gson().fromJson(response.body().toString(), TraderTypeResponse::class.java)
-                    val arrayAdapter1 = ArrayAdapter<Any?>(this, R.layout.customspinner, res.data)
+                    val jsonObject = JSONObject(response.body().toString())
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    type.add("")
+                    typeId.add("")
+                    for (i in 0 until jsonArray.length()) {
+                        val name = jsonArray.getJSONObject(i).get("name").toString()
+                        val idd = jsonArray.getJSONObject(i).get("id").toString()
+                        type.add(name)
+                        typeId.add(idd)
+                    }
+                    val arrayAdapter1 = ArrayAdapter<String>(this, R.layout.customspinner, type)
                     trader_type.adapter = arrayAdapter1
+                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            traderTypeId = typeId[position]
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    }
+
                 }
-            }
-            else
-            {
+            } else {
                 ErrorBodyResponse(response, this, null)
             }
         })
@@ -344,12 +212,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 if (response.body() != null) {
                     response.body()
                     progressDialog.hidedialog()
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val postid = jsonObject.getJSONObject("data").get("postId").toString()
-                    val categoryId = jsonObject.getJSONObject("data").get("categoryId").toString()
-                    finishAffinity()
 
+                    finishAffinity()
                     OpenActivity(HomeActivity::class.java)
 
                 }
@@ -361,50 +225,45 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
+                progressDialog.hidedialog()
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
-                        if (!savedaddEventImagesData) {
-                            urlListingFromResponse.add(response.body()!!.data!![0].image.toString())
-                            if (imageVideoListPosition <= 4) {
-                                imageVideoListPosition += 1
-                                hitApiForBannerImages(imageVideoListPosition)
+                        val image = response.body()!!.data!![0].image.toString()
+
+                        when (imageSelectedType) {
+
+                            "1" -> {
+                                isImageSelected = true
+                                selectedImages[0] = image
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                        .into(ivImg1!!)
+
                             }
-
-                        } else {
-                            // response for addEvent images data
-                            if (addEventUrlListingResponse != null) {
-                                addEventUrlListingResponse.clear()
+                            "2" -> {
+                                isImageSelected = true
+                                selectedImages[1] = image
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                        .into(ivImg2!!)
                             }
+                            "3" -> {
+                                isImageSelected = true
+                                selectedImages[2] = image
 
-                            for (element in response.body()!!.data!!) {
-                                addEventUrlListingResponse.add(element.image.toString())
+                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                        .into(ivImg!!)
                             }
-
-                            // now making json format for upper images media
-                            for (i in 0 until urlListingFromResponse.size) {
-                                val json = JSONObject()
-                                json.put("image", urlListingFromResponse[i])
-                                media.put(json)
+                            "4" -> {
+                                productArrayList[productPhotoPosition].image = image
+                                productDetailRepeatAdapter.notifyItemChanged(productPhotoPosition)
                             }
-
-                            // json format for select day
-                            makeJsonArray()
-
-                            // for make json product details
-                            makeProductJsonArray()
-
-                            hitFinalTraderPostApi()
-
                         }
-
-                        Log.d("urlListt", "-------------$urlListingFromResponse")
-                        Log.d("addEventUrlListing", "-------------$addEventUrlListingResponse")
-
+                        imageSelectedType = ""
                     }
-                } else {
-                    ErrorBodyResponse(response, this, null)
                 }
+            } else {
+
+                ErrorBodyResponse(response, this, null)
             }
         })
 
@@ -414,49 +273,21 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     }
 
-    private fun isValid(): Boolean {
-        traderType = trader_type.selectedItem.toString()
-        var check = false
-        if (checkStringNull(IS_IMAGE_SELECTED))
-            myCustomToast(getString(R.string.media_missing_error))
-        else if (checkStringNull(traderType))
-            myCustomToast(getString(R.string.trader_type_missing_error))
-        else if (checkStringNull(et_trader_shop_name.text.toString()))
-            myCustomToast(getString(R.string.shop_name_missing_error))
-        else if (checkStringNull(et_description_trader.text.toString()))
-            myCustomToast(getString(R.string.description_missing))
-        else if (checkStringNull(et_trader_phone.text.toString()))
-            myCustomToast(getString(R.string.phone_number_missing))
-        else if (checkStringNull(et_trader_email.text.toString()))
-            myCustomToast(getString(R.string.email_address_missing))
-        else if (checkStringNull(et_trader_email.text.toString()))
-            myCustomToast(getString(R.string.email_address_missing))
-        else if (!Validation.checkEmail(et_trader_email.text.toString(), this))
-            myCustomToast(getString(R.string.invalid_email_address))
-        else
-            check = true
-        return check
-    }
-
-    fun checkStringNull(string: String?): Boolean {
-        return string == null || string == "null" || string.isEmpty()
-    }
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ivBack -> {
                 onBackPressed()
             }
             R.id.ivImg -> {
-                IMAGE_SELECTED_TYPE = "1"
+                imageSelectedType = "3"
                 checkPermission(this)
             }
             R.id.ivImg1 -> {
-                IMAGE_SELECTED_TYPE = "2"
+                imageSelectedType = "1"
                 checkPermission(this)
             }
             R.id.ivImg2 -> {
-                IMAGE_SELECTED_TYPE = "3"
+                imageSelectedType = "2"
                 checkPermission(this)
             }
             R.id.tv_address -> {
@@ -464,148 +295,126 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             }
             R.id.btn_trader_submit -> {
 
-                val shopName = et_trader_shop_name.text.toString()
-                traderType = trader_type.selectedItem.toString()
-                val description = et_description_trader.text.toString()
-                val phone = et_trader_phone.text.toString()
-                val address = tv_address.text.toString()
-                val email = et_trader_email.text.toString()
-
-                if (IS_IMAGE_SELECTED == "") {
+                if (!isImageSelected) {
                     myCustomToast(getString(R.string.media_missing_error))
                 } else {
-                    if (traderType == "" || traderType == getString(R.string.select)) {
+                    if (traderTypeId == "") {
                         myCustomToast(getString(R.string.trader_type_missing_error))
                     } else {
-                        if (shopName.isEmpty()) {
+                        if (et_trader_shop_name.text.isEmpty()) {
                             myCustomToast(getString(R.string.shop_name_missing_error))
                         } else {
-                            if (description.isEmpty()) {
+                            if (et_description_trader.text.isEmpty()) {
                                 myCustomToast(getString(R.string.description_missing))
                             } else {
-                                if (address.isEmpty()) {
+                                if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
-                                   // if (phone.isEmpty()) {
-                                   //     myCustomToast(getString(R.string.phone_number_missing))
-                                  //  } else {
-                                        if (email.isEmpty()) {
-                                            myCustomToast(getString(R.string.email_address_missing))
+
+                                    if (et_trader_email.text.isEmpty()) {
+                                        myCustomToast(getString(R.string.email_address_missing))
+                                    } else {
+                                        when {
+                                            dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay.isNullOrEmpty() -> {
+                                                myCustomToast("Please select day")
+                                            }
+                                            dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty() -> {
+                                                myCustomToast("Please select morning time")
+                                            }
+                                            dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty() -> {
+                                                myCustomToast("Please select morning time")
+                                            }
+                                            dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty() -> {
+                                                myCustomToast("Please select evening time")
+                                            }
+                                            dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty() -> {
+                                                myCustomToast("Please select evening time")
+                                            }
+                                            else -> {
+                                                when {
+                                                    productArrayList[productArrayList.size - 1].image.isNullOrEmpty() -> {
+                                                        myCustomToast("Please select image")
+                                                    }
+                                                    productArrayList[productArrayList.size - 1].productTitle.isNullOrEmpty() -> {
+                                                        myCustomToast("Please enter product title")
+                                                    }
+                                                    productArrayList[productArrayList.size - 1].productPrice.isNullOrEmpty() -> {
+                                                        myCustomToast("Please enter product price")
+                                                    }
+                                                    productArrayList[productArrayList.size - 1].description.isNullOrEmpty() -> {
+                                                        myCustomToast("Please enter description")
+                                                    }
+                                                    else -> {
+
+                                                        media = JSONArray()
+                                                        for (i in 0 until selectedImages.size) {
+                                                            val json = JSONObject()
+                                                            json.put("image", selectedImages[i])
+                                                            media.put(json)
+                                                        }
+
+                                                        selectDayGroup  = JSONArray()
+                                                        for (i in 0 until dayTimeModelArrayList.size) {
+                                                            val json = JSONObject()
+                                                            json.put("day_name", dayTimeModelArrayList[i].selectedDay)
+                                                            json.put("time_from", dayTimeModelArrayList[i].firstStarttime)
+                                                            json.put("time_to", dayTimeModelArrayList[i].firstEndtime)
+                                                            json.put("secondStartTime", dayTimeModelArrayList[i].secondStarttime)
+                                                            json.put("secondEndTime", dayTimeModelArrayList[i].secondEndtime)
+                                                            selectDayGroup.put(json)
+                                                        }
+
+                                                        productDetailsGroup = JSONArray()
+                                                        for (i in 0 until productArrayList.size) {
+                                                            val json = JSONObject()
+                                                            json.put("image", productArrayList[i].image)
+                                                            json.put("title", productArrayList[i].productTitle)
+                                                            json.put("price", productArrayList[i].productPrice)
+                                                            json.put("description", productArrayList[i].description)
+                                                            productDetailsGroup.put(json)
+                                                        }
+
+                                                        hitFinalTraderPostApi()
+
+                                                    }
+                                                }
+                                            }
                                         }
-                                        else {
-                                            when {
-                                                dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select day")
-                                                }
-                                                dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstStarttime.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select morning time")
-                                                }
-                                                dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstEndtime.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select morning time")
-                                                }
-                                                dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select evening time")
-                                                }
-                                                dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select evening time")
-                                                }
-                                                else -> {
-                                                    when {
-                                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image.isNullOrEmpty() -> {
-                                                            myCustomToast("Please select image")
-                                                        }
-                                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].productTitle.isNullOrEmpty() -> {
-                                                            myCustomToast("Please enter product title")
-                                                        }
-                                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].productPrice.isNullOrEmpty() -> {
-                                                            myCustomToast("Please enter product price")
-                                                        }
-                                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description.isNullOrEmpty() -> {
-                                                            myCustomToast("Please enter description")
-                                                        }
-                                                        else -> {
-
-                                                            if (selectedUrlListing.size == urlListingFromResponse.size) {
-                                                                selectedUrlListing.clear()
-                                                                urlListingFromResponse.clear()
-                                                            }
-                                                            // for check upper images url from response
-                                                            Log.d("imageVideoListSize", "-----------$imageVideoUrlListing")
-                                                            // rotating loop
-                                                            for (i in 0 until imageVideoUrlListing.size) {
-                                                                val media = imageVideoUrlListing[i]
-                                                                if (media.isNotEmpty()) {
-                                                                    selectedUrlListing.add(media)
-                                                                }
-                                                            }
-                                                            hitApiForBannerImages(0)
-
-                                                        } } } } }
-                               // }
-                            } } } } } } } }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun getRealImagePath(imgPath: String?) {
-        when (IMAGE_SELECTED_TYPE) {
 
-            "1" -> {
-                setImageOnTab(imgPath, ivImg)
-                imageVideoUrlListing[0] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-            }
-
-            "2" -> {
-                setImageOnTab(imgPath, ivImg1)
-                imageVideoUrlListing[1] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-            }
-
-            "3" -> {
-                setImageOnTab(imgPath, ivImg2)
-                imageVideoUrlListing[2] = imgPath.toString()
-                IMAGE_SELECTED_TYPE = ""
-                IS_IMAGE_SELECTED = "1"
-            }
-            else -> {
-                productDetailDataModelArrayList[productPhotoPosition].image = imgPath.toString()
-                Log.d("lisufjdhf", "-----------$productDetailDataModelArrayList")
-                productDetailRepeatAdapter.notifyDataSetChanged()
-            }
-
-        }
+        uploadImageServer(imgPath)
     }
 
-    private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
-        Log.d("getimage", "---------" + imgPATH.toString())
+    private fun uploadImageServer(imgPath: String?) {
 
-        when (IMAGE_SELECTED_TYPE) {
+        val mFile: File?
+        mFile = File(imgPath!!)
+        val imageFile: RequestBody = mFile.asRequestBody("image/*".toMediaTypeOrNull())
+        val photo: MultipartBody.Part?
+        photo = MultipartBody.Part.createFormData("image", mFile.name, imageFile)
+        imagePathList.add(0, photo)
+        val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
 
-            "1" -> {
-                imageview?.scaleType = ImageView.ScaleType.FIT_XY
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video11)
-            }
-            "2" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video22)
-
-            }
-            "3" -> {
-                checkVideoButtonVisibility(imgPATH.toString(), iv_video33)
-
-            }
-        }
-
-        Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
-    }
-
-    private fun checkVideoButtonVisibility(imgpath: String, videoButton: ImageView) {
-
-        if (imgpath.contains(".mp4")) {
-            videoButton.visibility = View.VISIBLE
+        val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
+        if (checkIfHasNetwork(this)) {
+            appViewModel.sendUploadImageData(type, users, imagePathList)
+            progressDialog.setProgressDialog()
         } else {
-            videoButton.visibility = View.GONE
+            showSnackBar(this, getString(R.string.no_internet_error))
         }
     }
+
+
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
@@ -614,45 +423,64 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     override fun dayTimeAdd(list: java.util.ArrayList<DayTimeModel>, position: Int) {
 
         when {
-            dayTimeModelArrayList[list.size-1].selectedDay.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].selectedDay.isNullOrEmpty() -> {
                 myCustomToast("please select day")
             }
-            dayTimeModelArrayList[list.size-1].firstStarttime.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].firstStarttime.isNullOrEmpty() -> {
                 myCustomToast("please select Morning time")
 
             }
-            dayTimeModelArrayList[list.size-1].firstEndtime.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].firstEndtime.isNullOrEmpty() -> {
                 myCustomToast("please select Morning time")
 
             }
-            dayTimeModelArrayList[list.size-1].secondStarttime.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
                 myCustomToast("please select Evening time")
 
             }
-            dayTimeModelArrayList[list.size-1].secondEndtime.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
                 myCustomToast("please select Evening time")
 
             }
             else -> {
-                list.add(DayTimeModel("", "", "", "", ""))
+                dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeRepeatAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    override fun ontraderItemClick(list: java.util.ArrayList<ProductDetailDataModel>, pos: Int) {
+
+        when {
+            productArrayList[list.size - 1].image.isNullOrEmpty() -> {
+                myCustomToast("please select product image in previous data")
+            }
+            productArrayList[list.size - 1].productTitle.isNullOrEmpty() -> {
+                myCustomToast("please enter product Title in previous data")
+
+            }
+            productArrayList[list.size - 1].productPrice.isNullOrEmpty() -> {
+                myCustomToast("please enter product Price in previous data")
+
+            }
+            productArrayList[list.size - 1].description.isNullOrEmpty() -> {
+                myCustomToast("please enter description in previous data")
+
+            }
+
+            else -> {
+                productArrayList.add(ProductDetailDataModel("", "", "", ""))
+                productDetailRepeatAdapter.notifyDataSetChanged()
             }
         }
 
 
-
     }
 
-    override fun onITEEMClick(productDetailDataModellist: java.util.ArrayList<ProductDetailDataModel>, pos: Int) {
-
-        productDetailDataModelArrayList.add(ProductDetailDataModel("", "", "", ""))
-                productDetailRepeatAdapter.notifyDataSetChanged()
-    }
-
-    override fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, position: Int) {
-        productPhotoPosition = position
+    override fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int) {
+        productPhotoPosition = pos
+        imageSelectedType = "4"
         checkPermission(this)
     }
-
 
 }

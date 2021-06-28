@@ -334,7 +334,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     }
 
     override fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String,
-                                         nameofActivity: String, description: String, countryCode: String, phoneNumber: String,
+                                         nameofActivity: String, description: String, website: String, countryCode: String, phoneNumber: String,
                                          address: String,latti: String,longi: String, city: String, ageGroupListMyAds: ArrayList<AgeGroupMyAds>,
                                          ActivityimagesList: ArrayList<ActivityimageMyAds>, eventMyAdsList: ArrayList<EventMyAds>) {
 
@@ -350,6 +350,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
           intent.putExtra("city", city)
           intent.putExtra("latti", latti)
           intent.putExtra("longi", longi)
+          intent.putExtra("website", website)
           intent.putParcelableArrayListExtra("ageGroupList", ageGroupListMyAds)
           intent.putParcelableArrayListExtra("activityimagesList", ActivityimagesList)
           intent.putParcelableArrayListExtra("eventMyAdsList", eventMyAdsList)

@@ -153,9 +153,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             tvUserName!!.text = userName
         }
 
-
-
-
         LocalBroadcastManager.getInstance(this).registerReceiver(foregroundOnlyBroadcastReceiver, IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
     }
 

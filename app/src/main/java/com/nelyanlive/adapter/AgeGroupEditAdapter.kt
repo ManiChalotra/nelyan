@@ -34,6 +34,17 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
         return list.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
+
     inner class AgeGroupRepeatViewHolder(itemView: View, var listener: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
         private var addButton = itemView.tvAddMore!!
         var ageFrom = itemView.edtAgeFrom!!

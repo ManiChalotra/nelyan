@@ -36,6 +36,14 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         return list.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class EventRepeatViewHolder(itemView: View, var listner: OnEventRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         val addButton = itemView.tvAddMore!!

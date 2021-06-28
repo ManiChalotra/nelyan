@@ -52,7 +52,13 @@
                 style="@style/HeaderText"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+                android:singleLine="true"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_25sdp"
+                android:paddingStart="@dimen/_25sdp"
+                />
         </LinearLayout>
 
         <ImageView

@@ -34,6 +34,15 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
         return list.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     inner class AgeGroupRepeatViewHolder(itemView: View, var listner: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val addButton = itemView.tvAddMore
 

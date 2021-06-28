@@ -137,6 +137,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             et_description.setText(intent.getStringExtra("description"))
             et_phone.setText(intent.getStringExtra("phoneNumber"))
             et_addressActivity.text = intent.getStringExtra("address")
+            etWebsite.setText( intent.getStringExtra("website"))
             addressLatitude = intent.getStringExtra("latti")!!
             cityName = intent.getStringExtra("city")!!
             addressLongitude = intent.getStringExtra("longi")!!
@@ -228,10 +229,8 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         } else {
                             if (et_description.text.toString().isEmpty()) {
                                 myCustomToast(getString(R.string.description_missing))
-                            } else {
-                                if (et_phone.text.toString().isEmpty()) {
-                                    myCustomToast(getString(R.string.phone_number_missing))
-                                } else {
+                            }
+                                else {
                                     if (et_addressActivity.text.toString().isEmpty()) {
                                         myCustomToast(getString(R.string.address_missing_error))
                                     } else {
@@ -271,6 +270,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                                             else
                                             {
 
+
                                                 if(age) {
                                                     ageGroup = JSONArray()
                                                     for (i in 0 until listAgeGroupDataModel.size) {
@@ -284,6 +284,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                                                     }
                                                 }
                                                 if (event) {
+                                                    addEvent = JSONArray()
                                                     for (i in 0 until listAddEventDataModel.size) {
                                                         val json = JSONObject()
                                                         json.put("image", listAddEventDataModel[i].image)
@@ -302,9 +303,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                                                     }
                                                 }
                                                 hitFinallyActivityAddPostApi()
-                                            }
-                                        }
-                                    } } } } } } }
+                                            } } } } } } } }
 
             R.id.ivBack -> {
                 onBackPressed()
@@ -595,6 +594,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
 
         var typeEmpty = ""
         Log.e("sdfadsfdsf","======$event====$age======")
+        Log.e("sdfadsfdsf","======$ageGroup====$addEvent======")
         when {
             event && age -> { typeEmpty = "1"   }
             !age && event -> { typeEmpty = "2" }
@@ -602,10 +602,8 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             !age && !event -> { typeEmpty = "4" }
         }
 
-
-
         appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
-            et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
+            et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(),etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
                 addEvent.toString(),countryCodee, image1, image2, image3,typeEmpty)
     }
 

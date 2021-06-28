@@ -28,48 +28,61 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
         return list.size
     }
 
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner)  : RecyclerView.ViewHolder(itemView) {
 
-        var rvTime = itemView.findViewById(R.id.rvTime) as RecyclerView
         var tvAddDay = itemView.findViewById(R.id.tvAddDay) as TextView
-        var tvAddTime = itemView.findViewById(R.id.tvAddTime) as TextView
         var tvMorningFromtime = itemView.findViewById(R.id.tv_mornning_fromtime) as TextView
         var tvMorningTotime = itemView.findViewById(R.id.tv_morning_totime) as TextView
         var tvEveningFromtime = itemView.findViewById(R.id.tv_evening_fromtime) as TextView
         var tvEveningTotime = itemView.findViewById(R.id.tv_evening_totime) as TextView
         var spinnerDayss = itemView.findViewById(R.id.spinner_dayss) as Spinner
 
+
+
+
+
         fun initalize(dayTimeModelArrayList: ArrayList<DayTimeModel>, position: Int) {
+
+
+
+
+            tvMorningFromtime.text = list[position].firstStarttime
+            tvMorningTotime.text = list[position].firstEndtime
+            tvEveningFromtime.text = list[position].secondStarttime
+            tvEveningTotime.text = list[position].secondEndtime
+
             if (position == dayTimeModelArrayList.size - 1) {
                 tvAddDay.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 tvAddDay.visibility = View.GONE
             }
 
             tvAddDay.setOnClickListener {
                 listner.dayTimeAdd(list, position)
-                //*notifyDataSetChanged();*//*
             }
 
             var name = ""
-            // setting the data in spinner
             spinnerDayss.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
-                    // your code here
                     name = parentView?.getItemAtPosition(pos).toString()
-                    // context.toast(name)
-                    list[position].selectedDay = name.toString()
+                    list[position].selectedDay = name
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
-                    // your code here
                 }
             }
 
-
-            /*val timeRepeatAdapter =  TimeRepeatAdapter(context, dayTimeModelArrayList[position].selectTime)
-            rvTime.adapter = timeRepeatAdapter
-            rvTime.layoutManager = LinearLayoutManager(context)*/
 
             val days: MutableList<String?> = ArrayList()
             days.add("")
@@ -83,19 +96,16 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
             val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days )
             spinnerDayss.adapter = arrayAdapter
-//            val spinnerPosition: Int = arrayAdapter.getPosition(list.get(position).selectedDay)
- //           spinnerDayss.setSelection(spinnerPosition)
+            spinnerDayss.setSelection(arrayAdapter.getPosition(list[position].selectedDay))
 
             tvMorningFromtime.setOnClickListener {
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     tvMorningFromtime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].firstStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
@@ -103,9 +113,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     tvMorningTotime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].firstEndtime = "$selectedHour:$selectedMinute"
                 }, hour, minute, true) //Yes 24 hour time
@@ -118,12 +126,10 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     tvEveningFromtime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].secondStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
 
@@ -132,64 +138,15 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
-                    //  timeFrom.text = "$selectedHour:$selectedMinute"
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                     tvEveningTotime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].secondEndtime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
 
             }
-
         }
-
-
-        /*  fun bind(pos: Int) {
-              if (pos == dayTimeModelArrayList.size - 1) {
-                  tvAddDay.visibility = View.VISIBLE
-              } else {
-                  tvAddDay.visibility = View.GONE
-              }
-              tvAddDay.setOnClickListener {
-                  dayTimeRepeatListener.dayTimeAdd(pos)
-                  *//*notifyDataSetChanged();*//*
-            }
-            tvAddTime.setOnClickListener { dayTimeRepeatListener.timeAdd(pos) }
-            val days: MutableList<String?> = ArrayList()
-            days.add("")
-            days.add("Monday")
-            days.add("Tuesday")
-            days.add("Wednesday")
-            days.add("Thursday")
-            days.add("Friday")
-            days.add("Saturday")
-            days.add("Sunday")
-            val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(context, R.layout.customspinner, days as List<Any?>)
-            orderby1.adapter = arrayAdapter
-            val timeRepeatAdapter =  TimeRepeatAdapter(context, dayTimeModelArrayList[pos].selectTime)
-            rvTime.adapter = timeRepeatAdapter
-            rvTime.layoutManager = LinearLayoutManager(context)
-            val modeAdaptercity = ArrayAdapter(context, R.layout.customspinner, days)
-            orderby1.adapter = modeAdaptercity
-            try {
-                orderby1.setSelection(Selectedmonth[pos.toString()]!!.toInt())
-            } catch (e: Exception) {
-            }
-            orderby1.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>?, view: View, jj: Int, l: Long) {
-                    Selectedmonth[pos.toString()] = jj.toString()
-                }
-                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-            }
-        }
-
-        */
-
-        init {
-
-         }
     }
 
     interface OnDayTimeRecyclerViewItemClickListner {

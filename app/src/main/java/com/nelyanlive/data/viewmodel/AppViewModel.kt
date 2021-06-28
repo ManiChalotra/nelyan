@@ -925,14 +925,12 @@ class AppViewModel : ViewModel() {
     }
 
 
-
-
     fun send_editActivity_Data(securityKey: String?,authkey:String?, postId: String, type: String, activityType:String, shopname:String, activityName:String,
-                                  description:String, phone:String, address:String, city:String, latitude:String, longitude:String,
+                                  description:String, phone:String, address:String,website:String, city:String, latitude:String, longitude:String,
                                   ageGroup:String, addEvent:String,  country_code:String,  img1:String,  img2:String,  img3:String,  typeEmpty:String) {
         when(typeEmpty)
         {
-            "1"->{JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+            "1"->{JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,website,phone,address,city,
                 latitude,longitude,ageGroup,addEvent, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -945,7 +943,7 @@ class AppViewModel : ViewModel() {
                         editActivityMutableLiveData?.value = response
                     }
                 })}
-            "2"->{JsonPlaceHolder().editMyaddActivitywithoutAge(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+            "2"->{JsonPlaceHolder().editMyaddActivitywithoutAge(securityKey, authkey, postId, type, activityType, shopname, activityName, description,website,phone,address,city,
                 latitude,longitude,addEvent, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -958,7 +956,7 @@ class AppViewModel : ViewModel() {
                         editActivityMutableLiveData?.value = response
                     }
                 })}
-            "3"->{JsonPlaceHolder().editMyaddActivitywithoutEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+            "3"->{JsonPlaceHolder().editMyaddActivitywithoutEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,website,phone,address,city,
                 latitude,longitude,ageGroup, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -971,7 +969,7 @@ class AppViewModel : ViewModel() {
                         editActivityMutableLiveData?.value = response
                     }
                 })}
-            "4"->{JsonPlaceHolder().editMyaddActivitywithoutAgeEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+            "4"->{JsonPlaceHolder().editMyaddActivitywithoutAgeEvent(securityKey, authkey, postId, type, activityType, shopname, activityName, description,website,phone,address,city,
                 latitude,longitude, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -987,7 +985,7 @@ class AppViewModel : ViewModel() {
 
         }
 
-        JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
+        /*JsonPlaceHolder().editMyaddActivity(securityKey, authkey, postId, type, activityType, shopname, activityName, description,phone,address,city,
                 latitude,longitude,ageGroup,addEvent, country_code,img1,img2,img3)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -999,7 +997,7 @@ class AppViewModel : ViewModel() {
                     ) {
                         editActivityMutableLiveData?.value = response
                     }
-                })
+                })*/
     }
 
     // add post Trader api

@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:riv_corner_radius="@dimen/_5sdp"
-                        android:src="@drawable/small_photo_3"
+                        android:src="@drawable/photo_two"
                         android:scaleType="centerCrop"/>
 
 
@@ -139,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:visibility="gone"
                     android:layout_height="70dp"
-                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:background="@drawable/back_shape" >
 

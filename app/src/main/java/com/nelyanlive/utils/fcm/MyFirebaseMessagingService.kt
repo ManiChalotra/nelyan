@@ -157,9 +157,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
                             manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
                         }
                     }
-
                 }
-
         }
     }
 

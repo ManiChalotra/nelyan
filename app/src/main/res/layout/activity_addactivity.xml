@@ -251,7 +251,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
                 android:textSize="@dimen/_10sdp"
-                android:maxLines="1"
+                android:singleLine="true"
                 />
 
             <View
