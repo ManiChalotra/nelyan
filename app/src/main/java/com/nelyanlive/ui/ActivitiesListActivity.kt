@@ -82,7 +82,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
                         .first()
 
-                Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
                 if (latitude != "0.0") {
                     tv_userCityOrZipcode.text = locality
                     if (checkIfHasNetwork(this@ActivitiesListActivity)) {

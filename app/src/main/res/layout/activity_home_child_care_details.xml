@@ -111,7 +111,6 @@
                 <TextView
                     android:id="@+id/tv_child_care_name"
                     style="@style/CommonTextWrapcontent"
-                    android:drawableStart="@drawable/pic_01"
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/semibold"
                     android:text="@string/name_of_child_care"
