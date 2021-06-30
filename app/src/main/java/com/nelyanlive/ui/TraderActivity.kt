@@ -2,6 +2,7 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -36,6 +37,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope, DayTimeRepeatAdapter.OnDayTimeRecyclerViewItemClickListner,
@@ -134,11 +137,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                cityName = place.name.toString()
-                tv_address.text = cityName
+               // cityName = place.name.toString()
+                tv_address.text = place.address.toString()
 
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
+                val geocoder = Geocoder(this, Locale.getDefault())
+                val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
 
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }

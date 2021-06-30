@@ -2,6 +2,7 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,6 +38,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener,
@@ -353,19 +356,26 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         val place = Autocomplete.getPlaceFromIntent(data!!)
                         cityAddress = place.address.toString()
                         et_addressActivity.text = cityAddress
-                        cityName = place.name.toString()
                         addressLatitude = place.latLng?.latitude.toString()
                         addressLongitude = place.latLng?.longitude.toString()
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+
                     }
                     addEventRequestCode -> {
 
                         val place = Autocomplete.getPlaceFromIntent(data!!)
-                        cityName = place.name.toString()
                         cityLatitude = place.latLng?.latitude.toString()
                         cityLongitude = place.latLng?.longitude.toString()
                         updateEventList[pos].lati = cityLatitude
-                        updateEventList[pos].city = cityName
                         updateEventList[pos].longi = cityLongitude
+
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        updateEventList[pos].city = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+
+
                         addEventRepeatAdapter.notifyDataSetChanged()
 
                     } } } }

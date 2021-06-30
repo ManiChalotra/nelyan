@@ -2,6 +2,7 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -363,14 +364,13 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                     Activity.RESULT_OK -> {
                         val place = Autocomplete.getPlaceFromIntent(data!!)
                         et_addressActivity.text = place.address.toString()
-                        cityName = place.name.toString()
                         addressLatitude = place.latLng?.latitude.toString()
                         addressLongitude = place.latLng?.longitude.toString()
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
 
-                        Log.i(
-                            "dddddd",
-                            "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
-                        )
+                        Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
                     }
                 }
             }
@@ -378,13 +378,13 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         val place = Autocomplete.getPlaceFromIntent(data!!)
-                        cityName = place.name.toString()
                         cityLatitude = place.latLng?.latitude.toString()
                         cityLongitude = place.latLng?.longitude.toString()
-
                         updateEventList[pos].latitude = cityLatitude
-                        updateEventList[pos].city = cityName
                         updateEventList[pos].longitude = cityLongitude
+                        val geocoder = Geocoder(this, Locale.getDefault())
+                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        updateEventList[pos].city = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
 
                         eventEditAdapter.notifyDataSetChanged()
                     }

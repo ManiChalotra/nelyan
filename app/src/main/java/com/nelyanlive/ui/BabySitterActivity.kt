@@ -2,6 +2,7 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -175,10 +176,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             if (placeSpin.isEmpty()) {
                                 myCustomToast(getString(R.string.places_number_error))
                             } else {
-                              //  if (phoneNumber.isEmpty()) {
-                              //      myCustomToast(getString(R.string.phone_number_missing))
-                              //  }
-                         //   else {
+
                                     if (address_baby_sitter.isEmpty()) {
                                         myCustomToast(getString(R.string.address_missing_error))
                                     }
@@ -212,7 +210,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             // rotating loop
                                             for (i in 0 until imageVideoUrlListing.size) {
                                                 val media = imageVideoUrlListing[i]
-                                                if (!media.isEmpty()) {
+                                                if (media.isNotEmpty()) {
                                                     selectedUrlListing.add(media)
                                                 }
                                             }
@@ -302,7 +300,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
         if (imageVideoListPosition <= selectedUrlListing.size - 1) {
 
-            val media = selectedUrlListing[imageVideoListPosition]
 
             if (imagePathList != null) {
                 imagePathList.clear()
@@ -405,10 +402,10 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         })
     }
 
-    fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
+    private fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
         media = JSONArray()
         for (i in mlist.indices) {
-            val image = mlist.get(i).image.toString()
+            val image = mlist[i].image.toString()
             urlListingFromResponse.add(image)
             val json = JSONObject()
             json.put("image", image)
@@ -430,9 +427,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(applicationContext, googleMapKey)
-        // Create a new Places client instance.
         val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
@@ -441,27 +436,20 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            when {
-                resultCode === Activity.RESULT_OK -> {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
                     val place = Autocomplete.getPlaceFromIntent(data!!)
 
                     cityAddress = place.address.toString()
                     et_addressBabySitter.setText(cityAddress)
-                    cityName = place.name.toString()
-                    cityName = place.name.toString()
 
                     cityLatitude = place.latLng?.latitude.toString()
                     cityLongitude = place.latLng?.longitude.toString()
-
-                    Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                    cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
                 }
-                resultCode === AutocompleteActivity.RESULT_ERROR -> {
-                    // TODO: Handle the error.
-                    val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                    Log.i("dddddd", status.statusMessage.toString())
-                }
-
             }
         }
 

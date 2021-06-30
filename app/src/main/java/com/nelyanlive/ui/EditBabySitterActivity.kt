@@ -2,6 +2,7 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -48,37 +49,24 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     private var imageSelectedType = ""
     private val job by lazy { kotlinx.coroutines.Job() }
     private val dataStoragePreference by lazy { DataStoragePreference(this) }
-    private var media: JSONArray = JSONArray()
     private var countryCodee = "91"
     private var childCareId = ""
 
     private var authKey = ""
-    private var maternalName = ""
-    private var placeSpin = ""
-    private var phoneNumber = ""
-    private var address_baby_sitter = ""
-    private var descp_baby_sitter = ""
 
-    private var selectedUrlListing: ArrayList<String> = ArrayList()
-    private var urlListingFromResponse: ArrayList<String> = ArrayList()
-    var imageVideoUrlListing = arrayListOf("", "", "", "", "")
-    
     private var imagePathList = ArrayList<MultipartBody.Part>()
 
-    // dialo for progress
     private var progressDialog = ProgressDialog(this)
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
-    private val PLACE_PICKER_REQUEST = 1
+    private val placePickerRequest = 1
 
     private var cityName = ""
     private var cityLatitude = ""
     private var cityLongitude = ""
-    private var cityAddress = ""
 
     var image1: String=""
     var image2: String=""
@@ -91,7 +79,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_baby_sitter)
 
-        initalizeClicks()
+        initializeClicks()
         childimageList = ArrayList()
 
         sp_child_care_type.visibility = View.VISIBLE
@@ -101,7 +89,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         }
     }
 
-    private fun hitChildCareType_Api() {
+    private fun hitChildCareTypeApi() {
         if (checkIfHasNetwork(this@EditBabySitterActivity)) {
             launch(Dispatchers.Main.immediate) {
                 authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
@@ -115,7 +103,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     }
 
 
-    private fun initalizeClicks() {
+    private fun initializeClicks() {
 
         if (intent.extras != null) {
             childimageList = intent.getSerializableExtra("childCareImageList") as ArrayList<ChildCareImageMyAds>
@@ -132,9 +120,9 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             postID = intent.getStringExtra("adID").toString()
             cityLatitude = intent.getStringExtra("latitude").toString()
             cityLongitude = intent.getStringExtra("longitude").toString()
-            cityAddress = intent.getStringExtra("city").toString()
+            cityName = intent.getStringExtra("city").toString()
 
-            hitChildCareType_Api()
+            hitChildCareTypeApi()
 
 
             childimageList = ArrayList()
@@ -207,50 +195,25 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 onBackPressed()
             }
             R.id.btnSubmitBabySitter -> {
-                maternalName = et_maternalName.text.toString()
-                placeSpin = et_number_of_places.text.toString()
-                phoneNumber = et_phoneNumber.text.toString()
-                address_baby_sitter = et_addressBabySitter.text.toString()
-                descp_baby_sitter = et_descriptionBabySitter.text.toString()
 
 
                 if (childCareId.isEmpty()) {
                     myCustomToast(getString(R.string.child_care_type_missing_error))
                 } else {
-                    if (maternalName.isEmpty()) {
+                    if (et_maternalName.text.toString().isEmpty()) {
                         myCustomToast(getString(R.string.please_enter_name))
                     } else {
-                        if (placeSpin.isEmpty()) {
+                        if (et_number_of_places.text.toString().isEmpty()) {
                             myCustomToast(getString(R.string.places_number_error))
                         } else {
-                                if (address_baby_sitter.isEmpty()) {
+                                if (et_addressBabySitter.text.toString().isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 }
                                 else {
-                                    if (descp_baby_sitter.isEmpty()) {
+                                    if (et_descriptionBabySitter.text.toString().isEmpty()) {
                                         myCustomToast(getString(R.string.description_missing))
                                     } else {
 
-                                        // checking the list
-                                        if (selectedUrlListing.size == urlListingFromResponse.size) {
-                                            selectedUrlListing.clear()
-                                            urlListingFromResponse.clear()
-                                        }
-
-                                        Log.d("imageVideoListSize",
-                                            "-----------$imageVideoUrlListing"
-                                        )
-
-                                        // rotating loop
-                                        for (i in 0 until imageVideoUrlListing.size) {
-                                            val media = imageVideoUrlListing[i]
-                                            if (!media.isEmpty()) {
-                                                selectedUrlListing.add(media)
-                                            }
-                                        }
-                                        Log.d("selectedUpperimages",
-                                            "-------------------$selectedUrlListing"
-                                        )
 
 
                                         hitFinallyActivityAddPostApi()
@@ -279,14 +242,9 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         uploadImageServer(imgPath)
     }
 
-    private fun setImageOnTab(imgPATH: String?, imageview: ImageView) {
-        Log.d("getImage", "---------" + imgPATH.toString())
-
-        Glide.with(this).asBitmap().load(imgPATH).into(imageview)
-    }
 
 
-    fun uploadImageServer(imgPath: String?) {
+    private fun uploadImageServer(imgPath: String?) {
 
         val mFile: File?
         mFile = File(imgPath!!)
@@ -428,23 +386,11 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         })
     }
 
-    fun makeImageJsonArray(mlist: List<ImageUploadApiResponseModel.Datum>) {
-        media = JSONArray()
-        for (i in mlist.indices) {
-            val image = mlist[i].image.toString()
-            urlListingFromResponse.add(image)
-            val json = JSONObject()
-            json.put("image", image)
-            json.put("file_type", "image")
-            media.put(json)
-
-        }
-    }
 
     private fun hitFinallyActivityAddPostApi() {
         if (checkIfHasNetwork(this)) {
-            appViewModel.editMaternalPost_Data(security_key, authKey, "2", childCareId, maternalName, "hah@gmail.com", "",
-                placeSpin, countryCodee, phoneNumber, cityAddress, descp_baby_sitter, cityName, cityLatitude, cityLongitude,
+            appViewModel.editMaternalPost_Data(security_key, authKey, "2", childCareId, et_maternalName.text.toString(), "hah@gmail.com", "",
+                et_number_of_places.text.toString(), countryCodee, et_phoneNumber.text.toString(), et_addressBabySitter.text.toString(), et_descriptionBabySitter.text.toString(), cityName, cityLatitude, cityLongitude,
                  image1, image2, image3, postID)
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
@@ -456,22 +402,23 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         Places.initialize(applicationContext, googleMapKey)
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
-        startActivityForResult(intent, PLACE_PICKER_REQUEST)
+        startActivityForResult(intent, placePickerRequest)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PLACE_PICKER_REQUEST) {
+        if (requestCode == placePickerRequest) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                cityAddress = place.address.toString()
-                et_addressBabySitter.setText(cityAddress)
-                cityName = place.name.toString()
-
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
+
+                val geocoder = Geocoder(this, Locale.getDefault())
+                val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+                et_addressBabySitter.setText(cityName)
 
             }
         }

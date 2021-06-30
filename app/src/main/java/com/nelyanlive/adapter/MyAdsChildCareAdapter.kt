@@ -57,22 +57,11 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         fun bind(myadsList: GetChildcarePostMyAds) {
 
             ivDot.setImageResource(R.drawable.option_dot)
-/*fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
-                                    description: String, countryCode: String, phoneNumber: String, address: String, city: String,
-                                    childCareImageList : ArrayList<ChildCareImageMyAds>)*/
+
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.ChildcareType, myadsList.name, myadsList.availableplace, myadsList.description, myadsList.countryCode,
                     myadsList.phone, myadsList.city,  myadsList.ChildCareImages, myadsList.latitude, myadsList.longitude)
-/*
-                if (isMenuOpend.equals("0")){
-                    ll_1.visibility = View.VISIBLE
-                    isMenuOpend="1"
-                }else {
-                    ll_1.visibility = View.GONE
-                    isMenuOpend="0"
-                }
-*/
 
             }
 

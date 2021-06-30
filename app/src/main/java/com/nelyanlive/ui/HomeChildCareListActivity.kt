@@ -2,6 +2,8 @@ package com.nelyanlive.ui
 
 
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -75,14 +77,16 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
         if((tvFilter.text=="Filter")) {
             launch(Dispatchers.Main.immediate) {
                 latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                latitude =
+                longitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                         .first()
-                locality =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                        .first()
+                val geocoder = Geocoder(this@HomeChildCareListActivity, Locale.getDefault())
+                var list = listOf<Address>()
                 Log.e("location_changed", "==3=ifffff=$latitude==$longitude===$locality=")
                 if (latitude != "0.0") {
+                    list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                    locality = list[0].locality
 
                     tv_userCityOrZipcode.text = locality
                     if (checkIfHasNetwork(this@HomeChildCareListActivity)) {

@@ -2,6 +2,8 @@ package com.nelyanlive.ui
 
 import android.app.Dialog
 import android.content.*
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -75,39 +77,57 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 latitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                         .first()
-                latitude =
+                longitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                         .first()
-                locality =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                        .first()
 
-                Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
-                if (latitude != "0.0") {
-                    tv_userCityOrZipcode.text = locality
-                    if (checkIfHasNetwork(this@ActivitiesListActivity)) {
-                        launch(Dispatchers.Main.immediate) {
-                            val authKey =
-                                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                                    .first()
-                            appViewModel.sendFilterActivityListData(
-                                security_key, authKey,
-                                latitude, longitude, "", "", "",
-                                locality
-                            )
-                            activity_list_progressbar?.showProgressBar()
+                val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
+                var list = listOf<Address>()
+                Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
+
+
+                    if(latitude.toDouble()!=0.0) {
+                        list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                        locality = list[0].locality
+                        Log.e("location_changed", "==dasfasdf=$latitude==$longitude===${list[0]}")
+
+                        //locality = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+
+                        Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
+                        if (latitude != "0.0") {
+                            tv_userCityOrZipcode.text = locality
+                            if (checkIfHasNetwork(this@ActivitiesListActivity)) {
+                                launch(Dispatchers.Main.immediate) {
+                                    val authKey =
+                                        dataStoragePreference.emitStoredValue(
+                                            preferencesKey<String>(
+                                                "auth_key"
+                                            )
+                                        )
+                                            .first()
+                                    appViewModel.sendFilterActivityListData(
+                                        security_key, authKey,
+                                        latitude, longitude, "", "", "",
+                                        locality
+                                    )
+                                    activity_list_progressbar?.showProgressBar()
+                                }
+                            } else {
+                                showSnackBar(
+                                    this@ActivitiesListActivity,
+                                    getString(R.string.no_internet_error)
+                                )
+                            }
+
                         }
-                    } else {
-                        showSnackBar(
-                            this@ActivitiesListActivity,
-                            getString(R.string.no_internet_error)
-                        )
                     }
-
                 }
+
+
             }
 
-        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

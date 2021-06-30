@@ -11,6 +11,8 @@ import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -119,6 +121,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     }
 
     private var authorization = ""
+    var list = listOf<Address>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -126,7 +129,12 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
-        groupChatVM.groupName = userlocation
+        val geocoder = Geocoder(view.context, Locale.getDefault())
+        list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
+
+        if(!list[0].locality.isNullOrBlank())
+
+        groupChatVM.groupName =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
         groupChatVM.userId = (view.context as HomeActivity).userId
         groupChatVM.rvChat = activityChatBinding.rvChat
         groupChatVM.connectSocket(view.context)
@@ -136,9 +144,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
 
-            Log.e("groupMessageApiData", "-------------$security_key----$authorization----$userlocation----")
 
-            appViewModel.groupMessageApiData(security_key, authorization, userlocation, "0", "20")
+            appViewModel.groupMessageApiData(security_key, authorization, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}, "0", "20")
 
         }
         else {
@@ -197,7 +204,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         groupChatVM.noDataMessage.set("")
                     } else {
                         groupChatVM.noDataMessage.set("No chat found")
-                        groupChatVM.updateLocation(userlat, userlong, userlocation)
+                        groupChatVM.updateLocation(userlat, userlong, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation})
 
                     }
 

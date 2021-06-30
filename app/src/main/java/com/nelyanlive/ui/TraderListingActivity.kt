@@ -1,6 +1,7 @@
 package com.nelyanlive.ui
 
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -34,7 +35,6 @@ import kotlin.coroutines.CoroutineContext
 class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
     TraderListingAdapter.OnTraderItemClickListner, CoroutineScope {
 
-
     private val job by lazy {
         Job()
     }
@@ -67,15 +67,17 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 latitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                         .first()
-                latitude =
+                longitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                         .first()
-                locality =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                        .first()
+
+                val geocoder = Geocoder(this@TraderListingActivity, Locale.getDefault())
+                val list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                locality =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()}
+
                 Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
                 if (latitude != "0.0") {
-
 
                     tv_city_zipcode.text = locality
                     if (checkIfHasNetwork(this@TraderListingActivity)) {

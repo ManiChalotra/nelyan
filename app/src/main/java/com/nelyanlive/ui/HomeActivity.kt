@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -533,7 +534,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if (currentFragment !is ChatFrag) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
-                    tvTitleToolbar!!.text = userlocation
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                   val list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
+
+                    tvTitleToolbar!!.text =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
+                    //tvTitleToolbar!!.text = userlocation
                     fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
                     loadFragment(fragment)
                 }
