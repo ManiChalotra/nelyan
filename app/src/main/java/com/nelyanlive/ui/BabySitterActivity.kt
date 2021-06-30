@@ -428,7 +428,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     private fun showPlacePicker() {
         Places.initialize(applicationContext, googleMapKey)
-        val fields: List<Place.Field> = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
@@ -441,14 +441,14 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 Activity.RESULT_OK -> {
                     val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                    cityAddress = place.address.toString()
-                    et_addressBabySitter.setText(cityAddress)
 
                     cityLatitude = place.latLng?.latitude.toString()
                     cityLongitude = place.latLng?.longitude.toString()
                     val geocoder = Geocoder(this, Locale.getDefault())
                     val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
                     cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+                    cityAddress = cityName
+                    et_addressBabySitter.setText(cityAddress)
                 }
             }
         }

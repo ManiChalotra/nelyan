@@ -1,6 +1,7 @@
 package com.nelyanlive.ui
 
 import android.content.Intent
+import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -292,6 +293,14 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                     "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
                 )
 
+                val geocoder = Geocoder(this, Locale.getDefault())
+                var list = listOf<Address>()
+
+                list = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
+
+                val filteredAddress = list[0].locality
+
+
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
@@ -300,7 +309,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                         appViewModel.sendFilterTraderListData(
                             security_key, authKey, returnLat!!, returnlng,
                             returnDistance!!, returnName, typeId,
-                            returnLocation!!
+                            filteredAddress!!
                         )
                         trader_list_progressbar?.showProgressBar()
 

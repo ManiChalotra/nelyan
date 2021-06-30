@@ -224,6 +224,12 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
                 Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$childCareType===")
 
+                val geocoder = Geocoder(this, Locale.getDefault())
+                var list = listOf<Address>()
+
+                list = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
+
+                val filteredAddress = list[0].locality
 
 
                 if (checkIfHasNetwork(this)) {
@@ -238,7 +244,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             returnlng,
                             returnDistance!!,
                             returnName,
-                            returnLocation!!,
+                            filteredAddress!!,
                             childCareType!!
                         )
                         child_care_list_progressbar?.hideProgressBar() }

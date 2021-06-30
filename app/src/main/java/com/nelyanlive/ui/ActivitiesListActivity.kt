@@ -215,10 +215,15 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
+
+                val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
+                var list = listOf<Address>()
+
+                list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+              val filteredAddress = list[0].locality
                 Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
                 )
-
-
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
@@ -232,7 +237,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                             returnDistance!!,
                             returnName,
                             typeId,
-                            returnLocation!!
+                            filteredAddress!!
                         )
                         activity_list_progressbar?.showProgressBar()
 

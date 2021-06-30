@@ -196,10 +196,10 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             }
             R.id.btnSubmitBabySitter -> {
 
-
                 if (childCareId.isEmpty()) {
                     myCustomToast(getString(R.string.child_care_type_missing_error))
-                } else {
+                }
+                else {
                     if (et_maternalName.text.toString().isEmpty()) {
                         myCustomToast(getString(R.string.please_enter_name))
                     } else {
@@ -214,22 +214,16 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                                         myCustomToast(getString(R.string.description_missing))
                                     } else {
 
-
-
                                         hitFinallyActivityAddPostApi()
-
                                     }
                                 }
-
                         }
 
                     }
 
                 }
 
-
             }
-
 
             R.id.et_addressBabySitter -> {
                 showPlacePicker()
