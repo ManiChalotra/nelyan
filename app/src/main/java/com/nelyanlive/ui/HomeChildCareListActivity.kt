@@ -104,7 +104,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                                 locality,
                                 ""
                             )
-                            child_care_list_progressbar?.hideProgressBar()
+                            childProgressbar?.showProgressBar()
                         }
                     } else {
                         showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
@@ -189,7 +189,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                                 locality,
                                 ""
                             )
-                            child_care_list_progressbar?.hideProgressBar() }
+                            childProgressbar?.showProgressBar() }
                     }
                     else {
                         showSnackBar(this, getString(R.string.no_internet_error))
@@ -247,7 +247,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             filteredAddress!!,
                             childCareType!!
                         )
-                        child_care_list_progressbar?.hideProgressBar() }
+                        childProgressbar?.visibility = View.VISIBLE
+                    }
                 }
                 else {
                     showSnackBar(this, getString(R.string.no_internet_error))
@@ -271,7 +272,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
                 appViewModel.addFavouritePostApiData(security_key, authKey, postId, "2")
             }
-            child_care_list_progressbar.showProgressBar()
+            childProgressbar.showProgressBar()
         } else {
             showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
         }
@@ -285,7 +286,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             .observe(this, androidx.lifecycle.Observer { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
-                        child_care_list_progressbar?.hideProgressBar()
+                        childProgressbar?.hideProgressBar()
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
@@ -303,13 +304,13 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         }
                     }
                 } else {
-                    ErrorBodyResponse(response, this, child_care_list_progressbar)
+                    ErrorBodyResponse(response, this, childProgressbar)
                 }
             })
         appViewModel.observeFilterChildCareListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
-                        child_care_list_progressbar?.hideProgressBar()
+                        childProgressbar?.hideProgressBar()
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
@@ -331,14 +332,14 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     }
                 } else {
                     ErrorBodyResponse(response, this, null)
-                    child_care_list_progressbar?.hideProgressBar()
+                    childProgressbar?.hideProgressBar()
                 }
             })
 
         appViewModel.observeAddFavouritePostApiResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("addFavouriteResBody", "----------" + Gson().toJson(response.body()))
-                child_care_list_progressbar?.hideProgressBar()
+                childProgressbar?.hideProgressBar()
                 val mResponse = response.body().toString()
                 val jsonObject = JSONObject(mResponse)
 
@@ -352,14 +353,14 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
             } else {
-                ErrorBodyResponse(response, this, child_care_list_progressbar)
-                child_care_list_progressbar?.hideProgressBar()
+                ErrorBodyResponse(response, this, childProgressbar)
+                childProgressbar?.hideProgressBar()
             }
         })
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
-            child_care_list_progressbar?.hideProgressBar()
+            childProgressbar?.hideProgressBar()
         })
     }
 

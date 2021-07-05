@@ -83,22 +83,17 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
 
             llEvent.setOnClickListener {
 
-
-
                 context?.OpenActivity(ActivityDetailsActivity::class.java) {
                     putString("activityId",eventList.activityId )
                     putString("categoryId","")
                     putString("lati", eventList.latitude)
                     putString("longi",eventList.longitude)
                 }
-
             }
             ivEventFav.setOnClickListener {
                 OnCLICK.onAddFavoriteClick(eventList.id, ivEventFav)
-
             }
             ivEventFav.setImageDrawable(ContextCompat.getDrawable(ivEventFav.context,if(eventList.isFav=="1"){R.drawable.heart}else{R.drawable.heart_purple}))
-
         }
     }
 

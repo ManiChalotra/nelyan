@@ -219,7 +219,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
                 var list = listOf<Address>()
 
-                list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+                list = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
               val filteredAddress = list[0].locality
                 Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="

@@ -281,7 +281,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                                         longitude
                                     )
                                 )
-                            } else {
+                            }
+                            else {
                                 dataList.add(
                                     HomeEventModel(
                                         id, image, name, city, "", "", "", "",
