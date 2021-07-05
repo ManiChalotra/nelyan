@@ -4,9 +4,9 @@
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/59a4fd577367c168a047eea24bcf9a30/jetified-ccp-2.4.5/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/59a4fd577367c168a047eea24bcf9a30/jetified-ccp-2.4.5/res" />
       <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/59a4fd577367c168a047eea24bcf9a30/jetified-ccp-2.4.5/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/37a1addd9e10444a14d0d4a24a903ed8/jetified-ccp-2.4.5/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/37a1addd9e10444a14d0d4a24a903ed8/jetified-ccp-2.4.5/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/37a1addd9e10444a14d0d4a24a903ed8/jetified-ccp-2.4.5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2469ca53feef948d64549a92ca31ee2a/jetified-ccp-2.4.5/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2469ca53feef948d64549a92ca31ee2a/jetified-ccp-2.4.5/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2469ca53feef948d64549a92ca31ee2a/jetified-ccp-2.4.5/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.hbb20/ccp/2.4.5/db1396e17e51b67a83e3cc31da4a6fcc90e410d7/ccp-2.4.5-javadoc.jar!/" />

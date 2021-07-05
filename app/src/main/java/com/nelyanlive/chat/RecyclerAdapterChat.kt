@@ -49,10 +49,7 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
         notifyDataSetChanged()
     }
 
-    fun setItem(position: Int, item: T) {
-        this.items[position] = item
-        notifyDataSetChanged()
-    }
+
 
     fun setOnItemClick(onItemClick: OnItemClick?) {
         this.onItemClick = onItemClick
@@ -146,13 +143,10 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
     override fun getItemViewType(position: Int): Int {
 
         val data  = (items[position] as ChatData)
-        if(data.senderId==data.myID)
-        {
-            return if(data.messageType=="0") TEXT_RIGHT else IMAGE_RIGHT
-        }
-        else
-        {
-            return if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
+        return if(data.senderId==data.myID) {
+            if(data.messageType=="0") TEXT_RIGHT else IMAGE_RIGHT
+        } else {
+            if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
         }
 
        // return position
