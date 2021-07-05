@@ -274,7 +274,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         }
 
                     }
-                    ivBell.setImageResource(if(groupChatVM.notifyStatus=="0"){R.drawable.mute}else{R.drawable.unmute})
+                    ivBell.setImageResource(if(groupChatVM.notifyStatus=="0"){R.drawable.unmute}else{R.drawable.mute})
                     ivBell.visibility = View.VISIBLE
                     ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext,R.color.colorAccent))
                 }
@@ -331,7 +331,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
                     val notificationStatus = jsonData.getString("notification")
                     groupChatVM.notifyStatus = if(notificationStatus=="1"){"0"}else{"1"}
-                    ivBell.setImageResource(if(notificationStatus=="1"){R.drawable.mute}else{R.drawable.unmute})
+                    ivBell.setImageResource(if(notificationStatus=="1"){R.drawable.unmute}else{R.drawable.mute})
                     ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext,R.color.colorAccent))
 
                 }

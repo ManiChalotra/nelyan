@@ -101,11 +101,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                             this@TraderListingActivity,
                             getString(R.string.no_internet_error)
                         )
-                    }
-
-                }
-            }
-        }
+                    } } } }
     }
 
 
@@ -119,7 +115,6 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
-
 
         checkMvvmResponse()
     }
@@ -247,7 +242,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 if (tvFilter.text == "Filter") {
                     val i = Intent(this, TraderFilterActivity::class.java)
                     startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
-                } else {
+                }
+                else {
                     tvFilter.text = "Filter"
                     if (checkIfHasNetwork(this)) {
                         launch(Dispatchers.Main.immediate) {

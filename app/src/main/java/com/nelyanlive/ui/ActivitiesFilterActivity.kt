@@ -84,8 +84,15 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         mDay = c[Calendar.DAY_OF_MONTH]
         tvCal = findViewById(R.id.tv_cal)
         tvCal!!.setOnClickListener(this)
-        ll_1 = findViewById(R.id.ll_public)
-        ll_1!!.setOnClickListener { dailogLocation() }
+            //ll_1 = findViewById(R.id.ll_public)
+            //ll_1!!.setOnClickListener { dialogLocation() }
+            //set city
+        launch(Dispatchers.Main.immediate) {
+            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+        }
+
         btnFilter = findViewById(R.id.btnFilter)
         activityTypes = findViewById(R.id.trader_type)
 
@@ -158,21 +165,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     }
 
-    fun dailogLocation() {
-       /* dialog = Dialog(this)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_location)
-        dialog!!.setCancelable(true)
-        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
-        rlNo.setOnClickListener {
-            dialog!!.dismiss()
-        }
-        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
-        rlYes.setOnClickListener { dialog!!.dismiss() }
-        dialog!!.show()*/
-
-
-        //fetch current address
+    private fun dialogLocation() {
         launch(Dispatchers.Main.immediate) {
             et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()

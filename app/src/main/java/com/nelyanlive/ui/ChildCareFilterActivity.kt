@@ -86,15 +86,25 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
         mYear = c[Calendar.YEAR]
         mMonth = c[Calendar.MONTH]
         mDay = c[Calendar.DAY_OF_MONTH]
-        ll_0 = findViewById(R.id.ll_0)
-        ll_0!!.setOnClickListener {
+       // ll_0 = findViewById(R.id.ll_0)
+       /* ll_0!!.setOnClickListener {
 
             launch(Dispatchers.Main.immediate) {
                 et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
                 latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
                 longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             }
+        }*/
+
+        // set city
+        launch(Dispatchers.Main.immediate) {
+            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
         }
+
+
+
         btnSearch = findViewById(R.id.btnSearch)
         childCareTypes = findViewById(R.id.childType)
 
@@ -127,11 +137,7 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
 
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(applicationContext, googleMapKey)
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this@ChildCareFilterActivity)
-        // Set the fields to specify which types of place data to return.
         val fields: List<Place.Field> = listOf(
                 Place.Field.ID,
                 Place.Field.NAME,

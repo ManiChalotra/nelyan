@@ -48,7 +48,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@TraderFilterActivity) }
 
-
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
@@ -93,7 +92,14 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
     }
     private  fun initalizeClicks(){
         ivBack.setOnClickListener(this)
-        ll_public.setOnClickListener(this)
+        //ll_public.setOnClickListener(this)
+        //set city name
+        launch(Dispatchers.Main.immediate) {
+            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+        }
+
         btnFilter.setOnClickListener(this)
         et_location.setOnClickListener(this)
 
@@ -200,13 +206,13 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             R.id.ivBack->{
                 onBackPressed()
             }
-            R.id.ll_public->{
+            /*R.id.ll_public->{
                 launch(Dispatchers.Main.immediate) {
                     et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
                     latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
                     longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
                 }
-            }
+            }*/
             R.id.btnFilter->{
                 if (et_location.text.isNullOrEmpty()){
                     myCustomToast(getString(R.string.location_missing_error))
