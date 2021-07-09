@@ -52,12 +52,11 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
             Glide.with(context).asBitmap().load(image_base_URl+list[position].image).into(ivEvent)
             edtProductTitle.setText(list[position].title)
             edtDesc.setText(list[position].description)
-            edtProductPrice.setText("$"+ list[position].price)
+            edtProductPrice.setText(list[position].price)
 
             ivCam.setOnClickListener{
                 productRepeatListener.addCameraGalleryImage(list, position)
             }
-
 
             tvAdd.setOnClickListener {
                 edtDesc.clearFocus()
@@ -65,7 +64,6 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
                 edtProductTitle.clearFocus()
                 productRepeatListener.ontraderItemClick(list, position)
             }
-
 
             // add text watcher  for age To
             edtProductPrice.addTextChangedListener(object : TextWatcher {

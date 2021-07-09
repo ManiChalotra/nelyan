@@ -208,6 +208,7 @@
     <string name="add_product_image">Add Product Image</string>
     <string name="product_title">Product Title</string>
     <string name="product_price">Product Price</string>
+    <string name="product_price_with_dollar">Product Price ($)</string>
     <string name="description">Description</string>
     <string name="type_of_trader">Type of Trader</string>
     <string name="select_day">Select Day</string>

@@ -1012,20 +1012,42 @@ class AppViewModel : ViewModel() {
 
     fun send_addPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
                                   description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                               email:String, website:String, selectDay:String, productDetail:String, media:String ) {
-        JsonPlaceHolder().getAddTraderPostApi(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
-                latitude,longitude, email, website, selectDay,productDetail,media)
-                .enqueue(object : retrofit2.Callback<JsonObject> {
-                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
-                    }
-                    override fun onResponse(
+                               email:String, website:String, selectDay:String, productDetail:String, media:String, DaysType:String ) {
+
+        when(DaysType)
+        {
+            "0"->{
+                JsonPlaceHolder().getAddTraderPostApiWithoutDays(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                    latitude,longitude, email, website,productDetail,media)
+                    .enqueue(object : retrofit2.Callback<JsonObject> {
+                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                            exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                        }
+                        override fun onResponse(
                             call: Call<JsonObject>,
                             response: Response<JsonObject>
-                    ) {
-                        addPostTraderMutableLiveData?.value = response
-                    }
-                })
+                        ) {
+                            addPostTraderMutableLiveData?.value = response
+                        }
+                    })
+            }
+            "1"->{
+                JsonPlaceHolder().getAddTraderPostApi(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                    latitude,longitude, email, website, selectDay,productDetail,media)
+                    .enqueue(object : retrofit2.Callback<JsonObject> {
+                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                            exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                        }
+                        override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                        ) {
+                            addPostTraderMutableLiveData?.value = response
+                        }
+                    })
+            }
+        }
+
     }
 
 
@@ -1046,7 +1068,34 @@ class AppViewModel : ViewModel() {
 
         when(emptyType)
         {
-            "1"->{JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+            "1"->{JsonPlaceHolder().editTraderPost_ApiwithoutDay(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                latitude,longitude, email, website, productDetail, image1, image2, image3, postId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editPostTraderMutableLiveData?.value = response
+                    }
+                })}
+            "2"->{JsonPlaceHolder().editTraderPost_ApiWitoutProductandDay(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+                latitude,longitude, email, website, image1, image2, image3, postId)
+                .enqueue(object : retrofit2.Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                    }
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        editPostTraderMutableLiveData?.value = response
+                    }
+                })}
+
+            "0"->{JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
                 latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -1059,7 +1108,7 @@ class AppViewModel : ViewModel() {
                         editPostTraderMutableLiveData?.value = response
                     }
                 })}
-            "2"->{JsonPlaceHolder().editTraderPost_ApiWitoutProduct(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
+            "3"->{JsonPlaceHolder().editTraderPost_ApiWitoutProduct(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
                 latitude,longitude, email, website, selectDay, image1, image2, image3, postId)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {

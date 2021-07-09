@@ -144,7 +144,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             dayTimeModelArrayList = intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
             productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
-            productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
            // makeJsonArray()
 
 
@@ -163,8 +162,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             {
                 for(i in 0 until dayTimeModelArrayList.size)
                 {
-                    dayTimeList.add(
-                            DayTimeModel(
+                    dayTimeList.add(DayTimeModel(
                                     dayTimeModelArrayList[i].day,
                                     dayTimeModelArrayList[i].startTime,
                                     dayTimeModelArrayList[i].endTime,
@@ -270,19 +268,25 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         if (checkIfHasNetwork(this@EditTraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
 
-            if(product)
-            {appViewModel.send_editPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
-                et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
-                cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
-                productDetailsGroup.toString(), image1, image2, image3, postID,"1")}
-            else
-            {appViewModel.send_editPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
-                et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
-                cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
-                productDetailsGroup.toString(), image1, image2, image3, postID,"2")}
+            var typeEmpty = ""
+            when {
+                dayTime && product -> { typeEmpty = "0"   }
+                !product && dayTime -> { typeEmpty = "3" }
+                product && !dayTime -> { typeEmpty = "1" }
+                !product && !dayTime -> { typeEmpty = "2" }
+            }
 
 
-        } else {
+
+            appViewModel.send_editPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
+                et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
+                cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
+                productDetailsGroup.toString(), image1, image2, image3, postID,typeEmpty)}
+
+
+
+        //}
+    else {
             showSnackBar(this@EditTraderActivity, getString(R.string.no_internet_error))
 
         }
@@ -551,7 +555,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             }
             else -> {
                 dayTime = true
-                productErrorNumber =i
+                dayErrornumber =i
                 dayErrorString
             }
         }
