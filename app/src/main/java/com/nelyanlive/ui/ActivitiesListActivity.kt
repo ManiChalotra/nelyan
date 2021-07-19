@@ -300,7 +300,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         activity_list_progressbar?.hideProgressBar()
                         Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
                         dataString = response.body().toString()
-                        val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(
+                        val homeAcitivitiesResponse = Gson().fromJson(
                             response.body().toString(),
                             HomeActivityResponse::class.java
                         )

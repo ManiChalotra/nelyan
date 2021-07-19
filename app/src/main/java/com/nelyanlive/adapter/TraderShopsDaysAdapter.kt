@@ -1,13 +1,13 @@
 package com.nelyanlive.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.nelyanlive.AppUtils
 import com.nelyanlive.R
 import com.nelyanlive.modals.traderPostDetails.TraderDaysTiming
 import com.nelyanlive.ui.TraderPublishActivty
@@ -26,7 +26,15 @@ class TraderShopsDaysAdapter(internal  var context: Context, internal  var activ
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        holder.bindMethod(datalist[position])
+        try {
+            Log.e("asdfasdf","=======${datalist[position].day}")
+            holder.bindMethod(datalist[position])
+
+        }
+        catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
 
      }
 
@@ -35,7 +43,7 @@ class TraderShopsDaysAdapter(internal  var context: Context, internal  var activ
     }
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var tvDay: TextView
+        private lateinit var tvDay: TextView
         lateinit var tvTimings: TextView
 
         fun bindMethod(traderDaysTiming: TraderDaysTiming) {
@@ -60,10 +68,4 @@ class TraderShopsDaysAdapter(internal  var context: Context, internal  var activ
         }
 
     }
-
-
-
-
-    init {
-      }
 }

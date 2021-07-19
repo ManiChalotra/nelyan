@@ -322,7 +322,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                     if (mSizeOfTraderDaysTimings != 0) {
                         val traderShopsDaysAdapter = TraderShopsDaysAdapter(this, this@TraderPublishActivty, datalistDays)
-                        val lmmanager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                        val lmmanager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                         rvDays!!.layoutManager = lmmanager
                         rvDays!!.adapter = traderShopsDaysAdapter
 

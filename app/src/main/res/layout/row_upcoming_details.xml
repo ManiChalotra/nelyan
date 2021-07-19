@@ -8,17 +8,51 @@
     android:orientation="vertical"
     android:padding="@dimen/_5sdp">
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:gravity="end">
+
+
+        <TextView
+            android:id="@+id/tv_event_dates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_6sdp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:gravity="end">
+
+
+        <TextView
+            android:id="@+id/tv_event_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_6sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_5sdp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,31 +76,14 @@
         </LinearLayout>
 
 
-        -
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_weight="1"
-            android:gravity="end">
 
 
-            <TextView
-                android:id="@+id/tv_event_dates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_6sdp" />
 
-        </LinearLayout>
 
     </LinearLayout>
 
 
-    -
+
 
     <LinearLayout
         android:id="@+id/ll_age"
@@ -78,7 +95,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        -
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,27 +124,6 @@
 
         </LinearLayout>
 
-
-        -
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:gravity="end">
-
-
-            <TextView
-                android:id="@+id/tv_event_times"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_6sdp" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
 
@@ -135,7 +131,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:gravity="end">
+        android:gravity="end"
+        android:layout_marginTop="@dimen/_5sdp">
 
 
         <TextView

@@ -56,6 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/header"
+
                 >
 
                 <LinearLayout
@@ -149,7 +150,9 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical"
+                        android:nestedScrollingEnabled="true"
+                        />
 
                     <TextView
                         android:id="@+id/tv_trader_no_days"

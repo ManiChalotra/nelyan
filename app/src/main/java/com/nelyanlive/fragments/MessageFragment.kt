@@ -32,7 +32,7 @@ class MessageFragment : Fragment() {
     lateinit var fragmentMessageBinding: FragmentMessageBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         fragmentMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context),R.layout.fragment_message, container, false)
         fragmentMessageBinding.messageVM =messagesVM
