@@ -1,9 +1,20 @@
 package com.nelyanlive.data.network
 
+import android.content.Intent
+import android.os.Looper
+import android.text.TextUtils
+import android.util.Log
+import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.nelyanlive.data.network.responsemodels.ImageUploadApiResponseModel
+import com.nelyanlive.db.DataStoragePreference
+import com.nelyanlive.ui.LoginActivity
+import com.nelyanlive.utils.AllSharedPref
+import com.nelyanlive.utils.AppController
 import com.nelyanlive.utils.base_URL
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -714,17 +725,13 @@ interface JsonPlaceHolder {
                     .readTimeout(100, TimeUnit.SECONDS)
                     .writeTimeout(100, TimeUnit.SECONDS)
                     .addInterceptor(interceptor)
+                    .addInterceptor(ForbiddenInterceptor())
 
-            httpClient.addInterceptor(object : Interceptor {
-
-                override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-                    val request: Request
-                    request = chain.request().newBuilder()
-                            .addHeader("Accept", "application/json")
-                            .build()
-                    return chain.proceed(request)
-                }
-
+            httpClient.addInterceptor(Interceptor { chain ->
+                val request: Request = chain.request().newBuilder()
+                .addHeader("Accept", "application/json")
+                .build()
+                chain.proceed(request)
             })
 
             return Retrofit.Builder()
@@ -736,5 +743,39 @@ interface JsonPlaceHolder {
         }
 
     }
+
+
+    class ForbiddenInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request: Request = chain.request()
+            val response: Response = chain.proceed(request)
+            if (response.message == "Unauthorized") {
+
+               val authorization = AllSharedPref.restoreString(AppController.getInstance(), "auth_key")
+
+
+                if (!TextUtils.isEmpty(authorization)) {
+                    val dataStoragePreference by lazy {
+                        DataStoragePreference(AppController.getInstance())
+                    }
+                    Looper.prepare()
+                    Toast.makeText(AppController.getInstance(), "Unauthorized", Toast.LENGTH_SHORT).show();
+
+                    GlobalScope.launch {
+                        dataStoragePreference.deleteDataBase()
+                    }
+
+
+                    val intent = Intent(AppController.getInstance(), LoginActivity::class.java)
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    AppController.getInstance().startActivity(intent)
+                }
+            }
+            Log.e("ServiceGenerator", "response :=> $response")
+            return response
+        }
+    }
+
 
 }

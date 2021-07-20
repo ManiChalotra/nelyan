@@ -447,7 +447,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     val geocoder = Geocoder(this, Locale.getDefault())
                     val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
                     cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
-                    cityAddress = cityName
+                    cityAddress = place.address.toString()
                     et_addressBabySitter.setText(cityAddress)
                 }
             }

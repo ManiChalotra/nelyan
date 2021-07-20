@@ -231,9 +231,8 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                         tv_childcare_phone.visibility = View.GONE
 
                     }
-                    tv_child_care_address.text = jsonObject.getJSONObject("data").get("city").toString()
+                    tv_child_care_address.text = jsonObject.getJSONObject("data").get("address").toString()
 
-                    var childcareTypeId= jsonObject.getJSONObject("data").get("ChildcareType").toString()
 
 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()

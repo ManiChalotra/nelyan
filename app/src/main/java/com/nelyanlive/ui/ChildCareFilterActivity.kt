@@ -86,17 +86,7 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
         mYear = c[Calendar.YEAR]
         mMonth = c[Calendar.MONTH]
         mDay = c[Calendar.DAY_OF_MONTH]
-       // ll_0 = findViewById(R.id.ll_0)
-       /* ll_0!!.setOnClickListener {
 
-            launch(Dispatchers.Main.immediate) {
-                et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-            }
-        }*/
-
-        // set city
         launch(Dispatchers.Main.immediate) {
             et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
@@ -112,8 +102,8 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
         btnSearch!!.setOnClickListener(this)
 
         orderby1 = findViewById(R.id.spinner_dayss)
-        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM")
-        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30")
+        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
+        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
 
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
@@ -203,12 +193,9 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
-              //  city = place.name.toString()
                 et_location.text = place.name.toString()
-                // cityID = place.id.toString()
                 latitudee = place.latLng?.latitude.toString()
                 longitudee = place.latLng?.longitude.toString()
-
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
 

@@ -81,7 +81,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                         .first()
                 val geocoder = Geocoder(this@HomeChildCareListActivity, Locale.getDefault())
-                var list = listOf<Address>()
+                val list: List<Address>
                 Log.e("location_changed", "==3=ifffff=$latitude==$longitude===$locality=")
                 if (latitude != "0.0") {
                     list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)

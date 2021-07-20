@@ -217,9 +217,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
-                var list = listOf<Address>()
-
-                list = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
+                val list: List<Address> = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
               val filteredAddress = list[0].locality
                 Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
@@ -232,7 +230,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         appViewModel.sendFilterActivityListData(
                             security_key,
                             authKey,
-                            returnLat!!,
+                            returnLat,
                             returnlng,
                             returnDistance!!,
                             returnName,
@@ -240,9 +238,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                             filteredAddress!!
                         )
                         activity_list_progressbar?.showProgressBar()
-
                     }
-                } else {
+                }
+
+                else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
             }

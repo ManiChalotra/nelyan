@@ -30,7 +30,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ui.EventsOnMapActivity"></activity>
+        <activity android:name=".ui.EventsOnMapActivity" />
         <activity android:name=".fullscreen.FullScreen" />
 
         <provider

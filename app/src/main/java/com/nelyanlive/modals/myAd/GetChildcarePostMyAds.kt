@@ -5,6 +5,7 @@ data class GetChildcarePostMyAds(
         val ChildcareType: Int,
         val availableplace: Int,
         val city: String,
+        val address: String,
         val countryCode: String,
         /*val createdAt: String,*/
         val description: String,

@@ -185,10 +185,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                 }
 
-            } else {
-
-                Toast.makeText(this, "something dfsdfsd   went wrong", Toast.LENGTH_SHORT).show()
-
             }
         })
 

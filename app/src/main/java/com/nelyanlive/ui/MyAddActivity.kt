@@ -134,7 +134,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                 if (response.body() != null) {
                     myads_progressBar?.hideProgressBar()
                     Log.d("myAdsResponse", "-------------" + Gson().toJson(response.body()))
-                    val myAdsResponse = Gson().fromJson<MyAdsResponsee>(response.body().toString(), MyAdsResponsee::class.java)
+                    val myAdsResponse = Gson().fromJson(response.body().toString(), MyAdsResponsee::class.java)
 
                     dataList.clear()
                     dataList.addAll(myAdsResponse.data.getActivitypost)
@@ -309,7 +309,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
 
     override fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String, description: String, countryCode: String,
-                               phoneNumber: String, city: String, childCareImageList: ArrayList<ChildCareImageMyAds>, lattude: String, longitude:String) {
+                               phoneNumber: String, city: String,address: String, childCareImageList: ArrayList<ChildCareImageMyAds>, lattude: String, longitude:String) {
         val intent = Intent(this, EditBabySitterActivity::class.java)
         intent.putExtra("adID", adID)
         intent.putExtra("childType", childTypeId)
@@ -319,6 +319,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
         intent.putExtra("countryCode", countryCode)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("city", city)
+        intent.putExtra("address", address)
         intent.putExtra("childCareImageList", childCareImageList)
         intent.putExtra("latitude", lattude)
         intent.putExtra("longitude", longitude)

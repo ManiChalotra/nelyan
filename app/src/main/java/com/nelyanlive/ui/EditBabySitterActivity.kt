@@ -112,7 +112,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             et_number_of_places.setText(intent.getStringExtra("noofplaces"))
             et_descriptionBabySitter.setText(intent.getStringExtra("description"))
             et_phoneNumber.setText(intent.getStringExtra("phoneNumber"))
-            et_addressBabySitter.setText(intent.getStringExtra("city"))
+            et_addressBabySitter.setText(intent.getStringExtra("address"))
 
             countryCodee = intent.getStringExtra("countryCode").toString()
             countycode_baby_sitter.setCountryForPhoneCode(countryCodee.toInt())
@@ -123,7 +123,6 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             cityName = intent.getStringExtra("city").toString()
 
             hitChildCareTypeApi()
-
 
             childimageList = ArrayList()
             childimageList = intent.getSerializableExtra("childCareImageList") as ArrayList<ChildCareImageMyAds>
@@ -344,13 +343,9 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                                 Glide.with(this).asBitmap().load(image_base_URl + image)
                                     .into(ivImg!!)
                             }
-
                         }
                         imageSelectedType = ""
-
-                    }
-
-                }
+                    } }
             }
                 else {
 
@@ -412,7 +407,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 val geocoder = Geocoder(this, Locale.getDefault())
                 val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
                 cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
-                et_addressBabySitter.setText(cityName)
+                et_addressBabySitter.setText(place.address.toString())
 
             }
         }

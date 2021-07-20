@@ -18,9 +18,9 @@ import com.nelyanlive.utils.OpenActivity
 import com.nelyanlive.utils.image_base_URl
 
 
-class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelist: ArrayList<GetChildcarePostMyAds>, internal var deleteEditListner: OnDeleteEditClickListner) :
+class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist: ArrayList<GetChildcarePostMyAds>, internal var deleteEditListner: OnDeleteEditClickListner) :
     RecyclerView.Adapter<MyAdsChildCareAdapter.RecyclerViewHolder>() {
-    var inflater: LayoutInflater
+    var inflater: LayoutInflater = LayoutInflater.from(context)
     var dialog: Dialog? = null
     private var popupWindow: PopupWindow? = null
     var dialog1: Dialog? = null
@@ -28,19 +28,6 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-/*
-        var tvEdit = itemView.findViewById(R.id.tvEdit) as TextView
-        var ll_1 = itemView.findViewById(R.id.ll_public) as LinearLayout
-        var tvAdName = itemView.findViewById(R.id.tv_ad_name) as TextView
-        var tvLocation = itemView.findViewById(R.id.tv_location) as TextView
-        var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
-        var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
-        var tvMsg = itemView.findViewById(R.id.tv_msg) as TextView
-        var tvDelete = itemView.findViewById(R.id.tvDelete) as TextView
-        var ivDot = itemView.findViewById(R.id.iv_dot) as ImageView
-        var imageAds = itemView.findViewById(R.id.image_ads) as ImageView
-        // var iv_cncl = itemView.findViewById(R.id.tvDelete) as ImageView
-*/
 
 
         var tvAddress = itemView.findViewById(R.id.tv_address) as TextView
@@ -61,7 +48,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.ChildcareType, myadsList.name, myadsList.availableplace, myadsList.description, myadsList.countryCode,
-                    myadsList.phone, myadsList.city,  myadsList.ChildCareImages, myadsList.latitude, myadsList.longitude)
+                    myadsList.phone, myadsList.city,myadsList.address,  myadsList.ChildCareImages, myadsList.latitude, myadsList.longitude)
 
             }
 
@@ -71,14 +58,18 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
             tvMsg.text = context.getString(R.string.available_place)+" "+myadsList.availableplace.toString()
 
-            var childcareTypeId= myadsList.ChildcareType.toString()
+            val childcareTypeId= myadsList.ChildcareType.toString()
 
-            if (childcareTypeId.equals("1")){
-                tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.nursery)
-            }else if (childcareTypeId.equals("2")){
-                tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.maternal_assistant)
-            }else if (childcareTypeId.equals("3")){
-                tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.babySitter)
+            when (childcareTypeId) {
+                "1" -> {
+                    tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.nursery)
+                }
+                "2" -> {
+                    tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.maternal_assistant)
+                }
+                "3" -> {
+                    tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.babySitter)
+                }
             }
 
             if (myadsList.ChildCareImages !=null && myadsList.ChildCareImages.size !=0){
@@ -96,54 +87,12 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
                     putString("latti", myadsList.latitude)
                     putString("longi", myadsList.longitude)
                 }
-
             }
-
         }
-
     }
-
-    /* private fun showPopup(view: View) {
-
-         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-         val layout: View = inflater.inflate(R.layout.alert_dot, findViewById(R.id.popup_element) as ViewGroup?, false)
-
-         val pwindo = PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-
-         //get txt view from "layout" which will be added into popup window
-         //before it you tried to find view in activity container
-
-         //get txt view from "layout" which will be added into popup window
-         //before it you tried to find view in activity container
-         val txt = layout.findViewById(R.id.txtView) as TextView
-         txt.text = Html.fromHtml(getString(R.string.tos_text))
-
-      */
-    /*   val popup = PopupMenu(context, view)
-        popup.inflate(R.menu.popupmenu)
-
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-
-            when (item!!.itemId) {
-                R.id.edit_ad -> {
-                    Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
-                }
-                R.id.delete_ad -> {
-                    Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            true
-        })
-
-        popup.show()*/
-    /*
-    }
-*/
 
     private fun callPopup(ivDot: ImageView, adapterPosition: Int, id: Int, childcareType: Int, name: String, availableplace: Int,
-                          description: String, countryCode: String, phone: String, city: String, childCareImages: ArrayList<ChildCareImageMyAds>,
+                          description: String, countryCode: String, phone: String, city: String,address: String, childCareImages: ArrayList<ChildCareImageMyAds>,
                           latitude: String, longitude: String) {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
@@ -152,7 +101,6 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
 
         popupWindow!!.isTouchable = true
-        // popupWindow!!.setFocusable(true)
         popupWindow!!.isOutsideTouchable = true
 
 
@@ -160,7 +108,7 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
 
         editt.setOnClickListener {
             deleteEditListner.onEditAdClick(adapterPosition, id.toString(), childcareType.toString(), name, availableplace.toString(),
-                description, countryCode, phone, city, childCareImages, latitude, longitude)
+                description, countryCode, phone, city,address, childCareImages, latitude, longitude)
             popupWindow!!.dismiss()
         }
 
@@ -238,14 +186,10 @@ class MyAdsChildCareAdapter(var context: Context, internal var myadsChildCarelis
         dialog!!.show()
     }
 
-    init {
-        inflater = LayoutInflater.from(context)
-    }
-
     interface OnDeleteEditClickListner{
         fun onChildCareDeleteAdClick(position: Int, adID: String?)
         fun onEditAdClick(position: Int, adID: String?, childTypeId: String, name: String, noofplaces: String,
-                          description: String, countryCode: String, phoneNumber: String, city: String,
+                          description: String, countryCode: String, phoneNumber: String, city: String,address: String,
                           childCareImageList : ArrayList<ChildCareImageMyAds>, latitude: String, longitude: String)
     }
 
