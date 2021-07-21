@@ -176,7 +176,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                                 json.getString("senderId"),
                                 json.getString("receiverId"),
                                 "",
-                                "",
+                            json.getString("groupId"),
                                 json.getString("message"),
                                 json.getString("readStatus"),
                                 json.getString("messageType"),

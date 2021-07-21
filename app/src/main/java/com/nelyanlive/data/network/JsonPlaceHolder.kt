@@ -759,7 +759,7 @@ interface JsonPlaceHolder {
                         DataStoragePreference(AppController.getInstance())
                     }
                     Looper.prepare()
-                    Toast.makeText(AppController.getInstance(), "Unauthorized", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AppController.getInstance(), "Unauthorized", Toast.LENGTH_SHORT).show()
 
                     GlobalScope.launch {
                         dataStoragePreference.deleteDataBase()
