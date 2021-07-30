@@ -1012,39 +1012,66 @@ class AppViewModel : ViewModel() {
 
     fun send_addPostTraderData(securityKey: String?,authkey:String?, type: String, traderType:String, shopname:String,
                                   description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
-                               email:String, website:String, selectDay:String, productDetail:String, media:String, DaysType:String ) {
+                               email:String, website:String, selectDay:String, productDetail:String, media:String, DaysType:String, productType:String ) {
 
         when(DaysType)
         {
             "0"->{
-                JsonPlaceHolder().getAddTraderPostApiWithoutDays(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
-                    latitude,longitude, email, website,productDetail,media)
-                    .enqueue(object : retrofit2.Callback<JsonObject> {
-                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                            exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
-                        }
-                        override fun onResponse(
-                            call: Call<JsonObject>,
-                            response: Response<JsonObject>
-                        ) {
-                            addPostTraderMutableLiveData?.value = response
-                        }
-                    })
+
+                if(productType=="0") {
+
+                    JsonPlaceHolder().getAddTraderPostApiWithoutDaysWithoutProduct(
+                        securityKey, authkey, type, traderType, shopname, description, country_code, phone,
+                        address, city, latitude, longitude, email, website, media)
+                        .enqueue(object : retrofit2.Callback<JsonObject> {
+                            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                                exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage }
+                            override fun onResponse(
+                                call: Call<JsonObject>,
+                                response: Response<JsonObject>)
+                            { addPostTraderMutableLiveData?.value = response } })
+                }
+                else
+                {
+                    JsonPlaceHolder().getAddTraderPostApiWithoutDays(
+                        securityKey, authkey, type, traderType, shopname, description, country_code, phone,
+                        address, city, latitude, longitude, email, website, productDetail, media)
+                        .enqueue(object : retrofit2.Callback<JsonObject> {
+                            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                                exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage }
+                            override fun onResponse(
+                                call: Call<JsonObject>,
+                                response: Response<JsonObject>)
+                            { addPostTraderMutableLiveData?.value = response } })
+                }
             }
             "1"->{
-                JsonPlaceHolder().getAddTraderPostApi(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
-                    latitude,longitude, email, website, selectDay,productDetail,media)
-                    .enqueue(object : retrofit2.Callback<JsonObject> {
-                        override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                            exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
-                        }
-                        override fun onResponse(
-                            call: Call<JsonObject>,
-                            response: Response<JsonObject>
-                        ) {
-                            addPostTraderMutableLiveData?.value = response
-                        }
-                    })
+
+                if(productType=="1") {
+
+                    JsonPlaceHolder().getAddTraderPostApi(securityKey, authkey, type, traderType, shopname, description, country_code, phone, address,
+                        city, latitude, longitude, email, website, selectDay, productDetail, media)
+                        .enqueue(object : retrofit2.Callback<JsonObject> {
+                            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                                exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage }
+                            override fun onResponse(
+                                call: Call<JsonObject>,
+                                response: Response<JsonObject>)
+                            { addPostTraderMutableLiveData?.value = response } })
+                }
+                else {
+
+                    JsonPlaceHolder().getAddTraderPostApiWithoutProduct(
+                        securityKey, authkey, type, traderType, shopname, description, country_code, phone,
+                        address, city, latitude, longitude, email, website, selectDay, media)
+                        .enqueue(object : retrofit2.Callback<JsonObject> {
+                            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                                exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage }
+                            override fun onResponse(
+                                call: Call<JsonObject>,
+                                response: Response<JsonObject>)
+                            { addPostTraderMutableLiveData?.value = response } })
+                }
             }
         }
 
@@ -1065,7 +1092,6 @@ class AppViewModel : ViewModel() {
                                 description:String, country_code:String, phone:String, address:String, city:String, latitude:String, longitude:String,
                                 email:String, website:String, selectDay:String, productDetail:String, image1:String,
                                 image2:String, image3: String, postId: String,emptyType:String) {
-
         when(emptyType)
         {
             "1"->{JsonPlaceHolder().editTraderPost_ApiwithoutDay(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
@@ -1094,7 +1120,6 @@ class AppViewModel : ViewModel() {
                         editPostTraderMutableLiveData?.value = response
                     }
                 })}
-
             "0"->{JsonPlaceHolder().editTraderPost_Api(securityKey, authkey,type,  traderType, shopname,  description, country_code, phone,address,city,
                 latitude,longitude, email, website, selectDay,productDetail, image1, image2, image3, postId)
                 .enqueue(object : retrofit2.Callback<JsonObject> {
@@ -1122,14 +1147,7 @@ class AppViewModel : ViewModel() {
                     }
                 })}
         }
-
-
     }
-
-
-
-
-
     // add post Nursery api
 
     private var addNuseryPostMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null

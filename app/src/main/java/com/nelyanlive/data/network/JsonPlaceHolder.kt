@@ -42,7 +42,6 @@ interface JsonPlaceHolder {
             @Part("longi") longi: RequestBody?,
             @Part image: MultipartBody.Part?): Call<JsonObject>
 
-
     @Multipart
     @POST("signup")
     fun getSignUp_withoutImage_APi(
@@ -57,7 +56,6 @@ interface JsonPlaceHolder {
             @Part("city") city: RequestBody?,
             @Part("lat") lat: RequestBody?,
             @Part("longi") longi: RequestBody?): Call<JsonObject>
-
 
     @POST("login")
     @FormUrlEncoded
@@ -399,7 +397,27 @@ interface JsonPlaceHolder {
                             @Field("selectDay") selectDay: String,// sending json Array
                             @Field("productDetail") productDetail: String,// sending json Array
                             @Field("media") media: String// send json Array
+    ): Call<JsonObject>
 
+    @POST("addPost")
+    @FormUrlEncoded
+    fun getAddTraderPostApiWithoutProduct(@Header("security_key") securityKey: String?,
+                            @Header("auth_key") auth_key: String?,
+                            @Field("type") type: String,
+                            @Field("trader_type") traderType: String,
+                            @Field("shop_name") shop_name: String,
+                            @Field("description") description: String,
+                            @Field("country_code") country_code: String,
+                            @Field("phone") phone: String,
+                            @Field("address") address: String,
+                            @Field("city") city: String,
+                            @Field("latitude") latitude: String,
+                            @Field("longitude") longitude: String,
+                            @Field("email") email: String,
+                            @Field("website") website: String,
+                            @Field("selectDay") selectDay: String,// sending json Array
+                            //@Field("productDetail") productDetail: String,// sending json Array
+                            @Field("media") media: String// send json Array
     ): Call<JsonObject>
 
     @POST("addPost")
@@ -421,8 +439,29 @@ interface JsonPlaceHolder {
                             //@Field("selectDay") selectDay: String,// sending json Array
                             @Field("productDetail") productDetail: String,// sending json Array
                             @Field("media") media: String// send json Array
-
     ): Call<JsonObject>
+
+    @POST("addPost")
+    @FormUrlEncoded
+    fun getAddTraderPostApiWithoutDaysWithoutProduct(@Header("security_key") securityKey: String?,
+                            @Header("auth_key") auth_key: String?,
+                            @Field("type") type: String,
+                            @Field("trader_type") traderType: String,
+                            @Field("shop_name") shop_name: String,
+                            @Field("description") description: String,
+                            @Field("country_code") country_code: String,
+                            @Field("phone") phone: String,
+                            @Field("address") address: String,
+                            @Field("city") city: String,
+                            @Field("latitude") latitude: String,
+                            @Field("longitude") longitude: String,
+                            @Field("email") email: String,
+                            @Field("website") website: String,
+                            //@Field("selectDay") selectDay: String,// sending json Array
+                            //@Field("productDetail") productDetail: String,// sending json Array
+                            @Field("media") media: String// send json Array
+    ): Call<JsonObject>
+
 
     @POST("addPost")
     @FormUrlEncoded

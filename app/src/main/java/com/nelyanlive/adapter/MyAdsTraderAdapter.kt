@@ -84,7 +84,18 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
                 }
             }
 
-            tvEmail.text = myadsList.email
+
+            if( myadsList.email.isNotBlank())
+            {
+                tvEmail.text = myadsList.email
+                tvEmail.visibility =View.VISIBLE
+            }
+            else
+            {
+                tvEmail.visibility =View.GONE
+            }
+
+
             tvTraderdesc.text = myadsList.description
             phone.text = myadsList.country_code+"-"+myadsList.phone
             tvAddress.text = myadsList.address

@@ -80,6 +80,7 @@
                         android:drawableStart="@mipmap/ic_email"
                         android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_8sdp" />
 

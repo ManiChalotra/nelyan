@@ -458,16 +458,5 @@ class GroupChatVM :ViewModel() {
         {e.printStackTrace()}
 
     }
-
-
-
     lateinit var dialog: Dialog
-
-
-
-
-
-
-
-
 }

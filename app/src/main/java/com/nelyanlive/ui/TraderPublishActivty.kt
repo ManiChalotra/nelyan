@@ -137,7 +137,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
     }
 
-    fun dailogshare() {
+    private fun dailogshare() {
         dialog = Dialog(this)
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_share)
@@ -252,10 +252,20 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         tv_trader_phone.visibility = View.GONE
                         tvPhoneTrader.visibility = View.GONE
                     }
-                    tv_trader_email.text = jsonObject.getJSONObject("data").get("email").toString()
+
+
+                    if(jsonObject.getJSONObject("data").get("email").toString().isEmpty())
+                    {
+                        tvEmailAddress.visibility = View.GONE
+                        tv_trader_email.visibility = View.GONE
+                    }
+                    else
+                    {
+                        tv_trader_email.text = jsonObject.getJSONObject("data").get("email").toString()
+                    }
+
                     tv_website.text = jsonObject.getJSONObject("data").get("website").toString()
-                    tv_trader_address.text = jsonObject.getJSONObject("data").get("address").toString() +" "+
-                            jsonObject.getJSONObject("data").get("city").toString()
+                    tv_trader_address.text = jsonObject.getJSONObject("data").get("address").toString()
 
                     longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                     latitude = jsonObject.getJSONObject("data").get("latitude").toString()
@@ -268,12 +278,10 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     val mSizeOfTraderDaysTimings: Int = listArrayTraderDaysTimings.length()
                     val mSizeOfProducts: Int = listArrayProducts.length()
 
-
-/*Set Trader Images List in adapter*/
-
                     if (listTradersimage != null) {
                         listTradersimage.clear()
                     }
+
                     else {
                         listTradersimage = ArrayList()
                     }
@@ -288,6 +296,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                         listTradersimage.add(Tradersimage(createdAt.toString(), id.toString().toInt(), images.toString(), mediaType.toString().toInt(),
                                 tradersId.toString().toInt(), updatedAt.toString()))
+
                     }
 
                     if (mSizeOfData != 0) {
@@ -295,7 +304,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         rvTraderImages!!.adapter = traderDetailsImageAdapter
                         indicator!!.attachToRecyclerView(rvTraderImages!!)
                     }
-/*Set Age Group List in adapter*/
                     if (datalistDays != null) {
                         datalistDays.clear()
                     }
@@ -328,15 +336,12 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                         rvDays!!.visibility = View.VISIBLE
                         tv_trader_no_days!!.visibility = View.GONE
-
                     }
                     else {
                         rvDays!!.visibility = View.GONE
                         tv_trader_no_days!!.visibility = View.VISIBLE
-
                     }
 
-/*Set Product Deatils List in adapter*/
                     if (listTraderProduct != null) {
                         listTraderProduct.clear()
                     }
@@ -372,10 +377,8 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     else {
                         rvProducts!!.visibility = View.GONE
                         tv_trader_no_product!!.visibility = View.VISIBLE
-
-                    }
-                }
-            } else {
+                    } } }
+            else {
                 ErrorBodyResponse(response, this, trader_details_progressbar)
                 trader_details_progressbar?.hideProgressBar()
             }
@@ -390,7 +393,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
     private fun setUserData(jsonObject: JSONObject) {
 
-
             if(userId!=jsonObject.getString("id")) {
                 tvMessage.visibility = View.VISIBLE
                 ivMessage.visibility = View.VISIBLE
@@ -401,11 +403,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         .putExtra("senderName", jsonObject.getString("name"))
                         .putExtra("senderImage", jsonObject.getString("image"))
                         .putExtra("userId", userId)
-                )
-                }
-
-    }
-    }
+                ) } } }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -433,10 +431,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
          }
          R.id.ivBack -> {
              onBackPressed()
-         }
-        }
-        
-    }
+         } } }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job

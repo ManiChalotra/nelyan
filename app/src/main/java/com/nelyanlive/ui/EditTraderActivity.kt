@@ -276,20 +276,13 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 !product && !dayTime -> { typeEmpty = "2" }
             }
 
-
-
             appViewModel.send_editPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
                 et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
                 cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
                 productDetailsGroup.toString(), image1, image2, image3, postID,typeEmpty)}
 
-
-
         //}
-    else {
-            showSnackBar(this@EditTraderActivity, getString(R.string.no_internet_error))
-
-        }
+    else { showSnackBar(this@EditTraderActivity, getString(R.string.no_internet_error)) }
     }
 
     private val typeList: ArrayList<String> = ArrayList()
@@ -451,10 +444,8 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                 } else {
                                     if (et_trader_phone.text.toString().isEmpty()) {
                                         myCustomToast(getString(R.string.phone_number_missing))
-                                    } else {
-                                        if (et_trader_email.text.toString().isEmpty()) {
-                                            myCustomToast(getString(R.string.email_address_missing))
-                                        } else {
+                                    }
+                                    else {
 
                                             var dayErrorString = ""
                                             dayErrornumber = 0
@@ -464,7 +455,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondStarttime,dayErrorString,"Please fill evening time in previous data",4)
                                             dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondEndtime,dayErrorString,"Please fill evening time in previous data",5)
 
-
                                             var productErrorString = ""
                                             productErrorNumber = 0
                                             productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image,productErrorString,"Please select image in previous data",1)
@@ -472,13 +462,11 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].price,productErrorString,"Please fill price in previous data",3)
                                             productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description,productErrorString,"Please fill description in previous data",4)
 
-                                            
                                             if(dayErrornumber!=0 && dayErrorString.isNotEmpty())
                                             {
                                                 myCustomToast(dayErrorString)
                                             }
                                             else {
-
 
                                                 if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
                                                     myCustomToast(productErrorString)
@@ -510,22 +498,8 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                                         }
                                                     }
                                                     hitFinalTraderPostApi()
-                                                }
 
-
-                                            } 
-
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-
-            }
-        }
-    }
+                                                } } } } } } } } } }
 
     private fun getProductError(productFrom: String?, productErrorString: String, s: String,i:Int) : String {
 

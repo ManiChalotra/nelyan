@@ -49,7 +49,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private var isImageSelected = false
 
     private var days = false
+    private var product = false
     private var dayErrorNumber = 0
+    var productErrorNumber = 0
 
     private val job by lazy { kotlinx.coroutines.Job() }
     private lateinit var dayTimeRepeatAdapter: DayTimeRepeatAdapter
@@ -173,7 +175,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
               appViewModel.send_addPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
                   et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
                   cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
-                  productDetailsGroup.toString(), media.toString(),if(days) "1" else "0")
+                  productDetailsGroup.toString(), media.toString(),if(days) "1" else "0",if(product) "1" else "0")
 
         } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
@@ -319,26 +321,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                             } else {
                                 if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
-                                } else {
-
-                                    if (et_trader_email.text.isEmpty()) {
-                                        myCustomToast(getString(R.string.email_address_missing))
-                                    } else {
-                                        /*if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay.isNullOrEmpty()) {
-                                            myCustomToast("Please select day")
-                                        }
-                                        else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
-                                            myCustomToast("Please select morning time")
-                                        }
-                                        else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
-                                            myCustomToast("Please select morning time")
-                                        }
-                                        else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
-                                            myCustomToast("Please select evening time")
-                                        }
-                                        else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
-                                            myCustomToast("Please select evening time")
-                                        }*/
+                                }
+                                    else {
 
                                         var ageErrorString = ""
                                         dayErrorNumber = 0
@@ -348,85 +332,84 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                         ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime,ageErrorString,"Please select evening time in previous data",4)
                                         ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime,ageErrorString,"Please select evening time in previous data",5)
 
+                                        var productErrorString = ""
+                                        productErrorNumber = 0
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].image,productErrorString,"Please select image in previous data",1)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productTitle,productErrorString,"Please fill title in previous data",2)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productPrice,productErrorString,"Please fill price in previous data",3)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].description,productErrorString,"Please fill description in previous data",4)
 
-                                        if(dayErrorNumber!=0 && ageErrorString.isNotEmpty())
+
+
+
+                                    if(dayErrorNumber!=0 && ageErrorString.isNotEmpty())
                                         {
                                             myCustomToast(ageErrorString)
                                         }
                                         else {
-                                            when {
-                                                productArrayList[productArrayList.size - 1].image.isNullOrEmpty() -> {
-                                                    myCustomToast("Please select image")
-                                                }
-                                                productArrayList[productArrayList.size - 1].productTitle.isNullOrEmpty() -> {
-                                                    myCustomToast("Please enter product title")
-                                                }
-                                                productArrayList[productArrayList.size - 1].productPrice.isNullOrEmpty() -> {
-                                                    myCustomToast("Please enter product price")
-                                                }
-                                                productArrayList[productArrayList.size - 1].description.isNullOrEmpty() -> {
-                                                    myCustomToast("Please enter description")
-                                                }
-                                                else -> {
 
-                                                    media = JSONArray()
-                                                    for (i in 0 until selectedImages.size) {
-                                                        val json = JSONObject()
-                                                        json.put("image", selectedImages[i])
-                                                        media.put(json)
-                                                    }
+                                        if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
+                                            myCustomToast(productErrorString)
+                                        }
+                                        else {
+                                            media = JSONArray()
+                                            for (i in 0 until selectedImages.size) {
+                                                val json = JSONObject()
+                                                json.put("image", selectedImages[i])
+                                                media.put(json)
+                                            }
 
-                                                    if(days) {
-                                                        selectDayGroup = JSONArray()
-                                                        for (i in 0 until dayTimeModelArrayList.size) {
-                                                            val json = JSONObject()
-                                                            json.put(
-                                                                "day_name",
-                                                                dayTimeModelArrayList[i].selectedDay
-                                                            )
-                                                            json.put(
-                                                                "time_from",
-                                                                dayTimeModelArrayList[i].firstStarttime
-                                                            )
-                                                            json.put(
-                                                                "time_to",
-                                                                dayTimeModelArrayList[i].firstEndtime
-                                                            )
-                                                            json.put(
-                                                                "secondStartTime",
-                                                                dayTimeModelArrayList[i].secondStarttime
-                                                            )
-                                                            json.put(
-                                                                "secondEndTime",
-                                                                dayTimeModelArrayList[i].secondEndtime
-                                                            )
-                                                            selectDayGroup.put(json)
-                                                        }
-                                                    }
-
-                                                    productDetailsGroup = JSONArray()
-                                                    for (i in 0 until productArrayList.size) {
-                                                        val json = JSONObject()
-                                                        json.put("image", productArrayList[i].image)
-                                                        json.put("title", productArrayList[i].productTitle)
-                                                        json.put("price", productArrayList[i].productPrice)
-                                                        json.put("description", productArrayList[i].description)
-                                                        productDetailsGroup.put(json)
-                                                    }
-
-                                                    hitFinalTraderPostApi()
-
+                                            if (days) {
+                                                selectDayGroup = JSONArray()
+                                                for (i in 0 until dayTimeModelArrayList.size) {
+                                                    val json = JSONObject()
+                                                    json.put(
+                                                        "day_name",
+                                                        dayTimeModelArrayList[i].selectedDay
+                                                    )
+                                                    json.put(
+                                                        "time_from",
+                                                        dayTimeModelArrayList[i].firstStarttime
+                                                    )
+                                                    json.put(
+                                                        "time_to",
+                                                        dayTimeModelArrayList[i].firstEndtime
+                                                    )
+                                                    json.put(
+                                                        "secondStartTime",
+                                                        dayTimeModelArrayList[i].secondStarttime
+                                                    )
+                                                    json.put(
+                                                        "secondEndTime",
+                                                        dayTimeModelArrayList[i].secondEndtime
+                                                    )
+                                                    selectDayGroup.put(json)
                                                 }
                                             }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
+                                            if(product) {
+                                                productDetailsGroup = JSONArray()
+                                                for (i in 0 until productArrayList.size) {
+                                                    val json = JSONObject()
+                                                    json.put("image", productArrayList[i].image)
+                                                    json.put(
+                                                        "title",
+                                                        productArrayList[i].productTitle
+                                                    )
+                                                    json.put(
+                                                        "price",
+                                                        productArrayList[i].productPrice
+                                                    )
+                                                    json.put(
+                                                        "description",
+                                                        productArrayList[i].description
+                                                    )
+                                                    productDetailsGroup.put(json)
+                                                }
+                                            }
+                                            hitFinalTraderPostApi()
+
+                                        }} } } } } } } }
     }
 
     private fun getDayError(ageFrom: String?, ageErrorString: String, s: String,i:Int) : String {
@@ -446,6 +429,22 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         }
     }
 
+    private fun getProductError(productFrom: String?, productErrorString: String, s: String,i:Int) : String {
+
+        return when {
+            productFrom.isNullOrBlank() -> when {
+                productErrorString.isBlank() -> {
+                    s
+                }
+                else -> productErrorString
+            }
+            else -> {
+                product = true
+                productErrorNumber =i
+                productErrorString
+            }
+        }
+    }
 
 
     override fun getRealImagePath(imgPath: String?) {

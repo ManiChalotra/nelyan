@@ -65,7 +65,21 @@ class TraderListingAdapter(var context: Context, private var traderPostList: Arr
                 }
             }
 
-            tvEmail.text = traderPostList.email
+            if(traderPostList.email.isNotBlank())
+            {
+                tvEmail.visibility =View.VISIBLE
+                tvEmail.text = traderPostList.email
+            }
+            else
+            {
+                tvEmail.visibility = View.GONE
+            }
+
+
+
+
+
+
             tvTraderdesc.text = traderPostList.description
             if(traderPostList.phone.isNotBlank())
             {
