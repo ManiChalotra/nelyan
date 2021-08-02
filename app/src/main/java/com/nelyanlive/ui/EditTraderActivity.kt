@@ -368,7 +368,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             image1 = image
                                             Glide.with(this).asBitmap().load(image_base_URl + image)
                                                 .into(ivImg1!!)
-
                                         }
                                         "2" -> {
                                            image2 = image
@@ -377,7 +376,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                        }
                                         "3" -> {
                                             image3 = image
-
                                           Glide.with(this).asBitmap().load(image_base_URl + image)
                                                .into(ivImg!!)
                                        }
@@ -387,9 +385,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         }
                                     }
                                     imageSelectedType = ""
-
                                 }
-
                             }
                        }
                             else {
@@ -441,10 +437,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             } else {
                                 if (tv_address.text.toString().isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
-                                } else {
-                                    if (et_trader_phone.text.toString().isEmpty()) {
-                                        myCustomToast(getString(R.string.phone_number_missing))
-                                    }
+                                }
                                     else {
 
                                             var dayErrorString = ""
@@ -499,7 +492,9 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                                     }
                                                     hitFinalTraderPostApi()
 
-                                                } } } } } } } } } }
+                                                } } }
+
+                                 } } } } } }
 
     private fun getProductError(productFrom: String?, productErrorString: String, s: String,i:Int) : String {
 
