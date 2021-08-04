@@ -17,6 +17,8 @@ import com.nelyanlive.utils.image_base_URl
 
 class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitivitiesList: ArrayList<HomeAcitivityResponseData>,
                           internal var OnCLICK: OnHomeActivitiesRecyclerViewItemClickListner) : RecyclerView.Adapter<ActivityListAdapter.RecyclerViewHolder>() {
+
+
     var context: Context? = null
     var image: ImageView? = null
 

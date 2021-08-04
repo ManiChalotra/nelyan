@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.R
+import com.nelyanlive.utils.from_admin_image_base_URl
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -220,7 +221,7 @@ object BindingAdapter {
         if(!str.isNullOrEmpty()) {
 
 
-            Picasso.get().load("http://3.13.214.27:1052/uploads/users/$str").resize(100, 100)
+            Picasso.get().load(from_admin_image_base_URl+str).resize(100, 100)
                     .placeholder(ContextCompat.getDrawable(
                     ivImage.context,
                     R.drawable.placeholder
@@ -243,7 +244,7 @@ object BindingAdapter {
         if(!str.isNullOrEmpty()) {
 
 
-            Picasso.get().load("http://3.13.214.27:1052/uploads/users/$str")
+            Picasso.get().load(from_admin_image_base_URl+str)
                     .placeholder(ContextCompat.getDrawable(
                     ivImage.context,
                     R.drawable.placeholder

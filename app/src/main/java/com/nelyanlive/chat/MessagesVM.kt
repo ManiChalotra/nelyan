@@ -13,6 +13,7 @@ import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyanlive.R
 import com.nelyanlive.ui.Chat1Activity
+import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -77,7 +78,7 @@ class MessagesVM :ViewModel() {
         Log.e("socket", "connectSocket")
 
             try {
-                socket = IO.socket("http://3.13.214.27:1052")
+                socket = IO.socket(socketBaseUrl)
                 socket.on(Socket.EVENT_CONNECT, onConnect)
                 socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
                 socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)

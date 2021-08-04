@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
+import com.nelyanlive.utils.from_admin_image_base_URl
 import com.nelyanlive.utils.image_base_URl
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_full_screen.*
@@ -20,7 +21,7 @@ class FullScreen : AppCompatActivity() {
 
         if(intent.hasExtra("image"))
         {
-            str = "http://3.13.214.27:1052/uploads/users/"+intent.getStringExtra("image")!!
+            str = from_admin_image_base_URl +intent.getStringExtra("image")!!
 
             Picasso.get().load(str)
                 .placeholder(

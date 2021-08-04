@@ -19,6 +19,7 @@ import com.github.nkzawa.socketio.client.Socket
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
 import com.nelyanlive.ui.Chat1Activity
+import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -260,7 +261,7 @@ class GroupChatVM :ViewModel() {
         Log.e("socket", "connectSocket connectSocket")
         ctx = context
         try{
-            socket = IO.socket("http://3.13.214.27:1052")
+            socket = IO.socket(socketBaseUrl)
             socket.on(Socket.EVENT_CONNECT, onConnect)
             socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
             socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError)

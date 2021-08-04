@@ -15,6 +15,7 @@ import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
+import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -147,8 +148,9 @@ class ChatVM :ViewModel() {
 
         ctx = context
         try{
-            socket = IO.socket("http://3.13.214.27:1052")
+            socket = IO.socket(socketBaseUrl)
 
+            Log.e("socket", "=======${socketBaseUrl}")
             Log.e("socket", "=======${socket.connected()}")
 
             socket.on(Socket.EVENT_CONNECT, onConnect)
@@ -422,7 +424,7 @@ class ChatVM :ViewModel() {
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())
 
-            var newMessageRoomId = if(json.getString("senderId").toInt()<json.getString("receiverId").toInt())
+            val newMessageRoomId = if(json.getString("senderId").toInt()<json.getString("receiverId").toInt())
                                    {"${json.getString("senderId")}${json.getString("receiverId")}"}else{"${json.getString("receiverId")}${json.getString("senderId")}"}
 
             if(newMessageRoomId==chatRoom) {
