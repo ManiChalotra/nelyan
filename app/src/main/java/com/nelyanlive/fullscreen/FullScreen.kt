@@ -39,9 +39,6 @@ class FullScreen : AppCompatActivity() {
 
         }
 
-
-
-
         ivCross.setOnClickListener { onBackPressed() }
 
     }

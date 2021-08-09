@@ -718,8 +718,6 @@ interface JsonPlaceHolder {
                                            @Field("image_type") image_type: String?
     ): Call<JsonObject>
 
-
-
     @POST("get_group_messages")
     @FormUrlEncoded
     fun getGroupMessages(@Header("security_key") securityKey: String?,
@@ -780,9 +778,7 @@ interface JsonPlaceHolder {
                     .build()
                     .create(JsonPlaceHolder::class.java)
         }
-
     }
-
 
     class ForbiddenInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {

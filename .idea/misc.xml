@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_full_screen.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_regulation.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_terms.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_trader_publish.xml" value="0.17" />
         <entry key="app/src/main/res/layout/item_trader_listing.xml" value="0.18489583333333334" />
       </map>

@@ -83,10 +83,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     }
 
-    /*  override fun selectedImage(var1: Bitmap, var2: String) {
-          Log.d("imagePath","-------"+ var2)
-          iv_uploader!!.setImageBitmap(var1)
-      }*/
+
 
 
     private fun initalize() {
@@ -196,7 +193,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                                     if (tv_confirmPassword.text.toString().isNullOrEmpty()) {
                                         myCustomToast(getString(R.string.confirm_password_missing_error))
                                     } else {
-                                        if (tv_password.text.toString().equals(tv_confirmPassword.text.toString())) {
+                                        if (tv_password.text.toString() == tv_confirmPassword.text.toString()) {
                                             if (tv_city.text.isNullOrEmpty()) {
                                                 myCustomToast(getString(R.string.city_missing_error))
                                             } else {

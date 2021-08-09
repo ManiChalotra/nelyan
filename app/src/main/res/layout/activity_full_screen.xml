@@ -32,7 +32,6 @@
         android:visibility="invisible"
         />
 
-
     <ImageView
         android:id="@+id/ivMainImage"
         android:layout_width="match_parent"
@@ -41,9 +40,5 @@
         app:layout_constraintTop_toBottomOf="@id/ivCross"
         app:layout_constraintBottom_toTopOf="@id/ivCross2"
         />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
