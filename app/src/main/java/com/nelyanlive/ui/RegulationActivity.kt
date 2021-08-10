@@ -60,11 +60,7 @@ class RegulationActivity : AppCompatActivity() {
 
                 }
             }
-            else {
 
-                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show()
-
-            }
         })
 
     }

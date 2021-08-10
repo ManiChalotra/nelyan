@@ -35,7 +35,7 @@
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
-            android:text="Edit Profile"
+            android:text="@string/edit_profile"
             android:textColor="@color/black" />
     </RelativeLayout>
 
@@ -175,7 +175,7 @@
                     android:layout_marginTop="@dimen/_40sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:background="@drawable/btn"
-                    android:text="SAVE" />
+                    android:text="@string/save" />
             </LinearLayout>
 
         </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.nelyanlive.ui
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
 import android.text.SpannableString
@@ -10,23 +9,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.preferencesKey
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.nelyanlive.R
-import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.utils.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_activities_map.*
-import kotlinx.android.synthetic.main.activity_full_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -41,20 +36,18 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     var mContext: Context? = null
     var ivBack: ImageView? = null
     var ivFilter: ImageView? = null
-    var rl_1: RelativeLayout? = null
-    var listType: String? = null
+    private var listType: String? = null
     var latitude = ""
     var longitude = ""
-    lateinit var markerView: View
+    private lateinit var markerView: View
     private var mMap: GoogleMap? = null
     var lat = 0.0
     var lng = 0.0
-    var currentLat = "0.0"
-    var currentLong = "0.0"
-    var dataString = ""
+    private var currentLat = "0.0"
+    private var currentLong = "0.0"
+    private var dataString = ""
     val list  = mutableListOf<DataMap>()
 
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesOnMapActivity) }
     private var authkey: String? = null
     private val job by lazy {
@@ -143,7 +136,6 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         mContext = this
         ivBack = findViewById(R.id.ivBack)
         ivFilter = findViewById(R.id.ivFilter)
-        rl_1 = findViewById(R.id.rl_1)
 
         if (intent.extras != null) {
             listType = intent.getStringExtra("type").toString()
@@ -178,9 +170,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
 
         ivFilter!!.setOnClickListener { onBackPressed() }
 
-        rl_1!!.setOnClickListener {
-            val i = Intent(this@ActivitiesOnMapActivity, ActivityDetailsActivity::class.java)
-            startActivity(i)}
+
 
         markerView = (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.view_custom_marker, null)
 
@@ -195,7 +185,6 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
-        Log.e("activityMap","=======2======")
 
         if(list.isNotEmpty()) {
             // create bounds that encompass every location we reference
@@ -218,7 +207,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
                 setOnInfoWindowClickListener(this@ActivitiesOnMapActivity)
 
                 // Ideally this string would be localised.
-                setContentDescription("Map with lots of markers.")
+                setContentDescription("markers")
 
                 moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
             }
@@ -229,8 +218,6 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     }
 
     private fun addMarkersToMap() {
-
-
         // place markers for each of the defined locations
         (list.indices).map {
             mMap!!.addMarker(

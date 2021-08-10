@@ -35,8 +35,6 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    // dialog
-    private val progressDialog = ProgressDialog(this)
 
     private var noti_status = ""
     private var user_type = ""
@@ -138,7 +136,6 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                     noti_status = "1"
                     hitNotificationStatusApi(noti_status)
                 } else {
-                    isChecked
                     noti_status = "0"
                     hitNotificationStatusApi(noti_status)
                 }
@@ -152,37 +149,29 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
     override fun onClick(v: View?) {
         when (v!!.id) {
 
-            R.id.ivBack -> {
-                onBackPressed()
-            }
+            R.id.ivBack -> { onBackPressed() }
 
-            R.id.llLogout -> {
-                showDailog()
-            }
+            R.id.llLogout -> { showDailog() }
 
             R.id.llTerms -> {
                 OpenActivity(TermsActivity::class.java) {
                     putString("cmsData", termsConditipon_data)
-                }
-            }
+                } }
 
             R.id.llChange -> {
                 OpenActivity(ChangePasswordActivity::class.java) {
                     putString("authkey", authKey)
-                }
-            }
+                } }
 
             R.id.llContact -> {
                 OpenActivity(ContactUsActivity::class.java) {
                     putString("authorization", authKey)
-                }
-            }
+                } }
 
             R.id.llAbout -> {
                 OpenActivity(AboutActivity::class.java) {
                     putString("cmsData", aboutUs_data)
-                }
-            }
+                } }
 
             R.id.llPrivacy -> {
                 OpenActivity(PrivacyActivity::class.java) {
@@ -226,12 +215,6 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                         dataStoragePreference.save(dataObj.getString("type"), preferencesKey("typeLogin"))
                         val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
                         Log.d("observeSwitchUserResponse---", "--------$userType2-" )
-
-                            /*if (dataObj.getString("type") == "1") {
-                                tv_user_type.text = getString(R.string.switch_as_a_professional)}
-                            else
-                            {
-                                tv_user_type.text = getString(R.string.switch_as_a_consultant)}*/
 
                      }
                 }
@@ -327,15 +310,13 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setContentView(R.layout.alert_logout)
         dialog!!.setCancelable(true)
-        val rlYes: RelativeLayout
-        val rlNo: RelativeLayout
-        rlYes = dialog!!.findViewById(R.id.rlYes)
+        val rlYes: RelativeLayout = dialog!!.findViewById(R.id.rlYes)
         rlYes.setOnClickListener {
 
             hitLogoutApi()
 
         }
-        rlNo = dialog!!.findViewById(R.id.rlNo)
+        val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
 

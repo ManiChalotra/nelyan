@@ -51,9 +51,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     private val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
     }
-
     private var imageSelectedType = ""
-
 
     var image1: String=""
     var image2: String=""
@@ -238,25 +236,24 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
 
                                         var ageErrorString = ""
                                         ageErrorNumber = 0
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom,ageErrorString,"please fill age Group form in previous data",1)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageTo,ageErrorString,"please fill age Group to in previous data",2)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].days,ageErrorString,"please select days in previous data",3)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeFrom,ageErrorString,"please select From Time in previous data",4)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeTo,ageErrorString,"please select To Time in previous data",5)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom,ageErrorString,getString(R.string.fill_age_group_from_in_previous_data),1)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageTo,ageErrorString,getString(R.string.fill_age_group_to),2)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].days,ageErrorString,getString(R.string.select_days_in_previous),3)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeFrom,ageErrorString,getString(R.string.select_from_time),4)
+                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeTo,ageErrorString,getString(R.string.select_to_time),5)
 
                                         var eventErrorString = ""
                                         eventErrorNumber = 0
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].image,eventErrorString,"please select image in previous data",1)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].name,eventErrorString,"please fill Event name in previous data",2)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateFrom,eventErrorString,"please select From Date in previous data",3)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateTo,eventErrorString,"please select To Date in previous data",4)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].startTime,eventErrorString,"please select From Time in previous data",5)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].endTime,eventErrorString,"please select To Time in previous data",6)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].description,eventErrorString,"please fill description in previous data",7)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].price,eventErrorString,"please fill price in previous data",8)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].city,eventErrorString,"please fill city in previous data",9)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].image,eventErrorString,getString(R.string.select_image_in_previous),1)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].name,eventErrorString,getString(R.string.fill_event_name_in_previous),2)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateFrom,eventErrorString,getString(R.string.select_from_date_in_previous),3)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateTo,eventErrorString,getString(R.string.select_to_date_in_previous),4)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].startTime,eventErrorString,getString(R.string.select_from_time),5)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].endTime,eventErrorString,getString(R.string.select_to_time),6)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].description,eventErrorString,getString(R.string.fill_description_in_previous),7)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].price,eventErrorString,getString(R.string.fill_price_previous),8)
+                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].city,eventErrorString,getString(R.string.fill_city_previous),9)
 
-                                        Log.e("dsfasdfsadf","===============$ageErrorString=========$ageErrorNumber")
 
                                         if(ageErrorNumber!=0 && ageErrorString.isNotEmpty())
                                         {
@@ -423,11 +420,11 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     override fun addAgeGroupItem(list: ArrayList<AgeGroupMyAds>, position: Int) {
 
         when {
-            listAgeGroupDataModel[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
-            listAgeGroupDataModel[list.size-1].ageTo.isEmpty() -> { myCustomToast("please fill age Group to in previous data")}
-            listAgeGroupDataModel[list.size-1].days.isEmpty() -> { myCustomToast("please select days in previous data")}
-            listAgeGroupDataModel[list.size-1].timeFrom.isEmpty() -> { myCustomToast("please select From Time in previous data")}
-            listAgeGroupDataModel[list.size-1].timeTo.isEmpty() -> { myCustomToast("please select To Time in previous data")}
+            listAgeGroupDataModel[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_age_group_from_in_previous_data)) }
+            listAgeGroupDataModel[list.size-1].ageTo.isEmpty() -> { myCustomToast(getString(R.string.fill_age_group_to))}
+            listAgeGroupDataModel[list.size-1].days.isEmpty() -> { myCustomToast(getString(R.string.select_days_in_previous))}
+            listAgeGroupDataModel[list.size-1].timeFrom.isEmpty() -> { myCustomToast(getString(R.string.select_from_time))}
+            listAgeGroupDataModel[list.size-1].timeTo.isEmpty() -> { myCustomToast(getString(R.string.select_to_time))}
             else -> {  listAgeGroupDataModel.add(AgeGroupMyAds(0,"","","","",0,0,"","",""))
                 ageGroupEditAdapter.notifyDataSetChanged()
             }
@@ -443,15 +440,15 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     override fun onAddEventItem(list: ArrayList<EventMyAds>, position: Int) {
 
         when {
-            listAddEventDataModel[list.size-1].image.isEmpty() -> { myCustomToast("please select image in previous data") }
-            listAddEventDataModel[list.size-1].name.isEmpty() -> { myCustomToast("please fill Event name in previous data")}
-            listAddEventDataModel[list.size-1].dateFrom.isEmpty() -> { myCustomToast("please select From Date in previous data")}
-            listAddEventDataModel[list.size-1].dateTo.isEmpty() -> { myCustomToast("please select To Date in previous data")}
-            listAddEventDataModel[list.size-1].startTime.isEmpty() -> { myCustomToast("please select From Time in previous data")}
-            listAddEventDataModel[list.size-1].endTime.isEmpty() -> { myCustomToast("please select To Time in previous data")}
-            listAddEventDataModel[list.size-1].description.isEmpty() -> { myCustomToast("please fill description in previous data")}
-            listAddEventDataModel[list.size-1].price.isEmpty() -> { myCustomToast("please fill price in previous data")}
-            listAddEventDataModel[list.size-1].city.isEmpty() -> { myCustomToast("please fill city in previous data")}
+            listAddEventDataModel[list.size-1].image.isEmpty() -> { myCustomToast(getString(R.string.select_image_in_previous)) }
+            listAddEventDataModel[list.size-1].name.isEmpty() -> { myCustomToast(getString(R.string.fill_event_name_in_previous))}
+            listAddEventDataModel[list.size-1].dateFrom.isEmpty() -> { myCustomToast(getString(R.string.select_from_date_in_previous))}
+            listAddEventDataModel[list.size-1].dateTo.isEmpty() -> { myCustomToast(getString(R.string.select_to_date_in_previous))}
+            listAddEventDataModel[list.size-1].startTime.isEmpty() -> {myCustomToast(getString(R.string.select_from_time))}
+            listAddEventDataModel[list.size-1].endTime.isEmpty() -> {myCustomToast(getString(R.string.select_to_time))}
+            listAddEventDataModel[list.size-1].description.isEmpty() -> { myCustomToast(getString(R.string.fill_description_in_previous))}
+            listAddEventDataModel[list.size-1].price.isEmpty() -> {myCustomToast(getString(R.string.fill_price_previous))}
+            listAddEventDataModel[list.size-1].city.isEmpty() -> { myCustomToast(getString(R.string.fill_city_previous))}
             else -> {  listAddEventDataModel.add(EventMyAds(0,"","","","","","","",0,"","","","","",0,"",0))
                 eventEditAdapter.notifyDataSetChanged()
             }
@@ -593,8 +590,6 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     private fun hitFinallyActivityAddPostApi() {
 
         var typeEmpty = ""
-        Log.e("sdfadsfdsf","======$event====$age======")
-        Log.e("sdfadsfdsf","======$ageGroup====$addEvent======")
         when {
             event && age -> { typeEmpty = "1"   }
             !age && event -> { typeEmpty = "2" }

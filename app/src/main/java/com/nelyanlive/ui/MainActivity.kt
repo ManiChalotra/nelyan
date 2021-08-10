@@ -41,11 +41,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(intent.hasExtra("groupChat"))
-        {
-            Log.d("fgdssdfsdfsdfsd", "---------${intent.getStringExtra("groupChat")}")
-
-        }
         printKeyHash(this)
 
         try {

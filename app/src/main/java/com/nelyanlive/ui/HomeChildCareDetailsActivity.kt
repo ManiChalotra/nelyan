@@ -328,14 +328,8 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
             R.id.ivShare -> {
                 dailogshare()
             }
-            R.id.btnModify -> {
 
-            }
-            R.id.btnPublish -> {
-                OpenActivity(NurserieActivityy::class.java )
-                // AppUtils.gotoFragment(this, com.nelyan_live.fragments.NurserieFragment(), R.id.frame_container, false)
 
-            }
         }
     }
 

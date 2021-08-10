@@ -72,7 +72,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="PAS ENCORE SUR NELYAN"
+                    android:text="@string/pas_encore_sur_nelyan"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -92,7 +92,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/bold"
                     android:gravity="center"
-                    android:text="DÉJÀ SUR NELYAN"
+                    android:text="@string/d_j_sur_nelyan"
                     android:textColor="@color/app"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

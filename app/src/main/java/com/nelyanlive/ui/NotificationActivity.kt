@@ -20,7 +20,7 @@ class NotificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notification)
         mContext = this
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
         recyclerview = findViewById(R.id.recyclerview)
         notificationAdapter = NotificationAdapter(mContext)
         recyclerview!!.layoutManager = LinearLayoutManager(mContext)

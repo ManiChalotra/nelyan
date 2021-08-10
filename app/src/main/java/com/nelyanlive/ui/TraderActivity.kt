@@ -21,7 +21,6 @@ import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.adapter.DayTimeRepeatAdapter
 import com.nelyanlive.adapter.ProductDetailRepeatAdapter
-import com.nelyanlive.data.network.responsemodels.trader_type.TraderTypeResponse
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.modals.DayTimeModel
 import com.nelyanlive.modals.ProductDetailDataModel
@@ -326,18 +325,18 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
                                         var ageErrorString = ""
                                         dayErrorNumber = 0
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay,ageErrorString,"Please select day in previous data",1)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstStarttime,ageErrorString,"Please select morning time in previous data",2)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstEndtime,ageErrorString,"Please select morning time in previous data",3)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime,ageErrorString,"Please select evening time in previous data",4)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime,ageErrorString,"Please select evening time in previous data",5)
+                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay,ageErrorString,getString(R.string.select_day_previous),1)
+                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstStarttime,ageErrorString,getString(R.string.select_morning_time_previous),2)
+                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstEndtime,ageErrorString,getString(R.string.select_morning_time_previous),3)
+                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime,ageErrorString,getString(R.string.select_evening_time_previous),4)
+                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime,ageErrorString,getString(R.string.select_evening_time_previous),5)
 
                                         var productErrorString = ""
                                         productErrorNumber = 0
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].image,productErrorString,"Please select image in previous data",1)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productTitle,productErrorString,"Please fill title in previous data",2)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productPrice,productErrorString,"Please fill price in previous data",3)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].description,productErrorString,"Please fill description in previous data",4)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].image,productErrorString,getString(R.string.select_image_in_previous),1)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productTitle,productErrorString,getString(R.string.fill_title_previous),2)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productPrice,productErrorString,getString(R.string.fill_price_previous),3)
+                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].description,productErrorString,getString(R.string.fill_description_in_previous),4)
 
 
 
@@ -481,22 +480,22 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         when {
             dayTimeModelArrayList[list.size - 1].selectedDay.isNullOrEmpty() -> {
-                myCustomToast("please select day")
+                myCustomToast(getString(R.string.select_day_previous))
             }
             dayTimeModelArrayList[list.size - 1].firstStarttime.isNullOrEmpty() -> {
-                myCustomToast("please select Morning time")
+                myCustomToast(getString(R.string.select_morning_time_previous))
 
             }
             dayTimeModelArrayList[list.size - 1].firstEndtime.isNullOrEmpty() -> {
-                myCustomToast("please select Morning time")
+                myCustomToast(getString(R.string.select_morning_time_previous))
 
             }
             dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
-                myCustomToast("please select Evening time")
+                myCustomToast(getString(R.string.select_evening_time_previous))
 
             }
             dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
-                myCustomToast("please select Evening time")
+                myCustomToast(getString(R.string.select_evening_time_previous))
 
             }
             else -> {
@@ -510,18 +509,18 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         when {
             productArrayList[list.size - 1].image.isNullOrEmpty() -> {
-                myCustomToast("please select product image in previous data")
+                myCustomToast(getString(R.string.select_image_in_previous))
             }
             productArrayList[list.size - 1].productTitle.isNullOrEmpty() -> {
-                myCustomToast("please enter product Title in previous data")
+                myCustomToast(getString(R.string.fill_title_previous))
 
             }
             productArrayList[list.size - 1].productPrice.isNullOrEmpty() -> {
-                myCustomToast("please enter product Price in previous data")
+                myCustomToast(getString(R.string.fill_price_previous))
 
             }
             productArrayList[list.size - 1].description.isNullOrEmpty() -> {
-                myCustomToast("please enter description in previous data")
+                myCustomToast(getString(R.string.fill_description_in_previous))
 
             }
 

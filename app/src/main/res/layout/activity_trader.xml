@@ -111,7 +111,7 @@
                     android:visibility="gone"
                     android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:background="@drawable/back_shape" >
 
                     <ImageView
@@ -240,8 +240,6 @@
             <EditText
                 android:id="@+id/et_trader_shop_name"
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
                 android:maxLength="150"
@@ -257,13 +255,11 @@
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:visibility="gone"
-                android:text="Name of Activity" />
+                android:text="@string/name_of_activity" />
 
             <EditText
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:hint="Name of Activity"
+                android:hint="@string/name_of_activity"
                 android:visibility="gone"
                 android:inputType="text" />
 
@@ -341,7 +337,7 @@
                 <EditText
                     android:id="@+id/et_trader_phone"
                     style="@style/SimpleEdittext"
-                    android:layout_toRightOf="@+id/countycode"
+                    android:layout_toEndOf="@+id/countycode"
                     android:digits="0123456789"
                     android:hint="@string/phone_number"
                     android:imeOptions="actionNext"
@@ -350,14 +346,6 @@
                     android:maxLines="1" />
 
             </RelativeLayout>
-
-<!--
-            <EditText
-                style="@style/SimpleEdittext"
-                android:drawablePadding="@dimen/_10sdp"
-                android:hint="@string/phone"
-                android:inputType="number" />
--->
 
             <View
                 android:layout_width="match_parent"
@@ -416,102 +404,6 @@
                     />
 
             </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:visibility="gone"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="30"
-                    android:fontFamily="@font/semibold"
-                    android:text="Monday"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_weight="70"
-                    android:drawableRight="@drawable/cross"
-                    android:fontFamily="@font/regular"
-                    android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="30"
-                    android:fontFamily="@font/semibold"
-                    android:text="Tuesday"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_weight="70"
-                    android:drawableRight="@drawable/cross"
-                    android:fontFamily="@font/regular"
-                    android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="30"
-                    android:fontFamily="@font/semibold"
-                    android:text="Wednesday"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_weight="70"
-                    android:drawableRight="@drawable/cross"
-                    android:fontFamily="@font/regular"
-                    android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
-
-            </LinearLayout>
 
             <TextView
                 style="@style/CommonTextWrapcontent"

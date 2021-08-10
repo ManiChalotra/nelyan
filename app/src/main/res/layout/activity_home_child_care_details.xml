@@ -18,9 +18,9 @@
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
         <TextView
@@ -34,9 +34,9 @@
             android:id="@+id/ivShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/share_icon" />
     </RelativeLayout>
 
@@ -73,7 +73,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_coursename">
+                >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_childcare_images"
@@ -220,7 +220,7 @@
                             android:id="@+id/tvMessage"
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
-                            android:text="MESSAGES"
+                            android:text="@string/message"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/_12sdp"
                             android:visibility="gone" />
@@ -305,7 +305,7 @@
                         android:id="@+id/btnModify"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:background="@drawable/modify_btn"
                         android:fontFamily="@font/semibold"
@@ -318,11 +318,11 @@
                         android:id="@+id/btnPublish"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:background="@drawable/publish_btn"
                         android:fontFamily="@font/semibold"
-                        android:text="PUBLISH"
+                        android:text="@string/publish_caps"
                         android:textAllCaps="true"
                         android:textColor="@color/app"
                         android:textSize="@dimen/_14sdp"

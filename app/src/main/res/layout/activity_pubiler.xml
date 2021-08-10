@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,9 +16,9 @@
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
         <TextView
@@ -64,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/activity"
                     android:textColor="@color/black" />
 
@@ -76,7 +75,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/nursery"
                     android:visibility="gone" />
 
@@ -89,7 +88,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/maternal_asistant"
                     android:visibility="gone" />
 
@@ -102,7 +101,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/babySitter"
                     android:visibility="gone" />
 
@@ -114,7 +113,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/child_care" />
 
 
@@ -128,103 +127,18 @@
 
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
-                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="@string/traderArtisans" />
             </RadioGroup>
 
 
-            <!--   <LinearLayout
-                   android:id="@+id/ll_1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/_60sdp"
-                   android:orientation="horizontal">
-                   <ImageView
-                       android:id="@+id/ivRadio1"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/radio_fill"/>
-                   <TextView
-                       style="@style/CommonTextWrapcontent"
-                       android:text="Activity"
-                       android:layout_marginLeft="@dimen/_10sdp"
-                       android:fontFamily="@font/medium"/>
-               </LinearLayout>
-              <LinearLayout
-                  android:id="@+id/ll_2"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="@dimen/_25sdp"
-                  android:orientation="horizontal">
-                  <ImageView
-                      android:id="@+id/ivOn"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:src="@drawable/radio_outline"/>
-                  <TextView
-                      style="@style/CommonTextWrapcontent"
-                      android:text="Nursery"
-                      android:layout_marginLeft="@dimen/_10sdp"
-                      android:fontFamily="@font/medium"/>
-              </LinearLayout>
-           <LinearLayout
-               android:id="@+id/ll_3"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="@dimen/_25sdp"
-               android:orientation="horizontal">
-               <ImageView
-                   android:id="@+id/ivRadio2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/radio_outline"/>
-               <TextView
-                   style="@style/CommonTextWrapcontent"
-                   android:text="Maternal Assistant"
-                   android:layout_marginLeft="@dimen/_10sdp"
-                   android:fontFamily="@font/medium"/>
-           </LinearLayout>
-               <LinearLayout
-                   android:id="@+id/ll_4"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="@dimen/_25sdp"
-               android:orientation="horizontal">
-               <ImageView
-                   android:id="@+id/ivRadio3"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/radio_outline"/>
-               <TextView
-                   style="@style/CommonTextWrapcontent"
-                   android:text="Baby Sitter"
-                   android:layout_marginLeft="@dimen/_10sdp"
-                   android:fontFamily="@font/medium"/>
-           </LinearLayout>
-               <LinearLayout
-                   android:id="@+id/ll_5"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="@dimen/_25sdp"
-               android:orientation="horizontal">
-               <ImageView
-                   android:id="@+id/ivRadio4"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/radio_outline"/>
-               <TextView
-                   style="@style/CommonTextWrapcontent"
-                   android:text="Traders and Artisans"
-                   android:layout_marginLeft="@dimen/_10sdp"
-                   android:fontFamily="@font/medium"/>
-           </LinearLayout>-->
 
             <Button
                 android:id="@+id/btnSubmit"
                 style="@style/Button"
                 android:layout_marginTop="?actionBarSize"
                 android:background="@drawable/btn"
-                android:text="SUBMIT" />
+                android:text="@string/submit" />
 
         </LinearLayout>
 

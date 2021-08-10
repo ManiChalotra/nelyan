@@ -25,9 +25,7 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyanlive.modals.homeactivitylist.HomeActivityResponse
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.filter_activity.*
-import kotlinx.android.synthetic.main.filter_activity.trader_type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

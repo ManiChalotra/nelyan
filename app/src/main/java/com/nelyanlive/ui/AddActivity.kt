@@ -202,10 +202,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                             myCustomToast(getString(R.string.address_missing_error))
                                         }
                                         else {
-
-                                            Log.d("selectedImages", "-----------$selectedImages")
-                                            Log.d("selectedImages", "-----------$listAge")
-
+                                            
                                             for(i in 0 until selectedImages.size)
                                             {
                                                 if(selectedImages[i].isNotEmpty())
@@ -216,26 +213,23 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
                                             var ageErrorString = ""
                                             ageErrorNumber = 0
-                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageFrom,ageErrorString,"please fill age Group form in previous data",1)
-                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageTo,ageErrorString,"please fill age Group to in previous data",2)
-                                            ageErrorString =  getAgeError(listAge[listAge.size-1].days,ageErrorString,"please select days in previous data",3)
-                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeFrom,ageErrorString,"please select From Time in previous data",4)
-                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeTo,ageErrorString,"please select To Time in previous data",5)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageFrom,ageErrorString,getString(R.string.fill_age_group_from_in_previous_data),1)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].ageTo,ageErrorString,getString(R.string.fill_age_group_to),2)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].days,ageErrorString,getString(R.string.select_days_in_previous),3)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeFrom,ageErrorString,getString(R.string.select_from_time),4)
+                                            ageErrorString =  getAgeError(listAge[listAge.size-1].timeTo,ageErrorString,getString(R.string.select_to_time),5)
 
                                             var eventErrorString = ""
                                             eventErrorNumber = 0
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].image,eventErrorString,"please select image in previous data",1)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].name,eventErrorString,"please fill Event name in previous data",2)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateFrom,eventErrorString,"please select From Date in previous data",3)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateTo,eventErrorString,"please select To Date in previous data",4)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeFrom,eventErrorString,"please select From Time in previous data",5)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeTo,eventErrorString,"please select To Time in previous data",6)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].description,eventErrorString,"please fill description in previous data",7)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].price,eventErrorString,"please fill price in previous data",8)
-                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].city,eventErrorString,"please fill city in previous data",9)
-
-                                            Log.e("dsfasdfsadf","===============$ageErrorString=========$ageErrorNumber")
-
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].image,eventErrorString,getString(R.string.select_image_in_previous),1)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].name,eventErrorString,getString(R.string.fill_event_name_in_previous),2)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateFrom,eventErrorString,getString(R.string.select_from_date_in_previous),3)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].dateTo,eventErrorString,getString(R.string.select_to_date_in_previous),4)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeFrom,eventErrorString,getString(R.string.select_from_time),5)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].timeTo,eventErrorString,getString(R.string.select_to_time),6)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].description,eventErrorString,getString(R.string.fill_description_in_previous),7)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].price,eventErrorString,getString(R.string.fill_price_previous),8)
+                                            eventErrorString =  getEventError(listEvent[listEvent.size-1].city,eventErrorString,getString(R.string.fill_city_previous),9)
 
                                             if(ageErrorNumber!=0 && ageErrorString.isNotEmpty())
                                             {
@@ -290,8 +284,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                             ageGroup.put(json)
                                                         }
                                                     }
-
-
                                                     hitFinallyActivityAddPostApi()
                                                 }
                                             }
@@ -374,20 +366,14 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
                         updateEventList[pos].city = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
-
-
+                        
                         addEventRepeatAdapter.notifyDataSetChanged()
 
                     } } } }
     }
 
     override fun getRealImagePath(imgPath: String?) {
-
         uploadImageServer(imgPath)
-
-        Log.d("selectedImagePath", "-------$imgPath")
-
-
     }
 
 
@@ -413,11 +399,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
         when {
-            listAge[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast("please fill age Group form in previous data") }
-            listAge[list.size-1].ageTo.isNullOrEmpty() -> { myCustomToast("please fill age Group to in previous data")}
-            listAge[list.size-1].days.isNullOrEmpty() -> { myCustomToast("please select days in previous data")}
-            listAge[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
-            listAge[list.size-1].timeTo.isNullOrEmpty() -> { myCustomToast("please select To Time in previous data")}
+            listAge[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_age_group_from_in_previous_data)) }
+            listAge[list.size-1].ageTo.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_age_group_to))}
+            listAge[list.size-1].days.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_days_in_previous))}
+            listAge[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_from_time))}
+            listAge[list.size-1].timeTo.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_to_time))}
             else -> {  list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
                 ageGroupRepeatAdapter.notifyDataSetChanged()
             }
@@ -447,15 +433,15 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
         when {
-            listEvent[list.size-1].image.isNullOrEmpty() -> { myCustomToast("please select image in previous data") }
-            listEvent[list.size-1].name.isNullOrEmpty() -> { myCustomToast("please fill Event name in previous data")}
-            listEvent[list.size-1].dateFrom.isNullOrEmpty() -> { myCustomToast("please select From Date in previous data")}
-            listEvent[list.size-1].dateTo.isNullOrEmpty() -> { myCustomToast("please select To Date in previous data")}
-            listEvent[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast("please select From Time in previous data")}
-            listEvent[list.size-1].timeTo.isEmpty() -> { myCustomToast("please select To Time in previous data")}
-            listEvent[list.size-1].description.isNullOrEmpty() -> { myCustomToast("please fill description in previous data")}
-            listEvent[list.size-1].price.isNullOrEmpty() -> { myCustomToast("please fill price in previous data")}
-            listEvent[list.size-1].city.isNullOrEmpty() -> { myCustomToast("please fill city in previous data")}
+            listEvent[list.size-1].image.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_image_in_previous)) }
+            listEvent[list.size-1].name.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_event_name_in_previous))}
+            listEvent[list.size-1].dateFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_from_date_in_previous))}
+            listEvent[list.size-1].dateTo.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_to_date_in_previous))}
+            listEvent[list.size-1].timeFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.select_from_time))}
+            listEvent[list.size-1].timeTo.isEmpty() -> { myCustomToast(getString(R.string.select_to_time))}
+            listEvent[list.size-1].description.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_description_in_previous))}
+            listEvent[list.size-1].price.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_price_previous))}
+            listEvent[list.size-1].city.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_city_previous))}
             else -> {
                 list.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
                 "", "", "", "", ""))
@@ -588,11 +574,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private fun hitFinallyActivityAddPostApi() {
 
-        Log.d("datahtgfhtyhty=====", "-----00000-----${ageGroup.length()}------${addEvent.length()}---")
-        Log.d("datahtgfhtyhty=====", "-----1111-----${ageGroup}-------")
-        Log.d("datahtgfhtyhty=====", "-----22222-----${addEvent}-------")
         var typeEmpty = ""
-        Log.e("datahtgfhtyhty","======$event====$age======")
         when {
             event && age -> { typeEmpty = "0"   }
             !age && event -> { typeEmpty = "3" }

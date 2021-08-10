@@ -98,18 +98,7 @@ class ContactUsActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    /* fun dailogSubmit() {
-         dialog = Dialog(mContext!!)
-         dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-         dialog!!.setContentView(R.layout.alert_contact)
-         dialog!!.setCancelable(true)
-         val btnYes: Button
-         btnYes = dialog!!.findViewById(R.id.btnYes)
-         btnYes.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
-             dialog!!.dismiss()
-         }
-         dialog!!.show()
-     }*/
+
 
 
 }

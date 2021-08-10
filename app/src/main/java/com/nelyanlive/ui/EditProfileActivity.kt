@@ -67,7 +67,6 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
     override fun getRealImagePath(imgPath: String?) {
         this.imgPath = imgPath.toString()
         Glide.with(this).load(this.imgPath).into(iv_profileEdit)
-        Log.d("getEditPhotoPath", "----------${this.imgPath}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,18 +91,11 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
             et_nameEditProfile.setText(name); setFocusEditText(et_nameEditProfile)
             tv_emailEditProfile.text = email
             et_cityEditProfile.setText(city); setFocusEditText(et_cityEditProfile)
-
         }
-
         launch(Dispatchers.Main.immediate) {
             latitude =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
-                    .first()
-            longitude =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
-                    .first()
-        }
-
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+            longitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first() }
 
     }
 
@@ -262,11 +254,6 @@ class EditProfileActivity : OpenCameraGallery(), View.OnClickListener, Coroutine
 
                     latitude = place.latLng?.latitude.toString()
                     longitude = place.latLng?.longitude.toString()
-
-                    Log.i(
-                        "d",
-                        "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
-                    )
                 }
             }
         }

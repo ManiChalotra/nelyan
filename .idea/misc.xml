@@ -3,11 +3,70 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_activities_map.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_addactivity.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_baby_sitter.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_chat1.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_child_care.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_contact_us.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_drawer.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_full_screen.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_home_child_care_details.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_home_child_care_list.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_home_sectorization.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_maternal_assistant.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_my_alert.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_myadd.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_nurserie.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_privacy.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/activity_pubiler.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_regulation.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_sectorization.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_sectorization_map.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_sectro_map.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_terms.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_trader.xml" value="0.17962962962962964" />
+        <entry key="app/src/main/res/layout/activity_trader_preview.xml" value="0.1390625" />
+        <entry key="app/src/main/res/layout/activity_walkthrough.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/add_log.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/add_photo.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_add_post_restiction.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_change_pass.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_chat_delete.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_chat_flag.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_contact.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_dot.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_location.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_logout.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_notification_change.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_profile.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/alert_share.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/custom_toast_layout.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_activity_list.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_all.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_baby_sitter.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_child_care.xml" value="0.17962962962962964" />
+        <entry key="app/src/main/res/layout/fragment_drawer.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_drawer_new_home.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_map_activity.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_maternal_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_my_add.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_nurserie.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/fragment_sectorization_details.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_sectorization_list.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_trader_publish.xml" value="0.17" />
         <entry key="app/src/main/res/layout/item_trader_listing.xml" value="0.18489583333333334" />
       </map>

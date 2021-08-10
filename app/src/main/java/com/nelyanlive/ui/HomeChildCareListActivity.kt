@@ -25,14 +25,6 @@ import com.nelyanlive.modals.homechildcare.HomeChiildCareREsponse
 import com.nelyanlive.modals.homechildcare.HomeChildCareeData
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_home_child_care_list.*
-import kotlinx.android.synthetic.main.activity_home_child_care_list.ivBack
-import kotlinx.android.synthetic.main.activity_home_child_care_list.iv_map
-import kotlinx.android.synthetic.main.activity_home_child_care_list.ll_public
-import kotlinx.android.synthetic.main.activity_home_child_care_list.trader_type
-import kotlinx.android.synthetic.main.activity_home_child_care_list.tvFilter
-import kotlinx.android.synthetic.main.activity_home_child_care_list.tv_userCityOrZipcode
-import kotlinx.android.synthetic.main.fragment_activity_list.*
-import kotlinx.android.synthetic.main.fragment_child_care.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -74,7 +66,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onResume() {
             super.onResume()
-        if((tvFilter.text=="Filter")) {
+        if((tvFilter.text==getString(R.string.filter))) {
             launch(Dispatchers.Main.immediate) {
                 latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
                 longitude =
@@ -108,13 +100,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         }
                     } else {
                         showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
-                    }
-                }
-
-            }
-        }
-            }
-
+                    } } } } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,13 +153,13 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             R.id.ll_public -> {
             }
             R.id.tvFilter -> {
-                if (tvFilter.text == "Filter") {
+                if (tvFilter.text == getString(R.string.filter)) {
                     val i = Intent(this, ChildCareFilterActivity::class.java)
                     startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
                 } else {
 
                     if (checkIfHasNetwork(this)) {
-                        tvFilter.text = "Filter"
+                        tvFilter.text = getString(R.string.filter)
                         launch(Dispatchers.Main.immediate) {
                             val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
 
@@ -198,7 +184,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.iv_map -> {
                 if (dataString.isEmpty()) {
-                    myCustomToast("Data not loaded yet")
+                    myCustomToast(getString(R.string.data_not_loaded))
                 }
                 else {
                     val i = Intent(this, HomeChildCareOnMapActivity::class.java)
@@ -214,20 +200,17 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if (resultCode == 1214) {
-                tvFilter.text = "Clear Filter"
+                tvFilter.text = getString(R.string.clear_filter)
                 val returnName = data!!.getStringExtra("name")
-                val returnLocation = data.getStringExtra("location")
                 val returnDistance = data.getStringExtra("distance")
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val childCareType = data.getStringExtra("childCareType")
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
-                Log.e("=======","===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$childCareType===")
-
                 val geocoder = Geocoder(this, Locale.getDefault())
-                var list = listOf<Address>()
 
-                list = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
+                val list: List<Address> =
+                    geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
                 val filteredAddress = list[0].locality
 
@@ -240,7 +223,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         appViewModel.sendChildCareFilterData(
                             security_key,
                             authKey,
-                            returnLat!!,
+                            returnLat,
                             returnlng,
                             returnDistance!!,
                             returnName,
@@ -261,7 +244,6 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
 
 
     override fun onItemClickListner(position: Int) {
-        OpenActivity(NurserieActivityy::class.java)
     }
 
     override fun onAddFavoriteClick(position: Int, postId: String?, ivFavourite: ImageView) {
@@ -345,11 +327,11 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
 
                 val message = jsonObject.get("msg").toString()
                 if (message == "You marked this Post as Your Favourite") {
-                    myCustomToast("You marked this post as your favourite")
+                    myCustomToast(getString(R.string.marked_as_favourite))
 
                     ivFavouritee!!.setImageResource(R.drawable.heart)
                 } else {
-                    myCustomToast("You removed this post from your favourite")
+                    myCustomToast(getString(R.string.removed_from_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
             } else {

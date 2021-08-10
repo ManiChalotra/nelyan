@@ -20,7 +20,7 @@
         android:textColor="@color/black"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Your password has been\n changed successfully"/>
+        android:text="@string/your_password_has_been_n_changed_successfully"/>
     <Button
         android:id="@+id/btn_sectorization_ok"
         android:layout_width="wrap_content"
@@ -31,5 +31,5 @@
         android:fontFamily="@font/bold"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:text="OK"/>
+        android:text="@string/ok"/>
 </LinearLayout>

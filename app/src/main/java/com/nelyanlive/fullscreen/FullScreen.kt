@@ -18,7 +18,6 @@ class FullScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_screen)
 
-
         if(intent.hasExtra("image"))
         {
             str = from_admin_image_base_URl +intent.getStringExtra("image")!!
@@ -36,9 +35,7 @@ class FullScreen : AppCompatActivity() {
         {
             str = intent.getStringExtra("productImage")!!
             Glide.with(this).asBitmap().load(str).error(R.mipmap.no_image_placeholder).into(ivMainImage)
-
         }
-
         ivCross.setOnClickListener { onBackPressed() }
 
     }

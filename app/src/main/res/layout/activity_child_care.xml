@@ -26,7 +26,7 @@
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="Child Care"/>
+            android:text="@string/child_care"/>
         <ImageView
             android:id="@+id/ivFilter"
             android:layout_width="wrap_content"

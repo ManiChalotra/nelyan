@@ -74,7 +74,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private val progressDialog = ProgressDialog(this)
 
 
-    //  String[] signup = {"Consultant", "Professional"};
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -96,10 +95,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
         launch (Dispatchers.Main.immediate){
             deviceToken = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token")).first()
-
-           // deviceToken = dataStoragePreference.emitStoredValue(preferencesKey<String>("fcmToken")).first()
-            Log.e("deviceToken", "==11===$deviceToken=====")
-
         }
     }
 
@@ -123,10 +118,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         if (intent.extras != null) {
 
             socialSignup = intent?.extras?.getString("socialLogin").toString()
-
-
-            Log.d("getImageRealPath", "---22------------$socialImage")
-
             imgPath = intent?.extras?.getString("socialImage").toString()
 
 
@@ -229,14 +220,14 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             }
 
             R.id.tvPrivacy -> {
-                if (!privacyPolicy_data.isEmpty() && !privacyPolicy_data.equals("") && privacyPolicy_data != null) {
+                if (!privacyPolicy_data.isEmpty() && privacyPolicy_data != "" && privacyPolicy_data != null) {
                     OpenActivity(PrivacyActivity::class.java) {
                         putString("cmsData", privacyPolicy_data)
                     }
                 }
             }
             R.id.tvTerms -> {
-                if (!termsConditipon_data.isEmpty() && !termsConditipon_data.equals("") && termsConditipon_data != null) {
+                if (!termsConditipon_data.isEmpty() && termsConditipon_data != "" && termsConditipon_data != null) {
                     OpenActivity(TermsActivity::class.java) {
                         putString("cmsData", termsConditipon_data)
                     }
@@ -257,13 +248,13 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         // imageType 1-> file , 2-> url
         val tsLong = System.currentTimeMillis() / 1000
         val currentTS = tsLong.toString()
-        Log.e("current", currentTS.toString())
+        Log.e("current", currentTS)
 
 
         if (imgPath.isNullOrEmpty()) {
             appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
                     currentTS, cityName, "1")
-            progressDialog.setProgressDialog()// signupProgressBar?.showProgressBar()
+            progressDialog.setProgressDialog()
         } else {
             // here image is of type URl
             appViewModel.sendcompleteSocialLogin_withImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
@@ -274,15 +265,11 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     }
 
     private fun showPlacePicker() {
-        // Initialize Places.
         Places.initialize(
                 applicationContext,
                 googleMapKey
         )
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this@SignupActivity)
-        // Set the fields to specify which types of place data to return.
-        val fields: List<Place.Field> = Arrays.asList(
+        val fields: List<Place.Field> = listOf(
                 Place.Field.ID,
                 Place.Field.NAME,
                 Place.Field.ADDRESS,
@@ -328,9 +315,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             val photo: MultipartBody.Part?
             photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
 
-
-            Log.e("sadfdfaf","==111111=====$imgPathNormal")
-
                 appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, deviceToken, mName,
                         mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
             }
@@ -369,17 +353,17 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
                     launch(Dispatchers.IO) {
                         dataStoragePreference.save(id, preferencesKey("id"))
-                        dataStoragePreference.save(email, preferencesKey<String>("emailLogin"))
-                        dataStoragePreference.save(name, preferencesKey<String>("nameLogin"))
-                        dataStoragePreference.save(password, preferencesKey<String>("passwordLogin"))
-                        dataStoragePreference.save(type, preferencesKey<String>("typeLogin"))
-                        dataStoragePreference.save(notificationStatus, preferencesKey<String>("notificationStatusLogin"))
-                        dataStoragePreference.save(image, preferencesKey<String>("imageLogin"))
-                        dataStoragePreference.save(phone, preferencesKey<String>("phoneLogin"))
-                        dataStoragePreference.save(authKey, preferencesKey<String>("auth_key"))
-                        dataStoragePreference.save(cityOrZipcode, preferencesKey<String>("cityLogin"))
-                        dataStoragePreference.save(latitude, preferencesKey<String>("latitudeLogin"))
-                        dataStoragePreference.save(longitude, preferencesKey<String>("longitudeLogin"))
+                        dataStoragePreference.save(email, preferencesKey("emailLogin"))
+                        dataStoragePreference.save(name, preferencesKey("nameLogin"))
+                        dataStoragePreference.save(password, preferencesKey("passwordLogin"))
+                        dataStoragePreference.save(type, preferencesKey("typeLogin"))
+                        dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
+                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                        dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
+                        dataStoragePreference.save(authKey, preferencesKey("auth_key"))
+                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                        dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
+                        dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
 
                     }
 
@@ -395,10 +379,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             }
         })
 
-        // for terms condition
         appViewModel.observeTermsConditionResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
 
-            //  appViewModel.observeTermsConditionResponse()!!.observe(this, Observer { response->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     Log.d("getContent_terms", "---------" + Gson().toJson(response.body()))
@@ -487,36 +469,26 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === PLACE_PICKER_REQUEST) {
-            if (resultCode === Activity.RESULT_OK) {
-                val place = Autocomplete.getPlaceFromIntent(data!!)
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    val place = Autocomplete.getPlaceFromIntent(data!!)
 
-                cityName = place.name.toString()
-                tv_city.setText(cityName.toString())
+                    cityName = place.name.toString()
+                    tv_city.setText(cityName.toString())
 
-                // cityID = place.id.toString()
-                cityLatitude = place.latLng?.latitude.toString()
-                cityLongitude = place.latLng?.longitude.toString()
+                    cityLatitude = place.latLng?.latitude.toString()
+                    cityLongitude = place.latLng?.longitude.toString()
 
-                Log.i(
-                        "dddddd",
-                        "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
-                )
-            } else if (resultCode === AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            } else if (resultCode === Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-                Log.i("dddddd", "-------Operation is cancelled ")
+                }
             }
         }
     }
 
     private fun settingSpinnerForTypeSelection() {
         category.add("")
-        category.add("Consultant")
-        category.add("Professional")
+        category.add(getString(R.string.consultant))
+        category.add(getString(R.string.professional))
         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter(this, R.layout.customspinner, category as List<String>)
         typeSelected!!.adapter = arrayAdapter
     }
@@ -525,7 +497,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun getRealImagePath(imagePath: String?) {
-        Log.d("getImageRealPath", "---11------------$imagePath")
         imgPath = imagePath.toString()
         imgPathNormal = imagePath.toString()
         Glide.with(this).asBitmap().load(imgPath).circleCrop().into(iv_uploader)

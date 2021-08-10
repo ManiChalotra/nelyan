@@ -2,13 +2,11 @@ package com.nelyanlive.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.utils.*
@@ -64,11 +62,11 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
                 val confirmPassword = et_confirmPassword.text.toString()
                 if (Validation.checkoldPassword(oldPassword, this)) {
                     if (Validation.checkNewPassword(newPassword, this)) {
-                        if (!confirmPassword.isEmpty()) {
-                            if (newPassword.equals(confirmPassword)) {
+                        if (confirmPassword.isNotEmpty()) {
+                            if (newPassword == confirmPassword) {
                                 hitChangePasswordApi(oldPassword, newPassword)
-
-                            } else {
+                            }
+                            else {
                                 myCustomToast(getString(R.string.password_donot_match_error))
                             }
                         } else {
@@ -76,7 +74,6 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
                         }
                     }
                 }
-                //showDailog()
             }
 
         }
@@ -92,7 +89,6 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
         appViewModel.observeChangePasswordResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if(response.body()!= null){
-                    Log.d("chnagepassowrdRewsponse", "-------"+ Gson().toJson(response.body()))
                     val mResponse= response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
@@ -111,16 +107,15 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Corout
         })
     }
 
-    fun showDailog() {
+    private fun showDailog() {
         val dialog = Dialog(this@ChangePasswordActivity)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.alert_change_pass)
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
-        val btnOk: Button
-        btnOk = dialog.findViewById(R.id.btn_sectorization_ok)
-        btnOk.setOnClickListener { //   mContext.startActivity(new Intent(mContext, SettingsActivity.class));
-            finish()// finish the activity
+        val btnOk: Button = dialog.findViewById(R.id.btn_sectorization_ok)
+        btnOk.setOnClickListener {
+            finish()
             dialog.dismiss()
         }
         dialog.show()

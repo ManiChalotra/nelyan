@@ -34,9 +34,6 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     var list: ArrayList<Int>? = null
     var listtext: ArrayList<Int>? = null
     var text: ArrayList<Int>? = null
-    var tv: TextView? = null
-    var tv_walk: TextView? = null
-    var tv_walkdesc: TextView? = null
     var login: LinearLayout? = null
     var signup: LinearLayout? = null
 
@@ -80,14 +77,14 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
             override fun onPageSelected(position: Int) {}
             override fun onPageScrollStateChanged(state: Int) {}
         })
-        login!!.setOnClickListener(View.OnClickListener {
+        login!!.setOnClickListener {
             val i = Intent(this@WalkthroughActivity, SignupActivity::class.java)
             startActivity(i)
-        })
-        signup!!.setOnClickListener(View.OnClickListener {
+        }
+        signup!!.setOnClickListener {
             val i = Intent(this@WalkthroughActivity, LoginActivity::class.java)
             startActivity(i)
-        })
+        }
     }
 
     private  fun checkCredentails(){

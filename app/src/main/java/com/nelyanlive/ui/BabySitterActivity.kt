@@ -53,7 +53,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     private var childCareType = ""
     private var childCareId = ""
 
-
     private var authKey = ""
     private var maternalName = ""
     private var placeSpin = ""
@@ -66,7 +65,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
     var imageVideoUrlListing = arrayListOf("", "", "", "", "")
 
     private var imageVideoListPosition = -1
-
 
     private var imagePathList = ArrayList<MultipartBody.Part>()
 
@@ -105,9 +103,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             }
         } else {
             showSnackBar(this@BabySitterActivity, getString(R.string.no_internet_error))
-
-        }
-    }
+        } }
 
 
     private fun initalizeClicks() {
@@ -128,7 +124,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             countryCodee = countycode_baby_sitter.selectedCountryCode.toString()
         }
         checkMvvmResponse()
-
     }
 
     override fun onClick(v: View?) {
@@ -163,7 +158,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     if(!imageSelected && imageVideoUrlListing[i].isNotEmpty()) imageSelected = true
                 }
 
-
                 if (!imageSelected) {
                     myCustomToast(getString(R.string.select_image_video_error))
                 } else {
@@ -176,27 +170,24 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             if (placeSpin.isEmpty()) {
                                 myCustomToast(getString(R.string.places_number_error))
                             } else {
-
                                     if (address_baby_sitter.isEmpty()) {
                                         myCustomToast(getString(R.string.address_missing_error))
                                     }
                                     else {
                                         if (descp_baby_sitter.isEmpty()) {
                                             myCustomToast(getString(R.string.description_missing))
-                                        } else {
+                                        }
+                                        else {
                                             when (childCareType) {
                                                 "Nursery" -> {
                                                     childCareId = "1"
-
                                                 }
                                                 "Maternal Assistant" -> {
                                                     childCareId = "2"
-
                                                 }
                                                 "Baby Sitter" -> {
                                                     childCareId = "3"
-                                                }
-                                            }
+                                                } }
 
                                             // checking the list
                                             if (selectedUrlListing.size == urlListingFromResponse.size) {
@@ -212,35 +203,19 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                                 val media = imageVideoUrlListing[i]
                                                 if (media.isNotEmpty()) {
                                                     selectedUrlListing.add(media)
-                                                }
-                                            }
-                                            Log.d("selectedUpperimages",
-                                                "-------------------$selectedUrlListing"
-                                            )
+                                                } }
 
                                             if (isImageUploaded == "" && isImageUploaded !=null) {
                                                 hitApiForBannerImages(0)
-                                            }else {
-                                                hitFinallyActivityAddPostApi()
                                             }
-                                        }
-                                    }
-                              //  }
-                            }
-                        }
-
-                    }
-
-                }
-
-
-            }
-
+                                            else
+                                            {
+                                                hitFinallyActivityAddPostApi()
+                                            } } }} } } } }
 
             R.id.et_addressBabySitter -> {
                 showPlacePicker()
-            }
-        }
+            } }
     }
 
     override fun getRealImagePath(imgPath: String?) {
@@ -260,14 +235,10 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             "3" -> {
                 setImageOnTab(imgPath, ivImg2)
                 imageVideoUrlListing[2] = imgPath.toString()
-            }
-
-        }
-
+            } }
     }
 
     private fun setImageOnTab(imgPATH: String?, imageview: ImageView?) {
-        Log.d("getimage", "---------" + imgPATH.toString())
 
         when (IMAGE_SELECTED_TYPE) {
 
@@ -279,8 +250,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             }
             "3" -> {
                 checkVideoButtonVisibility(imgPATH.toString(), iv_video013)
-            }
-        }
+            } }
 
         Glide.with(this).asBitmap().load(imgPATH).into(imageview!!)
     }
@@ -300,14 +270,12 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
         if (imageVideoListPosition <= selectedUrlListing.size - 1) {
 
-
             if (imagePathList != null) {
                 imagePathList.clear()
-            } else {
-                imagePathList = java.util.ArrayList()
-
             }
-
+            else {
+                imagePathList = java.util.ArrayList()
+            }
 
             var mfile: File?
             for (i in 0 until selectedUrlListing.size) {
@@ -318,16 +286,13 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 imagePathList.add(photo)
             }
 
-
             val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
 
             val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
             appViewModel.sendUploadImageData(type, users, imagePathList)
             progressDialog.setProgressDialog()
 
-
-        }
-    }
+        } }
 
 
     private fun checkMvvmResponse() {
@@ -359,7 +324,8 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                         if (urlListingFromResponse != null) {
                             urlListingFromResponse.clear()
-                        } else {
+                        }
+                        else {
                             urlListingFromResponse = ArrayList()
                         }
 
@@ -367,7 +333,8 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         if (mlist.isNullOrEmpty()) {
                             mlist = ArrayList()
                         }
-                        else {
+                        else
+                        {
                             makeImageJsonArray(mlist)
                         }
 
@@ -388,13 +355,11 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     finishAffinity()
                     OpenActivity(HomeActivity::class.java)
                     myCustomToast(response.message())
-                }
-            } else {
+                } }
+            else {
                 progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
-            }
-        })
-
+            } })
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
@@ -412,26 +377,23 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             json.put("file_type", "image")
             media.put(json)
 
-        }
-    }
+        } }
 
     private fun hitFinallyActivityAddPostApi() {
         if (checkIfHasNetwork(this)) {
             appViewModel.sendMaternalPost_Data(security_key, authKey, "2", childCareId, maternalName, "hah@gmail.com",
                     placeSpin, countryCodee, phoneNumber, cityAddress, descp_baby_sitter, cityName, cityLatitude, cityLongitude,
                     media.toString())
-        } else {
-            showSnackBar(this, getString(R.string.no_internet_error))
         }
-    }
-
+        else {
+            showSnackBar(this, getString(R.string.no_internet_error))
+        } }
 
     private fun showPlacePicker() {
         Places.initialize(applicationContext, googleMapKey)
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -441,7 +403,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 Activity.RESULT_OK -> {
                     val place = Autocomplete.getPlaceFromIntent(data!!)
 
-
                     cityLatitude = place.latLng?.latitude.toString()
                     cityLongitude = place.latLng?.longitude.toString()
                     val geocoder = Geocoder(this, Locale.getDefault())
@@ -449,16 +410,11 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
                     cityAddress = place.address.toString()
                     et_addressBabySitter.setText(cityAddress)
-                }
-            }
-        }
-
-    }
+                } } } }
 
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
     }
-
 
 }

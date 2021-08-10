@@ -126,7 +126,7 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
                         android:paddingStart="@dimen/_20sdp"
-                        android:text="Home"
+                        android:text="@string/home"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -139,24 +139,14 @@
                         android:text="@string/my_ads"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
-                    <!--
-                            <TextView
-                                android:id="@+id/tvAlert"
-                                style="@style/CommonTextWrapcontent"
-                                android:layout_marginTop="@dimen/_20sdp"
-                                android:fontFamily="@font/semibold"
-                                android:paddingLeft="@dimen/_20sdp"
-                                android:text="My Alert"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_14sdp" />-->
 
                     <TextView
                         android:id="@+id/tvFavorite"
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:text="Favorite"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/favorite"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -165,8 +155,8 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:text="Profile"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/profile"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -175,8 +165,8 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:text="Contact Us"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/contact_us"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -186,7 +176,7 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
                         android:paddingStart="@dimen/_20sdp"
-                        android:text="Notification"
+                        android:text="@string/notification"
                         android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
@@ -196,8 +186,8 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:text="Settings"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/settings"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -206,8 +196,8 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:text="Logout"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/logout"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
                 </LinearLayout>

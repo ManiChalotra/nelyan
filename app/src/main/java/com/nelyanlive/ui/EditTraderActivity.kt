@@ -144,7 +144,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             dayTimeModelArrayList = intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
             productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
-           // makeJsonArray()
 
 
             if(productDetailDataModelArrayList.isEmpty()) productDetailDataModelArrayList.add(TraderProductMyAds("",0,"","","",0))
@@ -238,18 +237,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         }
     }
 
-    private fun makeJsonArray() {
-        for (i in 0 until dayTimeModelArrayList.size) {
-            val json = JSONObject()
-            json.put("day_name", dayTimeModelArrayList[i].day)
-            json.put("time_from", dayTimeModelArrayList[i].startTime)
-            json.put("time_to", dayTimeModelArrayList[i].endTime)
-            json.put("secondStartTime", dayTimeModelArrayList[i].secondStartTime)
-            json.put("secondEndTime", dayTimeModelArrayList[i].secondEndTime)
-            selectDayGroup.put(json)
-        }
-
-    }
 
 
 
@@ -343,7 +330,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     response.body()
                     progressDialog.hidedialog()
                     finishAffinity()
-                    myCustomToast("Post Updated Successfully")
+                    myCustomToast(getString(R.string.post_updated))
                     OpenActivity(HomeActivity::class.java)
 
                 }
@@ -442,18 +429,18 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                                             var dayErrorString = ""
                                             dayErrornumber = 0
-                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].selectedDay,dayErrorString,"Please select day in previous data",1)
-                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstStarttime,dayErrorString,"Please fill morning time in previous data",2)
-                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstEndtime,dayErrorString,"Please fill morning time in previous data",3)
-                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondStarttime,dayErrorString,"Please fill evening time in previous data",4)
-                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondEndtime,dayErrorString,"Please fill evening time in previous data",5)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].selectedDay,dayErrorString,getString(R.string.select_day_previous),1)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstStarttime,dayErrorString,getString(R.string.select_morning_time_previous),2)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].firstEndtime,dayErrorString,getString(R.string.select_morning_time_previous),3)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondStarttime,dayErrorString,getString(R.string.select_evening_time_previous),4)
+                                            dayErrorString =  getDayError(dayTimeList[dayTimeList.size-1].secondEndtime,dayErrorString,getString(R.string.select_evening_time_previous),5)
 
                                             var productErrorString = ""
                                             productErrorNumber = 0
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image,productErrorString,"Please select image in previous data",1)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].title,productErrorString,"Please fill title in previous data",2)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].price,productErrorString,"Please fill price in previous data",3)
-                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description,productErrorString,"Please fill description in previous data",4)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].image,productErrorString,getString(R.string.select_image_in_previous),1)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].title,productErrorString,getString(R.string.fill_title_previous),2)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].price,productErrorString,getString(R.string.fill_price_previous),3)
+                                            productErrorString =  getProductError(productDetailDataModelArrayList[productDetailDataModelArrayList.size-1].description,productErrorString,getString(R.string.fill_description_in_previous),4)
 
                                             if(dayErrornumber!=0 && dayErrorString.isNotEmpty())
                                             {
@@ -566,10 +553,10 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     override fun ontraderItemClick(list: ArrayList<TraderProductMyAds>, pos: Int) {
         when {
-            productDetailDataModelArrayList[list.size-1].image.isEmpty() -> { myCustomToast("Please select image in previous data") }
-            productDetailDataModelArrayList[list.size-1].title.isEmpty() -> { myCustomToast("Please fill Title in previous data")}
-            productDetailDataModelArrayList[list.size-1].price.isEmpty() -> { myCustomToast("Please fill price in previous data")}
-            productDetailDataModelArrayList[list.size-1].description.isEmpty() -> { myCustomToast("Please fill description in previous data")}
+            productDetailDataModelArrayList[list.size-1].image.isEmpty() -> { myCustomToast(getString(R.string.select_image_in_previous)) }
+            productDetailDataModelArrayList[list.size-1].title.isEmpty() -> { myCustomToast(getString(R.string.fill_title_previous))}
+            productDetailDataModelArrayList[list.size-1].price.isEmpty() -> { myCustomToast(getString(R.string.fill_price_previous))}
+            productDetailDataModelArrayList[list.size-1].description.isEmpty() -> { myCustomToast(getString(R.string.fill_description_in_previous))}
             else -> {  productDetailDataModelArrayList.add(TraderProductMyAds("", 0, "", "", "", 0))
                 productDetailRepeatAdapter.notifyDataSetChanged()
             }
@@ -584,11 +571,11 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     override fun dayTimeAdd(list: java.util.ArrayList<DayTimeModel>, position: Int) {
         when {
-            dayTimeList[list.size-1].selectedDay!!.isEmpty() -> { myCustomToast("Please select day in previous data") }
-            dayTimeList[list.size-1].firstStarttime!!.isEmpty() -> { myCustomToast("Please fill morning time in previous data")}
-            dayTimeList[list.size-1].firstEndtime!!.isEmpty() -> { myCustomToast("Please fill morning time in previous data")}
-            dayTimeList[list.size-1].secondStarttime!!.isEmpty() -> { myCustomToast("Please fill evening time in previous data")}
-            dayTimeList[list.size-1].secondEndtime!!.isEmpty() -> { myCustomToast("Please fill evening time in previous data")}
+            dayTimeList[list.size-1].selectedDay!!.isEmpty() -> { myCustomToast(getString(R.string.select_day_previous)) }
+            dayTimeList[list.size-1].firstStarttime!!.isEmpty() -> { myCustomToast(getString(R.string.select_morning_time_previous))}
+            dayTimeList[list.size-1].firstEndtime!!.isEmpty() -> { myCustomToast(getString(R.string.select_morning_time_previous))}
+            dayTimeList[list.size-1].secondStarttime!!.isEmpty() -> { myCustomToast(getString(R.string.select_evening_time_previous))}
+            dayTimeList[list.size-1].secondEndtime!!.isEmpty() -> { myCustomToast(getString(R.string.select_evening_time_previous))}
             else -> {  dayTimeList.add(DayTimeModel("","","","",""))
                 dayTimeAdapter.notifyDataSetChanged()
             }

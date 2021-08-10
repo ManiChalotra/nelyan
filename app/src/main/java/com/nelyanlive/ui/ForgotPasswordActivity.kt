@@ -20,7 +20,6 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     private val progressDialog by lazy { ProgressDialog(this) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
@@ -43,21 +42,16 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
                 val email = tv_emailForgetPassword.text.toString()
                 if (Validation.checkEmail(email, this)) {
                     hitForgetPassowrdApi(email)
-                }
-
-            }
-
-        }
-    }
+                } } } }
 
     private fun hitForgetPassowrdApi(email: String) {
         if (checkIfHasNetwork(this@ForgotPasswordActivity)) {
             appViewModel.sendForgetPasswordData(security_key, email)
-            progressDialog.setProgressDialog()//forgetPasswordProgressBar?.showProgressBar()
-        } else {
-            showSnackBar(this@ForgotPasswordActivity, getString(R.string.no_internet_error))
+            progressDialog.setProgressDialog()
         }
-    }
+        else {
+            showSnackBar(this@ForgotPasswordActivity, getString(R.string.no_internet_error))
+        } }
 
     private fun checkMvvmResponse() {
         appViewModel.observeForgetPasswordResponse()!!.observe(this, Observer { response ->
@@ -68,27 +62,23 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
                     val mResponse = response.body()!!.toString()
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
-                    Log.d("dkjhfkjhdh", "-------" + message)
+                    Log.d("dkjhfkjhdh", "-------$message")
 
-                    progressDialog.hidedialog()// forgetPasswordProgressBar?.hideProgressBar()
+                    progressDialog.hidedialog()
                     myCustomToast("Email has been sent to your registered email")
                     onBackPressed()
                 } else {
                     progressDialog.hidedialog()
                     ErrorBodyResponse(response, this, null)
-                }
-            } else {
+                } }
+            else {
                 progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
-
-            }
-        }
-
-        )
+            } })
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
-            progressDialog.hidedialog()//forgetPasswordProgressBar?.hideProgressBar()
+            progressDialog.hidedialog()
         })
 
     }

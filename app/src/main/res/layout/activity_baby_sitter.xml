@@ -244,8 +244,6 @@
             <EditText
                 android:id="@+id/et_maternalName"
                 style="@style/SimpleEdittext"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
                 android:hint="@string/enter_name"
                 android:imeOptions="actionNext"
                 android:inputType="text"
@@ -264,7 +262,6 @@
             <EditText
                 android:id="@+id/et_number_of_places"
                 style="@style/SimpleEdittext"
-                android:layout_toRightOf="@+id/countycode_baby_sitter"
                 android:digits="0123456789"
                 android:hint="@string/enter_number_of_places"
                 android:imeOptions="actionNext"
@@ -323,7 +320,7 @@
                 <EditText
                     android:id="@+id/et_phoneNumber"
                     style="@style/SimpleEdittext"
-                    android:layout_toRightOf="@+id/countycode_baby_sitter"
+                    android:layout_toEndOf="@+id/countycode_baby_sitter"
                     android:digits="0123456789"
                     android:hint="@string/phone_number"
                     android:imeOptions="actionNext"

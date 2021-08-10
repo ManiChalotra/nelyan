@@ -3,7 +3,6 @@ package com.nelyanlive.HELPER;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -12,20 +11,15 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-
 import com.gun0912.tedpermission.BuildConfig;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.nelyanlive.R;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -38,12 +32,8 @@ public abstract class image extends AppCompatActivity {
     Dialog dialog;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri mImageUri;
-    private SharedPreferences sharedPreferences;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    File imgFile;
     Bitmap bitmap;
-    Bitmap imag;
-    ImageView profileimage;
     private String encodedImage,pictureFilePath,kk,strIMg="";
 
     public void image(String type)
@@ -65,24 +55,9 @@ public abstract class image extends AppCompatActivity {
             LinearLayout take_photo = dialog.findViewById(R.id.take_photo);
             LinearLayout gallery = dialog.findViewById(R.id.gallery);
             LinearLayout cancel = dialog.findViewById(R.id.cancel);
-            take_photo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    camera();
-                }
-            });
-            gallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openFileChooser();
-                }
-            });
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
+            take_photo.setOnClickListener(v -> camera());
+            gallery.setOnClickListener(v -> openFileChooser());
+            cancel.setOnClickListener(v -> dialog.dismiss());
         }
 
     }

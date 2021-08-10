@@ -72,7 +72,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     override fun onResume() {
         super.onResume()
 
-        if ((tvFilter.text == "Filter")) {
+        if ((tvFilter.text == getString(R.string.filter))) {
             launch(Dispatchers.Main.immediate) {
                 latitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
@@ -150,14 +150,14 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
         tvFilter.setOnClickListener {
 
-            if (tvFilter.text == "Filter") {
+            if (tvFilter.text == getString(R.string.filter)) {
                 val i =
                     Intent(this, ActivitiesFilterActivity::class.java).putExtra("name", "Activity")
                 startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
             } else {
 
                 if (checkIfHasNetwork(this)) {
-                    tvFilter.text = "Filter"
+                    tvFilter.text = getString(R.string.filter)
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
                             dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
@@ -206,7 +206,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if (resultCode == 1213) {
 
-                tvFilter.text = "Clear Filter"
+                tvFilter.text = getString(R.string.clear_filter)
 
                 val returnName = data!!.getStringExtra("name")
                 val returnLocation = data.getStringExtra("location")

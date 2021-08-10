@@ -28,7 +28,7 @@
             android:layout_marginRight="@dimen/_20sdp"
             android:fontFamily="@font/medium"
             android:gravity="center"
-            android:text="Are you sure want to delete Chat?"
+            android:text="@string/are_you_sure_want_to_delete_chat"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 

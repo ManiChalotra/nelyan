@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -159,7 +158,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun callBadgeService(authorization: String) {
         if (checkIfHasNetwork(this)) {
-            Log.d("homeAuthKey--11---", "----------$authorization----$security_key")
 
             appViewModel.badgeApiData(security_key, authorization)
         }
@@ -173,7 +171,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
-                    //{"success":1,"code":200,"msg":"My Message Status","data":{"status":1}}
                     Log.e("observeBadgeApiResponse", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
@@ -184,18 +181,13 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     if(status=="1") ivBadge.visibility = View.VISIBLE
 
                 }
-
             }
         })
-
     }
-
-
     override fun onStart() {
         super.onStart()
         val serviceIntent = Intent(this, LocationService::class.java)
         bindService(serviceIntent, foregroundOnlyServiceConnection, Context.BIND_AUTO_CREATE)
-
     }
 
     override fun onStop() {
@@ -234,8 +226,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             homeFusedLocation.lastLocation.addOnSuccessListener {
                     location : Location? ->
-                Log.e("location_changed", "==home=====${location}=======")
-
             }
         }
 
@@ -281,64 +271,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         OpenActivity(ActivitiesFilterActivity::class.java)
                     }
                 }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "sectrofrag") {
-                        fragment = SectorizationDetailsFragment()
-                        loadFragment(fragment)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "activity") {
-                        Log.e("vghgv", "hhhhhhh")
-                        fragment = ChildCareFragment()
-                        val args = Bundle()
-                        args.putString("child", "childcare")
-                        fragment.arguments = args
-                        val fragmentManager = this.supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.frame_container, fragment)
-                        fragmentTransaction.commit()
-                    }
-                }
+
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "nurFrag") {
                         OpenActivity(HomeChildCareDetailsActivity::class.java)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                if (intent.getStringExtra("activity") == "tarfrag") {
-                        fragment = TraderPublishFragment()
-                        val args = Bundle()
-                        args.putString("activity", "traderfragment")
-                        fragment.arguments = args
-                        val fragmentManager = this.supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.frame_container, fragment)
-                        fragmentTransaction.commit()
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "mater") {
-                        fragment = MaternalFragmentFragment()
-                        loadFragment(fragment)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "babyfrag") {
-                        fragment = BabySitterFragment()
-                        loadFragment(fragment)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "nur") {
-                        OpenActivity(NurserieActivityy::class.java)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "seclist") {
-                        fragment = SectorizationListFragment()
-                        loadFragment(fragment)
-
                     }
                 }
                 if (intent.hasExtra("activity")) {
@@ -470,7 +406,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.e("fasfasfa", "======$currentFragment")
 
         if(currentFragment is ChatFrag ) {
-            Log.e("fasfasfa", "======ChatFrag")
             currentFragment.groupChatVM.disconnectSocket()
         }
         if(currentFragment is MessageFragment )
@@ -510,7 +445,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if (currentFragment !is PublisherFrag) {
                     launch(Dispatchers.Main.immediate) {
                   val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-                         Log.e("publier ------", "---111------------$userType2----")
                         if (userType2 == "2") {
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
@@ -534,7 +468,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                    val list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
 
                     tvTitleToolbar!!.text =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
-                    //tvTitleToolbar!!.text = userlocation
                     fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
                     loadFragment(fragment)
                 }
@@ -585,7 +518,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return
             }
             else {
-                myCustomToast("press once again to exit from the App.")
+                myCustomToast(getString(R.string.press_again_to_exit))
             }
             doubleBackToExitPressedOnce = true
             Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
@@ -602,7 +535,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun hitLogoutApi() {
 
-        Log.d("logoutResponse", "-----1111----$authorization")
         appViewModel.sendLogoutData(security_key, authorization)
         homeProgressBar?.showProgressBar()
     }

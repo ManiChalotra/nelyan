@@ -19,7 +19,6 @@ class TermsActivity : AppCompatActivity() {
         super.onResume()
         data = intent?.extras?.getString("cmsData").toString()
         data = Html.fromHtml(data).toString()
-        Log.d("datassss__terms", "-------$data")
         tv_termsTEXT.text = data
 
 
@@ -30,6 +29,6 @@ class TermsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_terms)
         mContext = this
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
     }
 }

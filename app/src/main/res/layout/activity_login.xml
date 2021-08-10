@@ -42,7 +42,7 @@
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/bold"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
@@ -50,7 +50,7 @@
                 style="@style/CommonTextMatchparent"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/medium"
-                android:text="Email"
+                android:text="@string/Email"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -60,7 +60,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/transparent"
                 android:gravity="bottom"
-                android:hint="Email"
+                android:hint="@string/Email"
                 android:inputType="textWebEmailAddress"
                 android:maxLines="1"
                 android:textColor="@color/black"
@@ -76,7 +76,7 @@
                 style="@style/CommonTextMatchparent"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/medium"
-                android:text="Password"
+                android:text="@string/password"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:fontFamily="@font/regular"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textWebPassword"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey"
@@ -148,7 +148,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Forgot Password?"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
             </RelativeLayout>
@@ -161,7 +161,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_3sdp"
                 android:background="@drawable/btn"
-                android:text="LOGIN" />
+                android:text="@string/login" />
 
 
             <LinearLayout
@@ -183,7 +183,7 @@
                     android:layout_marginLeft="@dimen/_2sdp"
                     android:layout_marginRight="@dimen/_2sdp"
                     android:fontFamily="@font/semibold"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:textColor="@color/black" />
 
                 <View

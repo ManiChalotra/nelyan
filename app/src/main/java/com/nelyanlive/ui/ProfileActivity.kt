@@ -119,7 +119,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                         putString("authorization", authKey)
                     }
                 }else{
-                    myCustomToast("Please wait for a while to load all data from server ")
+                    myCustomToast(getString(R.string.wait_a_while_to_load_all_data))
                 }
 
             }

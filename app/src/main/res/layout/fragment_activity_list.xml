@@ -94,7 +94,7 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingRight="@dimen/_20sdp"
             android:paddingBottom="@dimen/_2sdp"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 

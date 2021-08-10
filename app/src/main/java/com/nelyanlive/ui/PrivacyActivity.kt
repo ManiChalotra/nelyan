@@ -17,7 +17,7 @@ class PrivacyActivity : AppCompatActivity() {
         super.onResume()
         data = intent?.extras?.getString("cmsData").toString()
         data = Html.fromHtml(data).toString()
-        Log.d("datassss__privacy", "-------"+ data)
+        Log.d("datassss__privacy", "-------$data")
         tv_privacyPolicyTExt.text = data
 
     }
@@ -30,6 +30,6 @@ class PrivacyActivity : AppCompatActivity() {
 
 
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
     }
 }

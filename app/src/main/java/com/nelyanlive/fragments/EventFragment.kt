@@ -61,7 +61,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         if (listner != null) {
             listner!!.onFargmentActive(5)
         }
-        if (tvFilter!!.text == "Filter") {
+        if (tvFilter!!.text == getString(R.string.filter)) {
 
             latitude = userLat
             longitude = userLong
@@ -101,7 +101,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         rc = v.findViewById(R.id.rc_event)
         tvFilter = v.findViewById(R.id.tvFilter)
         tvFilter!!.setOnClickListener {
-            if (tvFilter!!.text == "Filter") {
+            if (tvFilter!!.text == getString(R.string.filter)) {
                 val intent =
                     Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra(
                         "name",
@@ -109,7 +109,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     )
                 startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
             } else {
-                tvFilter!!.text = "Filter"
+                tvFilter!!.text = getString(R.string.filter)
                 (mContext as HomeActivity).tvTitleToolbar!!.text =
                     getString(R.string.upcoming_events) + "\n" + locality
 
@@ -169,7 +169,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
 
         if (requestCode == FILTER_ACTIVITY_REQUEST_CODE) {
             if (resultCode == 1212) {
-                tvFilter!!.text = "Clear Filter"
+                tvFilter!!.text = getString(R.string.clear_filter)
 
                 val returnName = data!!.getStringExtra("name")
                 val returnLocation = data.getStringExtra("location")

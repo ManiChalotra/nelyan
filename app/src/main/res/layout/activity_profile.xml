@@ -40,7 +40,7 @@
             <TextView
                 style="@style/HeaderText"
                 android:layout_centerInParent="true"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textColor="@color/black" />
         </RelativeLayout>
 
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/semibold"
                         android:paddingStart="@dimen/_5sdp"
-                        android:text="Edit"
+                        android:text="@string/edit"
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
@@ -123,7 +123,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:fontFamily="@font/semibold"
                         android:paddingStart="@dimen/_5sdp"
-                        android:text="Delete"
+                        android:text="@string/delete"
                         android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
@@ -131,7 +131,7 @@
                 <TextView
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_10sdp" />
 
@@ -145,7 +145,7 @@
                 <TextView
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Email"
+                    android:text="@string/Email"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_10sdp" />
 
@@ -160,7 +160,7 @@
                 <TextView
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="City Name"
+                    android:text="@string/city_name"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_10sdp" />
 

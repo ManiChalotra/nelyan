@@ -63,7 +63,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
     override fun onResume() {
         super.onResume()
 
-        if (tvFilter.text == "Filter") {
+        if (tvFilter.text == getString(R.string.filter)) {
             launch(Dispatchers.Main.immediate) {
                 latitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
@@ -239,12 +239,12 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
             R.id.tvFilter -> {
-                if (tvFilter.text == "Filter") {
+                if (tvFilter.text == getString(R.string.filter)) {
                     val i = Intent(this, TraderFilterActivity::class.java)
                     startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
                 }
                 else {
-                    tvFilter.text = "Filter"
+                    tvFilter.text = getString(R.string.filter)
                     if (checkIfHasNetwork(this)) {
                         launch(Dispatchers.Main.immediate) {
                             val authKey =
@@ -275,7 +275,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if (resultCode == 1215) {
-                tvFilter.text = "Clear Filter"
+                tvFilter.text = getString(R.string.clear_filter)
                 val returnName = data!!.getStringExtra("name")
                 val returnLocation = data.getStringExtra("location")
                 val returnDistance = data.getStringExtra("distance")

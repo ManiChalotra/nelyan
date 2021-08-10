@@ -172,7 +172,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 if (Validation.checkEmail(email, this)) {
                     if (Validation.checkEmptyPassword(password, this)) {
 
-                       // if(clicked) {
                             val dataStoragePreference =
                                 DataStoragePreference(AppController.getInstance())
                             launch {
@@ -186,7 +185,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                                 )
 
                             }
-                       // }
                             hitLoginApi(email, password)
                     }
                 }
@@ -202,16 +200,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     clicked = true
                     iv_tickButton.setImageResource(R.drawable.tick)
 
-
-
-                    //save
-
-
                 } else {
                     clicked = false
                     iv_tickButton.setImageResource(R.drawable.fill_check)
-
-                    //remove
 
                 }
 
@@ -221,21 +212,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     isFb = "fb"
                     facebookHelper!!.login(this)
                 } else {
-                    showSnackBar(this, "No Internet Connection")
+                    showSnackBar(this, getString(R.string.no_internet_error))
                 }
             }
 
             R.id.ll_google_login -> {
                 if (checkIfHasNetwork(this@LoginActivity)) {
                     isFb = "google"
-                  //  googleHelper.signOut()
-                  //  googleHelper.signIn()
 
                     val signInIntent = mGoogleSignInClient.signInIntent
                     startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
 
                 } else {
-                    showSnackBar(this, "No Internet Connection")
+                    showSnackBar(this,getString(R.string.no_internet_error))
                 }
             }
         }
@@ -245,7 +234,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
         val tsLong = System.currentTimeMillis() / 1000
         val currentTS = tsLong.toString()
-       // Log.e("current", currentTS)
         Log.e("deviceToken", "=====$deviceToken=====")
 
         if (checkIfHasNetwork(this@LoginActivity)) {
@@ -334,10 +322,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 if (response.body() != null) {
                     progressDialog.hidedialog()
 
-                    Log.d("socialData", "-----------------$socialName")
-                    Log.d("socialData", "-----------------$socialEmail")
-                    Log.d("socialData", "-----------------$socialImage")
-                    Log.d("socialLogin ", "---------" + Gson().toJson(response.body()))
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
                     val message = jsonObject.get("msg").toString()
@@ -470,23 +454,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.d("onctivityResult", "---rqcode--------$requestCode")
-        Log.d("onctivityResult", "------rlcode-----$resultCode")
-        Log.d("onctivityResult", "-------d----$data")
-
         if (isFb == "fb") {
             facebookHelper!!.onResult(requestCode, resultCode, data)
         }
 
         if (isFb == "google") {
 
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
 
 
-          //  googleHelper.onResult(requestCode, resultCode, data)
         }
 
     }
@@ -497,7 +474,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
             override fun onSuccessGoogle(account: GoogleSignInAccount) {
                 try {
-                    Log.i("GoogleHelper", "" + account)
                     var photo = ""
                     if (account.photoUrl != null) {
                         photo = account.photoUrl.toString()
@@ -509,27 +485,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         socialName = account.displayName!!
                         socialType = FOR_GOOGLE_TYPE
 
-                        Log.d("googleDetail", "-------------name------$socialName")
-                        Log.d("googleDetail", "-------------email------$socialEmail")
-                        Log.d("googleDetail", "-------------image------$socialImage")
-                        Log.d("googleDetail", "-------------id------$socialId")
-
                         appViewModel.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
 
                     } catch (e: Exception) {
-                        Log.d("GoogleException", "-----------$e")
                     }
                 } catch (ex: Exception) {
                     ex.localizedMessage
-                    Log.d("gooleException", "---------" + ex.localizedMessage)
                 }
             }
 
             override fun onErrorGoogle() {
-
-                myCustomToast("Cancel Google Login")
-
-
+               // myCustomToast("Cancel Google Login")
             }
         })
 
@@ -541,7 +507,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         try {
             val account = completedTask.getResult(ApiException::class.java)
             mGoogleSignInClient.signOut()
-            Log.e("handleSignInResult", "===${account!!.photoUrl}+===${account.id}=+==${account.displayName}==== ${account.givenName}====${account.email}")
             var photo = ""
             if (account.photoUrl != null) {
                 photo = account.photoUrl.toString()
@@ -552,11 +517,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 socialEmail = account.email!!
                 socialName = account.displayName!!
               //  socialType = FOR_GOOGLE_TYPE
-
-                Log.d("googleDetail", "-------------name------$socialName")
-                Log.d("googleDetail", "-------------email------$socialEmail")
-                Log.d("googleDetail", "-------------image------$socialImage")
-                Log.d("googleDetail", "-------------id------$socialId")
 
                 appViewModel.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
 
@@ -570,8 +530,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
 
         } catch (e: ApiException) {
-            Log.e("handleSignInResult", "signInResult:failed code=" + e.statusCode)
-            Log.e("handleSignInResult", "signInResult:failed code=" + e.message)
         }
 
     }

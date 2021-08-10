@@ -57,9 +57,6 @@ import kotlin.coroutines.CoroutineContext
 
 class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, OnMapReadyCallback {
 
-    var tvTue: TextView? = null
-    var tvWed: TextView? = null
-    var tvSat: TextView? = null
     var iv_msg: ImageView? = null
     var iv_share: ImageView? = null
     var rvActivtiesImages: RecyclerView? = null
@@ -83,13 +80,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
     private var listUpcomingEvents = ArrayList<PostDetailsEvents>()
     private var listUpcomingEventsTimings = ArrayList<PostDetailsEventstiming>()
 
-
-    private val job by lazy {
-        Job()
-    }
+    private val job by lazy { Job() }
 
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,12 +114,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                     MotionEvent.ACTION_MOVE -> {
                         nvsMain.requestDisallowInterceptTouchEvent(true)
                         return false
-                    }
-                }
+                    } }
                 return true
             }
-
-
         })
 
         iv_msg = findViewById(R.id.iv_msg)
@@ -206,7 +196,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 shareDialog!!.show(content) // Show ShareDialog
 
             } catch (ex: ActivityNotFoundException) {
-                Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.facebook_have_not_installed), Toast.LENGTH_SHORT).show()
             }
 
             dialog!!.dismiss()
@@ -451,9 +441,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 }
             }
 
-        } catch (e: Exception) {
-
         }
+        catch (e: Exception) { }
     }
 
     private fun setUserData(jsonObject: JSONObject) {
@@ -467,13 +456,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         .putExtra("senderName", jsonObject.getString("name"))
                         .putExtra("senderImage", jsonObject.getString("image"))
                         .putExtra("userId", userId)
-                )
-            }
-
-        }
-    }
-
-
+                ) } } }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job

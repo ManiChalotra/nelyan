@@ -215,27 +215,17 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
 
                                         hitFinallyActivityAddPostApi()
                                     }
-                                }
-                        }
-
-                    }
-
-                }
-
-            }
+                                } } } } }
 
             R.id.et_addressBabySitter -> {
                 showPlacePicker()
             }
-        }
-    }
+        } }
 
     override fun getRealImagePath(imgPath: String?) {
         Log.d("selectedImagePath", "-------$imgPath")
         uploadImageServer(imgPath)
     }
-
-
 
     private fun uploadImageServer(imgPath: String?) {
 
@@ -257,11 +247,9 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
         }
     }
 
-
     private val typeList: ArrayList<String> = ArrayList()
     private val typeListId: ArrayList<String> = ArrayList()
     private var selectedPosition = 0
-
 
     private fun checkMvvmResponse() {
 
@@ -284,9 +272,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                                             typeList.add(name)
                                             typeListId.add(id)
                                             if(id==childCareId)
-                                            {
-                                                selectedPosition = i
-                                            }
+                                            { selectedPosition = i }
                                         }
                                         val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, typeList)
                                         sp_child_care_type.adapter = arrayAdapte1
@@ -298,16 +284,11 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                             view: View?,
                             position: Int,
                             id: Long
-                        ) {
-                            childCareId = typeListId[position]
-                        }
+                        ) { childCareId = typeListId[position] }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
                         }
-                    }
-
-
-                }
+                    } }
 
             } else {
                 ErrorBodyResponse(response, this, null)
@@ -345,8 +326,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                             }
                         }
                         imageSelectedType = ""
-                    } }
-            }
+                    } } }
                 else {
 
                     ErrorBodyResponse(response, this, null)
@@ -409,10 +389,7 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
                 cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
                 et_addressBabySitter.setText(place.address.toString())
 
-            }
-        }
-
-    }
+            } } }
 
     override fun onDestroy() {
         super.onDestroy()

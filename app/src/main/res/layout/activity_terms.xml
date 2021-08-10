@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/left_arrow"
             android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
             />
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="Terms &amp; Conditions"/>
+            android:text="@string/terms_amp_conditions"/>
     </RelativeLayout>
 
     <ScrollView
