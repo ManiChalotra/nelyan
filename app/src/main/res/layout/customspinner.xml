@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TextView android:layout_height="wrap_content"
-    android:hint="Select"
+    android:hint="@string/select"
     android:textSize="@dimen/_11sdp"
     android:fontFamily="@font/regular"
     android:textColorHint="@color/grey"

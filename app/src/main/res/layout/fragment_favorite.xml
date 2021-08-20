@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:id="@+id/frame_container"
-    android:clickable="true"
     tools:context=".ui.FavouriteActivity">
     <RelativeLayout
         android:id="@+id/header"
@@ -19,8 +18,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/left_arrow"
             android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_13sdp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_13sdp"
             />
         <TextView
             style="@style/HeaderText"

@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/custom_marker_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         >
-
-
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/marker"
             android:layout_marginTop="0.5dp"
             android:layout_centerHorizontal="true"
-
             />
+
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_images"
             android:layout_width="40dp"
             android:layout_height="40dp"
-
             android:layout_marginTop="3dp"
-
             android:src="@mipmap/ic_user_place"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-
             android:contentDescription="@null"
             />
 

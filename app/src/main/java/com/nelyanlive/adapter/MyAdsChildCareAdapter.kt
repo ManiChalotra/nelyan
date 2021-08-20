@@ -23,12 +23,9 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var dialog: Dialog? = null
     private var popupWindow: PopupWindow? = null
-    var dialog1: Dialog? = null
-    var isMenuOpend = "0"
+
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
 
         var tvAddress = itemView.findViewById(R.id.tv_address) as TextView
         var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
@@ -98,12 +95,10 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
         val editt = popupView.findViewById<View>(R.id.tvEdit) as TextView
         val deletee = popupView.findViewById<View>(R.id.tvDelete) as TextView
-        popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
 
+        popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
         popupWindow!!.isTouchable = true
         popupWindow!!.isOutsideTouchable = true
-
-
         popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.END)
 
         editt.setOnClickListener {
@@ -115,9 +110,7 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
         deletee.setOnClickListener {
             deleteEditListner.onChildCareDeleteAdClick(adapterPosition, id.toString() )
             popupWindow!!.dismiss()
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -126,64 +119,11 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-
         holder.bind(myadsChildCarelist[position])
-
-/*
-        holder.tvEdit.setOnClickListener { //  holder.ll_1.setVisibility(View.GONE);
-            context.startActivity(Intent(context, AddActivity::class.java))
-        }
-        holder.tvDelete.setOnClickListener { //  holder.ll_1.setVisibility(View.GONE);
-            dailogDelete()
-        }
-*/
     }
 
     override fun getItemCount(): Int {
         return myadsChildCarelist.size
-    }
-
-    fun dailogDelete() {
-        dialog1 = Dialog(context)
-        dialog1!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog1!!.setContentView(R.layout.alert_chat_delete)
-        dialog1!!.setCancelable(true)
-        val rl_1: RelativeLayout
-        rl_1 = dialog1!!.findViewById(R.id.rl_1)
-        val tvMessage = dialog1!!.findViewById<TextView>(R.id.tvMessage)
-        tvMessage.text = "Are you sure want to\n delete my add?"
-        rl_1.setOnClickListener { //  mContext.startActivity(new Intent(mContext, HomeActivity.class));
-            dialog1!!.dismiss()
-        }
-        dialog1!!.show()
-    }
-
-    fun dailogDot() {
-        dialog = Dialog(context)
-        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog!!.setContentView(R.layout.alert_dot)
-        dialog!!.setCancelable(true)
-        dialog!!.setCanceledOnTouchOutside(true)
-
-        val window = dialog!!.window
-        val wlp = window!!.attributes
-        wlp.gravity = Gravity.RIGHT or Gravity.TOP
-        wlp.x = -10 //x position
-        wlp.y = 0
-        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
-        window.attributes = wlp
-        val tvEdit = dialog!!.findViewById<TextView>(R.id.tvEdit)
-        val tvDelet = dialog!!.findViewById<TextView>(R.id.tvDelete)
-        //  tvEdit = dialog!!.findViewById(R.id.tvEdit)
-        tvEdit.setOnClickListener {
-            context.startActivity(Intent(context, AddActivity::class.java))
-            dialog!!.dismiss()
-        }
-        tvDelet.setOnClickListener {
-            dailogDelete()
-            dialog!!.dismiss()
-        }
-        dialog!!.show()
     }
 
     interface OnDeleteEditClickListner{

@@ -148,7 +148,7 @@ class Chat1Activity :  OpenCameraGallery() {
             }
             else {
 
-                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                 progressDialog.hidedialog()
 
             }

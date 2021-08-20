@@ -186,9 +186,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 applicationContext,
                 googleMapKey
         )
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this@TraderFilterActivity)
-        // Set the fields to specify which types of place data to return.
         val fields: List<Place.Field> = Arrays.asList(
                 Place.Field.ID,
                 Place.Field.NAME,
@@ -206,13 +203,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             R.id.ivBack->{
                 onBackPressed()
             }
-            /*R.id.ll_public->{
-                launch(Dispatchers.Main.immediate) {
-                    et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                    latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                    longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-                }
-            }*/
+
             R.id.btnFilter->{
                 if (et_location.text.isNullOrEmpty()){
                     myCustomToast(getString(R.string.location_missing_error))
@@ -229,8 +220,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
 
                     setResult(1215,intent)
                     onBackPressed()
-
-                   // hitFilterTrader_Api()
                 }
             }
             R.id.et_location->{

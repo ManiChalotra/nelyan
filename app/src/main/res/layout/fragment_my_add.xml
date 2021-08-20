@@ -18,21 +18,21 @@
             android:layout_height="wrap_content"
             android:src="@drawable/left_arrow"
             android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_13sdp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_13sdp"
             />
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="My Add"/>
+            android:text="@string/my_add"/>
         <ImageView
             android:id="@+id/ivAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
             android:src="@drawable/plus"/>
     </RelativeLayout>
     <LinearLayout
@@ -42,59 +42,8 @@
         android:layout_marginRight="@dimen/_5sdp"
         android:orientation="vertical"
         android:layout_below="@id/header">
-<!--<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end"
-    android:gravity="end"
-    android:orientation="horizontal">
-   &lt;!&ndash; <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:paddingRight="@dimen/_5sdp"
-        android:fontFamily="@font/bold"
-        android:text="Sort by Category:: "
-        android:textColor="@color/black"
-        android:textSize="@dimen/_10sdp" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_weight="0"
-        android:background="@drawable/text_outlinebg"
-        android:gravity="center"
-        android:paddingTop="@dimen/_3sdp"
-        android:paddingRight="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_3sdp">
-
-        <Spinner
-            android:id="@+id/orderby"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/regular"
-            android:gravity="start"
-            android:hint="Select"
-            android:inputType="text"
-            android:spinnerMode="dropdown"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:textSize="8sp" />
-
-        <ImageView
-            android:layout_width="@dimen/_10sdp"
-            android:layout_height="@dimen/_10sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/down_arrow" />
-
-    </LinearLayout>&ndash;&gt;
-
-</LinearLayout>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
-            android:layout_below="@id/ll_public"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

@@ -129,15 +129,6 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
                 return VH(binding)
             }
         }
-
-
-       /* val binding = DataBindingUtil.inflate<ViewDataBinding>(
-                layoutInflater,
-                layoutId,
-                parent,
-                false
-        )
-        return VH(binding)*/
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -149,12 +140,9 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
             if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
         }
 
-       // return position
     }
 
-    /*override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }*/
+
 
     override fun getItemCount(): Int = items.size
 

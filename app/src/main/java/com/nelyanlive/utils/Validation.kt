@@ -12,13 +12,13 @@ object Validation {
                 if(isUserNameValid(name)){
                     return true
                 }else{
-                   activity.myCustomToast("Please enter only alphabets in name")
+                   activity.myCustomToast(activity.getString(R.string.enter_only_alphabets))
                 }
             }else{
-                activity.myCustomToast("please enter name minimum of  3 characters Long ")
+                activity.myCustomToast(activity.getString(R.string.enter_min_chars))
             }
         }else{
-           activity.myCustomToast("Please enter name ")
+           activity.myCustomToast(activity.getString(R.string.please_enter_name))
         }
         return false
 
@@ -33,7 +33,7 @@ object Validation {
                 // toast("Please enter a valid email")
             }
         } else {
-            activity.myCustomToast( "Please enter email")
+            activity.myCustomToast( activity.getString(R.string.please_enter_email))
             // toast("Please enter email")
         }
         return false
@@ -43,7 +43,7 @@ object Validation {
         if (password.isNotEmpty()) {
             if (password.length < 8) {
                 activity.myCustomToast(
-                        "Password should be minimum of 8 characters and maximum of 30 characters"
+                    activity.getString(R.string.password_min_8_to_30)
                 )
                 //toast("Password should be minimum of 8 characters and maximum of 30 characters")
             } else {
@@ -65,7 +65,7 @@ object Validation {
             }
 
         } else {
-            activity.myCustomToast( "Please enter password")
+            activity.myCustomToast(activity.getString(R.string.please_enter_password))
 
             // toast("Please enter password")
         }
@@ -76,9 +76,8 @@ object Validation {
         if (password.isNotEmpty()) {
                 return true
         } else {
-            activity.myCustomToast( "Please enter password")
+            activity.myCustomToast( activity.getString(R.string.please_enter_password))
 
-            // toast("Please enter password")
         }
         return false
 
@@ -87,29 +86,16 @@ object Validation {
         if (!password.isEmpty()) {
             if (password.length < 3) {
                 activity.myCustomToast(
-                        "Password should be minimum of 3 characters and maximum of 30 characters"
+                        activity.getString(R.string.minimum_old_password)
                 )
-                //toast("Password should be minimum of 8 characters and maximum of 30 characters")
             } else {
                 return true
 
-                /* this inner if-else loop is for strong password validation
-                if (isPasswordValid(password)) {
-                    return true
-
-                } else {
-                    toast(
-                        "Please enter some strong password having atleast " + "\n" +
-                                "One Capital and small letter and one special Symbol" + "\n" +
-                                "One numeric keyword..."
-                    )
-
-                }*/
 
             }
 
         } else {
-            activity.myCustomToast( "Please enter old password")
+            activity.myCustomToast( activity.getString(R.string.enter_old_password))
 
             // toast("Please enter password")
         }
@@ -120,14 +106,14 @@ object Validation {
         if (!password.isEmpty()) {
             if (password.length < 8) {
                 activity.myCustomToast(
-                        "Password should be minimum of 8 characters and maximum of 30 characters"
+                        activity.getString(R.string.password_min_8_to_30)
                 )
             } else {
                 return true
             }
 
         } else {
-            activity.myCustomToast( "Please enter new password")
+            activity.myCustomToast( activity.getString(R.string.please_enter_new_password))
 
             // toast("Please enter password")
         }

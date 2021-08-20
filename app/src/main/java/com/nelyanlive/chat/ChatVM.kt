@@ -36,9 +36,6 @@ class ChatVM :ViewModel() {
 
     var chatRoom = ""
 
-    /*init {
-        socket = SocketManager.socket
-    }*/
 
 
     var message : ObservableField<String> = ObservableField("")
@@ -75,7 +72,8 @@ class ChatVM :ViewModel() {
             "ivSend"->{
                 if(message.get().toString().isEmpty())
                 {
-                    Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context,view.context.getString(R.string.please_enter_message),Toast.LENGTH_SHORT).show()
                 }
                 else {
                     sendChatMessage()
@@ -133,7 +131,7 @@ class ChatVM :ViewModel() {
         if(message.get().toString().trim().isEmpty())
         {
 
-            Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context,view.context.getString(R.string.please_enter_message),Toast.LENGTH_SHORT).show()
 
         }
         else {
@@ -246,27 +244,7 @@ class ChatVM :ViewModel() {
             {
                 val json = jsonArray.getJSONObject(i)
 
-                /*[
-                    {
-                        "id": 389,
-                        "senderId": 188,
-                        "receiverId": 184,
-                        "chatConstantId": 1,
-                        "groupId": 0,
-                        "message": "hello bhai",
-                        "readStatus": 0,
-                        "messageType": 0,
-                        "deletedId": 0,
-                        "created": 1620997139,
-                        "updated": 1620997139,
-                        "recieverName": "Rohit nine",
-                        "recieverImage": "",
-                        "senderName": "ani",
-                        "senderImage": ""
-                    }
-                ]*/
 
-              //  block = json.getString("blockCount")
 
                 listData.add(ChatData(
                     json.getString("id"),
@@ -360,9 +338,6 @@ class ChatVM :ViewModel() {
                     }
                 }
 
-              //  chatAdapter.addAtPosition(listChat,listChat.size-1)
-
-               // rvChat.scrollToPosition(listChat.size-1)
                 Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
 
                 if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
@@ -384,42 +359,6 @@ class ChatVM :ViewModel() {
         Log.e("socket", it[0].toString())
 
         try {
-
-            /*{
-                "id": 451,
-                "senderId": 188,
-                "receiverId": 197,
-                "chatConstantId": 9,
-                "groupId": 0,
-                "message": "hello 197",
-                "readStatus": 0,
-                "messageType": 0,
-                "deletedId": 0,
-                "created": 1621493605,
-                "updated": 1621493605,
-                "senderName": "ani",
-                "senderImage": "",
-                "recieverImage": "a9e5857f-0c7e-40ce-b87f-69cde43a844c.jpg",
-                "recieverName": "ramu"
-            }*/
-            /*{
-                "id": 389,
-                "senderId": 188,
-                "receiverId": 184,
-                "chatConstantId": 1,
-                "groupId": 0,
-                "message": "hello bhai",
-                "readStatus": 0,
-                "messageType": 0,
-                "deletedId": 0,
-                "created": 1620997139,
-                "updated": 1620997139,
-                "senderName": "ani",
-                "senderImage": "",
-                "recieverImage": "",
-                "recieverName": "Rohit nine"
-            }*/
-
 
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())

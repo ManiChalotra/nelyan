@@ -58,11 +58,8 @@ import kotlin.collections.ArrayList
 class ChatFrag(var userlocation: String, var userlat: String, var userlong: String,var ivBell: ImageView) : Fragment() {
 
     private var listner: CommunicationListner? = null
-
     lateinit var mContext: Context
-
      val groupChatVM: GroupChatVM by viewModels()
-
     lateinit var activityChatBinding: ActivityChatBinding
 
     override fun onResume() {
@@ -125,7 +122,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //hideKeyboard
         val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
@@ -143,8 +139,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         if (checkIfHasNetwork((mContext as Activity))) {
 
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
-
-
             appViewModel.groupMessageApiData(security_key, authorization, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}, "0", "20")
 
         }
@@ -197,8 +191,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
                     if (listData.isNotEmpty()) {
                         groupChatVM.listChat.addAll(listData)
-
-                        ///groupChatVM.listChat.reverse()
                         groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
                         activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
                         groupChatVM.noDataMessage.set("")
@@ -206,12 +198,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         groupChatVM.noDataMessage.set("No chat found")
                         groupChatVM.updateLocation(userlat, userlong, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation})
 
-                    }
+                    } }
+            } else
+            {
 
-                }
-            } else {
-
-                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
 
             }
         })
@@ -223,7 +214,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 } }
             }
         }
-
 
         ivBell.setOnClickListener {
             dailogNotification()
@@ -241,7 +231,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     }
 
     override fun onDestroyView() {
-      //  groupChatVM.disconnectSocket()
         Log.e("fasfasfa","==chatFrag=====onDestroyView")
         super.onDestroyView()
 
@@ -281,7 +270,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
             } else {
 
-                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
 
             }
         })
@@ -299,7 +288,9 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val tvYes: TextView = dialog.findViewById(R.id.tvYes)
         val tvNo: TextView = dialog.findViewById(R.id.tvNo)
         val tvMessage: TextView = dialog.findViewById(R.id.tvMessage)
-        tvMessage.text = if(groupChatVM.notifyStatus=="1"){"Are you sure to un-mute this Group Notifications ?"}else{"Are you sure to mute this Group Notifications ?"}
+        tvMessage.text = if(groupChatVM.notifyStatus=="1"){
+            getString(R.string.are_you_sure_to_un_mute)}
+        else{getString(R.string.are_you_sure_to_mute)}
         tvYes.setOnClickListener {
             dialog.dismiss()
            setMuteNotifications()
@@ -326,7 +317,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     Log.e("observeGroupNotifyApiResponse", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
-                    //{"success":1,"code":200,"msg":"Notification off","data":{"notification":"0"}}
                     val jsonData = jsonMain.getJSONObject("data")
 
                     val notificationStatus = jsonData.getString("notification")
@@ -338,16 +328,13 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
             } else {
 
-                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
 
             }
         })
 
     }
 
-
-
-    //selectImage
     fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(
                         mContext,
@@ -399,7 +386,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             StrictMode.setVmPolicy(builder.build())
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (cameraIntent.resolveActivity((mContext as Activity).packageManager) != null) {
-                // Create the File where the photo should go
                 var photoFile: File? = null
                 try {
                     val myDirectory =
@@ -409,10 +395,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     }
                     photoFile = createImageFile()
                 } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    //Log.i(TAG, "IOException");
                 }
-                // Continue only if the File was successfully created
                 if (photoFile != null) {
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
                     startActivityForResult(cameraIntent, requestCodeCamera)
@@ -424,14 +407,9 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         tv_cancel.setOnClickListener { uploadImage.dismiss() }
         tvGallery.setOnClickListener {
             uploadImage.dismiss()
-            //  selectImage(ivProfile, "1")
-
             val intent = Intent()
             intent.type = "*/*"
             intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
-            //  intent.setType("image/* , video/*")   // for both image and video
-            //  intent.type = "image/*"     // only for image
-            //intent.type = "video/*"     // only for video
             intent.action = Intent.ACTION_GET_CONTENT
             this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
 
@@ -444,9 +422,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     private var imgPath = ""
 
     private fun createImageFile(): File? {
-        var image: File? = null
+        val image: File?
 
-        // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir =
@@ -456,7 +433,6 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 ".jpg",  // suffix
                 storageDir // directory
         )
-        // Save a file: path for use with ACTION_VIEW intents
         imgPath = "file:" + image.absolutePath
         return image
 
@@ -498,7 +474,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     }
 
-    fun getPath(context: Context?, uri: Uri): String? {
+    private fun getPath(context: Context?, uri: Uri): String? {
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 
         // DocumentProvider
@@ -574,24 +550,15 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             if (cursor != null && cursor.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)
-            }
-        } finally {
-            cursor?.close()
-        }
+            } }
+        finally { cursor?.close() }
         return null
     }
 
-
-
     private var imagePathList = ArrayList<MultipartBody.Part>()
-
-
-   // private var progressDialog = ProgressDialog(AppController.getInstance())
-
 
     var setImage = ""
     var setImageTrue = false
-
 
     fun setImage(imgPath: String?) {
 
@@ -607,27 +574,15 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
 
-
-        Log.d("setImage", "------------$imagePathList")
-        Log.d("setImage", "------------${imagePathList.size}")
-
         appViewModel.sendUploadImageData(type, users, imagePathList)
-       // progressDialog.setProgressDialog()
-
-
 
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
-              //  progressDialog.hidedialog()
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
 
-                        Log.e("urlListt", "--------${response.body()!!.data!![0].image.toString()}---")
-
-
                         val fileName  = response.body()!!.data!![0].fileName.toString()
-
                         var str  = response.body()!!.data!![0].image.toString()
                         str =     str.replaceBeforeLast("/","")
 
@@ -635,17 +590,14 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                             setImageTrue = false
                             groupChatVM.sendChatImageMessage(str)
                         }
-
                     }
-                } else {
+                }
+                else {
                     ErrorBodyResponse(response, mContext, null)
                 }
             }
             else {
-
-                Toast.makeText(mContext, "something went wrong", Toast.LENGTH_SHORT).show()
-              //  progressDialog.hidedialog()
-
+                Toast.makeText(mContext,mContext.getString(R.string.something_went_wrong) , Toast.LENGTH_SHORT).show()
             }
         })
 

@@ -21,29 +21,22 @@ import kotlin.collections.ArrayList
 class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAds>, var listener: OnAgeGroupRecyclerViewItemClickListener)
     : RecyclerView.Adapter<AgeGroupEditAdapter.AgeGroupRepeatViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgeGroupRepeatViewHolder {
         return AgeGroupRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false), listener)
     }
-
     override fun onBindViewHolder(holder: AgeGroupRepeatViewHolder, position: Int) {
         holder.initialize(list, position)
     }
-
     override fun getItemCount(): Int {
         return list.size
     }
-
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-
     override fun getItemViewType(position: Int): Int {
         return position
     }
-
-
 
     inner class AgeGroupRepeatViewHolder(itemView: View, var listener: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
         private var addButton = itemView.tvAddMore!!
@@ -83,7 +76,6 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 }
             })
 
-            // add text watcher  for age To
             ageTo.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].ageTo = s.toString()
@@ -98,7 +90,6 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
                     list[position].days = parentView?.getItemAtPosition(pos).toString()
                 }
-
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
                 }
             }
@@ -116,7 +107,6 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 mTimePicker.show()
             }
 
-
             timeTo.setOnClickListener {
                 val mCurrentTime = Calendar.getInstance()
                 val hour = mCurrentTime[Calendar.HOUR_OF_DAY]
@@ -125,7 +115,7 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                     timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                     list[position].timeTo = "$selectedHour:$selectedMinute"
                 }, hour, minute, true)
-                mTimePicker.setTitle("Select Time")
+                mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
 

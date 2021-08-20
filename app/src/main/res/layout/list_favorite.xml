@@ -21,7 +21,7 @@
                 android:id="@+id/iv_event_image"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/no_image_placeholder"
@@ -43,7 +43,7 @@
                     <TextView
                         android:id="@+id/tv_event_name"
                         style="@style/CommonTextWrapcontent"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:fontFamily="@font/semibold"
                         android:textColor="@color/app"
                         android:textSize="@dimen/_14sdp" />
@@ -52,17 +52,15 @@
                 <TextView
                     android:id="@+id/tv_address"
                     style="@style/CommonTextWrapcontent"
-                    android:drawableLeft="@drawable/location_grey"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_10sdp"
+                    app:drawableLeftCompat="@drawable/location_grey" />
 
                 <TextView
                     android:id="@+id/tv_activity_title"
                     style="@style/CommonTextWrapcontent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
@@ -70,7 +68,7 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="@style/CommonTextWrapcontent"
-                    android:layout_marginRight="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:textSize="@dimen/_9sdp" />
             </LinearLayout>
 
@@ -78,30 +76,16 @@
                 android:id="@+id/iv_favourtie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginRight="@dimen/_4sdp"
                 android:src="@drawable/heart" />
-
-<!--
-            <ImageView
-                android:id="@+id/iv_unfev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/heart_purple"
-                android:visibility="gone" />
--->
-
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_available_place"
             style="@style/CommonTextWrapcontent"
-            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:textColor="@color/app"

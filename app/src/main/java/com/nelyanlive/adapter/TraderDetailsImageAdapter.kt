@@ -43,7 +43,6 @@ class TraderDetailsImageAdapter(traderDetailsActivity: TraderPublishActivty,
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var img: ImageView = itemView.findViewById(R.id.detailsimg)
-        var videoPic: ImageView? = null
 
     }
 

@@ -162,7 +162,7 @@ class GroupChatVM :ViewModel() {
             "ivSend"->{
                 if(message.get()!!.trim().isEmpty())
                 {
-                    Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context,view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
 
                 }
                 else {
@@ -247,7 +247,7 @@ class GroupChatVM :ViewModel() {
 
         if(message.get().toString().trim().isEmpty())
         {
-            Toast.makeText(view.context,"Please enter message", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context,view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
         }
         else {
             sendChatMessage()
@@ -356,25 +356,6 @@ class GroupChatVM :ViewModel() {
 
         try {
 
-            /*{
-                "id": 389,
-                "senderId": 188,
-                "receiverId": 184,
-                "chatConstantId": 1,
-                "groupId": 0,
-                "message": "hello bhai",
-                "readStatus": 0,
-                "messageType": 0,
-                "deletedId": 0,
-                "created": 1620997139,
-                "updated": 1620997139,
-                "senderName": "ani",
-                "senderImage": "",
-                "recieverImage": "",
-                "recieverName": "Rohit nine"
-            }*/
-
-
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())
 
@@ -437,19 +418,13 @@ class GroupChatVM :ViewModel() {
                         groupChatAdapter.notifyItemRangeChanged(i, listChat.size)
                     }
                 }
-
             }}
-
-
-
     }
 
     private fun connectUser() {
         val json = JSONObject()
         try{
-
             Log.e("socket=connectUser", userId)
-
             json.put("userId", userId)
             socket.emit("connect_user",json)
 

@@ -40,11 +40,8 @@ import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.modals.postDetails.PostDetailsEvents
 import com.nelyanlive.modals.postDetails.PostDetailsEventstiming
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.activity_home_child_care_details.*
 import kotlinx.android.synthetic.main.alert_share.*
 import kotlinx.android.synthetic.main.fragment_activity_details.*
-import kotlinx.android.synthetic.main.fragment_activity_details.ivMapImage
-import kotlinx.android.synthetic.main.fragment_activity_details.nvsMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -166,7 +163,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
         }
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
-            email.putExtra(Intent.EXTRA_SUBJECT, "Nelyan App")
+            email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nelyan_app))
             email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
                     "https://play.google.com/store/apps/details?id=com.nelyan")
             email.setPackage("com.google.android.gm")
@@ -189,7 +186,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
             val content =  ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
-                    .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan App").build())
+                    .setShareHashtag( ShareHashtag.Builder().setHashtag(getString(R.string.nelyan_app)).build())
                     .build()
 
             try {
@@ -222,8 +219,6 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                 if (response.body() != null) {
 
                     activity_details_progressbar?.hideProgressBar()
-                    Log.d("postDetailsResponse", "-------------" + Gson().toJson(response.body()))
-
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)

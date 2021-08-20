@@ -37,7 +37,7 @@
                 <TextView
                     style="@style/HeaderText"
                     android:layout_centerInParent="true"
-                    android:text="Trader / Artisant"
+                    android:text="@string/trader_artisant"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -167,187 +167,6 @@
 
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_40sdp"
-                        android:visibility="gone"
-                        android:background="@color/lightgrey"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Tuesday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Wednesday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Thursday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Friday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="10:30AM-1PM, 2:30AM-6:30PM"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Saturday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="Closed"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-
-                                android:layout_height="wrap_content"
-                                android:layout_weight="30"
-                                android:fontFamily="@font/semibold"
-                                android:text="Sunday"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_15sdp"
-                                android:layout_weight="80"
-                                android:fontFamily="@font/regular"
-                                android:text="Closed"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tvMessage"
@@ -355,7 +174,7 @@
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:fontFamily="@font/bold"
-                        android:text="Message"
+                        android:text="@string/message"
                         android:visibility="gone"
                         android:textAllCaps="true"
                         android:textColor="@color/grey" />

@@ -126,7 +126,7 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         dialog1!!.setContentView(R.layout.alert_chat_delete)
         dialog1!!.setCancelable(true)
         val tvMessage = dialog1!!.findViewById<TextView>(R.id.tvMessage)
-        tvMessage.text = "Are you sure want to\n delete this?"
+        tvMessage.text = context.getString(R.string.are_you_sure_want_to_delete_this)
         dialog1!!.tvYes.setOnClickListener {
             dialog1!!.dismiss()
             myadsActivitylist.removeAt(adapterPosition)

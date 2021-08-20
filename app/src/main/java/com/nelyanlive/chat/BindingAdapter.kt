@@ -99,13 +99,12 @@ object BindingAdapter {
             }
             else {
                 if (diff > 0 && diff < (60 * 60 * 1000)) {
-                    tvText.text = "Yesterday"
+                    tvText.text =tvText.context.getString(R.string.yesterday)
 
                 } else {
                     tvText.text = SimpleDateFormat("dd/MM/yyyy").format(Date(str.toLong() * 1000))
                 }
             }
-
         }
         else
         {
@@ -132,7 +131,7 @@ object BindingAdapter {
             }
             else {
                 if (diff > 0 && diff < (60 * 60 * 1000)) {
-                    tvText.text = "Yesterday"
+                    tvText.text = tvText.context.getString(R.string.yesterday)
 
                 } else {
                     tvText.text = SimpleDateFormat("dd/MM/yyyy").format(Date(str.toLong() * 1000))

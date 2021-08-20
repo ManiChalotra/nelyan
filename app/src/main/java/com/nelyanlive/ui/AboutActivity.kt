@@ -20,7 +20,7 @@ class AboutActivity : AppCompatActivity() {
         super.onResume()
         data = intent?.extras?.getString("cmsData").toString()
         data = Html.fromHtml(data).toString()
-        Log.d("datassss__about", "-------"+ data)
+        Log.d("datassss__about", "-------$data")
         tv_aboutTExt.text = data
 
 
@@ -32,6 +32,6 @@ class AboutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_about)
         mContext = this
         ivBack = findViewById(R.id.ivBack)
-        ivBack!!.setOnClickListener(View.OnClickListener { finish() })
+        ivBack!!.setOnClickListener { finish() }
     }
 }

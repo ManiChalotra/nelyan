@@ -203,11 +203,11 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
 
                 val message = jsonObject.get("msg").toString()
                 if (message == "You marked this Post as Your Favourite") {
-                    myCustomToast("You marked this post as your favourite")
+                    myCustomToast(getString(R.string.marked_as_fav))
 
                     ivFavourite.setImageResource(R.drawable.heart)
                 } else {
-                    myCustomToast("You removed this post from your favourite")
+                    myCustomToast(getString(R.string.removed_from_fav))
 
                     ivFavourite.setImageResource(R.drawable.heart_purple)
                 }
@@ -230,7 +230,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.ivMap -> {
                 if (dataString.isEmpty()) {
-                    myCustomToast("Data not loaded yet")
+                    myCustomToast(getString(R.string.data_not_loaded))
                 } else {
                     val i = Intent(this, HomeChildCareOnMapActivity::class.java)
                     i.putExtra("dataString", dataString)

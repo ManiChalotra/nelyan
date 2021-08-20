@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="30"
             android:fontFamily="@font/semibold"
-            android:text="Monday"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="80"
             android:fontFamily="@font/regular"
-            android:text="10:30AM-1PM, 2:30AM-6:30PM"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/_9sdp" />
     </LinearLayout>

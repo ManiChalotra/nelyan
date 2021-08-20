@@ -37,9 +37,6 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
     var btnSearch: Button? = null
     var dialog: Dialog? = null
     var ivBack: ImageView? = null
-    var ll_1: LinearLayout? = null
-    var ll_0: LinearLayout? = null
-    var activityTypes: Spinner? = null
     var orderby1: Spinner? = null
     var childCareTypes: Spinner? = null
     var distance: String? = null
@@ -92,8 +89,6 @@ class ChildCareFilterActivity : AppCompatActivity(),  CoroutineScope, View.OnCli
             latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
         }
-
-
 
         btnSearch = findViewById(R.id.btnSearch)
         childCareTypes = findViewById(R.id.childType)

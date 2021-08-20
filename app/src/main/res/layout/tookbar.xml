@@ -30,7 +30,7 @@
         style="@style/HeaderText"
         android:layout_centerInParent="true"
         android:textColor="@color/black"
-        android:text="Message"
+        android:text="@string/message"
         android:gravity="center"
         android:ellipsize="end"
         android:maxLines="2"

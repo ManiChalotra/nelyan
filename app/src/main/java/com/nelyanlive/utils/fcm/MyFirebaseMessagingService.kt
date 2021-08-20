@@ -79,29 +79,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.e("new_message", "=======${senderID}")
 
 
-       //  Log.e("new_message", "=======${remoteMessage.notification!!.title}")
-       //   Log.e("new_message", "=======${remoteMessage.notification!!.title}")
-       //   Log.e("new_message", "=======${remoteMessage.notification!!.body}")
-
-
-        /*{body=ani Sent You a Message, data={"readStatus":0,"created":1622098609,
-            "groupId":0,"chatConstantId":22,"deletedId":0,
-            "recieverName":"rohit sevenn",
-            "message":"hello bhai 2","senderImage":"",
-            "senderId":188,"senderName":"ani","receiverId":181,"messageType":0,"id":567,
-            "recieverImage":"b98e0a97-2367-4804-89d5-65d9561e51fb.jpg","updated":1622098609}}*/
-
-        /*{body=rohit sevenn Sent a Message in Khanna, data={"readStatus":0,"created":1622449933,
-            "groupId":40,"chatConstantId":57,"deletedId":0,
-            "recieverName":"",
-            "message":"hello 1122","senderImage":"b98e0a97-2367-4804-89d5-65d9561e51fb.jpg",
-            "senderId":181,"senderName":"rohit sevenn","receiverId":0,"messageType":0,"id":1060,
-            "recieverImage":"","updated":1622449933}, type=4, groupId=40}*/
-
-        //showSmallNotification(data1["message"]!!, data1["title"]!!)
-
-        //  Log.e("msg", "onMessageReceived: " + remoteMessage.data["message"])
-
                                val intent1 =  Intent(this, Chat1Activity::class.java)
                                                           .putExtra("senderID", senderID)
                                                           .putExtra("senderName", name)

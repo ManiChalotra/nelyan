@@ -57,7 +57,7 @@ class ContactUsActivity : AppCompatActivity(), View.OnClickListener {
                         if(!comment.isEmpty()){
                             hitContactUsApi(name, email, comment)
                         }else{
-                            myCustomToast("Please enter comment ")
+                            myCustomToast(getString(R.string.please_enter_comment))
                         }
                     }
                 }

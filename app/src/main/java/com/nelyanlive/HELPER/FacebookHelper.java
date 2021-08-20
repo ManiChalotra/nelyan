@@ -78,10 +78,7 @@ public  class FacebookHelper implements FacebookCallback<LoginResult>, GraphRequ
     @Override
     public void onSuccess(LoginResult loginResult) {
 
-       /* new MyPref(context).saveString(Constants.FB_ACCESS_TOKEN,loginResult.getAccessToken().getToken());
-        new MyPref(context).saveString(Constants.FB_USER_ID,loginResult.getAccessToken().getUserId());
-*/
-        //CommonMethods.showProgress(context);
+
         getFaceBookProfile(loginResult);
     }
 

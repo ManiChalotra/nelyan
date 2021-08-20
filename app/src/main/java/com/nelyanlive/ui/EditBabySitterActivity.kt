@@ -19,11 +19,9 @@ import com.nelyanlive.R
 import com.nelyanlive.data.network.responsemodels.ImageUploadApiResponseModel
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
-import com.nelyanlive.modals.childcaretype.ChildCareTypeRespone
 import com.nelyanlive.modals.myAd.ChildCareImageMyAds
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_baby_sitter.*
-import kotlinx.android.synthetic.main.dialog_vehicle_type.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

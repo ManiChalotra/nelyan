@@ -48,13 +48,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
         var spinnerDayss = itemView.findViewById(R.id.spinner_dayss) as Spinner
 
 
-
-
-
         fun initalize(dayTimeModelArrayList: ArrayList<DayTimeModel>, position: Int) {
-
-
-
 
             tvMorningFromtime.text = list[position].firstStarttime
             tvMorningTotime.text = list[position].firstEndtime

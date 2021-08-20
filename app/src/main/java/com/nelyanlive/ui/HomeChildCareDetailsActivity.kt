@@ -158,7 +158,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         }
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
-            email.putExtra(Intent.EXTRA_SUBJECT, "Nelyan App")
+            email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nelyan_app))
             email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
                     "https://play.google.com/store/apps/details?id=com.nelyan")
             email.setPackage("com.google.android.gm")
@@ -188,7 +188,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                 shareDialog!!.show(content) // Show ShareDialog
 
             } catch (ex: ActivityNotFoundException) {
-                Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.facebook_have_not_installed), Toast.LENGTH_SHORT).show()
             }
             dialog!!.dismiss()
         }

@@ -44,7 +44,7 @@
             <TextView
                 style="@style/HeaderText"
                 android:layout_gravity="center"
-                android:text="Activity List"
+                android:text="@string/activity_list"
                 android:textColor="@color/black" />
 
             <TextView
@@ -98,20 +98,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:fontFamily="@font/bold"
-            android:visibility="gone"
-            android:text="Order by: "
-            android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -137,7 +123,7 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:src="@drawable/down_arrow" />
 
         </LinearLayout>

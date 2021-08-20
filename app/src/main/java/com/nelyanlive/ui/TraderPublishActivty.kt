@@ -54,7 +54,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
     var postID : String=""
     var mMap: GoogleMap? = null
     var indicator: ScrollingPagerIndicator? = null
-    var rc: RecyclerView? = null
 
     var rvTraderImages: RecyclerView? = null
     private var shareDialog: ShareDialog? = null
@@ -157,7 +156,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
         }
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
-            email.putExtra(Intent.EXTRA_SUBJECT, "Nelyan App")
+            email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nelyan_app))
             email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
                     "https://play.google.com/store/apps/details?id=com.nelyan")
             email.setPackage("com.google.android.gm")
@@ -177,7 +176,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
             val content =  ShareLinkContent.Builder()
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
-                    .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan App").build())
+                    .setShareHashtag( ShareHashtag.Builder().setHashtag(getString(R.string.nelyan_app)).build())
                     .build()
 
             try {
@@ -185,7 +184,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
             }
             catch (ex: ActivityNotFoundException) {
-                Toast.makeText(this, "Facebook have not been installed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.facebook_have_not_installed), Toast.LENGTH_SHORT).show()
             }
 
 
@@ -253,7 +252,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                         tvPhoneTrader.visibility = View.GONE
                     }
 
-
                     if(jsonObject.getJSONObject("data").get("email").toString().isEmpty())
                     {
                         tvEmailAddress.visibility = View.GONE
@@ -281,7 +279,6 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     if (listTradersimage != null) {
                         listTradersimage.clear()
                     }
-
                     else {
                         listTradersimage = ArrayList()
                     }

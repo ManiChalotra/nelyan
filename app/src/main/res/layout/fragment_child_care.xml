@@ -38,7 +38,7 @@
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="Child Care"/>
+            android:text="@string/child_care"/>
 
     </RelativeLayout>
     <LinearLayout
@@ -167,20 +167,6 @@
         </LinearLayout>
 
 
-        <TextView
-            style="@style/CommonTextWrapcontent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="gone"
-            android:text="Enter you scroll message of ad" />
-        <EditText
-            style="@style/SimpleEdittext"
-            android:visibility="gone"
-            android:hint="Add a message that appears on your ad .. " />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:visibility="gone"
-            android:background="@color/black" />
 
         <TextView
             style="@style/CommonTextWrapcontent"
@@ -188,7 +174,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:textColor="@color/black"
             android:visibility="visible"
-            android:text="Select Type"/>
+            android:text="@string/select_type"/>
         <Spinner
             android:id="@+id/childType"
             android:layout_width="match_parent"

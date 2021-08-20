@@ -65,7 +65,7 @@ class ForgotPasswordActivity : AppCompatActivity(), View.OnClickListener {
                     Log.d("dkjhfkjhdh", "-------$message")
 
                     progressDialog.hidedialog()
-                    myCustomToast("Email has been sent to your registered email")
+                    myCustomToast(getString(R.string.email_has_been_sent))
                     onBackPressed()
                 } else {
                     progressDialog.hidedialog()

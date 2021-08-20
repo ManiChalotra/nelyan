@@ -12,8 +12,8 @@ import com.nelyanlive.modals.DetailsTimeModal
 import java.util.*
 
 class DetailsTimeAdapter(activityDetailsActivity: FragmentActivity, datalisttime: ArrayList<DetailsTimeModal>) : RecyclerView.Adapter<DetailsTimeAdapter.Vh>() {
-    var a: Activity
-    var datalisttime: ArrayList<DetailsTimeModal>
+    var a: Activity = activityDetailsActivity
+    var datalisttime: ArrayList<DetailsTimeModal> = datalisttime
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_activtydetail_time, parent, false)
         return Vh(v)
@@ -31,21 +31,11 @@ class DetailsTimeAdapter(activityDetailsActivity: FragmentActivity, datalisttime
     }
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var t1: TextView
-        var t2: TextView
-        var t3: TextView
-        var t4: TextView
+        var t1: TextView = itemView.findViewById(R.id.text1)
+        var t2: TextView = itemView.findViewById(R.id.text2)
+        var t3: TextView = itemView.findViewById(R.id.text3)
+        var t4: TextView = itemView.findViewById(R.id.text4)
 
-        init {
-            t1 = itemView.findViewById(R.id.text1)
-            t2 = itemView.findViewById(R.id.text2)
-            t3 = itemView.findViewById(R.id.text3)
-            t4 = itemView.findViewById(R.id.text4)
-        }
     }
 
-    init {
-        a = activityDetailsActivity
-        this.datalisttime = datalisttime
-    }
 }

@@ -1,6 +1,5 @@
 package com.nelyanlive.adapter
 
-/*import com.nelyan_live.utils.image_url_local*/
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -38,9 +37,5 @@ class ActivitiesEventsDaysAdapter(internal  var context: Context, internal  var 
             tvDay.text = activitiesEventsDaysList.daysName
            
         }
-
     }
-
-    init {
-      }
 }

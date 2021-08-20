@@ -22,9 +22,7 @@ import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.modals.HomeEventModel
 import com.nelyanlive.ui.*
 import com.nelyanlive.utils.*
-import kotlinx.android.synthetic.main.fragment_activity_list.*
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.fragment_trader_listing.*
 import kotlinx.android.synthetic.main.tookbar.*
 import org.json.JSONObject
 import java.util.*

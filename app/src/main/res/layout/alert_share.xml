@@ -12,10 +12,10 @@
         <TextView
             style="@style/CommonTextWrapcontent"
          android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/bold"
             android:textSize="@dimen/_14sdp"
-            android:text="Share By"/>
+            android:text="@string/share_by"/>
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Facebook"/>
+                   android:text="@string/facebook"/>
            </LinearLayout>
            <LinearLayout
                android:id="@+id/ll_twitter_share"
@@ -54,7 +54,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Twitter"/>
+                   android:text="@string/twitter"/>
            </LinearLayout>
            <LinearLayout
                android:id="@+id/ll_instra_share"
@@ -70,7 +70,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Instagram"/>
+                   android:text="@string/instagram"/>
            </LinearLayout>
 
        </LinearLayout>
@@ -95,7 +95,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Whatsapp"/>
+                   android:text="@string/whatsapp"/>
            </LinearLayout>
            <LinearLayout
                android:id="@+id/ll_gmail_share"
@@ -113,7 +113,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Gmail"/>
+                   android:text="@string/gmail"/>
            </LinearLayout>
            <LinearLayout
                android:id="@+id/ll_messanger_share"
@@ -129,7 +129,7 @@
                <TextView
                   style="@style/CommonTextWrapcontent"
                    android:layout_gravity="center"
-                   android:text="Messenger"/>
+                   android:text="@string/messenger"/>
            </LinearLayout>
 
        </LinearLayout>

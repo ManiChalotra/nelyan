@@ -50,7 +50,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     var ivFavouritee: ImageView? = null
     var LAUNCH_SECOND_ACTIVITY = 1
     var dataString = ""
-    var enabled = false
 
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -82,7 +81,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         .first()
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
-                var list = listOf<Address>()
+                var list: List<Address>
                 Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
 
 
@@ -92,7 +91,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         locality = list[0].locality
                         Log.e("location_changed", "==dasfasdf=$latitude==$longitude===${list[0]}")
 
-                        //locality = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
 
                         Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
                         if (latitude != "0.0") {
@@ -194,9 +192,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             "Distance"
         )
         val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, orderByList)
-        // Setting Adapter to the Spinner
         orderby!!.adapter = adapter
-        // Setting OnItemClickListener to the Spinner
         orderby!!.onItemSelectedListener = this@ActivitiesListActivity
     }
 
@@ -330,12 +326,12 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val jsonObject = JSONObject(mResponse)
                 val message = jsonObject.get("msg").toString()
                 if (message == "You marked this Post as Your Favourite") {
-                    myCustomToast("You marked this post as your favourite")
+                    myCustomToast(getString(R.string.marked_as_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart)
                 }
                 else
                 {
-                    myCustomToast("You removed this post from your favourite")
+                    myCustomToast(getString(R.string.removed_from_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
             }

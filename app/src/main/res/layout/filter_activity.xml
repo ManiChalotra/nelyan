@@ -72,7 +72,7 @@
                 <TextView
                     style="@style/CommonTextWrapcontent"
                     android:paddingStart="@dimen/_10sdp"
-                    android:text="Around me"
+                    android:text="@string/around_me"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -225,7 +225,7 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Events by Date"
+                android:text="@string/events_by_date"
                 android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -236,7 +236,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/transparent"
                 android:drawableEnd="@drawable/calendar_icon"
-                android:hint="Events by Date"
+                android:hint="@string/events_by_date"
                 android:visibility="gone"
                 android:maxLines="1"
                 android:textColor="@color/black"

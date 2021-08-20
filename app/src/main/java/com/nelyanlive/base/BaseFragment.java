@@ -20,7 +20,6 @@ import java.util.List;
 
 public abstract class BaseFragment extends Fragment {
 
-    private DownloadManager downloadManager;
 
     protected void hideKeyboard(View view) {
         if (view != null) {
@@ -83,40 +82,12 @@ public abstract class BaseFragment extends Fragment {
         } else { // For early versions, do what worked for you before.
             Intent smsIntent = new Intent(Intent.ACTION_VIEW);
             smsIntent.setType("vnd.android-dir/mms-sms");
-//            smsIntent.putExtra("address","phoneNumber");
             smsIntent.putExtra("sms_body", link);
             startActivity(smsIntent);
         }
     }
 
-//    protected void deleteAlert(int pos, final String addressId, final DeleteCallback callback) {
-//        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getContext());
-//        alertDialogBuilder.setMessage(getContext().getString(R.string.delete_alert_message))
-//                .setCancelable(false)
-//                .setPositiveButton(getContext().getString(R.string.delete),
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                callback.onYesClicked();
-//                         }
-//                        });
-//
-//        alertDialogBuilder.setNegativeButton(getContext().getString(R.string.cancel),
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.dismiss();
-//                        callback.onNoClicked();
-//                    }
-//                });
-//        final android.app.AlertDialog alert = alertDialogBuilder.create();
-//
-//        alert.setOnShowListener(new DialogInterface.OnShowListener() {
-//            @Override
-//            public void onShow(DialogInterface arg0) {
-//                alert.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#000000"));
-//            }
-//        });
-//        alert.show();
-//    }
+
 
 
 }

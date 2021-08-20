@@ -92,8 +92,7 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
         context = parent.context
         return RecyclerViewHolder(LayoutInflater.from(context).inflate(R.layout.list_activitylist, parent, false))
 
-              /*  val v = LayoutInflater.from(context).inflate(R.layout.list_activitylist, parent, false)
-        return RecyclerViewHolder(v)*/
+
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {

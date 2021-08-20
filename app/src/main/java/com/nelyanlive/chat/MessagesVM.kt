@@ -60,12 +60,7 @@ class MessagesVM :ViewModel() {
         when(s){
             "noData"->{
 
-              /*  view.context.startActivity(
-                        Intent(view.context, Chat1Activity::class.java)
-                                .putExtra("senderID", "187")
-                                .putExtra("senderName", "kamal")
-                                .putExtra("senderImage", "dsffds")
-                )*/
+
             }
         }
     }
@@ -101,7 +96,6 @@ class MessagesVM :ViewModel() {
                 else
                 {
                    connectUser()
-                   // getUserChat()
                 }
 
 
@@ -316,7 +310,6 @@ class MessagesVM :ViewModel() {
 
                 }
             }
-            // chat.addAll(it[0] as )
 
         }
         catch (e:Exception)

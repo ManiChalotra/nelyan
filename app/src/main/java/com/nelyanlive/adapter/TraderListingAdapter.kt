@@ -33,7 +33,6 @@ class TraderListingAdapter(var context: Context, private var traderPostList: Arr
         val tvShopType = itemView.tv_shop_type
         val tvEmail = itemView.tv_email
         val phone = itemView.phone
-        val currently = itemView.currently
         val llTraderDetails = itemView.ll_trader_details
         val tvAddress = itemView.tv_address
         val tvTraderdesc = itemView.tv_traderdesc

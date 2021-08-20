@@ -44,7 +44,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.alert_add_post_restiction.*
 import kotlinx.android.synthetic.main.bottom_navigation.*
-import kotlinx.android.synthetic.main.fragment_drawer.tvLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -82,7 +81,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var tvFavorite: TextView? = null
     var tvProfile: TextView? = null
     var tvContact: TextView? = null
-    var tvNoti: TextView? = null
     var tvSettings: TextView? = null
     var dialog: Dialog? = null
     var consultantUserDialog: Dialog? = null
@@ -327,7 +325,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         tvAdd = findViewById(R.id.tv_myAdd)
         tvFavorite = findViewById(R.id.tvFavorite)
         tvProfile = findViewById(R.id.tvProfile)
-        tvNoti = findViewById(R.id.tvNoti)
         tvContact = findViewById(R.id.tvContact)
         tvSettings = findViewById(R.id.tvSettings)
 
@@ -362,11 +359,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         }
 
-        tvNoti!!.setOnClickListener {
-            mDrawerLayout!!.closeDrawers()
-            val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-            startActivity(i)
-        }
+
 
         tvSettings!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
@@ -435,7 +428,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
-                tvTitleToolbar!!.text = "Message"
+                tvTitleToolbar!!.text = getString(R.string.message)
                 iv_bell!!.visibility = View.GONE
                 fragment = MessageFragment()
                     loadFragment(fragment)
@@ -448,7 +441,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         if (userType2 == "2") {
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
-                            tvTitleToolbar!!.text = "Publisher"
+                            tvTitleToolbar!!.text = getString(R.string.publisher)
                             iv_bell!!.visibility = View.GONE
                             val bundle = Bundle()
                             val frag = PublisherFrag()

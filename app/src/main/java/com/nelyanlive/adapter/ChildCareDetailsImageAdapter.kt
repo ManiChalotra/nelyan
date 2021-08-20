@@ -26,7 +26,6 @@ class ChildCareDetailsImageAdapter(homeChildCareDetailsActivity: HomeChildCareDe
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------"+ dataList[position].image)
         Glide.with(a).asBitmap().load(image_base_URl+ dataList[position].image).into(holder.img)
 
        holder.img.setOnClickListener { (holder.img.context as Activity).startActivity(

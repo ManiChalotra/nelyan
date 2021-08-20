@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
     android:background="@drawable/detailstime_bg"
     android:orientation="vertical"
 >
@@ -10,7 +10,7 @@
             android:id="@+id/tv_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/regular"
             android:layout_margin="@dimen/_7sdp"
             android:textColor="@color/white" />

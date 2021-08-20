@@ -82,9 +82,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         mDay = c[Calendar.DAY_OF_MONTH]
         tvCal = findViewById(R.id.tv_cal)
         tvCal!!.setOnClickListener(this)
-            //ll_1 = findViewById(R.id.ll_public)
-            //ll_1!!.setOnClickListener { dialogLocation() }
-            //set city
+
         launch(Dispatchers.Main.immediate) {
             et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
@@ -148,9 +146,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 applicationContext,
                 googleMapKey
         )
-        // Create a new Places client instance.
-        val placesClient: PlacesClient = Places.createClient(this@ActivitiesFilterActivity)
-        // Set the fields to specify which types of place data to return.
         val fields: List<Place.Field> = listOf(
                 Place.Field.ID,
                 Place.Field.NAME,
@@ -163,14 +158,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     }
 
-    private fun dialogLocation() {
-        launch(Dispatchers.Main.immediate) {
-            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-        }
-
-    }
     val category: ArrayList<String?> = ArrayList()
     val categoryId: ArrayList<String?> = ArrayList()
 
@@ -296,7 +283,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             onBackPressed()
                         }
                         else -> {
-                           // hitFilterActivity_Api()
                         }
                     }
                 }

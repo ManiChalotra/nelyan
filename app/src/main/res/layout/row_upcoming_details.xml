@@ -117,7 +117,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="5 Years to 10 Years"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
