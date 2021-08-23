@@ -358,5 +358,7 @@
     <string name="please_enter_email">Please enter email</string>
     <string name="enter_only_alphabets">Please enter only alphabets in name</string>
     <string name="enter_min_chars">\"please enter name minimum of  3 characters Long \"</string>
+    <string name="switch_to_english">Switch to English</string>
+    <string name="switch_to_french">Switch to French</string>
 
 </resources>

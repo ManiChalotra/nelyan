@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.utils.OpenActivity
@@ -41,7 +42,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+       val sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
+       val language =  sharedPreferences.getString("language", "en")!!
+        Log.e("asfdfads","======$language")
+        LanguageHelper.setLocale(this, language)
         printKeyHash(this)
+
+
+
+
+
 
         try {
             //fcm tokencommit today
@@ -67,8 +78,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             e.printStackTrace()
 
         }
-
-
 
         mContext = this
         ivLogo = findViewById(R.id.ivLogo)

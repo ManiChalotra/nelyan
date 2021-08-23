@@ -146,6 +146,50 @@
                         android:src="@drawable/tab_off"/>
                 </RelativeLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/setting_shape"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        style="@style/CommonTextWrapcontent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:text="@string/switch_to_english"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:theme="@style/Color1SwitchStyle"
+                        android:thumb="@drawable/thumb"
+                        app:track="@drawable/switch_track" />
+
+
+
+                </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llAbout"

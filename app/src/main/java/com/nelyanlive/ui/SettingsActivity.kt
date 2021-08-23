@@ -1,8 +1,11 @@
 package com.nelyanlive.ui
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
@@ -11,6 +14,7 @@ import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
@@ -30,6 +34,10 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
     private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
     private val job = Job()
 
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
     private val dataStoragePreference by lazy { DataStoragePreference(this@SettingsActivity) }
 
     override val coroutineContext: CoroutineContext
@@ -38,6 +46,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
 
     private var noti_status = ""
     private var user_type = ""
+    private var language = "en"
 
     private var authKey = ""
     private var aboutUs_data = ""
@@ -89,6 +98,8 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
         }
     }
 
+
+
     private fun initalizeClick() {
         ivBack.setOnClickListener(this)
         llLogout.setOnClickListener(this)
@@ -98,9 +109,25 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
         llAbout.setOnClickListener(this)
         llPrivacy.setOnClickListener(this)
 
+
+
+        sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
+        language =  sharedPreferences.getString("language", "en")!!
+        Log.e("asfdfads","======$language")
+
+        if (language == "en") {
+            tvLanguage.text = getString(R.string.switch_to_french)
+            scLanguage.isChecked = false
+        } else {
+            tvLanguage.text = getString(R.string.switch_to_english)
+            scLanguage.isChecked = false
+        }
+
+
         launch(Dispatchers.Main.immediate) {
             noti_status = dataStoragePreference.emitStoredValue(preferencesKey<String>("notificationStatusLogin")).first()
             user_type = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
+
 
             if (noti_status != null) {
                 iv_notification_switch.isChecked = noti_status == "1"
@@ -127,6 +154,35 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                     hitUserTypeApi(user_type)
                 }
 
+            }
+            scLanguage.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (language == "en") {
+                    language = "fr"
+                    sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
+                    editor = sharedPreferences.edit()
+                    editor.putString("language", "fr")
+                    editor.apply()
+                    editor.commit()
+
+                    LanguageHelper.setLocale(this@SettingsActivity, "fr")
+
+
+                }
+                else {
+                    language = "en"
+
+                     sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
+                    editor = sharedPreferences.edit()
+                    editor.putString("language", "en")
+                    editor.apply()
+                    editor.commit()
+
+                    LanguageHelper.setLocale(this@SettingsActivity, "en")
+
+
+                }
+
+              //  recreate()
             }
 
 

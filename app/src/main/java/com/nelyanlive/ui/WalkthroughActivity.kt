@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ImageSliderCustomAdapter
 import com.nelyanlive.db.DataStoragePreference
@@ -78,10 +79,17 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
             override fun onPageScrollStateChanged(state: Int) {}
         })
         login!!.setOnClickListener {
+
+           // LanguageHelper.setLocale(this@WalkthroughActivity, "en");
+
+
             val i = Intent(this@WalkthroughActivity, SignupActivity::class.java)
             startActivity(i)
         }
         signup!!.setOnClickListener {
+
+            //LanguageHelper.setLocale(this@WalkthroughActivity, "fr");
+
             val i = Intent(this@WalkthroughActivity, LoginActivity::class.java)
             startActivity(i)
         }
