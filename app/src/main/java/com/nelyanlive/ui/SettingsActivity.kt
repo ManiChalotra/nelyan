@@ -182,6 +182,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
 
                 }
 
+                onBackPressed()
               //  recreate()
             }
 
@@ -195,11 +196,8 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                     noti_status = "0"
                     hitNotificationStatusApi(noti_status)
                 }
-
             }
-
         }
-
     }
 
     override fun onClick(v: View?) {
