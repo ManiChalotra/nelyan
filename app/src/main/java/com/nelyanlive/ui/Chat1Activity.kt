@@ -48,6 +48,7 @@ class Chat1Activity :  OpenCameraGallery() {
             checkPermission(this)
         }
         chatVM.rvChat =activityChat1Binding.rvChat
+        chatVM.noDataMessage.set(getString(R.string.loading_chat))
 
         Log.e("ssdfdsfsd","=====${intent.getStringExtra("senderID")}")
 

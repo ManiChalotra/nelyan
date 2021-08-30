@@ -103,7 +103,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 val intent =
                     Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra(
                         "name",
-                        "Event"
+                       it.context.getString(R.string.event)
                     )
                 startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
             } else {

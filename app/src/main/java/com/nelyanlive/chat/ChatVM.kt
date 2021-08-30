@@ -41,7 +41,7 @@ class ChatVM :ViewModel() {
     var message : ObservableField<String> = ObservableField("")
     var senderName : ObservableField<String> = ObservableField("")
     var senderImage : ObservableField<String> = ObservableField("")
-    var noDataMessage : ObservableField<String> = ObservableField("Loading Chat...")
+    var noDataMessage : ObservableField<String> = ObservableField("")
 
     val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
      val listChat by lazy { ArrayList<ChatData>() }

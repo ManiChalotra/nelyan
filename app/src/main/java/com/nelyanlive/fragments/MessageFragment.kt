@@ -38,6 +38,7 @@ class MessageFragment : Fragment() {
         fragmentMessageBinding.messageVM =messagesVM
 
         messagesVM.userId = (container.context as HomeActivity).userId
+        messagesVM.noDataMessage.set(container.context.getString(R.string.loading_messages))
 
         return fragmentMessageBinding.root
     }

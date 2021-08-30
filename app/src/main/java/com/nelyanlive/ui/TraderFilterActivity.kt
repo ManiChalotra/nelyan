@@ -60,7 +60,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         initalizeClicks()
 
 
-        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
+        val km = arrayOf<String?>("Distance", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
         val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.size_customspinner, km)
         spinner_trader_distance!!.adapter = adapter1
@@ -71,7 +71,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 position: Int,
                 id: Long
             ) {
-              distance = if(km[position].isNullOrBlank()){""}else{kmValue[position]!!}
+              distance = if(kmValue[position].isNullOrBlank()){""}else{kmValue[position]!!}
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

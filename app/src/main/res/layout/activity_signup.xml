@@ -52,8 +52,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
+
                 android:orientation="vertical">
 
                 <ImageView
@@ -77,6 +76,8 @@
                     android:fontFamily="@font/bold"
                     android:text="@string/create_an_account"
                     android:textColor="@color/black"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
@@ -85,6 +86,8 @@
                     android:fontFamily="@font/medium"
                     android:text="@string/sign_up_as_a"
                     android:textColor="@color/black"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textSize="@dimen/_12sdp" />
 
                 <Spinner
@@ -98,15 +101,19 @@
                     android:fontFamily="@font/regular"
                     android:gravity="start"
                     android:inputType="text"
+                    android:paddingStart="0dp"
                     android:paddingTop="-15dp"
                     android:paddingBottom="0dp"
-                    android:paddingStart="0dp"
                     android:spinnerMode="dropdown"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:text="@string/select" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@color/black" />
 
                 <TextView
@@ -114,6 +121,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/medium"
                     android:text="@string/full_name"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -124,13 +133,17 @@
                     android:background="@color/transparent"
                     android:hint="@string/full_name"
                     android:inputType="text"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/black" />
 
@@ -139,6 +152,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/medium"
                     android:text="@string/email_address"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -150,11 +165,15 @@
                     android:hint="@string/email_address"
                     android:inputType="textWebEmailAddress"
                     android:maxLines="1"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textColor="@color/black" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/black" />
 
@@ -164,6 +183,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/medium"
                     android:text="@string/password"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -174,6 +195,8 @@
                     android:layout_marginTop="-10dp"
                     android:layout_marginBottom="-10dp"
                     app:hintEnabled="false"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/grey">
 
@@ -181,12 +204,12 @@
                         android:id="@+id/tv_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:paddingBottom="0dp"
                         android:layout_marginBottom="0dp"
+                        android:background="@null"
                         android:fontFamily="@font/regular"
                         android:hint="@string/password"
                         android:inputType="textWebPassword"
+                        android:paddingBottom="0dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/_10sdp" />
@@ -197,12 +220,16 @@
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_confirmPasswordSignup"
                     style="@style/CommonTextMatchparent"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:fontFamily="@font/medium"
                     android:text="@string/confirm_password"
                     android:textColor="@color/black"
@@ -214,7 +241,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
                     android:layout_marginBottom="-10dp"
-
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/grey">
@@ -223,12 +251,12 @@
                         android:id="@+id/tv_confirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="0dp"
                         android:layout_marginBottom="0dp"
                         android:background="@null"
                         android:fontFamily="@font/regular"
                         android:hint="@string/confirm_password"
                         android:inputType="textWebPassword"
+                        android:paddingBottom="0dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/_10sdp" />
@@ -239,6 +267,8 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@color/black" />
 
                 <TextView
@@ -246,6 +276,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/medium"
                     android:text="@string/your_city"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -255,6 +287,8 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/transparent"
                     android:focusable="false"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:focusableInTouchMode="false"
                     android:hint="@string/your_city"
                     android:inputType="text"
@@ -265,14 +299,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@color/black" />
 
                 <Button
                     android:id="@+id/btnRegister"
                     style="@style/Button"
-                    android:layout_marginLeft="@dimen/_3sdp"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginRight="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/_23sdp"
+                    android:layout_marginRight="@dimen/_23sdp"
                     android:background="@drawable/btn"
                     android:text="@string/register" />
 
@@ -282,8 +318,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="@dimen/_90sdp"
@@ -310,11 +346,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_gravity="center"
-                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/fb_btn"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
@@ -334,10 +370,10 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:visibility="gone"
                     android:background="@drawable/google_btn"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
@@ -372,6 +408,7 @@
                         style="@style/CommonTextWrapcontent"
                         android:text="@string/accept"
                         android:textColor="@color/app"
+                        android:singleLine="true"
                         android:textSize="@dimen/_9sdp" />
                 </LinearLayout>
 
@@ -384,7 +421,7 @@
 
                     <TextView
                         style="@style/CommonTextWrapcontent"
-                        android:text="and use and "
+                        android:text="@string/and_use_and"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp"
                         tools:ignore="HardcodedText" />

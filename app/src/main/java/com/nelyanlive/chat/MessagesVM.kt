@@ -26,7 +26,7 @@ class MessagesVM :ViewModel() {
     lateinit var ctx: Context
 
     var userId = ""
-    var noDataMessage : ObservableField<String> = ObservableField("Loading messages...")
+    var noDataMessage : ObservableField<String> = ObservableField("")
 
     val membersAdapter by lazy { RecyclerAdapter<ChatListResponse>(R.layout.list_message) }
     val listMembers by lazy { ArrayList<ChatListResponse>() }

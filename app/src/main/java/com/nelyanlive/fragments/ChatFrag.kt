@@ -81,7 +81,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         activityChatBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context), R.layout.activity_chat, container, false)
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
-
+        groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
         activityChatBinding.btnRegulation.setOnClickListener {
             val i = Intent(mContext, RegulationActivity::class.java)
             startActivity(i)

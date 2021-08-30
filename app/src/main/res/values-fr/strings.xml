@@ -6,7 +6,7 @@
     <string name="default_notification_channel_name" translatable="true">Sash</string>
     <string name="AUTH_ID">203646964865-ie0kg3ji47ff24ld4selfbo5itbummki.apps.googleusercontent.com</string>
 
-    <string name="app_name">French Nelyan</string>
+    <string name="app_name">Nelyan</string>
     <string name="signup"><u>S\'inscrire</u></string>
     <string name="privacy"><u>Politique de confidentialité</u></string>
     <string name="accept"><u>J\'accepte les conditions générales</u></string>
@@ -27,7 +27,7 @@
     </string>
     <string name="loremipsum">During this summer, many cities show movies in the park. Bring a blanket,snacks,a light sweater and enjoy the magic of cinema.</string>
     <string name="home">Accueil</string>
-    <string name="add">Mes annonces</string>
+    <string name="add"> annonces</string>
     <string name="alert">Mes alertes</string>
     <string name="favo">Mes favoris</string>
     <string name="profile">Profil</string>
@@ -143,6 +143,9 @@
     <string name="name">Nom d\'utilisateur </string>
     <string name="enter_email">E-mail</string>
     <string name="enter_name">Nom d\'utilisateur </string>
+    <string name="enter_activity_name">Nom de l’activité</string>
+    <string name="enter_event_name">Nom de l’événement</string>
+    <string name="enter_child_care_filter_name">Nom de</string>
     <string name="are_you_sure_you_want_to_logout">Êtes-vous sûr de vouloir vous déconnecter?</string>
     <string name="password_donot_match_error">Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas</string>
     <string name="confirm_password_missing_erro">Confirmez le mot de passe</string>
@@ -160,7 +163,7 @@
     <string name="my_ads">Mes annonces</string>
     <string name="edit">Modifier</string>
     <string name="delete">Supprimer </string>
-    <string name="don_t_have_an_account">DVous n\'avez pas de compte ?</string>
+    <string name="don_t_have_an_account">Vous n\'avez pas de compte ?</string>
     <string name="continue_with_google">CONTINUE WITH GOOGLE</string>
     <string name="name_of_activity">Nom de l\'activité</string>
     <string name="child_care">Garde d\'enfants</string>
@@ -191,7 +194,7 @@
     <string name="to1">Au:</string>
     <string name="select_from">À partir de</string>
     <string name="select_to">Au</string>
-    <string name="price">Prix($)</string>
+    <string name="price">Prix(€)</string>
     <string name="price11">Prix</string>
     <string name="add_more">Ajouter plus</string>
     <string name="type_of_child_care">Type de garde</string>
@@ -207,7 +210,7 @@
     <string name="add_product_image">Photo</string>
     <string name="product_title">Titre</string>
     <string name="product_price">Prix</string>
-    <string name="product_price_with_dollar">Prix ($)</string>
+    <string name="product_price_with_dollar">Prix (€)</string>
     <string name="description">Description</string>
     <string name="type_of_trader">Type</string>
     <string name="select_day">Jours</string>
@@ -352,4 +355,8 @@
     <string name="enter_only_alphabets">Veuillez entrer uniquement des alphabets dans le nom</string>
     <string name="enter_min_chars">\"Veuillez saisir un nom de 3 caractères minimum \"</string>
     <string name="switch_to_english">Passer à l\'anglais</string>
+    <string name="and_use_and">et la </string>
+    <string name="loading_chat">Chargement du Tchatche</string>
+    <string name="loading_messages">Chargement des messages</string>
+
 </resources>

@@ -41,7 +41,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     var tvCal: TextView? = null
     var dialog: Dialog? = null
     var ivBack: ImageView? = null
-    var ll_1: LinearLayout? = null
     var activityTypes: Spinner? = null
     var orderby1: Spinner? = null
     var distance: String? = null
@@ -96,7 +95,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         btnFilter!!.setOnClickListener(this)
 
         orderby1 = findViewById(R.id.spinner_dayss)
-        val km = arrayOf<String?>("", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
+        val km = arrayOf<String?>("Distance", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
         val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
 
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
@@ -110,7 +109,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                position: Int,
                id: Long
            ) {
-               distance = if(km[position].isNullOrBlank()){""}else{kmValue[position]!!}
+               distance = if(kmValue[position].isNullOrBlank()){""}else{kmValue[position]!!}
            }
 
            override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -118,15 +117,21 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
            }
        }
 
-        if(tvName.text !="Event")
+        if(tvName.text !=getString(R.string.event))
         {
             viewType.visibility = View.VISIBLE
             tvType.visibility = View.VISIBLE
             llType.visibility = View.VISIBLE
+
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendActivityTypeData(security_key, authKey)
-        }} }
+        }}
+    else
+        {
+            et_name.hint = getString(R.string.enter_event_name)
+        }
+    }
 
 
     override fun onResume() {
@@ -260,7 +265,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 }
                 else {
                     when (tvName.text) {
-                        "Event" -> {
+                        getString(R.string.event)-> {
 
                             val intent = Intent().putExtra("name",et_name.text.toString())
                                 .putExtra("latitude",latitudee)
@@ -271,7 +276,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             setResult(1212,intent)
                             onBackPressed()
                         }
-                        "Activity" -> {
+                        getString(R.string.activity) -> {
                             val intent = Intent().putExtra("name",et_name.text.toString())
                                 .putExtra("latitude",latitudee)
                                 .putExtra("longitude",longitudee)

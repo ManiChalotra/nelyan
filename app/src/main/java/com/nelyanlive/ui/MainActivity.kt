@@ -44,18 +44,13 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
 
        val sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
-       val language =  sharedPreferences.getString("language", "en")!!
-        Log.e("asfdfads","======$language")
+       val language =  sharedPreferences.getString("language", "fr")!!
+
+        Log.d("sharedPreferences---", "--------language------------$language")
         LanguageHelper.setLocale(this, language)
         printKeyHash(this)
 
-
-
-
-
-
         try {
-            //fcm tokencommit today
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Log.w(
@@ -65,7 +60,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                     )
                     return@OnCompleteListener
                 }
-                // Get new FCM registration token
                 val token = task.result
                 launch(Dispatchers.Main.immediate) {
                     dataStoragePreference = DataStoragePreference(this@MainActivity)
@@ -109,9 +103,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     fun printKeyHash(context: Activity): String? {
         val packageInfo: PackageInfo
         var key: String? = null
-        try { //getting application package name, as defined in manifest
+        try {
             val packageName = context.applicationContext.packageName
-//Retriving package info
             packageInfo = context.packageManager.getPackageInfo(
                     packageName,
                     PackageManager.GET_SIGNATURES

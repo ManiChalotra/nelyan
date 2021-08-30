@@ -122,7 +122,7 @@
                     android:backgroundTint="@color/transparent"
                     android:drawableEnd="@drawable/blk_cross"
                     android:fontFamily="@font/regular"
-                    android:hint="@string/enter_name"
+                    android:hint="@string/enter_activity_name"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey"

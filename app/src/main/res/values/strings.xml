@@ -143,6 +143,9 @@
     <string name="name">Name</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_name">Enter Name</string>
+    <string name="enter_activity_name">Enter Activity Name</string>
+    <string name="enter_event_name">Enter Event Name</string>
+    <string name="enter_child_care_filter_name">Enter Name</string>
     <string name="are_you_sure_you_want_to_logout">Are you sure you want to logout?</string>
     <string name="password_donot_match_error">New and Confirm password do not match</string>
     <string name="confirm_password_missing_erro">Please enter confirm Password</string>
@@ -192,7 +195,7 @@
 
     <string name="select_from">Select From</string>
     <string name="select_to">Select To</string>
-    <string name="price">Price($)</string>
+    <string name="price">Price(€)</string>
     <string name="price11">Price</string>
     <string name="add_more">Add More</string>
     <string name="type_of_child_care">Type of child care</string>
@@ -208,7 +211,7 @@
     <string name="add_product_image">Add Product Image</string>
     <string name="product_title">Product Title</string>
     <string name="product_price">Product Price</string>
-    <string name="product_price_with_dollar">Product Price ($)</string>
+    <string name="product_price_with_dollar">Product Price (€)</string>
     <string name="description">Description</string>
     <string name="type_of_trader">Type of Trader</string>
     <string name="select_day">Select Day</string>
@@ -360,5 +363,8 @@
     <string name="enter_min_chars">\"please enter name minimum of  3 characters Long \"</string>
     <string name="switch_to_english">Switch to English</string>
     <string name="switch_to_french">Switch to French</string>
+    <string name="and_use_and">and use and</string>
+    <string name="loading_chat">Loading Chat…</string>
+    <string name="loading_messages">Loading messages…</string>
 
 </resources>

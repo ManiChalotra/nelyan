@@ -80,15 +80,10 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
         })
         login!!.setOnClickListener {
 
-           // LanguageHelper.setLocale(this@WalkthroughActivity, "en");
-
-
             val i = Intent(this@WalkthroughActivity, SignupActivity::class.java)
             startActivity(i)
         }
         signup!!.setOnClickListener {
-
-            //LanguageHelper.setLocale(this@WalkthroughActivity, "fr");
 
             val i = Intent(this@WalkthroughActivity, LoginActivity::class.java)
             startActivity(i)

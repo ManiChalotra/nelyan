@@ -106,7 +106,7 @@
                 android:textColor="@color/black"
                 android:maxLines="1"
                 android:backgroundTint="@color/transparent"
-                android:hint="@string/enter_name"
+                android:hint="@string/enter_activity_name"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:drawableEnd="@drawable/blk_cross"
                 android:textSize="@dimen/_12sdp"
@@ -161,7 +161,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:textColor="@color/black"
             android:visibility="visible"
-            android:text="Type of Traders"/>
+            android:text="@string/type_of_activity"/>
         <Spinner
             android:id="@+id/trader_type"
             android:layout_width="match_parent"

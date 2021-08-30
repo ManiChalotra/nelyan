@@ -117,7 +117,7 @@
                 android:maxLines="1"
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
-                android:hint="@string/enter_name"
+                android:hint="@string/enter_child_care_filter_name"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:drawableEnd="@drawable/blk_cross"
                 android:textSize="@dimen/_12sdp"

@@ -150,7 +150,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
             if (tvFilter.text == getString(R.string.filter)) {
                 val i =
-                    Intent(this, ActivitiesFilterActivity::class.java).putExtra("name", "Activity")
+                    Intent(this, ActivitiesFilterActivity::class.java).putExtra("name", getString(R.string.activity))
                 startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
             } else {
 
