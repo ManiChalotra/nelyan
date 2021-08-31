@@ -53,7 +53,7 @@ class HomeChildCareListAdapter(var context: Context, internal var childCareDatal
                     tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.nursery)
                 }
                 "2" -> {
-                    tvNameOfShop.text = context.getString(R.string.type1)+" Maternal Assistant"
+                    tvNameOfShop.text = context.getString(R.string.type1)+" "+context.getString(R.string.maternal_asistant)
                 }
                 "3" -> {
                     tvNameOfShop.text = context.getString(R.string.type1)+" "+ context.getString(R.string.babySitter)

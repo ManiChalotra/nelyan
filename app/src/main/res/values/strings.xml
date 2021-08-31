@@ -373,5 +373,7 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
-
+    <string name="cat_nursery">Nursery</string>
+    <string name="cat_maternal">Maternal Assistant</string>
+    <string name="cat_baby_sitter">Baby Sitter</string>
 </resources>

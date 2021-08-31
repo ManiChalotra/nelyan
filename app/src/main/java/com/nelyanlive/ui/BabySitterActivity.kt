@@ -179,16 +179,15 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         }
                                         else {
                                             when (childCareType) {
-                                                "Nursery" -> {
+                                                getString(R.string.cat_nursery) -> {
                                                     childCareId = "1"
                                                 }
-                                                "Maternal Assistant" -> {
+                                                getString(R.string.cat_maternal)  -> {
                                                     childCareId = "2"
                                                 }
-                                                "Baby Sitter" -> {
+                                                getString(R.string.cat_baby_sitter)  -> {
                                                     childCareId = "3"
                                                 } }
-
                                             // checking the list
                                             if (selectedUrlListing.size == urlListingFromResponse.size) {
                                                 selectedUrlListing.clear()
