@@ -80,13 +80,13 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
             val days: MutableList<String?> = ArrayList()
             days.add("")
-            days.add("Monday")
-            days.add("Tuesday")
-            days.add("Wednesday")
-            days.add("Thursday")
-            days.add("Friday")
-            days.add("Saturday")
-            days.add("Sunday")
+            days.add(context.getString(R.string.monday))
+            days.add(context.getString(R.string.tuesday))
+            days.add(context.getString(R.string.wednesday))
+            days.add(context.getString(R.string.thursday))
+            days.add(context.getString(R.string.friday))
+            days.add(context.getString(R.string.saturday))
+            days.add(context.getString(R.string.sunday))
 
             val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days )
             spinnerDayss.adapter = arrayAdapter

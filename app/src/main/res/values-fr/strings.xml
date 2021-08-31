@@ -358,5 +358,12 @@
     <string name="and_use_and">et la </string>
     <string name="loading_chat">Chargement du Tchatche</string>
     <string name="loading_messages">Chargement des messages</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Jeudi</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="sunday">Dimanche</string>
 
 </resources>

@@ -54,13 +54,14 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
 
             val day: ArrayList<String> = ArrayList()
             day.add("")
-            day.add("Monday")
-            day.add("Tuesday")
-            day.add("Wednesday")
-            day.add("Thursday")
-            day.add("Friday")
-            day.add("Saturday")
-            day.add("Sunday")
+            day.add(context.getString(R.string.monday))
+            day.add(context.getString(R.string.tuesday))
+            day.add(context.getString(R.string.wednesday))
+            day.add(context.getString(R.string.thursday))
+            day.add(context.getString(R.string.friday))
+            day.add(context.getString(R.string.saturday))
+            day.add(context.getString(R.string.sunday))
+
 
             val modeAdapterCity = ArrayAdapter(context, R.layout.customspinner, day)
             days.adapter = modeAdapterCity

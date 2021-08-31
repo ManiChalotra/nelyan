@@ -366,5 +366,12 @@
     <string name="and_use_and">and use and</string>
     <string name="loading_chat">Loading Chat…</string>
     <string name="loading_messages">Loading messages…</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
 </resources>
