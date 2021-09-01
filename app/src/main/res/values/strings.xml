@@ -176,6 +176,7 @@
     <string name="name_of_traineship">Name of Traineship:</string>
     <string name="date1">Date:</string>
     <string name="years">Years</string>
+    <string name="years_masculine">Years</string>
     <string name="no_age_group_found">No age group found</string>
     <string name="facebook_not_error">Facebook have not been installed.</string>
     <string name="whatsapp_not_error">Whatsapp have not been installed.</string>
@@ -192,6 +193,8 @@
     <string name="select_date">Select Date</string>
     <string name="from1">From:</string>
     <string name="to1">To:</string>
+    <string name="to2">to</string>
+    <string name="to_only_a">to</string>
 
     <string name="select_from">Select From</string>
     <string name="select_to">Select To</string>

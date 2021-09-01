@@ -176,6 +176,7 @@
     <string name="name_of_traineship">Nom de l\'événement:</string>
     <string name="date1">Date événement:</string>
     <string name="years">Années</string>
+    <string name="years_masculine">Ans</string>
     <string name="no_age_group_found">Pas d\'information sur l\'âge</string>
     <string name="facebook_not_error">Facebook n\'a pas été installé</string>
     <string name="whatsapp_not_error">Whatsapp n\'a pas été installé</string>
@@ -192,6 +193,9 @@
     <string name="select_date">Date</string>
     <string name="from1">De :</string>
     <string name="to1">Au:</string>
+    <string name="to2">au</string>
+    <string name="to_only_a">a</string>
+
     <string name="select_from">À partir de</string>
     <string name="select_to">Au</string>
     <string name="price">Prix(€)</string>

@@ -160,7 +160,8 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                 if (!imageSelected) {
                     myCustomToast(getString(R.string.select_image_video_error))
-                } else {
+                }
+                else {
                     if (childCareType == "" || childCareType == getString(R.string.select)) {
                         myCustomToast(getString(R.string.child_care_type_missing_error))
                     } else {

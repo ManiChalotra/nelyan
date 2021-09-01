@@ -42,11 +42,11 @@ class DetailsUpcomingAdapter(val context: Context?, internal var activityDetails
          fun bindItems(postDetailsEvents: PostDetailsEvents) {
              tvEventName.text = postDetailsEvents.name
              tvDescription.text = postDetailsEvents.description
-             tvEventPrice.text ="$"+ postDetailsEvents.price
+             tvEventPrice.text ="€ "+postDetailsEvents.price
 
              if (postDetailsEvents.eventstimings !=null && postDetailsEvents.eventstimings.size !=0){
-                 tvEventDates.text = context!!.getString(R.string.date1)+" "+postDetailsEvents.eventstimings.get(0).dateFrom+" To "+postDetailsEvents.eventstimings.get(0).dateTo
-                 tvEventTime.text = context.getString(R.string.time1)+" "+postDetailsEvents.eventstimings.get(0).startTime+" To "+postDetailsEvents.eventstimings.get(0).endTime
+                 tvEventDates.text = context!!.getString(R.string.date1)+" "+ postDetailsEvents.eventstimings[0].dateFrom+" "+context.getString(R.string.to2)+" "+ postDetailsEvents.eventstimings[0].dateTo
+                 tvEventTime.text = context.getString(R.string.time1)+" "+ postDetailsEvents.eventstimings[0].startTime+" "+context.getString(R.string.to_only_a)+" "+ postDetailsEvents.eventstimings[0].endTime
              }
          }
     }
