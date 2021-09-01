@@ -15,8 +15,7 @@ import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.item_traders_products.view.*
 import java.util.*
 
-class TradersProductListAdapter(var context: Context, var traderProductList: ArrayList<TraderProduct>
-                                ) : RecyclerView.Adapter<TradersProductListAdapter.TraderProductViewHolder>()
+class TradersProductListAdapter(var context: Context, var traderProductList: ArrayList<TraderProduct>) : RecyclerView.Adapter<TradersProductListAdapter.TraderProductViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TraderProductViewHolder {
@@ -42,17 +41,14 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
             Glide.with(context).asBitmap().load(image_base_URl+list[position].image).error(R.mipmap.no_image_placeholder).into(image)
             name.text = list[position].title
             tvProductDesc.text = list[position].description
-            tvProductPrice.text = list[position].price
+            tvProductPrice.text = list[position].price + " €"
 
             image.setOnClickListener {
                 (image.context as Activity).startActivity(
                     Intent(image.context, FullScreen::class.java)
                     .putExtra("productImage",image_base_URl+list[position].image))
             }
-
         }
-
-
     }
 
 
