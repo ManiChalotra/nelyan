@@ -50,8 +50,6 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
             }
         }
     }
-
-
 }
 
 
