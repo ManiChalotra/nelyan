@@ -369,8 +369,8 @@
     <string name="friday">Vendredi</string>
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
-    <string name="cat_nursery">Nursery</string>
-    <string name="cat_maternal">Maternal Assistant</string>
-    <string name="cat_baby_sitter">Baby Sitter</string>
+    <string name="cat_nursery">Crèche</string>
+    <string name="cat_maternal">Assistante maternelle</string>
+    <string name="cat_baby_sitter">Baby-sitter</string>
 
 </resources>

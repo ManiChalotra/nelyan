@@ -43,7 +43,6 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-
     private var noti_status = ""
     private var user_type = ""
     private var language = "en"
@@ -112,7 +111,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
 
 
         sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
-        language =  sharedPreferences.getString("language", "en")!!
+        language =  sharedPreferences.getString("language", "fr")!!
         Log.e("asfdfads","======$language")
 
         if (language == "en") {
@@ -123,11 +122,9 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
             scLanguage.isChecked = false
         }
 
-
         launch(Dispatchers.Main.immediate) {
             noti_status = dataStoragePreference.emitStoredValue(preferencesKey<String>("notificationStatusLogin")).first()
             user_type = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
-
 
             if (noti_status != null) {
                 iv_notification_switch.isChecked = noti_status == "1"
@@ -137,13 +134,12 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                 if (user_type == "1") {
                     tv_user_type.text = getString(R.string.switch_as_a_professional)
                     iv_professional_switch.isChecked = false
-                } else {
+                }
+                else
+                {
                     tv_user_type.text = getString(R.string.switch_as_a_consultant)
                     iv_professional_switch.isChecked = false
-                }
-
-            }
-
+                }}
 
             iv_professional_switch.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (user_type == "1") {
@@ -165,8 +161,6 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                     editor.commit()
 
                     LanguageHelper.setLocale(this@SettingsActivity, "fr")
-
-
                 }
                 else {
                     language = "en"
