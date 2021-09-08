@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.datastore.preferences.core.preferencesKey
@@ -179,16 +180,6 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             myCustomToast(getString(R.string.description_missing))
                                         }
                                         else {
-                                            when (childCareType) {
-                                                getString(R.string.cat_nursery) -> {
-                                                    childCareId = "1"
-                                                }
-                                                getString(R.string.cat_maternal)  -> {
-                                                    childCareId = "2"
-                                                }
-                                                getString(R.string.cat_baby_sitter)  -> {
-                                                    childCareId = "3"
-                                                } }
                                             // checking the list
                                             if (selectedUrlListing.size == urlListingFromResponse.size) {
                                                 selectedUrlListing.clear()
@@ -303,13 +294,37 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     val jsonObject = JSONObject(response.body().toString())
                     val jsonArray = jsonObject.getJSONArray("data")
                     val country: ArrayList<String?> = ArrayList()
+                    val countryIds: ArrayList<String?> = ArrayList()
                     country.add("")
+                    countryIds.add("")
                     for (i in 0 until jsonArray.length()) {
                         val name = jsonArray.getJSONObject(i).get("categoryName").toString()
+                        val id = jsonArray.getJSONObject(i).get("id").toString()
                         country.add(name)
+                        countryIds.add(id)
                     }
-                    val arrayAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.customspinner, country as List<Any?>)
+                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, R.layout.customspinner, country )
                     sp_child_care_type!!.adapter = arrayAdapter
+                    sp_child_care_type!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            childCareId = if(position!=0) {
+                                countryIds[position]!!
+                            } else {
+                                ""
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            //TODO("Not yet implemented")
+                        }
+                    }
+
+
                 }
             } else {
                 ErrorBodyResponse(response, this, null)
