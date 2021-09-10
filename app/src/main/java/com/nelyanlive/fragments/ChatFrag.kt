@@ -48,9 +48,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.java_websocket.util.Base64
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -165,13 +167,27 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
                         val json = jsonArray.getJSONObject(i)
                         groupChatVM.groupId = json.getString("groupId")
+
+                        //decoding
+                        var val3 = ""
+                        try{
+                            val lineSep = System.getProperty("line.separator")
+                            val ps2: String = json.getString("message")
+                            val tmp2: ByteArray = Base64.decode(ps2)
+                            val val2 = String(tmp2, StandardCharsets.UTF_8)
+                             val3 = val2.replace("<br />".toRegex(), lineSep!!)
+                        }
+                        catch (e: Exception)
+                        {e.printStackTrace()}
+
+
                         listData.add(ChatData(
                                 json.getString("id"),
                                 json.getString("senderId"),
                                 json.getString("receiverId"),
                                 "",
                             json.getString("groupId"),
-                                json.getString("message"),
+                            val3,
                                 json.getString("readStatus"),
                                 json.getString("messageType"),
                                 json.getString("deletedId"),

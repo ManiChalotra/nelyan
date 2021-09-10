@@ -20,7 +20,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.java_websocket.util.Base64
 import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -84,10 +86,15 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
+            //encoding
+            val ps: String = message.get().toString()
+            val tmp = Base64.encodeBytes(ps.toByteArray())
+
+
             json.put("senderId", userId)
             json.put("receiverId", senderID)
             json.put("messageType", 0)
-            json.put("message", message.get().toString())
+            json.put("message", tmp)
 
             Log.e("send_message","=======$json")
 
@@ -106,10 +113,15 @@ class ChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
+
+            //encoding
+            val ps: String = str
+            val tmp = Base64.encodeBytes(ps.toByteArray())
+
             json.put("senderId", userId)
             json.put("receiverId", senderID)
             json.put("messageType", 1)
-            json.put("message", str)
+            json.put("message", tmp)
 
             Log.e("send_message","=======$json")
 
@@ -244,7 +256,12 @@ class ChatVM :ViewModel() {
             {
                 val json = jsonArray.getJSONObject(i)
 
-
+                //decoding
+                val lineSep = System.getProperty("line.separator")
+                val ps2: String = json.getString("message")
+                val tmp2: ByteArray = Base64.decode(ps2)
+                val val2 = String(tmp2, StandardCharsets.UTF_8)
+                val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
                 listData.add(ChatData(
                     json.getString("id"),
@@ -252,7 +269,7 @@ class ChatVM :ViewModel() {
                     json.getString("receiverId"),
                     json.getString("chatConstantId"),
                     "",
-                    json.getString("message"),
+                    val3,
                     json.getString("readStatus"),
                     json.getString("messageType"),
                     json.getString("deletedId"),
@@ -369,7 +386,12 @@ class ChatVM :ViewModel() {
             if(newMessageRoomId==chatRoom) {
                 val listData: ArrayList<ChatData> = ArrayList()
 
-
+               //decoding
+                val lineSep = System.getProperty("line.separator")
+                val ps2: String = json.getString("message")
+                val tmp2: ByteArray = Base64.decode(ps2)
+                val val2 = String(tmp2, StandardCharsets.UTF_8)
+                val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
                 listData.add(
                     ChatData(
@@ -378,7 +400,7 @@ class ChatVM :ViewModel() {
                         json.getString("receiverId"),
                         "",
                         "",
-                        json.getString("message"),
+                        val3,
                         json.getString("readStatus"),
                         json.getString("messageType"),
                         json.getString("deletedId"),

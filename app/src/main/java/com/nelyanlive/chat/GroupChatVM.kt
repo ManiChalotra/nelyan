@@ -24,7 +24,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.java_websocket.util.Base64
 import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class GroupChatVM :ViewModel() {
 
@@ -163,11 +165,9 @@ class GroupChatVM :ViewModel() {
                 if(message.get()!!.trim().isEmpty())
                 {
                     Toast.makeText(view.context,view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
-
                 }
                 else {
                     Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
-
                 }
             }
         }
@@ -179,10 +179,20 @@ class GroupChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
+
+
+
+
+
+            //encoding
+            val ps: String = message.get().toString()
+            val tmp = Base64.encodeBytes(ps.toByteArray())
+
+
             json.put("senderId", userId)
             json.put("groupName", groupName)
-            json.put("messageType", 0)//1406
-            json.put("message", message.get().toString())
+            json.put("messageType", 0)
+            json.put("message",tmp)
 
             Log.e("socket","=======$json")
 
@@ -201,10 +211,14 @@ class GroupChatVM :ViewModel() {
         val json = JSONObject()
         try
         {
+            //encoding
+            val ps: String = str
+            val tmp = Base64.encodeBytes(ps.toByteArray())
+
             json.put("senderId", userId)
             json.put("groupName", groupName)
             json.put("messageType", 1)
-            json.put("message", str)
+            json.put("message", tmp)
 
             Log.e("send_group_message","=======$json")
 
@@ -361,13 +375,21 @@ class GroupChatVM :ViewModel() {
 
             val listData : ArrayList<ChatData> = ArrayList()
 
+            //decoding
+            val lineSep = System.getProperty("line.separator")
+            val ps2: String = json.getString("message")
+            val tmp2: ByteArray = Base64.decode(ps2)
+            val val2 = String(tmp2, StandardCharsets.UTF_8)
+            val val3 = val2.replace("<br />".toRegex(), lineSep!!)
+
+
             listData.add(ChatData(
                     json.getString("id"),
                     json.getString("senderId"),
                     json.getString("receiverId"),
                     "",
                 json.getString("groupId"),
-                    json.getString("message"),
+                val3,
                     json.getString("readStatus"),
                     json.getString("messageType"),
                     json.getString("deletedId"),

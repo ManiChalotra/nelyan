@@ -18,7 +18,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.java_websocket.util.Base64
 import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class MessagesVM :ViewModel() {
 
@@ -251,29 +253,16 @@ class MessagesVM :ViewModel() {
 
             for(i in 0 until jsonArray.length())
             {
-
-                //[
-                //  {
-                //    "id": 1,
-                //    "senderId": 188,
-                //    "receiverId": 184,
-                //    "groupId": 0,
-                //    "lastMessageId": 389,
-                //    "deletedId": 0,
-                //    "created": 1620997139,
-                //    "updated": 1620997139,
-                //    "user_id": 184,
-                //    "lastMessage": "hello bhai",
-                //    "userName": "Rohit nine",
-                //    "userImage": "",
-                //    "created_at": 1620997139,
-                //    "messageType": 0,
-                //    "isOnline": 0,
-                //    "unreadcount": 0
-                //  }
-                //]
-
                 val json = jsonArray.getJSONObject(i)
+
+                //decoding
+                val lineSep = System.getProperty("line.separator")
+                val ps2: String = json.getString("lastMessage")
+                val tmp2: ByteArray = Base64.decode(ps2)
+                val val2 = String(tmp2, StandardCharsets.UTF_8)
+                val val3 = val2.replace("<br />".toRegex(), lineSep!!)
+
+
                 listData.add(ChatListResponse(
                     json.getString("id"),
                     json.getString("senderId"),
@@ -284,7 +273,7 @@ class MessagesVM :ViewModel() {
                     json.getString("created"),
                     json.getString("updated"),
                     json.getString("user_id"),
-                    if(json.getString("messageType")=="1"){"image"}else{json.getString("lastMessage")},
+                    if(json.getString("messageType")=="1"){"image"}else{val3},
                     json.getString("userName"),
                     json.getString("userImage"),
                     json.getString("created_at"),

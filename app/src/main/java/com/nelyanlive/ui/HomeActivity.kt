@@ -70,6 +70,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var mDrawerLayout: DrawerLayout? = null
     var mDrawerToggle: ActionBarDrawerToggle? = null
     var mainContainer: RelativeLayout? = null
+    var  bottomNavigationBar: BottomNavigationView? = null
     var iv_back: ImageView? = null
     var ivToolBarImage: ImageView? = null
     var iv_bell: ImageView? = null
@@ -240,8 +241,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
         loadFragment(HomeFragment())
 
-        val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navigationbar)
-        bottomNavigationBar.setOnNavigationItemSelectedListener(this)
+         bottomNavigationBar = findViewById(R.id.navigationbar)
+        bottomNavigationBar!!.setOnNavigationItemSelectedListener(this)
+        bottomNavigationBar!!.setOnNavigationItemReselectedListener {  }
         setDrawerClicks()
         setToolBarClicks()
             try {
@@ -255,13 +257,13 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
                         Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
-                        bottomNavigationBar.selectedItemId = R.id.chat
+                        bottomNavigationBar!!.selectedItemId = R.id.chat
                     }
                 }
 
                 if (intent.hasExtra("chat")) {
                         userId = intent.getStringExtra("chat")!!
-                    bottomNavigationBar.selectedItemId = R.id.msg
+                    bottomNavigationBar!!.selectedItemId = R.id.msg
                 }
                 if (intent.hasExtra("activity")) {
                     if (intent.getStringExtra("activity") == "map") {
@@ -517,12 +519,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         }
         else {
-                loadFragment(HomeFragment())
-                iv_bell!!.visibility = View.GONE
-                tvTitleToolbar!!.visibility = View.GONE
-                ivToolBarImage!!.visibility = View.VISIBLE
-                supportFragmentManager.popBackStack()
-            }
+            bottomNavigationBar!!.selectedItemId = R.id.home
+        }
 
     }
 
