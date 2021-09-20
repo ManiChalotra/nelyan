@@ -65,7 +65,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     lateinit var googleHelper: GoogleHelper
 
-
     private var job = Job()
     private var clicked = false
 
@@ -73,8 +72,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
-
 
     private var GOOGLE_SIGN_IN: Int = 2
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -130,9 +127,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             Log.e("exception", e.toString())
         }
     }
-
-
-
 
     private fun initalize() {
         tvForgotPass.setOnClickListener(this)

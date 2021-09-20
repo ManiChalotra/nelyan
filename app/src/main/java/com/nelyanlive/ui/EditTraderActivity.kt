@@ -223,8 +223,9 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     val place = Autocomplete.getPlaceFromIntent(data!!)
+                    Log.i("editttttt", "Place: " + place.name + "," + place.id + "," + place.address + "," + place.latLng)
 
-                    tv_address.text = place.name.toString()
+                    tv_address.text = place.address.toString()
 
                     cityLatitude = place.latLng?.latitude.toString()
                     cityLongitude = place.latLng?.longitude.toString()
@@ -232,13 +233,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
                     cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
 
-                }
-            } 
-        }
-    }
-
-
-
+                } } } }
 
     private fun hitTypeTradeActivity_Api() {
         if (checkIfHasNetwork(this@EditTraderActivity)) {

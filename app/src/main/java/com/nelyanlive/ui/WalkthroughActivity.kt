@@ -3,12 +3,21 @@ package com.nelyanlive.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ImageSliderCustomAdapter
@@ -37,14 +46,37 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     var text: ArrayList<Int>? = null
     var login: LinearLayout? = null
     var signup: LinearLayout? = null
+    var MY_REQUEST_CODE = 112233
+
+
+    lateinit var appUpdateManager: AppUpdateManager
 
     override fun onResume() {
         super.onResume()
-        checkCredentails()
+
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
+                {
+                    // If an in-app update is already running, resume the update.
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                }
+            }
+            .addOnFailureListener {
+                System.currentTimeMillis()
+            }
+            .addOnCompleteListener {
+                System.currentTimeMillis() }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walkthrough)
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        checkUpdate()
         mContext = this
         setView()
     }
@@ -90,7 +122,41 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    private  fun checkCredentails(){
+    private fun checkUpdate() {
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        // Checks that the platform will allow the specified type of update.
+        Log.d("TAG", "Checking for updates")
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                // Request the update.
+                Log.d("TAG", "Update available")
+                appUpdateManager.registerListener(listener)
+                appUpdateManager.startUpdateFlowForResult(
+                    // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                    appUpdateInfo,
+                    // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                    AppUpdateType.FLEXIBLE,
+                    // The current activity making the update request.
+                    this,
+                    // Include a request code to later monitor this update request.
+                    MY_REQUEST_CODE)
+            }
+            else {
+                Log.d("TAG", "No Update available")
+            } } }
+
+    private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
+        if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+            // After the update is downloaded, show a notification
+            // and request user confirmation to restart the app.
+            Log.d("TAG", "An update has been downloaded")
+            Toast.makeText(this,"Update Complete", Toast.LENGTH_SHORT).show()
+            // appUpdateManager.unregisterListener(listener)
+            appUpdateManager.completeUpdate()
+
+        }
     }
 
     override fun onDestroy() {

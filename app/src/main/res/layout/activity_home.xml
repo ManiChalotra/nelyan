@@ -94,18 +94,20 @@
                 android:layout_height="match_parent"
                 android:background="@color/app"
                >
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_50sdp"
                     android:orientation="vertical">
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_home_userpic"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/user_img"/>
+                        android:src="@drawable/user_img" />
 
                     <TextView
                         android:id="@+id/tv_user_name"
@@ -113,10 +115,10 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/login_btn"
+                        android:fontFamily="@font/bold"
                         android:paddingLeft="@dimen/_20sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingRight="@dimen/_20sdp"
-                        android:fontFamily="@font/bold"
                         android:paddingBottom="@dimen/_5sdp"
                         android:textColor="@color/app" />
 
