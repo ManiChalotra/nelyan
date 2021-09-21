@@ -46,6 +46,8 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     var text: ArrayList<Int>? = null
     var login: LinearLayout? = null
     var signup: LinearLayout? = null
+
+
     var MY_REQUEST_CODE = 112233
 
 
@@ -53,24 +55,6 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onResume() {
         super.onResume()
-
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
-                {
-                    // If an in-app update is already running, resume the update.
-                    appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        IMMEDIATE,
-                        this,
-                        MY_REQUEST_CODE
-                    )
-                }
-            }
-            .addOnFailureListener {
-                System.currentTimeMillis()
-            }
-            .addOnCompleteListener {
-                System.currentTimeMillis() }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +112,10 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
         // Checks that the platform will allow the specified type of update.
         Log.d("TAG", "Checking for updates")
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+
+            Log.d("TAG", "Checking for updates===11===${appUpdateInfo.updateAvailability()==UpdateAvailability.UPDATE_AVAILABLE}")
+            Log.d("TAG", "Checking for updates===22===${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)}")
+
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
                 // Request the update.
@@ -152,7 +140,7 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
             // After the update is downloaded, show a notification
             // and request user confirmation to restart the app.
             Log.d("TAG", "An update has been downloaded")
-            Toast.makeText(this,"Update Complete", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
             // appUpdateManager.unregisterListener(listener)
             appUpdateManager.completeUpdate()
 

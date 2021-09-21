@@ -372,5 +372,6 @@
     <string name="cat_nursery">Crèche</string>
     <string name="cat_maternal">Assistante maternelle</string>
     <string name="cat_baby_sitter">Baby-sitter</string>
+    <string name="update_complete">Mise à jour terminée</string>
 
 </resources>

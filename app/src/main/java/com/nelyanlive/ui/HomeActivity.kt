@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -32,6 +33,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.current_location.LocationService
@@ -110,6 +116,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var homeFusedLocation: FusedLocationProviderClient
 
 
+    var MY_REQUEST_CODE = 112233
+    lateinit var appUpdateManager: AppUpdateManager
+
 
     private val foregroundOnlyServiceConnection = object : ServiceConnection {
 
@@ -153,6 +162,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(foregroundOnlyBroadcastReceiver, IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
+
     }
 
     private fun callBadgeService(authorization: String) {
@@ -206,7 +216,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        checkUpdate()
         MyFirebaseMessagingService.chatNotifyLive.observe(this, Observer {
 
             if(it.equals("true"))
@@ -288,6 +298,46 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 loadFragment(fragment)
             }
     }
+
+
+    private fun checkUpdate() {
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        // Checks that the platform will allow the specified type of update.
+        Log.d("TAG", "Checking for updates")
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                // Request the update.
+                Log.d("TAG", "Update available")
+                appUpdateManager.registerListener(listener)
+                appUpdateManager.startUpdateFlowForResult(
+                    // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                    appUpdateInfo,
+                    // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                    AppUpdateType.FLEXIBLE,
+                    // The current activity making the update request.
+                    this,
+                    // Include a request code to later monitor this update request.
+                    MY_REQUEST_CODE)
+            }
+            else {
+                Log.d("TAG", "No Update available")
+            } } }
+
+    private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
+        if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+            // After the update is downloaded, show a notification
+            // and request user confirmation to restart the app.
+            Log.d("TAG", "An update has been downloaded")
+            Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
+            // appUpdateManager.unregisterListener(listener)
+            appUpdateManager.completeUpdate()
+
+        }
+    }
+
+
 
     private fun initalize() {
         tvLog.setOnClickListener(this)
