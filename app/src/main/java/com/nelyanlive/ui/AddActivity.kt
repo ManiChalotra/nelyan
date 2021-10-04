@@ -92,7 +92,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private var eventPhotoPosition = 0
 
-
     private var activityTypeId = ""
 
     private var shopName = ""
@@ -116,7 +115,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         setContentView(R.layout.activity_addactivity)
         initalizeClicks()
         checkMvvmResponse()
-        
 
         countycode.setOnCountryChangeListener {
             countryCodee = countycode.selectedCountryCode.toString()
@@ -143,11 +141,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             listAge = ArrayList()
             listAge.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
 
-
             listEvent = ArrayList()
             listEvent.add(ModelPOJO.AddEventDataModel("", "", "", "", "",
                     "", "", "", "", "", ""))
-
 
         // clicks for images
         ivImg1.setOnClickListener(this)
@@ -326,10 +322,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 event = true
                 eventErrorNumber =i
                 eventErrorString
-            }
-        }
-    }
-
+            } } }
 
     private fun showPlacePicker(requestCode: Int) {
         Places.initialize(applicationContext, googleMapKey)
@@ -510,7 +503,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                     finishAffinity()
                     OpenActivity(HomeActivity::class.java)
                
-            } else {
+            }
+            else {
                 progressDialog.hidedialog()
                 ErrorBodyResponse(response, this, null)
             }
@@ -557,11 +551,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                     imageSelectedType = ""
 
                                 }
-
-                            }
-                        }
+                            } }
                             else {
-
                                 ErrorBodyResponse(response, this, null)
                             }
         })
