@@ -81,10 +81,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 listner.addCameraGalleryImage(list, position)
             }
 
-            city.setOnClickListener {
-                listner.cityAddEvent(list, position, city)
-
-            }
+            city.setOnClickListener { listner.cityAddEvent(list, position, city) }
 
             addButton.setOnClickListener {
                 description.clearFocus()
@@ -169,26 +166,22 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             mMonth = currentDate[Calendar.MONTH]
             mDay = currentDate[Calendar.DAY_OF_MONTH]
 
-
             val mDatePicker = DatePickerDialog(context,
                 { datepicker, selectedyear, selectedmonth, selectedday ->
                             day = if (selectedday.toString().length == 1)
                                 "0$selectedday"
                             else
                                 selectedday.toString()
-    
                     month = if ((selectedmonth + 1).toString().length == 1)
                         "0" + (selectedmonth + 1).toString()
                     else (selectedmonth + 1).toString()
     
                             year = selectedyear.toString()
-    
                             date_timestamp = calDateToTimeStamp(
                                 "$day-$month-$year"
                             ).toString()
                             select_date = "$day/$month/$selectedyear"
-    
-    
+
                     when (type) {
                         "1" -> {
                             list[position].dateFrom = select_date
@@ -206,9 +199,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
             mDatePicker.datePicker.minDate = System.currentTimeMillis()
             if (!mDatePicker.isShowing) {
                 mDatePicker.show()
-            }
-        }
-
+            } }
 
         private fun calDateToTimeStamp(strDate: String?): Long {
             var timeStamp = java.lang.Long.valueOf(0)
@@ -232,7 +223,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         fun addCameraGalleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int)
         fun cityAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView)
         fun eventDataSet(type:String,value:String, position: Int )
-
     }
 }
 
