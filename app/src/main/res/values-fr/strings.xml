@@ -92,8 +92,8 @@
     <string name="price1">Prix:</string>
     <string name="startdate1">Date début:</string>
     <string name="end_date1">Date fin:</string>
-    <string name="end_time1">Heure début:</string>
-    <string name="start_time1">Heure fin:</string>
+    <string name="start_time1">Heure début:</string>
+    <string name="end_time1">Heure fin:</string>
     <string name="select_city_error">Veuillez sélectionner votre ville</string>
     <string name="select">Sélectionner</string>
     <string name="sign_up_as_a">Type d\'utilisation</string>
@@ -201,6 +201,7 @@
     <string name="price">Prix(€)</string>
     <string name="price11">Prix</string>
     <string name="add_more">Ajouter plus</string>
+    <string name="add_more_event">Ajouter un événemnt</string>
     <string name="type_of_child_care">Type de garde</string>
     <string name="type">Type</string>
     <string name="type1">Type:</string>

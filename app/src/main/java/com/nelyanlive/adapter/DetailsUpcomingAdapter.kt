@@ -1,6 +1,7 @@
 package com.nelyanlive.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +14,13 @@ import com.nelyanlive.ui.ActivityDetailsActivity
 class DetailsUpcomingAdapter(val context: Context?, internal var activityDetailsActivity: ActivityDetailsActivity, internal  var listUpcomingEvents: ArrayList<PostDetailsEvents>)
     : RecyclerView.Adapter<DetailsUpcomingAdapter.RecyclerViewHolder>() {
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val v = LayoutInflater.from(context).inflate(R.layout.row_upcoming_details, parent, false)
         return RecyclerViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.bindItems(listUpcomingEvents[position])
+        holder.bindItems(listUpcomingEvents[position],position)
     }
 
     override fun getItemCount(): Int {
@@ -39,14 +38,16 @@ class DetailsUpcomingAdapter(val context: Context?, internal var activityDetails
         var tvEventDates = itemView.findViewById(R.id.tv_event_dates) as TextView
         var tvEventTime = itemView.findViewById(R.id.tv_event_times) as TextView
 
-         fun bindItems(postDetailsEvents: PostDetailsEvents) {
+         fun bindItems(postDetailsEvents: PostDetailsEvents, position: Int) {
              tvEventName.text = postDetailsEvents.name
              tvDescription.text = postDetailsEvents.description
              tvEventPrice.text ="€ "+postDetailsEvents.price
 
              if (postDetailsEvents.eventstimings !=null && postDetailsEvents.eventstimings.size !=0){
-                 tvEventDates.text = context!!.getString(R.string.date1)+" "+ postDetailsEvents.eventstimings[0].dateFrom+" "+context.getString(R.string.to2)+" "+ postDetailsEvents.eventstimings[0].dateTo
-                 tvEventTime.text = context.getString(R.string.time1)+" "+ postDetailsEvents.eventstimings[0].startTime+" "+context.getString(R.string.to_only_a)+" "+ postDetailsEvents.eventstimings[0].endTime
+                 Log.e("postDetailsEventsssssss","==11====${postDetailsEvents.eventstimings}===")
+                 Log.e("postDetailsEventsssssss","==22====${postDetailsEvents.eventstimings[position].dateFrom}===")
+                 tvEventDates.text = context!!.getString(R.string.date1)+" "+ postDetailsEvents.eventstimings[position].dateFrom+" "+context.getString(R.string.to2)+" "+ postDetailsEvents.eventstimings[position].dateTo
+                 tvEventTime.text = context.getString(R.string.time1)+" "+ postDetailsEvents.eventstimings[position].startTime+" "+context.getString(R.string.to_only_a)+" "+ postDetailsEvents.eventstimings[position].endTime
              }
          }
     }

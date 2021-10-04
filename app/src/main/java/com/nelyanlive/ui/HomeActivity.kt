@@ -260,7 +260,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setToolBarClicks()
             try {
 
-
                 if(intent.hasExtra("groupChat"))
                 {
                     launch(Dispatchers.Main.immediate) {
@@ -335,11 +334,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
             // appUpdateManager.unregisterListener(listener)
             appUpdateManager.completeUpdate()
-
         }
     }
-
-
 
     private fun initalize() {
         tvLog.setOnClickListener(this)
@@ -366,8 +362,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val scaleFactor = max - (max - min) * slideOffset
                     mainContainer!!.scaleX = scaleFactor
                     mainContainer!!.scaleY = scaleFactor
-                }
-            }
+                } }
             mDrawerLayout!!.addDrawerListener(mDrawerToggle!!)
         }
     }
@@ -410,10 +405,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             mDrawerLayout!!.closeDrawers()
             OpenActivity(ContactUsActivity::class.java) {
                 putString("authorization", authorization)
-            }
-        }
-
-
+            } }
 
         tvSettings!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
@@ -451,7 +443,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
         Log.e("fasfasfa", "======$currentFragment")
-
         if(currentFragment is ChatFrag ) {
             currentFragment.groupChatVM.disconnectSocket()
         }
@@ -471,7 +462,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     iv_bell!!.visibility = View.GONE
                     tvTitleToolbar!!.visibility = View.GONE
                     ivToolBarImage!!.visibility = View.VISIBLE
-
                     fragment = HomeFragment()
                     loadFragment(fragment)
                 }
@@ -479,7 +469,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.msg -> {
                 ivBadge.visibility = View.GONE
                 if (currentFragment !is MessageFragment) {
-
                 tvTitleToolbar!!.visibility = View.VISIBLE
                 ivToolBarImage!!.visibility = View.GONE
                 tvTitleToolbar!!.text = getString(R.string.message)
@@ -517,8 +506,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     tvTitleToolbar!!.text =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
                     fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
                     loadFragment(fragment)
-                }
-            }
+                } }
             R.id.event -> {
                 if (currentFragment !is EventFragment) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
@@ -528,8 +516,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     iv_bell!!.imageTintList = null
                     fragment = EventFragment(userlat, userlong,userlocation)
                     loadFragment(fragment)
-                } }
-        }
+                } } }
 
         return true
     }
@@ -539,7 +526,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 .beginTransaction()
                 .replace(R.id.frame_container, fragment)
                 .commit()
-
         return true
     }
 
@@ -553,7 +539,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val rlNo: RelativeLayout = dialog!!.findViewById(R.id.rlNo)
         rlNo.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
-
     }
 
     override fun onBackPressed() {
@@ -572,12 +557,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         else {
             bottomNavigationBar!!.selectedItemId = R.id.home
-        }
-
-    }
+        } }
 
     private fun hitLogoutApi() {
-
         appViewModel.sendLogoutData(security_key, authorization)
         homeProgressBar?.showProgressBar()
     }
@@ -600,9 +582,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         startActivity(i)
                         dialog!!.dismiss()
                         dataStoragePreference.deleteDataBase()
-                    }
-
-                }
+                    } }
             } else {
                 ErrorBodyResponse(response, this, homeProgressBar)
             }

@@ -301,8 +301,8 @@
             android:gravity="center"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
-            android:text="@string/add_more"
+            android:text="@string/add_more_event"
             android:textColor="@color/white"
-            android:textSize="@dimen/_8sdp" />
+            android:textSize="@dimen/_10sdp" />
     </LinearLayout>
 </LinearLayout>
