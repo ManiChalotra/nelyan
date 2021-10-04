@@ -64,10 +64,8 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         var year = ""
         var date_timestamp = ""
 
-
         fun initalize(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
 
-            // setting data  here
             Glide.with(context).asBitmap().load(image_base_URl+list[position].image).into(image)
             name.setText(list[position].name)
             description.setText(list[position].description)
@@ -88,7 +86,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
 
             }
 
-
             addButton.setOnClickListener {
                 description.clearFocus()
                 price.clearFocus()
@@ -96,7 +93,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 city.clearFocus()
                 listner.onAddEventItem(list, position)
             }
-
 
             timeFrom.setOnClickListener {
                 val mcurrentTime = Calendar.getInstance()
@@ -124,7 +120,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 mTimePicker.show()
             }
 
-
             dateFrom.setOnClickListener {
                 select_date_register_popup(position,"1")
             }
@@ -133,8 +128,6 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                select_date_register_popup(position,"2")
             }
 
-
-            // add text watcher  for age To
             price.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].price = s.toString()
