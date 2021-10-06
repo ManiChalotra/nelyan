@@ -22,7 +22,7 @@
             android:background="@drawable/btn"
             android:textColor="@color/white"
             android:fontFamily="@font/semibold"
-            android:text="@string/regulation"
+            android:text="@string/discussions_and_tips"
             app:layout_constraintTop_toTopOf="parent"
             />
 

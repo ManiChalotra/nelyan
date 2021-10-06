@@ -201,7 +201,7 @@
     <string name="price">Prix(€)</string>
     <string name="price11">Prix</string>
     <string name="add_more">Ajouter plus</string>
-    <string name="add_more_event">Ajouter un événemnt</string>
+    <string name="add_more_event">Ajouter un événement</string>
     <string name="type_of_child_care">Type de garde</string>
     <string name="type">Type</string>
     <string name="type1">Type:</string>
@@ -230,7 +230,7 @@
     <string name="yoga_trainer">Yoga Trainer</string>
     <string name="gym_trainer">Gym Trainer</string>
     <string name="filter">Filtre</string>
-    <string name="trader_artisant">Commerçant</string>
+    <string name="trader_artisant">Commerces</string>
     <string name="no_product_found">Aucun produit</string>
     <string name="child_care_details">Détails</string>
     <string name="modify">Modifier</string>
@@ -374,5 +374,6 @@
     <string name="cat_maternal">Assistante maternelle</string>
     <string name="cat_baby_sitter">Baby-sitter</string>
     <string name="update_complete">Mise à jour terminée</string>
+    <string name="discussions_and_tips">discussions et bons plans</string>
 
 </resources>

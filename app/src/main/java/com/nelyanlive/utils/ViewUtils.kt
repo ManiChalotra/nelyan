@@ -105,6 +105,7 @@ fun <T> Context.OpenActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {
     intent.putExtras(Bundle().apply(extras))
     startActivity(intent)
 }
+
 private fun settingMargin(layoutParams: ViewGroup.MarginLayoutParams, start: Int, end: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         layoutParams.marginStart = start
@@ -137,6 +138,7 @@ fun failureMethod(
                 DataStoragePreference(mContext).deleteDataBase()
             }
         }
+
         UNAUTHORIZED -> {
             Toast.makeText(
                     mContext,
@@ -171,7 +173,6 @@ fun checkIfHasNetwork(activity: Activity): Boolean {
     val cm =(activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = cm.activeNetworkInfo
     return networkInfo != null && networkInfo.isConnected
-
 }
 
 fun Activity.myCustomToast(message: String) {
@@ -184,19 +185,4 @@ fun Activity.myCustomToast(message: String) {
     toast.duration = Toast.LENGTH_LONG
     toast.view = layout
     toast.show()
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

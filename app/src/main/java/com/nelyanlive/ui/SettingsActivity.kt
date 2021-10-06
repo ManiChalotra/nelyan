@@ -107,6 +107,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
         llContact.setOnClickListener(this)
         llAbout.setOnClickListener(this)
         llPrivacy.setOnClickListener(this)
+        llRegulation.setOnClickListener(this)
 
 
 
@@ -226,7 +227,10 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
                     putString("cmsData", privacyPolicy_data)
                 }
             }
-
+            R.id.llRegulation -> {
+                val intent = Intent(this, RegulationActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

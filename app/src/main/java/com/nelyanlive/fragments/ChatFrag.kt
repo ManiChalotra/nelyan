@@ -40,7 +40,6 @@ import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.databinding.ActivityChatBinding
 import com.nelyanlive.ui.CommunicationListner
 import com.nelyanlive.ui.HomeActivity
-import com.nelyanlive.ui.RegulationActivity
 import com.nelyanlive.utils.*
 import com.nelyanlive.utils.fcm.MyFirebaseMessagingService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -85,8 +84,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         mContext = container.context
         groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
         activityChatBinding.btnRegulation.setOnClickListener {
-            val i = Intent(mContext, RegulationActivity::class.java)
-            startActivity(i)
+           /* val i = Intent(mContext, RegulationActivity::class.java)
+            startActivity(i)*/
         }
 
         activityChatBinding.ivAttachment.setOnClickListener {

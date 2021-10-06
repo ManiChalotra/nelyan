@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -97,9 +98,6 @@
                     android:layout_gravity="center"
                     android:text="@string/from1" />
 
-
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,19 +106,14 @@
                     <TextView
                         android:id="@+id/tv_cal"
                         style="@style/CommonTextMatchparent"
-                        android:drawableRight="@drawable/calendar_icon"
                         android:hint="@string/select_date"
                         android:inputType="number"
                         android:paddingStart="@dimen/_5sdp"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/grey" />
-
+                        android:textColorHint="@color/grey"
+                        app:drawableRightCompat="@drawable/calendar_icon" />
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,9 +127,6 @@
                     android:layout_gravity="center"
                     android:text="@string/to1" />
 
-
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,11 +135,11 @@
                     <TextView
                         android:id="@+id/tvCal1"
                         style="@style/CommonTextMatchparent"
-                        android:drawableEnd="@drawable/calendar_icon"
                         android:hint="@string/select_date"
                         android:inputType="number"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/grey" />
+                        android:textColorHint="@color/grey"
+                        app:drawableEndCompat="@drawable/calendar_icon" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -185,19 +175,15 @@
                     <TextView
                         android:id="@+id/edClo2"
                         style="@style/CommonTextMatchparent"
-                        android:drawableEnd="@drawable/clock_purple_icon"
                         android:hint="@string/select_from"
                         android:inputType="number"
                         android:paddingStart="@dimen/_5sdp"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/grey" />
+                        android:textColorHint="@color/grey"
+                        app:drawableEndCompat="@drawable/clock_purple_icon" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,9 +197,6 @@
                     android:layout_gravity="center"
                     android:text="@string/to1" />
 
-
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,12 +205,12 @@
                     <TextView
                         android:id="@+id/edClo3"
                         style="@style/CommonTextMatchparent"
-                        android:drawableRight="@drawable/clock_purple_icon"
                         android:hint="@string/select_to"
                         android:inputType="number"
                         android:paddingStart="@dimen/_5sdp"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/grey" />
+                        android:textColorHint="@color/grey"
+                        app:drawableRightCompat="@drawable/clock_purple_icon" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
