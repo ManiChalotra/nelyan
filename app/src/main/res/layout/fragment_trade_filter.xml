@@ -187,7 +187,6 @@
             android:layout_marginTop="@dimen/_70sdp"
             android:background="@drawable/btn"
             android:textAllCaps="true"
-
             android:text="@string/filter"/>
     </LinearLayout>
 
