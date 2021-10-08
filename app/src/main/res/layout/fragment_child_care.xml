@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
                 android:hint="@string/enter_child_care_filter_name"

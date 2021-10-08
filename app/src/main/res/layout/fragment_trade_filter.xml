@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:backgroundTint="@color/transparent"
                 android:hint="@string/enter_activity_name"
                 android:layout_marginEnd="@dimen/_10sdp"
