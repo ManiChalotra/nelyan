@@ -59,32 +59,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         if (listner != null) {
             listner!!.onFargmentActive(5)
         }
-        if (tvFilter!!.text == getString(R.string.filter)) {
 
-            latitude = userLat
-            longitude = userLong
-            locality = userLocation
-            Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
-            if (latitude != "0.0") {
-
-                (mContext as HomeActivity).tvTitleToolbar!!.text =
-                    getString(R.string.upcoming_events) + "\n" + locality
-
-                if (checkIfHasNetwork(requireActivity())) {
-                    authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
-                    appViewModel.sendFilterEventListData(
-                        security_key, authKey,
-                        latitude, longitude, "",
-                        "", locality
-                    )
-                    eventProgressBar?.showProgressBar()
-                } else {
-                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
-                }
-
-
-            }
-        }
 
     }
 
@@ -160,6 +135,30 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         checkMvvmResponse()
+        if (tvFilter!!.text == getString(R.string.filter)) {
+
+            latitude = userLat
+            longitude = userLong
+            locality = userLocation
+            Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+            if (latitude != "0.0") {
+
+                (mContext as HomeActivity).tvTitleToolbar!!.text =
+                    getString(R.string.upcoming_events) + "\n" + locality
+
+                if (checkIfHasNetwork(requireActivity())) {
+                    authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+                    appViewModel.sendFilterEventListData(
+                        security_key, authKey,
+                        latitude, longitude, "",
+                        "", locality
+                    )
+                    eventProgressBar?.showProgressBar()
+                } else {
+                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

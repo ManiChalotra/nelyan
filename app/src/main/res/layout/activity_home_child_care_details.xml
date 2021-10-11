@@ -197,6 +197,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:textColor="@color/black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_10sdp" />
 
                         <TextView
@@ -249,6 +250,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:textColor="@color/black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_10sdp" />
 
                         <TextView
@@ -263,6 +265,7 @@
                             android:id="@+id/tv_child_care_address"
                             style="@style/CommonTextWrapcontent"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:textIsSelectable="true"
                             android:drawableRight="@drawable/colored_map"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9sdp" />

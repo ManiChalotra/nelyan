@@ -138,6 +138,7 @@
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:textIsSelectable="true"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_9sdp" />
 
@@ -204,6 +205,7 @@
                     <TextView
                         android:id="@+id/tv_trader_phone"
                         style="@style/CommonTextWrapcontent"
+                        android:textIsSelectable="true"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:textColor="@color/black" />
@@ -223,6 +225,7 @@
                     <TextView
                         android:id="@+id/tv_trader_email"
                         style="@style/CommonTextWrapcontent"
+                        android:textIsSelectable="true"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:textColor="@color/black" />
@@ -240,6 +243,7 @@
                         android:id="@+id/tv_website"
                         style="@style/CommonTextWrapcontent"
                         android:layout_marginStart="@dimen/_20sdp"
+                        android:textIsSelectable="true"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:textColor="@color/black" />
 
@@ -283,6 +287,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:drawableStart="@drawable/location_black"
                         android:drawableEnd="@drawable/colored_map"
+                        android:textIsSelectable="true"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />

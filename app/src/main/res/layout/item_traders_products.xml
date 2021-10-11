@@ -39,6 +39,7 @@
                 style="@style/CommonTextWrapcontent"
                 android:fontFamily="@font/semibold"
                 android:textColor="@color/app"
+                android:textIsSelectable="true"
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
@@ -53,6 +54,7 @@
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>

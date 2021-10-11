@@ -63,6 +63,20 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
     override fun onResume() {
         super.onResume()
 
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_trader_listing)
+        initalizeClicks()
+        rvTrader = findViewById(R.id.rv_traderListing)
+
+        if (intent.extras != null) {
+            listType = intent.getStringExtra("type").toString()
+            Log.e("qwe", intent.getStringExtra("type").toString())
+        }
+        checkMvvmResponse()
         if (tvFilter.text == getString(R.string.filter)) {
             launch(Dispatchers.Main.immediate) {
                 latitude =
@@ -102,21 +116,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                             getString(R.string.no_internet_error)
                         )
                     } } } }
-    }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_trader_listing)
-        initalizeClicks()
-        rvTrader = findViewById(R.id.rv_traderListing)
-
-        if (intent.extras != null) {
-            listType = intent.getStringExtra("type").toString()
-            Log.e("qwe", intent.getStringExtra("type").toString())
-        }
-
-        checkMvvmResponse()
     }
 
     private fun initalizeClicks() {

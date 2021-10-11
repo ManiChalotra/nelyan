@@ -382,4 +382,7 @@
     <string name="cat_baby_sitter">Baby Sitter</string>
     <string name="update_complete">Update Complete</string>
     <string name="discussions_and_tips">Discussions and tips</string>
+    <string name="update">Update</string>
+    <string name="a_new_version_of_nelyan_application_is_available">A new version of Nelyan Application is available</string>
+    <string name="update_available">Update Available</string>
 </resources>

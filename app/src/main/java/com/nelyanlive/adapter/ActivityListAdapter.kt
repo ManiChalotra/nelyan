@@ -41,21 +41,27 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
             tvDescription.text = homeAcitivityList.description
             tvAddress.text = homeAcitivityList.address
 
-            if (homeAcitivityList.typeofActivityId == 5){
-                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.sports)
+            when (homeAcitivityList.typeofActivityId) {
+                5 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.sports)
 
-            } else if (homeAcitivityList.typeofActivityId == 9){
-                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.dance)
+                }
+                9 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.dance)
 
-            } else if (homeAcitivityList.typeofActivityId == 10){
-                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.drawing)
+                }
+                10 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.drawing)
 
-            }else if (homeAcitivityList.typeofActivityId == 11){
-                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.zumba)
+                }
+                11 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.zumba)
 
-            }else if (homeAcitivityList.typeofActivityId == 13){
-                tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.tutor_mother_subject)
+                }
+                13 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.tutor_mother_subject)
 
+                }
             }
 
             tvNameOfShop.text = homeAcitivityList.nameOfShop

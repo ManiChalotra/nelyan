@@ -69,7 +69,7 @@
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/dialog_vehicle_type.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/filter_activity.xml" value="0.16944444444444445" />
-        <entry key="app/src/main/res/layout/fragment_activity_details.xml" value="0.16944444444444445" />
+        <entry key="app/src/main/res/layout/fragment_activity_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_activity_list.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_all.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_baby_sitter.xml" value="0.1" />
@@ -122,6 +122,7 @@
         <entry key="app/src/main/res/layout/size_customspinner.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/tookbar.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/trader_customspinner.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/update_app_dialog.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/view_custom_marker.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/menu/activity_drawer_drawer.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/menu/bottom_navigation_home_menu.xml" value="0.18020833333333333" />

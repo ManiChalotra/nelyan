@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:textColor="@color/app"
+                android:textIsSelectable="true"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
@@ -149,6 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
+        android:textIsSelectable="true"
         android:textSize="@dimen/_10sdp" />
 
 </LinearLayout>

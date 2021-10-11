@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.TraderActivity">
+    tools:context=".ui.TraderActivity"
+    >
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp">
+        android:layout_height="@dimen/_40sdp"
+        >
 
         <ImageView
             android:id="@+id/ivBack"
@@ -19,35 +22,41 @@
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_10sdp"
-            android:src="@drawable/left_arrow" />
+            android:src="@drawable/left_arrow"
+            />
 
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:text="@string/trader_artisant"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            />
 
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:text="@string/photo" />
+                android:text="@string/photo"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <RelativeLayout
                     android:id="@+id/ll_public"
@@ -91,7 +100,6 @@
                         android:src="@drawable/photo_two"
                         android:scaleType="centerCrop"/>
 
-
                     <ImageView
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
@@ -102,7 +110,6 @@
                         android:src="@drawable/ic_baseline_videocam_24"
                         android:id="@+id/iv_video33"
                         />
-
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -143,7 +150,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/back_shape" >
 
-
                     <ImageView
                         android:id="@+id/ivplus"
                         android:layout_width="match_parent"
@@ -163,11 +169,7 @@
                         android:id="@+id/iv_video55"
                         />
 
-
-
-
                 </RelativeLayout>
-
 
             </LinearLayout>
 
@@ -190,7 +192,6 @@
                     android:scaleType="centerCrop"
                     />
 
-
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
@@ -200,7 +201,6 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_baseline_videocam_24"
                     android:id="@+id/iv_video11"
-
                     />
 
             </RelativeLayout>
@@ -276,7 +276,6 @@
 
             <EditText
                 android:id="@+id/et_description_trader"
-                android:inputType="text"
                 android:hint="@string/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -402,16 +401,13 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     />
-
             </RelativeLayout>
-
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/product_detail"
                 android:textSize="@dimen/_14sdp" />
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
