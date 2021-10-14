@@ -375,8 +375,8 @@
     <string name="cat_baby_sitter">Baby-sitter</string>
     <string name="update_complete">Mise à jour terminée</string>
     <string name="discussions_and_tips">discussions et bons plans</string>
-    <string name="update">Update</string>
-    <string name="a_new_version_of_nelyan_application_is_available">A new version of Nelyan Application is available</string>
-    <string name="update_available">Update Available</string>
+    <string name="update">Mettez à jour maintenant</string>
+    <string name="a_new_version_of_nelyan_application_is_available">Une nouvelle version de l\'application Nelyan est disponible sur play store</string>
+    <string name="update_available">Mise à jour disponible</string>
 
 </resources>
