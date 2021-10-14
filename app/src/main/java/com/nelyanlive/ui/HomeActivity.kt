@@ -118,7 +118,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 
     var MY_REQUEST_CODE = 112233
-    lateinit var appUpdateManager: AppUpdateManager
+   // lateinit var appUpdateManager: AppUpdateManager
 
 
     private val foregroundOnlyServiceConnection = object : ServiceConnection {
@@ -217,8 +217,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        appUpdateManager = AppUpdateManagerFactory.create(this)
-        checkUpdate()
+      //  appUpdateManager = AppUpdateManagerFactory.create(this)
+      //  checkUpdate()
         MyFirebaseMessagingService.chatNotifyLive.observe(this, Observer {
 
             if(it.equals("true"))
@@ -301,7 +301,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
 
-    private fun checkUpdate() {
+     /* private fun checkUpdate() {
         // Returns an intent object that you use to check for an update.
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         // Checks that the platform will allow the specified type of update.
@@ -336,7 +336,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             appUpdateManager.completeUpdate()
         }
     }
-
+     */
     private fun initalize() {
         tvLog.setOnClickListener(this)
     }

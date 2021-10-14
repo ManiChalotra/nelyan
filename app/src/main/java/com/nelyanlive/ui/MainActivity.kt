@@ -23,6 +23,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.db.DataStoragePreference
+import com.nelyanlive.utils.CheckPlayStoreVersion
 import com.nelyanlive.utils.OpenActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +35,9 @@ import java.security.NoSuchAlgorithmException
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity(), CoroutineScope {
+class MainActivity : CheckPlayStoreVersion() {
     var mContext: Context? = null
     var ivLogo: ImageView? = null
-    var timer: Timer? = null
 
 
     private lateinit var dataStoragePreference: DataStoragePreference
@@ -50,9 +50,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
 
         val sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
        val language =  sharedPreferences.getString("language", "fr")!!
@@ -86,27 +83,29 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         mContext = this
         ivLogo = findViewById(R.id.ivLogo)
-        timer = Timer()
-        timer!!.schedule(object : TimerTask() {
-            override fun run() {
-                launch (Dispatchers.Main.immediate){
-                    dataStoragePreference = DataStoragePreference(this@MainActivity)
-                    val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
-                    val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+        GetVersionCode().execute()
+
+        /* timer = Timer()
+         timer!!.schedule(object : TimerTask() {
+             override fun run() {
+                 launch (Dispatchers.Main.immediate){
+                     dataStoragePreference = DataStoragePreference(this@MainActivity)
+                     val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
+                     val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
 
 
-                    if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
-                        OpenActivity(HomeActivity::class.java)
-                        finishAffinity()
-                    }else {
-                        val i = Intent(this@MainActivity, WalkthroughActivity::class.java)
-                        startActivity(i)
-                        finishAffinity()
+                     if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
+                         OpenActivity(HomeActivity::class.java)
+                         finishAffinity()
+                     }else {
+                         val i = Intent(this@MainActivity, WalkthroughActivity::class.java)
+                         startActivity(i)
+                         finishAffinity()
 
-                    }
-                }
-            }
-        }, 3000)
+                     }
+                 }
+             }
+         }, 3000)*/
     }
 
 

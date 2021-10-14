@@ -51,7 +51,7 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     var MY_REQUEST_CODE = 112233
 
 
-    lateinit var appUpdateManager: AppUpdateManager
+   // lateinit var appUpdateManager: AppUpdateManager
 
     override fun onResume() {
         super.onResume()
@@ -59,8 +59,8 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walkthrough)
-        appUpdateManager = AppUpdateManagerFactory.create(this)
-        checkUpdate()
+      //  appUpdateManager = AppUpdateManagerFactory.create(this)
+       // checkUpdate()
         mContext = this
         setView()
     }
@@ -106,7 +106,7 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    private fun checkUpdate() {
+    /*private fun checkUpdate() {
         // Returns an intent object that you use to check for an update.
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         // Checks that the platform will allow the specified type of update.
@@ -133,9 +133,9 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
             }
             else {
                 Log.d("TAG", "No Update available")
-            } } }
+            } } }*/
 
-    private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
+   /* private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
         if (installState.installStatus() == InstallStatus.DOWNLOADED) {
             // After the update is downloaded, show a notification
             // and request user confirmation to restart the app.
@@ -145,7 +145,7 @@ class WalkthroughActivity : AppCompatActivity(), CoroutineScope {
             appUpdateManager.completeUpdate()
 
         }
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()

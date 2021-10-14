@@ -9,23 +9,33 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.datastore.preferences.core.preferencesKey
 import com.nelyanlive.R
+import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.ui.HomeActivity
+import com.nelyanlive.ui.WalkthroughActivity
 import com.yanzhenjie.album.mvp.BaseActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLConnection
+import java.util.*
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
+import kotlin.coroutines.CoroutineContext
 
 
 /**
  * Created by AIM on 10/18/2018.
  */
-abstract class CheckPlayStoreVersion : BaseActivity() {
+abstract class CheckPlayStoreVersion : BaseActivity(), CoroutineScope {
 
     inner class GetVersionCode : AsyncTask<Void, String, String>() {
 
@@ -107,51 +117,45 @@ abstract class CheckPlayStoreVersion : BaseActivity() {
                     if (diff < 0) {
                         openUpdateDialog()
                     } else {
-                        Handler().postDelayed({
-
-                            /*if (getPrefrence(GlobalVariables.CONSTANTS.ISLOGIN, false)) {
-
-
-                                    if (getPrefrence(GlobalVariables.CONSTANTS.USER_TYPE, "").equals("1")) {
-                                    activitySwitcher(HomeActivity::class.java, true)
-                                } else  if (getPrefrence(GlobalVariables.CONSTANTS.USER_TYPE, "").equals("2")){
-                                    activitySwitcher(HomeMenderActivity::class.java, true)
-                                }
-
-                            } else {
-                                activitySwitcher(LoginActivity::class.java, true)
-                            }*/
-
-                        }, 3000)
+                        callNextActivity()
                     }
                 } catch (e: PackageManager.NameNotFoundException) {
                     e.printStackTrace()
                 }
             } else {
                 Log.e("datacheck","three")
-
-                Handler().postDelayed({
-
-
-                   /* if (getPrefrence(GlobalVariables.CONSTANTS.ISLOGIN, false)) {
-
-                         if (getPrefrence(GlobalVariables.CONSTANTS.USER_TYPE, "").equals("1")) {
-                            activitySwitcher(HomeActivity::class.java, true)
-                        } else  if (getPrefrence(GlobalVariables.CONSTANTS.USER_TYPE, "").equals("2")){
-                            activitySwitcher(HomeMenderActivity::class.java, true)
-                        }
-
-                    } else {
-                        OpenActivity(HomeActivity::class.java)
-                        activitySwitcher(LoginActivity::class.java, true)
-                    }*/
-
-
-                }, 3000)
-
-
+                callNextActivity()
             }
         }
+    }
+    var timer: Timer? = null
+    private lateinit var dataStoragePreference: DataStoragePreference
+    private var job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    private fun callNextActivity() {
+        timer = Timer()
+        timer!!.schedule(object : TimerTask() {
+            override fun run() {
+                launch (Dispatchers.Main.immediate){
+                    dataStoragePreference = DataStoragePreference(this@CheckPlayStoreVersion)
+                    val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
+                    val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+
+
+                    if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
+                        OpenActivity(HomeActivity::class.java)
+                        finishAffinity()
+                    }else {
+                        val i = Intent(this@CheckPlayStoreVersion, WalkthroughActivity::class.java)
+                        startActivity(i)
+                        finishAffinity()
+
+                    }
+                }
+            }
+        }, 3000)
     }
 
     private fun getAppVersion(patternString: String, inputString: String): String? {
@@ -169,7 +173,6 @@ abstract class CheckPlayStoreVersion : BaseActivity() {
 
         return null
     }
-
 
     private fun openUpdateDialog() {
         val dialog = Dialog(this, R.style.Theme_Dialog)
