@@ -22,8 +22,8 @@ android {
         applicationId "com.nelyanlive"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 22
-        versionName "1.21"
+        versionCode 23
+        versionName "1.22"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
