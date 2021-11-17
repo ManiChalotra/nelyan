@@ -68,8 +68,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filter_activity)
 
-        if(intent.hasExtra("name"))
-        { tvName.text = intent.getStringExtra("name")}
+        if (intent.hasExtra("name")) {
+            tvName.text = intent.getStringExtra("name")
+        }
 
         ivBack = findViewById(R.id.ivBack)
 
@@ -102,33 +103,35 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 this, R.layout.size_customspinner, km)
         orderby1!!.adapter = adapter1
 
-       orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-           override fun onItemSelected(
-               parent: AdapterView<*>?,
-               view: View?,
-               position: Int,
-               id: Long
-           ) {
-               distance = if(kmValue[position].isNullOrBlank()){""}else{kmValue[position]!!}
-           }
+        orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+            ) {
+                distance = if (kmValue[position].isNullOrBlank()) {
+                    ""
+                } else {
+                    kmValue[position]!!
+                }
+            }
 
-           override fun onNothingSelected(parent: AdapterView<*>?) {
-               // TODO("Not yet implemented")
-           }
-       }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // TODO("Not yet implemented")
+            }
+        }
 
-        if(tvName.text !=getString(R.string.event))
-        {
+        if (tvName.text != getString(R.string.event)) {
             viewType.visibility = View.VISIBLE
             tvType.visibility = View.VISIBLE
             llType.visibility = View.VISIBLE
 
-        launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-            appViewModel.sendActivityTypeData(security_key, authKey)
-        }}
-    else
-        {
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                appViewModel.sendActivityTypeData(security_key, authKey)
+            }
+        } else {
             et_name.hint = getString(R.string.enter_event_name)
         }
     }
@@ -136,11 +139,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     override fun onResume() {
         super.onResume()
-         }
+    }
 
     private fun dateDialog() {
-        val listener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> tvCal!!.text = dayOfMonth.toString() +
-                "/" + (monthOfYear + 1) + "/" + year }
+        val listener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            tvCal!!.text = dayOfMonth.toString() +
+                    "/" + (monthOfYear + 1) + "/" + year
+        }
         val datePickerDialog = DatePickerDialog(this, R.style.datepicker, listener, mYear, mMonth, mDay)
         datePickerDialog.show()
     }
@@ -185,14 +190,18 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                     }
                     val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                     traderType.adapter = arrayAdapte1
-                    traderType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                    traderType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
                         ) {
-                            typeId = if(position!=0) { categoryId[position]!! } else { "" }
+                            typeId = if (position != 0) {
+                                categoryId[position]!!
+                            } else {
+                                ""
+                            }
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -235,7 +244,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
-              //  city = place.name.toString()
+                //  city = place.name.toString()
                 et_location.text = place.name.toString()
 
                 // cityID = place.id.toString()
@@ -243,48 +252,47 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 longitudee = place.latLng?.longitude.toString()
 
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-            }
-
-            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
                 Log.i("dddddd", status.statusMessage.toString())
-            } } }
+            }
+        }
+    }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.et_location ->{
+            R.id.et_location -> {
                 showPlacePicker()
             }
-            R.id.tv_cal ->{
+            R.id.tv_cal -> {
                 dateDialog()
             }
-            R.id.btnFilter ->{
-                if (et_location.text.isNullOrEmpty()){
-                  myCustomToast(getString(R.string.location_missing_error))
-                }
-                else {
+            R.id.btnFilter -> {
+                if (et_location.text.isNullOrEmpty()) {
+                    myCustomToast(getString(R.string.location_missing_error))
+                } else {
                     when (tvName.text) {
-                        getString(R.string.event)-> {
+                        getString(R.string.event) -> {
 
-                            val intent = Intent().putExtra("name",et_name.text.toString())
-                                .putExtra("latitude",latitudee)
-                                .putExtra("longitude",longitudee)
-                                .putExtra("distance",distance)
-                                .putExtra("location",et_location.text.toString())
+                            val intent = Intent().putExtra("name", et_name.text.toString())
+                                    .putExtra("latitude", latitudee)
+                                    .putExtra("longitude", longitudee)
+                                    .putExtra("distance", distance)
+                                    .putExtra("location", et_location.text.toString())
 
-                            setResult(1212,intent)
+                            setResult(1212, intent)
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
-                            val intent = Intent().putExtra("name",et_name.text.toString())
-                                .putExtra("latitude",latitudee)
-                                .putExtra("longitude",longitudee)
-                                .putExtra("distance",distance)
-                                .putExtra("typeId",typeId)
-                                .putExtra("location",et_location.text.toString())
+                            val intent = Intent().putExtra("name", et_name.text.toString())
+                                    .putExtra("latitude", latitudee)
+                                    .putExtra("longitude", longitudee)
+                                    .putExtra("distance", distance)
+                                    .putExtra("typeId", typeId)
+                                    .putExtra("location", et_location.text.toString())
 
-                            setResult(1213,intent)
+                            setResult(1213, intent)
                             onBackPressed()
                         }
                         else -> {
