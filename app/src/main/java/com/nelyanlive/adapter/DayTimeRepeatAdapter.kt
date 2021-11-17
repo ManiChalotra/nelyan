@@ -17,7 +17,7 @@ import java.util.*
 class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeModel>, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return  MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false), listner)
+        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false), listner)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -38,7 +38,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
     }
 
 
-    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner)  : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
 
         var tvAddDay = itemView.findViewById(R.id.tvAddDay) as TextView
         var tvMorningFromtime = itemView.findViewById(R.id.tv_mornning_fromtime) as TextView
@@ -57,8 +57,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
             if (position == dayTimeModelArrayList.size - 1) {
                 tvAddDay.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 tvAddDay.visibility = View.GONE
             }
 
@@ -88,7 +87,7 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
             days.add(context.getString(R.string.saturday))
             days.add(context.getString(R.string.sunday))
 
-            val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days )
+            val arrayAdapter = ArrayAdapter(context, R.layout.customspinner, days)
             spinnerDayss.adapter = arrayAdapter
             spinnerDayss.setSelection(arrayAdapter.getPosition(list[position].selectedDay))
 

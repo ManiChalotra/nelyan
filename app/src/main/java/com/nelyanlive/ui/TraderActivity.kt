@@ -84,7 +84,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     private var selectedImages = mutableListOf("", "", "")
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader)
@@ -117,7 +116,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         productArrayList = ArrayList()
         productArrayList.add(ProductDetailDataModel("", "", "", ""))
 
-
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
@@ -141,14 +139,18 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             if (resultCode == Activity.RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
 
-               // cityName = place.name.toString()
+                // cityName = place.name.toString()
                 tv_address.text = place.address.toString()
 
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
                 val geocoder = Geocoder(this, Locale.getDefault())
                 val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
-                cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+                cityName = if (!list[0].locality.isNullOrBlank()) {
+                    list[0].locality
+                } else {
+                    place.name.toString()
+                }
 
                 Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
             }
@@ -171,10 +173,10 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
 
-              appViewModel.send_addPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
-                  et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
-                  cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
-                  productDetailsGroup.toString(), media.toString(),if(days) "1" else "0",if(product) "1" else "0")
+            appViewModel.send_addPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
+                    et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
+                    cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
+                    productDetailsGroup.toString(), media.toString(), if (days) "1" else "0", if (product) "1" else "0")
 
         } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
@@ -203,7 +205,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                     }
                     val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, type)
                     trader_type.adapter = arrayAdapter1
-                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             traderTypeId = typeId[position]
                         }
@@ -320,37 +322,31 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                             } else {
                                 if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
-                                }
-                                    else {
+                                } else {
 
-                                        var ageErrorString = ""
-                                        dayErrorNumber = 0
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].selectedDay,ageErrorString,getString(R.string.select_day_previous),1)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstStarttime,ageErrorString,getString(R.string.select_morning_time_previous),2)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].firstEndtime,ageErrorString,getString(R.string.select_morning_time_previous),3)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime,ageErrorString,getString(R.string.select_evening_time_previous),4)
-                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime,ageErrorString,getString(R.string.select_evening_time_previous),5)
+                                    var ageErrorString = ""
+                                    dayErrorNumber = 0
+//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay, ageErrorString, getString(R.string.select_day_previous), 1)
+//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime, ageErrorString, getString(R.string.select_morning_time_previous), 2)
+//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime, ageErrorString, getString(R.string.select_morning_time_previous), 3)
+//                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondStarttime,ageErrorString,getString(R.string.select_evening_time_previous),4)
+//                                        ageErrorString =  getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size-1].secondEndtime,ageErrorString,getString(R.string.select_evening_time_previous),5)
 
-                                        var productErrorString = ""
-                                        productErrorNumber = 0
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].image,productErrorString,getString(R.string.select_image_in_previous),1)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productTitle,productErrorString,getString(R.string.fill_title_previous),2)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].productPrice,productErrorString,getString(R.string.fill_price_previous),3)
-                                        productErrorString =  getProductError(productArrayList[productArrayList.size-1].description,productErrorString,getString(R.string.fill_description_in_previous),4)
-
+                                    var productErrorString = ""
+                                    productErrorNumber = 0
+                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].image, productErrorString, getString(R.string.select_image_in_previous), 1)
+                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].productTitle, productErrorString, getString(R.string.fill_title_previous), 2)
+                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].productPrice, productErrorString, getString(R.string.fill_price_previous), 3)
+                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].description, productErrorString, getString(R.string.fill_description_in_previous), 4)
 
 
-
-                                    if(dayErrorNumber!=0 && ageErrorString.isNotEmpty())
-                                        {
-                                            myCustomToast(ageErrorString)
-                                        }
-                                        else {
+                                    if (dayErrorNumber != 0 && ageErrorString.isNotEmpty()) {
+                                        myCustomToast(ageErrorString)
+                                    } else {
 
                                         if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
                                             myCustomToast(productErrorString)
-                                        }
-                                        else {
+                                        } else {
                                             media = JSONArray()
                                             for (i in 0 until selectedImages.size) {
                                                 val json = JSONObject()
@@ -363,55 +359,63 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                 for (i in 0 until dayTimeModelArrayList.size) {
                                                     val json = JSONObject()
                                                     json.put(
-                                                        "day_name",
-                                                        dayTimeModelArrayList[i].selectedDay
+                                                            "day_name",
+                                                            dayTimeModelArrayList[i].selectedDay
                                                     )
                                                     json.put(
-                                                        "time_from",
-                                                        dayTimeModelArrayList[i].firstStarttime
+                                                            "time_from",
+                                                            dayTimeModelArrayList[i].firstStarttime
                                                     )
                                                     json.put(
-                                                        "time_to",
-                                                        dayTimeModelArrayList[i].firstEndtime
+                                                            "time_to",
+                                                            dayTimeModelArrayList[i].firstEndtime
                                                     )
                                                     json.put(
-                                                        "secondStartTime",
-                                                        dayTimeModelArrayList[i].secondStarttime
+                                                            "secondStartTime",
+                                                            dayTimeModelArrayList[i].secondStarttime
                                                     )
                                                     json.put(
-                                                        "secondEndTime",
-                                                        dayTimeModelArrayList[i].secondEndtime
+                                                            "secondEndTime",
+                                                            dayTimeModelArrayList[i].secondEndtime
                                                     )
                                                     selectDayGroup.put(json)
                                                 }
                                             }
 
-                                            if(product) {
+                                            if (product) {
                                                 productDetailsGroup = JSONArray()
                                                 for (i in 0 until productArrayList.size) {
                                                     val json = JSONObject()
                                                     json.put("image", productArrayList[i].image)
                                                     json.put(
-                                                        "title",
-                                                        productArrayList[i].productTitle
+                                                            "title",
+                                                            productArrayList[i].productTitle
                                                     )
                                                     json.put(
-                                                        "price",
-                                                        productArrayList[i].productPrice
+                                                            "price",
+                                                            productArrayList[i].productPrice
                                                     )
                                                     json.put(
-                                                        "description",
-                                                        productArrayList[i].description
+                                                            "description",
+                                                            productArrayList[i].description
                                                     )
                                                     productDetailsGroup.put(json)
                                                 }
                                             }
                                             hitFinalTraderPostApi()
 
-                                        }} } } } } } } }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    private fun getDayError(ageFrom: String?, ageErrorString: String, s: String,i:Int) : String {
+    private fun getDayError(ageFrom: String?, ageErrorString: String, s: String, i: Int): String {
 
         return when {
             ageFrom.isNullOrBlank() -> when {
@@ -422,13 +426,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             }
             else -> {
                 days = true
-                dayErrorNumber =i
+                dayErrorNumber = i
                 ageErrorString
             }
         }
     }
 
-    private fun getProductError(productFrom: String?, productErrorString: String, s: String,i:Int) : String {
+    private fun getProductError(productFrom: String?, productErrorString: String, s: String, i: Int): String {
 
         return when {
             productFrom.isNullOrBlank() -> when {
@@ -439,7 +443,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             }
             else -> {
                 product = true
-                productErrorNumber =i
+                productErrorNumber = i
                 productErrorString
             }
         }
@@ -490,14 +494,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 myCustomToast(getString(R.string.select_morning_time_previous))
 
             }
-            dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
-
-            }
-            dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
-
-            }
+//            dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
+//                myCustomToast(getString(R.string.select_evening_time_previous))
+//
+//            }
+//            dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
+//                myCustomToast(getString(R.string.select_evening_time_previous))
+//
+//            }
             else -> {
                 dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeRepeatAdapter.notifyDataSetChanged()

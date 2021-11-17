@@ -116,13 +116,13 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
         recyclerview!!.adapter = myAddAdapter
     }
 
-    private fun setChildCareAdaptor(activityPostMyAdsList: ArrayList<GetChildcarePostMyAds>) {
+    fun setChildCareAdaptor(activityPostMyAdsList: ArrayList<GetChildcarePostMyAds>) {
         myAdsChildCareAdapter = MyAdsChildCareAdapter(this, activityPostMyAdsList, this)
         recyclerview!!.layoutManager = LinearLayoutManager(this)
         recyclerview!!.adapter = myAdsChildCareAdapter
     }
 
-    private fun setTraderAdaptor(getTraderMyAdsList: ArrayList<GetTraderMyAds>) {
+    fun setTraderAdaptor(getTraderMyAdsList: ArrayList<GetTraderMyAds>) {
         myAdsTraderAdapter = MyAdsTraderAdapter(this, getTraderMyAdsList, this)
         recyclerview!!.layoutManager = LinearLayoutManager(this)
         recyclerview!!.adapter = myAdsTraderAdapter
@@ -145,8 +145,6 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                     traderList.clear()
                     traderList.addAll(myAdsResponse.data.GetTrader)
 
-
-
                     recyclerview!!.visibility = View.GONE
                     tv_no_ad!!.visibility = View.VISIBLE
 
@@ -157,14 +155,12 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                 tv_no_ad!!.visibility = View.GONE
                                 setChildCareAdaptor(childCareList)
                             }
-
                         }
                         "3" -> {
                             if (traderList.size !=0){
                                 recyclerview!!.visibility = View.VISIBLE
                                 tv_no_ad!!.visibility = View.GONE
                                 setTraderAdaptor(traderList)
-
                             }
                         }
                         "1" -> {
@@ -190,9 +186,9 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                 myCustomToast(message)
                 when (categoryId) {
                     "2" -> {
-                        childCareList.removeAt(childCarePos)
-                        myAdsChildCareAdapter!!.notifyDataSetChanged()
-                        Log.e("deleteListSize", childCareList.size.toString())
+//                        childCareList.removeAt(childCarePos)
+//                        myAdsChildCareAdapter!!.notifyDataSetChanged()
+//                        Log.e("deleteListSize", childCareList.size.toString())
 
                         if (childCareList.size == 0) {
                             tv_no_ad.visibility = View.VISIBLE
@@ -215,8 +211,8 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                         }
                     }
                     "3" -> {
-                        traderList.removeAt(tradersPos)
-                        myAdsTraderAdapter!!.notifyDataSetChanged()
+//                        traderList.removeAt(tradersPos)
+//                        myAdsTraderAdapter!!.notifyDataSetChanged()
                         Log.e("deleteListSize", traderList.size.toString())
 
                         if (traderList.size == 0) {
@@ -284,6 +280,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     override fun onChildCareDeleteAdClick(position: Int, adID: String?) {
          categoryId="2"
         childCarePos=position
+
         hitDeleteMyAdsApi(adID, categoryId)
     }
 

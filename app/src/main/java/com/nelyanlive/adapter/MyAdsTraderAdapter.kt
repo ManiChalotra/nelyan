@@ -21,13 +21,14 @@ import com.nelyanlive.modals.myAd.TradersimageMyAds
 import com.nelyanlive.ui.TraderPublishActivty
 import com.nelyanlive.utils.OpenActivity
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.alert_chat_delete.*
 import kotlinx.android.synthetic.main.item_trader_listing.view.*
 
 
 class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: ArrayList<GetTraderMyAds>, internal var deleteEditTradersAdListner: OnDeleteEditTradersAdClickListner) :
     RecyclerView.Adapter<MyAdsTraderAdapter.RecyclerViewHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
-    var dialog: Dialog? = null
+    var dialog1: Dialog? = null
     private var popupWindow: PopupWindow? = null
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -147,8 +148,9 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
         }
 
         deletee.setOnClickListener {
+            dailogDelete(adapterPosition, id.toString() )
             popupWindow!!.dismiss()
-            deleteEditTradersAdListner.onTraderAdDeleteAdClick(adapterPosition, id.toString())
+//            deleteEditTradersAdListner.onTraderAdDeleteAdClick(adapterPosition, id.toString())
         }
 
     }
@@ -168,6 +170,24 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
         return myadsTraderlist.size
     }
 
+    fun dailogDelete(adapterPosition: Int, adId: String) {
+        dialog1 = Dialog(context)
+        dialog1!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog1!!.setContentView(R.layout.alert_chat_delete)
+        dialog1!!.setCancelable(true)
+        val tvMessage = dialog1!!.findViewById<TextView>(R.id.tvMessage)
+        tvMessage.text = context.getString(R.string.are_you_sure_want_to_delete_this)
+        dialog1!!.tvYes.setOnClickListener {
+            dialog1!!.dismiss()
+            myadsTraderlist.removeAt(adapterPosition)
+            notifyItemRemoved(adapterPosition)
+            deleteEditTradersAdListner.onTraderAdDeleteAdClick(adapterPosition, adId)
+        }
+        dialog1!!.tvNo.setOnClickListener {
+            dialog1!!.dismiss()
+        }
+        dialog1!!.show()
+    }
 
     interface OnDeleteEditTradersAdClickListner{
         fun onTraderAdDeleteAdClick(position: Int, adID: String?)

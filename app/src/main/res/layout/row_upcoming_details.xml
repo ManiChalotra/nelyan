@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,6 +7,7 @@
     android:background="@drawable/grey_bg"
     android:orientation="vertical"
     android:padding="@dimen/_5sdp">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +24,7 @@
             android:textSize="@dimen/_6sdp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,15 +46,15 @@
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_5sdp">
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,23 +69,17 @@
                 android:id="@+id/tv_event_namee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/regular"
                 android:textColor="@color/app"
                 android:textIsSelectable="true"
-                android:layout_marginStart="@dimen/_5sdp"
                 android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
-
-
-
-
     </LinearLayout>
-
-
 
 
     <LinearLayout
@@ -97,13 +92,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -132,8 +125,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:gravity="end"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="end">
 
 
         <TextView

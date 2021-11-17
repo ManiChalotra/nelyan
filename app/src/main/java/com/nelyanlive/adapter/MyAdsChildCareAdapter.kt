@@ -16,6 +16,7 @@ import com.nelyanlive.ui.AddActivity
 import com.nelyanlive.ui.HomeChildCareDetailsActivity
 import com.nelyanlive.utils.OpenActivity
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.alert_chat_delete.*
 
 
 class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist: ArrayList<GetChildcarePostMyAds>, internal var deleteEditListner: OnDeleteEditClickListner) :
@@ -108,7 +109,8 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
         }
 
         deletee.setOnClickListener {
-            deleteEditListner.onChildCareDeleteAdClick(adapterPosition, id.toString() )
+//            deleteEditListner.onChildCareDeleteAdClick(adapterPosition, id.toString() )
+            dailogDelete(adapterPosition, id.toString() )
             popupWindow!!.dismiss()
         }
     }
@@ -124,6 +126,25 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
 
     override fun getItemCount(): Int {
         return myadsChildCarelist.size
+    }
+
+    fun dailogDelete(adapterPosition: Int, adId: String) {
+        dialog = Dialog(context)
+        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog!!.setContentView(R.layout.alert_chat_delete)
+        dialog!!.setCancelable(true)
+        val tvMessage = dialog!!.findViewById<TextView>(R.id.tvMessage)
+        tvMessage.text = context.getString(R.string.are_you_sure_want_to_delete_this)
+        dialog!!.tvYes.setOnClickListener {
+            dialog!!.dismiss()
+            myadsChildCarelist.removeAt(adapterPosition)
+            notifyItemRemoved(adapterPosition)
+            deleteEditListner.onChildCareDeleteAdClick(adapterPosition, adId)
+        }
+        dialog!!.tvNo.setOnClickListener {
+            dialog!!.dismiss()
+        }
+        dialog!!.show()
     }
 
     interface OnDeleteEditClickListner{

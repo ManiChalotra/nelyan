@@ -2,20 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/back_shape"
         android:orientation="vertical"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:paddingRight="@dimen/_5sdp"
         android:paddingLeft="@dimen/_5sdp"
-        android:background="@drawable/back_shape">
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp">
+
         <TextView
             style="@style/CommonTextWrapcontent"
             android:text="@string/age_group_years" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,12 +34,12 @@ android:layout_marginTop="@dimen/_10sdp"
                 <EditText
                     android:id="@+id/edtAgeFrom"
                     style="@style/SimpleEdittext"
+                    android:digits="0123456789"
                     android:hint="@string/age_group_from"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
+                    android:inputType="number"
                     android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number" />
+                    android:maxLines="1" />
 
                 <View
                     android:layout_width="match_parent"
@@ -45,6 +48,7 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/black" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,13 +59,13 @@ android:layout_marginTop="@dimen/_10sdp"
                 <EditText
                     android:id="@+id/edtAgeTo"
                     style="@style/SimpleEdittext"
-                    android:hint="@string/age_group_to"
-                    android:focusable="true"
-                    android:maxLines="1"
-                    android:maxLength="3"
                     android:digits="0123456789"
+                    android:focusable="true"
+                    android:hint="@string/age_group_to"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
 
                 <View
                     android:layout_width="match_parent"
@@ -72,6 +76,7 @@ android:layout_marginTop="@dimen/_10sdp"
             </LinearLayout>
 
         </LinearLayout>
+
         <TextView
             style="@style/CommonTextWrapcontent"
             android:text="@string/days" />
@@ -96,23 +101,26 @@ android:layout_marginTop="@dimen/_10sdp"
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@color/black" />
+
         <TextView
             style="@style/CommonTextWrapcontent"
 
             android:text="@string/select_time" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -125,9 +133,9 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/clock_purple_icon"
+                    android:fontFamily="@font/regular"
                     android:hint="@string/select_from"
                     android:inputType="number"
-                    android:fontFamily="@font/regular"
                     android:paddingStart="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey" />
@@ -139,8 +147,8 @@ android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_weight="1"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -153,13 +161,14 @@ android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/clock_purple_icon"
+                    android:fontFamily="@font/regular"
                     android:hint="@string/select_to"
                     android:inputType="number"
-                    android:fontFamily="@font/regular"
                     android:paddingStart="@dimen/_5sdp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:id="@+id/tvAddMore"
             android:layout_width="wrap_content"
@@ -167,11 +176,11 @@ android:layout_marginTop="@dimen/_10sdp"
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/add_more_btn"
-            android:gravity="center"
             android:focusable="true"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
-            android:fontFamily="@font/regular"
             android:text="@string/add_more"
             android:textAlignment="center"
             android:textColor="@color/white"
