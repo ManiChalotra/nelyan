@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.TraderActivity"
-    >
+    tools:context=".ui.TraderActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        >
+        android:layout_height="@dimen/_40sdp">
 
         <ImageView
             android:id="@+id/ivBack"
@@ -22,66 +19,62 @@
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_10sdp"
-            android:src="@drawable/left_arrow"
-            />
+            android:src="@drawable/left_arrow" />
 
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:text="@string/trader_artisant"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:text="@string/photo"
-                />
+                android:text="@string/photo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/ll_public"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
+                    android:background="@drawable/back_shape">
+
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImg1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ic_photo_one"
-                        app:riv_corner_radius="@dimen/_5sdp"
-                        android:scaleType="centerCrop"/>
+                        app:riv_corner_radius="@dimen/_5sdp" />
 
                     <ImageView
+                        android:id="@+id/iv_video22"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
                         android:elevation="@dimen/_5dp"
                         android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
                         android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video22"
-                        />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -91,83 +84,82 @@
                     android:layout_height="@dimen/_100sdp"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
+                    android:background="@drawable/back_shape">
+
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/ivImg2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:riv_corner_radius="@dimen/_5sdp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/photo_two"
-                        android:scaleType="centerCrop"/>
+                        app:riv_corner_radius="@dimen/_5sdp" />
 
                     <ImageView
+                        android:id="@+id/iv_video33"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
                         android:elevation="@dimen/_5dp"
                         android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
                         android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video33"
-                        />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/ll_3"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="70dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/_3sdp"
-                    android:background="@drawable/back_shape" >
+                    android:layout_weight="1"
+                    android:background="@drawable/back_shape"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivImg3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/small_photo_4"
-                        android:scaleType="fitXY"/>
+                        android:scaleType="fitXY"
+                        android:src="@drawable/small_photo_4" />
 
                     <ImageView
+                        android:id="@+id/iv_video44"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
                         android:elevation="@dimen/_5dp"
                         android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
                         android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video44"
-                        />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlAddImg"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="70dp"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
-                    android:background="@drawable/back_shape" >
+                    android:background="@drawable/back_shape"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivplus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/small_photo_5"
                         android:layout_centerInParent="true"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:src="@drawable/small_photo_5" />
 
                     <ImageView
+                        android:id="@+id/iv_video55"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
+                        android:layout_centerInParent="true"
                         android:elevation="@dimen/_5dp"
                         android:scaleType="fitXY"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
                         android:src="@drawable/ic_baseline_videocam_24"
-                        android:id="@+id/iv_video55"
-                        />
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -177,31 +169,29 @@
                 android:id="@+id/rlImg"
                 android:layout_width="@dimen/_140sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape"
                 android:layout_gravity="center"
-                >
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_shape">
+
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    app:riv_corner_radius="@dimen/_5sdp"
                     android:backgroundTint="@color/grey"
-                    android:src="@drawable/ic_photo_3"
                     android:scaleType="centerCrop"
-                    />
+                    android:src="@drawable/ic_photo_3"
+                    app:riv_corner_radius="@dimen/_5sdp" />
 
                 <ImageView
+                    android:id="@+id/iv_video11"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
                     android:elevation="@dimen/_5dp"
                     android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
                     android:src="@drawable/ic_baseline_videocam_24"
-                    android:id="@+id/iv_video11"
-                    />
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -240,11 +230,11 @@
             <EditText
                 android:id="@+id/et_trader_shop_name"
                 style="@style/SimpleEdittext"
-                android:maxLines="1"
-                android:imeOptions="actionNext"
-                android:maxLength="150"
                 android:hint="@string/name_of_shop"
-                android:inputType="text" />
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="150"
+                android:maxLines="1" />
 
             <View
                 android:layout_width="match_parent"
@@ -254,20 +244,20 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:visibility="gone"
-                android:text="@string/name_of_activity" />
+                android:text="@string/name_of_activity"
+                android:visibility="gone" />
 
             <EditText
                 style="@style/SimpleEdittext"
                 android:hint="@string/name_of_activity"
-                android:visibility="gone"
-                android:inputType="text" />
+                android:inputType="text"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <TextView
                 style="@style/CommonTextWrapcontent"
@@ -276,17 +266,16 @@
 
             <EditText
                 android:id="@+id/et_description_trader"
-                android:hint="@string/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
+                android:hint="@string/description"
+                android:maxLines="3"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp"
-                android:maxLines="3"
-                />
+                android:textSize="@dimen/_10sdp" />
 
             <View
                 android:layout_width="match_parent"
@@ -328,10 +317,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     app:ccpDialog_textColor="@color/black"
+                    app:ccp_defaultPhoneCode="33"
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/_12sdp"
-                    app:ccp_defaultPhoneCode="33"/>
+                    app:ccp_textSize="@dimen/_12sdp" />
 
                 <EditText
                     android:id="@+id/et_trader_phone"
@@ -362,8 +351,8 @@
                 style="@style/SimpleEdittext"
                 android:hint="@string/email_address"
                 android:imeOptions="actionNext"
-                android:maxLines="1"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
 
             <View
                 android:layout_width="match_parent"
@@ -380,8 +369,8 @@
                 android:id="@+id/et_web_address"
                 style="@style/SimpleEdittext"
                 android:hint="@string/website"
-                android:maxLines="1"
-                android:inputType="textWebEmailAddress" />
+                android:inputType="textWebEmailAddress"
+                android:maxLines="1" />
 
             <View
                 android:layout_width="match_parent"
@@ -396,12 +385,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvDayTime"
                     android:layout_width="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    />
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </RelativeLayout>
+
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -428,8 +417,8 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/btn"
-                android:textAllCaps="true"
-                android:text="@string/submit" />
+                android:text="@string/submit"
+                android:textAllCaps="true" />
 
         </LinearLayout>
 

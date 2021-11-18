@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/_10sdp"
     android:orientation="vertical">
 
@@ -22,22 +21,31 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/add_an_event" />
 
+        <ImageView
+            android:id="@+id/ivdlt"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="right"
+            android:layout_marginTop="-20dp"
+            android:backgroundTint="@color/grey"
+            android:scaleType="centerCrop"
+            android:src="@drawable/blk_cross" />
+
+
         <RelativeLayout
             android:id="@+id/rl_Add"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_90sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_gravity="center"
-            android:background="@drawable/back_shape"
-            >
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/back_shape">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivEventimage"
-                app:riv_corner_radius="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                />
+                app:riv_corner_radius="@dimen/_5sdp" />
 
             <ImageView
                 android:id="@+id/ivCam"
@@ -45,9 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:backgroundTint="@color/grey"
-                android:src="@drawable/ic_photo_one"
                 android:scaleType="centerCrop"
-                />
+                android:src="@drawable/ic_photo_one" />
 
         </RelativeLayout>
 
@@ -66,10 +73,10 @@
         <EditText
             android:id="@+id/edtEventName"
             style="@style/SimpleEdittext"
-            android:maxLength="150"
-            android:maxLines="1"
             android:hint="@string/name_of_event"
-            android:inputType="text" />
+            android:inputType="text"
+            android:maxLength="150"
+            android:maxLines="1" />
 
         <View
             android:layout_width="match_parent"
@@ -227,8 +234,8 @@
             android:backgroundTint="@color/transparent"
             android:fontFamily="@font/regular"
             android:hint="@string/description"
-            android:paddingEnd="@dimen/_10sdp"
             android:maxLines="3"
+            android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"
             android:textSize="@dimen/_10sdp" />
@@ -309,11 +316,11 @@
         <EditText
             android:id="@+id/edtPrice"
             style="@style/SimpleEdittext"
-            android:hint="@string/price11"
-            android:maxLines="1"
-            android:maxLength="10"
             android:digits="0123456789."
-            android:inputType="number" />
+            android:hint="@string/price11"
+            android:inputType="number"
+            android:maxLength="10"
+            android:maxLines="1" />
 
         <View
             android:layout_width="match_parent"
@@ -329,8 +336,7 @@
         <TextView
             android:id="@+id/et_city_add_event"
             style="@style/SimpleEdittext"
-            android:hint="@string/city"
-             />
+            android:hint="@string/city" />
 
         <View
             android:layout_width="match_parent"

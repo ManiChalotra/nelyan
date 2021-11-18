@@ -143,10 +143,10 @@
     <string name="name">Nom d\'utilisateur </string>
     <string name="enter_email">E-mail</string>
     <string name="enter_name">Nom d\'utilisateur </string>
-<!--    <string name="enter_activity_name">Nom de l’activité</string>-->
+    <!--    <string name="enter_activity_name">Nom de l’activité</string>-->
     <string name="enter_activity_name">Chercher</string>
-<!--    <string name="enter_event_name">Nom de l’événement</string>-->
-    <string name="enter_event_name">Nom d’événement</string>
+    <string name="enter_event_name">Nom de l’événement</string>
+    <!--    <string name="enter_event_name">Nom d’événement</string>-->
     <string name="enter_child_care_filter_name">Nom de</string>
     <string name="are_you_sure_you_want_to_logout">Êtes-vous sûr de vouloir vous déconnecter?</string>
     <string name="password_donot_match_error">Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas</string>
@@ -191,7 +191,7 @@
     <string name="date_added">Ajouter une date</string>
     <string name="add_an_event">Ajouter un événement</string>
     <string name="event_picture">Photo</string>
-<!--    <string name="name_of_event">Nom de l\'événement</string>-->
+    <!--    <string name="name_of_event">Nom de l\'événement</string>-->
     <string name="name_of_event">Nom d’événement</string>
     <string name="select_date">Date</string>
     <string name="from1">De :</string>
