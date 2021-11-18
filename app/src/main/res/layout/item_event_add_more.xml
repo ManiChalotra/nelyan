@@ -21,15 +21,15 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/add_an_event" />
 
-        <ImageView
-            android:id="@+id/ivdlt"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_gravity="right"
-            android:layout_marginTop="-20dp"
-            android:backgroundTint="@color/grey"
-            android:scaleType="centerCrop"
-            android:src="@drawable/blk_cross" />
+<!--        <ImageView-->
+<!--            android:id="@+id/ivdlt"-->
+<!--            android:layout_width="@dimen/_20sdp"-->
+<!--            android:layout_height="@dimen/_20sdp"-->
+<!--            android:layout_gravity="right"-->
+<!--            android:layout_marginTop="-20dp"-->
+<!--            android:backgroundTint="@color/grey"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/blk_cross" />-->
 
 
         <RelativeLayout
