@@ -32,6 +32,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
     }
 
     override fun getItemCount(): Int {
+        Log.d(EventRepeatAdapter::class.java.name, "EventRepearAdapter_size   " + list.size)
         return list.size
     }
 
@@ -55,7 +56,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
         val description = itemView.edtDesc
         val price = itemView.edtPrice
         val city = itemView.et_city_add_event
-//        val removeButton = itemView.ivdlt
+        val removeButton = itemView.ivdlt
 
         //  for selecting the date
         var select_date = ""
@@ -91,10 +92,10 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 listner.onAddEventItem(list, position)
             }
 
-//            removeButton.setOnClickListener {
-//                list.removeAt(position)
-//                listner.onRemoveEventItem(position)
-//            }
+            removeButton.setOnClickListener {
+                list.removeAt(position)
+                listner.onRemoveEventItem(position)
+            }
 
             timeFrom.setOnClickListener {
                 val mcurrentTime = Calendar.getInstance()
@@ -165,6 +166,7 @@ class EventRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.Add
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
+
         }
 
         private fun select_date_register_popup(position: Int, type: String) {

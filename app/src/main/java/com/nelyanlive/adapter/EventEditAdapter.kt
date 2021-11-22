@@ -21,8 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
-                       var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.Adapter<EventEditAdapter.EventRepeatViewHolder>()
-{
+                       var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.Adapter<EventEditAdapter.EventRepeatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventRepeatViewHolder {
         return EventRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_event_add_more, parent, false), listener)
@@ -58,6 +57,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
         val description = itemView.edtDesc!!
         val price = itemView.edtPrice!!
         val city = itemView.et_city_add_event!!
+        val removeButton = itemView.ivdlt
 
         var selectDate = ""
         var day = ""
@@ -67,9 +67,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
 
         fun initialize(list: ArrayList<EventMyAds>, position: Int) {
 
-            Glide.with(context).load(image_base_URl+
-                    list[position].image).error(R.mipmap.no_image_placeholder).into(image)
-
+            Glide.with(context).load(image_base_URl + list[position].image).error(R.mipmap.no_image_placeholder).into(image)
 
             name.setText(list[position].name)
             description.setText(list[position].description)
@@ -80,14 +78,14 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
             timeTo.text = list[position].endTime
             city.text = list[position].city
 
-            image.setOnClickListener{
-                listener.addCameraGalleryImage( position)
+            image.setOnClickListener {
+                listener.addCameraGalleryImage(position)
             }
 
             city.setOnClickListener {
                 listener.cityAddEvent(list, position, city)
             }
-            
+
             addButton.setOnClickListener {
                 description.clearFocus()
                 price.clearFocus()
@@ -96,14 +94,21 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
                 listener.onAddEventItem(list, position)
             }
 
+            removeButton.setOnClickListener {
+                name.clearFocus()
+                list.removeAt(position)
+                listener.onRemoveEventItem(position)
+            }
 
             // add text watcher  for age To
             price.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].price = s.toString()
                 }
+
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
@@ -112,60 +117,67 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
                 override fun afterTextChanged(s: Editable?) {
                     list[position].description = s.toString()
                 }
+
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-            
+
             //text watcher  for name 
-             name.addTextChangedListener(object : TextWatcher {
-                            override fun afterTextChanged(s: Editable?) {
-                                list[position].name = s.toString()
-                            }
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                            }
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                           }
-                        })
+            name.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].name = s.toString()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
 
             dateFrom.setOnClickListener {
-                selectDate(position,"1")
+                selectDate(position, "1")
             }
 
             dateTo.setOnClickListener {
-                selectDate(position,"2")
+                selectDate(position, "2")
             }
 
 
-                        timeFrom.setOnClickListener {
-                            val currentTime = Calendar.getInstance()
-                            val hour = currentTime[Calendar.HOUR_OF_DAY]
-                            val minute = currentTime[Calendar.MINUTE]
-                            val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                                timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                                list[position].startTime = "$selectedHour:$selectedMinute"
-                            }, hour, minute, true)
-                            mTimePicker.setTitle(context.getString(R.string.select_time))
-                            mTimePicker.show()
-                        }
+            timeFrom.setOnClickListener {
+                val currentTime = Calendar.getInstance()
+                val hour = currentTime[Calendar.HOUR_OF_DAY]
+                val minute = currentTime[Calendar.MINUTE]
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                    timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
+                    list[position].startTime = "$selectedHour:$selectedMinute"
+                }, hour, minute, true)
+                mTimePicker.setTitle(context.getString(R.string.select_time))
+                mTimePicker.show()
+            }
 
-                        timeTo.setOnClickListener {
-                            val currentTime = Calendar.getInstance()
-                            val hour = currentTime[Calendar.HOUR_OF_DAY]
-                            val minute = currentTime[Calendar.MINUTE]
-                            val mTimePicker =
-                                TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                                timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                                list[position].endTime = "$selectedHour:$selectedMinute"
-                            }, hour, minute, true)
-                            mTimePicker.setTitle(context.getString(R.string.select_time))
-                            mTimePicker.show()
-                        }
+            timeTo.setOnClickListener {
+                val currentTime = Calendar.getInstance()
+                val hour = currentTime[Calendar.HOUR_OF_DAY]
+                val minute = currentTime[Calendar.MINUTE]
+                val mTimePicker =
+                        TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                            timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
+                            list[position].endTime = "$selectedHour:$selectedMinute"
+                        }, hour, minute, true)
+                mTimePicker.setTitle(context.getString(R.string.select_time))
+                mTimePicker.show()
+            }
 
         }
-        private fun selectDate( position: Int, type: String) {
-            selectDate=""
+
+        private fun selectDate(position: Int, type: String) {
+            selectDate = ""
             val mYear: Int
             val mMonth: Int
             val mDay: Int
@@ -176,43 +188,44 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
 
 
             val mDatePicker = DatePickerDialog(context,
-                { _, selectedyear, selectedmonth, selectedday ->
-                    day = if (selectedday.toString().length == 1)
-                        "0$selectedday"
-                    else
-                        selectedday.toString()
+                    { _, selectedyear, selectedmonth, selectedday ->
+                        day = if (selectedday.toString().length == 1)
+                            "0$selectedday"
+                        else
+                            selectedday.toString()
 
-                    month = if ((selectedmonth + 1).toString().length == 1)
-                        "0" + (selectedmonth + 1).toString()
-                    else (selectedmonth + 1).toString()
+                        month = if ((selectedmonth + 1).toString().length == 1)
+                            "0" + (selectedmonth + 1).toString()
+                        else (selectedmonth + 1).toString()
 
-                    year = selectedyear.toString()
+                        year = selectedyear.toString()
 
-                    dateTimeStamp = dateToTimeStamp(
-                        "$day-$month-$year"
-                    ).toString()
-                    Log.e("day", day)
-                    Log.e("month", month)
-                    Log.e("year", selectedyear.toString())
-                    Log.e("dateTimeStamp", dateTimeStamp)
-                    selectDate = "$day/$month/$selectedyear"
+                        dateTimeStamp = dateToTimeStamp(
+                                "$day-$month-$year"
+                        ).toString()
+                        Log.e("day", day)
+                        Log.e("month", month)
+                        Log.e("year", selectedyear.toString())
+                        Log.e("dateTimeStamp", dateTimeStamp)
+                        selectDate = "$day/$month/$selectedyear"
 
 
-                    if (type == "1") {
-                        list[position].dateFrom = selectDate
-                        notifyDataSetChanged()
-                    } else if (type == "2") {
-                        list[position].dateTo = selectDate
-                        notifyDataSetChanged()
+                        if (type == "1") {
+                            list[position].dateFrom = selectDate
+                            notifyDataSetChanged()
+                        } else if (type == "2") {
+                            list[position].dateTo = selectDate
+                            notifyDataSetChanged()
 
-                    }
-                }, mYear, mMonth, mDay
+                        }
+                    }, mYear, mMonth, mDay
             )
             mDatePicker.datePicker.minDate = System.currentTimeMillis()
             if (!mDatePicker.isShowing) {
                 mDatePicker.show()
             }
         }
+
         private fun dateToTimeStamp(str_date: String?): Long {
             var timeStamp = java.lang.Long.valueOf(0)
             try {
@@ -231,12 +244,11 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
     }
 
 
-
     interface OnEventRecyclerViewItemClickListener {
         fun onAddEventItem(list: ArrayList<EventMyAds>, position: Int)
-        fun addCameraGalleryImage( position: Int)
+        fun addCameraGalleryImage(position: Int)
         fun cityAddEvent(list: ArrayList<EventMyAds>, position: Int, city: TextView)
-
+        fun onRemoveEventItem(position: Int)
     }
 }
 

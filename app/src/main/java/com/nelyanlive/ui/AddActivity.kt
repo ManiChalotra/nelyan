@@ -102,7 +102,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var countryCodee = "+33"
     private var lastPos = 0
 
-    var clickPosition: Int = 0
+    var clickPosition: String = ""
     private lateinit var updateEventList: ArrayList<ModelPOJO.AddEventDataModel>
     private var pos = -1
 
@@ -207,27 +207,52 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
                                         var ageErrorString = ""
                                         ageErrorNumber = 0
+                                        var eventErrorString = ""
+                                        eventErrorNumber = 0
+
                                         ageErrorString = getAgeError(listAge[listAge.size - 1].ageFrom, ageErrorString, getString(R.string.fill_age_group_from_in_previous_data), 1)
                                         ageErrorString = getAgeError(listAge[listAge.size - 1].ageTo, ageErrorString, getString(R.string.fill_age_group_to), 2)
                                         ageErrorString = getAgeError(listAge[listAge.size - 1].days, ageErrorString, getString(R.string.select_days_in_previous), 3)
                                         ageErrorString = getAgeError(listAge[listAge.size - 1].timeFrom, ageErrorString, getString(R.string.select_from_time), 4)
                                         ageErrorString = getAgeError(listAge[listAge.size - 1].timeTo, ageErrorString, getString(R.string.select_to_time), 5)
 
-                                        var eventErrorString = ""
-                                        eventErrorNumber = 0
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeFrom, eventErrorString, getString(R.string.select_from_time), 5)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeTo, eventErrorString, getString(R.string.select_to_time), 6)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
-                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
+                                        if (clickPosition.equals("0")) {
+
+                                        } else {
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].timeFrom, eventErrorString, getString(R.string.select_from_time), 5)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].timeTo, eventErrorString, getString(R.string.select_to_time), 6)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
+                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
+                                        }
+
+//                                        var eventErrorString = ""
+//                                        eventErrorNumber = 0
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeFrom, eventErrorString, getString(R.string.select_from_time), 5)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeTo, eventErrorString, getString(R.string.select_to_time), 6)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
+//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
 
                                         if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
                                             myCustomToast(ageErrorString)
                                         } else {
+
+                                            if (clickPosition.equals("0")) {
+
+                                            }
+
+                                            if (clickPosition.equals("0")) {
+
+                                            }
                                             if (eventErrorNumber != 0 && eventErrorString.isNotEmpty()) {
                                                 myCustomToast(eventErrorString)
                                             } else {
@@ -462,8 +487,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onRemoveEventItem(position: Int) {
         Log.d(AddActivity::class.java.name, "OnRemoveClick   " + position + "clickPosition   " + clickPosition)
-        clickPosition = position
+        clickPosition = position.toString()
         addEventRepeatAdapter.notifyItemChanged(position)
+
     }
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
@@ -639,9 +665,18 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             }
         }
 
-        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
-                descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-                addEvent.toString(), media.toString(), countryCodee, typeEmpty)
+        if (clickPosition.equals("0")) {
+            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
+                    descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
+                    "", media.toString(), countryCodee, typeEmpty)
+        } else {
+            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
+                    descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
+                    addEvent.toString(), media.toString(), countryCodee, typeEmpty)
+        }
+//        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
+//                descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
+//                addEvent.toString(), media.toString(), countryCodee, typeEmpty)
 
     }
 

@@ -109,6 +109,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="57"
                 android:backgroundTint="@color/transparent"
+                android:drawableStart="@drawable/places_ic_search"
                 android:drawableEnd="@drawable/blk_cross"
                 android:fontFamily="@font/regular"
                 android:hint="@string/enter_activity_name"

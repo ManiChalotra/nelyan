@@ -27,26 +27,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatVM :ViewModel() {
+class ChatVM : ViewModel() {
 
     lateinit var socket: Socket
     lateinit var ctx: Context
     lateinit var rvChat: RecyclerView
-    var senderID =""
-    var userId =""
-    var block ="0"
+    var senderID = ""
+    var userId = ""
+    var block = "0"
 
     var chatRoom = ""
 
 
+    var message: ObservableField<String> = ObservableField("")
+    var senderName: ObservableField<String> = ObservableField("")
+    var senderImage: ObservableField<String> = ObservableField("")
+    var noDataMessage: ObservableField<String> = ObservableField("")
 
-    var message : ObservableField<String> = ObservableField("")
-    var senderName : ObservableField<String> = ObservableField("")
-    var senderImage : ObservableField<String> = ObservableField("")
-    var noDataMessage : ObservableField<String> = ObservableField("")
-
-    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
-     val listChat by lazy { ArrayList<ChatData>() }
+    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left, R.layout.chat_text_right, R.layout.chat_image_right, R.layout.chat_image_left) }
+    val listChat by lazy { ArrayList<ChatData>() }
 
 
     init {
@@ -59,33 +58,34 @@ class ChatVM :ViewModel() {
                         // disconnectSocket()
 
                         (view.context as Activity).startActivity(
-                            Intent(view.context, FullScreen::class.java)
-                            .putExtra("image",listChat[position].message))
+                                Intent(view.context, FullScreen::class.java)
+                                        .putExtra("image", listChat[position].message))
 
                     }
-                } } }) }
-
-
-    fun onClick(view: View, s:String)
-    {
-        when(s)
-        {
-
-            "ivSend"->{
-                if(message.get().toString().isEmpty())
-                {
-                   // Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
-                    Toast.makeText(view.context,view.context.getString(R.string.please_enter_message),Toast.LENGTH_SHORT).show()
                 }
-                else {
+            }
+        })
+    }
+
+
+    fun onClick(view: View, s: String) {
+        when (s) {
+
+            "ivSend" -> {
+                if (message.get().toString().isEmpty()) {
+                    // Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                } else {
                     sendChatMessage()
-                } } } }
+                }
+            }
+        }
+    }
 
     fun sendChatMessage() {
 
         val json = JSONObject()
-        try
-        {
+        try {
             //encoding
             val ps: String = message.get().toString()
             val tmp = Base64.encodeBytes(ps.toByteArray())
@@ -96,23 +96,20 @@ class ChatVM :ViewModel() {
             json.put("messageType", 0)
             json.put("message", tmp)
 
-            Log.e("send_message","=======$json")
+            Log.e("send_message", "=======$json")
 
-            socket.emit("send_message",json)
+            socket.emit("send_message", json)
 
             message.set("")
-        }
-
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
     fun sendChatImageMessage(str: String) {
 
         val json = JSONObject()
-        try
-        {
+        try {
 
             //encoding
             val ps: String = str
@@ -123,30 +120,24 @@ class ChatVM :ViewModel() {
             json.put("messageType", 1)
             json.put("message", tmp)
 
-            Log.e("send_message","=======$json")
+            Log.e("send_message", "=======$json")
 
-            socket.emit("send_message",json)
+            socket.emit("send_message", json)
 
             message.set("")
-        }
-
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun sendMessage(view: View,rv:RecyclerView)
-    {
+    fun sendMessage(view: View, rv: RecyclerView) {
         rvChat = rv
 
-        if(message.get().toString().trim().isEmpty())
-        {
+        if (message.get().toString().trim().isEmpty()) {
 
-            Toast.makeText(view.context,view.context.getString(R.string.please_enter_message),Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
 
-        }
-        else {
+        } else {
             sendChatMessage()
         }
 
@@ -157,7 +148,7 @@ class ChatVM :ViewModel() {
         Log.e("socket", "connectSocket connectSocket")
 
         ctx = context
-        try{
+        try {
             socket = IO.socket(socketBaseUrl)
 
             Log.e("socket", "=======${socketBaseUrl}")
@@ -179,19 +170,18 @@ class ChatVM :ViewModel() {
             socket.on("delete_data", deleteData)
             socket.on("seen_unseen", seenMessages)
             socket.on("seen_unseen_msg", seenMessages)
-            if(!socket.connected()) {
+            if (!socket.connected()) {
                 socket.connect()
-            }
-            else
-            {
+            } else {
                 connectUser()
                 getUserChat()
             }
 
             Log.e("socket", "sfdafdsfdsfsdf")
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        catch (e :Exception){e.printStackTrace()}
 
     }
 
@@ -228,19 +218,19 @@ class ChatVM :ViewModel() {
 
     }
 
-    private val onDisconnect = Emitter.Listener  { Log.e("socket", "run: disconnect")  }
+    private val onDisconnect = Emitter.Listener { Log.e("socket", "run: disconnect") }
 
-    private val onConnectError = Emitter.Listener  { Log.e("socket", "run: onConnectError")  }
+    private val onConnectError = Emitter.Listener { Log.e("socket", "run: onConnectError") }
 
-    private val onConnectTimeout = Emitter.Listener  { Log.e("socket", "run: onConnectTimeout") }
+    private val onConnectTimeout = Emitter.Listener { Log.e("socket", "run: onConnectTimeout") }
 
-    private val connectListener = Emitter.Listener{
+    private val connectListener = Emitter.Listener {
         Log.e("socket", "chat   JOIN")
         Log.e("socket", it[0].toString())
         Log.e("socket", it[0].toString())
     }
 
-    private val chatList = Emitter.Listener{
+    private val chatList = Emitter.Listener {
 
         Log.e("socket", "chat    chatList")
         Log.e("socket", it[0].toString())
@@ -249,11 +239,10 @@ class ChatVM :ViewModel() {
             val obj = JSONObject("{\"body\":${it[0]}}")
             Log.e("socket===", obj.toString())
 
-            val listData : ArrayList<ChatData> = ArrayList()
+            val listData: ArrayList<ChatData> = ArrayList()
             val jsonArray = obj.getJSONArray("body")
 
-            for(i in 0 until jsonArray.length())
-            {
+            for (i in 0 until jsonArray.length()) {
                 val json = jsonArray.getJSONObject(i)
 
                 //decoding
@@ -264,25 +253,32 @@ class ChatVM :ViewModel() {
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
                 listData.add(ChatData(
-                    json.getString("id"),
-                    json.getString("senderId"),
-                    json.getString("receiverId"),
-                    json.getString("chatConstantId"),
-                    "",
-                    val3,
-                    json.getString("readStatus"),
-                    json.getString("messageType"),
-                    json.getString("deletedId"),
-                    json.getString("created"),
-                    json.getString("updated"),
-                    json.getString("recieverName"),
-                    json.getString("recieverImage"),
-                    json.getString("senderName"),
-                    if(json.getString("senderId") == userId){json.getString("senderImage")}else{json.getString("recieverImage")},
-                    userId,
+                        json.getString("id"),
+                        json.getString("senderId"),
+                        json.getString("receiverId"),
+                        json.getString("chatConstantId"),
                         "",
-                        if(i==0){true}
-                        else{checkDateCompare(json.getString("created"),listData[i-1].created)}
+                        val3,
+                        json.getString("readStatus"),
+                        json.getString("messageType"),
+                        json.getString("deletedId"),
+                        json.getString("created"),
+                        json.getString("updated"),
+                        json.getString("recieverName"),
+                        json.getString("recieverImage"),
+                        json.getString("senderName"),
+                        if (json.getString("senderId") == userId) {
+                            json.getString("senderImage")
+                        } else {
+                            json.getString("recieverImage")
+                        },
+                        userId,
+                        "",
+                        if (i == 0) {
+                            true
+                        } else {
+                            checkDateCompare(json.getString("created"), listData[i - 1].created)
+                        }
 
                 ))
             }
@@ -292,20 +288,22 @@ class ChatVM :ViewModel() {
                 withContext(Dispatchers.Main) {
                     listChat.clear()
                     listChat.addAll(listData)
-                   // listChat.reverse()
+                    // listChat.reverse()
                     chatAdapter.addItems(listChat)
-                    rvChat.scrollToPosition(listChat.size-1)
+                    rvChat.scrollToPosition(listChat.size - 1)
 
                     Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
 
-                    if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
+                    if (listChat.isEmpty()) noDataMessage.set("No chat found") else {
+                        noDataMessage.set("")
+                    }
 
                 }
             }
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        catch (e:Exception)
-        {e.printStackTrace()}
 
         setSeenStatus()
 
@@ -317,60 +315,56 @@ class ChatVM :ViewModel() {
         val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
         val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
 
-        return date1!=date2
+        return date1 != date2
     }
 
-    private val blockData = Emitter.Listener{
+    private val blockData = Emitter.Listener {
 
         Log.e("socket", "chat    blockData")
         Log.e("socket", it[0].toString())
 
         val json = JSONObject(it[0].toString())
 
-        if(""==json.getString("userId"))  block = json.getString("block_data")
+        if ("" == json.getString("userId")) block = json.getString("block_data")
 
 
     }
 
 
-    private val seenMessages = Emitter.Listener{
+    private val seenMessages = Emitter.Listener {
 
-        if(mySeen)
-        {
-        Log.e("socket", "chat    seenMessages")
-        Log.e("socket", it[0].toString())
+        if (mySeen) {
+            Log.e("socket", "chat    seenMessages")
+            Log.e("socket", it[0].toString())
 
-        GlobalScope.launch {
+            GlobalScope.launch {
 
-            withContext(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
 
-               // listChat.addAll(listData)
+                    // listChat.addAll(listData)
 
-                for(i in 0 until listChat.size)
-                {
-                    if(listChat[i].readStatus=="0")
-                    {
-                        listChat[i].readStatus="1"
-                        chatAdapter.notifyItemChanged(i)
+                    for (i in 0 until listChat.size) {
+                        if (listChat[i].readStatus == "0") {
+                            listChat[i].readStatus = "1"
+                            chatAdapter.notifyItemChanged(i)
+                        }
+                    }
+
+                    Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
+
+                    if (listChat.isEmpty()) noDataMessage.set("No chat found") else {
+                        noDataMessage.set("")
                     }
                 }
-
-                Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
-
-                if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
             }
-        }}
-        else
-        {
+        } else {
             mySeen = true
         }
 
     }
 
 
-
-
-    private val newMessage = Emitter.Listener{
+    private val newMessage = Emitter.Listener {
 
         Log.e("socket", "chat    newMessage")
         Log.e("socket", it[0].toString())
@@ -380,13 +374,16 @@ class ChatVM :ViewModel() {
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())
 
-            val newMessageRoomId = if(json.getString("senderId").toInt()<json.getString("receiverId").toInt())
-                                   {"${json.getString("senderId")}${json.getString("receiverId")}"}else{"${json.getString("receiverId")}${json.getString("senderId")}"}
+            val newMessageRoomId = if (json.getString("senderId").toInt() < json.getString("receiverId").toInt()) {
+                "${json.getString("senderId")}${json.getString("receiverId")}"
+            } else {
+                "${json.getString("receiverId")}${json.getString("senderId")}"
+            }
 
-            if(newMessageRoomId==chatRoom) {
+            if (newMessageRoomId == chatRoom) {
                 val listData: ArrayList<ChatData> = ArrayList()
 
-               //decoding
+                //decoding
                 val lineSep = System.getProperty("line.separator")
                 val ps2: String = json.getString("message")
                 val tmp2: ByteArray = Base64.decode(ps2)
@@ -394,25 +391,25 @@ class ChatVM :ViewModel() {
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
                 listData.add(
-                    ChatData(
-                        json.getString("id"),
-                        json.getString("senderId"),
-                        json.getString("receiverId"),
-                        "",
-                        "",
-                        val3,
-                        json.getString("readStatus"),
-                        json.getString("messageType"),
-                        json.getString("deletedId"),
-                        json.getString("created"),
-                        json.getString("updated"),
-                        "",
-                        json.getString("recieverImage"),
-                        json.getString("senderName"),
-                        json.getString("senderImage"),
-                        userId
+                        ChatData(
+                                json.getString("id"),
+                                json.getString("senderId"),
+                                json.getString("receiverId"),
+                                "",
+                                "",
+                                val3,
+                                json.getString("readStatus"),
+                                json.getString("messageType"),
+                                json.getString("deletedId"),
+                                json.getString("created"),
+                                json.getString("updated"),
+                                "",
+                                json.getString("recieverImage"),
+                                json.getString("senderName"),
+                                json.getString("senderImage"),
+                                userId
 
-                    )
+                        )
                 )
 
                 GlobalScope.launch {
@@ -432,13 +429,13 @@ class ChatVM :ViewModel() {
                 }
             }
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        catch (e:Exception)
-        {e.printStackTrace()}
         setSeenStatus()
 
     }
-    private val deleteData = Emitter.Listener{
+    private val deleteData = Emitter.Listener {
 
         Log.e("socket", "chat    deleteData")
         Log.e("socket", it[0].toString())
@@ -452,7 +449,9 @@ class ChatVM :ViewModel() {
 
                 Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
 
-                if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
+                if (listChat.isEmpty()) noDataMessage.set("No chat found") else {
+                    noDataMessage.set("")
+                }
             }
         }
 
@@ -460,17 +459,16 @@ class ChatVM :ViewModel() {
 
     private fun connectUser() {
         val json = JSONObject()
-        try{
+        try {
 
             Log.e("socket=connectUser", userId)
 
             json.put("userId", userId)
-            socket.emit("connect_user",json)
+            socket.emit("connect_user", json)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        catch (e: Exception)
-        {e.printStackTrace()}
 
     }
 
@@ -478,34 +476,36 @@ class ChatVM :ViewModel() {
 
     private fun setSeenStatus() {
         val json = JSONObject()
-        try{
+        try {
             mySeen = false
             Log.e("socket=connectUser", userId)
 
             json.put("userId", userId)
             json.put("user2Id", senderID)
-            socket.emit("seen_unseen",json)
+            socket.emit("seen_unseen", json)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        catch (e: Exception)
-        {e.printStackTrace()}
 
     }
 
     private fun getUserChat() {
         val json = JSONObject()
-        try{
+        try {
 
-            chatRoom = if(userId.toInt()<senderID.toInt()){"$userId$senderID"}else{"$senderID$userId"}
+            chatRoom = if (userId.toInt() < senderID.toInt()) {
+                "$userId$senderID"
+            } else {
+                "$senderID$userId"
+            }
             json.put("senderId", userId)
             json.put("receiverId", senderID)
-            socket.emit("get_message",json)
+            socket.emit("get_message", json)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        catch (e: Exception)
-        {e.printStackTrace()}
 
     }
 

@@ -60,8 +60,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener
-        , View.OnClickListener, CoroutineScope, CommunicationListner {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, CoroutineScope, CommunicationListner {
 
     val appViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
@@ -77,7 +76,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     var mDrawerLayout: DrawerLayout? = null
     var mDrawerToggle: ActionBarDrawerToggle? = null
     var mainContainer: RelativeLayout? = null
-    var  bottomNavigationBar: BottomNavigationView? = null
+    var bottomNavigationBar: BottomNavigationView? = null
     var iv_back: ImageView? = null
     var ivToolBarImage: ImageView? = null
     var iv_bell: ImageView? = null
@@ -106,7 +105,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         get() = Dispatchers.Main + job
 
 
-    companion object{
+    companion object {
         var locationService: LocationService? = null
 
     }
@@ -118,7 +117,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 
     var MY_REQUEST_CODE = 112233
-   // lateinit var appUpdateManager: AppUpdateManager
+    // lateinit var appUpdateManager: AppUpdateManager
 
 
     private val foregroundOnlyServiceConnection = object : ServiceConnection {
@@ -136,17 +135,16 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
 
-
     override fun onResume() {
         super.onResume()
 
         Log.d("homeAuthKey", "----------$authorization")
 
         launch(Dispatchers.Main.immediate) {
-             userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
+            userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
             authorization = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
-             userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
             userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
             val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
@@ -170,8 +168,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (checkIfHasNetwork(this)) {
 
             appViewModel.badgeApiData(security_key, authorization)
-        }
-        else {
+        } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
 
@@ -185,15 +182,16 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
 
-                    val data  = jsonMain.getJSONObject("data")
-                    val status  = data.getString("status")
+                    val data = jsonMain.getJSONObject("data")
+                    val status = data.getString("status")
 
-                    if(status=="1") ivBadge.visibility = View.VISIBLE
+                    if (status == "1") ivBadge.visibility = View.VISIBLE
 
                 }
             }
         })
     }
+
     override fun onStart() {
         super.onStart()
         val serviceIntent = Intent(this, LocationService::class.java)
@@ -217,16 +215,13 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-      //  appUpdateManager = AppUpdateManagerFactory.create(this)
-      //  checkUpdate()
+        //  appUpdateManager = AppUpdateManagerFactory.create(this)
+        //  checkUpdate()
         MyFirebaseMessagingService.chatNotifyLive.observe(this, Observer {
 
-            if(it.equals("true"))
-            {
+            if (it.equals("true")) {
                 ivBadge.visibility = View.VISIBLE
-            }
-            else
-            {
+            } else {
                 ivBadge.visibility = View.GONE
             }
         })
@@ -234,9 +229,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         homeFusedLocation = LocationServices.getFusedLocationProviderClient(this)
 
-        if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            homeFusedLocation.lastLocation.addOnSuccessListener {
-                    location : Location? ->
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            homeFusedLocation.lastLocation.addOnSuccessListener { location: Location? ->
             }
         }
 
@@ -253,90 +247,88 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
         loadFragment(HomeFragment())
 
-         bottomNavigationBar = findViewById(R.id.navigationbar)
+        bottomNavigationBar = findViewById(R.id.navigationbar)
         bottomNavigationBar!!.setOnNavigationItemSelectedListener(this)
-        bottomNavigationBar!!.setOnNavigationItemReselectedListener {  }
+        bottomNavigationBar!!.setOnNavigationItemReselectedListener { }
         setDrawerClicks()
         setToolBarClicks()
-            try {
+        try {
 
-                if(intent.hasExtra("groupChat"))
-                {
-                    launch(Dispatchers.Main.immediate) {
-                        userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                        userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                        userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+            if (intent.hasExtra("groupChat")) {
+                launch(Dispatchers.Main.immediate) {
+                    userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                    userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                    userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
-                        Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
-                        bottomNavigationBar!!.selectedItemId = R.id.chat
-                    }
-                }
-
-                if (intent.hasExtra("chat")) {
-                        userId = intent.getStringExtra("chat")!!
-                    bottomNavigationBar!!.selectedItemId = R.id.msg
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "map") {
-
-                        OpenActivity(ActivitiesFilterActivity::class.java)
-                    }
-                }
-
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "nurFrag") {
-                        OpenActivity(HomeChildCareDetailsActivity::class.java)
-                    }
-                }
-                if (intent.hasExtra("activity")) {
-                    if (intent.getStringExtra("activity") == "acti") {
-                        OpenActivity(ActivityDetailsActivity::class.java)
-                    }
+                    Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
+                    bottomNavigationBar!!.selectedItemId = R.id.chat
                 }
             }
-            catch (e: Exception) {
-                fragment = HomeFragment()
-                loadFragment(fragment)
+
+            if (intent.hasExtra("chat")) {
+                userId = intent.getStringExtra("chat")!!
+                bottomNavigationBar!!.selectedItemId = R.id.msg
             }
-    }
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "map") {
 
-
-     /* private fun checkUpdate() {
-        // Returns an intent object that you use to check for an update.
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        // Checks that the platform will allow the specified type of update.
-        Log.d("TAG", "Checking for updates")
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                // Request the update.
-                Log.d("TAG", "Update available")
-                appUpdateManager.registerListener(listener)
-                appUpdateManager.startUpdateFlowForResult(
-                    // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                    appUpdateInfo,
-                    // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                    AppUpdateType.FLEXIBLE,
-                    // The current activity making the update request.
-                    this,
-                    // Include a request code to later monitor this update request.
-                    MY_REQUEST_CODE)
+                    OpenActivity(ActivitiesFilterActivity::class.java)
+                }
             }
-            else {
-                Log.d("TAG", "No Update available")
-            } } }
 
-    private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
-        if (installState.installStatus() == InstallStatus.DOWNLOADED) {
-            // After the update is downloaded, show a notification
-            // and request user confirmation to restart the app.
-            Log.d("TAG", "An update has been downloaded")
-            Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
-            // appUpdateManager.unregisterListener(listener)
-            appUpdateManager.completeUpdate()
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "nurFrag") {
+                    OpenActivity(HomeChildCareDetailsActivity::class.java)
+                }
+            }
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "acti") {
+                    OpenActivity(ActivityDetailsActivity::class.java)
+                }
+            }
+        } catch (e: Exception) {
+            fragment = HomeFragment()
+            loadFragment(fragment)
         }
     }
-     */
+
+
+    /* private fun checkUpdate() {
+       // Returns an intent object that you use to check for an update.
+       val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+       // Checks that the platform will allow the specified type of update.
+       Log.d("TAG", "Checking for updates")
+       appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+           if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+               && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+               // Request the update.
+               Log.d("TAG", "Update available")
+               appUpdateManager.registerListener(listener)
+               appUpdateManager.startUpdateFlowForResult(
+                   // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                   appUpdateInfo,
+                   // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                   AppUpdateType.FLEXIBLE,
+                   // The current activity making the update request.
+                   this,
+                   // Include a request code to later monitor this update request.
+                   MY_REQUEST_CODE)
+           }
+           else {
+               Log.d("TAG", "No Update available")
+           } } }
+
+   private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
+       if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+           // After the update is downloaded, show a notification
+           // and request user confirmation to restart the app.
+           Log.d("TAG", "An update has been downloaded")
+           Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
+           // appUpdateManager.unregisterListener(listener)
+           appUpdateManager.completeUpdate()
+       }
+   }
+    */
     private fun initalize() {
         tvLog.setOnClickListener(this)
     }
@@ -362,7 +354,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val scaleFactor = max - (max - min) * slideOffset
                     mainContainer!!.scaleX = scaleFactor
                     mainContainer!!.scaleY = scaleFactor
-                } }
+                }
+            }
             mDrawerLayout!!.addDrawerListener(mDrawerToggle!!)
         }
     }
@@ -405,21 +398,25 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             mDrawerLayout!!.closeDrawers()
             OpenActivity(ContactUsActivity::class.java) {
                 putString("authorization", authorization)
-            } }
+            }
+        }
 
         tvSettings!!.setOnClickListener {
             mDrawerLayout!!.closeDrawers()
 
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
-            } } }
+            }
+        }
+    }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tvLog -> {
                 mDrawerLayout!!.closeDrawers()
                 showLog()
-            } }
+            }
+        }
     }
 
     fun consultantUserDialogMethod() {
@@ -434,24 +431,23 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             OpenActivity(SettingsActivity::class.java) {
                 putString("authorization", authorization)
                 consultantUserDialog!!.dismiss()
-            } }
+            }
+        }
 
         consultantUserDialog!!.show()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem):Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
         Log.e("fasfasfa", "======$currentFragment")
-        if(currentFragment is ChatFrag ) {
+        if (currentFragment is ChatFrag) {
             currentFragment.groupChatVM.disconnectSocket()
         }
-        if(currentFragment is MessageFragment )
-        {
+        if (currentFragment is MessageFragment) {
             currentFragment.messagesVM.disconnectSocket()
         }
-        if(currentFragment is EventFragment )
-        {
+        if (currentFragment is EventFragment) {
             currentFragment.onDestroy()
         }
 
@@ -469,18 +465,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.msg -> {
                 ivBadge.visibility = View.GONE
                 if (currentFragment !is MessageFragment) {
-                tvTitleToolbar!!.visibility = View.VISIBLE
-                ivToolBarImage!!.visibility = View.GONE
-                tvTitleToolbar!!.text = getString(R.string.message)
-                iv_bell!!.visibility = View.GONE
-                fragment = MessageFragment()
+                    tvTitleToolbar!!.visibility = View.VISIBLE
+                    ivToolBarImage!!.visibility = View.GONE
+                    tvTitleToolbar!!.text = getString(R.string.message)
+                    iv_bell!!.visibility = View.GONE
+                    fragment = MessageFragment()
                     loadFragment(fragment)
-            }
+                }
             }
             R.id.publier -> {
                 if (currentFragment !is PublisherFrag) {
                     launch(Dispatchers.Main.immediate) {
-                  val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
+                        val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
                         if (userType2 == "2") {
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
@@ -492,21 +488,28 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                             frag.arguments = bundle
                             fragment = frag
                             loadFragment(fragment)
+                        } else {
+                            consultantUserDialogMethod()
                         }
-                        else { consultantUserDialogMethod() }
-                    } }
+                    }
+                }
             }
             R.id.chat -> {
                 if (currentFragment !is ChatFrag) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
                     val geocoder = Geocoder(this, Locale.getDefault())
-                   val list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
+                    val list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
 
-                    tvTitleToolbar!!.text =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
-                    fragment = ChatFrag(userlocation, userlat, userlong,iv_bell!!)
+                    tvTitleToolbar!!.text = if (!list[0].locality.isNullOrBlank()) {
+                        list[0].locality
+                    } else {
+                        userlocation
+                    }
+                    fragment = ChatFrag(userlocation, userlat, userlong, iv_bell!!)
                     loadFragment(fragment)
-                } }
+                }
+            }
             R.id.event -> {
                 if (currentFragment !is EventFragment) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
@@ -514,9 +517,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
                     iv_bell!!.imageTintList = null
-                    fragment = EventFragment(userlat, userlong,userlocation)
+                    fragment = EventFragment(userlat, userlong, userlocation)
                     loadFragment(fragment)
-                } } }
+                }
+            }
+        }
 
         return true
     }
@@ -548,16 +553,15 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (doubleBackToExitPressedOnce) {
                 finishAffinity()
                 return
-            }
-            else {
+            } else {
                 myCustomToast(getString(R.string.press_again_to_exit))
             }
             doubleBackToExitPressedOnce = true
             Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        }
-        else {
+        } else {
             bottomNavigationBar!!.selectedItemId = R.id.home
-        } }
+        }
+    }
 
     private fun hitLogoutApi() {
         appViewModel.sendLogoutData(security_key, authorization)
@@ -582,7 +586,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         startActivity(i)
                         dialog!!.dismiss()
                         dataStoragePreference.deleteDataBase()
-                    } }
+                    }
+                }
             } else {
                 ErrorBodyResponse(response, this, homeProgressBar)
             }

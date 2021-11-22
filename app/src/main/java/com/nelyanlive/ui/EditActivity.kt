@@ -44,7 +44,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class EditActivity : OpenCameraGallery(),  View.OnClickListener,
+class EditActivity : OpenCameraGallery(), View.OnClickListener,
         CoroutineScope, AgeGroupEditAdapter.OnAgeGroupRecyclerViewItemClickListener,
         EventEditAdapter.OnEventRecyclerViewItemClickListener {
 
@@ -53,9 +53,9 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     }
     private var imageSelectedType = ""
 
-    var image1: String=""
-    var image2: String=""
-    var image3: String=""
+    var image1: String = ""
+    var image2: String = ""
+    var image3: String = ""
 
 
     private val job by lazy { kotlinx.coroutines.Job() }
@@ -108,6 +108,8 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     private lateinit var updateEventList: ArrayList<EventMyAds>
     private var pos = -1
 
+    var clickPosition: String = ""
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
@@ -121,7 +123,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
         setContentView(R.layout.activity_addactivity)
         initializeClicks()
         checkMvvmResponse()
-        
+
         countycode.setOnCountryChangeListener {
             countryCodee = countycode.selectedCountryCode.toString()
         }
@@ -136,7 +138,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             et_description.setText(intent.getStringExtra("description"))
             et_phone.setText(intent.getStringExtra("phoneNumber"))
             et_addressActivity.text = intent.getStringExtra("address")
-            etWebsite.setText( intent.getStringExtra("website"))
+            etWebsite.setText(intent.getStringExtra("website"))
             addressLatitude = intent.getStringExtra("latti")!!
             cityName = intent.getStringExtra("city")!!
             addressLongitude = intent.getStringExtra("longi")!!
@@ -146,49 +148,49 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             activityTypeId = intent.getStringExtra("activityTypeId").toString()
         }
 
-            activityimageList = ArrayList()
-            activityimageList = intent.getParcelableArrayListExtra<ActivityimageMyAds>("activityimagesList")!!
+        activityimageList = ArrayList()
+        activityimageList = intent.getParcelableArrayListExtra<ActivityimageMyAds>("activityimagesList")!!
 
-            if (!activityimageList.isNullOrEmpty()) {
-                when (activityimageList.size) {
-                    1 -> {
-                        Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
-                        image1 = activityimageList[0].images
+        if (!activityimageList.isNullOrEmpty()) {
+            when (activityimageList.size) {
+                1 -> {
+                    Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                    image1 = activityimageList[0].images
 
 
-                    }
-                    2 -> {
-                        Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
-                        Glide.with(this).load(image_base_URl + activityimageList[1].images).error(R.mipmap.no_image_placeholder).into(ivImg2)
-                        image1 = activityimageList[0].images
-                        image2 = activityimageList[1].images
-                    }
-                    3 -> {
-                        Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
-                        Glide.with(this).load(image_base_URl + activityimageList[1].images).error(R.mipmap.no_image_placeholder).into(ivImg2)
-                        Glide.with(this).load(image_base_URl + activityimageList[2].images).error(R.mipmap.no_image_placeholder).into(ivImg3)
-                        image1 = activityimageList[0].images
-                        image2 = activityimageList[1].images
-                        image3 = activityimageList[2].images
-                    }
+                }
+                2 -> {
+                    Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                    Glide.with(this).load(image_base_URl + activityimageList[1].images).error(R.mipmap.no_image_placeholder).into(ivImg2)
+                    image1 = activityimageList[0].images
+                    image2 = activityimageList[1].images
+                }
+                3 -> {
+                    Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                    Glide.with(this).load(image_base_URl + activityimageList[1].images).error(R.mipmap.no_image_placeholder).into(ivImg2)
+                    Glide.with(this).load(image_base_URl + activityimageList[2].images).error(R.mipmap.no_image_placeholder).into(ivImg3)
+                    image1 = activityimageList[0].images
+                    image2 = activityimageList[1].images
+                    image3 = activityimageList[2].images
                 }
             }
+        }
 
-            listAgeGroupDataModel = ArrayList()
-            listAgeGroupDataModel = intent.getParcelableArrayListExtra<AgeGroupMyAds>("ageGroupList")!!
+        listAgeGroupDataModel = ArrayList()
+        listAgeGroupDataModel = intent.getParcelableArrayListExtra<AgeGroupMyAds>("ageGroupList")!!
 
-            if(listAgeGroupDataModel.isEmpty()) listAgeGroupDataModel.add(AgeGroupMyAds(0,"","","","",0,0,"","",""))
+        if (listAgeGroupDataModel.isEmpty()) listAgeGroupDataModel.add(AgeGroupMyAds(0, "", "", "", "", 0, 0, "", "", ""))
 
-            ageGroupEditAdapter = AgeGroupEditAdapter(this, listAgeGroupDataModel, this)
-            rvAgeGroup!!.adapter = ageGroupEditAdapter
+        ageGroupEditAdapter = AgeGroupEditAdapter(this, listAgeGroupDataModel, this)
+        rvAgeGroup!!.adapter = ageGroupEditAdapter
 
-            listAddEventDataModel = ArrayList()
-            listAddEventDataModel = intent.getParcelableArrayListExtra<EventMyAds>("eventMyAdsList")!!
+        listAddEventDataModel = ArrayList()
+        listAddEventDataModel = intent.getParcelableArrayListExtra<EventMyAds>("eventMyAdsList")!!
 
-            if(listAddEventDataModel.isEmpty()) listAddEventDataModel.add(EventMyAds(0,"","","","","","","",0,"","","","","",0,"",0))
+        if (listAddEventDataModel.isEmpty()) listAddEventDataModel.add(EventMyAds(0, "", "", "", "", "", "", "", 0, "", "", "", "", "", 0, "", 0))
 
-            eventEditAdapter = EventEditAdapter(this, listAddEventDataModel, this)
-            rvEvent!!.adapter = eventEditAdapter
+        eventEditAdapter = EventEditAdapter(this, listAddEventDataModel, this)
+        rvEvent!!.adapter = eventEditAdapter
 
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
@@ -216,7 +218,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             }
 
             R.id.btnSubmit -> {
-                
+
                 if (activityTypeId == "") {
                     myCustomToast(getString(R.string.activity_type_missing_error))
                 } else {
@@ -228,80 +230,98 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         } else {
                             if (et_description.text.toString().isEmpty()) {
                                 myCustomToast(getString(R.string.description_missing))
-                            }
-                                else {
-                                    if (et_addressActivity.text.toString().isEmpty()) {
-                                        myCustomToast(getString(R.string.address_missing_error))
+                            } else {
+                                if (et_addressActivity.text.toString().isEmpty()) {
+                                    myCustomToast(getString(R.string.address_missing_error))
+                                } else {
+
+                                    var ageErrorString = ""
+                                    ageErrorNumber = 0
+                                    var eventErrorString = ""
+                                    eventErrorNumber = 0
+
+                                    ageErrorString = getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageFrom, ageErrorString, getString(R.string.fill_age_group_from_in_previous_data), 1)
+                                    ageErrorString = getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageTo, ageErrorString, getString(R.string.fill_age_group_to), 2)
+                                    ageErrorString = getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size - 1].days, ageErrorString, getString(R.string.select_days_in_previous), 3)
+                                    ageErrorString = getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeFrom, ageErrorString, getString(R.string.select_from_time), 4)
+                                    ageErrorString = getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeTo, ageErrorString, getString(R.string.select_to_time), 5)
+
+                                    if (clickPosition.equals("0")) {
+
                                     } else {
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].startTime, eventErrorString, getString(R.string.select_from_time), 5)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].endTime, eventErrorString, getString(R.string.select_to_time), 6)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
+                                        eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
 
-                                        var ageErrorString = ""
-                                        ageErrorNumber = 0
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageFrom,ageErrorString,getString(R.string.fill_age_group_from_in_previous_data),1)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].ageTo,ageErrorString,getString(R.string.fill_age_group_to),2)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].days,ageErrorString,getString(R.string.select_days_in_previous),3)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeFrom,ageErrorString,getString(R.string.select_from_time),4)
-                                        ageErrorString =  getAgeError(listAgeGroupDataModel[listAgeGroupDataModel.size-1].timeTo,ageErrorString,getString(R.string.select_to_time),5)
+                                    }
 
-                                        var eventErrorString = ""
-                                        eventErrorNumber = 0
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].image,eventErrorString,getString(R.string.select_image_in_previous),1)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].name,eventErrorString,getString(R.string.fill_event_name_in_previous),2)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateFrom,eventErrorString,getString(R.string.select_from_date_in_previous),3)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].dateTo,eventErrorString,getString(R.string.select_to_date_in_previous),4)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].startTime,eventErrorString,getString(R.string.select_from_time),5)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].endTime,eventErrorString,getString(R.string.select_to_time),6)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].description,eventErrorString,getString(R.string.fill_description_in_previous),7)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].price,eventErrorString,getString(R.string.fill_price_previous),8)
-                                        eventErrorString =  getEventError(listAddEventDataModel[listAddEventDataModel.size-1].city,eventErrorString,getString(R.string.fill_city_previous),9)
+//                                    var eventErrorString = ""
+//                                    eventErrorNumber = 0
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].startTime, eventErrorString, getString(R.string.select_from_time), 5)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].endTime, eventErrorString, getString(R.string.select_to_time), 6)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
+//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
 
 
-                                        if(ageErrorNumber!=0 && ageErrorString.isNotEmpty())
-                                        {
-                                            myCustomToast(ageErrorString)
-                                        }
-                                        else
-                                        {
-                                            if(eventErrorNumber!=0 && eventErrorString.isNotEmpty())
-                                            {
-                                                myCustomToast(eventErrorString)
+                                    if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
+                                        myCustomToast(ageErrorString)
+                                    } else {
+                                        if (eventErrorNumber != 0 && eventErrorString.isNotEmpty()) {
+                                            myCustomToast(eventErrorString)
+                                        } else {
+
+
+                                            if (age) {
+                                                ageGroup = JSONArray()
+                                                for (i in 0 until listAgeGroupDataModel.size) {
+                                                    val json = JSONObject()
+                                                    json.put("age_from", listAgeGroupDataModel[i].ageFrom)
+                                                    json.put("age_to", listAgeGroupDataModel[i].ageTo)
+                                                    json.put("days", listAgeGroupDataModel[i].days)
+                                                    json.put("time_from", listAgeGroupDataModel[i].timeFrom)
+                                                    json.put("time_to", listAgeGroupDataModel[i].timeTo)
+                                                    ageGroup.put(json)
+                                                }
                                             }
-                                            else
-                                            {
-
-
-                                                if(age) {
-                                                    ageGroup = JSONArray()
-                                                    for (i in 0 until listAgeGroupDataModel.size) {
-                                                        val json = JSONObject()
-                                                        json.put("age_from", listAgeGroupDataModel[i].ageFrom)
-                                                        json.put("age_to", listAgeGroupDataModel[i].ageTo)
-                                                        json.put("days", listAgeGroupDataModel[i].days)
-                                                        json.put("time_from", listAgeGroupDataModel[i].timeFrom)
-                                                        json.put("time_to", listAgeGroupDataModel[i].timeTo)
-                                                        ageGroup.put(json)
-                                                    }
+                                            if (event) {
+                                                addEvent = JSONArray()
+                                                for (i in 0 until listAddEventDataModel.size) {
+                                                    val json = JSONObject()
+                                                    json.put("image", listAddEventDataModel[i].image)
+                                                    json.put("name", listAddEventDataModel[i].name)
+                                                    json.put("file_type", "image")
+                                                    json.put("date_from", listAddEventDataModel[i].dateFrom)
+                                                    json.put("date_to", listAddEventDataModel[i].dateTo)
+                                                    json.put("time_from", listAddEventDataModel[i].startTime)
+                                                    json.put("time_to", listAddEventDataModel[i].endTime)
+                                                    json.put("description", listAddEventDataModel[i].description)
+                                                    json.put("price", listAddEventDataModel[i].price)
+                                                    json.put("city", listAddEventDataModel[i].city)
+                                                    json.put("lat", listAddEventDataModel[i].latitude)
+                                                    json.put("lng", listAddEventDataModel[i].longitude)
+                                                    addEvent.put(json)
                                                 }
-                                                if (event) {
-                                                    addEvent = JSONArray()
-                                                    for (i in 0 until listAddEventDataModel.size) {
-                                                        val json = JSONObject()
-                                                        json.put("image", listAddEventDataModel[i].image)
-                                                        json.put("name", listAddEventDataModel[i].name)
-                                                        json.put("file_type", "image")
-                                                        json.put("date_from", listAddEventDataModel[i].dateFrom)
-                                                        json.put("date_to", listAddEventDataModel[i].dateTo)
-                                                        json.put("time_from", listAddEventDataModel[i].startTime)
-                                                        json.put("time_to", listAddEventDataModel[i].endTime)
-                                                        json.put("description", listAddEventDataModel[i].description)
-                                                        json.put("price", listAddEventDataModel[i].price)
-                                                        json.put("city", listAddEventDataModel[i].city)
-                                                        json.put("lat", listAddEventDataModel[i].latitude)
-                                                        json.put("lng", listAddEventDataModel[i].longitude)
-                                                        addEvent.put(json)
-                                                    }
-                                                }
-                                                hitFinallyActivityAddPostApi()
-                                            } } } } } } } }
+                                            }
+                                            hitFinallyActivityAddPostApi()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             R.id.ivBack -> {
                 onBackPressed()
@@ -313,7 +333,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     }
 
 
-    private fun getAgeError(ageFrom: String?, ageErrorString: String, s: String,i:Int) : String {
+    private fun getAgeError(ageFrom: String?, ageErrorString: String, s: String, i: Int): String {
 
         return when {
             ageFrom.isNullOrBlank() -> when {
@@ -324,12 +344,13 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             }
             else -> {
                 age = true
-                ageErrorNumber =i
+                ageErrorNumber = i
                 ageErrorString
             }
         }
     }
-    private fun getEventError(ageFrom: String?, eventErrorString: String, s: String,i:Int) : String {
+
+    private fun getEventError(ageFrom: String?, eventErrorString: String, s: String, i: Int): String {
 
         return when {
             ageFrom.isNullOrBlank() -> when {
@@ -340,7 +361,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             }
             else -> {
                 event = true
-                eventErrorNumber =i
+                eventErrorNumber = i
                 eventErrorString
             }
         }
@@ -365,7 +386,11 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         addressLongitude = place.latLng?.longitude.toString()
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
-                        cityName = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+                        cityName = if (!list[0].locality.isNullOrBlank()) {
+                            list[0].locality
+                        } else {
+                            place.name.toString()
+                        }
 
                         Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
                     }
@@ -381,7 +406,11 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         updateEventList[pos].longitude = cityLongitude
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
-                        updateEventList[pos].city = if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{place.name.toString() }
+                        updateEventList[pos].city = if (!list[0].locality.isNullOrBlank()) {
+                            list[0].locality
+                        } else {
+                            place.name.toString()
+                        }
 
                         eventEditAdapter.notifyDataSetChanged()
                     }
@@ -389,7 +418,7 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
             }
         }
     }
-    
+
     override fun getRealImagePath(imgPath: String?) {
 
         Log.d("selectedImagePath", "-------$imgPath")
@@ -404,15 +433,14 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
         val imageFile: RequestBody = mFile.asRequestBody("image/*".toMediaTypeOrNull())
         val photo: MultipartBody.Part?
         photo = MultipartBody.Part.createFormData("image", mFile.name, imageFile)
-        imagePathList.add(0,photo)
+        imagePathList.add(0, photo)
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
 
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
         if (checkIfHasNetwork(this)) {
-        appViewModel.sendUploadImageData(type, users, imagePathList)
-        progressDialog.setProgressDialog()
-        }
-        else {
+            appViewModel.sendUploadImageData(type, users, imagePathList)
+            progressDialog.setProgressDialog()
+        } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
     }
@@ -420,12 +448,23 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     override fun addAgeGroupItem(list: ArrayList<AgeGroupMyAds>, position: Int) {
 
         when {
-            listAgeGroupDataModel[list.size-1].ageFrom.isNullOrEmpty() -> { myCustomToast(getString(R.string.fill_age_group_from_in_previous_data)) }
-            listAgeGroupDataModel[list.size-1].ageTo.isEmpty() -> { myCustomToast(getString(R.string.fill_age_group_to))}
-            listAgeGroupDataModel[list.size-1].days.isEmpty() -> { myCustomToast(getString(R.string.select_days_in_previous))}
-            listAgeGroupDataModel[list.size-1].timeFrom.isEmpty() -> { myCustomToast(getString(R.string.select_from_time))}
-            listAgeGroupDataModel[list.size-1].timeTo.isEmpty() -> { myCustomToast(getString(R.string.select_to_time))}
-            else -> {  listAgeGroupDataModel.add(AgeGroupMyAds(0,"","","","",0,0,"","",""))
+            listAgeGroupDataModel[list.size - 1].ageFrom.isNullOrEmpty() -> {
+                myCustomToast(getString(R.string.fill_age_group_from_in_previous_data))
+            }
+            listAgeGroupDataModel[list.size - 1].ageTo.isEmpty() -> {
+                myCustomToast(getString(R.string.fill_age_group_to))
+            }
+            listAgeGroupDataModel[list.size - 1].days.isEmpty() -> {
+                myCustomToast(getString(R.string.select_days_in_previous))
+            }
+            listAgeGroupDataModel[list.size - 1].timeFrom.isEmpty() -> {
+                myCustomToast(getString(R.string.select_from_time))
+            }
+            listAgeGroupDataModel[list.size - 1].timeTo.isEmpty() -> {
+                myCustomToast(getString(R.string.select_to_time))
+            }
+            else -> {
+                listAgeGroupDataModel.add(AgeGroupMyAds(0, "", "", "", "", 0, 0, "", "", ""))
                 ageGroupEditAdapter.notifyDataSetChanged()
             }
         }
@@ -437,26 +476,52 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
         showPlacePicker(addEventRequestCode)
     }
 
+    override fun onRemoveEventItem(position: Int) {
+        Log.d(AddActivity::class.java.name, "OnRemoveClick   " + position + "clickPosition   " + clickPosition)
+        clickPosition = position.toString()
+        eventEditAdapter.notifyItemChanged(position)
+
+    }
+
     override fun onAddEventItem(list: ArrayList<EventMyAds>, position: Int) {
 
         when {
-            listAddEventDataModel[list.size-1].image.isEmpty() -> { myCustomToast(getString(R.string.select_image_in_previous)) }
-            listAddEventDataModel[list.size-1].name.isEmpty() -> { myCustomToast(getString(R.string.fill_event_name_in_previous))}
-            listAddEventDataModel[list.size-1].dateFrom.isEmpty() -> { myCustomToast(getString(R.string.select_from_date_in_previous))}
-            listAddEventDataModel[list.size-1].dateTo.isEmpty() -> { myCustomToast(getString(R.string.select_to_date_in_previous))}
-            listAddEventDataModel[list.size-1].startTime.isEmpty() -> {myCustomToast(getString(R.string.select_from_time))}
-            listAddEventDataModel[list.size-1].endTime.isEmpty() -> {myCustomToast(getString(R.string.select_to_time))}
-            listAddEventDataModel[list.size-1].description.isEmpty() -> { myCustomToast(getString(R.string.fill_description_in_previous))}
-            listAddEventDataModel[list.size-1].price.isEmpty() -> {myCustomToast(getString(R.string.fill_price_previous))}
-            listAddEventDataModel[list.size-1].city.isEmpty() -> { myCustomToast(getString(R.string.fill_city_previous))}
-            else -> {  listAddEventDataModel.add(EventMyAds(0,"","","","","","","",0,"","","","","",0,"",0))
+            listAddEventDataModel[list.size - 1].image.isEmpty() -> {
+                myCustomToast(getString(R.string.select_image_in_previous))
+            }
+            listAddEventDataModel[list.size - 1].name.isEmpty() -> {
+                myCustomToast(getString(R.string.fill_event_name_in_previous))
+            }
+            listAddEventDataModel[list.size - 1].dateFrom.isEmpty() -> {
+                myCustomToast(getString(R.string.select_from_date_in_previous))
+            }
+            listAddEventDataModel[list.size - 1].dateTo.isEmpty() -> {
+                myCustomToast(getString(R.string.select_to_date_in_previous))
+            }
+            listAddEventDataModel[list.size - 1].startTime.isEmpty() -> {
+                myCustomToast(getString(R.string.select_from_time))
+            }
+            listAddEventDataModel[list.size - 1].endTime.isEmpty() -> {
+                myCustomToast(getString(R.string.select_to_time))
+            }
+            listAddEventDataModel[list.size - 1].description.isEmpty() -> {
+                myCustomToast(getString(R.string.fill_description_in_previous))
+            }
+            listAddEventDataModel[list.size - 1].price.isEmpty() -> {
+                myCustomToast(getString(R.string.fill_price_previous))
+            }
+            listAddEventDataModel[list.size - 1].city.isEmpty() -> {
+                myCustomToast(getString(R.string.fill_city_previous))
+            }
+            else -> {
+                listAddEventDataModel.add(EventMyAds(0, "", "", "", "", "", "", "", 0, "", "", "", "", "", 0, "", 0))
                 eventEditAdapter.notifyDataSetChanged()
             }
         }
 
     }
 
-    override fun addCameraGalleryImage( position: Int) {
+    override fun addCameraGalleryImage(position: Int) {
         eventPhotoPosition = position
         imageSelectedType = "4"
         checkPermission(this)
@@ -465,11 +530,10 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
     private fun hitTypeActivityApi() {
         launch(Dispatchers.Main.immediate) {
             authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
-                .first()
+                    .first()
             appViewModel.sendActivityTypeData(security_key, authKey)
         }
     }
-
 
 
     private fun checkMvvmResponse() {
@@ -488,14 +552,13 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                         val id = jsonArray.getJSONObject(i).get("id").toString()
                         typeList.add(name)
                         typeListId.add(id)
-                        if(id==activityTypeId)
-                        {
+                        if (id == activityTypeId) {
                             selectedPosition = i
                         }
                     }
                     val arrayAdapter = ArrayAdapter(this, R.layout.customspinner, typeList)
                     trader_type.adapter = arrayAdapter
-                    trader_type.setSelection(selectedPosition+1)
+                    trader_type.setSelection(selectedPosition + 1)
 
                     trader_type.onItemSelectedListener = object : OnItemSelectedListener {
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -548,19 +611,19 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                             "1" -> {
                                 image1 = image
                                 Glide.with(this).asBitmap().load(image_base_URl + image)
-                                    .into(ivImg1!!)
+                                        .into(ivImg1!!)
 
                             }
                             "2" -> {
                                 image2 = image
                                 Glide.with(this).asBitmap().load(image_base_URl + image)
-                                    .into(ivImg2!!)
+                                        .into(ivImg2!!)
                             }
                             "3" -> {
                                 image3 = image
 
                                 Glide.with(this).asBitmap().load(image_base_URl + image)
-                                    .into(ivImg3!!)
+                                        .into(ivImg3!!)
                             }
                             "4" -> {
                                 listAddEventDataModel[eventPhotoPosition].image = image
@@ -572,11 +635,10 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
                     }
 
                 }
-            }
-                else {
+            } else {
 
-                    ErrorBodyResponse(response, this, null)
-                }
+                ErrorBodyResponse(response, this, null)
+            }
 
         })
 
@@ -591,15 +653,32 @@ class EditActivity : OpenCameraGallery(),  View.OnClickListener,
 
         var typeEmpty = ""
         when {
-            event && age -> { typeEmpty = "1"   }
-            !age && event -> { typeEmpty = "2" }
-            age && !event -> { typeEmpty = "3" }
-            !age && !event -> { typeEmpty = "4" }
+            event && age -> {
+                typeEmpty = "1"
+            }
+            !age && event -> {
+                typeEmpty = "2"
+            }
+            age && !event -> {
+                typeEmpty = "3"
+            }
+            !age && !event -> {
+                typeEmpty = "4"
+            }
         }
 
-        appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
-            et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(),etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
-                addEvent.toString(),countryCodee, image1, image2, image3,typeEmpty)
+        if (clickPosition.equals("0")) {
+            appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
+                    et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
+                    "", countryCodee, image1, image2, image3, typeEmpty)
+        } else {
+            appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
+                    et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
+                    addEvent.toString(), countryCodee, image1, image2, image3, typeEmpty)
+        }
+//        appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
+//                et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
+//                addEvent.toString(), countryCodee, image1, image2, image3, typeEmpty)
     }
 
 

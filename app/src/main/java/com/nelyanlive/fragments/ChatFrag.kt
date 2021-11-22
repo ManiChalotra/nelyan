@@ -151,7 +151,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
-                    Log.e("observeGroupMessageApiResponse", "-------------" + Gson().toJson(response.body()))
+                    Log.e("observeGroupMessageApi", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
                     val listData: ArrayList<ChatData> = ArrayList()
@@ -264,7 +264,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
-                    Log.e("observeGroupNotifyApiResponse", "-------------" + Gson().toJson(response.body()))
+                    Log.e("observeGroupNotifyApi", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
                     if(!jsonMain.isNull("data")) {
