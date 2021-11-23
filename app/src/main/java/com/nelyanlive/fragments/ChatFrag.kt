@@ -56,11 +56,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatFrag(var userlocation: String, var userlat: String, var userlong: String,var ivBell: ImageView) : Fragment() {
+class ChatFrag(var userlocation: String, var userlat: String, var userlong: String, var ivBell: ImageView) : Fragment() {
 
     private var listner: CommunicationListner? = null
     lateinit var mContext: Context
-     val groupChatVM: GroupChatVM by viewModels()
+    val groupChatVM: GroupChatVM by viewModels()
     lateinit var activityChatBinding: ActivityChatBinding
 
     override fun onResume() {
@@ -84,8 +84,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         mContext = container.context
         groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
         activityChatBinding.btnRegulation.setOnClickListener {
-           /* val i = Intent(mContext, RegulationActivity::class.java)
-            startActivity(i)*/
+            /* val i = Intent(mContext, RegulationActivity::class.java)
+             startActivity(i)*/
         }
 
         activityChatBinding.ivAttachment.setOnClickListener {
@@ -98,7 +98,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e("fasfasfa","=chatFrag=====onAttach")
+        Log.e("fasfasfa", "=chatFrag=====onAttach")
 
         if (context is CommunicationListner) {
             listner = context
@@ -109,7 +109,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("fasfasfa","==chatFrag=====onDetach")
+        Log.e("fasfasfa", "==chatFrag=====onDetach")
 
         listner = null
     }
@@ -129,21 +129,27 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val geocoder = Geocoder(view.context, Locale.getDefault())
         list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
 
-        if(!list[0].locality.isNullOrBlank())
+        if (!list[0].locality.isNullOrBlank())
 
-        groupChatVM.groupName =if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}
+            groupChatVM.groupName = if (!list[0].locality.isNullOrBlank()) {
+                list[0].locality
+            } else {
+                userlocation
+            }
         groupChatVM.userId = (view.context as HomeActivity).userId
         groupChatVM.rvChat = activityChatBinding.rvChat
         groupChatVM.connectSocket(view.context)
 
-
         if (checkIfHasNetwork((mContext as Activity))) {
 
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
-            appViewModel.groupMessageApiData(security_key, authorization, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation}, "0", "20")
+            appViewModel.groupMessageApiData(security_key, authorization, if (!list[0].locality.isNullOrBlank()) {
+                list[0].locality
+            } else {
+                userlocation
+            }, "0", "20")
 
-        }
-        else {
+        } else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
@@ -156,37 +162,36 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     Log.e("socket===", jsonMain.toString())
                     val listData: ArrayList<ChatData> = ArrayList()
 
-                   groupChatVM.groupId = ""
+                    groupChatVM.groupId = ""
 
                     val jsonArray = jsonMain.getJSONArray("data")
 
-                    Log.e("socket=======", "===="+jsonArray.length())
+                    Log.e("socket=======", "====" + jsonArray.length())
 
-                    for (i in jsonArray.length()-1 downTo  0) {
+                    for (i in jsonArray.length() - 1 downTo 0) {
 
                         val json = jsonArray.getJSONObject(i)
                         groupChatVM.groupId = json.getString("groupId")
 
                         //decoding
                         var val3 = ""
-                        try{
+                        try {
                             val lineSep = System.getProperty("line.separator")
                             val ps2: String = json.getString("message")
                             val tmp2: ByteArray = Base64.decode(ps2)
                             val val2 = String(tmp2, StandardCharsets.UTF_8)
-                             val3 = val2.replace("<br />".toRegex(), lineSep!!)
+                            val3 = val2.replace("<br />".toRegex(), lineSep!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
-                        catch (e: Exception)
-                        {e.printStackTrace()}
-
 
                         listData.add(ChatData(
                                 json.getString("id"),
                                 json.getString("senderId"),
                                 json.getString("receiverId"),
                                 "",
-                            json.getString("groupId"),
-                            val3,
+                                json.getString("groupId"),
+                                val3,
                                 json.getString("readStatus"),
                                 json.getString("messageType"),
                                 json.getString("deletedId"),
@@ -196,13 +201,16 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                                 json.getString("recieverImage"),
                                 json.getString("senderName"),
                                 json.getString("senderImage"),
-                                groupChatVM.userId, "1",if(listData.size==0){true}
-                        else{checkDateCompare(json.getString("created"),listData[listData.size-1].created)}
+                                groupChatVM.userId, "1", if (listData.size == 0) {
+                            true
+                        } else {
+                            checkDateCompare(json.getString("created"), listData[listData.size - 1].created)
+                        }
 
                         ))
                     }
 
-                    if(groupChatVM.groupId.isNotEmpty())  setNotification(groupChatVM.groupId)
+                    if (groupChatVM.groupId.isNotEmpty()) setNotification(groupChatVM.groupId)
 
                     if (listData.isNotEmpty()) {
                         groupChatVM.listChat.addAll(listData)
@@ -211,11 +219,15 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         groupChatVM.noDataMessage.set("")
                     } else {
                         groupChatVM.noDataMessage.set("No chat found")
-                        groupChatVM.updateLocation(userlat, userlong, if(!list[0].locality.isNullOrBlank()) {list[0].locality} else{userlocation})
+                        groupChatVM.updateLocation(userlat, userlong, if (!list[0].locality.isNullOrBlank()) {
+                            list[0].locality
+                        } else {
+                            userlocation
+                        })
 
-                    } }
-            } else
-            {
+                    }
+                }
+            } else {
 
                 Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
 
@@ -223,10 +235,12 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         })
 
         activityChatBinding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            if(bottom<oldBottom) {
-                v!!.post { if(groupChatVM.listChat.isNotEmpty()) {
-                    activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
-                } }
+            if (bottom < oldBottom) {
+                v!!.post {
+                    if (groupChatVM.listChat.isNotEmpty()) {
+                        activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
+                    }
+                }
             }
         }
 
@@ -242,11 +256,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
         val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
 
-        return date1!=date2
+        return date1 != date2
     }
 
     override fun onDestroyView() {
-        Log.e("fasfasfa","==chatFrag=====onDestroyView")
+        Log.e("fasfasfa", "==chatFrag=====onDestroyView")
         super.onDestroyView()
 
     }
@@ -255,8 +269,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         if (checkIfHasNetwork((mContext as Activity))) {
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
             appViewModel.groupNotifyApiData(security_key, authorization, groupID)
-        }
-        else {
+        } else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
@@ -267,7 +280,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                     Log.e("observeGroupNotifyApi", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
-                    if(!jsonMain.isNull("data")) {
+                    if (!jsonMain.isNull("data")) {
                         val jsonData = jsonMain.getJSONObject("data")
 
                         val notificationStatus = jsonData.getString("notification")
@@ -278,9 +291,13 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         }
 
                     }
-                    ivBell.setImageResource(if(groupChatVM.notifyStatus=="0"){R.drawable.unmute}else{R.drawable.mute})
+                    ivBell.setImageResource(if (groupChatVM.notifyStatus == "0") {
+                        R.drawable.unmute
+                    } else {
+                        R.drawable.mute
+                    })
                     ivBell.visibility = View.VISIBLE
-                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext,R.color.colorAccent))
+                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorAccent))
                 }
 
             } else {
@@ -303,12 +320,14 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val tvYes: TextView = dialog.findViewById(R.id.tvYes)
         val tvNo: TextView = dialog.findViewById(R.id.tvNo)
         val tvMessage: TextView = dialog.findViewById(R.id.tvMessage)
-        tvMessage.text = if(groupChatVM.notifyStatus=="1"){
-            getString(R.string.are_you_sure_to_un_mute)}
-        else{getString(R.string.are_you_sure_to_mute)}
+        tvMessage.text = if (groupChatVM.notifyStatus == "1") {
+            getString(R.string.are_you_sure_to_un_mute)
+        } else {
+            getString(R.string.are_you_sure_to_mute)
+        }
         tvYes.setOnClickListener {
             dialog.dismiss()
-           setMuteNotifications()
+            setMuteNotifications()
         }
         tvNo.setOnClickListener {
             dialog.dismiss()
@@ -319,9 +338,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     private fun setMuteNotifications() {
         if (checkIfHasNetwork((mContext as Activity))) {
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
-            appViewModel.changeNotifyApiData(security_key, authorization, groupChatVM.groupId,groupChatVM.notifyStatus)
-        }
-        else {
+            appViewModel.changeNotifyApiData(security_key, authorization, groupChatVM.groupId, groupChatVM.notifyStatus)
+        } else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
@@ -329,15 +347,23 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
-                    Log.e("observeGroupNotifyApiResponse", "-------------" + Gson().toJson(response.body()))
+                    Log.e("observeGroupNotifyApi", "-------------" + Gson().toJson(response.body()))
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
                     val jsonData = jsonMain.getJSONObject("data")
 
                     val notificationStatus = jsonData.getString("notification")
-                    groupChatVM.notifyStatus = if(notificationStatus=="1"){"0"}else{"1"}
-                    ivBell.setImageResource(if(notificationStatus=="1"){R.drawable.unmute}else{R.drawable.mute})
-                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext,R.color.colorAccent))
+                    groupChatVM.notifyStatus = if (notificationStatus == "1") {
+                        "0"
+                    } else {
+                        "1"
+                    }
+                    ivBell.setImageResource(if (notificationStatus == "1") {
+                        R.drawable.unmute
+                    } else {
+                        R.drawable.mute
+                    })
+                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorAccent))
 
                 }
 
@@ -363,8 +389,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 ) == PackageManager.PERMISSION_GRANTED
         ) {
             uploadImage()
-        }
-        else {
+        } else {
             requestPermission()
         }
 
@@ -376,6 +401,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+
     private fun requestPermission() {
         let { ActivityCompat.requestPermissions((mContext as Activity), permissions, CAMERA_REQUEST) }
     }
@@ -470,14 +496,13 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
 
             try {
                 val uri = data!!.data
                 if (uri != null) {
                     imgPath = getPath(mContext, uri).toString()
-                   // getRealImagePath(imgPath)
+                    // getRealImagePath(imgPath)
                     setImage(imgPath)
                 }
 
@@ -565,8 +590,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             if (cursor != null && cursor.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)
-            } }
-        finally { cursor?.close() }
+            }
+        } finally {
+            cursor?.close()
+        }
         return null
     }
 
@@ -584,7 +611,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
         imagePathList.clear()
         imagePathList.add(photo)
-        setImage = imgPath.replaceBeforeLast("/","")
+        setImage = imgPath.replaceBeforeLast("/", "")
         setImageTrue = true
         val type: RequestBody = "image".toRequestBody("text/plain".toMediaTypeOrNull())
         val users = "users".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -597,25 +624,22 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 if (response.body() != null) {
                     if (response.body()!!.data != null) {
 
-                        val fileName  = response.body()!!.data!![0].fileName.toString()
-                        var str  = response.body()!!.data!![0].image.toString()
-                        str =     str.replaceBeforeLast("/","")
+                        val fileName = response.body()!!.data!![0].fileName.toString()
+                        var str = response.body()!!.data!![0].image.toString()
+                        str = str.replaceBeforeLast("/", "")
 
-                        if(setImage.substring(1) ==fileName && setImageTrue) {
+                        if (setImage.substring(1) == fileName && setImageTrue) {
                             setImageTrue = false
                             groupChatVM.sendChatImageMessage(str)
                         }
                     }
-                }
-                else {
+                } else {
                     ErrorBodyResponse(response, mContext, null)
                 }
-            }
-            else {
-                Toast.makeText(mContext,mContext.getString(R.string.something_went_wrong) , Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         })
-
 
 
     }

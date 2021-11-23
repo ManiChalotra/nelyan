@@ -38,7 +38,6 @@ class ChatVM : ViewModel() {
 
     var chatRoom = ""
 
-
     var message: ObservableField<String> = ObservableField("")
     var senderName: ObservableField<String> = ObservableField("")
     var senderImage: ObservableField<String> = ObservableField("")
@@ -46,7 +45,6 @@ class ChatVM : ViewModel() {
 
     val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left, R.layout.chat_text_right, R.layout.chat_image_right, R.layout.chat_image_left) }
     val listChat by lazy { ArrayList<ChatData>() }
-
 
     init {
 
@@ -66,7 +64,6 @@ class ChatVM : ViewModel() {
             }
         })
     }
-
 
     fun onClick(view: View, s: String) {
         when (s) {
@@ -170,6 +167,7 @@ class ChatVM : ViewModel() {
             socket.on("delete_data", deleteData)
             socket.on("seen_unseen", seenMessages)
             socket.on("seen_unseen_msg", seenMessages)
+
             if (!socket.connected()) {
                 socket.connect()
             } else {

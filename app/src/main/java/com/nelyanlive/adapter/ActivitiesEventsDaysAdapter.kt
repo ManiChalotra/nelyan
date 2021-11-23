@@ -11,7 +11,7 @@ import com.nelyanlive.R
 import com.nelyanlive.modals.ActivitiesEventsDaysModel
 import com.nelyanlive.ui.ActivityDetailsActivity
 
-class ActivitiesEventsDaysAdapter(internal  var context: Context, internal  var activity: ActivityDetailsActivity, internal var datalist: ArrayList<ActivitiesEventsDaysModel>) : RecyclerView.Adapter<ActivitiesEventsDaysAdapter.Vh>() {
+class ActivitiesEventsDaysAdapter(internal var context: Context, internal var activity: ActivityDetailsActivity, internal var datalist: ArrayList<ActivitiesEventsDaysModel>) : RecyclerView.Adapter<ActivitiesEventsDaysAdapter.Vh>() {
     var rl_1: RelativeLayout? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
@@ -23,7 +23,7 @@ class ActivitiesEventsDaysAdapter(internal  var context: Context, internal  var 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         holder.bindMethod(datalist[position])
 
-     }
+    }
 
     override fun getItemCount(): Int {
         return datalist.size
@@ -35,7 +35,7 @@ class ActivitiesEventsDaysAdapter(internal  var context: Context, internal  var 
         fun bindMethod(activitiesEventsDaysList: ActivitiesEventsDaysModel) {
             tvDay = itemView.findViewById(R.id.tv_day)
             tvDay.text = activitiesEventsDaysList.daysName
-           
+
         }
     }
 }

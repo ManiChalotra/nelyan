@@ -40,7 +40,6 @@ class Chat1Activity :  OpenCameraGallery() {
         activityChat1Binding = DataBindingUtil.setContentView(this,R.layout.activity_chat1)
         activityChat1Binding.chatVM = chatVM
 
-
         activityChat1Binding.ivBack.setOnClickListener { onBackPressed() }
 
         ivAttachment = findViewById(R.id.ivAttachment)
@@ -50,7 +49,7 @@ class Chat1Activity :  OpenCameraGallery() {
         chatVM.rvChat =activityChat1Binding.rvChat
         chatVM.noDataMessage.set(getString(R.string.loading_chat))
 
-        Log.e("ssdfdsfsd","=====${intent.getStringExtra("senderID")}")
+        Log.e("Chat1Activity","=====${intent.getStringExtra("senderID")}")
 
         if (intent.hasExtra("senderID")) {
 

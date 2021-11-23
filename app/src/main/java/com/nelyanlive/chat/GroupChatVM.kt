@@ -382,7 +382,6 @@ class GroupChatVM :ViewModel() {
             val val2 = String(tmp2, StandardCharsets.UTF_8)
             val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
-
             listData.add(ChatData(
                     json.getString("id"),
                     json.getString("senderId"),
@@ -445,7 +444,7 @@ class GroupChatVM :ViewModel() {
 
     private fun connectUser() {
         val json = JSONObject()
-        try{
+        try {
             Log.e("socket=connectUser", userId)
             json.put("userId", userId)
             socket.emit("connect_user",json)

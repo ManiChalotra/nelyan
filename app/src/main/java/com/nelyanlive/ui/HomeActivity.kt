@@ -174,7 +174,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         appViewModel.observeBadgeApiResponse()!!.observe(this, Observer { response ->
 
-
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 

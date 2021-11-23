@@ -880,7 +880,7 @@ class AppViewModel : ViewModel() {
                         })
             }
             "1" -> {
-                JsonPlaceHolder().  get_addPOSt_withoutevent_Activity_Api(securityKey, authkey, type, activityType, shopname, activityName, description, phone, address, city, website,
+                JsonPlaceHolder().get_addPOSt_withoutevent_Activity_Api(securityKey, authkey, type, activityType, shopname, activityName, description, phone, address, city, website,
                         latitude, longitude, ageGroup, media, country_code)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {

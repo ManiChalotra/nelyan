@@ -60,8 +60,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
         ) {
             uploadImage()
-        }
-        else {
+        } else {
             requestPermission()
         }
 
@@ -89,8 +88,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 // Create the File where the photo should go
                 var photoFile: File? = null
                 try {
-                    val myDirectory =
-                            File(Environment.getExternalStorageDirectory(), "Pictures")
+                    val myDirectory = File(Environment.getExternalStorageDirectory(), "Pictures")
                     if (!myDirectory.exists()) {
                         myDirectory.mkdirs()
                     }
@@ -116,8 +114,8 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             val intent = Intent()
             intent.type = "*/*"
             intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
-          //  intent.setType("image/* , video/*")   // for both image and video
-          //  intent.type = "image/*"     // only for image
+            //  intent.setType("image/* , video/*")   // for both image and video
+            //  intent.type = "image/*"     // only for image
             //intent.type = "video/*"     // only for video
             intent.action = Intent.ACTION_GET_CONTENT
             this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
@@ -171,8 +169,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == requestCodeGallary && resultCode == Activity.RESULT_OK) {
 
             try {
                 val uri = data!!.data
@@ -186,8 +183,7 @@ abstract class OpenCameraGallery : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-        }
-        else if (CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE === requestCode && resultCode == Activity.RESULT_OK) {
+        } else if (CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE === requestCode && resultCode == Activity.RESULT_OK) {
             try {
                 val result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 if (resultCode == RESULT_OK) {

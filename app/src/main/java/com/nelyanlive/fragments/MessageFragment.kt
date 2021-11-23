@@ -16,33 +16,30 @@ import com.nelyanlive.databinding.FragmentMessageBinding
 import com.nelyanlive.ui.CommunicationListner
 import com.nelyanlive.ui.HomeActivity
 
-
 class MessageFragment : Fragment() {
 
-    private  var listner: CommunicationListner?= null
-     val messagesVM: MessagesVM by viewModels()
+    private var listner: CommunicationListner? = null
+    val messagesVM: MessagesVM by viewModels()
 
     override fun onResume() {
         super.onResume()
-        if(listner!= null){
+        if (listner != null) {
             listner!!.onFargmentActive(2)
         }
     }
 
     lateinit var fragmentMessageBinding: FragmentMessageBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
 
-        fragmentMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context),R.layout.fragment_message, container, false)
-        fragmentMessageBinding.messageVM =messagesVM
+        fragmentMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context), R.layout.fragment_message, container, false)
+        fragmentMessageBinding.messageVM = messagesVM
 
         messagesVM.userId = (container.context as HomeActivity).userId
         messagesVM.noDataMessage.set(container.context.getString(R.string.loading_messages))
 
         return fragmentMessageBinding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,11 +51,9 @@ class MessageFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if(context is CommunicationListner)
-        {
+        if (context is CommunicationListner) {
             listner = context
-        }
-        else{
+        } else {
 
             throw RuntimeException("Home Fragment not Attched")
         }

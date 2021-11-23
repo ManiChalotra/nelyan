@@ -101,7 +101,6 @@ class LocationService : Service() {
     override fun onRebind(intent: Intent) {
         Log.e("location_changed", "onRebind()")
 
-
         stopForeground(true)
         serviceRunningInForeground = false
         configurationChange = false
@@ -109,7 +108,6 @@ class LocationService : Service() {
     }
 
     override fun onUnbind(intent: Intent): Boolean {
-
 
         if (!configurationChange && SharedUtil.getLocationTrackingPref(this)) {
             Log.e("location_changed", "Start foreground service")

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="groupChatVM"
             type="com.nelyanlive.chat.GroupChatVM" />
@@ -20,23 +21,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn"
-            android:textColor="@color/white"
             android:fontFamily="@font/semibold"
             android:text="@string/discussions_and_tips"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChat"
+            setRecyclerAdapter="@{groupChatVM.groupChatAdapter}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_5sdp"
-            app:layout_constraintBottom_toTopOf="@id/rlBottom"
-            app:layout_constraintTop_toBottomOf="@id/btnRegulation"
-            setRecyclerAdapter="@{groupChatVM.groupChatAdapter}"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            app:layout_constraintBottom_toTopOf="@id/rlBottom"
+            app:layout_constraintTop_toBottomOf="@id/btnRegulation" />
 
         <RelativeLayout
             android:id="@+id/rlBottom"
@@ -44,8 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_12sdp"
             android:background="@drawable/shape_chat"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -68,12 +66,12 @@
                 android:textSize="@dimen/_12sdp" />
 
             <LinearLayout
+                android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:id="@+id/icon"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -81,14 +79,15 @@
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:layout_gravity="center"
-                    android:src="@drawable/attachment_icon"/>
+                    android:src="@drawable/attachment_icon" />
+
                 <ImageView
                     android:id="@+id/ivSend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_5sdp"
                     android:onClick="@{(view)->groupChatVM.sendMessage(view,rvChat)}"
+                    android:padding="@dimen/_5sdp"
                     android:src="@drawable/message_sent" />
             </LinearLayout>
 
@@ -99,11 +98,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@{groupChatVM.noDataMessage}"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

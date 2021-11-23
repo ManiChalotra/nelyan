@@ -17,7 +17,6 @@ import java.util.*
 
 object BindingAdapter {
 
-
     @BindingAdapter(value = ["setRecyclerAdapter"], requireAll = false)
     @JvmStatic
     fun setRecyclerAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
@@ -26,14 +25,11 @@ object BindingAdapter {
 
     @BindingAdapter(value = ["setBorderColor"], requireAll = false)
     @JvmStatic
-    fun setBorderColor(ivImage: CircleImageView, str:String) {
-        if(str=="0")
-        {
-            ivImage.borderColor = ContextCompat.getColor(ivImage.context,R.color.white)
-        }
-        else
-        {
-            ivImage.borderColor = ContextCompat.getColor(ivImage.context,R.color.red)
+    fun setBorderColor(ivImage: CircleImageView, str: String) {
+        if (str == "0") {
+            ivImage.borderColor = ContextCompat.getColor(ivImage.context, R.color.white)
+        } else {
+            ivImage.borderColor = ContextCompat.getColor(ivImage.context, R.color.red)
 
         }
     }
@@ -42,11 +38,9 @@ object BindingAdapter {
     @JvmStatic
     fun setTime(tvText: TextView, str: String) {
 
-        if(str.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             tvText.text = SimpleDateFormat("h:mm a d MMM").format(Date(str.toLong() * 1000))
-        }
-        else
-        {
+        } else {
             tvText.text = "now"
         }
     }
@@ -55,20 +49,15 @@ object BindingAdapter {
     @JvmStatic
     fun setTickStatus(iv: ImageView, data: ChatListResponse) {
 
-        if(data.unreadcount !="0") {
+        if (data.unreadcount != "0") {
             iv.visibility = View.GONE
-        }
-        else
-        {
-            if(data.readStatus =="0")
-            {
-                iv.setImageDrawable(ContextCompat.getDrawable(iv.context,R.drawable.blue_double_check))
-                iv.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(iv.context,R.color.grey))
+        } else {
+            if (data.readStatus == "0") {
+                iv.setImageDrawable(ContextCompat.getDrawable(iv.context, R.drawable.blue_double_check))
+                iv.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(iv.context, R.color.grey))
 
-            }
-            else
-            {
-                iv.setImageDrawable(ContextCompat.getDrawable(iv.context,R.drawable.blue_double_check))
+            } else {
+                iv.setImageDrawable(ContextCompat.getDrawable(iv.context, R.drawable.blue_double_check))
             }
         }
 
@@ -78,7 +67,7 @@ object BindingAdapter {
     @JvmStatic
     fun setMessageTime(tvText: TextView, str: String) {
 
-        if(str.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             val data1 = Date(str.toLong() * 1000)
             val data2 = Date()
             data2.hours = 0
@@ -86,28 +75,30 @@ object BindingAdapter {
 
             val diff: Long = data2.time - data1.time
 
-            if(diff<0)
-            {
+            if (diff < 0) {
                 val hr = SimpleDateFormat("h").format(Date(str.toLong() * 1000))
                 val am_pm = SimpleDateFormat("a").format(Date(str.toLong() * 1000))
                 val min = SimpleDateFormat("mm").format(Date(str.toLong() * 1000))
 
                 Log.e("dsfgasdfasdfadsf", "====$hr==$min==$am_pm=====")
 
-                tvText.text = "${if(hr.toInt()<13){hr}else{(hr.toInt()-12).toString()}}:${min} ${am_pm}"
+                tvText.text = "${
+                    if (hr.toInt() < 13) {
+                        hr
+                    } else {
+                        (hr.toInt() - 12).toString()
+                    }
+                }:${min} ${am_pm}"
 
-            }
-            else {
+            } else {
                 if (diff > 0 && diff < (60 * 60 * 1000)) {
-                    tvText.text =tvText.context.getString(R.string.yesterday)
+                    tvText.text = tvText.context.getString(R.string.yesterday)
 
                 } else {
                     tvText.text = SimpleDateFormat("dd/MM/yyyy").format(Date(str.toLong() * 1000))
                 }
             }
-        }
-        else
-        {
+        } else {
             tvText.text = "now"
         }
     }
@@ -116,7 +107,7 @@ object BindingAdapter {
     @JvmStatic
     fun setMessageListTime(tvText: TextView, str: String) {
 
-        if(str.isNotEmpty()) {
+        if (str.isNotEmpty()) {
             val data1 = Date(str.toLong() * 1000)
             val data2 = Date()
             data2.hours = 0
@@ -124,12 +115,10 @@ object BindingAdapter {
 
             val diff: Long = data2.time - data1.time
 
-            if(diff<0)
-            {
+            if (diff < 0) {
                 tvText.text = "Today"
 
-            }
-            else {
+            } else {
                 if (diff > 0 && diff < (60 * 60 * 1000)) {
                     tvText.text = tvText.context.getString(R.string.yesterday)
 
@@ -143,116 +132,98 @@ object BindingAdapter {
     }
 
 
-    @BindingAdapter(value = ["setChatVisibility","setUserID"], requireAll = false)
+    @BindingAdapter(value = ["setChatVisibility", "setUserID"], requireAll = false)
     @JvmStatic
     fun setChatVisibility(ll: View, str: String, userId: String) {
 
 
-
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
         Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
 
-        if(str==userId)
-        {
+        if (str == userId) {
             ll.visibility = View.VISIBLE
+        } else {
+            ll.visibility = View.GONE
         }
-        else
-        {ll.visibility = View.GONE}
     }
 
 
-    @BindingAdapter(value = ["setLeftChatVisibility","setUserID"], requireAll = false)
+    @BindingAdapter(value = ["setLeftChatVisibility", "setUserID"], requireAll = false)
     @JvmStatic
     fun setLeftChatVisibility(ll: View, str: String, userId: String) {
 
 
-
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
         Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
 
-        if(str!=userId)
-        {
+        if (str != userId) {
             ll.visibility = View.VISIBLE
+        } else {
+            ll.visibility = View.GONE
         }
-        else
-        {ll.visibility = View.GONE}
     }
 
     @BindingAdapter(value = ["setDrawableTint"], requireAll = false)
     @JvmStatic
     fun setDrawableTint(tv: TextView, str: ChatData) {
 
-
-
         Log.e("dsfgasdfasdfadsf", "====$33333=====")
         Log.e("dsfgasdfasdfadsf", "====$33333=====${str}=$33333=====${str}")
 
+        Log.e(BindingAdapter::class.java.name, "BindingAdapter   " + { str })
 
-        if(str.isFlag=="") {
-            if(str.readStatus=="1")
-            {
-                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.blue))
-            }
-            else
-            {
-                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.lightgrey))
+        if (str.isFlag == "") {
+            if (str.readStatus == "1") {
+                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.blue))
+            } else {
+                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.lightgrey))
             }
         } else {
-            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context,R.color.grey))
+            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.grey))
         }
-
-
 
 
     }
 
-
-
-
-
     @BindingAdapter(value = ["setChatImage"], requireAll = false)
     @JvmStatic
     fun setChatImage(
-        ivImage: ImageView,
-        str: String?
+            ivImage: ImageView,
+            str: String?
 
     ) {
-        if(!str.isNullOrEmpty()) {
+        if (!str.isNullOrEmpty()) {
 
 
-            Picasso.get().load(from_admin_image_base_URl+str).resize(100, 100)
+            Picasso.get().load(from_admin_image_base_URl + str).resize(100, 100)
                     .placeholder(ContextCompat.getDrawable(
-                    ivImage.context,
-                    R.drawable.placeholder
-            )!!).into(ivImage)
+                            ivImage.context,
+                            R.drawable.placeholder
+                    )!!).into(ivImage)
 
-        }
-        else
-        {
-            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context,R.drawable.placeholder))
+        } else {
+            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context, R.drawable.placeholder))
         }
     }
 
     @BindingAdapter(value = ["setChatMessages"], requireAll = false)
     @JvmStatic
     fun setChatMessages(
-        ivImage: ImageView,
-        str: String?
+            ivImage: ImageView,
+            str: String?
 
     ) {
-        if(!str.isNullOrEmpty()) {
+        if (!str.isNullOrEmpty()) {
 
 
-            Picasso.get().load(from_admin_image_base_URl+str)
+            Picasso.get().load(from_admin_image_base_URl + str)
                     .placeholder(ContextCompat.getDrawable(
-                    ivImage.context,
-                    R.drawable.placeholder
-            )!!).into(ivImage)
+                            ivImage.context,
+                            R.drawable.placeholder
+                    )!!).into(ivImage)
 
-        }
-        else
-        {
-            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context,R.drawable.placeholder))
+        } else {
+            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context, R.drawable.placeholder))
         }
     }
 
