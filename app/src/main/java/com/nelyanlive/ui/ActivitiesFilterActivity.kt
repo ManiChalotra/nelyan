@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -62,7 +61,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +114,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                     kmValue[position]!!
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // TODO("Not yet implemented")
             }
@@ -131,11 +128,17 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
                 appViewModel.sendActivityTypeData(security_key, authKey)
             }
+            Log.d(ActivitiesFilterActivity::class.java.name, "ActivitiesFilter_if   ")
         } else {
+            launch(Dispatchers.Main.immediate) {
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                appViewModel.sendActivityTypeData(security_key, authKey)
+            }
+
+            Log.d(ActivitiesFilterActivity::class.java.name, "ActivitiesFilter_else   ")
             et_name.hint = getString(R.string.enter_event_name)
         }
     }
-
 
     override fun onResume() {
         super.onResume()
