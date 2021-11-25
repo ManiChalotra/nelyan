@@ -42,14 +42,17 @@ class LocationService : Service() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
-        {
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
             fusedLocationProviderClient.lastLocation
 
             fusedLocationProviderClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
+                .addOnSuccessListener { location: Location? ->
                     Log.e("location_changed", "==111=====${location}=======")
-                    if(location!=null) {
+                    if (location != null) {
                         val intent = Intent(ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST)
                         intent.putExtra(EXTRA_LOCATION, location)
                         LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
@@ -57,14 +60,11 @@ class LocationService : Service() {
                 }
         }
 
-            locationRequest = LocationRequest.create().apply {
-
+        locationRequest = LocationRequest.create().apply {
 
             interval = TimeUnit.SECONDS.toMillis(30)
 
-
             fastestInterval = TimeUnit.SECONDS.toMillis(30)
-
 
             maxWaitTime = TimeUnit.MINUTES.toMillis(2)
 
@@ -135,11 +135,18 @@ class LocationService : Service() {
         startService(Intent(applicationContext, LocationService::class.java))
 
         try {
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
 
         } catch (unlikely: SecurityException) {
             SharedUtil.saveLocationTrackingPref(this, false)
-            Log.e("location_changed", "Lost location permissions. Couldn't remove updates. $unlikely")
+            Log.e(
+                "location_changed",
+                "Lost location permissions. Couldn't remove updates. $unlikely"
+            )
         }
     }
 
@@ -160,11 +167,12 @@ class LocationService : Service() {
 
         } catch (unlikely: SecurityException) {
             SharedUtil.saveLocationTrackingPref(this, true)
-            Log.e("location_changed", "Lost location permissions. Couldn't remove updates. $unlikely")
+            Log.e(
+                "location_changed",
+                "Lost location permissions. Couldn't remove updates. $unlikely"
+            )
         }
     }
-
-
 
 
     inner class LocalBinder : Binder() {

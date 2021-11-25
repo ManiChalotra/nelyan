@@ -23,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
-
 interface JsonPlaceHolder {
 
     @Multipart
@@ -174,13 +173,11 @@ interface JsonPlaceHolder {
                  @Field("categoryId") categoryId: String?,
                  @Field("postId") postId: String?): Call<JsonObject>
 
-
     @Multipart
     @POST("imageUplaod")
     fun get_ImageUpload_Api(@Part("type") type: RequestBody?,
                             @Part("folder") folder: RequestBody?,
                             @Part image: ArrayList<MultipartBody.Part>?): Call<ImageUploadApiResponseModel>
-
 
     @GET("activityTpe")
     fun get_ActivityType_Api(@Header("security_key") securityKey: String?,
@@ -240,6 +237,7 @@ interface JsonPlaceHolder {
             //@Field("addEvent") addEvent: String,// sending json Array
                                               @Field("media") media: String,
                                               @Field("country_code") country_code: String
+
     ): Call<JsonObject>
 
     @POST("addPost")

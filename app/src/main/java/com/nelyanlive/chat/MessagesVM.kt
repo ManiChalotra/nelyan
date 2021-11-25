@@ -41,11 +41,17 @@ class MessagesVM : ViewModel() {
                 when (type) {
                     "chat" -> {
                         disconnectSocket()
-                        view.context.startActivity(Intent(view.context, Chat1Activity::class.java)
-                                        .putExtra("senderID", listMembers[position].user_id)
-                                        .putExtra("senderName", listMembers[position].userName)
-                                        .putExtra("senderImage", listMembers[position].userImage)
-                                        .putExtra("userId", userId)
+                        view.context.startActivity(
+                            Intent(view.context, Chat1Activity::class.java)
+                                .putExtra("senderID", listMembers[position].user_id)
+                                .putExtra("senderName", listMembers[position].userName)
+                                .putExtra("senderImage", listMembers[position].userImage)
+                                .putExtra("userId", userId)
+                        )
+
+                        Log.d(
+                            MessagesVM::class.java.name,
+                            "MessageUserImage   " + listMembers[position].userImage
                         )
                     }
                     "delete" -> {
@@ -249,7 +255,8 @@ class MessagesVM : ViewModel() {
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
 
-                listData.add(ChatListResponse(
+                listData.add(
+                    ChatListResponse(
                         json.getString("id"),
                         json.getString("senderId"),
                         json.getString("receiverId"),
@@ -273,7 +280,8 @@ class MessagesVM : ViewModel() {
                         json.getString("unreadcount"),
                         json.getString("readStatus")
 
-                ))
+                    )
+                )
             }
 
 
@@ -285,7 +293,9 @@ class MessagesVM : ViewModel() {
                     membersAdapter.addItems(listMembers)
                     Log.e("socket=sdffd==", listMembers.size.toString())
 
-                    if (listMembers.isEmpty()) noDataMessage.set("No messages found") else noDataMessage.set("")
+                    if (listMembers.isEmpty()) noDataMessage.set("No messages found") else noDataMessage.set(
+                        ""
+                    )
 
                 }
             }

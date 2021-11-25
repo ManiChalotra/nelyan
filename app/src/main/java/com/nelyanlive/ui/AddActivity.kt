@@ -44,11 +44,12 @@ import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickListener,
-        CoroutineScope, AgeGroupRepeatAdapter.OnAgeGroupRecyclerViewItemClickListener,
-        EventRepeatAdapter.OnEventRecyclerViewItemClickListener {
+    CoroutineScope, AgeGroupRepeatAdapter.OnAgeGroupRecyclerViewItemClickListener,
+    EventRepeatAdapter.OnEventRecyclerViewItemClickListener {
 
     private val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
     }
 
     private var imageSelectedType = ""
@@ -146,8 +147,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         listAge.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
 
         listEvent = ArrayList()
-        listEvent.add(ModelPOJO.AddEventDataModel("", "", "", "", "",
-                "", "", "", "", "", ""))
+        listEvent.add(
+            ModelPOJO.AddEventDataModel(
+                "", "", "", "", "",
+                "", "", "", "", "", ""
+            )
+        )
 
         // clicks for images
         ivImg1.setOnClickListener(this)
@@ -215,24 +220,94 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                         var eventErrorString = ""
                                         eventErrorNumber = 0
 
-                                        ageErrorString = getAgeError(listAge[listAge.size - 1].ageFrom, ageErrorString, getString(R.string.fill_age_group_from_in_previous_data), 1)
-                                        ageErrorString = getAgeError(listAge[listAge.size - 1].ageTo, ageErrorString, getString(R.string.fill_age_group_to), 2)
-                                        ageErrorString = getAgeError(listAge[listAge.size - 1].days, ageErrorString, getString(R.string.select_days_in_previous), 3)
-                                        ageErrorString = getAgeError(listAge[listAge.size - 1].timeFrom, ageErrorString, getString(R.string.select_from_time), 4)
-                                        ageErrorString = getAgeError(listAge[listAge.size - 1].timeTo, ageErrorString, getString(R.string.select_to_time), 5)
+                                        ageErrorString = getAgeError(
+                                            listAge[listAge.size - 1].ageFrom,
+                                            ageErrorString,
+                                            getString(R.string.fill_age_group_from_in_previous_data),
+                                            1
+                                        )
+                                        ageErrorString = getAgeError(
+                                            listAge[listAge.size - 1].ageTo,
+                                            ageErrorString,
+                                            getString(R.string.fill_age_group_to),
+                                            2
+                                        )
+                                        ageErrorString = getAgeError(
+                                            listAge[listAge.size - 1].days,
+                                            ageErrorString,
+                                            getString(R.string.select_days_in_previous),
+                                            3
+                                        )
+                                        ageErrorString = getAgeError(
+                                            listAge[listAge.size - 1].timeFrom,
+                                            ageErrorString,
+                                            getString(R.string.select_from_time),
+                                            4
+                                        )
+                                        ageErrorString = getAgeError(
+                                            listAge[listAge.size - 1].timeTo,
+                                            ageErrorString,
+                                            getString(R.string.select_to_time),
+                                            5
+                                        )
 
                                         if (clickPosition.equals("0")) {
 
                                         } else {
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].timeFrom, eventErrorString, getString(R.string.select_from_time), 5)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].timeTo, eventErrorString, getString(R.string.select_to_time), 6)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
-                                            eventErrorString = getEventError(listEvent[listEvent.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].image,
+                                                eventErrorString,
+                                                getString(R.string.select_image_in_previous),
+                                                1
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].name,
+                                                eventErrorString,
+                                                getString(R.string.fill_event_name_in_previous),
+                                                2
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].dateFrom,
+                                                eventErrorString,
+                                                getString(R.string.select_from_date_in_previous),
+                                                3
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].dateTo,
+                                                eventErrorString,
+                                                getString(R.string.select_to_date_in_previous),
+                                                4
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].timeFrom,
+                                                eventErrorString,
+                                                getString(R.string.select_from_time),
+                                                5
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].timeTo,
+                                                eventErrorString,
+                                                getString(R.string.select_to_time),
+                                                6
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].description,
+                                                eventErrorString,
+                                                getString(R.string.fill_description_in_previous),
+                                                7
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].price,
+                                                eventErrorString,
+                                                getString(R.string.fill_price_previous),
+                                                8
+                                            )
+                                            eventErrorString = getEventError(
+                                                listEvent[listEvent.size - 1].city,
+                                                eventErrorString,
+                                                getString(R.string.fill_city_previous),
+                                                9
+                                            )
                                         }
 
 //                                        var eventErrorString = ""
@@ -265,6 +340,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                 for (i in 0 until selectedImages.size) {
                                                     val json = JSONObject()
                                                     json.put("image", selectedImages[i])
+                                                    Log.d(
+                                                        AddActivity::class.java.name,
+                                                        "AddActivity_Image   " + json
+                                                    )
                                                     media.put(json)
                                                 }
 
@@ -272,18 +351,53 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                     addEvent = JSONArray()
                                                     for (i in 0 until listEvent.size) {
                                                         val json = JSONObject()
-                                                        json.put("image", listEvent[i].image.toString())
-                                                        json.put("name", listEvent[i].name.toString())
+                                                        json.put(
+                                                            "image",
+                                                            listEvent[i].image.toString()
+                                                        )
+                                                        json.put(
+                                                            "name",
+                                                            listEvent[i].name.toString()
+                                                        )
                                                         json.put("file_type", "image")
-                                                        json.put("date_from", listEvent[i].dateFrom.toString())
-                                                        json.put("date_to", listEvent[i].dateTo.toString())
-                                                        json.put("time_from", listEvent[i].timeFrom.toString())
+                                                        json.put(
+                                                            "date_from",
+                                                            listEvent[i].dateFrom.toString()
+                                                        )
+                                                        json.put(
+                                                            "date_to",
+                                                            listEvent[i].dateTo.toString()
+                                                        )
+                                                        json.put(
+                                                            "time_from",
+                                                            listEvent[i].timeFrom.toString()
+                                                        )
                                                         json.put("time_to", listEvent[i].timeTo)
-                                                        json.put("description", listEvent[i].description.toString())
-                                                        json.put("price", listEvent[i].price.toString())
-                                                        json.put("city", listEvent[i].city.toString())
-                                                        json.put("lat", listEvent[i].lati.toString())
-                                                        json.put("lng", listEvent[i].longi.toString())
+                                                        json.put(
+                                                            "description",
+                                                            listEvent[i].description.toString()
+                                                        )
+                                                        json.put(
+                                                            "price",
+                                                            listEvent[i].price.toString()
+                                                        )
+                                                        json.put(
+                                                            "city",
+                                                            listEvent[i].city.toString()
+                                                        )
+                                                        json.put(
+                                                            "lat",
+                                                            listEvent[i].lati.toString()
+                                                        )
+                                                        json.put(
+                                                            "lng",
+                                                            listEvent[i].longi.toString()
+                                                        )
+
+                                                        Log.d(
+                                                            AddActivity::class.java.name,
+                                                            "AddActivity_addevent  " + json
+                                                        )
                                                         addEvent.put(json)
                                                     }
                                                 }
@@ -299,7 +413,17 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                         json.put("time_to", listAge[i].timeTo)
                                                         json.put("time_to", listAge[i].timeTo)
                                                         json.put("time_to", listAge[i].timeTo)
+                                                        Log.d(
+                                                            AddActivity::class.java.name,
+                                                            "AddActivity_agegroup_string  " + ageGroup!!.toString()
+                                                        )
+
+                                                        Log.d(
+                                                            AddActivity::class.java.name,
+                                                            "AddActivity_agegroup  " + json
+                                                        )
                                                         ageGroup.put(json)
+
                                                     }
                                                 }
                                                 hitFinallyActivityAddPostApi()
@@ -339,7 +463,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         }
     }
 
-    private fun getEventError(ageFrom: String?, eventErrorString: String, s: String, i: Int): String {
+    private fun getEventError(
+        ageFrom: String?,
+        eventErrorString: String,
+        s: String,
+        i: Int
+    ): String {
 
         return when {
             ageFrom.isNullOrBlank() -> when {
@@ -358,8 +487,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private fun showPlacePicker(requestCode: Int) {
         Places.initialize(applicationContext, googleMapKey)
-        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        val fields: List<Place.Field> =
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent: Intent =
+            Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, requestCode)
     }
 
@@ -376,7 +507,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         addressLatitude = place.latLng?.latitude.toString()
                         addressLongitude = place.latLng?.longitude.toString()
                         val geocoder = Geocoder(this, Locale.getDefault())
-                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        val list = geocoder.getFromLocation(
+                            place.latLng?.latitude!!.toDouble(),
+                            place.latLng?.longitude!!.toDouble(),
+                            1
+                        )
                         cityName = if (!list[0].locality.isNullOrBlank()) {
                             list[0].locality
                         } else {
@@ -393,7 +528,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         updateEventList[pos].longi = cityLongitude
 
                         val geocoder = Geocoder(this, Locale.getDefault())
-                        val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                        val list = geocoder.getFromLocation(
+                            place.latLng?.latitude!!.toDouble(),
+                            place.latLng?.longitude!!.toDouble(),
+                            1
+                        )
                         updateEventList[pos].city = if (!list[0].locality.isNullOrBlank()) {
                             list[0].locality
                         } else {
@@ -456,7 +595,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         }
     }
 
-    override fun cityAddEvent(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int, city: TextView) {
+    override fun cityAddEvent(
+        list: ArrayList<ModelPOJO.AddEventDataModel>,
+        position: Int,
+        city: TextView
+    ) {
         updateEventList = list
         pos = position
         showPlacePicker(addEventRequestCode)
@@ -491,7 +634,10 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     }
 
     override fun onRemoveEventItem(position: Int) {
-        Log.d(AddActivity::class.java.name, "OnRemoveClick   " + position + "clickPosition   " + clickPosition)
+        Log.d(
+            AddActivity::class.java.name,
+            "OnRemoveClick   " + position + "clickPosition   " + clickPosition
+        )
         clickPosition = position.toString()
         addEventRepeatAdapter.notifyItemChanged(position)
 
@@ -527,14 +673,21 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 myCustomToast(getString(R.string.fill_city_previous))
             }
             else -> {
-                list.add(ModelPOJO.AddEventDataModel("", "", "", "", "", "",
-                        "", "", "", "", ""))
+                list.add(
+                    ModelPOJO.AddEventDataModel(
+                        "", "", "", "", "", "",
+                        "", "", "", "", ""
+                    )
+                )
                 addEventRepeatAdapter.notifyDataSetChanged()
             }
         }
     }
 
-    override fun addCameraGalleryImage(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
+    override fun addCameraGalleryImage(
+        list: ArrayList<ModelPOJO.AddEventDataModel>,
+        position: Int
+    ) {
         imageSelectedType = "4"
         eventPhotoPosition = position
         checkPermission(this)
@@ -542,7 +695,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     private fun hitTypeActivity() {
         launch(Dispatchers.Main.immediate) {
-            authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            authKey =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.sendActivityTypeData(security_key, authKey)
         }
     }
@@ -551,100 +705,104 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     val typeId: ArrayList<String> = ArrayList()
 
     private fun checkMvvmResponse() {
-        appViewModel.observeActivityTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    val jsonObject = JSONObject(response.body().toString())
-                    val jsonArray = jsonObject.getJSONArray("data")
-                    type.add("")
-                    typeId.add("")
-                    for (i in 0 until jsonArray.length()) {
-                        val name = jsonArray.getJSONObject(i).get("name").toString()
-                        val idd = jsonArray.getJSONObject(i).get("id").toString()
-                        type.add(name)
-                        typeId.add(idd)
-                    }
-                    val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, type as List<String>)
-                    trader_type.adapter = arrayAdapter1
-                    trader_type.onItemSelectedListener = object : OnItemSelectedListener {
-                        override fun onItemSelected(
+        appViewModel.observeActivityTypeResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        val jsonObject = JSONObject(response.body().toString())
+                        val jsonArray = jsonObject.getJSONArray("data")
+                        type.add("")
+                        typeId.add("")
+                        for (i in 0 until jsonArray.length()) {
+                            val name = jsonArray.getJSONObject(i).get("name").toString()
+                            val idd = jsonArray.getJSONObject(i).get("id").toString()
+                            type.add(name)
+                            typeId.add(idd)
+                        }
+                        val arrayAdapter1 =
+                            ArrayAdapter(this, R.layout.customspinner, type as List<String>)
+                        trader_type.adapter = arrayAdapter1
+                        trader_type.onItemSelectedListener = object : OnItemSelectedListener {
+                            override fun onItemSelected(
                                 parent: AdapterView<*>?,
                                 view: View?,
                                 position: Int,
                                 id: Long
-                        ) {
-                            activityTypeId = typeId[position]
-                        }
+                            ) {
+                                activityTypeId = typeId[position]
+                            }
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+                            }
                         }
                     }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
         // add post for activity
-        appViewModel.observe_addPostActivity_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
-                progressDialog.hidedialog()
-                finishAffinity()
-                OpenActivity(HomeActivity::class.java)
-            } else {
-                progressDialog.hidedialog()
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+        appViewModel.observe_addPostActivity_Response()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    Log.d("addPostActivityResopnse", "-----------" + Gson().toJson(response.body()))
+                    progressDialog.hidedialog()
+                    finishAffinity()
+                    OpenActivity(HomeActivity::class.java)
+                } else {
+                    progressDialog.hidedialog()
+                    ErrorBodyResponse(response, this, null)
+                }
+            })
 
         // for imageUpload api
-        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeUploadImageResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
 
 
-            if (response!!.isSuccessful && response.code() == 200) {
-                progressDialog.hidedialog()
-                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
-                if (response.body() != null) {
-                    if (response.body()!!.data != null) {
-                        val image = response.body()!!.data!![0].image.toString()
+                if (response!!.isSuccessful && response.code() == 200) {
+                    progressDialog.hidedialog()
+                    Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                    if (response.body() != null) {
+                        if (response.body()!!.data != null) {
+                            val image = response.body()!!.data!![0].image.toString()
 
-                        when (imageSelectedType) {
+                            when (imageSelectedType) {
 
-                            "1" -> {
-                                isImageSelected = true
-                                selectedImages[0] = image
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                "1" -> {
+                                    isImageSelected = true
+                                    selectedImages[0] = image
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg1!!)
 
-                            }
-                            "2" -> {
-                                isImageSelected = true
-                                selectedImages[1] = image
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                }
+                                "2" -> {
+                                    isImageSelected = true
+                                    selectedImages[1] = image
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg2!!)
-                            }
-                            "3" -> {
-                                isImageSelected = true
-                                selectedImages[2] = image
+                                }
+                                "3" -> {
+                                    isImageSelected = true
+                                    selectedImages[2] = image
 
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg3!!)
+                                }
+                                "4" -> {
+                                    listEvent[eventPhotoPosition].image = image
+                                    addEventRepeatAdapter.notifyItemChanged(eventPhotoPosition)
+                                }
                             }
-                            "4" -> {
-                                listEvent[eventPhotoPosition].image = image
-                                addEventRepeatAdapter.notifyItemChanged(eventPhotoPosition)
-                            }
-                        }
-                        imageSelectedType = ""
+                            imageSelectedType = ""
 
+                        }
                     }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
@@ -672,13 +830,51 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
         Log.d(AddActivity::class.java.name, "AddActivity_Age   " + minage + "  " + maxage)
         if (clickPosition.equals("0")) {
-            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
-                    descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-                    "", media.toString(), countryCodee, typeEmpty, minage, maxage)
+            appViewModel.send_addPostActivity_Data(
+                security_key,
+                authKey,
+                "1",
+                activityTypeId,
+                shopName,
+                activityName,
+                descp,
+                phonee,
+                cityAddress,
+                cityName,
+                website,
+                addressLatitude,
+                addressLongitude,
+                ageGroup.toString(),
+                "",
+                media.toString(),
+                countryCodee,
+                typeEmpty,
+                minage,
+                maxage
+            )
         } else {
-            appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
-                    descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-                    addEvent.toString(), media.toString(), countryCodee, typeEmpty, minage, maxage)
+            appViewModel.send_addPostActivity_Data(
+                security_key,
+                authKey,
+                "1",
+                activityTypeId,
+                shopName,
+                activityName,
+                descp,
+                phonee,
+                cityAddress,
+                cityName,
+                website,
+                addressLatitude,
+                addressLongitude,
+                ageGroup.toString(),
+                addEvent.toString(),
+                media.toString(),
+                countryCodee,
+                typeEmpty,
+                minage,
+                maxage
+            )
         }
 //        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
 //                descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),

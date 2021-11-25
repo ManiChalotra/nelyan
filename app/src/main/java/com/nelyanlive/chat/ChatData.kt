@@ -19,6 +19,4 @@ data class ChatData(
     var myID: String = "",
     var isFlag: String = "",
     var dateShown: Boolean = false
-
-
 ) : AbstractModel()

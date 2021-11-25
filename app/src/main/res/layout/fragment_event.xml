@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragments.EventFragment">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/eventProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/eventProgressBar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
     <LinearLayout
         android:id="@+id/ll_filter"
@@ -41,35 +39,33 @@
             android:paddingBottom="@dimen/_2sdp"
             android:text="@string/filter"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp"
-            />
+            android:textSize="@dimen/_10sdp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="start"
             android:layout_weight="0"
-            android:visibility="gone"
             android:background="@drawable/text_outlinebg"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/trader_type"
                 android:layout_width="120dp"
-                android:layout_marginTop="-10dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:paddingTop="-15dp"
+                android:layout_marginTop="-10dp"
                 android:background="@android:color/transparent"
                 android:gravity="start"
-                android:spinnerMode="dropdown"
-                />
+                android:paddingTop="-15dp"
+                android:spinnerMode="dropdown" />
 
             <ImageView
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:src="@drawable/down_arrow" />
 
         </LinearLayout>
@@ -91,13 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/_14sdp"
-            android:visibility="gone"
-            android:textColor="@color/black"
             android:fontFamily="@font/regular"
-            android:text="@string/no_event_found"/>
+            android:text="@string/no_event_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone" />
     </RelativeLayout>
-
 
 
 </RelativeLayout>

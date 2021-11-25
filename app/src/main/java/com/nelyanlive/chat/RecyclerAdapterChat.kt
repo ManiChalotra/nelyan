@@ -10,8 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.BR
 
-class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int,@LayoutRes val layoutId3: Int,@LayoutRes val layoutId4: Int) :
-        RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
+class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int,@LayoutRes val layoutId3: Int,@LayoutRes val layoutId4: Int) : RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
 
     private val items = mutableListOf<T>()
     private var inflater: LayoutInflater? = null
@@ -139,10 +138,7 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
         } else {
             if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
         }
-
     }
-
-
 
     override fun getItemCount(): Int = items.size
 

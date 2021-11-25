@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragments.HomeFragment">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/homeFargProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/homeFargProgressBar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
     <include
-         layout="@layout/tookbar"
-         android:id="@+id/toolbar"
-         android:visibility="gone"
-        />
+        android:id="@+id/toolbar"
+        layout="@layout/tookbar"
+        android:visibility="gone" />
 
 
     <androidx.recyclerview.widget.RecyclerView

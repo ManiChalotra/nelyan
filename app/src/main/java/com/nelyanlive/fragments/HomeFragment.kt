@@ -37,15 +37,12 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
     private val job = Job()
 
-
     private  var listener:CommunicationListner?= null
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-
     private val dataList by lazy { ArrayList<HomeModal>() }
-
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {

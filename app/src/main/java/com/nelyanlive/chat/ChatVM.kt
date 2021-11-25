@@ -65,7 +65,6 @@ class ChatVM : ViewModel() {
 
     fun onClick(view: View, s: String) {
         when (s) {
-
             "ivSend" -> {
                 if (message.get().toString().isEmpty()) {
                     // Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
@@ -434,7 +433,6 @@ class ChatVM : ViewModel() {
                 }
             }
         }
-
     }
 
     private fun connectUser() {
@@ -449,7 +447,6 @@ class ChatVM : ViewModel() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     var mySeen = false
