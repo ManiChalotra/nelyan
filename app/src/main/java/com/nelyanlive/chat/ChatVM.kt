@@ -50,7 +50,6 @@ class ChatVM : ViewModel() {
 
         chatAdapter.setOnItemClick(object : RecyclerAdapterChat.OnItemClick {
             override fun onClick(view: View, position: Int, type: String) {
-
                 when (type) {
                     "fullscreen" -> {
                         // disconnectSocket()
@@ -58,7 +57,6 @@ class ChatVM : ViewModel() {
                         (view.context as Activity).startActivity(
                                 Intent(view.context, FullScreen::class.java)
                                         .putExtra("image", listChat[position].message))
-
                     }
                 }
             }
@@ -86,7 +84,6 @@ class ChatVM : ViewModel() {
             //encoding
             val ps: String = message.get().toString()
             val tmp = Base64.encodeBytes(ps.toByteArray())
-
 
             json.put("senderId", userId)
             json.put("receiverId", senderID)
@@ -129,15 +126,11 @@ class ChatVM : ViewModel() {
 
     fun sendMessage(view: View, rv: RecyclerView) {
         rvChat = rv
-
         if (message.get().toString().trim().isEmpty()) {
-
             Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
-
         } else {
             sendChatMessage()
         }
-
     }
 
     fun connectSocket(context: Context) {
@@ -180,9 +173,7 @@ class ChatVM : ViewModel() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
 
     fun disconnectSocket() {
         socket.disconnect()
@@ -205,7 +196,6 @@ class ChatVM : ViewModel() {
         socket.off("delete_data", deleteData)
         socket.off("seen_unseen", seenMessages)
         socket.off("seen_unseen_msg", seenMessages)
-
 
     }
 
@@ -277,12 +267,10 @@ class ChatVM : ViewModel() {
                         } else {
                             checkDateCompare(json.getString("created"), listData[i - 1].created)
                         }
-
                 ))
             }
 
             GlobalScope.launch {
-
                 withContext(Dispatchers.Main) {
                     listChat.clear()
                     listChat.addAll(listData)
@@ -295,20 +283,16 @@ class ChatVM : ViewModel() {
                     if (listChat.isEmpty()) noDataMessage.set("No chat found") else {
                         noDataMessage.set("")
                     }
-
                 }
             }
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         setSeenStatus()
-
     }
 
     private fun checkDateCompare(created: String, created1: String): Boolean {
-
 
         val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
         val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
@@ -325,9 +309,7 @@ class ChatVM : ViewModel() {
 
         if ("" == json.getString("userId")) block = json.getString("block_data")
 
-
     }
-
 
     private val seenMessages = Emitter.Listener {
 
@@ -485,13 +467,11 @@ class ChatVM : ViewModel() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun getUserChat() {
         val json = JSONObject()
         try {
-
             chatRoom = if (userId.toInt() < senderID.toInt()) {
                 "$userId$senderID"
             } else {
@@ -500,14 +480,11 @@ class ChatVM : ViewModel() {
             json.put("senderId", userId)
             json.put("receiverId", senderID)
             socket.emit("get_message", json)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     lateinit var dialog: Dialog
-
 
 }

@@ -90,8 +90,8 @@ interface JsonPlaceHolder {
     @POST("addPost_fav")
     @FormUrlEncoded
     fun addFavouritePost(@Header("security_key") securityKey: String?,
-                     @Header("auth_key") authKey: String?,
-                     @Field("postId") postId: String?,  @Field("type") type: String? ): Call<JsonObject>
+                         @Header("auth_key") authKey: String?,
+                         @Field("postId") postId: String?, @Field("type") type: String?): Call<JsonObject>
 
     @POST("post_detail")
     @FormUrlEncoded
@@ -150,8 +150,8 @@ interface JsonPlaceHolder {
     @POST("switchAccount")
     @FormUrlEncoded
     fun switchAccount(@Header("security_key") securityKey: String?,
-                                     @Header("auth_key") auth_key: String?,
-                                     @Field("type") type: String?): Call<JsonObject>
+                      @Header("auth_key") auth_key: String?,
+                      @Field("type") type: String?): Call<JsonObject>
 
     @POST("change_password")
     @FormUrlEncoded
@@ -170,9 +170,9 @@ interface JsonPlaceHolder {
     @POST("delete_ad")
     @FormUrlEncoded
     fun deleteAd(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") auth_key: String?,
-                           @Field("categoryId") categoryId: String?,
-                           @Field("postId") postId: String?): Call<JsonObject>
+                 @Header("auth_key") auth_key: String?,
+                 @Field("categoryId") categoryId: String?,
+                 @Field("postId") postId: String?): Call<JsonObject>
 
 
     @Multipart
@@ -216,166 +216,168 @@ interface JsonPlaceHolder {
                                  @Field("ageGroup") ageGroup: String,// sending json Array
                                  @Field("addEvent") addEvent: String,// sending json Array
                                  @Field("media") media: String,// send json Array
-                                 @Field("country_code") country_code: String
+                                 @Field("country_code") country_code: String,
+                                 @Field("minAge") minage: String,
+                                 @Field("maxAge") maxage: String
     ): Call<JsonObject>
 
     @POST("addPost")
     @FormUrlEncoded
     fun get_addPOSt_withoutevent_Activity_Api(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("website") website: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 @Field("ageGroup") ageGroup: String,
-                                 //@Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,
-                                 @Field("country_code") country_code: String
+                                              @Header("auth_key") auth_key: String?,
+                                              @Field("type") type: String,
+                                              @Field("activity_type") activity_type: String,
+                                              @Field("shop_name") shop_name: String,
+                                              @Field("activity_name") activity_name: String,
+                                              @Field("description") description: String,
+                                              @Field("phone") phone: String,
+                                              @Field("address") address: String,
+                                              @Field("city") city: String,
+                                              @Field("website") website: String,
+                                              @Field("latitude") latitude: String,
+                                              @Field("longitude") longitude: String,
+                                              @Field("ageGroup") ageGroup: String,
+            //@Field("addEvent") addEvent: String,// sending json Array
+                                              @Field("media") media: String,
+                                              @Field("country_code") country_code: String
     ): Call<JsonObject>
 
     @POST("addPost")
     @FormUrlEncoded
     fun get_addPOSt_withoutevent_age_Activity_Api(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("website") website: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 //@Field("ageGroup") ageGroup: String,// sending json Array
-                                 //@Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,// send json Array
-                                 @Field("country_code") country_code: String
+                                                  @Header("auth_key") auth_key: String?,
+                                                  @Field("type") type: String,
+                                                  @Field("activity_type") activity_type: String,
+                                                  @Field("shop_name") shop_name: String,
+                                                  @Field("activity_name") activity_name: String,
+                                                  @Field("description") description: String,
+                                                  @Field("phone") phone: String,
+                                                  @Field("address") address: String,
+                                                  @Field("city") city: String,
+                                                  @Field("website") website: String,
+                                                  @Field("latitude") latitude: String,
+                                                  @Field("longitude") longitude: String,
+            //@Field("ageGroup") ageGroup: String,// sending json Array
+            //@Field("addEvent") addEvent: String,// sending json Array
+                                                  @Field("media") media: String,// send json Array
+                                                  @Field("country_code") country_code: String
     ): Call<JsonObject>
 
     @POST("addPost")
     @FormUrlEncoded
     fun get_addPOSt_without_age_Activity_Api(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("website") website: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 //@Field("ageGroup") ageGroup: String,// sending json Array
-                                 @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("media") media: String,// send json Array
-                                 @Field("country_code") country_code: String
+                                             @Header("auth_key") auth_key: String?,
+                                             @Field("type") type: String,
+                                             @Field("activity_type") activity_type: String,
+                                             @Field("shop_name") shop_name: String,
+                                             @Field("activity_name") activity_name: String,
+                                             @Field("description") description: String,
+                                             @Field("phone") phone: String,
+                                             @Field("address") address: String,
+                                             @Field("city") city: String,
+                                             @Field("website") website: String,
+                                             @Field("latitude") latitude: String,
+                                             @Field("longitude") longitude: String,
+            //@Field("ageGroup") ageGroup: String,// sending json Array
+                                             @Field("addEvent") addEvent: String,// sending json Array
+                                             @Field("media") media: String,// send json Array
+                                             @Field("country_code") country_code: String
     ): Call<JsonObject>
 
     @POST("edit_myadd")
     @FormUrlEncoded
     fun editMyaddActivity(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("postId") postId: String,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("website") website: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 @Field("ageGroup") ageGroup: String,// sending json Array
-                                 @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("country_code") country_code: String,
-                                 @Field("image1") image1: String,
-                                 @Field("image2") image2: String,
-                                 @Field("image3") image3: String
+                          @Header("auth_key") auth_key: String?,
+                          @Field("postId") postId: String,
+                          @Field("type") type: String,
+                          @Field("activity_type") activity_type: String,
+                          @Field("shop_name") shop_name: String,
+                          @Field("activity_name") activity_name: String,
+                          @Field("description") description: String,
+                          @Field("website") website: String,
+                          @Field("phone") phone: String,
+                          @Field("address") address: String,
+                          @Field("city") city: String,
+                          @Field("latitude") latitude: String,
+                          @Field("longitude") longitude: String,
+                          @Field("ageGroup") ageGroup: String,// sending json Array
+                          @Field("addEvent") addEvent: String,// sending json Array
+                          @Field("country_code") country_code: String,
+                          @Field("image1") image1: String,
+                          @Field("image2") image2: String,
+                          @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("edit_myadd")
     @FormUrlEncoded
     fun editMyaddActivitywithoutEvent(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("postId") postId: String,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("website") website: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                 @Field("ageGroup") ageGroup: String,// sending json Array
-                                // @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("country_code") country_code: String,
-                                 @Field("image1") image1: String,
-                                 @Field("image2") image2: String,
-                                 @Field("image3") image3: String
+                                      @Header("auth_key") auth_key: String?,
+                                      @Field("postId") postId: String,
+                                      @Field("type") type: String,
+                                      @Field("activity_type") activity_type: String,
+                                      @Field("shop_name") shop_name: String,
+                                      @Field("activity_name") activity_name: String,
+                                      @Field("description") description: String,
+                                      @Field("website") website: String,
+                                      @Field("phone") phone: String,
+                                      @Field("address") address: String,
+                                      @Field("city") city: String,
+                                      @Field("latitude") latitude: String,
+                                      @Field("longitude") longitude: String,
+                                      @Field("ageGroup") ageGroup: String,// sending json Array
+            // @Field("addEvent") addEvent: String,// sending json Array
+                                      @Field("country_code") country_code: String,
+                                      @Field("image1") image1: String,
+                                      @Field("image2") image2: String,
+                                      @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("edit_myadd")
     @FormUrlEncoded
     fun editMyaddActivitywithoutAge(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("postId") postId: String,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("website") website: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                // @Field("ageGroup") ageGroup: String,// sending json Array
-                                 @Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("country_code") country_code: String,
-                                 @Field("image1") image1: String,
-                                 @Field("image2") image2: String,
-                                 @Field("image3") image3: String
+                                    @Header("auth_key") auth_key: String?,
+                                    @Field("postId") postId: String,
+                                    @Field("type") type: String,
+                                    @Field("activity_type") activity_type: String,
+                                    @Field("shop_name") shop_name: String,
+                                    @Field("activity_name") activity_name: String,
+                                    @Field("description") description: String,
+                                    @Field("website") website: String,
+                                    @Field("phone") phone: String,
+                                    @Field("address") address: String,
+                                    @Field("city") city: String,
+                                    @Field("latitude") latitude: String,
+                                    @Field("longitude") longitude: String,
+            // @Field("ageGroup") ageGroup: String,// sending json Array
+                                    @Field("addEvent") addEvent: String,// sending json Array
+                                    @Field("country_code") country_code: String,
+                                    @Field("image1") image1: String,
+                                    @Field("image2") image2: String,
+                                    @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("edit_myadd")
     @FormUrlEncoded
     fun editMyaddActivitywithoutAgeEvent(@Header("security_key") securityKey: String?,
-                                 @Header("auth_key") auth_key: String?,
-                                 @Field("postId") postId: String,
-                                 @Field("type") type: String,
-                                 @Field("activity_type") activity_type: String,
-                                 @Field("shop_name") shop_name: String,
-                                 @Field("activity_name") activity_name: String,
-                                 @Field("description") description: String,
-                                 @Field("website") website: String,
-                                 @Field("phone") phone: String,
-                                 @Field("address") address: String,
-                                 @Field("city") city: String,
-                                 @Field("latitude") latitude: String,
-                                 @Field("longitude") longitude: String,
-                                // @Field("ageGroup") ageGroup: String,// sending json Array
-                                 //@Field("addEvent") addEvent: String,// sending json Array
-                                 @Field("country_code") country_code: String,
-                                 @Field("image1") image1: String,
-                                 @Field("image2") image2: String,
-                                 @Field("image3") image3: String
+                                         @Header("auth_key") auth_key: String?,
+                                         @Field("postId") postId: String,
+                                         @Field("type") type: String,
+                                         @Field("activity_type") activity_type: String,
+                                         @Field("shop_name") shop_name: String,
+                                         @Field("activity_name") activity_name: String,
+                                         @Field("description") description: String,
+                                         @Field("website") website: String,
+                                         @Field("phone") phone: String,
+                                         @Field("address") address: String,
+                                         @Field("city") city: String,
+                                         @Field("latitude") latitude: String,
+                                         @Field("longitude") longitude: String,
+            // @Field("ageGroup") ageGroup: String,// sending json Array
+            //@Field("addEvent") addEvent: String,// sending json Array
+                                         @Field("country_code") country_code: String,
+                                         @Field("image1") image1: String,
+                                         @Field("image2") image2: String,
+                                         @Field("image3") image3: String
     ): Call<JsonObject>
 
     @POST("addPost")
@@ -402,64 +404,64 @@ interface JsonPlaceHolder {
     @POST("addPost")
     @FormUrlEncoded
     fun getAddTraderPostApiWithoutProduct(@Header("security_key") securityKey: String?,
-                            @Header("auth_key") auth_key: String?,
-                            @Field("type") type: String,
-                            @Field("trader_type") traderType: String,
-                            @Field("shop_name") shop_name: String,
-                            @Field("description") description: String,
-                            @Field("country_code") country_code: String,
-                            @Field("phone") phone: String,
-                            @Field("address") address: String,
-                            @Field("city") city: String,
-                            @Field("latitude") latitude: String,
-                            @Field("longitude") longitude: String,
-                            @Field("email") email: String,
-                            @Field("website") website: String,
-                            @Field("selectDay") selectDay: String,// sending json Array
-                            //@Field("productDetail") productDetail: String,// sending json Array
-                            @Field("media") media: String// send json Array
+                                          @Header("auth_key") auth_key: String?,
+                                          @Field("type") type: String,
+                                          @Field("trader_type") traderType: String,
+                                          @Field("shop_name") shop_name: String,
+                                          @Field("description") description: String,
+                                          @Field("country_code") country_code: String,
+                                          @Field("phone") phone: String,
+                                          @Field("address") address: String,
+                                          @Field("city") city: String,
+                                          @Field("latitude") latitude: String,
+                                          @Field("longitude") longitude: String,
+                                          @Field("email") email: String,
+                                          @Field("website") website: String,
+                                          @Field("selectDay") selectDay: String,// sending json Array
+            //@Field("productDetail") productDetail: String,// sending json Array
+                                          @Field("media") media: String// send json Array
     ): Call<JsonObject>
 
     @POST("addPost")
     @FormUrlEncoded
     fun getAddTraderPostApiWithoutDays(@Header("security_key") securityKey: String?,
-                            @Header("auth_key") auth_key: String?,
-                            @Field("type") type: String,
-                            @Field("trader_type") traderType: String,
-                            @Field("shop_name") shop_name: String,
-                            @Field("description") description: String,
-                            @Field("country_code") country_code: String,
-                            @Field("phone") phone: String,
-                            @Field("address") address: String,
-                            @Field("city") city: String,
-                            @Field("latitude") latitude: String,
-                            @Field("longitude") longitude: String,
-                            @Field("email") email: String,
-                            @Field("website") website: String,
-                            //@Field("selectDay") selectDay: String,// sending json Array
-                            @Field("productDetail") productDetail: String,// sending json Array
-                            @Field("media") media: String// send json Array
+                                       @Header("auth_key") auth_key: String?,
+                                       @Field("type") type: String,
+                                       @Field("trader_type") traderType: String,
+                                       @Field("shop_name") shop_name: String,
+                                       @Field("description") description: String,
+                                       @Field("country_code") country_code: String,
+                                       @Field("phone") phone: String,
+                                       @Field("address") address: String,
+                                       @Field("city") city: String,
+                                       @Field("latitude") latitude: String,
+                                       @Field("longitude") longitude: String,
+                                       @Field("email") email: String,
+                                       @Field("website") website: String,
+            //@Field("selectDay") selectDay: String,// sending json Array
+                                       @Field("productDetail") productDetail: String,// sending json Array
+                                       @Field("media") media: String// send json Array
     ): Call<JsonObject>
 
     @POST("addPost")
     @FormUrlEncoded
     fun getAddTraderPostApiWithoutDaysWithoutProduct(@Header("security_key") securityKey: String?,
-                            @Header("auth_key") auth_key: String?,
-                            @Field("type") type: String,
-                            @Field("trader_type") traderType: String,
-                            @Field("shop_name") shop_name: String,
-                            @Field("description") description: String,
-                            @Field("country_code") country_code: String,
-                            @Field("phone") phone: String,
-                            @Field("address") address: String,
-                            @Field("city") city: String,
-                            @Field("latitude") latitude: String,
-                            @Field("longitude") longitude: String,
-                            @Field("email") email: String,
-                            @Field("website") website: String,
-                            //@Field("selectDay") selectDay: String,// sending json Array
-                            //@Field("productDetail") productDetail: String,// sending json Array
-                            @Field("media") media: String// send json Array
+                                                     @Header("auth_key") auth_key: String?,
+                                                     @Field("type") type: String,
+                                                     @Field("trader_type") traderType: String,
+                                                     @Field("shop_name") shop_name: String,
+                                                     @Field("description") description: String,
+                                                     @Field("country_code") country_code: String,
+                                                     @Field("phone") phone: String,
+                                                     @Field("address") address: String,
+                                                     @Field("city") city: String,
+                                                     @Field("latitude") latitude: String,
+                                                     @Field("longitude") longitude: String,
+                                                     @Field("email") email: String,
+                                                     @Field("website") website: String,
+            //@Field("selectDay") selectDay: String,// sending json Array
+            //@Field("productDetail") productDetail: String,// sending json Array
+                                                     @Field("media") media: String// send json Array
     ): Call<JsonObject>
 
 
@@ -501,7 +503,6 @@ interface JsonPlaceHolder {
                             @Field("media") media: String// send json Array
 
     ): Call<JsonObject>
-
 
 
     @FormUrlEncoded
@@ -556,50 +557,50 @@ interface JsonPlaceHolder {
     @FormUrlEncoded
     @POST("edit_myadd")
     fun editTraderPost_ApiWitoutProductandDay(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") auth_key: String?,
-                           @Field("type") type: String,
-                           @Field("trader_type") traderType: String,
-                           @Field("shop_name") shop_name: String,
-                           @Field("description") description: String,
-                           @Field("country_code") country_code: String,
-                           @Field("phone") phone: String,
-                           @Field("address") address: String,
-                           @Field("city") city: String,
-                           @Field("latitude") latitude: String,
-                           @Field("longitude") longitude: String,
-                           @Field("email") email: String,
-                           @Field("website") website: String,
-                           //@Field("selectDay") selectDay: String,// sending json Array
-                           //@Field("productDetail") productDetail: String,
-                           @Field("image1") image1: String,
-                           @Field("image2") image2: String,
-                           @Field("image3") image3: String,
-                           @Field("postId") postId: String
+                                              @Header("auth_key") auth_key: String?,
+                                              @Field("type") type: String,
+                                              @Field("trader_type") traderType: String,
+                                              @Field("shop_name") shop_name: String,
+                                              @Field("description") description: String,
+                                              @Field("country_code") country_code: String,
+                                              @Field("phone") phone: String,
+                                              @Field("address") address: String,
+                                              @Field("city") city: String,
+                                              @Field("latitude") latitude: String,
+                                              @Field("longitude") longitude: String,
+                                              @Field("email") email: String,
+                                              @Field("website") website: String,
+            //@Field("selectDay") selectDay: String,// sending json Array
+            //@Field("productDetail") productDetail: String,
+                                              @Field("image1") image1: String,
+                                              @Field("image2") image2: String,
+                                              @Field("image3") image3: String,
+                                              @Field("postId") postId: String
 
     ): Call<JsonObject>
 
     @FormUrlEncoded
     @POST("edit_myadd")
     fun editTraderPost_ApiwithoutDay(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") auth_key: String?,
-                           @Field("type") type: String,
-                           @Field("trader_type") traderType: String,
-                           @Field("shop_name") shop_name: String,
-                           @Field("description") description: String,
-                           @Field("country_code") country_code: String,
-                           @Field("phone") phone: String,
-                           @Field("address") address: String,
-                           @Field("city") city: String,
-                           @Field("latitude") latitude: String,
-                           @Field("longitude") longitude: String,
-                           @Field("email") email: String,
-                           @Field("website") website: String,
-                           //@Field("selectDay") selectDay: String,// sending json Array
-                           @Field("productDetail") productDetail: String,
-                           @Field("image1") image1: String,
-                           @Field("image2") image2: String,
-                           @Field("image3") image3: String,
-                           @Field("postId") postId: String
+                                     @Header("auth_key") auth_key: String?,
+                                     @Field("type") type: String,
+                                     @Field("trader_type") traderType: String,
+                                     @Field("shop_name") shop_name: String,
+                                     @Field("description") description: String,
+                                     @Field("country_code") country_code: String,
+                                     @Field("phone") phone: String,
+                                     @Field("address") address: String,
+                                     @Field("city") city: String,
+                                     @Field("latitude") latitude: String,
+                                     @Field("longitude") longitude: String,
+                                     @Field("email") email: String,
+                                     @Field("website") website: String,
+            //@Field("selectDay") selectDay: String,// sending json Array
+                                     @Field("productDetail") productDetail: String,
+                                     @Field("image1") image1: String,
+                                     @Field("image2") image2: String,
+                                     @Field("image3") image3: String,
+                                     @Field("postId") postId: String
 
     ): Call<JsonObject>
 
@@ -607,28 +608,27 @@ interface JsonPlaceHolder {
     @FormUrlEncoded
     @POST("edit_myadd")
     fun editTraderPost_ApiWitoutProduct(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") auth_key: String?,
-                           @Field("type") type: String,
-                           @Field("trader_type") traderType: String,
-                           @Field("shop_name") shop_name: String,
-                           @Field("description") description: String,
-                           @Field("country_code") country_code: String,
-                           @Field("phone") phone: String,
-                           @Field("address") address: String,
-                           @Field("city") city: String,
-                           @Field("latitude") latitude: String,
-                           @Field("longitude") longitude: String,
-                           @Field("email") email: String,
-                           @Field("website") website: String,
-                           @Field("selectDay") selectDay: String,// sending json Array
-                           //@Field("productDetail") productDetail: String,
-                           @Field("image1") image1: String,
-                           @Field("image2") image2: String,
-                           @Field("image3") image3: String,
-                           @Field("postId") postId: String
+                                        @Header("auth_key") auth_key: String?,
+                                        @Field("type") type: String,
+                                        @Field("trader_type") traderType: String,
+                                        @Field("shop_name") shop_name: String,
+                                        @Field("description") description: String,
+                                        @Field("country_code") country_code: String,
+                                        @Field("phone") phone: String,
+                                        @Field("address") address: String,
+                                        @Field("city") city: String,
+                                        @Field("latitude") latitude: String,
+                                        @Field("longitude") longitude: String,
+                                        @Field("email") email: String,
+                                        @Field("website") website: String,
+                                        @Field("selectDay") selectDay: String,// sending json Array
+            //@Field("productDetail") productDetail: String,
+                                        @Field("image1") image1: String,
+                                        @Field("image2") image2: String,
+                                        @Field("image3") image3: String,
+                                        @Field("postId") postId: String
 
     ): Call<JsonObject>
-
 
 
     @POST("social_login")
@@ -653,24 +653,24 @@ interface JsonPlaceHolder {
     @POST("TraderFilter")
     @FormUrlEncoded
     fun traderFilter_Api(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") authKey: String?,
-                           @Field("lat") lat: String?,
-                           @Field("long") longitude: String?,
-                           @Field("distance") distance: String?,
-                           @Field("name") name: String?,
-                           @Field("type") typeId: String?,
-                           @Field("address") address: String?): Call<JsonObject>
+                         @Header("auth_key") authKey: String?,
+                         @Field("lat") lat: String?,
+                         @Field("long") longitude: String?,
+                         @Field("distance") distance: String?,
+                         @Field("name") name: String?,
+                         @Field("type") typeId: String?,
+                         @Field("address") address: String?): Call<JsonObject>
 
     @POST("childCareFilter")
     @FormUrlEncoded
     fun childCareFilter_Api(@Header("security_key") securityKey: String?,
-                           @Header("auth_key") authKey: String?,
-                           @Field("lat") lat: String?,
-                           @Field("long") longitude: String?,
-                           @Field("distance") distance: String?,
-                           @Field("name") name: String?,
-                           @Field("address") address: String?,
-                            @Field("childCareId") childCareId: String? ): Call<JsonObject>
+                            @Header("auth_key") authKey: String?,
+                            @Field("lat") lat: String?,
+                            @Field("long") longitude: String?,
+                            @Field("distance") distance: String?,
+                            @Field("name") name: String?,
+                            @Field("address") address: String?,
+                            @Field("childCareId") childCareId: String?): Call<JsonObject>
 
     @POST("eventList")
     @FormUrlEncoded
@@ -729,24 +729,24 @@ interface JsonPlaceHolder {
     @POST("get_group_notification_status")
     @FormUrlEncoded
     fun getGroupMessagesNotification(@Header("security_key") securityKey: String?,
-                         @Header("auth_key") authKey: String?,
-                         @Field("groupId") groupId: String?): Call<JsonObject>
+                                     @Header("auth_key") authKey: String?,
+                                     @Field("groupId") groupId: String?): Call<JsonObject>
 
     @GET("getMessageStatus")
     fun getBadgeStatus(@Header("security_key") securityKey: String?,
-                         @Header("auth_key") authKey: String?): Call<JsonObject>
+                       @Header("auth_key") authKey: String?): Call<JsonObject>
 
     @PUT("group_noification_status")
     @FormUrlEncoded
     fun changeGroupMessagesNotification(@Header("security_key") securityKey: String?,
-                         @Header("auth_key") authKey: String?,
-                         @Field("groupId") groupId: String?,
-                         @Field("status") status: String?
+                                        @Header("auth_key") authKey: String?,
+                                        @Field("groupId") groupId: String?,
+                                        @Field("status") status: String?
     ): Call<JsonObject>
 
     @GET("get_chat_regulation")
     fun getChatRegulation(@Header("security_key") securityKey: String?,
-                         @Header("auth_key") authKey: String?
+                          @Header("auth_key") authKey: String?
 
     ): Call<JsonObject>
 
@@ -766,8 +766,8 @@ interface JsonPlaceHolder {
 
             httpClient.addInterceptor(Interceptor { chain ->
                 val request: Request = chain.request().newBuilder()
-                .addHeader("Accept", "application/json")
-                .build()
+                        .addHeader("Accept", "application/json")
+                        .build()
                 chain.proceed(request)
             })
 
@@ -786,7 +786,7 @@ interface JsonPlaceHolder {
             val response: Response = chain.proceed(request)
             if (response.message == "Unauthorized") {
 
-               val authorization = AllSharedPref.restoreString(AppController.getInstance(), "auth_key")
+                val authorization = AllSharedPref.restoreString(AppController.getInstance(), "auth_key")
 
 
                 if (!TextUtils.isEmpty(authorization)) {
@@ -803,7 +803,7 @@ interface JsonPlaceHolder {
 
                     val intent = Intent(AppController.getInstance(), LoginActivity::class.java)
                     intent.flags =
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     AppController.getInstance().startActivity(intent)
                 }
             }

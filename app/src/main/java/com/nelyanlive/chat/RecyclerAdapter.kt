@@ -50,7 +50,6 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
         this.onItemClick = onItemClick
     }
 
-
     private fun setAnimation(holder: RecyclerView.ViewHolder, position: Int) {
 
         if (orientationType == 1) {

@@ -860,12 +860,12 @@ class AppViewModel : ViewModel() {
 
     fun send_addPostActivity_Data(securityKey: String?, authkey: String?, type: String, activityType: String, shopname: String, activityName: String,
                                   description: String, phone: String, address: String, city: String, website: String, latitude: String, longitude: String,
-                                  ageGroup: String, addEvent: String, media: String, country_code: String, typeEmpty: String) {
+                                  ageGroup: String, addEvent: String, media: String, country_code: String, typeEmpty: String, minage: String, maxage: String) {
 
         when (typeEmpty) {
             "0" -> {
                 JsonPlaceHolder().get_addPOSt_Activity_Api(securityKey, authkey, type, activityType, shopname, activityName, description, phone, address, city, website,
-                        latitude, longitude, ageGroup, addEvent, media, country_code)
+                        latitude, longitude, ageGroup, addEvent, media, country_code, minage, maxage)
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                                 exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage

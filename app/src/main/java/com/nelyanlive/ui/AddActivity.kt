@@ -26,6 +26,7 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.ModelPOJO
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
+import kotlinx.android.synthetic.main.item_time_add_more.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -84,6 +85,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var authKey = ""
     private var addressLatitude = ""
     private var addressLongitude = ""
+    private var minage = ""
+    private var maxage = ""
 
     private var ageErrorNumber = 0
     private var eventErrorNumber = 0
@@ -176,6 +179,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             R.id.btnSubmit -> {
                 shopName = et_shopName.text.toString()
                 website = etWebsite.text.toString()
+                minage = edtAgeFrom.text.toString()
+                maxage = edtAgeTo.text.toString()
                 activityName = et_activityName.text.toString()
                 descp = et_description.text.toString()
                 phonee = et_phone.text.toString()
@@ -648,7 +653,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     }
 
     private fun hitFinallyActivityAddPostApi() {
-
+        Log.d(AddActivity::class.java.name, "AddActivity_hitfinallyApi   ")
         var typeEmpty = ""
         when {
             event && age -> {
@@ -665,14 +670,15 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             }
         }
 
+        Log.d(AddActivity::class.java.name, "AddActivity_Age   " + minage + "  " + maxage)
         if (clickPosition.equals("0")) {
             appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
                     descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-                    "", media.toString(), countryCodee, typeEmpty)
+                    "", media.toString(), countryCodee, typeEmpty, minage, maxage)
         } else {
             appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
                     descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-                    addEvent.toString(), media.toString(), countryCodee, typeEmpty)
+                    addEvent.toString(), media.toString(), countryCodee, typeEmpty, minage, maxage)
         }
 //        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
 //                descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
@@ -684,6 +690,4 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         super.onDestroy()
         job.cancel()
     }
-
-
 }

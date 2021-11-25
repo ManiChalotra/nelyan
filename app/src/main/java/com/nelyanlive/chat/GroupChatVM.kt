@@ -28,27 +28,27 @@ import org.java_websocket.util.Base64
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
-class GroupChatVM :ViewModel() {
+class GroupChatVM : ViewModel() {
 
     lateinit var socket: Socket
     lateinit var ctx: Context
     lateinit var rvChat: RecyclerView
-    var senderID =""
-    var userId =""
-    var groupName =""
-    var groupId =""
-    var notifyStatus ="0"
-    var block ="0"
+    var senderID = ""
+    var userId = ""
+    var groupName = ""
+    var groupId = ""
+    var notifyStatus = "0"
+    var block = "0"
 
-    var message : ObservableField<String> = ObservableField("")
+    var message: ObservableField<String> = ObservableField("")
 
-    var senderName : ObservableField<String> = ObservableField("")
+    var senderName: ObservableField<String> = ObservableField("")
 
-    var senderImage : ObservableField<String> = ObservableField("")
-    var noDataMessage : ObservableField<String> = ObservableField("")
+    var senderImage: ObservableField<String> = ObservableField("")
+    var noDataMessage: ObservableField<String> = ObservableField("")
 
-    val groupChatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left,R.layout.chat_text_right,R.layout.chat_image_right,R.layout.chat_image_left) }
-     val listChat by lazy { ArrayList<ChatData>() }
+    val groupChatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left, R.layout.chat_text_right, R.layout.chat_image_right, R.layout.chat_image_left) }
+    val listChat by lazy { ArrayList<ChatData>() }
 
     init {
 
@@ -58,10 +58,10 @@ class GroupChatVM :ViewModel() {
                 when (type) {
 
                     "delete" -> {
-                        dailogDelete(view.context,listChat[position].id,listChat[position].groupId,position)
+                        dailogDelete(view.context, listChat[position].id, listChat[position].groupId, position)
                     }
                     "flag" -> {
-                        showDailog(view.context,listChat[position].senderId,listChat[position].id,listChat[position].groupId)
+                        showDailog(view.context, listChat[position].senderId, listChat[position].id, listChat[position].groupId)
                     }
                     "chat" -> {
 
@@ -77,11 +77,14 @@ class GroupChatVM :ViewModel() {
 
                     }
                     "fullscreen" -> {
-                        (view.context as Activity).startActivity(Intent(view.context,FullScreen::class.java)
-                            .putExtra("image",listChat[position].message))
+                        (view.context as Activity).startActivity(Intent(view.context, FullScreen::class.java)
+                                .putExtra("image", listChat[position].message))
 
                     }
-                } } }) }
+                }
+            }
+        })
+    }
 
 
     fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
@@ -109,8 +112,8 @@ class GroupChatVM :ViewModel() {
 
             listChat.removeAt(position)
             groupChatAdapter.removeAtPosition(position)
-           // groupChatAdapter.notifyItemRemoved(position)
-            groupChatAdapter.notifyItemRangeChanged(position,listChat.size)
+            // groupChatAdapter.notifyItemRemoved(position)
+            groupChatAdapter.notifyItemRangeChanged(position, listChat.size)
 
 
         }
@@ -129,11 +132,9 @@ class GroupChatVM :ViewModel() {
         val etReport: EditText = dialog.findViewById(R.id.etReport)
         btnSubmit.setOnClickListener {
 
-            if(etReport.text.toString().trim().isEmpty())
-            {
-                Toast.makeText(ctx,"please enter message",Toast.LENGTH_SHORT).show()
-            }
-            else {
+            if (etReport.text.toString().trim().isEmpty()) {
+                Toast.makeText(ctx, "please enter message", Toast.LENGTH_SHORT).show()
+            } else {
                 dialog.dismiss()
                 val json = JSONObject()
                 try {
@@ -155,53 +156,36 @@ class GroupChatVM :ViewModel() {
         dialog.show()
     }
 
-    fun onClick(view: View, s:String)
-    {
-        when(s)
-        {
-
-
-            "ivSend"->{
-                if(message.get()!!.trim().isEmpty())
-                {
-                    Toast.makeText(view.context,view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    Toast.makeText(view.context,"enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
+    fun onClick(view: View, s: String) {
+        when (s) {
+            "ivSend" -> {
+                if (message.get()!!.trim().isEmpty()) {
+                    Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(view.context, "enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-
     fun sendChatMessage() {
 
         val json = JSONObject()
-        try
-        {
-
-
-
-
-
+        try {
             //encoding
             val ps: String = message.get().toString()
             val tmp = Base64.encodeBytes(ps.toByteArray())
 
-
             json.put("senderId", userId)
             json.put("groupName", groupName)
             json.put("messageType", 0)
-            json.put("message",tmp)
+            json.put("message", tmp)
 
-            Log.e("socket","=======$json")
+            Log.e("socket", "=======$json")
 
-            socket.emit("send_group_message",json)
+            socket.emit("send_group_message", json)
             message.set("")
-        }
-
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -209,8 +193,7 @@ class GroupChatVM :ViewModel() {
     fun sendChatImageMessage(str: String) {
 
         val json = JSONObject()
-        try
-        {
+        try {
             //encoding
             val ps: String = str
             val tmp = Base64.encodeBytes(ps.toByteArray())
@@ -220,61 +203,48 @@ class GroupChatVM :ViewModel() {
             json.put("messageType", 1)
             json.put("message", tmp)
 
-            Log.e("send_group_message","=======$json")
+            Log.e("send_group_message", "=======$json")
 
-            socket.emit("send_group_message",json)
+            socket.emit("send_group_message", json)
 
             message.set("")
-        }
-
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-
-    fun updateLocation(lat:String,long:String,city:String) {
+    fun updateLocation(lat: String, long: String, city: String) {
 
         val json = JSONObject()
-        try
-        {
+        try {
             json.put("latitude", lat)
             json.put("longitude", long)
             json.put("city", city)
             json.put("userId", userId)
 
-            Log.e("socket","=======$json")
-            socket.emit("update_location_user",json)
+            Log.e("socket", "=======$json")
+            socket.emit("update_location_user", json)
 
-        }
-
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun sendMessage(view: View, rv: RecyclerView)
-    {
+    fun sendMessage(view: View, rv: RecyclerView) {
         rvChat = rv
 
-        if(message.get().toString().trim().isEmpty())
-        {
-            Toast.makeText(view.context,view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
-        }
-        else {
+        if (message.get().toString().trim().isEmpty()) {
+            Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+        } else {
             sendChatMessage()
-
         }
-
     }
 
     fun connectSocket(context: Context) {
 
         Log.e("socket", "connectSocket connectSocket")
         ctx = context
-        try{
+        try {
             socket = IO.socket(socketBaseUrl)
             socket.on(Socket.EVENT_CONNECT, onConnect)
             socket.on(Socket.EVENT_DISCONNECT, onDisconnect)
@@ -295,8 +265,9 @@ class GroupChatVM :ViewModel() {
 
             Log.e("socket", "sfdafdsfdsfsdf")
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        catch (e :Exception){e.printStackTrace()}
 
     }
 
@@ -330,20 +301,20 @@ class GroupChatVM :ViewModel() {
     }
 
 
-    private val onDisconnect = Emitter.Listener  { Log.e("socket", "run: disconnect")  }
+    private val onDisconnect = Emitter.Listener { Log.e("socket", "run: disconnect") }
 
 
-    private val onConnectError = Emitter.Listener  { Log.e("socket", "run: onConnectError")  }
+    private val onConnectError = Emitter.Listener { Log.e("socket", "run: onConnectError") }
 
-    private val onConnectTimeout = Emitter.Listener  { Log.e("socket", "run: onConnectTimeout") }
+    private val onConnectTimeout = Emitter.Listener { Log.e("socket", "run: onConnectTimeout") }
 
 
-    private val connectListener = Emitter.Listener{
+    private val connectListener = Emitter.Listener {
         Log.e("socket", "chat   JOIN")
         Log.e("socket", it[0].toString())
     }
 
-    private val reportUser = Emitter.Listener{
+    private val reportUser = Emitter.Listener {
 
         Log.e("socket", "chat    reportUser")
         Log.e("socket", it[0].toString())
@@ -353,9 +324,10 @@ class GroupChatVM :ViewModel() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(ctx, "Message reported successfully", Toast.LENGTH_SHORT).show()
 
-            }}
+            }
+        }
     }
-    private val updatedLocation = Emitter.Listener{
+    private val updatedLocation = Emitter.Listener {
 
         Log.e("socket", "chat    reportUser")
         Log.e("socket", it[0].toString())
@@ -363,7 +335,7 @@ class GroupChatVM :ViewModel() {
 
     }
 
-    private val newMessage = Emitter.Listener{
+    private val newMessage = Emitter.Listener {
 
         Log.e("socket", "chat    newMessage")
         Log.e("socket", it[0].toString())
@@ -373,7 +345,7 @@ class GroupChatVM :ViewModel() {
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())
 
-            val listData : ArrayList<ChatData> = ArrayList()
+            val listData: ArrayList<ChatData> = ArrayList()
 
             //decoding
             val lineSep = System.getProperty("line.separator")
@@ -387,8 +359,8 @@ class GroupChatVM :ViewModel() {
                     json.getString("senderId"),
                     json.getString("receiverId"),
                     "",
-                json.getString("groupId"),
-                val3,
+                    json.getString("groupId"),
+                    val3,
                     json.getString("readStatus"),
                     json.getString("messageType"),
                     json.getString("deletedId"),
@@ -398,7 +370,7 @@ class GroupChatVM :ViewModel() {
                     json.getString("recieverImage"),
                     json.getString("senderName"),
                     json.getString("senderImage"),
-                    userId,"1"
+                    userId, "1"
 
             ))
             groupId = json.getString("groupId")
@@ -408,20 +380,22 @@ class GroupChatVM :ViewModel() {
                 withContext(Dispatchers.Main) {
 
                     listChat.addAll(listData)
-                    groupChatAdapter.addAtPosition(listChat,listChat.size-1)
+                    groupChatAdapter.addAtPosition(listChat, listChat.size - 1)
 
-                    rvChat.scrollToPosition(listChat.size-1)
+                    rvChat.scrollToPosition(listChat.size - 1)
                     Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
 
-                    if(listChat.isEmpty()) noDataMessage.set("No chat found") else{noDataMessage.set("")}
+                    if (listChat.isEmpty()) noDataMessage.set("No chat found") else {
+                        noDataMessage.set("")
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        catch (e:Exception)
-        {e.printStackTrace()}
 
     }
-    private val deleteData = Emitter.Listener{
+    private val deleteData = Emitter.Listener {
 
         Log.e("socket", "chat    deleteData")
         Log.e("socket", it[0].toString())
@@ -439,7 +413,8 @@ class GroupChatVM :ViewModel() {
                         groupChatAdapter.notifyItemRangeChanged(i, listChat.size)
                     }
                 }
-            }}
+            }
+        }
     }
 
     private fun connectUser() {
@@ -447,13 +422,13 @@ class GroupChatVM :ViewModel() {
         try {
             Log.e("socket=connectUser", userId)
             json.put("userId", userId)
-            socket.emit("connect_user",json)
+            socket.emit("connect_user", json)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
-        catch (e: Exception)
-        {e.printStackTrace()}
-
     }
+
     lateinit var dialog: Dialog
 }
