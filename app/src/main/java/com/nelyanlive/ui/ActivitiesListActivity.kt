@@ -25,6 +25,7 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.homeactivitylist.HomeAcitivityResponseData
 import com.nelyanlive.modals.homeactivitylist.HomeActivityResponse
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.filter_activity.*
 import kotlinx.android.synthetic.main.fragment_activity_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +68,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     private var latitude: String = "42.6026"
     private var longitude: String = "20.9030"
     private var locality: String = ""
-
+    var minage: String = ""
+    var maxage: String = ""
     override fun onResume() {
         super.onResume()
     }
@@ -94,7 +96,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
             if (tvFilter.text == getString(R.string.filter)) {
                 val i =
-                    Intent(this, ActivitiesFilterActivity::class.java).putExtra("name", getString(R.string.activity))
+                    Intent(this, ActivitiesFilterActivity::class.java).putExtra(
+                        "name",
+                        getString(R.string.activity)
+                    )
                 startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
             } else {
 
@@ -107,7 +112,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         appViewModel.sendFilterActivityListData(
                             security_key, authKey,
                             latitude, longitude, "", "", "",
-                            locality
+                            locality, minage, maxage
                         )
                         tv_userCityOrZipcode.text = locality
                         activity_list_progressbar?.showProgressBar()
@@ -153,7 +158,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
 
 
-                if(latitude.toDouble()!=0.0) {
+                if (latitude.toDouble() != 0.0) {
                     list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
 
                     locality = list[0].locality
@@ -175,7 +180,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 appViewModel.sendFilterActivityListData(
                                     security_key, authKey,
                                     latitude, longitude, "", "", "",
-                                    locality
+                                    locality, minage, maxage
                                 )
                                 activity_list_progressbar?.showProgressBar()
                             }
@@ -203,6 +208,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
                 tvFilter.text = getString(R.string.clear_filter)
 
+//                    .putExtra("minage", edtAgeFrom.text.toString())
+//                    .putExtra("maxage", edtAgeTo.text.toString())
                 val returnName = data!!.getStringExtra("name")
                 val returnLocation = data.getStringExtra("location")
                 val returnDistance = data.getStringExtra("distance")
@@ -210,12 +217,17 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
+                minage = data.getStringExtra("minage")!!
+                maxage = data.getStringExtra("maxage")!!
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
-                val list: List<Address> = geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
+                val list: List<Address> =
+                    geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
-              val filteredAddress = list[0].locality
-                Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
+                val filteredAddress = list[0].locality
+                Log.e(
+                    "=======",
+                    "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
                 )
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
@@ -230,13 +242,14 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                             returnDistance!!,
                             returnName,
                             typeId,
-                            filteredAddress!!
-                        )
+                            minage!!,
+                            maxage!!,
+                            filteredAddress!!,
+
+                            )
                         activity_list_progressbar?.showProgressBar()
                     }
-                }
-
-                else {
+                } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
             }
@@ -304,8 +317,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         if (activitisDatalist.size == 0) {
                             recyclerview!!.visibility = View.GONE
                             tv_no_activities!!.visibility = View.VISIBLE
-                        }
-                        else {
+                        } else {
                             recyclerview!!.visibility = View.VISIBLE
                             tv_no_activities!!.visibility = View.GONE
                             setAdaptor(activitisDatalist)
@@ -327,14 +339,11 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 if (message == "You marked this Post as Your Favourite") {
                     myCustomToast(getString(R.string.marked_as_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart)
-                }
-                else
-                {
+                } else {
                     myCustomToast(getString(R.string.removed_from_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart_purple)
                 }
-            }
-            else {
+            } else {
                 ErrorBodyResponse(response, this, activity_list_progressbar)
                 activity_list_progressbar?.hideProgressBar()
             }
@@ -351,7 +360,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
         if (checkIfHasNetwork(this@ActivitiesListActivity)) {
             launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                    .first()
                 appViewModel.addFavouritePostApiData(security_key, authKey, eventID, "1")
             }
             activity_list_progressbar.showProgressBar()

@@ -646,6 +646,8 @@ interface JsonPlaceHolder {
                            @Field("distance") distance: String?,
                            @Field("name") name: String?,
                            @Field("type") typeId: String?,
+                           @Field("minAge") minAge: String?,
+                           @Field("maxAge") maxAge: String?,
                            @Field("address") address: String?): Call<JsonObject>
 
     @POST("TraderFilter")
@@ -685,6 +687,8 @@ interface JsonPlaceHolder {
                        @Field("long") longitude: String?,
                        @Field("distance") distance: String?,
                        @Field("name") name: String?,
+                       @Field("minAge") minAge: String?,
+                       @Field("maxAge") maxAge: String?,
                        @Field("address") address: String?): Call<JsonObject>
 
     @POST("completeprofile_sociallogin")

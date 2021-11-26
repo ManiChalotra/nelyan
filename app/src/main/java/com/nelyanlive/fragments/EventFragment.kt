@@ -51,6 +51,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     private var latitude: String = "42.6026"
     private var longitude: String = "20.9030"
     private var locality: String = ""
+    var minage: String = ""
+    var maxage: String = ""
 
     override fun onResume() {
         super.onResume()
@@ -86,7 +88,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, userLat, userLong, "",
-                        "", userLocation
+                        "", userLocation, minage, maxage
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -147,7 +149,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     appViewModel.sendFilterEventListData(
                         security_key, authKey,
                         latitude, longitude, "",
-                        "", locality
+                        "", locality, minage, maxage
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -169,6 +171,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 val returnDistance = data.getStringExtra("distance")
                 val returnLat = data.getStringExtra("latitude")
                 val returnLng = data.getStringExtra("longitude")
+                minage = data.getStringExtra("minage")!!
+                maxage = data.getStringExtra("maxage")!!
                 (mContext as HomeActivity).tvTitleToolbar!!.text =
                     getString(R.string.upcoming_events) + "\n" + returnLocation
 
@@ -177,7 +181,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, returnLat, returnLng, returnDistance,
-                        returnName, returnLocation
+                        returnName, minage, maxage, returnLocation
                     )
                     eventProgressBar?.showProgressBar()
                 } else {

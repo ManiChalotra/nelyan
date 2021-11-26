@@ -48,11 +48,7 @@ class MessagesVM : ViewModel() {
                                 .putExtra("senderImage", listMembers[position].userImage)
                                 .putExtra("userId", userId)
                         )
-
-                        Log.d(
-                            MessagesVM::class.java.name,
-                            "MessageUserImage   " + listMembers[position].userImage
-                        )
+                        Log.d(MessagesVM::class.java.name, "MessageUserImage   " + listMembers[position].userImage)
                     }
                     "delete" -> {
                         delDialog(listMembers[position].user_id)

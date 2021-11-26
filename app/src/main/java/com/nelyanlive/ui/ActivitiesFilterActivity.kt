@@ -52,7 +52,10 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     private val job by lazy { Job() }
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    private val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
+    }
     private var authKey = ""
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesFilterActivity) }
 
@@ -82,9 +85,14 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         tvCal!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {
-            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+            et_location.text =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            latitudee =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                    .first()
+            longitudee =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                    .first()
         }
 
         btnFilter = findViewById(R.id.btnFilter)
@@ -94,19 +102,34 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         btnFilter!!.setOnClickListener(this)
 
         orderby1 = findViewById(R.id.spinner_dayss)
-        val km = arrayOf<String?>("Distance", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
-        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
+        val km = arrayOf<String?>(
+            "Distance",
+            "0KM",
+            "5KM",
+            "10KM",
+            "15KM",
+            "20KM",
+            "25KM",
+            "30KM",
+            "35KM",
+            "40KM",
+            "45KM",
+            "50KM"
+        )
+        val kmValue =
+            arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
 
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
-                this, R.layout.size_customspinner, km)
+            this, R.layout.size_customspinner, km
+        )
         orderby1!!.adapter = adapter1
 
         orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
             ) {
                 distance = if (kmValue[position].isNullOrBlank()) {
                     ""
@@ -114,24 +137,27 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                     kmValue[position]!!
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // TODO("Not yet implemented")
             }
         }
-
         if (tvName.text != getString(R.string.event)) {
             viewType.visibility = View.VISIBLE
             tvType.visibility = View.VISIBLE
             llType.visibility = View.VISIBLE
 
             launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                    .first()
                 appViewModel.sendActivityTypeData(security_key, authKey)
             }
             Log.d(ActivitiesFilterActivity::class.java.name, "ActivitiesFilter_if   ")
         } else {
+            tvType.text = "Type of Event"
             launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                    .first()
                 appViewModel.sendActivityTypeData(security_key, authKey)
             }
 
@@ -149,24 +175,25 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             tvCal!!.text = dayOfMonth.toString() +
                     "/" + (monthOfYear + 1) + "/" + year
         }
-        val datePickerDialog = DatePickerDialog(this, R.style.datepicker, listener, mYear, mMonth, mDay)
+        val datePickerDialog =
+            DatePickerDialog(this, R.style.datepicker, listener, mYear, mMonth, mDay)
         datePickerDialog.show()
     }
 
     private fun showPlacePicker() {
         // Initialize Places.
         Places.initialize(
-                applicationContext,
-                googleMapKey
+            applicationContext,
+            googleMapKey
         )
         val fields: List<Place.Field> = listOf(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
+            Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG
         )
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this@ActivitiesFilterActivity)
+            .build(this@ActivitiesFilterActivity)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
     }
@@ -176,70 +203,77 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     private fun checkMvvmResponse() {
 
-        appViewModel.observeActivityTypeResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    val jsonObject = JSONObject(response.body().toString())
-                    val jsonArray = jsonObject.getJSONArray("data")
-                    category.clear()
-                    categoryId.clear()
-                    category.add("")
-                    categoryId.add("")
-                    for (i in 0 until jsonArray.length()) {
-                        val name = jsonArray.getJSONObject(i).get("name").toString()
-                        val id = jsonArray.getJSONObject(i).get("id").toString()
-                        category.add(name)
-                        categoryId.add(id)
-                    }
-                    val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
-                    traderType.adapter = arrayAdapte1
-                    traderType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long
-                        ) {
-                            typeId = if (position != 0) {
-                                categoryId[position]!!
-                            } else {
-                                ""
+        appViewModel.observeActivityTypeResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        val jsonObject = JSONObject(response.body().toString())
+                        val jsonArray = jsonObject.getJSONArray("data")
+                        category.clear()
+                        categoryId.clear()
+                        category.add("")
+                        categoryId.add("")
+                        for (i in 0 until jsonArray.length()) {
+                            val name = jsonArray.getJSONObject(i).get("name").toString()
+                            val id = jsonArray.getJSONObject(i).get("id").toString()
+                            category.add(name)
+                            categoryId.add(id)
+                        }
+                        val arrayAdapte1 =
+                            ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
+                        traderType.adapter = arrayAdapte1
+                        traderType.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    typeId = if (position != 0) {
+                                        categoryId[position]!!
+                                    } else {
+                                        ""
+                                    }
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    //TODO("Not yet implemented")
+                                }
                             }
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            //TODO("Not yet implemented")
-                        }
                     }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
-        appViewModel.observeFilterActivityListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+        appViewModel.observeFilterActivityListResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        activity_filter_progressbar?.hideProgressBar()
+
+                        val jsonObject = JSONObject(response.body().toString())
+                        var jsonArray = jsonObject.getJSONArray("data")
+                        val homeAcitivitiesResponse = Gson().fromJson(
+                            response.body().toString(),
+                            HomeActivityResponse::class.java
+                        )
+
+                        if (activitisDatalist != null) {
+                            activitisDatalist.clear()
+                            activitisDatalist.addAll(homeAcitivitiesResponse.data)
+                        }
+                        val returnIntent = Intent()
+                        returnIntent.putExtra("filteredActivitisDatalist", activitisDatalist)
+                        setResult(Activity.RESULT_OK, returnIntent)
+                        finish()
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                     activity_filter_progressbar?.hideProgressBar()
-
-                    val jsonObject = JSONObject(response.body().toString())
-                    var jsonArray = jsonObject.getJSONArray("data")
-                    val homeAcitivitiesResponse = Gson().fromJson(response.body().toString(), HomeActivityResponse::class.java)
-
-                    if (activitisDatalist != null) {
-                        activitisDatalist.clear()
-                        activitisDatalist.addAll(homeAcitivitiesResponse.data)
-                    }
-                    val returnIntent = Intent()
-                    returnIntent.putExtra("filteredActivitisDatalist", activitisDatalist)
-                    setResult(Activity.RESULT_OK, returnIntent)
-                    finish()
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-                activity_filter_progressbar?.hideProgressBar()
-            }
-        })
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -254,7 +288,10 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 latitudee = place.latLng?.latitude.toString()
                 longitudee = place.latLng?.longitude.toString()
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+                Log.i(
+                    "dddddd",
+                    "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
+                )
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
@@ -277,23 +314,26 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 } else {
                     when (tvName.text) {
                         getString(R.string.event) -> {
-
                             val intent = Intent().putExtra("name", et_name.text.toString())
-                                    .putExtra("latitude", latitudee)
-                                    .putExtra("longitude", longitudee)
-                                    .putExtra("distance", distance)
-                                    .putExtra("location", et_location.text.toString())
+                                .putExtra("latitude", latitudee)
+                                .putExtra("longitude", longitudee)
+                                .putExtra("distance", distance)
+                                .putExtra("location", et_location.text.toString())
+                                .putExtra("minage", edtAgeFrom.text.toString())
+                                .putExtra("maxage", edtAgeTo.text.toString())
 
                             setResult(1212, intent)
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
                             val intent = Intent().putExtra("name", et_name.text.toString())
-                                    .putExtra("latitude", latitudee)
-                                    .putExtra("longitude", longitudee)
-                                    .putExtra("distance", distance)
-                                    .putExtra("typeId", typeId)
-                                    .putExtra("location", et_location.text.toString())
+                                .putExtra("latitude", latitudee)
+                                .putExtra("longitude", longitudee)
+                                .putExtra("distance", distance)
+                                .putExtra("typeId", typeId)
+                                .putExtra("location", et_location.text.toString())
+                                .putExtra("minage", edtAgeFrom.text.toString())
+                                .putExtra("maxage", edtAgeTo.text.toString())
 
                             setResult(1213, intent)
                             onBackPressed()

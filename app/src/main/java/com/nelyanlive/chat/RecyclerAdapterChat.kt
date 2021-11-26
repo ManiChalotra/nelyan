@@ -10,7 +10,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.BR
 
-class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@LayoutRes val layoutId2: Int,@LayoutRes val layoutId3: Int,@LayoutRes val layoutId4: Int) : RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
+class RecyclerAdapterChat<T : AbstractModel>(
+    @LayoutRes val layoutId: Int,
+    @LayoutRes val layoutId2: Int,
+    @LayoutRes val layoutId3: Int,
+    @LayoutRes val layoutId4: Int
+) : RecyclerView.Adapter<RecyclerAdapterChat.VH<T>>() {
 
     private val items = mutableListOf<T>()
     private var inflater: LayoutInflater? = null
@@ -23,7 +28,6 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
     var TEXT_RIGHT = 2
     var TEXT_LEFT = 3
 
-
     var setAnimOrNot: Boolean = true
     private val animatedPosition: HashSet<Int> = HashSet()
 
@@ -32,8 +36,8 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
         notifyDataSetChanged()
     }
 
-    fun addAtPosition(items: List<T>,position: Int) {
-        this.items.add(items[items.size-1])
+    fun addAtPosition(items: List<T>, position: Int) {
+        this.items.add(items[items.size - 1])
         notifyItemInserted(position)
     }
 
@@ -47,7 +51,6 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
         this.items.addAll(items)
         notifyDataSetChanged()
     }
-
 
 
     fun setOnItemClick(onItemClick: OnItemClick?) {
@@ -72,58 +75,61 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH<T> {
         val layoutInflater = inflater ?: LayoutInflater.from(parent.context)
 
-        when(viewType)
-        {
-            TEXT_RIGHT->{
-                Log.e("dfdasfaf","=========111111=======")
+        when (viewType) {
+            TEXT_RIGHT -> {
+                Log.e("dfdasfaf", "=========111111=======")
                 val binding = DataBindingUtil.inflate<ViewDataBinding>(
                     layoutInflater,
                     layoutId2,
                     parent,
                     false
-            )
-                return VH(binding)}
-            TEXT_LEFT->{
+                )
+                return VH(binding)
+            }
+            TEXT_LEFT -> {
 
-                Log.e("dfdasfaf","=========222222=======")
+                Log.e("dfdasfaf", "=========222222=======")
 
                 val binding = DataBindingUtil.inflate<ViewDataBinding>(
                     layoutInflater,
                     layoutId,
                     parent,
                     false
-            )
-                return VH(binding)}
-            IMAGE_RIGHT->{
+                )
+                return VH(binding)
+            }
+            IMAGE_RIGHT -> {
 
-                Log.e("dfdasfaf","=========222222=======")
+                Log.e("dfdasfaf", "=========222222=======")
 
                 val binding = DataBindingUtil.inflate<ViewDataBinding>(
                     layoutInflater,
                     layoutId3,
                     parent,
                     false
-            )
-                return VH(binding)}
-            IMAGE_LEFT->{
+                )
+                return VH(binding)
+            }
+            IMAGE_LEFT -> {
 
-                Log.e("dfdasfaf","=========222222=======")
+                Log.e("dfdasfaf", "=========222222=======")
 
                 val binding = DataBindingUtil.inflate<ViewDataBinding>(
                     layoutInflater,
                     layoutId4,
                     parent,
                     false
-            )
-                return VH(binding)}
-            else->{
-                Log.e("dfdasfaf","=========333333=======")
+                )
+                return VH(binding)
+            }
+            else -> {
+                Log.e("dfdasfaf", "=========333333=======")
 
                 val binding = DataBindingUtil.inflate<ViewDataBinding>(
-                        layoutInflater,
-                        layoutId,
-                        parent,
-                        false
+                    layoutInflater,
+                    layoutId,
+                    parent,
+                    false
                 )
                 return VH(binding)
             }
@@ -132,11 +138,11 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
 
     override fun getItemViewType(position: Int): Int {
 
-        val data  = (items[position] as ChatData)
-        return if(data.senderId==data.myID) {
-            if(data.messageType=="0") TEXT_RIGHT else IMAGE_RIGHT
+        val data = (items[position] as ChatData)
+        return if (data.senderId == data.myID) {
+            if (data.messageType == "0") TEXT_RIGHT else IMAGE_RIGHT
         } else {
-            if(data.messageType=="0") TEXT_LEFT else IMAGE_LEFT
+            if (data.messageType == "0") TEXT_LEFT else IMAGE_LEFT
         }
     }
 
@@ -152,7 +158,7 @@ class RecyclerAdapterChat<T : AbstractModel>(@LayoutRes val layoutId: Int,@Layou
     }
 
     class VH<T : AbstractModel>(private val binding: ViewDataBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(model: T) {
             binding.setVariable(BR.model, model)
             binding.executePendingBindings()
