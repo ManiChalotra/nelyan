@@ -19,7 +19,6 @@
         app:mk_color="@color/colorPrimary"
         />
 
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/mDrawerLayout"
         android:layout_width="match_parent"

@@ -94,11 +94,7 @@
 
                 />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
         <ImageView
             android:layout_width="@dimen/_20sdp"
@@ -109,11 +105,9 @@
             android:padding="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
-            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`flag`)}"
-            />
+            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`flag`)}" />
 
         <TextView
-
             android:id="@+id/tvSenderTime"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

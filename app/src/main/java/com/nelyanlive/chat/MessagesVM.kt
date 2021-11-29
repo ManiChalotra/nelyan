@@ -26,7 +26,7 @@ class MessagesVM : ViewModel() {
 
     lateinit var socket: Socket
     lateinit var ctx: Context
-
+    lateinit var dialog: Dialog
     var userId = ""
     var noDataMessage: ObservableField<String> = ObservableField("")
 
@@ -48,14 +48,54 @@ class MessagesVM : ViewModel() {
                                 .putExtra("senderImage", listMembers[position].userImage)
                                 .putExtra("userId", userId)
                         )
-                        Log.d(MessagesVM::class.java.name, "MessageUserImage   " + listMembers[position].userImage)
+                        Log.d(
+                            MessagesVM::class.java.name,
+                            "MessageUserImage   " + listMembers[position].userImage
+                        )
                     }
                     "delete" -> {
                         delDialog(listMembers[position].user_id)
+
                     }
                 }
             }
         })
+    }
+
+    fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
+        dialog = Dialog(context)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.alert_chat_delete)
+        dialog.setCancelable(true)
+        val tvYes: TextView = dialog.findViewById(R.id.tvYes)
+        val tvNo: TextView = dialog.findViewById(R.id.tvNo)
+        tvYes.setOnClickListener {
+            dialog.dismiss()
+            val json = JSONObject()
+            try {
+                json.put("userId", userId)
+                json.put("messageId", id)
+                json.put("groupId", groupId)
+
+                Log.e("socket", "=======$json")
+                socket.emit("delete_group_message", json)
+
+//                message.set("")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            listMembers.removeAt(position)
+            membersAdapter.removeAtPosition(position)
+            // groupChatAdapter.notifyItemRemoved(position)
+            membersAdapter.notifyItemRangeChanged(position, listMembers.size)
+
+
+        }
+        tvNo.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     fun onClick(view: View, s: String) {

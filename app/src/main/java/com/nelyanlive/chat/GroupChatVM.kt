@@ -47,7 +47,14 @@ class GroupChatVM : ViewModel() {
     var senderImage: ObservableField<String> = ObservableField("")
     var noDataMessage: ObservableField<String> = ObservableField("")
 
-    val groupChatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left, R.layout.chat_text_right, R.layout.chat_image_right, R.layout.chat_image_left) }
+    val groupChatAdapter by lazy {
+        RecyclerAdapterChat<ChatData>(
+            R.layout.chat_text_left,
+            R.layout.chat_text_right,
+            R.layout.chat_image_right,
+            R.layout.chat_image_left
+        )
+    }
     val listChat by lazy { ArrayList<ChatData>() }
 
     init {
@@ -58,34 +65,45 @@ class GroupChatVM : ViewModel() {
                 when (type) {
 
                     "delete" -> {
-                        dailogDelete(view.context, listChat[position].id, listChat[position].groupId, position)
+                        dailogDelete(
+                            view.context,
+                            listChat[position].id,
+                            listChat[position].groupId,
+                            position
+                        )
                     }
                     "flag" -> {
-                        showDailog(view.context, listChat[position].senderId, listChat[position].id, listChat[position].groupId)
+                        showDailog(
+                            view.context,
+                            listChat[position].senderId,
+                            listChat[position].id,
+                            listChat[position].groupId
+                        )
                     }
                     "chat" -> {
 
                         disconnectSocket()
 
                         view.context.startActivity(
-                                Intent(view.context, Chat1Activity::class.java)
-                                        .putExtra("senderID", listChat[position].senderId)
-                                        .putExtra("senderName", listChat[position].senderName)
-                                        .putExtra("senderImage", listChat[position].senderImage)
-                                        .putExtra("userId", userId)
+                            Intent(view.context, Chat1Activity::class.java)
+                                .putExtra("senderID", listChat[position].senderId)
+                                .putExtra("senderName", listChat[position].senderName)
+                                .putExtra("senderImage", listChat[position].senderImage)
+                                .putExtra("userId", userId)
                         )
 
                     }
                     "fullscreen" -> {
-                        (view.context as Activity).startActivity(Intent(view.context, FullScreen::class.java)
-                                .putExtra("image", listChat[position].message))
+                        (view.context as Activity).startActivity(
+                            Intent(view.context, FullScreen::class.java)
+                                .putExtra("image", listChat[position].message)
+                        )
 
                     }
                 }
             }
         })
     }
-
 
     fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
         dialog = Dialog(context)
@@ -160,9 +178,17 @@ class GroupChatVM : ViewModel() {
         when (s) {
             "ivSend" -> {
                 if (message.get()!!.trim().isEmpty()) {
-                    Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        view.context,
+                        view.context.getString(R.string.please_enter_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(view.context, "enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        view.context,
+                        "enter message-----${message.get().toString().trim()}----",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -234,7 +260,11 @@ class GroupChatVM : ViewModel() {
         rvChat = rv
 
         if (message.get().toString().trim().isEmpty()) {
-            Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                view.context,
+                view.context.getString(R.string.please_enter_message),
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             sendChatMessage()
         }
@@ -354,7 +384,8 @@ class GroupChatVM : ViewModel() {
             val val2 = String(tmp2, StandardCharsets.UTF_8)
             val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
-            listData.add(ChatData(
+            listData.add(
+                ChatData(
                     json.getString("id"),
                     json.getString("senderId"),
                     json.getString("receiverId"),
@@ -372,7 +403,8 @@ class GroupChatVM : ViewModel() {
                     json.getString("senderImage"),
                     userId, "1"
 
-            ))
+                )
+            )
             groupId = json.getString("groupId")
 
             GlobalScope.launch {
@@ -412,6 +444,7 @@ class GroupChatVM : ViewModel() {
                         groupChatAdapter.removeAtPosition(i)
                         groupChatAdapter.notifyItemRangeChanged(i, listChat.size)
                     }
+                    Log.d(GroupChatVM::class.java.name, "GroupChatVM_deleteData   ")
                 }
             }
         }

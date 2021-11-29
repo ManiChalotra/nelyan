@@ -1329,7 +1329,8 @@ class AppViewModel : ViewModel() {
         DaysType: String,
         productType: String
     ) {
-
+        Log.d(AppViewModel::class.java.name,"Daystype_1332   " + DaysType)
+        Log.d(AppViewModel::class.java.name,"Daystype_1333   " + productType)
         when (DaysType) {
             "0" -> {
 
@@ -1364,7 +1365,10 @@ class AppViewModel : ViewModel() {
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })
+                    Log.d(AppViewModel::class.java.name,"Daystype_1367   " + DaysType)
                 } else {
+                    Log.d(AppViewModel::class.java.name,"Daystype_1370   " + DaysType)
+                    Log.d(AppViewModel::class.java.name,"Daystype_1371   " + productType)
                     JsonPlaceHolder().getAddTraderPostApiWithoutDays(
                         securityKey,
                         authkey,
@@ -1398,9 +1402,9 @@ class AppViewModel : ViewModel() {
                 }
             }
             "1" -> {
-
+                Log.d(AppViewModel::class.java.name,"Daystype_1403   " + productType)
                 if (productType == "1") {
-
+                    Log.d(AppViewModel::class.java.name,"Daystype_1405   " + productType)
                     JsonPlaceHolder().getAddTraderPostApi(
                         securityKey,
                         authkey,
@@ -1433,7 +1437,7 @@ class AppViewModel : ViewModel() {
                             }
                         })
                 } else {
-
+                    Log.d(AppViewModel::class.java.name,"Daystype_1438   " + productType)
                     JsonPlaceHolder().getAddTraderPostApiWithoutProduct(
                         securityKey,
                         authkey,

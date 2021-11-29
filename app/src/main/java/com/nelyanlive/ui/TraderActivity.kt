@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,10 +40,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope, DayTimeRepeatAdapter.OnDayTimeRecyclerViewItemClickListner,
-        ProductDetailRepeatAdapter.ProductRepeatListener {
+class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope,
+    DayTimeRepeatAdapter.OnDayTimeRecyclerViewItemClickListner,
+    ProductDetailRepeatAdapter.ProductRepeatListener {
 
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    private val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
+    }
     private var imageSelectedType = ""
     private var isImageSelected = false
 
@@ -127,7 +130,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     private fun showPlacePicker() {
         Places.initialize(applicationContext, googleMapKey)
-        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val fields: List<Place.Field> =
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, placePickerRequest)
 
@@ -145,19 +149,24 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 cityLatitude = place.latLng?.latitude.toString()
                 cityLongitude = place.latLng?.longitude.toString()
                 val geocoder = Geocoder(this, Locale.getDefault())
-                val list = geocoder.getFromLocation(place.latLng?.latitude!!.toDouble(), place.latLng?.longitude!!.toDouble(), 1)
+                val list = geocoder.getFromLocation(
+                    place.latLng?.latitude!!.toDouble(),
+                    place.latLng?.longitude!!.toDouble(),
+                    1
+                )
                 cityName = if (!list[0].locality.isNullOrBlank()) {
                     list[0].locality
                 } else {
                     place.name.toString()
                 }
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
+                Log.i(
+                    "dddddd",
+                    "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
+                )
             }
-
         }
     }
-
 
     private fun hitTypeTradeActivityApi() {
         if (checkIfHasNetwork(this@TraderActivity)) {
@@ -173,10 +182,27 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
 
-            appViewModel.send_addPostTraderData(security_key, authkey, "3", traderTypeId, et_trader_shop_name.text.toString().trim(),
-                    et_description_trader.text.toString().trim(), countryCodee, et_trader_phone.text.toString().trim(), tv_address.text.toString().trim(),
-                    cityName, cityLatitude, cityLongitude, et_trader_email.text.toString(), et_web_address.text.toString(), selectDayGroup.toString(),
-                    productDetailsGroup.toString(), media.toString(), if (days) "1" else "0", if (product) "1" else "0")
+            appViewModel.send_addPostTraderData(
+                security_key,
+                authkey,
+                "3",
+                traderTypeId,
+                et_trader_shop_name.text.toString().trim(),
+                et_description_trader.text.toString().trim(),
+                countryCodee,
+                et_trader_phone.text.toString().trim(),
+                tv_address.text.toString().trim(),
+                cityName,
+                cityLatitude,
+                cityLongitude,
+                et_trader_email.text.toString(),
+                et_web_address.text.toString(),
+                selectDayGroup.toString(),
+                productDetailsGroup.toString(),
+                media.toString(),
+                if (days) "1" else "0",
+                if (product) "1" else "0"
+            )
 
         } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
@@ -189,95 +215,105 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     private fun traderTypeResponse() {
 
-        appViewModel.observeActivityTypeTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
+        appViewModel.observeActivityTypeTraderResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
 
-                if (response.body() != null) {
-                    val jsonObject = JSONObject(response.body().toString())
-                    val jsonArray = jsonObject.getJSONArray("data")
-                    type.add("")
-                    typeId.add("")
-                    for (i in 0 until jsonArray.length()) {
-                        val name = jsonArray.getJSONObject(i).get("name").toString()
-                        val idd = jsonArray.getJSONObject(i).get("id").toString()
-                        type.add(name)
-                        typeId.add(idd)
-                    }
-                    val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, type)
-                    trader_type.adapter = arrayAdapter1
-                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                            traderTypeId = typeId[position]
+                    if (response.body() != null) {
+                        val jsonObject = JSONObject(response.body().toString())
+                        val jsonArray = jsonObject.getJSONArray("data")
+                        type.add("")
+                        typeId.add("")
+                        for (i in 0 until jsonArray.length()) {
+                            val name = jsonArray.getJSONObject(i).get("name").toString()
+                            val idd = jsonArray.getJSONObject(i).get("id").toString()
+                            type.add(name)
+                            typeId.add(idd)
                         }
+                        val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, type)
+                        trader_type.adapter = arrayAdapter1
+                        trader_type.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    traderTypeId = typeId[position]
+                                }
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                        }
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                }
+                            }
                     }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
-        appViewModel.observeAddPostTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("addPostTraderResopnse", "-----------" + Gson().toJson(response.body()))
-                if (response.body() != null) {
+        appViewModel.observeAddPostTraderResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    Log.d("addPostTraderResopnse", "-----------" + Gson().toJson(response.body()))
+                    if (response.body() != null) {
 
+                        progressDialog.hidedialog()
+                        finishAffinity()
+                        OpenActivity(HomeActivity::class.java)
+
+                    }
+                } else {
                     progressDialog.hidedialog()
-                    finishAffinity()
-                    OpenActivity(HomeActivity::class.java)
-
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                progressDialog.hidedialog()
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
-        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                progressDialog.hidedialog()
-                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
-                if (response.body() != null) {
-                    if (response.body()!!.data != null) {
-                        val image = response.body()!!.data!![0].image.toString()
+        appViewModel.observeUploadImageResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    progressDialog.hidedialog()
+                    Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                    if (response.body() != null) {
+                        if (response.body()!!.data != null) {
+                            val image = response.body()!!.data!![0].image.toString()
 
-                        when (imageSelectedType) {
+                            when (imageSelectedType) {
 
-                            "1" -> {
-                                isImageSelected = true
-                                selectedImages[0] = image
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                "1" -> {
+                                    isImageSelected = true
+                                    selectedImages[0] = image
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg1!!)
 
-                            }
-                            "2" -> {
-                                isImageSelected = true
-                                selectedImages[1] = image
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                }
+                                "2" -> {
+                                    isImageSelected = true
+                                    selectedImages[1] = image
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg2!!)
-                            }
-                            "3" -> {
-                                isImageSelected = true
-                                selectedImages[2] = image
+                                }
+                                "3" -> {
+                                    isImageSelected = true
+                                    selectedImages[2] = image
 
-                                Glide.with(this).asBitmap().load(image_base_URl + image)
+                                    Glide.with(this).asBitmap().load(image_base_URl + image)
                                         .into(ivImg!!)
+                                }
+                                "4" -> {
+                                    productArrayList[productPhotoPosition].image = image
+                                    productDetailRepeatAdapter.notifyItemChanged(
+                                        productPhotoPosition
+                                    )
+                                }
                             }
-                            "4" -> {
-                                productArrayList[productPhotoPosition].image = image
-                                productDetailRepeatAdapter.notifyItemChanged(productPhotoPosition)
-                            }
+                            imageSelectedType = ""
                         }
-                        imageSelectedType = ""
                     }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
@@ -323,34 +359,79 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
 
-                                    var ageErrorString = ""
-                                    dayErrorNumber = 0
-//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay, ageErrorString, getString(R.string.select_day_previous), 1)
-//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime, ageErrorString, getString(R.string.select_morning_time_previous), 2)
-//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime, ageErrorString, getString(R.string.select_morning_time_previous), 3)
-//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime, ageErrorString, getString(R.string.select_evening_time_previous), 4)
-//                                    ageErrorString = getDayError(dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime, ageErrorString, getString(R.string.select_evening_time_previous), 5)
-
                                     if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
                                         myCustomToast(getString(R.string.select_morning_time_previous))
                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-                                        ApiData()
+                                        ApiDataNew()
                                     }
 
                                     if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
                                         myCustomToast(getString(R.string.select_evening_time_previous))
                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-                                        ApiData()
+                                        ApiDataNew()
                                     }
 
-                                    /*var productErrorString = ""
+                                    /*var ageErrorString = ""
+                                    dayErrorNumber = 0
+                                    ageErrorString = getDayError(
+                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay,
+                                        ageErrorString,
+                                        getString(R.string.select_day_previous),
+                                        1
+                                    )
+                                    ageErrorString = getDayError(
+                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime,
+                                        ageErrorString,
+                                        getString(R.string.select_morning_time_previous),
+                                        2
+                                    )
+                                    ageErrorString = getDayError(
+                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime,
+                                        ageErrorString,
+                                        getString(R.string.select_morning_time_previous),
+                                        3
+                                    )
+                                    ageErrorString = getDayError(
+                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime,
+                                        ageErrorString,
+                                        getString(R.string.select_evening_time_previous),
+                                        4
+                                    )
+                                    ageErrorString = getDayError(
+                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime,
+                                        ageErrorString,
+                                        getString(R.string.select_evening_time_previous),
+                                        5
+                                    )
+
+                                    var productErrorString = ""
                                     productErrorNumber = 0
-                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].image, productErrorString, getString(R.string.select_image_in_previous), 1)
-                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].productTitle, productErrorString, getString(R.string.fill_title_previous), 2)
-                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].productPrice, productErrorString, getString(R.string.fill_price_previous), 3)
-                                    productErrorString = getProductError(productArrayList[productArrayList.size - 1].description, productErrorString, getString(R.string.fill_description_in_previous), 4)
+                                    productErrorString = getProductError(
+                                        productArrayList[productArrayList.size - 1].image,
+                                        productErrorString,
+                                        getString(R.string.select_image_in_previous),
+                                        1
+                                    )
+                                    productErrorString = getProductError(
+                                        productArrayList[productArrayList.size - 1].productTitle,
+                                        productErrorString,
+                                        getString(R.string.fill_title_previous),
+                                        2
+                                    )
+                                    productErrorString = getProductError(
+                                        productArrayList[productArrayList.size - 1].productPrice,
+                                        productErrorString,
+                                        getString(R.string.fill_price_previous),
+                                        3
+                                    )
+                                    productErrorString = getProductError(
+                                        productArrayList[productArrayList.size - 1].description,
+                                        productErrorString,
+                                        getString(R.string.fill_description_in_previous),
+                                        4
+                                    )
 
                                     if (dayErrorNumber != 0 && ageErrorString.isNotEmpty()) {
                                         myCustomToast(ageErrorString)
@@ -371,24 +452,24 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                 for (i in 0 until dayTimeModelArrayList.size) {
                                                     val json = JSONObject()
                                                     json.put(
-                                                            "day_name",
-                                                            dayTimeModelArrayList[i].selectedDay
+                                                        "day_name",
+                                                        dayTimeModelArrayList[i].selectedDay
                                                     )
                                                     json.put(
-                                                            "time_from",
-                                                            dayTimeModelArrayList[i].firstStarttime
+                                                        "time_from",
+                                                        dayTimeModelArrayList[i].firstStarttime
                                                     )
                                                     json.put(
-                                                            "time_to",
-                                                            dayTimeModelArrayList[i].firstEndtime
+                                                        "time_to",
+                                                        dayTimeModelArrayList[i].firstEndtime
                                                     )
                                                     json.put(
-                                                            "secondStartTime",
-                                                            dayTimeModelArrayList[i].secondStarttime
+                                                        "secondStartTime",
+                                                        dayTimeModelArrayList[i].secondStarttime
                                                     )
                                                     json.put(
-                                                            "secondEndTime",
-                                                            dayTimeModelArrayList[i].secondEndtime
+                                                        "secondEndTime",
+                                                        dayTimeModelArrayList[i].secondEndtime
                                                     )
                                                     selectDayGroup.put(json)
                                                 }
@@ -400,22 +481,21 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                     val json = JSONObject()
                                                     json.put("image", productArrayList[i].image)
                                                     json.put(
-                                                            "title",
-                                                            productArrayList[i].productTitle
+                                                        "title",
+                                                        productArrayList[i].productTitle
                                                     )
                                                     json.put(
-                                                            "price",
-                                                            productArrayList[i].productPrice
+                                                        "price",
+                                                        productArrayList[i].productPrice
                                                     )
                                                     json.put(
-                                                            "description",
-                                                            productArrayList[i].description
+                                                        "description",
+                                                        productArrayList[i].description
                                                     )
                                                     productDetailsGroup.put(json)
                                                 }
                                             }
                                             hitFinalTraderPostApi()
-
                                         }
                                     }*/
                                 }
@@ -427,86 +507,173 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         }
     }
 
-    fun ApiData() {
+    fun ApiDataNew() {
 
-        var ageErrorString = ""
-        dayErrorNumber = 0
-        var productErrorString = ""
-        productErrorNumber = 0
-        productErrorString = getProductError(productArrayList[productArrayList.size - 1].image, productErrorString, getString(R.string.select_image_in_previous), 1)
-        productErrorString = getProductError(productArrayList[productArrayList.size - 1].productTitle, productErrorString, getString(R.string.fill_title_previous), 2)
-        productErrorString = getProductError(productArrayList[productArrayList.size - 1].productPrice, productErrorString, getString(R.string.fill_price_previous), 3)
-        productErrorString = getProductError(productArrayList[productArrayList.size - 1].description, productErrorString, getString(R.string.fill_description_in_previous), 4)
-
-        if (dayErrorNumber != 0 && ageErrorString.isNotEmpty()) {
-            myCustomToast(ageErrorString)
-        } else {
-
-            if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
-                myCustomToast(productErrorString)
-            } else {
-                media = JSONArray()
-                for (i in 0 until selectedImages.size) {
-                    val json = JSONObject()
-                    json.put("image", selectedImages[i])
-                    media.put(json)
-                }
-
-                if (days) {
-                    selectDayGroup = JSONArray()
-                    for (i in 0 until dayTimeModelArrayList.size) {
-                        val json = JSONObject()
-                        json.put(
-                                "day_name",
-                                dayTimeModelArrayList[i].selectedDay
-                        )
-                        json.put(
-                                "time_from",
-                                dayTimeModelArrayList[i].firstStarttime
-                        )
-                        json.put(
-                                "time_to",
-                                dayTimeModelArrayList[i].firstEndtime
-                        )
-                        json.put(
-                                "secondStartTime",
-                                dayTimeModelArrayList[i].secondStarttime
-                        )
-                        json.put(
-                                "secondEndTime",
-                                dayTimeModelArrayList[i].secondEndtime
-                        )
-                        selectDayGroup.put(json)
-                    }
-                }
-
-                if (product) {
-                    productDetailsGroup = JSONArray()
-                    for (i in 0 until productArrayList.size) {
-                        val json = JSONObject()
-                        json.put("image", productArrayList[i].image)
-                        json.put(
-                                "title",
-                                productArrayList[i].productTitle
-                        )
-                        json.put(
-                                "price",
-                                productArrayList[i].productPrice
-                        )
-                        json.put(
-                                "description",
-                                productArrayList[i].description
-                        )
-                        productDetailsGroup.put(json)
-                    }
-                }
-                hitFinalTraderPostApi()
-
+        if (days) {
+            selectDayGroup = JSONArray()
+            for (i in 0 until dayTimeModelArrayList.size) {
+                val json = JSONObject()
+                json.put(
+                    "day_name",
+                    dayTimeModelArrayList[i].selectedDay
+                )
+                json.put(
+                    "time_from",
+                    dayTimeModelArrayList[i].firstStarttime
+                )
+                json.put(
+                    "time_to",
+                    dayTimeModelArrayList[i].firstEndtime
+                )
+                json.put(
+                    "secondStartTime",
+                    dayTimeModelArrayList[i].secondStarttime
+                )
+                json.put(
+                    "secondEndTime",
+                    dayTimeModelArrayList[i].secondEndtime
+                )
+                selectDayGroup.put(json)
+                Log.d(
+                    TraderActivity::class.java.name,
+                    "TraderActivity_traderpost   " + json
+                )
             }
         }
+
+        if (product) {
+            productDetailsGroup = JSONArray()
+            for (i in 0 until productArrayList.size) {
+                val json = JSONObject()
+                json.put("image", productArrayList[i].image)
+                json.put(
+                    "title",
+                    productArrayList[i].productTitle
+                )
+                json.put(
+                    "price",
+                    productArrayList[i].productPrice
+                )
+                json.put(
+                    "description",
+                    productArrayList[i].description
+                )
+                productDetailsGroup.put(json)
+            }
+        }
+        hitFinalTraderPostApi()
+
     }
 
-    private fun getDayError(ageFrom: String?, ageErrorString: String, s: String, i: Int): String {
+/* fun ApiData() {
+
+     var ageErrorString = ""
+     dayErrorNumber = 0
+     var productErrorString = ""
+     productErrorNumber = 0
+     productErrorString = getProductError(
+         productArrayList[productArrayList.size - 1].image,
+         productErrorString,
+         getString(R.string.select_image_in_previous),
+         1
+     )
+     productErrorString = getProductError(
+         productArrayList[productArrayList.size - 1].productTitle,
+         productErrorString,
+         getString(R.string.fill_title_previous),
+         2
+     )
+     productErrorString = getProductError(
+         productArrayList[productArrayList.size - 1].productPrice,
+         productErrorString,
+         getString(R.string.fill_price_previous),
+         3
+     )
+     productErrorString = getProductError(
+         productArrayList[productArrayList.size - 1].description,
+         productErrorString,
+         getString(R.string.fill_description_in_previous),
+         4
+     )
+
+     if (dayErrorNumber != 0 && ageErrorString.isNotEmpty()) {
+         myCustomToast(ageErrorString)
+     } else {
+
+         if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
+             myCustomToast(productErrorString)
+         } else {
+             media = JSONArray()
+             for (i in 0 until selectedImages.size) {
+                 val json = JSONObject()
+                 json.put("image", selectedImages[i])
+                 media.put(json)
+             }
+
+             if (days) {
+                 selectDayGroup = JSONArray()
+                 for (i in 0 until dayTimeModelArrayList.size) {
+                     val json = JSONObject()
+                     json.put(
+                         "day_name",
+                         dayTimeModelArrayList[i].selectedDay
+                     )
+                     json.put(
+                         "time_from",
+                         dayTimeModelArrayList[i].firstStarttime
+                     )
+                     json.put(
+                         "time_to",
+                         dayTimeModelArrayList[i].firstEndtime
+                     )
+                     json.put(
+                         "secondStartTime",
+                         dayTimeModelArrayList[i].secondStarttime
+                     )
+                     json.put(
+                         "secondEndTime",
+                         dayTimeModelArrayList[i].secondEndtime
+                     )
+                     selectDayGroup.put(json)
+                     Log.d(
+                         TraderActivity::class.java.name,
+                         "TraderActivity_traderpost   " + json
+                     )
+                 }
+             }
+
+             if (product) {
+                 productDetailsGroup = JSONArray()
+                 for (i in 0 until productArrayList.size) {
+                     val json = JSONObject()
+                     json.put("image", productArrayList[i].image)
+                     json.put(
+                         "title",
+                         productArrayList[i].productTitle
+                     )
+                     json.put(
+                         "price",
+                         productArrayList[i].productPrice
+                     )
+                     json.put(
+                         "description",
+                         productArrayList[i].description
+                     )
+                     productDetailsGroup.put(json)
+                 }
+             }
+             hitFinalTraderPostApi()
+
+         }
+     }
+ }*/
+
+    private fun getDayError(
+        ageFrom: String?,
+        ageErrorString: String,
+        s: String,
+        i: Int
+    ): String {
 
         return when {
             ageFrom.isNullOrBlank() -> when {
@@ -523,7 +690,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         }
     }
 
-    private fun getProductError(productFrom: String?, productErrorString: String, s: String, i: Int): String {
+    private fun getProductError(
+        productFrom: String?,
+        productErrorString: String,
+        s: String,
+        i: Int
+    ): String {
 
         return when {
             productFrom.isNullOrBlank() -> when {
@@ -600,7 +772,10 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         }
     }
 
-    override fun ontraderItemClick(list: java.util.ArrayList<ProductDetailDataModel>, pos: Int) {
+    override fun ontraderItemClick(
+        list: java.util.ArrayList<ProductDetailDataModel>,
+        pos: Int
+    ) {
 
         when {
             productArrayList[list.size - 1].image.isNullOrEmpty() -> {

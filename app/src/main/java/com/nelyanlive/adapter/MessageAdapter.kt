@@ -2,6 +2,7 @@ package com.nelyanlive.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.R
 import com.nelyanlive.ui.Chat1Activity
 
-class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter.RecyclerViewHolder>() {
+class MessageAdapter(var context: Context) :
+    RecyclerView.Adapter<MessageAdapter.RecyclerViewHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var rl_1: RelativeLayout? = null
 
@@ -27,6 +29,7 @@ class MessageAdapter(var context: Context) : RecyclerView.Adapter<MessageAdapter
                     Chat1Activity::class.java
                 )
             )
+            Log.d(MessageAdapter::class.java.name, "MessageAdapterClick  ")
         }
         return viewHolder
     }
