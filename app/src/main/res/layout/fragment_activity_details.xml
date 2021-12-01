@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    >
+    android:orientation="vertical">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/activity_details_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/activity_details_progressbar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
     <RelativeLayout
         android:id="@+id/rl_toolbar_root"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -58,8 +54,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nvsMain"
         android:layout_width="match_parent"
-        android:layout_below="@+id/rl_toolbar_root"
         android:layout_height="match_parent"
+        android:layout_below="@+id/rl_toolbar_root"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -129,10 +125,10 @@
                     android:id="@+id/rv_activties_images"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"
                     android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
                     android:id="@+id/indicator"
@@ -159,9 +155,9 @@
                 android:fontFamily="@font/regular"
                 android:text=""
                 android:textColor="@color/black"
-                android:visibility="gone"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imgslidelayout" />
@@ -196,9 +192,9 @@
                     android:id="@+id/tv_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:drawableStart="@drawable/location_grey"
                     android:drawablePadding="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/regular"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -310,20 +306,19 @@
                             android:id="@+id/rv_days"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            android:orientation="horizontal"/>
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                         <TextView
                             android:id="@+id/tv_no_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/no_days_found"
-                            android:visibility="gone"
-                            android:fontFamily="@font/regular"
                             android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/no_days_found"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
-
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
@@ -362,8 +357,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="10dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/underlineweek" />
@@ -373,13 +368,13 @@
                         android:id="@+id/tv_no_age_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no_age_group_found"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:visibility="gone"
-                        android:fontFamily="@font/regular"
                         android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/no_age_group_found"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="gone" />
 
 
                     <View
@@ -510,13 +505,13 @@
                         android:id="@+id/tv_no_upcoming_events"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no_upcoming_events"
-                        android:fontFamily="@font/regular"
-                        android:visibility="gone"
-                        android:layout_margin="@dimen/_30sdp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/_30sdp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/no_upcoming_events"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="gone" />
 
 
                     <TextView
@@ -530,8 +525,8 @@
                         android:text="@string/messages"
                         android:textColor="@color/grey"
                         android:textSize="14sp"
-                        android:visibility="visible"
                         android:textStyle="bold"
+                        android:visibility="visible"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/rc_upcomingevents" />
@@ -540,10 +535,10 @@
                         android:id="@+id/iv_msg"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:visibility="visible"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:src="@drawable/message_ico"
+                        android:visibility="visible"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_msg" />
 
@@ -571,8 +566,8 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/regular"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
                         android:textIsSelectable="true"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -585,9 +580,9 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:drawableStart="@drawable/location_black"
                         android:drawableEnd="@drawable/colored_map"
-                        android:textIsSelectable="true"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textColor="@color/black"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/_9sdp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -609,11 +604,11 @@
                             android:name="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+
                         <ImageView
                             android:id="@+id/ivMapImage"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
+                            android:layout_height="match_parent" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

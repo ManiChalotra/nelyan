@@ -382,4 +382,6 @@
     <string name="a_new_version_of_nelyan_application_is_available">Une nouvelle version de l\'application Nelyan est disponible sur play store</string>
     <string name="update_available">Mise à jour disponible</string>
 
+    <string name="event_type">Type d’événement</string>
+
 </resources>

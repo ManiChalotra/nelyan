@@ -154,7 +154,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             }
             Log.d(ActivitiesFilterActivity::class.java.name, "ActivitiesFilter_if   ")
         } else {
-            tvType.text = "Type of Event"
+            tvType.text = getString(R.string.event_type)
             launch(Dispatchers.Main.immediate) {
                 authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
                     .first()
