@@ -102,7 +102,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         dayTimeRepeatAdapter = DayTimeRepeatAdapter(this, dayTimeModelArrayList, this)
         rvDayTime!!.adapter = dayTimeRepeatAdapter
 
-        productDetailRepeatAdapter = ProductDetailRepeatAdapter(this, productArrayList, this@TraderActivity)
+        productDetailRepeatAdapter =
+            ProductDetailRepeatAdapter(this, productArrayList, this@TraderActivity)
         rvProductDetails!!.layoutManager = LinearLayoutManager(this)
         rvProductDetails!!.adapter = productDetailRepeatAdapter
 
@@ -132,7 +133,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         Places.initialize(applicationContext, googleMapKey)
         val fields: List<Place.Field> =
             listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        val intent: Intent =
+            Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, placePickerRequest)
 
     }
@@ -359,21 +361,21 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
 
-                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
-                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
-                                        myCustomToast(getString(R.string.select_morning_time_previous))
-                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-                                        ApiDataNew()
-                                    }
+//                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
+//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
+//                                        myCustomToast(getString(R.string.select_morning_time_previous))
+//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
+//                                        ApiDataNew()
+//                                    }
+//
+//                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
+//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
+//                                        myCustomToast(getString(R.string.select_evening_time_previous))
+//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
+//                                        ApiDataNew()
+//                                    }
 
-                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
-                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
-                                        myCustomToast(getString(R.string.select_evening_time_previous))
-                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-                                        ApiDataNew()
-                                    }
-
-                                    /*var ageErrorString = ""
+                                    var ageErrorString = ""
                                     dayErrorNumber = 0
                                     ageErrorString = getDayError(
                                         dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay,
@@ -497,7 +499,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                             }
                                             hitFinalTraderPostApi()
                                         }
-                                    }*/
+                                    }
                                 }
                             }
                         }
@@ -757,14 +759,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 myCustomToast(getString(R.string.select_morning_time_previous))
 
             }
-//            dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
-//                myCustomToast(getString(R.string.select_evening_time_previous))
-//
-//            }
-//            dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
-//                myCustomToast(getString(R.string.select_evening_time_previous))
-//
-//            }
+            dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
+                myCustomToast(getString(R.string.select_evening_time_previous))
+
+            }
+            dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
+                myCustomToast(getString(R.string.select_evening_time_previous))
+
+            }
             else -> {
                 dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeRepeatAdapter.notifyDataSetChanged()
