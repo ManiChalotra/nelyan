@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:id="@+id/frame_container"
     tools:context=".ui.ActivitiesListActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/activity_list_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/activity_list_progressbar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
 
     <RelativeLayout
@@ -51,14 +50,13 @@
                 android:id="@+id/tv_userCityOrZipcode"
                 style="@style/HeaderText"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:singleLine="true"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:paddingEnd="@dimen/_25sdp"
                 android:paddingStart="@dimen/_25sdp"
-                />
+                android:paddingEnd="@dimen/_25sdp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
         <ImageView
@@ -104,9 +102,9 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="start"
             android:layout_weight="0"
-            android:visibility="gone"
             android:background="@drawable/text_outlinebg"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/trader_type"
@@ -132,19 +130,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@id/ll_public"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_public">
 
         <TextView
             android:id="@+id/tv_no_activities"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_activities_available"
-            android:visibility="gone"
-            android:fontFamily="@font/regular"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/regular"
+            android:text="@string/no_activities_available"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_home_activities"

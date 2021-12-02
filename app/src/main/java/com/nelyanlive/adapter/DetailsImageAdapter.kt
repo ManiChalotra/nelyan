@@ -16,7 +16,10 @@ import com.nelyanlive.fullscreen.FullScreen
 import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.utils.image_base_URl
 
-class DetailsImageAdapter(activityDetailsActivity: FragmentActivity,var dataList: ArrayList<Activityimage>) : RecyclerView.Adapter<Vh>() {
+class DetailsImageAdapter(
+    activityDetailsActivity: FragmentActivity,
+    var dataList: ArrayList<Activityimage>
+) : RecyclerView.Adapter<Vh>() {
     var a: Activity = activityDetailsActivity
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         val v = LayoutInflater.from(a).inflate(R.layout.row_detailsimg, parent, false)
@@ -24,15 +27,19 @@ class DetailsImageAdapter(activityDetailsActivity: FragmentActivity,var dataList
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------"+ dataList[position].images)
-        Glide.with(a).asBitmap().load(image_base_URl+ dataList[position].images).into(holder.img)
-
-        holder.img.setOnClickListener { (holder.img.context as Activity).startActivity(
-            Intent(holder.img.context,
-                FullScreen::class.java)
-                .putExtra("productImage",image_base_URl+ dataList[position].images)) }
-
-
+        Log.d("serverImages", "------------------------------" + dataList[position].images)
+        Glide.with(a).asBitmap().load(image_base_URl + dataList[position].images).into(holder.img)
+//        holder.img.setScaleType(ImageView.ScaleType.FIT_XY);
+//        holder.img.setAdjustViewBounds(true)
+        holder.img.setOnClickListener {
+            (holder.img.context as Activity).startActivity(
+                Intent(
+                    holder.img.context,
+                    FullScreen::class.java
+                )
+                    .putExtra("productImage", image_base_URl + dataList[position].images)
+            )
+        }
     }
 
     override fun getItemCount(): Int {
@@ -41,6 +48,7 @@ class DetailsImageAdapter(activityDetailsActivity: FragmentActivity,var dataList
 
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var img: ImageView = itemView.findViewById(R.id.detailsimg)
+
 
     }
 
