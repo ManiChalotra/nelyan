@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp">
 
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
@@ -52,6 +53,23 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvFilterclear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5dp"
+                android:layout_weight="0"
+                android:background="@drawable/text_outlinebg"
+                android:fontFamily="@font/bold"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:text="@string/clear_filter_txt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+
 
             <LinearLayout
                 android:id="@+id/ll_public"
@@ -218,12 +236,29 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/age_group_years" />
+                android:text="@string/age" />
+
+            <EditText
+                android:id="@+id/edtAge"
+                style="@style/SimpleEdittext"
+                android:digits="0123456789"
+                android:hint="@string/age"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="3"
+                android:maxLines="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="2">
 
                 <LinearLayout

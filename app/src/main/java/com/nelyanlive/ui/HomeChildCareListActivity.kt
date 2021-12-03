@@ -65,8 +65,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     private var locality: String = ""
 
     override fun onResume() {
-            super.onResume()
-       }
+        super.onResume()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,9 +96,11 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
         // Setting OnItemClickListener to the Spinner
         trader_type!!.onItemSelectedListener = this@HomeChildCareListActivity
         checkMvvmResponse()
-        if((tvFilter.text==getString(R.string.filter))) {
+        if ((tvFilter.text == getString(R.string.filter))) {
             launch(Dispatchers.Main.immediate) {
-                latitude = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+                latitude =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                        .first()
                 longitude =
                     dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                         .first()
@@ -106,7 +108,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 val list: List<Address>
                 Log.e("location_changed", "==3=ifffff=$latitude==$longitude===$locality=")
                 if (latitude != "0.0") {
-                    list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+                    list =
+                        geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
 
                     locality = list[0].locality
 
@@ -129,8 +132,14 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                             childProgressbar?.showProgressBar()
                         }
                     } else {
-                        showSnackBar(this@HomeChildCareListActivity, getString(R.string.no_internet_error))
-                    } } } }
+                        showSnackBar(
+                            this@HomeChildCareListActivity,
+                            getString(R.string.no_internet_error)
+                        )
+                    }
+                }
+            }
+        }
 
     }
 
@@ -155,7 +164,9 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             R.id.ll_public -> {
             }
             R.id.tvFilter -> {
-                if (tvFilter.text == getString(R.string.filter)) {
+                if (tvFilter.text == getString(R.string.filter) || tvFilter.text ==
+                    getString(R.string.clear_filter)
+                ) {
                     val i = Intent(this, ChildCareFilterActivity::class.java)
                     startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
                 } else {
@@ -163,7 +174,9 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     if (checkIfHasNetwork(this)) {
                         tvFilter.text = getString(R.string.filter)
                         launch(Dispatchers.Main.immediate) {
-                            val authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                            val authKey =
+                                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                    .first()
 
                             tv_userCityOrZipcode.text = locality
 
@@ -177,9 +190,9 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                                 locality,
                                 ""
                             )
-                            childProgressbar?.showProgressBar() }
-                    }
-                    else {
+                            childProgressbar?.showProgressBar()
+                        }
+                    } else {
                         showSnackBar(this, getString(R.string.no_internet_error))
                     }
                 }
@@ -187,14 +200,14 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             R.id.iv_map -> {
                 if (dataString.isEmpty()) {
                     myCustomToast(getString(R.string.data_not_loaded))
-                }
-                else {
+                } else {
                     val i = Intent(this, HomeChildCareOnMapActivity::class.java)
                     i.putExtra("dataString", dataString)
                     i.putExtra("type", "childCare")
                     startActivity(i)
                 }
-            } }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -210,6 +223,25 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 val childCareType = data.getStringExtra("childCareType")
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
                 val geocoder = Geocoder(this, Locale.getDefault())
+                var returnLocation = data.getStringExtra("location")
+
+                AllSharedPref.save(this, "returnnamechild", returnName!!)
+                AllSharedPref.save(this, "returnlocationchild", returnLocation!!)
+                AllSharedPref.save(this, "returndistancechild", returnDistance!!)
+                AllSharedPref.save(this, "Selectvaluechild", childCareType!!)
+
+                Log.d(
+                    "ChildCareListActivity ",
+                    "returnValues_Trader   " + AllSharedPref.restoreString(
+                        this,
+                        "returnDistance"
+                    ) + "  " +
+                            AllSharedPref.restoreString(
+                                this,
+                                "returndistancechild"
+                            ) + "  " + AllSharedPref.restoreString(this, "Selectvaluechild")
+                )
+
 
                 val list: List<Address> =
                     geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
@@ -234,11 +266,12 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         )
                         childProgressbar?.visibility = View.VISIBLE
                     }
-                }
-                else {
+                } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
-            } } }
+            }
+        }
+    }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {}
 
@@ -253,7 +286,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
         if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
 
             launch(Dispatchers.Main.immediate) {
-                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+                authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                    .first()
                 appViewModel.addFavouritePostApiData(security_key, authKey, postId, "2")
             }
             childProgressbar.showProgressBar()
@@ -275,7 +309,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         val mResponse = response.body().toString()
                         dataString = response.body().toString()
                         val homeChildcareResponse = Gson().fromJson<HomeChiildCareREsponse>(
-                            response.body().toString(), HomeChiildCareREsponse::class.java)
+                            response.body().toString(), HomeChiildCareREsponse::class.java
+                        )
                         childCareDatalist.clear()
                         childCareDatalist.addAll(homeChildcareResponse.data)
                         if (childCareDatalist.size == 0) {
@@ -291,7 +326,8 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     ErrorBodyResponse(response, this, childProgressbar)
                 }
             })
-        appViewModel.observeFilterChildCareListResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeFilterChildCareListResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
                         childProgressbar?.hideProgressBar()

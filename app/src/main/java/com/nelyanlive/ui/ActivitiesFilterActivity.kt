@@ -50,6 +50,11 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     private var longitudee = ""
     private var typeId = ""
     var SelectValue = ""
+    var ReturnDistance = ""
+    var ActivityType = ""
+//    var int poz = 0
+    var poz: Int = 0
+
     private val job by lazy { Job() }
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -91,8 +96,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         tvCal!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {
-            et_location.text =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+//            et_location.text =
+//                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
             latitudee =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                     .first()
@@ -106,6 +111,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
         et_location.setOnClickListener(this)
         btnFilter!!.setOnClickListener(this)
+        tvFilterclear!!.setOnClickListener(this)
 
         orderby1 = findViewById(R.id.spinner_dayss)
         val km = arrayOf<String?>(
@@ -129,6 +135,15 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             this, R.layout.size_customspinner, km
         )
         orderby1!!.adapter = adapter1
+        val arr: MutableList<Array<String?>> = Arrays.asList(kmValue)
+
+        for (i in 0 until arr.get(0).size) {
+            Log.e("checkdata", "categoty" + "----" + arr.get(0).get(i).toString())
+            if (ReturnDistance.equals(arr.get(0).get(i).toString())) {
+                Log.e("checkdata", "categoty_if" + i + arr.get(0).get(i).toString())
+                spinner_dayss.setSelection(i)
+            }
+        }
 
         orderby1!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -225,13 +240,22 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                         categoryId.add("")
                         for (i in 0 until jsonArray.length()) {
                             val name = jsonArray.getJSONObject(i).get("name").toString()
-                            val id = jsonArray.getJSONObject(i).get("id").toString()
+                            var id = jsonArray.getJSONObject(i).get("id").toString()
+                            Log.e("checkmyactivity", "id   " + id + "---" + ActivityType)
+                            if (id.equals(ActivityType)) {
+                                poz = i
+                                Log.e("checkmyactivity", "-CCCCC---" + poz)
+
+                            }
                             category.add(name)
                             categoryId.add(id)
                         }
                         val arrayAdapte1 =
                             ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
+//                        traderType.setSelection(poz)
+                        // for check the value wit api
+
                         traderType.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
@@ -249,8 +273,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                         "Selected_traderType    " + traderType.getSelectedItem()
                                             .toString()
                                     )
-                                    SelectValue = traderType.getSelectedItem()
-                                        .toString()
+//                                    SelectValue = traderType.getSelectedItem()
+//                                        .toString()
 //                                    AllSharedPref.save(
 //                                        this,
 //                                        "selecttype",
@@ -258,10 +282,14 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 //                                    )
                                     typeId = if (position != 0) {
                                         categoryId[position]!!
-
                                     } else {
                                         ""
                                     }
+                                    Log.d(
+                                        "ActivityFilterActivity ",
+                                        "returnValues_typeId   " + typeId
+                                    )
+                                    SelectValue = typeId
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -335,6 +363,11 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             R.id.tv_cal -> {
                 dateDialog()
             }
+            R.id.tvFilterclear -> {
+                val i = Intent(this, ActivitiesListActivity::class.java)
+                startActivity(i)
+                finish()
+            }
             R.id.btnFilter -> {
                 if (et_location.text.isNullOrEmpty()) {
                     myCustomToast(getString(R.string.location_missing_error))
@@ -348,7 +381,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("location", et_location.text.toString())
                                 .putExtra("minage", edtAgeFrom.text.toString())
                                 .putExtra("maxage", edtAgeTo.text.toString())
-                                .putExtra("SelectValue", SelectValue)
+                                .putExtra("age", edtAge.text.toString())
+                                .putExtra("SelectValueactivity", SelectValue)
 
                             setResult(1212, intent)
                             onBackPressed()
@@ -362,7 +396,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("location", et_location.text.toString())
                                 .putExtra("minage", edtAgeFrom.text.toString())
                                 .putExtra("maxage", edtAgeTo.text.toString())
-                                .putExtra("SelectValue", SelectValue)
+                                .putExtra("SelectValueactivity", SelectValue)
+                                .putExtra("age", edtAge.text.toString())
 
                             setResult(1213, intent)
                             onBackPressed()
@@ -378,24 +413,35 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     fun getFilterValues() {
 //        if (AllSharedPref != null && !AllSharedPref.equals("")) {
         var ReturnName = AllSharedPref.restoreString(this, "returnName")
-        var ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
+        var ReturnLocation = AllSharedPref.restoreString(this, "returnLocation")
+        ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
         var ReturnMinAge = AllSharedPref.restoreString(this, "minage")
         var ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
-        var ActivityType = AllSharedPref.restoreString(this, "SelectValue")
+        ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
+        var Age = AllSharedPref.restoreString(this, "Age")
 
         Log.d(
             "ActivityFilterActivity ",
-            "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " + ReturnMaxAge + "   " + ActivityType
+            "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
+                    ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
         )
+        et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
+        edtAge.setText(Age, TextView.BufferType.EDITABLE);
 
-//        et_name.setText("This sets the text.", TextView.BufferType.EDITABLE);
-
-//        et_name.setText(ReturnName)
-//        } else {
-//            Log.d(
-//                "ActivityFilterActivity ",
-//                "returnValues_else   "
-//            )
-//        }
+        if (ReturnLocation != null && !ReturnLocation.equals("")) {
+            et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
+        } else {
+            launch(Dispatchers.Main.immediate) {
+                et_location.text =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                        .first()
+                latitudee =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                        .first()
+                longitudee =
+                    dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                        .first()
+            }
+        }
     }
 }

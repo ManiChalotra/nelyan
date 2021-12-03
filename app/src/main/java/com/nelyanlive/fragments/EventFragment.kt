@@ -174,6 +174,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
                 var TypeActivity = data.getStringExtra("SelectValue")!!
+                var Age = data.getStringExtra("age")!!
+
                 (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
 
                 Log.d(EventFragment::class.java.name, "returndistance   " + returnDistance)
@@ -183,6 +185,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 AllSharedPref.save(mContext, "minage", minage!!)
                 AllSharedPref.save(mContext, "maxage", maxage!!)
                 AllSharedPref.save(mContext, "SelectValue", TypeActivity!!)
+                AllSharedPref.save(mContext, "Age", Age!!)
 
                 Log.d(
                     "EventFragment ",

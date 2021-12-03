@@ -293,16 +293,22 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
                 tv_city_zipcode.text = data.getStringExtra("location")
-                var TypeActivity = data.getStringExtra("SelectValue")!!
+                var TypeActivity = data.getStringExtra("SelectValuetrade")!!
 
                 Log.e(
                     "=======",
                     "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
                 )
 
-                AllSharedPref.save(this, "returnName", returnName!!)
-                AllSharedPref.save(this, "returnDistance", returnDistance!!)
-                AllSharedPref.save(this, "SelectValue", TypeActivity!!)
+                Log.d(
+                    "TraderActivity ",
+                    "returnValues_TypeActivity   " + TypeActivity
+                )
+
+                AllSharedPref.save(this, "returnnametrade", returnName!!)
+                AllSharedPref.save(this, "returnlocationtrade", returnLocation!!)
+                AllSharedPref.save(this, "returndistancetrade", returnDistance!!)
+                AllSharedPref.save(this, "SelectValuetrade", TypeActivity!!)
 
                 Log.d(
                     "TraderActivity ",
@@ -310,7 +316,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                         this,
                         "returnDistance"
                     ) + "  " +
-                            AllSharedPref.restoreString(this, "SelectValue")
+                            AllSharedPref.restoreString(this, "SelectValuetrade")
                 )
 
 

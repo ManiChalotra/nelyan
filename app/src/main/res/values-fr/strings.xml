@@ -299,6 +299,7 @@
     <string name="publish_caps">Publier</string>
     <string name="facebook_have_not_installed">Facebook n\'a pas été installé.</string>
 <!--    <string name="clear_filter">Supprimer le filtre</string>-->
+    <string name="clear_filter_txt">Supprimer le filtre</string>
     <string name="clear_filter">modifiy</string>
     <string name="marked_as_favourite">Vous avez marqué ce post comme favori</string>
     <string name="removed_from_favourite">Vous avez supprimé ce message de vos favoris</string>

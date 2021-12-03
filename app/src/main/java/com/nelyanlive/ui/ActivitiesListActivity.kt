@@ -94,7 +94,9 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
         tvFilter.setOnClickListener {
 
-            if (tvFilter.text == getString(R.string.filter)) {
+            if (tvFilter.text == getString(R.string.filter) || tvFilter.text ==
+                getString(R.string.clear_filter)
+            ) {
                 val i =
                     Intent(this, ActivitiesFilterActivity::class.java).putExtra(
                         "name",
@@ -208,8 +210,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
                 tvFilter.text = getString(R.string.clear_filter)
 
-//                    .putExtra("minage", edtAgeFrom.text.toString())
-//                    .putExtra("maxage", edtAgeTo.text.toString())
                 val returnName = data!!.getStringExtra("name")
                 val returnLocation = data.getStringExtra("location")
                 val returnDistance = data.getStringExtra("distance")
@@ -219,13 +219,16 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
-                var TypeActivity = data.getStringExtra("SelectValue")!!
+                var TypeActivity = data.getStringExtra("SelectValueactivity")!!
+                var Age = data.getStringExtra("age")!!
 
                 AllSharedPref.save(this, "returnName", returnName!!)
+                AllSharedPref.save(this, "returnLocation", returnLocation!!)
                 AllSharedPref.save(this, "returnDistance", returnDistance!!)
                 AllSharedPref.save(this, "minage", minage!!)
                 AllSharedPref.save(this, "maxage", maxage!!)
-                AllSharedPref.save(this, "SelectValue", TypeActivity!!)
+                AllSharedPref.save(this, "SelectValueactivity", TypeActivity!!)
+                AllSharedPref.save(this, "Age", Age!!)
 
                 Log.d(
                     "ActivityListActivity ",
@@ -234,14 +237,12 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 )
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
+                Log.e("returnLat0","--" +returnLat  + "====="+returnlng)
                 val list: List<Address> =
                     geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
                 val filteredAddress = list[0].locality
-                Log.e(
-                    "=======",
-                    "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
-                )
+                Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
