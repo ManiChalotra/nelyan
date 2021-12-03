@@ -173,10 +173,23 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 val returnLng = data.getStringExtra("longitude")
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
-                (mContext as HomeActivity).tvTitleToolbar!!.text =
-                    getString(R.string.upcoming_events) + "\n" + returnLocation
+                var TypeActivity = data.getStringExtra("SelectValue")!!
+                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
 
                 Log.d(EventFragment::class.java.name, "returndistance   " + returnDistance)
+
+                AllSharedPref.save(mContext, "returnName", returnName!!)
+                AllSharedPref.save(mContext, "returnDistance", returnDistance!!)
+                AllSharedPref.save(mContext, "minage", minage!!)
+                AllSharedPref.save(mContext, "maxage", maxage!!)
+                AllSharedPref.save(mContext, "SelectValue", TypeActivity!!)
+
+                Log.d(
+                    "EventFragment ",
+                    "returnValues_Event   " + AllSharedPref.restoreString(mContext, "returnDistance") + "  " +
+                            AllSharedPref.restoreString(mContext, "SelectValue")
+                )
+
                 if (checkIfHasNetwork(requireActivity())) {
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(

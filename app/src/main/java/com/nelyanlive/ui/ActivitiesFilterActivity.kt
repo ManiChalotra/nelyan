@@ -49,6 +49,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     private var latitudee = ""
     private var longitudee = ""
     private var typeId = ""
+    var SelectValue = ""
     private val job by lazy { Job() }
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -71,8 +72,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
         if (intent.hasExtra("name")) {
             tvName.text = intent.getStringExtra("name")
-        }
 
+        }
+        Log.d(
+            "ActivityFilterActivity ",
+            "OnCreateCalled   "
+        )
+        getFilterValues()
         ivBack = findViewById(R.id.ivBack)
 
         ivBack!!.setOnClickListener { onBackPressed() }
@@ -168,6 +174,10 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
     override fun onResume() {
         super.onResume()
+        Log.d(
+            "ActivityFilterActivity ",
+            "onResumeCalled   "
+        )
     }
 
     private fun dateDialog() {
@@ -230,8 +240,25 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                     position: Int,
                                     id: Long
                                 ) {
+                                    Log.d(
+                                        "ActivityFilterActivity   ",
+                                        "Selected_Item    " + categoryId[position]!!
+                                    )
+                                    Log.d(
+                                        "ActivityFilterActivity   ",
+                                        "Selected_traderType    " + traderType.getSelectedItem()
+                                            .toString()
+                                    )
+                                    SelectValue = traderType.getSelectedItem()
+                                        .toString()
+//                                    AllSharedPref.save(
+//                                        this,
+//                                        "selecttype",
+//                                        "HelloIndia"
+//                                    )
                                     typeId = if (position != 0) {
                                         categoryId[position]!!
+
                                     } else {
                                         ""
                                     }
@@ -321,6 +348,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("location", et_location.text.toString())
                                 .putExtra("minage", edtAgeFrom.text.toString())
                                 .putExtra("maxage", edtAgeTo.text.toString())
+                                .putExtra("SelectValue", SelectValue)
 
                             setResult(1212, intent)
                             onBackPressed()
@@ -334,6 +362,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("location", et_location.text.toString())
                                 .putExtra("minage", edtAgeFrom.text.toString())
                                 .putExtra("maxage", edtAgeTo.text.toString())
+                                .putExtra("SelectValue", SelectValue)
 
                             setResult(1213, intent)
                             onBackPressed()
@@ -344,5 +373,29 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 }
             }
         }
+    }
+
+    fun getFilterValues() {
+//        if (AllSharedPref != null && !AllSharedPref.equals("")) {
+        var ReturnName = AllSharedPref.restoreString(this, "returnName")
+        var ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
+        var ReturnMinAge = AllSharedPref.restoreString(this, "minage")
+        var ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
+        var ActivityType = AllSharedPref.restoreString(this, "SelectValue")
+
+        Log.d(
+            "ActivityFilterActivity ",
+            "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " + ReturnMaxAge + "   " + ActivityType
+        )
+
+//        et_name.setText("This sets the text.", TextView.BufferType.EDITABLE);
+
+//        et_name.setText(ReturnName)
+//        } else {
+//            Log.d(
+//                "ActivityFilterActivity ",
+//                "returnValues_else   "
+//            )
+//        }
     }
 }

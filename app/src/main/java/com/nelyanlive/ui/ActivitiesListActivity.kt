@@ -219,6 +219,19 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
+                var TypeActivity = data.getStringExtra("SelectValue")!!
+
+                AllSharedPref.save(this, "returnName", returnName!!)
+                AllSharedPref.save(this, "returnDistance", returnDistance!!)
+                AllSharedPref.save(this, "minage", minage!!)
+                AllSharedPref.save(this, "maxage", maxage!!)
+                AllSharedPref.save(this, "SelectValue", TypeActivity!!)
+
+                Log.d(
+                    "ActivityListActivity ",
+                    "returnValues   " + AllSharedPref.restoreString(this, "returnDistance") + "  " +
+                            AllSharedPref.restoreString(this, "SelectValue")
+                )
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
                 val list: List<Address> =

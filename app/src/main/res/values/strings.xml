@@ -301,7 +301,8 @@
     <string name="press_again_to_exit">press once again to exit from the App.</string>
     <string name="publish_caps">PUBLISH</string>
     <string name="facebook_have_not_installed">Facebook have not been installed.</string>
-    <string name="clear_filter">Clear Filter</string>
+<!--    <string name="clear_filter">Clear Filter</string>-->
+    <string name="clear_filter">Modifier</string>
     <string name="marked_as_favourite">You marked this post as your favourite</string>
     <string name="removed_from_favourite">You removed this post from your favourite</string>
     <string name="data_not_loaded">Data not loaded yet</string>

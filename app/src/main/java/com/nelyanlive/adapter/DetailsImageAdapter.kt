@@ -49,7 +49,6 @@ class DetailsImageAdapter(
     inner class Vh(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var img: ImageView = itemView.findViewById(R.id.detailsimg)
 
-
     }
 
 }

@@ -6,7 +6,6 @@ object  AllSharedPref {
 
     internal var KEY = "Shared_Preferences"
 
-
     fun save(context: Context, key: String, value: String): Boolean {
         val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
         editor.putString(key, value)

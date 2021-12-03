@@ -31,20 +31,22 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
-{
+class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope {
 
     private var latitudee = ""
     private var longitudee = ""
+    var SelectValue = ""
     private var typeId = ""
+    private var ReturnDistance = ""
     private val job by lazy {
         Job()
     }
 
     private val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
     }
-    var distance: String= ""
+    var distance: String = ""
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@TraderFilterActivity) }
 
@@ -58,60 +60,103 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_trade_filter)
         initalizeClicks()
+        getFilterValues()
+        Log.d(
+            "TraderFilterActivity ",
+            "OnCreateTraderFilter   "
+        )
+        val km = arrayOf<String?>(
+            "Distance",
+            "0KM",
+            "5KM",
+            "10KM",
+            "15KM",
+            "20KM",
+            "25KM",
+            "30KM",
+            "35KM",
+            "40KM",
+            "45KM",
+            "50KM"
+        )
+        val kmValue =
+            arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
 
-
-        val km = arrayOf<String?>("Distance", "0KM", "5KM", "10KM", "15KM", "20KM", "25KM", "30KM", "35KM", "40KM", "45KM", "50KM")
-        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.size_customspinner, km)
         spinner_trader_distance!!.adapter = adapter1
-        spinner_trader_distance!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-              distance = if(kmValue[position].isNullOrBlank()){""}else{kmValue[position]!!}
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-               // TODO("Not yet implemented")
+        val arr: List<String> = kmValue.toString.split(",")
+
+        for (i in 0 until arr.size) {
+            if (ReturnDistance.equals(arr.get(i).toString)) {
+                Log.e("checkdata", "categoty" + i + arr.get(i).toString())
+
+                spinner_trader_distance.setSelection(i)
             }
         }
-        checkMvvmResponse()
 
-        if (checkIfHasNetwork(this)) {
-            val authkey = AllSharedPref.restoreString(this, "auth_key")
-            appViewModel.sendTraderTypeTraderData(security_key, authkey)
-        }
-        else
-        {
-            showSnackBar(this, getString(R.string.no_internet_error))
+//    spinner_trader_distance.setSelection(1);
+
+    spinner_trader_distance!!.onItemSelectedListener =
+    object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            distance = if (kmValue[position].isNullOrBlank()) {
+                ""
+            } else {
+                kmValue[position]!!
+            }
         }
 
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            // TODO("Not yet implemented")
+        }
     }
-    private  fun initalizeClicks(){
-        ivBack.setOnClickListener(this)
-        //ll_public.setOnClickListener(this)
-        //set city name
-        launch(Dispatchers.Main.immediate) {
-            et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-            longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-        }
+    checkMvvmResponse()
 
-        btnFilter.setOnClickListener(this)
-        et_location.setOnClickListener(this)
-
+    if (checkIfHasNetwork(this))
+    {
+        val authkey = AllSharedPref.restoreString(this, "auth_key")
+        appViewModel.sendTraderTypeTraderData(security_key, authkey)
+    } else
+    {
+        showSnackBar(this, getString(R.string.no_internet_error))
     }
 
+}
 
-    val traderType: MutableList<String?> = mutableListOf()
-    val traderID: MutableList<String?> = mutableListOf()
+private fun initalizeClicks() {
+    ivBack.setOnClickListener(this)
+    //ll_public.setOnClickListener(this)
+    //set city name
+    launch(Dispatchers.Main.immediate) {
+        et_location.text =
+            dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+        latitudee =
+            dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                .first()
+        longitudee =
+            dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                .first()
+    }
 
-    private fun checkMvvmResponse() {
+    btnFilter.setOnClickListener(this)
+    et_location.setOnClickListener(this)
 
-        appViewModel.observeActivityTypeTraderResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+}
+
+
+val traderType: MutableList<String?> = mutableListOf()
+val traderID: MutableList<String?> = mutableListOf()
+
+private fun checkMvvmResponse() {
+
+    appViewModel.observeActivityTypeTraderResponse()!!
+        .observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
                     val jsonObject = JSONObject(response.body().toString())
@@ -128,107 +173,123 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                     val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
                     trader_type.adapter = arrayAdapter1
 
-                    trader_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            typeId = if(position!=0) {
-                                traderID[position]!!
-                            } else {
-                                ""
+                    trader_type.onItemSelectedListener =
+                        object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                SelectValue = trader_type.getSelectedItem()
+                                    .toString()
+                                typeId = if (position != 0) {
+                                    traderID[position]!!
+                                } else {
+                                    ""
+                                }
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                //TODO("Not yet implemented")
                             }
                         }
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            //TODO("Not yet implemented")
-                        }
-                    }
-
-                } }
-            else
-            {
+                }
+            } else {
                 ErrorBodyResponse(response, this, null)
             }
         })
-    }
+}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                val place = Autocomplete.getPlaceFromIntent(data!!)
-                //  city = place.name.toString()
-                et_location.text = place.name.toString()
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == PLACE_PICKER_REQUEST) {
+        if (resultCode == Activity.RESULT_OK) {
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            //  city = place.name.toString()
+            et_location.text = place.name.toString()
 
-                // cityID = place.id.toString()
-                latitudee = place.latLng?.latitude.toString()
-                longitudee = place.latLng?.longitude.toString()
+            // cityID = place.id.toString()
+            latitudee = place.latLng?.latitude.toString()
+            longitudee = place.latLng?.longitude.toString()
 
-                Log.i("dddddd", "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng)
-            }
-
-            else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                Log.i("dddddd", status.statusMessage.toString())
-            }
-
-
+            Log.i(
+                "dddddd",
+                "Place: " + place.name + ", " + place.id + "," + place.address + "," + place.latLng
+            )
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            // TODO: Handle the error.
+            val status: Status = Autocomplete.getStatusFromIntent(data!!)
+            Log.i("dddddd", status.statusMessage.toString())
         }
-    }
 
-    private fun showPlacePicker() {
-        // Initialize Places.
-        Places.initialize(
-                applicationContext,
-                googleMapKey
-        )
-        val fields: List<Place.Field> = Arrays.asList(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
-        )
-        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this@TraderFilterActivity)
-        startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
     }
+}
 
-    override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.ivBack->{
+private fun showPlacePicker() {
+    // Initialize Places.
+    Places.initialize(
+        applicationContext,
+        googleMapKey
+    )
+    val fields: List<Place.Field> = Arrays.asList(
+        Place.Field.ID,
+        Place.Field.NAME,
+        Place.Field.ADDRESS,
+        Place.Field.LAT_LNG
+    )
+    val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+        .build(this@TraderFilterActivity)
+    startActivityForResult(intent, PLACE_PICKER_REQUEST)
+
+}
+
+override fun onClick(v: View?) {
+    when (v!!.id) {
+        R.id.ivBack -> {
+            onBackPressed()
+        }
+
+        R.id.btnFilter -> {
+            if (et_location.text.isNullOrEmpty()) {
+                myCustomToast(getString(R.string.location_missing_error))
+            } else {
+
+                val intent = Intent()
+                    .putExtra("name", et_name.text.toString().trim())
+                    .putExtra("latitude", latitudee)
+                    .putExtra("longitude", longitudee)
+                    .putExtra("distance", distance)
+                    .putExtra("typeId", typeId)
+                    .putExtra("location", et_location.text.toString().trim())
+                    .putExtra("SelectValue", SelectValue)
+
+                setResult(1215, intent)
                 onBackPressed()
             }
+        }
+        R.id.et_location -> {
+            showPlacePicker()
 
-            R.id.btnFilter->{
-                if (et_location.text.isNullOrEmpty()){
-                    myCustomToast(getString(R.string.location_missing_error))
-                }
-                else {
-
-                    val intent = Intent()
-                        .putExtra("name",et_name.text.toString().trim())
-                        .putExtra("latitude",latitudee)
-                        .putExtra("longitude",longitudee)
-                        .putExtra("distance",distance)
-                        .putExtra("typeId",typeId)
-                        .putExtra("location",et_location.text.toString().trim())
-
-                    setResult(1215,intent)
-                    onBackPressed()
-                }
-            }
-            R.id.et_location->{
-                showPlacePicker()
-
-            }
         }
     }
+}
 
+fun getFilterValues() {
+    var ReturnName = AllSharedPref.restoreString(this, "returnName")
+    ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
+    var ActivityType = AllSharedPref.restoreString(this, "SelectValue")
 
+    Log.d(
+        "TraderFilterActivity ",
+        "returnValues_Traderif   " + ReturnName + "   " + ReturnDistance + "  " + ActivityType
+    )
+    et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
+//        spinner_trader_distance.setText(ReturnDistance);
+//        trader_type.setText(ActivityType);
 
+//        et_name.setText("This sets the text.", TextView.BufferType.EDITABLE);
+}
 }

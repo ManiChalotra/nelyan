@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_weight="57"
+                android:layout_weight="63"
                 android:backgroundTint="@color/transparent"
                 android:drawableStart="@drawable/places_ic_search"
                 android:drawableEnd="@drawable/blk_cross"
