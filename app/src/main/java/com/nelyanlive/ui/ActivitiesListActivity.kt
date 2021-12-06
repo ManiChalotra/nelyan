@@ -51,6 +51,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     var ivFavouritee: ImageView? = null
     var LAUNCH_SECOND_ACTIVITY = 1
     var dataString = ""
+    var Age = ""
 
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -114,7 +115,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         appViewModel.sendFilterActivityListData(
                             security_key, authKey,
                             latitude, longitude, "", "", "",
-                            locality, minage, maxage
+                            locality, Age
                         )
                         tv_userCityOrZipcode.text = locality
                         activity_list_progressbar?.showProgressBar()
@@ -182,7 +183,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                                 appViewModel.sendFilterActivityListData(
                                     security_key, authKey,
                                     latitude, longitude, "", "", "",
-                                    locality, minage, maxage
+                                    locality, Age
                                 )
                                 activity_list_progressbar?.showProgressBar()
                             }
@@ -220,7 +221,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
                 var TypeActivity = data.getStringExtra("SelectValueactivity")!!
-                var Age = data.getStringExtra("age")!!
+                Age = data.getStringExtra("age")!!
 
                 AllSharedPref.save(this, "returnName", returnName!!)
                 AllSharedPref.save(this, "returnLocation", returnLocation!!)
@@ -232,17 +233,31 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
 
                 Log.d(
                     "ActivityListActivity ",
-                    "returnValues   " + AllSharedPref.restoreString(this, "returnDistance") + "  " +
-                            AllSharedPref.restoreString(this, "SelectValue")
+                    "returnValues_Activity_age   " + AllSharedPref.restoreString(
+                        this,
+                        "age"
+                    )
+                )
+
+                Log.d(
+                    "ActivityListActivity ",
+                    "returnValues_Activity   " + AllSharedPref.restoreString(
+                        this,
+                        "returnDistance"
+                    ) + "  " +
+                            AllSharedPref.restoreString(this, "SelectValueactivity")
                 )
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
-                Log.e("returnLat0","--" +returnLat  + "====="+returnlng)
+                Log.e("returnLat0", "--" + returnLat + "=====" + returnlng)
                 val list: List<Address> =
                     geocoder.getFromLocation(returnLat!!.toDouble(), returnlng!!.toDouble(), 1)
 
                 val filteredAddress = list[0].locality
-                Log.e("=======", "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId===")
+                Log.e(
+                    "=======",
+                    "===$returnName====$returnLocation====$returnDistance====$returnLat====$returnlng====$typeId==="
+                )
                 if (checkIfHasNetwork(this)) {
                     launch(Dispatchers.Main.immediate) {
                         val authKey =
@@ -256,8 +271,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                             returnDistance!!,
                             returnName,
                             typeId,
-                            minage!!,
-                            maxage!!,
+                            Age,
                             filteredAddress!!,
 
                             )

@@ -47,6 +47,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     private var rc: RecyclerView? = null
     private var authKey = ""
     var dataString = ""
+    var Age = ""
     private val dataList by lazy { ArrayList<HomeEventModel>() }
     private var latitude: String = "42.6026"
     private var longitude: String = "20.9030"
@@ -88,7 +89,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, userLat, userLong, "",
-                        "", userLocation, minage, maxage
+                        "", userLocation, Age
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -149,7 +150,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     appViewModel.sendFilterEventListData(
                         security_key, authKey,
                         latitude, longitude, "",
-                        "", locality, minage, maxage
+                        "", locality, Age
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -173,23 +174,27 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 val returnLng = data.getStringExtra("longitude")
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
-                var TypeActivity = data.getStringExtra("SelectValue")!!
-                var Age = data.getStringExtra("age")!!
+                var TypeActivity = data.getStringExtra("SelectValueactivity")!!
+                Age = data.getStringExtra("age")!!
 
-                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
+                (mContext as HomeActivity).tvTitleToolbar!!.text =
+                    getString(R.string.upcoming_events) + "\n" + returnLocation
 
                 Log.d(EventFragment::class.java.name, "returndistance   " + returnDistance)
 
-                AllSharedPref.save(mContext, "returnName", returnName!!)
-                AllSharedPref.save(mContext, "returnDistance", returnDistance!!)
+                AllSharedPref.save(mContext, "returnNameEvent", returnName!!)
+                AllSharedPref.save(mContext, "returnDistanceEvent", returnDistance!!)
                 AllSharedPref.save(mContext, "minage", minage!!)
                 AllSharedPref.save(mContext, "maxage", maxage!!)
-                AllSharedPref.save(mContext, "SelectValue", TypeActivity!!)
-                AllSharedPref.save(mContext, "Age", Age!!)
+                AllSharedPref.save(mContext, "SelectValueEvent", TypeActivity!!)
+                AllSharedPref.save(mContext, "AgeEvent", Age!!)
 
                 Log.d(
                     "EventFragment ",
-                    "returnValues_Event   " + AllSharedPref.restoreString(mContext, "returnDistance") + "  " +
+                    "returnValues_Event   " + AllSharedPref.restoreString(
+                        mContext,
+                        "returnDistance"
+                    ) + "  " +
                             AllSharedPref.restoreString(mContext, "SelectValue")
                 )
 
@@ -197,7 +202,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, returnLat, returnLng, returnDistance,
-                        returnName, minage, maxage, returnLocation
+                        returnName, Age, returnLocation
                     )
                     eventProgressBar?.showProgressBar()
                 } else {

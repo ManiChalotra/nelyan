@@ -52,7 +52,10 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     var SelectValue = ""
     var ReturnDistance = ""
     var ActivityType = ""
-//    var int poz = 0
+    var ScreenName = ""
+    var SelectId: String = ""
+
+    //    var int poz = 0
     var poz: Int = 0
 
     private val job by lazy { Job() }
@@ -79,9 +82,10 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             tvName.text = intent.getStringExtra("name")
 
         }
+        ScreenName = intent.getStringExtra("name")!!
         Log.d(
             "ActivityFilterActivity ",
-            "OnCreateCalled   "
+            "OnCreateCalled   " + ScreenName
         )
         getFilterValues()
         ivBack = findViewById(R.id.ivBack)
@@ -242,18 +246,25 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             val name = jsonArray.getJSONObject(i).get("name").toString()
                             var id = jsonArray.getJSONObject(i).get("id").toString()
                             Log.e("checkmyactivity", "id   " + id + "---" + ActivityType)
+                            Log.e("checkmyactivity", "ActivityType   " + ActivityType)
+
                             if (id.equals(ActivityType)) {
+
                                 poz = i
                                 Log.e("checkmyactivity", "-CCCCC---" + poz)
-
+                                Log.e("checkmyactivity", "-CCCCC_i ---" + i)
+                                Log.e("checkmyactivity", "-CCCCC_id ---" + id)
                             }
+
                             category.add(name)
                             categoryId.add(id)
+
                         }
                         val arrayAdapte1 =
                             ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
-//                        traderType.setSelection(poz)
+                        traderType.setSelection(poz)
+//
                         // for check the value wit api
 
                         traderType.onItemSelectedListener =
@@ -411,37 +422,81 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     }
 
     fun getFilterValues() {
-//        if (AllSharedPref != null && !AllSharedPref.equals("")) {
-        var ReturnName = AllSharedPref.restoreString(this, "returnName")
-        var ReturnLocation = AllSharedPref.restoreString(this, "returnLocation")
-        ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
-        var ReturnMinAge = AllSharedPref.restoreString(this, "minage")
-        var ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
-        ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
-        var Age = AllSharedPref.restoreString(this, "Age")
 
-        Log.d(
-            "ActivityFilterActivity ",
-            "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
-                    ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
-        )
-        et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
-        edtAge.setText(Age, TextView.BufferType.EDITABLE);
+        var ReturnName: String = ""
+        var ReturnLocation: String = ""
+        var ReturnMinAge: String = ""
+        var ReturnMaxAge: String = ""
+        var Age: String = ""
 
-        if (ReturnLocation != null && !ReturnLocation.equals("")) {
-            et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
-        } else {
-            launch(Dispatchers.Main.immediate) {
-                et_location.text =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                        .first()
-                latitudee =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
-                        .first()
-                longitudee =
-                    dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
-                        .first()
+        if (ScreenName.equals(getString(R.string.activity))) {
+
+            ReturnName = AllSharedPref.restoreString(this, "returnName")
+            ReturnLocation = AllSharedPref.restoreString(this, "returnLocation")
+            ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
+            ReturnMinAge = AllSharedPref.restoreString(this, "minage")
+            ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
+            ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
+            Age = AllSharedPref.restoreString(this, "Age")
+
+            Log.d(
+                "ActivityFilterActivity ",
+                "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
+                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
+            )
+            et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
+            edtAge.setText(Age, TextView.BufferType.EDITABLE);
+
+            if (ReturnLocation != null && !ReturnLocation.equals("")) {
+                et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
+            } else {
+                launch(Dispatchers.Main.immediate) {
+                    et_location.text =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                            .first()
+                    latitudee =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                            .first()
+                    longitudee =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                            .first()
+                }
             }
+        } else if (ScreenName.equals(getString(R.string.event))) {
+
+            ReturnName = AllSharedPref.restoreString(this, "returnNameEvent")
+            ReturnLocation = AllSharedPref.restoreString(this, "returnLocationEvent")
+            ReturnDistance = AllSharedPref.restoreString(this, "returnDistanceEvent")
+            ReturnMinAge = AllSharedPref.restoreString(this, "minage")
+            ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
+            ActivityType = AllSharedPref.restoreString(this, "SelectValueEvent")
+            Age = AllSharedPref.restoreString(this, "AgeEvent")
+
+            Log.d(
+                "ActivityFilterActivity ",
+                "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
+                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
+            )
+            et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
+            edtAge.setText(Age, TextView.BufferType.EDITABLE);
+
+            if (ReturnLocation != null && !ReturnLocation.equals("")) {
+                et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
+            } else {
+                launch(Dispatchers.Main.immediate) {
+                    et_location.text =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                            .first()
+                    latitudee =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                            .first()
+                    longitudee =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                            .first()
+                }
+            }
+        } else {
+
         }
     }
 }

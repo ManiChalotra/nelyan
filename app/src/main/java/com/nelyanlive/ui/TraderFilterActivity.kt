@@ -165,10 +165,14 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         for (i in 0 until jsonArray.length()) {
                             val name = jsonArray.getJSONObject(i).get("name").toString()
                             val id = jsonArray.getJSONObject(i).get("id").toString()
-
+                            Log.e("checkmyactivity", "-ActivityType---" + ActivityType)
+                            Log.e("checkmyactivity", "-CCCC_i_169  ---" + i)
+                            Log.e("checkmyactivity", "-CCCC_i_id  ---" + id)
                             if (id.equals(ActivityType)) {
                                 poz = i
                                 Log.e("checkmyactivity", "-CCCCC---" + poz)
+                                Log.e("checkmyactivity", "-CCCC_i  ---" + i)
+                                Log.e("checkmyactivity", "-CCCC_i_id_175  ---" + i)
 
                             }
 
@@ -178,7 +182,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
 
                         val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
                         trader_type.adapter = arrayAdapter1
-//                        trader_type.setSelection(poz)
+                        trader_type.setSelection(poz)
                         trader_type.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(

@@ -1329,8 +1329,8 @@ class AppViewModel : ViewModel() {
         DaysType: String,
         productType: String
     ) {
-        Log.d(AppViewModel::class.java.name,"Daystype_1332   " + DaysType)
-        Log.d(AppViewModel::class.java.name,"Daystype_1333   " + productType)
+        Log.d(AppViewModel::class.java.name, "Daystype_1332   " + DaysType)
+        Log.d(AppViewModel::class.java.name, "Daystype_1333   " + productType)
         when (DaysType) {
             "0" -> {
 
@@ -1365,10 +1365,13 @@ class AppViewModel : ViewModel() {
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })
-                    Log.d(AppViewModel::class.java.name,"Daystype_withoutdaysandproduct   " + DaysType)
+                    Log.d(
+                        AppViewModel::class.java.name,
+                        "Daystype_withoutdaysandproduct   " + DaysType
+                    )
                 } else {
-                    Log.d(AppViewModel::class.java.name,"Daystype_withoutdays   " + DaysType)
-                    Log.d(AppViewModel::class.java.name,"Producttype_withoutdays   " + productType)
+                    Log.d(AppViewModel::class.java.name, "Daystype_withoutdays   " + DaysType)
+                    Log.d(AppViewModel::class.java.name, "Producttype_withoutdays   " + productType)
                     JsonPlaceHolder().getAddTraderPostApiWithoutDays(
                         securityKey,
                         authkey,
@@ -1402,9 +1405,9 @@ class AppViewModel : ViewModel() {
                 }
             }
             "1" -> {
-                Log.d(AppViewModel::class.java.name,"Daystype_1403   " + productType)
+                Log.d(AppViewModel::class.java.name, "Daystype_1403   " + productType)
                 if (productType == "1") {
-                    Log.d(AppViewModel::class.java.name,"Daystype_TraderpostAPi   " + productType)
+                    Log.d(AppViewModel::class.java.name, "Daystype_TraderpostAPi   " + productType)
                     JsonPlaceHolder().getAddTraderPostApi(
                         securityKey,
                         authkey,
@@ -1437,7 +1440,10 @@ class AppViewModel : ViewModel() {
                             }
                         })
                 } else {
-                    Log.d(AppViewModel::class.java.name,"Daystype_withoutProducts   " + productType)
+                    Log.d(
+                        AppViewModel::class.java.name,
+                        "Daystype_withoutProducts   " + productType
+                    )
                     JsonPlaceHolder().getAddTraderPostApiWithoutProduct(
                         securityKey,
                         authkey,
@@ -1880,8 +1886,7 @@ class AppViewModel : ViewModel() {
         distance: String,
         name: String?,
         typeId: String?,
-        minage: String,
-        maxage: String,
+        Age: String,
         address: String
     ) {
         JsonPlaceHolder().activityFilter_Api(
@@ -1892,8 +1897,7 @@ class AppViewModel : ViewModel() {
             distance,
             name,
             typeId,
-            minage,
-            maxage,
+            Age,
             address
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
@@ -2036,7 +2040,7 @@ class AppViewModel : ViewModel() {
 
     fun sendFilterEventListData(
         securityKey: String?, authKey: String?, lati: String?, longi: String?, distance: String?,
-        name: String?, minage: String, maxage: String, address: String?
+        name: String?, Age: String, address: String?
     ) {
         JsonPlaceHolder().getEventFilter(
             securityKey,
@@ -2046,8 +2050,7 @@ class AppViewModel : ViewModel() {
             distance,
             name,
             address,
-            minage,
-            maxage
+            Age
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
