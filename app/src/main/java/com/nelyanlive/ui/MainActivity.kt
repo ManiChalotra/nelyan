@@ -54,7 +54,7 @@ class MainActivity : CheckPlayStoreVersion() {
         val sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
        val language =  sharedPreferences.getString("language", "fr")!!
 
-        Log.d("sharedPreferences---", "--------language------------$language")
+        Log.d("sharedPrefdderences---", "--------language------------$language")
         LanguageHelper.setLocale(this, language)
         printKeyHash(this)
 
