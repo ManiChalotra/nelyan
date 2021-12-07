@@ -262,7 +262,7 @@
     <string name="gps_settings_desc">Please enable GPS settings</string>
     <string name="post_updated_success">Post updated successfully</string>
 
-   <!-- new words -->
+    <!-- new words -->
     <string name="about_us">About Us</string>
 
     <string name="fill_age_group_from_in_previous_data">please fill age Group from in previous data</string>
@@ -301,7 +301,7 @@
     <string name="press_again_to_exit">press once again to exit from the App.</string>
     <string name="publish_caps">PUBLISH</string>
     <string name="facebook_have_not_installed">Facebook have not been installed.</string>
-<!--    <string name="clear_filter">Clear Filter</string>-->
+    <!--    <string name="clear_filter">Clear Filter</string>-->
     <string name="clear_filter">Modifier</string>
     <string name="marked_as_favourite">You marked this post as your favourite</string>
     <string name="removed_from_favourite">You removed this post from your favourite</string>
@@ -389,4 +389,6 @@
     <string name="update_available">Update Available</string>
     <string name="event_type">Type of Event</string>
     <string name="clear_filter_txt">Clear Filter</string>
+    <string name="selecttime_txt">Please select time</string>
+
 </resources>

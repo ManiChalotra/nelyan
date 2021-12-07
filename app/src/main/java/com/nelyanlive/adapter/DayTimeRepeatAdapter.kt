@@ -14,10 +14,17 @@ import com.nelyanlive.R
 import com.nelyanlive.modals.DayTimeModel
 import java.util.*
 
-class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeModel>, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
+class DayTimeRepeatAdapter(
+    var context: Context,
+    var list: ArrayList<DayTimeModel>,
+    var listner: OnDayTimeRecyclerViewItemClickListner
+) : RecyclerView.Adapter<DayTimeRepeatAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false), listner)
+        return MyViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.item_day_time_add_more, parent, false),
+            listner
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -38,7 +45,8 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
     }
 
 
-    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View, var listner: OnDayTimeRecyclerViewItemClickListner) :
+        RecyclerView.ViewHolder(itemView) {
 
         var tvAddDay = itemView.findViewById(R.id.tvAddDay) as TextView
         var tvMorningFromtime = itemView.findViewById(R.id.tv_mornning_fromtime) as TextView
@@ -67,7 +75,12 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
 
             var name = ""
             spinnerDayss.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View,
+                    pos: Int,
+                    id: Long
+                ) {
                     name = parentView?.getItemAtPosition(pos).toString()
                     list[position].selectedDay = name
                 }
@@ -95,10 +108,12 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    tvMorningFromtime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].firstStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true)
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                        tvMorningFromtime.text =
+                            String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].firstStarttime = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
@@ -106,10 +121,12 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    tvMorningTotime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].firstEndtime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                        tvMorningTotime.text =
+                            String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].firstEndtime = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
 
@@ -119,10 +136,12 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    tvEveningFromtime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].secondStarttime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true)
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                        tvEveningFromtime.text =
+                            String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].secondStarttime = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
 
@@ -131,10 +150,12 @@ class DayTimeRepeatAdapter(var context: Context, var list: ArrayList<DayTimeMode
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    tvEveningTotime.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].secondEndtime = "$selectedHour:$selectedMinute"
-                }, hour, minute, true)
+                val mTimePicker =
+                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                        tvEveningTotime.text =
+                            String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].secondEndtime = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true)
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
 

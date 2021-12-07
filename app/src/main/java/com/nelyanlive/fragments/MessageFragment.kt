@@ -2,7 +2,6 @@ package com.nelyanlive.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,9 +29,18 @@ class MessageFragment : Fragment() {
 
     lateinit var fragmentMessageBinding: FragmentMessageBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        fragmentMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context), R.layout.fragment_message, container, false)
+        fragmentMessageBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(container!!.context),
+            R.layout.fragment_message,
+            container,
+            false
+        )
         fragmentMessageBinding.messageVM = messagesVM
 
         messagesVM.userId = (container.context as HomeActivity).userId
@@ -43,7 +51,8 @@ class MessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager =
+            view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         messagesVM.connectSocket(view.context)
     }

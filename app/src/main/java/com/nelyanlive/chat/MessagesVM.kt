@@ -54,8 +54,11 @@ class MessagesVM : ViewModel() {
                         )
                     }
                     "delete" -> {
+                        Log.d(
+                            MessagesVM::class.java.name,
+                            "MessageVM_Id    " + listMembers[position].id + "  " + "MessageVM_UserId  " + listMembers[position].user_id
+                        )
                         delDialog(listMembers[position].user_id)
-
                     }
                 }
             }

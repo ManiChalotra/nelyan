@@ -385,5 +385,6 @@
     <string name="update_available">Mise à jour disponible</string>
 
     <string name="event_type">Type d’événement</string>
+    <string name="selecttime_txt">Please select time</string>
 
 </resources>

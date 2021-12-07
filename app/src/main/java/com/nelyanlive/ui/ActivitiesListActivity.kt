@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ActivityListAdapter
 import com.nelyanlive.data.viewmodel.AppViewModel
@@ -52,7 +53,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
     var LAUNCH_SECOND_ACTIVITY = 1
     var dataString = ""
     var Age = ""
-
+    var jsondata = ArrayList<JsonObject>()
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
     private val appViewModel by lazy {
@@ -131,10 +132,22 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
             if (dataString.isEmpty()) {
                 myCustomToast("Data not loaded yet")
             } else {
-                val i = Intent(this, ActivitiesOnMapActivity::class.java)
-                i.putExtra("type", listType)
-                i.putExtra("dataString", dataString)
-                startActivity(i)
+
+                try {
+                    val i = Intent(this, ActivitiesOnMapActivity::class.java)
+                    i.putExtra("type", listType)
+                    i.putExtra("dataString", dataString)
+//                    val bundle = Bundle()
+//
+//                    bundle.putString("type", listType)
+//                    bundle.putString("dataString", dataString)
+//                    i.putExtras(bundle)
+                    startActivity(i)
+                } catch (ex: Exception) {
+                    Log.d(ActivitiesListActivity::class.java.name, "ActivitiesException_ex   " + ex)
+                    ex.printStackTrace();
+                }
+
             }
         }
 
@@ -159,7 +172,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
                 var list: List<Address>
                 Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
-
 
                 if (latitude.toDouble() != 0.0) {
                     list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
@@ -198,11 +210,9 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 }
             }
 
-
         }
 
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -296,6 +306,11 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         activity_list_progressbar?.hideProgressBar()
                         Log.d("myadsResponse", "-------------" + Gson().toJson(response.body()))
                         dataString = response.body().toString()
+//                        jsondata = response.body()
+                        Log.d(
+                            ActivitiesListActivity::class.java.name,
+                            "ActivitiesList_dataString    " + dataString
+                        )
                         val homeAcitivitiesResponse = Gson().fromJson<HomeActivityResponse>(
                             response.body().toString(),
                             HomeActivityResponse::class.java

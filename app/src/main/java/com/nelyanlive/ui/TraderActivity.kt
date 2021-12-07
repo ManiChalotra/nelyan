@@ -361,6 +361,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
 
+                                    days = true
+//                                    dayErrorNumber = i
+
 //                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
 //                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
 //                                        myCustomToast(getString(R.string.select_morning_time_previous))
@@ -377,37 +380,37 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
                                     var ageErrorString = ""
                                     dayErrorNumber = 0
-                                    ageErrorString = getDayError(
-                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay,
-                                        ageErrorString,
-                                        getString(R.string.select_day_previous),
-                                        1
-                                    )
-                                    ageErrorString = getDayError(
-                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime,
-                                        ageErrorString,
-                                        getString(R.string.select_morning_time_previous),
-                                        2
-                                    )
-                                    ageErrorString = getDayError(
-                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime,
-                                        ageErrorString,
-                                        getString(R.string.select_morning_time_previous),
-                                        3
-                                    )
-                                    ageErrorString = getDayError(
-                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime,
-                                        ageErrorString,
-                                        getString(R.string.select_evening_time_previous),
-                                        4
-                                    )
-                                    ageErrorString = getDayError(
-                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime,
-                                        ageErrorString,
-                                        getString(R.string.select_evening_time_previous),
-                                        5
-                                    )
-//
+//                                    ageErrorString = getDayError(
+//                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].selectedDay,
+//                                        ageErrorString,
+//                                        getString(R.string.select_day_previous),
+//                                        1
+//                                    )
+//                                    ageErrorString = getDayError(
+//                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime,
+//                                        ageErrorString,
+//                                        getString(R.string.select_morning_time_previous),
+//                                        2
+//                                    )
+//                                    ageErrorString = getDayError(
+//                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime,
+//                                        ageErrorString,
+//                                        getString(R.string.select_morning_time_previous),
+//                                        3
+//                                    )
+//                                    ageErrorString = getDayError(
+//                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime,
+//                                        ageErrorString,
+//                                        getString(R.string.select_evening_time_previous),
+//                                        4
+//                                    )
+//                                    ageErrorString = getDayError(
+//                                        dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime,
+//                                        ageErrorString,
+//                                        getString(R.string.select_evening_time_previous),
+//                                        5
+//                                    )
+////
                                     var productErrorString = ""
                                     productErrorNumber = 0
                                     productErrorString = getProductError(
@@ -452,11 +455,44 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                             if (days) {
                                                 selectDayGroup = JSONArray()
                                                 for (i in 0 until dayTimeModelArrayList.size) {
+
                                                     val json = JSONObject()
                                                     json.put(
                                                         "day_name",
                                                         dayTimeModelArrayList[i].selectedDay
                                                     )
+
+                                                    if (dayTimeModelArrayList[i].selectedDay.isNullOrEmpty()
+
+                                                    ) {
+
+                                                        Log.d(
+                                                            TraderActivity::class.java.name,
+                                                            "TraderActivity_AddStartOrEndTime  "
+                                                        )
+
+//                                                        myCustomToast(getString(R.string.select_day_previous))
+//                                                        myCustomToast(getString(R.string.select_day_previous))
+                                                    } else {
+
+                                                        if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
+                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
+                                                            myCustomToast(getString(R.string.select_morning_time_previous))
+                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
+                                                        }
+
+                                                        if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
+                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
+                                                            myCustomToast(getString(R.string.select_evening_time_previous))
+                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
+                                                        }
+
+                                                        Log.d(
+                                                            TraderActivity::class.java.name,
+                                                            "TraderActivity_DayElse "
+                                                        )
+                                                    }
+
                                                     json.put(
                                                         "time_from",
                                                         dayTimeModelArrayList[i].firstStarttime
@@ -473,6 +509,37 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                         "secondEndTime",
                                                         dayTimeModelArrayList[i].secondEndtime
                                                     )
+                                                    Log.d(
+                                                        TraderActivity::class.java.name,
+                                                        "TraderJson_Days   " + json
+                                                    )
+
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_Day   " + dayTimeModelArrayList[i].selectedDay
+//                                                    )
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_FirstTime   " + dayTimeModelArrayList[i].firstStarttime
+//                                                    )
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_FirstEndTime   " + dayTimeModelArrayList[i].firstEndtime
+//                                                    )
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_SecondStartTime   " + dayTimeModelArrayList[i].secondStarttime
+//                                                    )
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_SecondEndTime   " + dayTimeModelArrayList[i].secondEndtime
+//                                                    )
+
+                                                    Log.d(
+                                                        TraderActivity::class.java.name,
+                                                        "TraderJson_Days   " + json
+                                                    )
+
                                                     selectDayGroup.put(json)
                                                 }
                                             }
@@ -494,10 +561,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                         "description",
                                                         productArrayList[i].description
                                                     )
+                                                    Log.d(
+                                                        TraderActivity::class.java.name,
+                                                        "TraderJson_product   " + json
+                                                    )
                                                     productDetailsGroup.put(json)
                                                 }
                                             }
-                                            hitFinalTraderPostApi()
+//                                            hitFinalTraderPostApi()
                                         }
                                     }
                                 }

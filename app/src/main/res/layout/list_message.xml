@@ -3,9 +3,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="model"
             type="com.nelyanlive.chat.ChatListResponse" />
@@ -45,9 +43,7 @@
 
                     />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <RelativeLayout
                 android:id="@+id/rl_1"
@@ -144,6 +140,18 @@
                             android:src="@drawable/blue_double_check"
                             app:layout_constraintBottom_toBottomOf="@id/tv_address"
                             app:layout_constraintStart_toStartOf="parent" />
+
+                        <!--                        <ImageView-->
+                        <!--                            android:id="@+id/tvDelete"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="match_parent"-->
+                        <!--                            android:layout_marginStart="@dimen/_10sdp"-->
+                        <!--                            android:gravity="center"-->
+                        <!--                            android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`delete`)}"-->
+                        <!--                            android:paddingRight="@dimen/_10sdp"-->
+                        <!--                            android:src="@drawable/dlt_icon_red"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="@id/tv_address"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent" />-->
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

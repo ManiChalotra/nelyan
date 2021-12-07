@@ -114,6 +114,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(channel)
+
         }
 
         Log.e("new_message", "==212=222====${myId}")

@@ -31,8 +31,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
-class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope, View.OnClickListener,
+class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope,
+    View.OnClickListener,
     GoogleMap.OnInfoWindowClickListener {
+
     var mContext: Context? = null
     var ivBack: ImageView? = null
     var ivFilter: ImageView? = null
@@ -46,7 +48,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     private var currentLat = "0.0"
     private var currentLong = "0.0"
     private var dataString = ""
-    val list  = mutableListOf<DataMap>()
+    val list = mutableListOf<DataMap>()
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@ActivitiesOnMapActivity) }
     private var authkey: String? = null
@@ -55,21 +57,21 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     }
 
     override fun onPermissionGranted() {
+
     }
 
-
-    override fun onInfoWindowClick(marker : Marker) {
-     OpenActivity(ActivityDetailsActivity::class.java) {
+    override fun onInfoWindowClick(marker: Marker) {
+        OpenActivity(ActivityDetailsActivity::class.java) {
             putString("activityId", list[marker.tag.toString().toInt()].activityId)
             putString("categoryId", list[marker.tag.toString().toInt()].categoryId)
             putString("lati", marker.position.latitude.toString())
-         putString("longi", marker.position.longitude.toString())
+            putString("longi", marker.position.longitude.toString())
         }
     }
 
     override fun onLocationGet(latitude: String?, longitude: String?) {
-        currentLat= latitude!!
-        currentLong= longitude!!
+        currentLat = latitude!!
+        currentLong = longitude!!
 
         Log.e("lat_lng", "$currentLat,$currentLong")
     }
@@ -87,24 +89,23 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         }
 
         override fun getInfoContents(marker: Marker): View? {
-                return null
+            return null
         }
 
         private fun render(marker: Marker, view: View) {
 
             var url = marker.snippet.toString()
-            url  = url.replaceBeforeLast("###","")
+            url = url.replaceBeforeLast("###", "")
 
-           val ivImage =  view.findViewById<ImageView>(R.id.ivImage)
+            val ivImage = view.findViewById<ImageView>(R.id.ivImage)
 
-
-            Picasso.get().load(image_base_URl+ url.substring(3)).resize(150,150)
+            Picasso.get().load(image_base_URl + url.substring(3)).resize(150, 150)
                 .placeholder(
                     ContextCompat.getDrawable(
                         ivImage.context,
                         R.drawable.placeholder
-                    )!!).into(ivImage)
-
+                    )!!
+                ).into(ivImage)
 
             // Set the title and snippet for the custom info window
             val title: String? = marker.title
@@ -115,17 +116,16 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
                 titleUi.text = SpannableString(title).apply {
                     setSpan(ForegroundColorSpan(Color.BLACK), 0, length, 0)
                 }
-            }
-            else {
+            } else {
                 titleUi.text = ""
             }
-            var snippet: String = marker.snippet.toString().replaceAfterLast("###","")
-            snippet = snippet.substring(0,snippet.length-3)
+            var snippet: String = marker.snippet.toString().replaceAfterLast("###", "")
+            snippet = snippet.substring(0, snippet.length - 3)
             val snippetUi = view.findViewById<TextView>(R.id.tvSubTitle)
 
-                snippetUi.text = SpannableString(snippet).apply {
-                    setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
-                }
+            snippetUi.text = SpannableString(snippet).apply {
+                setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
+            }
 
         }
     }
@@ -141,8 +141,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
 
-            if(intent.hasExtra("dataString"))
-            {
+            if (intent.hasExtra("dataString")) {
                 dataString = intent.getStringExtra("dataString")!!
 
                 val jsonObject = JSONObject(dataString)
@@ -150,43 +149,98 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
                 val jsonArray = jsonObject.getJSONArray("data")
                 (0 until jsonArray.length()).map {
                     val json = jsonArray.getJSONObject(it)
-                    if(json.getString("latitude").isNotEmpty() && json.getString("longitude").isNotEmpty()) {
+                    if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
+                            .isNotEmpty()
+                    ) {
                         list.add(
                             DataMap(
                                 LatLng(
                                     json.getString("latitude").toString().toDouble(),
                                     json.getString("longitude").toString().toDouble()
-                                ), json.getString("activityname"), json.getString("city")
-                                ,getImageFromArray(json.getJSONArray("activityimages")),
-                                json.getString("categoryId"),json.getString("id")
-                            ))
+                                ),
+                                json.getString("activityname"),
+                                json.getString("city"),
+                                getImageFromArray(json.getJSONArray("activityimages")),
+                                json.getString("categoryId"),
+                                json.getString("id")
+                            )
+                        )
                     }
-                } }
+                }
+            }
         }
+
+//        val bundle = intent.extras
+//
+//        if (bundle != null && !bundle.equals("")) {
+//            listType = bundle.getString("type").toString()
+//            dataString = bundle.getString("dataString")!!
+//
+////            if (intent.extras != null) {
+////                listType = intent.getStringExtra("type").toString()
+////                Log.e("qwe", intent.getStringExtra("type").toString())
+////
+////                if (intent.hasExtra("dataString")) {
+////                    dataString = intent.getStringExtra("dataString")!!
+//
+//            val jsonObject = JSONObject(dataString)
+//
+//            val jsonArray = jsonObject.getJSONArray("data")
+//            (0 until jsonArray.length()).map {
+//                val json = jsonArray.getJSONObject(it)
+//                if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
+//                        .isNotEmpty()
+//                ) {
+//                    list.add(
+//                        DataMap(
+//                            LatLng(
+//                                json.getString("latitude").toString().toDouble(),
+//                                json.getString("longitude").toString().toDouble()
+//                            ),
+//                            json.getString("activityname"),
+//                            json.getString("city"),
+//                            getImageFromArray(json.getJSONArray("activityimages")),
+//                            json.getString("categoryId"),
+//                            json.getString("id")
+//                        )
+//                    )
+////                        }
+////                    }
+//                }
+//            }
+//        }
+
+
         ivBack!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {
-            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first() }
+            authkey =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+        }
 
         ivFilter!!.setOnClickListener { onBackPressed() }
 
 
 
-        markerView = (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.view_custom_marker, null)
+        markerView =
+            (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+                R.layout.view_custom_marker,
+                null
+            )
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
 
     private fun getImageFromArray(jsonArray: JSONArray): String {
-        return  if(jsonArray.length()>0) jsonArray.getJSONObject(0).getString("images") else ""
+        return if (jsonArray.length() > 0) jsonArray.getJSONObject(0).getString("images") else ""
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
 
         mMap = googleMap
 
-        if(list.isNotEmpty()) {
+        if (list.isNotEmpty()) {
             // create bounds that encompass every location we reference
             val boundsBuilder = LatLngBounds.Builder()
             // include all places we have markers for on the map
@@ -224,11 +278,12 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
                 MarkerOptions()
                     .position(list[it].position)
                     .title(list[it].title)
-                    .snippet(list[it].snippet+"###"+list[it].url)
+                    .snippet(list[it].snippet + "###" + list[it].url)
                     .icon(BitmapDescriptorFactory.defaultMarker())
                     .infoWindowAnchor(0.5F, 0F)
                     .draggable(false)
-                    .zIndex(it.toFloat())).tag = it.toString()
+                    .zIndex(it.toFloat())
+            ).tag = it.toString()
 
         }
     }
@@ -237,8 +292,8 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         get() = Dispatchers.Main + job
 
     override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.ivBack->{
+        when (v!!.id) {
+            R.id.ivBack -> {
                 onBackPressed()
             }
         }
@@ -252,4 +307,4 @@ class DataMap(
     val url: String = "",
     val categoryId: String = "",
     val activityId: String = ""
-    )
+)

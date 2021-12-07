@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ActivitiesOnMapActivity">
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
+
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
-            android:layout_centerInParent="true"
             android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_10sdp"
-            />
+            android:src="@drawable/left_arrow" />
+
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="@string/activity"/>
+            android:text="@string/activity"
+            android:textColor="@color/black" />
+
         <ImageView
             android:id="@+id/ivFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/filter_icon"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="@dimen/_10sdp"/>
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/filter_icon" />
     </RelativeLayout>
 
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/activity_list_map_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/activity_list_map_progressbar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -55,8 +56,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           >
+            android:layout_height="wrap_content">
 
             <fragment
                 android:id="@+id/map"
