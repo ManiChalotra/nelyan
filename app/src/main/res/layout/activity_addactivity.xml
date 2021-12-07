@@ -32,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
+        android:layout_marginTop="-78dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -45,10 +46,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
                 android:fontFamily="@font/semibold"
-                android:text="@string/photo" />
+                android:text="@string/photo"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,8 +72,6 @@
                         app:riv_corner_radius="@dimen/_5sdp" />
 
 
-
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -93,18 +92,14 @@
                 </RelativeLayout>
 
 
-
-
-
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="@dimen/_140sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/back_shape"
                 android:layout_gravity="center"
-                >
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_shape">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivImg3"
@@ -116,21 +111,17 @@
                     app:riv_corner_radius="@dimen/_5sdp" />
 
 
-
             </RelativeLayout>
-
-
-
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:text="@string/type_of_activity" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/type_of_activity"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,11 +156,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/name_of_shop" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/name_of_shop"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <EditText
                 android:id="@+id/et_shopName"
@@ -185,19 +176,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/name_of_activity" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/name_of_activity"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <EditText
                 android:id="@+id/et_activityName"
                 style="@style/SimpleEdittext"
                 android:hint="@string/name_of_activity"
-                android:maxLines="1"
+                android:inputType="text"
                 android:maxLength="100"
-                android:inputType="text" />
+                android:maxLines="1" />
 
             <View
                 android:layout_width="match_parent"
@@ -207,11 +198,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/description" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <EditText
                 android:id="@+id/et_description"
@@ -220,11 +211,11 @@
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
                 android:hint="@string/description"
+                android:maxLines="3"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp"
-                android:maxLines="3"/>
+                android:textSize="@dimen/_10sdp" />
 
             <View
                 android:layout_width="match_parent"
@@ -234,11 +225,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/website" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/website"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <EditText
                 android:id="@+id/etWebsite"
@@ -248,11 +239,10 @@
                 android:fontFamily="@font/regular"
                 android:hint="@string/website"
                 android:paddingEnd="@dimen/_10sdp"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
-                android:textSize="@dimen/_10sdp"
-                android:singleLine="true"
-                />
+                android:textSize="@dimen/_10sdp" />
 
             <View
                 android:layout_width="match_parent"
@@ -263,11 +253,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/phone" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/phone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -280,11 +270,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     app:ccpDialog_textColor="@color/black"
+                    app:ccp_defaultPhoneCode="33"
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/_12sdp"
-                    app:ccp_defaultPhoneCode="33"
-                    />
+                    app:ccp_textSize="@dimen/_12sdp" />
 
                 <EditText
                     android:id="@+id/et_phone"
@@ -307,11 +296,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:fontFamily="@font/semibold"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/address" />
+                android:fontFamily="@font/semibold"
+                android:text="@string/address"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/et_addressActivity"
@@ -358,7 +347,7 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/btn"
                 android:text="@string/submit"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true" />
 
         </LinearLayout>
 

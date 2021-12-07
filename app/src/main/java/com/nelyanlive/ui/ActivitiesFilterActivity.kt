@@ -250,18 +250,18 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
                             if (id.equals(ActivityType)) {
 
-                                poz = i
-                                Log.e("checkmyactivity", "-CCCCC---" + poz)
+                                poz = i + 1
+                                Log.e("checkmyactivity", "-CCCCC_Poz---" + poz)
                                 Log.e("checkmyactivity", "-CCCCC_i ---" + i)
                                 Log.e("checkmyactivity", "-CCCCC_id ---" + id)
                             }
+
 
                             category.add(name)
                             categoryId.add(id)
 
                         }
-                        val arrayAdapte1 =
-                            ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
+                        val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
                         traderType.setSelection(poz)
 //

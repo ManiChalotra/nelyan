@@ -231,21 +231,11 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 AllSharedPref.save(this, "SelectValueactivity", TypeActivity!!)
                 AllSharedPref.save(this, "Age", Age!!)
 
-                Log.d(
+                Log.e(
                     "ActivityListActivity ",
-                    "returnValues_Activity_age   " + AllSharedPref.restoreString(
-                        this,
-                        "age"
+                    "returnValues_Activity_selectvalue   " + AllSharedPref.restoreString(
+                        this, "SelectValueactivity"
                     )
-                )
-
-                Log.d(
-                    "ActivityListActivity ",
-                    "returnValues_Activity   " + AllSharedPref.restoreString(
-                        this,
-                        "returnDistance"
-                    ) + "  " +
-                            AllSharedPref.restoreString(this, "SelectValueactivity")
                 )
 
                 val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())

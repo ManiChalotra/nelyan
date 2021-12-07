@@ -169,7 +169,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                             Log.e("checkmyactivity", "-CCCC_i_169  ---" + i)
                             Log.e("checkmyactivity", "-CCCC_i_id  ---" + id)
                             if (id.equals(ActivityType)) {
-                                poz = i
+                                poz = i + 1
                                 Log.e("checkmyactivity", "-CCCCC---" + poz)
                                 Log.e("checkmyactivity", "-CCCC_i  ---" + i)
                                 Log.e("checkmyactivity", "-CCCC_i_id_175  ---" + i)

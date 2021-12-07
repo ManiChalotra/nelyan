@@ -73,7 +73,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         rc = v.findViewById(R.id.rc_event)
         tvFilter = v.findViewById(R.id.tvFilter)
         tvFilter!!.setOnClickListener {
-            if (tvFilter!!.text == getString(R.string.filter)) {
+            if (tvFilter!!.text == getString(R.string.filter) || tvFilter!!.text == getString(R.string.clear_filter)) {
                 val intent =
                     Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra(
                         "name",

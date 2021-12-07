@@ -201,7 +201,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                             val id = jsonArray.getJSONObject(i).get("id").toString()
 
                             if (id.equals(ChildType)) {
-                                poz = i
+                                poz = i + 1
                                 Log.e("checkmyactivity_child", "-CCCCC---" + poz)
 
                             }
@@ -213,7 +213,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                             ArrayAdapter<String>(this, R.layout.customspinner, childCareType)
                         childCareTypes!!.adapter = arrayAdapter
 
-//                        childType.setSelection(poz)
+                        childType.setSelection(poz)
 
                         childCareTypes!!.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
