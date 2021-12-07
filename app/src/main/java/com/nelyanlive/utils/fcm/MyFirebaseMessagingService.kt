@@ -28,7 +28,7 @@ import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 
-class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
+class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
     var title: String? = ""
     var message: String? = ""
@@ -36,7 +36,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
     val dataStoragePreference by lazy { DataStoragePreference(this) }
 
-    private  var job = Job()
+    private var job = Job()
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -47,7 +47,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.d(TAG, "Refreshed token: $refreshedToken")
         Log.d("fcm_token", "-----$refreshedToken")
 
-        val dataStoragePreference= DataStoragePreference(AppController.getInstance())
+        val dataStoragePreference = DataStoragePreference(AppController.getInstance())
         launch {
             dataStoragePreference.saveFCM(refreshedToken, preferencesKey("device_token"))
         }
@@ -58,7 +58,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
         Log.e("new_message", "=======")
         Log.e("new_message", "=======$remoteMessage")
         Log.e("new_message", "=======${remoteMessage.data}")
-        var myId =""
+        var myId = ""
 
         val data1 = remoteMessage.data
 
@@ -68,50 +68,60 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
         val jsonMain = JSONObject(data1["data"]!!.toString())
 
-        val senderID  = jsonMain.getString("senderId")
-        val name  = jsonMain.getString("senderName")
-        val image  = jsonMain.getString("senderImage")
-        val userId  = jsonMain.getString("receiverId")
-        val groupId  = jsonMain.getInt("groupId")
+        val senderID = jsonMain.getString("senderId")
+        val name = jsonMain.getString("senderName")
+        val image = jsonMain.getString("senderImage")
+        val userId = jsonMain.getString("receiverId")
+        val groupId = jsonMain.getInt("groupId")
 
 
         Log.e("new_message", "=======${userId}")
         Log.e("new_message", "=======${senderID}")
 
 
-                               val intent1 =  Intent(this, Chat1Activity::class.java)
-                                                          .putExtra("senderID", senderID)
-                                                          .putExtra("senderName", name)
-                                                          .putExtra("senderImage", image)
-                                                          .putExtra("userId", userId)
-                                                          .putExtra("disconnect", userId)
-                                           intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent1 = Intent(this, Chat1Activity::class.java)
+            .putExtra("senderID", senderID)
+            .putExtra("senderName", name)
+            .putExtra("senderImage", image)
+            .putExtra("userId", userId)
+            .putExtra("disconnect", userId)
+        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
         val intent = Intent(this, HomeActivity::class.java)
             .putExtra("groupChat", "true")
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
 
-        val pendingIntent = PendingIntent.getActivity(this, 0,if(groupId==0){intent1}else{intent}, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, if (groupId == 0) {
+                intent1
+            } else {
+                intent
+            }, PendingIntent.FLAG_ONE_SHOT
+        )
         val channelId = getString(R.string.default_notification_channel_id)
 
         val builder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(data1["body"]!!).setAutoCancel(true)
-                .setContentIntent(pendingIntent)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(data1["body"]!!).setAutoCancel(true)
+            .setContentIntent(pendingIntent)
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Default channel", NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(
+                channelId,
+                "Default channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             manager.createNotificationChannel(channel)
         }
-
-
 
         Log.e("new_message", "==212=222====${myId}")
 
         launch(Dispatchers.Main.immediate) {
-            myId = DataStoragePreference(AppController.getInstance()).emitStoredValue(preferencesKey<String>("id")).first()
+            myId = DataStoragePreference(AppController.getInstance()).emitStoredValue(
+                preferencesKey<String>("id")
+            ).first()
 
             Log.e("new_message", "==212=1111111====${myId}")
             Log.e("new_message", "==212=324234====${currentChatUser}")
@@ -121,20 +131,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
             if (groupId == 0) {
 
-                chatNotification.value ="true"
+                chatNotification.value = "true"
             }
 
-                if (senderID != myId && senderID != currentChatUser) {
+            if (senderID != myId && senderID != currentChatUser) {
 
-                    if (myChatVisible) {
-                        manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
-                    } else {
-                        if (groupId == 0) {
+                if (myChatVisible) {
+                    manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+                } else {
+                    if (groupId == 0) {
 
-                            manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
-                        }
+                        manager.notify(
+                            ((Date().time / 1000L % Int.MAX_VALUE).toInt()),
+                            builder.build()
+                        )
                     }
                 }
+            }
         }
     }
 
@@ -150,10 +163,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() , CoroutineScope{
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-         var myChatVisible = true
-         var currentChatUser = ""
-        var chatNotification : MutableLiveData<String> = MutableLiveData()
-        var chatNotifyLive : LiveData<String> = chatNotification
+        var myChatVisible = true
+        var currentChatUser = ""
+        var chatNotification: MutableLiveData<String> = MutableLiveData()
+        var chatNotifyLive: LiveData<String> = chatNotification
 
     }
 }
