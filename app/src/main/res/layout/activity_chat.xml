@@ -58,22 +58,47 @@
             android:id="@+id/relativRelpy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_30sdp"
+            android:layout_marginBottom="-10dp"
             android:background="@drawable/chattext"
             android:backgroundTint="@color/lightgrey"
             android:padding="@dimen/_5sdp"
-            android:visibility="gone"
+            android:visibility="@{groupChatVM.replymessage.equals(``)? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/rlBottom"
             app:layout_constraintEnd_toEndOf="@+id/rlBottom"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="@+id/rlBottom">
 
+            <ImageView
+                android:id="@+id/imageClose"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{(view)->groupChatVM.onClick(view,`replyclose`)}"
+                android:src="@drawable/com_facebook_close">
+
+            </ImageView>
+
             <TextView
+                android:id="@+id/tvReplyname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/imageClose"
                 android:maxLines="2"
-                android:text="Reply data"
-                android:textColor="@color/grey"
+                android:text="@={groupChatVM.replymessageUserName}"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvReply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReplyname"
+                android:maxLines="2"
+                android:text="@={groupChatVM.replymessage}"
+                android:textColor="@color/grey" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rlBottom"
@@ -148,8 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            android:clickable="true"
-            >
+            android:clickable="true">
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

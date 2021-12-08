@@ -369,6 +369,12 @@ class ChatVM : ViewModel() {
                 val val2 = String(tmp2, StandardCharsets.UTF_8)
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
+                 val lineSepparentmessage = System.getProperty("line.separator")
+                val ps2parentmessage: String = json.getString("parentmessage")
+                val tmp2parentmessage: ByteArray = Base64.decode(ps2parentmessage)
+                val val2parentmessage = String(tmp2parentmessage, StandardCharsets.UTF_8)
+                val parentmessage = val2parentmessage.replace("<br />".toRegex(), lineSepparentmessage!!)
+
                 listData.add(
                     ChatData(
                         json.getString("id"),
@@ -386,8 +392,8 @@ class ChatVM : ViewModel() {
                         json.getString("recieverImage"),
                         json.getString("senderName"),
                         json.getString("senderImage"),
-                        userId,"1",false, json.getString("description")
-
+                        userId,"1",false, json.getString("description"),
+                        json.getString("parentId"), parentmessage
                     )
                 )
 

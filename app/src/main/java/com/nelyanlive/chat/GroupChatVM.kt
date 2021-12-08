@@ -4,7 +4,9 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.databinding.ObservableField
@@ -16,26 +18,20 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyanlive.R
-import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.fullscreen.FullScreen
 import com.nelyanlive.ui.Chat1Activity
-import com.nelyanlive.utils.ErrorBodyResponse
-import com.nelyanlive.utils.image_base_URl
 import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.java_websocket.util.Base64
 import org.json.JSONObject
-import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.*
+import android.view.LayoutInflater
+
 
 class GroupChatVM : ViewModel()
 {
@@ -48,10 +44,14 @@ class GroupChatVM : ViewModel()
     var groupId = ""
     var notifyStatus = "0"
     var block = "0"
+    var replayerId = ""
+
     var selectedImage = ""
     var imagePathList = ArrayList<MultipartBody.Part>()
 
     var message: ObservableField<String> = ObservableField("")
+    var replymessage: ObservableField<String> = ObservableField("")
+    var replymessageUserName: ObservableField<String> = ObservableField("")
 
     var senderName: ObservableField<String> = ObservableField("")
 
@@ -93,27 +93,31 @@ class GroupChatVM : ViewModel()
                             listChat[position].groupId
                         )
                     }
-//                    "arrayreply" ->
-//                    {
-//                        var filterPopUp: PopupWindow? = null
-//                        val v: View = layoutInflater.inflate(R.layout.res_reply, null)
-//                        anchorview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-//                        // Creating the PopupWindow
-//                        filterPopUp = PopupWindow(anchorview.context)
-//                        filterPopUp!!.setContentView(v)
-//                        filterPopUp!!.setOutsideTouchable(true)
-//                        filterPopUp!!.setWidth(400)
-//                        filterPopUp!!.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-//                        /* val recycler_detergent: RecyclerView = v.findViewById(R.id.res_reply)
-//                         val tv_title = v.findViewById<TextView>(R.id.tv_title)
-//
-//                         tv_title.setText(type)*/
-//
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                            filterPopUp!!.showAsDropDown(anchorview, -0, 0, Gravity.RIGHT)
-//                        }
-//                        filterPopUp!!.setFocusable(true)
-//                    }
+                    "arrayreply" ->
+                    {
+
+                        var filterPopUp: PopupWindow? = null
+                        val v: View? = LayoutInflater.from(ctx).inflate(R.layout.res_reply, null)
+                        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                        // Creating the PopupWindow
+                        filterPopUp = PopupWindow(view.context)
+                        filterPopUp.setContentView(v)
+                        filterPopUp.setOutsideTouchable(true)
+                        filterPopUp.setWidth(200)
+                        filterPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                          val llReply = v!!.findViewById<LinearLayout>(R.id.llReply)
+                          llReply.setOnClickListener {
+                              replymessage.set("'"+listChat[position].message+"'")
+                              replymessageUserName.set(listChat[position].senderName)
+                              replayerId=listChat[position].id
+                              filterPopUp.dismiss()
+                          }
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            filterPopUp.showAsDropDown(view, -0, 0, Gravity.RIGHT)
+                        }
+                        filterPopUp.setFocusable(true)
+                    }
                     "chat" ->
                     {
 
@@ -238,6 +242,10 @@ class GroupChatVM : ViewModel()
                     ).show()
                 }
             }
+            "replyclose" ->
+            {
+                replymessage.set("")
+            }
         }
     }
 
@@ -264,6 +272,30 @@ class GroupChatVM : ViewModel()
             e.printStackTrace()
         }
     }
+    fun sendReplyChatMessage()
+    {
+
+        val json = JSONObject()
+        try
+        { //encoding
+            val ps: String = message.get().toString()
+            val tmp = Base64.encodeBytes(ps.toByteArray())
+
+            json.put("senderId", userId)
+            json.put("groupName", groupName)
+            json.put("messageType", 0)
+            json.put("message", tmp)
+            json.put("parentId", replayerId)
+            Log.e("socket", "=======$json")
+
+            socket.emit("send_group_message", json)
+            message.set("")
+        } catch (e: Exception)
+        {
+            e.printStackTrace()
+        }
+        replymessage.set("")
+    }
 
     fun sendChatImageMessage(str: String)
     {
@@ -279,6 +311,7 @@ class GroupChatVM : ViewModel()
             json.put("senderId", userId)
             json.put("groupName", groupName)
             json.put("messageType", 1)
+
             if(messagetext.isNotEmpty())
             {
                 // message with image
@@ -457,6 +490,13 @@ class GroupChatVM : ViewModel()
             val val2 = String(tmp2, StandardCharsets.UTF_8)
             val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
+
+            val lineSepparentmessage = System.getProperty("line.separator")
+            val ps2parentmessage: String = json.getString("parentmessage")
+            val tmp2parentmessage: ByteArray = Base64.decode(ps2parentmessage)
+            val val2parentmessage = String(tmp2parentmessage, StandardCharsets.UTF_8)
+            val parentmessage = val2parentmessage.replace("<br />".toRegex(), lineSepparentmessage!!)
+
             listData.add(
                 ChatData(
                     json.getString("id"),
@@ -476,7 +516,7 @@ class GroupChatVM : ViewModel()
                     json.getString("senderImage"),
                     userId,
                     "1",false,
-                    json.getString("description")
+                    json.getString("description"),json.getString("parentId"), parentmessage
 
                 )
             )

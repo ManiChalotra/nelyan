@@ -85,17 +85,32 @@
                 android:id="@+id/arrowRight"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
+                android:padding="@dimen/_5sdp"
                 android:src="@drawable/down_arrow"
                 app:layout_constraintEnd_toStartOf="@+id/tvReceiver"
                 app:layout_constraintTop_toTopOf="@+id/tvReceiver"
-                app:tint="@color/black"
-                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}">
+                app:tint="@color/black" />
 
-
-            </ImageView>
+            <TextView
+                android:id="@+id/tvReceiverRelplaymessage"
+                setDrawableTint="@{model}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@+id/arrowRight"
+                android:includeFontPadding="false"
+                android:maxWidth="200dp"
+                android:minWidth="80dp"
+                android:background="@color/verylitgray"
+                android:padding="2dp"
+                android:gravity="end"
+                android:text="@{model.parentmessage}"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:visibility="@{model.parentId.equals(`0`) ? View.GONE : View.VISIBLE}" />
 
             <TextView
                 android:id="@+id/tvReceiver"
@@ -108,6 +123,7 @@
                 android:maxWidth="200dp"
                 android:minWidth="80dp"
                 android:padding="8dp"
+                android:layout_below="@+id/tvReceiverRelplaymessage"
                 android:text="@{model.message}"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
@@ -137,6 +153,7 @@
             android:layout_width="wrap_content"
             setMessageTime="@{model.created}"
             android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/relativRight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/relativRight"
             android:textSize="8dp"/>

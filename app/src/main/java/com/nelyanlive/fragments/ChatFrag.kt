@@ -100,13 +100,17 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 // send image
                 activityChatBinding.relativProgress.visibility=View.VISIBLE
                 setImage(imgPath)
-
             }
             else
             {
                 if (activityChatBinding.etMessage.text.toString().trim().isEmpty())
                 {
                     Toast.makeText(context, getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                }
+                else if (activityChatBinding.relativRelpy.visibility==View.VISIBLE)
+                {
+                    // send reply
+                    groupChatVM.sendReplyChatMessage()
                 }
                 else
                 {
@@ -200,12 +204,23 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
                         //decoding
                         var val3 = ""
+                        var parentmessage = ""
                         try {
                             val lineSep = System.getProperty("line.separator")
                             val ps2: String = json.getString("message")
                             val tmp2: ByteArray = Base64.decode(ps2)
                             val val2 = String(tmp2, StandardCharsets.UTF_8)
                             val3 = val2.replace("<br />".toRegex(), lineSep!!)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        try {
+                            val lineSep = System.getProperty("line.separator")
+                            val ps2: String = json.getString("parentmessage")
+                            val tmp2: ByteArray = Base64.decode(ps2)
+                            val val2 = String(tmp2, StandardCharsets.UTF_8)
+                            parentmessage = val2.replace("<br />".toRegex(), lineSep!!)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -230,7 +245,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                                 true
                             } else {
                                 checkDateCompare(json.getString("created"), listData[listData.size - 1].created)
-                            },json.getString("description")
+                            },json.getString("description"), json.getString("parentId"), parentmessage
 
                         ))
                     }
@@ -646,7 +661,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
         appViewModel.sendUploadImageData(type, users, imagePathList)
 
-        appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observeUploadImageResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
                 if (response.body() != null)

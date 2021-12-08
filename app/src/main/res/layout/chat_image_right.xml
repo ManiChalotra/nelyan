@@ -77,7 +77,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clReceiver"
             android:layout_width="wrap_content"
-            android:minWidth="@dimen/_110sdp"
+            android:minWidth="@dimen/_120sdp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/rightchat"
@@ -87,22 +87,33 @@
             app:layout_constraintTop_toBottomOf="@id/tvDate">
 
             <ImageView
+                android:id="@+id/arrowRight"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/down_arrow"
+                app:tint="@color/black" />
+
+
+            <ImageView
                 android:id="@+id/image_right"
                 setChatMessages="@{model.message}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_110sdp"
-                android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:scaleType="centerCrop"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tvReceiverWithImageRight"
                 app:layout_constraintEnd_toStartOf="@id/tvReceiver"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/arrowRight"
 
 
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView

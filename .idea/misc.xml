@@ -13,7 +13,7 @@
         <entry key="app/src/main/res/layout/activity_addactivity.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_baby_sitter.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_chat1.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_child_care.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_contact_us.xml" value="0.18489583333333334" />
@@ -61,10 +61,10 @@
         <entry key="app/src/main/res/layout/alert_share.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/bottom_navigation.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/camera_gallery_popup.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/chat_image_left.xml" value="0.15384615384615385" />
-        <entry key="app/src/main/res/layout/chat_image_right.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/chat_text_left.xml" value="0.16944444444444445" />
-        <entry key="app/src/main/res/layout/chat_text_right.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/chat_image_left.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/chat_image_right.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/chat_text_left.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/chat_text_right.xml" value="0.33" />
         <entry key="app/src/main/res/layout/custom_info_window.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/custom_toast_layout.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/customspinner.xml" value="0.18489583333333334" />
