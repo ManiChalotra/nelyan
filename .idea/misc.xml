@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/alert_dialog_shape.xml" value="0.19333333333333333" />
         <entry key="app/src/main/res/drawable/alert_shape.xml" value="0.19333333333333333" />
+        <entry key="app/src/main/res/drawable/chattext.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/placeholder.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_activities_map.xml" value="0.18489583333333334" />
@@ -60,7 +61,7 @@
         <entry key="app/src/main/res/layout/alert_share.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/bottom_navigation.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/camera_gallery_popup.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/chat_image_left.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/chat_image_left.xml" value="0.15384615384615385" />
         <entry key="app/src/main/res/layout/chat_image_right.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/chat_text_left.xml" value="0.16944444444444445" />
         <entry key="app/src/main/res/layout/chat_text_right.xml" value="0.18489583333333334" />
@@ -112,6 +113,7 @@
         <entry key="app/src/main/res/layout/open_setting_dialog.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/provider_paths.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/res.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/res_reply.xml" value="0.1" />
         <entry key="app/src/main/res/layout/row_activtydetail_days.xml" value="0.1" />
         <entry key="app/src/main/res/layout/row_activtydetail_time.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/row_detailsimg.xml" value="0.18489583333333334" />

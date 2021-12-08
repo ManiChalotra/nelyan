@@ -18,5 +18,6 @@ data class ChatData(
     var senderImage: String = "",
     var myID: String = "",
     var isFlag: String = "",
-    var dateShown: Boolean = false
+    var dateShown: Boolean = false,
+    var description: String = ""
 ) : AbstractModel()

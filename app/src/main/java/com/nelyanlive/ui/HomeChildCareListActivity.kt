@@ -43,6 +43,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
     private val job by lazy {
         Job()
     }
+
     private var listType: String? = null
     var LAUNCH_SECOND_ACTIVITY = 2
 

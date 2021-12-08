@@ -32,6 +32,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.chat.ChatData
@@ -90,6 +91,30 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
         activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()
+        }
+
+        activityChatBinding.ivSend.setOnClickListener {
+
+            if (activityChatBinding.imageSelected.visibility==View.VISIBLE)
+            {
+                // send image
+                activityChatBinding.relativProgress.visibility=View.VISIBLE
+                setImage(imgPath)
+
+            }
+            else
+            {
+                if (activityChatBinding.etMessage.text.toString().trim().isEmpty())
+                {
+                    Toast.makeText(context, getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    groupChatVM.sendChatMessage()
+                    activityChatBinding.imageSelected.visibility=View.GONE
+                }
+
+            }
         }
 
         ivBell.visibility = View.GONE
@@ -186,26 +211,26 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                         }
 
                         listData.add(ChatData(
-                                json.getString("id"),
-                                json.getString("senderId"),
-                                json.getString("receiverId"),
-                                "",
-                                json.getString("groupId"),
-                                val3,
-                                json.getString("readStatus"),
-                                json.getString("messageType"),
-                                json.getString("deletedId"),
-                                json.getString("created"),
-                                json.getString("updated"),
-                                "",
-                                json.getString("recieverImage"),
-                                json.getString("senderName"),
-                                json.getString("senderImage"),
-                                groupChatVM.userId, "1", if (listData.size == 0) {
-                            true
-                        } else {
-                            checkDateCompare(json.getString("created"), listData[listData.size - 1].created)
-                        }
+                            json.getString("id"),
+                            json.getString("senderId"),
+                            json.getString("receiverId"),
+                            "",
+                            json.getString("groupId"),
+                            val3,
+                            json.getString("readStatus"),
+                            json.getString("messageType"),
+                            json.getString("deletedId"),
+                            json.getString("created"),
+                            json.getString("updated"),
+                            "",
+                            json.getString("recieverImage"),
+                            json.getString("senderName"),
+                            json.getString("senderImage"),
+                            groupChatVM.userId, "1", if (listData.size == 0) {
+                                true
+                            } else {
+                                checkDateCompare(json.getString("created"), listData[listData.size - 1].created)
+                            },json.getString("description")
 
                         ))
                     }
@@ -378,15 +403,15 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(
-                        mContext,
-                        Manifest.permission.CAMERA
-                ) + ActivityCompat.checkSelfPermission(
-                        mContext,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                ) + ActivityCompat.checkSelfPermission(
-                        mContext,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
+                mContext,
+                Manifest.permission.CAMERA
+            ) + ActivityCompat.checkSelfPermission(
+                mContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) + ActivityCompat.checkSelfPermission(
+                mContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             uploadImage()
         } else {
@@ -397,9 +422,9 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     val CAMERA_REQUEST = 1
     private val permissions = arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
     private fun requestPermission() {
@@ -430,7 +455,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 var photoFile: File? = null
                 try {
                     val myDirectory =
-                            File(Environment.getExternalStorageDirectory(), "Pictures")
+                        File(Environment.getExternalStorageDirectory(), "Pictures")
                     if (!myDirectory.exists()) {
                         myDirectory.mkdirs()
                     }
@@ -468,11 +493,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpg",  // suffix
-                storageDir // directory
+            imageFileName,  // prefix
+            ".jpg",  // suffix
+            storageDir // directory
         )
         imgPath = "file:" + image.absolutePath
         return image
@@ -488,11 +513,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             try {
                 if (Uri.parse(imgPath) != null) {
                     imgPath = getPath(mContext, Uri.parse(imgPath)).toString()
+                    activityChatBinding.imageSelected.visibility=View.VISIBLE
+                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder).into(activityChatBinding.imageSelected)
 
-                    setImage(imgPath)
+                    // setImage(imgPath)
                 }
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -502,8 +527,11 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 val uri = data!!.data
                 if (uri != null) {
                     imgPath = getPath(mContext, uri).toString()
+                    activityChatBinding.imageSelected.visibility=View.VISIBLE
+                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder).into(activityChatBinding.imageSelected)
+
                     // getRealImagePath(imgPath)
-                    setImage(imgPath)
+                    //  setImage(imgPath)
                 }
 
             } catch (e: Exception) {
@@ -531,7 +559,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
                 return context?.let { getDataColumn(it, contentUri, null, null) }
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
@@ -551,7 +579,7 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 }
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(
-                        split[1]
+                    split[1]
                 )
                 return context?.let { getDataColumn(it, contentUri, selection, selectionArgs) }
             }
@@ -621,28 +649,34 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         appViewModel.observeUploadImageResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
-                if (response.body() != null) {
-                    if (response.body()!!.data != null) {
+                if (response.body() != null)
+                {
+                    val fileName = response.body()!!.data!![0].fileName.toString()
+                    var str = response.body()!!.data!![0].image.toString()
+                    str = str.replaceBeforeLast("/", "")
+                    groupChatVM.selectedImage = str
 
-                        val fileName = response.body()!!.data!![0].fileName.toString()
-                        var str = response.body()!!.data!![0].image.toString()
-                        str = str.replaceBeforeLast("/", "")
+                    /*      if (response.body()!!.data != null)
+                          {
 
-                        if (setImage.substring(1) == fileName && setImageTrue) {
-                            setImageTrue = false
-                            groupChatVM.sendChatImageMessage(str)
-                        }
+                                  setImageTrue = false
+                                  groupChatVM.sendChatImageMessage(str)
+                              }*/
+
+                    if (setImage.substring(1) == fileName && setImageTrue) {
+                        setImageTrue = false
+                        groupChatVM.sendChatImageMessage(str)
                     }
-                } else {
+                    activityChatBinding.imageSelected.visibility=View.GONE
+                    activityChatBinding.relativProgress.visibility=View.GONE // progressbar
+                }
+                else
+                {
                     ErrorBodyResponse(response, mContext, null)
                 }
             } else {
                 Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         })
-
-
     }
-
-
 }

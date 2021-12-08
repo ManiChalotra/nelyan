@@ -38,7 +38,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-
 class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner, CoroutineScope {
 

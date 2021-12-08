@@ -174,7 +174,6 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                         R.drawable.placeholder
                     )!!).into(ivImage)
 
-
             // Set the title and snippet for the custom info window
             val title: String? = marker.title
             val titleUi = view.findViewById<TextView>(R.id.tvTitle)

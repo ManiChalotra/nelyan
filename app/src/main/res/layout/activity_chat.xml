@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="groupChatVM"
             type="com.nelyanlive.chat.GroupChatVM" />
@@ -37,15 +39,53 @@
             app:layout_constraintBottom_toTopOf="@id/rlBottom"
             app:layout_constraintTop_toBottomOf="@id/btnRegulation" />
 
+
+        <ImageView
+            android:id="@+id/imageSelected"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/age_icon"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:elevation="@dimen/_5sdp"
+            android:layout_marginBottom="-5dp"
+            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintStart_toStartOf="@+id/rlBottom">
+        </ImageView>
+
+
+        <RelativeLayout
+            android:id="@+id/relativRelpy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:background="@drawable/chattext"
+            android:backgroundTint="@color/lightgrey"
+            android:padding="@dimen/_5sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintEnd_toEndOf="@+id/rlBottom"
+            app:layout_constraintStart_toStartOf="@+id/rlBottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Reply data"
+                android:textColor="@color/grey"
+                android:textStyle="bold" />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rlBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
             android:background="@drawable/shape_chat"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
+                android:id="@+id/etMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -86,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:onClick="@{(view)->groupChatVM.sendMessage(view,rvChat)}"
+
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/message_sent" />
             </LinearLayout>
@@ -103,5 +143,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <RelativeLayout
+            android:id="@+id/relativProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:clickable="true"
+            >
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+            </ProgressBar>
+
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

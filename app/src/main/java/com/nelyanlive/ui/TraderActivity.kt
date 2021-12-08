@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -462,113 +463,168 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                         dayTimeModelArrayList[i].selectedDay
                                                     )
 
-                                                    if (dayTimeModelArrayList[i].selectedDay.isNullOrEmpty()
-
-                                                    ) {
-
-                                                        Log.d(
-                                                            TraderActivity::class.java.name,
-                                                            "TraderActivity_AddStartOrEndTime  "
-                                                        )
-
-//                                                        myCustomToast(getString(R.string.select_day_previous))
-//                                                        myCustomToast(getString(R.string.select_day_previous))
+                                                   if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Please select one time",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Please select Morning First Time",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty()) {
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Please select Morning Last Time",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Please select Evening First Time",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty()) {
+                                                        Toast.makeText(
+                                                            this,
+                                                            "Please select Evening Last Time",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
                                                     } else {
-
-                                                        if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
-                                                            myCustomToast(getString(R.string.select_morning_time_previous))
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-                                                        }
-
-                                                        if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
-                                                            myCustomToast(getString(R.string.select_evening_time_previous))
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-                                                        }
-
+                                                        json.put(
+                                                            "time_from",
+                                                            dayTimeModelArrayList[i].firstStarttime
+                                                        )
+                                                        json.put(
+                                                            "time_to",
+                                                            dayTimeModelArrayList[i].firstEndtime
+                                                        )
+                                                        json.put(
+                                                            "secondStartTime",
+                                                            dayTimeModelArrayList[i].secondStarttime
+                                                        )
+                                                        json.put(
+                                                            "secondEndTime",
+                                                            dayTimeModelArrayList[i].secondEndtime
+                                                        )
                                                         Log.d(
                                                             TraderActivity::class.java.name,
-                                                            "TraderActivity_DayElse "
+                                                            "TraderJson_Days   " + json
                                                         )
+                                                        Log.d(
+                                                            TraderActivity::class.java.name,
+                                                            "TraderActivity_DaysFirstData   " + json
+                                                        )
+
+                                                        selectDayGroup.put(json)
+                                                        if (product) {
+                                                            productDetailsGroup = JSONArray()
+                                                            for (i in 0 until productArrayList.size) {
+                                                                val json = JSONObject()
+                                                                json.put(
+                                                                    "image",
+                                                                    productArrayList[i].image
+                                                                )
+                                                                json.put(
+                                                                    "title",
+                                                                    productArrayList[i].productTitle
+                                                                )
+                                                                json.put(
+                                                                    "price",
+                                                                    productArrayList[i].productPrice
+                                                                )
+                                                                json.put(
+                                                                    "description",
+                                                                    productArrayList[i].description
+                                                                )
+                                                                Log.d(
+                                                                    TraderActivity::class.java.name,
+                                                                    "TraderJson_product   " + json
+                                                                )
+                                                                productDetailsGroup.put(json)
+                                                            }
+                                                        }
+                                                        hitFinalTraderPostApi()
+                                                        Toast.makeText(
+                                                            this,
+                                                            "SuccessFul",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
                                                     }
 
-                                                    json.put(
-                                                        "time_from",
-                                                        dayTimeModelArrayList[i].firstStarttime
-                                                    )
-                                                    json.put(
-                                                        "time_to",
-                                                        dayTimeModelArrayList[i].firstEndtime
-                                                    )
-                                                    json.put(
-                                                        "secondStartTime",
-                                                        dayTimeModelArrayList[i].secondStarttime
-                                                    )
-                                                    json.put(
-                                                        "secondEndTime",
-                                                        dayTimeModelArrayList[i].secondEndtime
-                                                    )
-                                                    Log.d(
-                                                        TraderActivity::class.java.name,
-                                                        "TraderJson_Days   " + json
-                                                    )
-
-//                                                    Log.d(
-//                                                        TraderActivity::class.java.name,
-//                                                        "TraderJson_Day   " + dayTimeModelArrayList[i].selectedDay
-//                                                    )
-//                                                    Log.d(
-//                                                        TraderActivity::class.java.name,
-//                                                        "TraderJson_FirstTime   " + dayTimeModelArrayList[i].firstStarttime
-//                                                    )
-//                                                    Log.d(
-//                                                        TraderActivity::class.java.name,
-//                                                        "TraderJson_FirstEndTime   " + dayTimeModelArrayList[i].firstEndtime
-//                                                    )
-//                                                    Log.d(
-//                                                        TraderActivity::class.java.name,
-//                                                        "TraderJson_SecondStartTime   " + dayTimeModelArrayList[i].secondStarttime
-//                                                    )
-//                                                    Log.d(
-//                                                        TraderActivity::class.java.name,
-//                                                        "TraderJson_SecondEndTime   " + dayTimeModelArrayList[i].secondEndtime
-//                                                    )
-
-                                                    Log.d(
-                                                        TraderActivity::class.java.name,
-                                                        "TraderJson_Days   " + json
-                                                    )
-
-                                                    selectDayGroup.put(json)
+//                                                        else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty()) {
+//                                                            Toast.makeText(
+//                                                                this,
+//                                                                "Please select FirstEndTime",
+//                                                                Toast.LENGTH_SHORT
+//                                                            ).show()
+//                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
+//                                                            Toast.makeText(
+//                                                                this,
+//                                                                "Please select FirstStartTime",
+//                                                                Toast.LENGTH_SHORT
+//                                                            ).show()
+//                                                        } else {
+//                                                            json.put(
+//                                                                "time_from",
+//                                                                dayTimeModelArrayList[i].firstStarttime
+//                                                            )
+//                                                            json.put(
+//                                                                "time_to",
+//                                                                dayTimeModelArrayList[i].firstEndtime
+//                                                            )
+//                                                            json.put(
+//                                                                "secondStartTime",
+//                                                                dayTimeModelArrayList[i].secondStarttime
+//                                                            )
+//                                                            json.put(
+//                                                                "secondEndTime",
+//                                                                dayTimeModelArrayList[i].secondEndtime
+//                                                            )
+//                                                            Log.d(
+//                                                                TraderActivity::class.java.name,
+//                                                                "TraderJson_Days   " + json
+//                                                            )
+//                                                            Log.d(
+//                                                                TraderActivity::class.java.name,
+//                                                                "TraderActivity_DaysFirstData   " + json
+//                                                            )
+//
+//                                                            selectDayGroup.put(json)
+//                                                        }
+//
+//
                                                 }
                                             }
 
-                                            if (product) {
-                                                productDetailsGroup = JSONArray()
-                                                for (i in 0 until productArrayList.size) {
-                                                    val json = JSONObject()
-                                                    json.put("image", productArrayList[i].image)
-                                                    json.put(
-                                                        "title",
-                                                        productArrayList[i].productTitle
-                                                    )
-                                                    json.put(
-                                                        "price",
-                                                        productArrayList[i].productPrice
-                                                    )
-                                                    json.put(
-                                                        "description",
-                                                        productArrayList[i].description
-                                                    )
-                                                    Log.d(
-                                                        TraderActivity::class.java.name,
-                                                        "TraderJson_product   " + json
-                                                    )
-                                                    productDetailsGroup.put(json)
-                                                }
-                                            }
-//                                            hitFinalTraderPostApi()
+//                                            if (product) {
+//                                                productDetailsGroup = JSONArray()
+//                                                for (i in 0 until productArrayList.size) {
+//                                                    val json = JSONObject()
+//                                                    json.put("image", productArrayList[i].image)
+//                                                    json.put(
+//                                                        "title",
+//                                                        productArrayList[i].productTitle
+//                                                    )
+//                                                    json.put(
+//                                                        "price",
+//                                                        productArrayList[i].productPrice
+//                                                    )
+//                                                    json.put(
+//                                                        "description",
+//                                                        productArrayList[i].description
+//                                                    )
+//                                                    Log.d(
+//                                                        TraderActivity::class.java.name,
+//                                                        "TraderJson_product   " + json
+//                                                    )
+//                                                    productDetailsGroup.put(json)
+//                                                }
+//                                            }
+////                                            hitFinalTraderPostApi()
                                         }
                                     }
                                 }

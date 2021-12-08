@@ -43,14 +43,7 @@ class ChatVM : ViewModel() {
     var senderImage: ObservableField<String> = ObservableField("")
     var noDataMessage: ObservableField<String> = ObservableField("")
 
-    val chatAdapter by lazy {
-        RecyclerAdapterChat<ChatData>(
-            R.layout.chat_text_left,
-            R.layout.chat_text_right,
-            R.layout.chat_image_right,
-            R.layout.chat_image_left
-        )
-    }
+    val chatAdapter by lazy { RecyclerAdapterChat<ChatData>(R.layout.chat_text_left, R.layout.chat_text_right, R.layout.chat_image_right, R.layout.chat_image_left) }
     val listChat by lazy { ArrayList<ChatData>() }
 
     init {
@@ -63,8 +56,7 @@ class ChatVM : ViewModel() {
 
                         (view.context as Activity).startActivity(
                             Intent(view.context, FullScreen::class.java)
-                                .putExtra("image", listChat[position].message)
-                        )
+                                .putExtra("image", listChat[position].message))
                     }
                 }
             }
@@ -76,11 +68,7 @@ class ChatVM : ViewModel() {
             "ivSend" -> {
                 if (message.get().toString().isEmpty()) {
                     // Toast.makeText(view.context,"Please enter message",Toast.LENGTH_SHORT).show()
-                    Toast.makeText(
-                        view.context,
-                        view.context.getString(R.string.please_enter_message),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
                 } else {
                     sendChatMessage()
                 }
@@ -138,11 +126,7 @@ class ChatVM : ViewModel() {
     fun sendMessage(view: View, rv: RecyclerView) {
         rvChat = rv
         if (message.get().toString().trim().isEmpty()) {
-            Toast.makeText(
-                view.context,
-                view.context.getString(R.string.please_enter_message),
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
         } else {
             sendChatMessage()
         }
@@ -255,36 +239,34 @@ class ChatVM : ViewModel() {
                 val val2 = String(tmp2, StandardCharsets.UTF_8)
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
-                listData.add(
-                    ChatData(
-                        json.getString("id"),
-                        json.getString("senderId"),
-                        json.getString("receiverId"),
-                        json.getString("chatConstantId"),
-                        "",
-                        val3,
-                        json.getString("readStatus"),
-                        json.getString("messageType"),
-                        json.getString("deletedId"),
-                        json.getString("created"),
-                        json.getString("updated"),
-                        json.getString("recieverName"),
-                        json.getString("recieverImage"),
-                        json.getString("senderName"),
-                        if (json.getString("senderId") == userId) {
-                            json.getString("senderImage")
-                        } else {
-                            json.getString("recieverImage")
-                        },
-                        userId,
-                        "",
-                        if (i == 0) {
-                            true
-                        } else {
-                            checkDateCompare(json.getString("created"), listData[i - 1].created)
-                        }
-                    )
-                )
+                listData.add(ChatData(
+                    json.getString("id"),
+                    json.getString("senderId"),
+                    json.getString("receiverId"),
+                    json.getString("chatConstantId"),
+                    "",
+                    val3,
+                    json.getString("readStatus"),
+                    json.getString("messageType"),
+                    json.getString("deletedId"),
+                    json.getString("created"),
+                    json.getString("updated"),
+                    json.getString("recieverName"),
+                    json.getString("recieverImage"),
+                    json.getString("senderName"),
+                    if (json.getString("senderId") == userId) {
+                        json.getString("senderImage")
+                    } else {
+                        json.getString("recieverImage")
+                    },
+                    userId,
+                    "",
+                    if (i == 0) {
+                        true
+                    } else {
+                        checkDateCompare(json.getString("created"), listData[i - 1].created)
+                    }
+                ))
             }
 
             GlobalScope.launch {
@@ -371,12 +353,11 @@ class ChatVM : ViewModel() {
             val json = JSONObject(it[0].toString())
             Log.e("socket===", json.toString())
 
-            val newMessageRoomId =
-                if (json.getString("senderId").toInt() < json.getString("receiverId").toInt()) {
-                    "${json.getString("senderId")}${json.getString("receiverId")}"
-                } else {
-                    "${json.getString("receiverId")}${json.getString("senderId")}"
-                }
+            val newMessageRoomId = if (json.getString("senderId").toInt() < json.getString("receiverId").toInt()) {
+                "${json.getString("senderId")}${json.getString("receiverId")}"
+            } else {
+                "${json.getString("receiverId")}${json.getString("senderId")}"
+            }
 
             if (newMessageRoomId == chatRoom) {
                 val listData: ArrayList<ChatData> = ArrayList()
@@ -405,7 +386,7 @@ class ChatVM : ViewModel() {
                         json.getString("recieverImage"),
                         json.getString("senderName"),
                         json.getString("senderImage"),
-                        userId
+                        userId,"1",false, json.getString("description")
 
                     )
                 )
