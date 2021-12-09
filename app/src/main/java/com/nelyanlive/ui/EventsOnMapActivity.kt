@@ -1,13 +1,13 @@
 package com.nelyanlive.ui
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -29,7 +29,7 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
     var mMap: GoogleMap? = null
 
     var dataString = ""
-    val list  = mutableListOf<DataMap>()
+    val list = mutableListOf<DataMap>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +43,9 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
 
         if (intent.extras != null) {
 
-            if(intent.hasExtra("dataString"))
-            {
-                tvTitle.text ="Events"
+            if (intent.hasExtra("dataString")) {
+//                tvTitle.text ="Events"
+                tvTitle.text = getString(R.string.events)
                 dataString = intent.getStringExtra("dataString")!!
 
                 val jsonObject = JSONObject(dataString)
@@ -53,17 +53,25 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 val jsonArray = jsonObject.getJSONArray("data")
                 (0 until jsonArray.length()).map {
                     val json = jsonArray.getJSONObject(it)
-                    if(json.getString("latitude").isNotEmpty() && json.getString("longitude").isNotEmpty()) {
+                    if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
+                            .isNotEmpty()
+                    ) {
                         list.add(
-                            DataMap(LatLng(
+                            DataMap(
+                                LatLng(
                                     json.getString("latitude").toString().toDouble(),
                                     json.getString("longitude").toString().toDouble()
-                                ),json.getString("name"), json.getString("city")
-                                ,json.getString("image"),
-                                "",json.getString("activityId")
-                            ))
+                                ),
+                                json.getString("name"),
+                                json.getString("city"),
+                                json.getString("image"),
+                                "",
+                                json.getString("activityId")
+                            )
+                        )
                     }
-                } }
+                }
+            }
         }
 
         val mapFragment = supportFragmentManager
@@ -75,9 +83,8 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
 
         mMap = googleMap
 
-        if(list.isEmpty())
-        {}
-        else {
+        if (list.isEmpty()) {
+        } else {
             // create bounds that encompass every location we reference
             val boundsBuilder = LatLngBounds.Builder()
             // include all places we have markers for on the map
@@ -127,14 +134,16 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 MarkerOptions()
                     .position(list[it].position)
                     .title(list[it].title)
-                    .snippet(list[it].snippet+"###"+list[it].url)
+                    .snippet(list[it].snippet + "###" + list[it].url)
                     .icon(BitmapDescriptorFactory.defaultMarker())
                     .infoWindowAnchor(0.5F, 0F)
                     .draggable(false)
-                    .zIndex(it.toFloat())).tag = it.toString()
+                    .zIndex(it.toFloat())
+            ).tag = it.toString()
 
         }
     }
+
     internal inner class ChildCareInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
 
         // TextViews with id "title" and "snippet".
@@ -154,16 +163,17 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
         private fun render(marker: Marker, view: View) {
 
             var url = marker.snippet.toString()
-            url  = url.replaceBeforeLast("###","")
+            url = url.replaceBeforeLast("###", "")
 
-            val ivImage =  view.findViewById<ImageView>(R.id.ivImage)
+            val ivImage = view.findViewById<ImageView>(R.id.ivImage)
 
-            Picasso.get().load(image_base_URl + url.substring(3)).resize(150,150)
+            Picasso.get().load(image_base_URl + url.substring(3)).resize(150, 150)
                 .placeholder(
                     ContextCompat.getDrawable(
                         ivImage.context,
                         R.drawable.placeholder
-                    )!!).into(ivImage)
+                    )!!
+                ).into(ivImage)
 
 
             // Set the title and snippet for the custom info window
@@ -175,20 +185,20 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 titleUi.text = SpannableString(title).apply {
                     setSpan(ForegroundColorSpan(Color.BLACK), 0, length, 0)
                 }
-            }
-            else {
+            } else {
                 titleUi.text = ""
             }
-            var snippet: String = marker.snippet.toString().replaceAfterLast("###","")
-            snippet = snippet.substring(0,snippet.length-3)
+            var snippet: String = marker.snippet.toString().replaceAfterLast("###", "")
+            snippet = snippet.substring(0, snippet.length - 3)
             val snippetUi = view.findViewById<TextView>(R.id.tvSubTitle)
-                snippetUi.text = SpannableString(snippet).apply {
-                    setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
-                }
+            snippetUi.text = SpannableString(snippet).apply {
+                setSpan(ForegroundColorSpan(Color.GRAY), 0, length, 0)
+            }
         }
     }
+
     private fun getImageFromArray(jsonArray: JSONArray): String {
-        return  if(jsonArray.length()>0) jsonArray.getJSONObject(0).getString("image") else ""
+        return if (jsonArray.length() > 0) jsonArray.getJSONObject(0).getString("image") else ""
     }
 
 }

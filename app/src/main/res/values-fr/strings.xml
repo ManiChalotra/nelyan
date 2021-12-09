@@ -245,7 +245,8 @@
     <string name="switch_as_a_professional">Changer en tant que professionnel</string>
     <string name="switch_as_a_consultant">Changer en tant qu\'utilisateur</string>
     <string name="ads">Annonces</string>
-    <string name="events">Événements</string>
+<!--    <string name="events">Événements</string>-->
+    <string name="events">Événements à venir</string>
     <string name="sports">Sports</string>
     <string name="dance">Dance</string>
     <string name="drawing">Drawing</string>
