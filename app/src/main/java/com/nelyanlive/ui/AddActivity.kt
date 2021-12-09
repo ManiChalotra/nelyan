@@ -530,7 +530,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         } else {
                             place.name.toString()
                         }
-
                     }
                     addEventRequestCode -> {
 

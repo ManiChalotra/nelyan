@@ -454,6 +454,35 @@ class AppViewModel : ViewModel() {
             })
     }
 
+    // for event notifictaion
+
+    fun observeChangeEventNotifyApiResponse(): LiveData<Response<JsonObject>?>? {
+        if (eventPushModel == null) {
+            eventPushModel = MutableLiveData()
+        }
+        return eventPushModel
+    }
+
+    fun changeEventNotiApiData(
+        securityKey: String?,
+        authkey: String?,
+        type: String
+    ) {
+        JsonPlaceHolder().changeEventNotification(securityKey, authkey, type)
+            .enqueue(object : retrofit2.Callback<JsonObject> {
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
+                }
+
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    eventPushModel?.value = response
+                }
+            })
+    }
+
     // change Chat Regulation  api
     private var changeChatRegulationMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 
@@ -2005,6 +2034,7 @@ class AppViewModel : ViewModel() {
     // Event List api
 
     private var eventListMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
+    private var eventPushModel: MutableLiveData<Response<JsonObject>?>? = null
     fun observeEventListResponse(): LiveData<Response<JsonObject>?>? {
         if (eventListMutableLiveData == null) {
             eventListMutableLiveData = MutableLiveData<Response<JsonObject>?>()

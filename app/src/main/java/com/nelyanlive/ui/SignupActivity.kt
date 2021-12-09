@@ -11,12 +11,9 @@ import android.widget.ArrayAdapter
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.nelyanlive.R
@@ -40,10 +37,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
-class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineScope, View.OnClickListener {
+class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineScope,
+    View.OnClickListener {
 
     val category by lazy { ArrayList<String>() }
-    val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
+    }
     val dataStoragePreference by lazy { DataStoragePreference(this@SignupActivity) }
     private var imgPath = ""
     private var imgPathNormal = ""
@@ -57,7 +58,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     // Initialize Places variables
     private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
-    private var deviceToken: String?= null
+    private var deviceToken: String? = null
 
     // dialog
     private var job = Job()
@@ -83,8 +84,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     }
 
 
-
-
     private fun initalize() {
         ivBack.setOnClickListener(this)
         btnRegister.setOnClickListener(this)
@@ -93,8 +92,10 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         iv_uploader.setOnClickListener(this)
         tv_city.setOnClickListener(this)
 
-        launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token")).first()
+        launch(Dispatchers.Main.immediate) {
+            deviceToken =
+                dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token"))
+                    .first()
         }
     }
 
@@ -252,13 +253,17 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
 
         if (imgPath.isNullOrEmpty()) {
-            appViewModel.sendcompleteSocialLogin_withoutImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
-                    currentTS, cityName, "1")
+            appViewModel.sendcompleteSocialLogin_withoutImage_Data(
+                security_key, socialID, email, name, type, cityLatitude, cityLongitude,
+                currentTS, cityName, "1"
+            )
             progressDialog.setProgressDialog()
         } else {
             // here image is of type URl
-            appViewModel.sendcompleteSocialLogin_withImage_Data(security_key, socialID, email, name, type, cityLatitude, cityLongitude,
-                    currentTS, cityName, "2", imgPath)
+            appViewModel.sendcompleteSocialLogin_withImage_Data(
+                security_key, socialID, email, name, type, cityLatitude, cityLongitude,
+                currentTS, cityName, "2", imgPath
+            )
             progressDialog.setProgressDialog()
         }
 
@@ -266,17 +271,17 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     private fun showPlacePicker() {
         Places.initialize(
-                applicationContext,
-                googleMapKey
+            applicationContext,
+            googleMapKey
         )
         val fields: List<Place.Field> = listOf(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
+            Place.Field.ID,
+            Place.Field.NAME,
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG
         )
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this@SignupActivity)
+            .build(this@SignupActivity)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)
 
     }
@@ -299,11 +304,23 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
 
         if (imgPathNormal.isEmpty()) {
-            Log.e("sadfdfaf","==33333===$deviceToken===")
+            Log.e("sadfdfaf", "==33333===$deviceToken===")
 
-            appViewModel.Send_SIGNUP_withoutIMAGE_Data(security_key, device_Type, deviceToken, mName, mEmail, mPassword, mType, mSecond, city, lat, longi)
+            appViewModel.Send_SIGNUP_withoutIMAGE_Data(
+                security_key,
+                device_Type,
+                deviceToken,
+                mName,
+                mEmail,
+                mPassword,
+                mType,
+                mSecond,
+                city,
+                lat,
+                longi
+            )
 
-            Log.e("sadfdfaf","==222222===$deviceToken===")
+            Log.e("sadfdfaf", "==222222===$deviceToken===")
 
             progressDialog.setProgressDialog()
 
@@ -315,150 +332,175 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             val photo: MultipartBody.Part?
             photo = MultipartBody.Part.createFormData("image", mfile.name, imageFile)
 
-                appViewModel.Send_SIGNUP_withIMAGE_Data(security_key, device_Type, deviceToken, mName,
-                        mEmail, mPassword, mType, mSecond, city, lat, longi, photo)
-            }
-            progressDialog.setProgressDialog()
+            appViewModel.Send_SIGNUP_withIMAGE_Data(
+                security_key, device_Type, deviceToken, mName,
+                mEmail, mPassword, mType, mSecond, city, lat, longi, photo
+            )
+        }
+        progressDialog.setProgressDialog()
 
     }
 
     private fun checkMvvmResponse() {
-        appViewModel.observeSignupResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+        appViewModel.observeSignupResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
-                    Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
+                        Log.d("signupResponse", "-----" + Gson().toJson(response.body()))
 
+                        progressDialog.hidedialog()
+
+                        val mResponse: String = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        val message = jsonObject.get("msg").toString()
+                        myCustomToast(message)
+
+                        val id = jsonObject.getJSONObject("data").get("id").toString()
+                        val email = jsonObject.getJSONObject("data").get("email").toString()
+                        val name = jsonObject.getJSONObject("data").get("name").toString()
+                        val password = jsonObject.getJSONObject("data").get("password").toString()
+                        val type = jsonObject.getJSONObject("data").get("type").toString()
+                        val notificationStatus =
+                            jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                        val image = jsonObject.getJSONObject("data").get("image").toString()
+                        val phone = jsonObject.getJSONObject("data").get("phone").toString()
+                        val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
+                        val cityOrZipcode =
+                            jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                        val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+                        val EventPush = jsonObject.getJSONObject("data").get("eventPush").toString()
+
+                        Log.d(
+                            LoginActivity::class.java.name,
+                            "SignUpActivity_EventPush    " + EventPush
+                        )
+
+                        AllSharedPref.save(this, "auth_key", authKey)
+                        AllSharedPref.save(this, "EventPush", EventPush)
+
+                        launch(Dispatchers.IO) {
+                            dataStoragePreference.save(id, preferencesKey("id"))
+                            dataStoragePreference.save(email, preferencesKey("emailLogin"))
+                            dataStoragePreference.save(name, preferencesKey("nameLogin"))
+                            dataStoragePreference.save(password, preferencesKey("passwordLogin"))
+                            dataStoragePreference.save(type, preferencesKey("typeLogin"))
+                            dataStoragePreference.save(
+                                notificationStatus,
+                                preferencesKey("notificationStatusLogin")
+                            )
+                            dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                            dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
+                            dataStoragePreference.save(authKey, preferencesKey("auth_key"))
+                            dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                            dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
+                            dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
+
+                        }
+
+                        progressDialog.hidedialog()
+                        OpenActivity(HomeActivity::class.java) {
+                            putString("authorization", authKey)
+                        }
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                     progressDialog.hidedialog()
 
-                    val mResponse: String = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
-
-                    val id = jsonObject.getJSONObject("data").get("id").toString()
-                    val email = jsonObject.getJSONObject("data").get("email").toString()
-                    val name = jsonObject.getJSONObject("data").get("name").toString()
-                    val password = jsonObject.getJSONObject("data").get("password").toString()
-                    val type = jsonObject.getJSONObject("data").get("type").toString()
-                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
-                    val image = jsonObject.getJSONObject("data").get("image").toString()
-                    val phone = jsonObject.getJSONObject("data").get("phone").toString()
-                    val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
-                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
-                    val latitude = jsonObject.getJSONObject("data").get("lat").toString()
-                    val longitude = jsonObject.getJSONObject("data").get("lng").toString()
-
-                    AllSharedPref.save(this, "auth_key", authKey)
-
-                    launch(Dispatchers.IO) {
-                        dataStoragePreference.save(id, preferencesKey("id"))
-                        dataStoragePreference.save(email, preferencesKey("emailLogin"))
-                        dataStoragePreference.save(name, preferencesKey("nameLogin"))
-                        dataStoragePreference.save(password, preferencesKey("passwordLogin"))
-                        dataStoragePreference.save(type, preferencesKey("typeLogin"))
-                        dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
-                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
-                        dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
-                        dataStoragePreference.save(authKey, preferencesKey("auth_key"))
-                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
-                        dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
-                        dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
-
-                    }
-
-                    progressDialog.hidedialog()
-                    OpenActivity(HomeActivity::class.java) {
-                        putString("authorization", authKey)
-                    }
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-                progressDialog.hidedialog()
+            })
 
-            }
-        })
+        appViewModel.observeTermsConditionResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
 
-        appViewModel.observeTermsConditionResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.d("getContent_terms", "---------" + Gson().toJson(response.body()))
 
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    Log.d("getContent_terms", "---------" + Gson().toJson(response.body()))
-
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    termsConditipon_data = jsonObject.getJSONObject("data").get("content").toString()
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        termsConditipon_data =
+                            jsonObject.getJSONObject("data").get("content").toString()
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
+            })
 
         // for  privacy policy
 
-        appViewModel.observePrivacyPolicyResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    Log.d("getContent_privacy", "---------" + Gson().toJson(response.body()))
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    privacyPolicy_data = jsonObject.getJSONObject("data").get("content").toString()
+        appViewModel.observePrivacyPolicyResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        Log.d("getContent_privacy", "---------" + Gson().toJson(response.body()))
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        privacyPolicy_data =
+                            jsonObject.getJSONObject("data").get("content").toString()
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, null)
                 }
-            } else {
-                ErrorBodyResponse(response, this, null)
-            }
-        })
-        appViewModel.observeCompleteSociaLogin_Api_Response()!!.observe(this, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+            })
+        appViewModel.observeCompleteSociaLogin_Api_Response()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
-                    val mResponse: String = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
+                        val mResponse: String = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
 
-                    val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
-                    progressDialog.hidedialog()
-                    val id = jsonObject.getJSONObject("data").get("id").toString()
-                    val email = jsonObject.getJSONObject("data").get("email").toString()
-                    val password = jsonObject.getJSONObject("data").get("password").toString()
-                    val type = jsonObject.getJSONObject("data").get("type").toString()
-                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
-                    val image = jsonObject.getJSONObject("data").get("image").toString()
-                    val phone = jsonObject.getJSONObject("data").get("phone").toString()
-                    val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
-                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
-                    val latitude = jsonObject.getJSONObject("data").get("lat").toString()
-                    val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+                        val message = jsonObject.get("msg").toString()
+                        myCustomToast(message)
+                        progressDialog.hidedialog()
+                        val id = jsonObject.getJSONObject("data").get("id").toString()
+                        val email = jsonObject.getJSONObject("data").get("email").toString()
+                        val password = jsonObject.getJSONObject("data").get("password").toString()
+                        val type = jsonObject.getJSONObject("data").get("type").toString()
+                        val notificationStatus =
+                            jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                        val image = jsonObject.getJSONObject("data").get("image").toString()
+                        val phone = jsonObject.getJSONObject("data").get("phone").toString()
+                        val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
+                        val cityOrZipcode =
+                            jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val latitude = jsonObject.getJSONObject("data").get("lat").toString()
+                        val longitude = jsonObject.getJSONObject("data").get("lng").toString()
 
-                    AllSharedPref.save(this, "auth_key", authKey)
+                        AllSharedPref.save(this, "auth_key", authKey)
 
-                    launch(Dispatchers.IO) {
-                        dataStoragePreference.save(id, preferencesKey("id"))
-                        dataStoragePreference.save(email, preferencesKey("emailLogin"))
-                        dataStoragePreference.save(password, preferencesKey("passwordLogin"))
-                        dataStoragePreference.save(type, preferencesKey("typeLogin"))
-                        dataStoragePreference.save(image, preferencesKey("imageLogin"))
-                        dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
-                        dataStoragePreference.save(authKey, preferencesKey("auth_key"))
-                        dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
-                        dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
-                        dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
-                        dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
+                        launch(Dispatchers.IO) {
+                            dataStoragePreference.save(id, preferencesKey("id"))
+                            dataStoragePreference.save(email, preferencesKey("emailLogin"))
+                            dataStoragePreference.save(password, preferencesKey("passwordLogin"))
+                            dataStoragePreference.save(type, preferencesKey("typeLogin"))
+                            dataStoragePreference.save(image, preferencesKey("imageLogin"))
+                            dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
+                            dataStoragePreference.save(authKey, preferencesKey("auth_key"))
+                            dataStoragePreference.save(
+                                notificationStatus,
+                                preferencesKey("notificationStatusLogin")
+                            )
+                            dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
+                            dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
+                            dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
+                        }
+
+                        progressDialog.hidedialog()
+                        OpenActivity(HomeActivity::class.java) {
+                            putString("authorization", authKey)
+                        }
+                        finishAffinity()
                     }
 
+                } else {
+                    ErrorBodyResponse(response, this, null)
                     progressDialog.hidedialog()
-                    OpenActivity(HomeActivity::class.java) {
-                        putString("authorization", authKey)
-                    }
-                    finishAffinity()
+
                 }
-
-            } else {
-                ErrorBodyResponse(response, this, null)
-                progressDialog.hidedialog()
-
-            }
-        })
+            })
 
         appViewModel.getException()!!.observe(this, androidx.lifecycle.Observer {
             myCustomToast(it)
@@ -489,7 +531,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         category.add("")
         category.add(getString(R.string.consultant))
         category.add(getString(R.string.professional))
-        val arrayAdapter: ArrayAdapter<*> = ArrayAdapter(this, R.layout.customspinner, category as List<String>)
+        val arrayAdapter: ArrayAdapter<*> =
+            ArrayAdapter(this, R.layout.customspinner, category as List<String>)
         typeSelected!!.adapter = arrayAdapter
     }
 

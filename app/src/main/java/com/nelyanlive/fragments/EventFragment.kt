@@ -1,6 +1,7 @@
 package com.nelyanlive.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -21,6 +22,7 @@ import com.nelyanlive.R
 import com.nelyanlive.R.layout
 import com.nelyanlive.adapter.MyEventAdapter
 import com.nelyanlive.data.viewmodel.AppViewModel
+import com.nelyanlive.modals.EventPushmodel
 import com.nelyanlive.modals.HomeEventModel
 import com.nelyanlive.ui.*
 import com.nelyanlive.utils.*
@@ -51,12 +53,16 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     var dataString = ""
     var Age = ""
     private val dataList by lazy { ArrayList<HomeEventModel>() }
+    private val dataListEventPush by lazy { ArrayList<EventPushmodel>() }
     private var latitude: String = "42.6026"
     private var longitude: String = "20.9030"
     private var locality: String = ""
     var minage: String = ""
     var maxage: String = ""
     var noti: Boolean = false
+    var authorization = ""
+    var typenoti = ""
+    var type: String = ""
 
     override fun onResume() {
         super.onResume()
@@ -137,7 +143,10 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         val inputManager =
             view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        checkMvvmResponse()
+
+        if (type.equals("")) {
+            checkMvvmResponse()
+        }
         if (tvFilter!!.text == getString(R.string.filter)) {
 
             latitude = userLat
@@ -163,8 +172,16 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             }
         }
 
-        var getNotiImg = AllSharedPref.restoreBoolean(requireContext(), "noti")
-        if (getNotiImg == false) {
+//        var getNotiImg = AllSharedPref.restoreBoolean(requireContext(), "noti")
+//        if (getNotiImg == false) {
+//            img_noti.setImageResource(R.drawable.mute);
+//        } else {
+//            img_noti.setImageResource(R.drawable.unmute);
+//        }
+
+        var NotiType = AllSharedPref.restoreString(requireContext(), "EventPush")
+        Log.d(EventFragment::class.java.name, "EventFragment_NotiType   " + NotiType)
+        if (NotiType.equals("0")) {
             img_noti.setImageResource(R.drawable.mute);
         } else {
             img_noti.setImageResource(R.drawable.unmute);
@@ -257,7 +274,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                         val jsonObject = JSONObject(mResponse)
                         val listArray = jsonObject.getJSONArray("data")
                         val mSizeOfData = listArray.length()
-
+                        Log.d("homeEventResponse", "-------------_listArray " + listArray)
                         dataList.clear()
 
                         for (i in 0 until mSizeOfData) {
@@ -531,8 +548,10 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     }
 
     lateinit var dialog: Dialog
+
     fun dailogNotification() {
         dialog = Dialog(mContext)
+        type = "1"
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.alert_notification_change)
         dialog.setCancelable(true)
@@ -550,24 +569,73 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         tvYes.setOnClickListener {
             Log.d(EventFragment::class.java.name, "EventFragment_noti_yes   ")
             dialog.dismiss()
+
             if (img_noti.getDrawable()
                     .getConstantState() == getResources().getDrawable(R.drawable.unmute)
                     .getConstantState()
             ) {
-                AllSharedPref.save(requireContext(), "noti", false)
+                typenoti = "0"
+                AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.mute);
             } else {
-                AllSharedPref.save(requireContext(), "noti", true)
-                img_noti.setImageResource(R.drawable.mute);
+                typenoti = "1"
+                AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.unmute);
             }
-//            setMuteNotifications()
+            setMuteNotifications()
         }
         tvNo.setOnClickListener {
             Log.d(EventFragment::class.java.name, "EventFragment_noti_No   ")
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun setMuteNotifications() {
+        if (checkIfHasNetwork((mContext as Activity))) {
+            authorization = AllSharedPref.restoreString(mContext, "auth_key")
+            appViewModel.changeEventNotiApiData(security_key, authorization, typenoti)
+        } else {
+            showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
+        }
+
+        appViewModel.observeChangeEventNotifyApiResponse()!!
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+
+                        Log.e(
+                            "observeGroupNotifyApi",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+                        val jsonMain = JSONObject(response.body().toString())
+                        Log.e("socket===", jsonMain.toString())
+                        val jsonData = jsonMain.getJSONObject("data")
+                        var Message = jsonMain.get("msg")
+
+                        Log.d(EventFragment::class.java.name, "EventFragment_Message   " + Message)
+                        requireActivity().myCustomToast(Message as String)
+
+                        img_noti.setImageResource(
+                            if (AllSharedPref.restoreString(requireContext(), "EventPush") == "1") {
+                                R.drawable.unmute
+                            } else {
+                                R.drawable.mute
+                            }
+                        )
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        mContext,
+                        mContext.getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            })
+
     }
 
 }

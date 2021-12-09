@@ -27,7 +27,6 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-
 class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
     var title: String? = ""

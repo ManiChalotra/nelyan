@@ -830,6 +830,14 @@ interface JsonPlaceHolder {
         @Field("status") status: String?
     ): Call<JsonObject>
 
+    @POST("eventPushStatus")
+    @FormUrlEncoded
+    fun changeEventNotification(
+        @Header("security_key") securityKey: String?,
+        @Header("auth_key") authKey: String?,
+        @Field("type") type: String?
+    ): Call<JsonObject>
+
     @GET("get_chat_regulation")
     fun getChatRegulation(
         @Header("security_key") securityKey: String?,

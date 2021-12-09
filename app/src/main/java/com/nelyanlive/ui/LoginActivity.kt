@@ -46,9 +46,13 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.coroutines.CoroutineContext
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, FacebookHelperCallback {
+class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
+    FacebookHelperCallback {
 
-    val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
+    }
     val dataStoragePreference by lazy { DataStoragePreference(this) }
 
     var facebookHelper: FacebookHelper? = null
@@ -59,9 +63,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
     var socialEmail = ""
     var socialImage = ""
     var facebookCustomDataModel: FacebookCustomDataModel? = null
-    private var deviceToken: String?= null
-    private var savedUser: String= ""
-    private var savedPassword: String= ""
+    private var deviceToken: String? = null
+    private var savedUser: String = ""
+    private var savedPassword: String = ""
 
     lateinit var googleHelper: GoogleHelper
 
@@ -94,7 +98,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         initGoogleSignin()
         initalize()
         checkMVVMResponse()
-        getSig(this,"SHA")
+        getSig(this, "SHA")
     }
 
     fun getSig(context: Context, key: String) {
@@ -136,13 +140,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         ll_facebook_login.setOnClickListener(this)
         ll_google_login.setOnClickListener(this)
 
-        launch (Dispatchers.Main.immediate){
-            deviceToken = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token")).first()
-            savedUser = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("userName")).first()
-            savedPassword = dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("password")).first()
+        launch(Dispatchers.Main.immediate) {
+            deviceToken =
+                dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("device_token"))
+                    .first()
+            savedUser =
+                dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("userName")).first()
+            savedPassword =
+                dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("password")).first()
 
-            if(savedUser!="null" && savedUser!=null) tv_emailLogin.text  =Editable.Factory.getInstance().newEditable(savedUser)
-            if(savedPassword!="null" &&  savedPassword!=null) tv_passwordLogin.text  =Editable.Factory.getInstance().newEditable(savedPassword)
+            if (savedUser != "null" && savedUser != null) tv_emailLogin.text =
+                Editable.Factory.getInstance().newEditable(savedUser)
+            if (savedPassword != "null" && savedPassword != null) tv_passwordLogin.text =
+                Editable.Factory.getInstance().newEditable(savedPassword)
         }
     }
 
@@ -166,20 +176,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 if (Validation.checkEmail(email, this)) {
                     if (Validation.checkEmptyPassword(password, this)) {
 
-                            val dataStoragePreference =
-                                DataStoragePreference(AppController.getInstance())
-                            launch {
-                                dataStoragePreference.saveFCM(
-                                    if(clicked){email}else{""},
-                                    preferencesKey("userName")
-                                )
-                                dataStoragePreference.saveFCM(
-                                    if(clicked){password}else{""},
-                                    preferencesKey("password")
-                                )
+                        val dataStoragePreference =
+                            DataStoragePreference(AppController.getInstance())
+                        launch {
+                            dataStoragePreference.saveFCM(
+                                if (clicked) {
+                                    email
+                                } else {
+                                    ""
+                                },
+                                preferencesKey("userName")
+                            )
+                            dataStoragePreference.saveFCM(
+                                if (clicked) {
+                                    password
+                                } else {
+                                    ""
+                                },
+                                preferencesKey("password")
+                            )
 
-                            }
-                            hitLoginApi(email, password)
+                        }
+                        hitLoginApi(email, password)
                     }
                 }
 
@@ -218,7 +236,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
 
                 } else {
-                    showSnackBar(this,getString(R.string.no_internet_error))
+                    showSnackBar(this, getString(R.string.no_internet_error))
                 }
             }
         }
@@ -231,10 +249,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         Log.e("deviceToken", "=====$deviceToken=====")
 
         if (checkIfHasNetwork(this@LoginActivity)) {
-            appViewModel.sendLoginData(security_key, device_Type, deviceToken, email, password, currentTS)
+            appViewModel.sendLoginData(
+                security_key,
+                device_Type,
+                deviceToken,
+                email,
+                password,
+                currentTS
+            )
             progressDialog.setProgressDialog()
-        }
-        else {
+        } else {
             showSnackBar(this@LoginActivity, getString(R.string.no_internet_error))
         }
     }
@@ -243,8 +267,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         appViewModel.observeLOginResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    Log.d("" +
-                            "", "---------" + Gson().toJson(response.body()))
+                    Log.d(
+                        "" +
+                                "", "---------" + Gson().toJson(response.body())
+                    )
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
 
@@ -256,15 +282,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val name = jsonObject.getJSONObject("data").get("name").toString()
                     val password = jsonObject.getJSONObject("data").get("password").toString()
                     val type = jsonObject.getJSONObject("data").get("type").toString()
-                    val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                    val notificationStatus =
+                        jsonObject.getJSONObject("data").get("notificationStatus").toString()
                     val image = jsonObject.getJSONObject("data").get("image").toString()
                     val phone = jsonObject.getJSONObject("data").get("phone").toString()
                     val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
-                    val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                    val cityOrZipcode =
+                        jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                     val latitude = jsonObject.getJSONObject("data").get("lat").toString()
                     val longitude = jsonObject.getJSONObject("data").get("lng").toString()
+                    val EventPush = jsonObject.getJSONObject("data").get("eventPush").toString()
+
+                    Log.d(LoginActivity::class.java.name, "LoginActivity_EventPush    " + EventPush)
 
                     AllSharedPref.save(this, "auth_key", authKey)
+                    AllSharedPref.save(this, "EventPush", EventPush)
 
                     launch(Dispatchers.IO) {
 
@@ -273,7 +305,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         dataStoragePreference.save(name, preferencesKey("nameLogin"))
                         dataStoragePreference.save(password, preferencesKey("passwordLogin"))
                         dataStoragePreference.save(type, preferencesKey("typeLogin"))
-                        dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
+                        dataStoragePreference.save(
+                            notificationStatus,
+                            preferencesKey("notificationStatusLogin")
+                        )
                         dataStoragePreference.save(image, preferencesKey("imageLogin"))
                         dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
                         dataStoragePreference.save(authKey, preferencesKey("auth_key"))
@@ -281,17 +316,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
                         dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
 
-                        Log.d("savedValues", "----------"+
-                        "\n\n"+ "---email---"+email+
-                        "\n\n"+ "---name---"+name+
-                        "\n\n"+ "---password---"+password+
-                        "\n\n"+ "---type---"+type+
-                        "\n\n"+ "---image---"+image+
-                        "\n\n"+ "---phone---"+phone+
-                        "\n\n"+ "---authkey---"+authKey+
-                        "\n\n"+ "---cityZipCode---"+cityOrZipcode+
-                        "\n\n"+ "---latitude---"+latitude+
-                        "\n\n"+ "---longitude---"+longitude
+                        Log.d(
+                            "savedValues", "----------" +
+                                    "\n\n" + "---email---" + email +
+                                    "\n\n" + "---name---" + name +
+                                    "\n\n" + "---password---" + password +
+                                    "\n\n" + "---type---" + type +
+                                    "\n\n" + "---image---" + image +
+                                    "\n\n" + "---phone---" + phone +
+                                    "\n\n" + "---authkey---" + authKey +
+                                    "\n\n" + "---cityZipCode---" + cityOrZipcode +
+                                    "\n\n" + "---latitude---" + latitude +
+                                    "\n\n" + "---longitude---" + longitude
                         )
                     }
 
@@ -303,8 +339,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     finishAffinity()
                 }
 
-            }
-            else {
+            } else {
                 ErrorBodyResponse(response, this, null)
                 progressDialog.hidedialog()
 
@@ -321,7 +356,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                     val message = jsonObject.get("msg").toString()
                     val isAlready = jsonObject.getJSONObject("data").get("isAlready").toString()
 
-                    if (isAlready == "0"){
+                    if (isAlready == "0") {
                         OpenActivity(SignupActivity::class.java) {
                             putString("socialLogin", "SOCIAL_LOGIN")
                             putString("socialName", socialName)
@@ -330,7 +365,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                             putString("socialId", socialId)
                         }
 
-                    }else {
+                    } else {
                         myCustomToast(message)
 
                         val id = jsonObject.getJSONObject("data").get("id").toString()
@@ -338,11 +373,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         val name = jsonObject.getJSONObject("data").get("name").toString()
                         val password = jsonObject.getJSONObject("data").get("password").toString()
                         val type = jsonObject.getJSONObject("data").get("type").toString()
-                        val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                        val notificationStatus =
+                            jsonObject.getJSONObject("data").get("notificationStatus").toString()
                         val image = jsonObject.getJSONObject("data").get("image").toString()
                         val phone = jsonObject.getJSONObject("data").get("phone").toString()
                         val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
-                        val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val cityOrZipcode =
+                            jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                         val latitude = jsonObject.getJSONObject("data").get("lat").toString()
                         val longitude = jsonObject.getJSONObject("data").get("lng").toString()
 
@@ -354,7 +391,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                             dataStoragePreference.save(name, preferencesKey("nameLogin"))
                             dataStoragePreference.save(password, preferencesKey("passwordLogin"))
                             dataStoragePreference.save(type, preferencesKey("typeLogin"))
-                            dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
+                            dataStoragePreference.save(
+                                notificationStatus,
+                                preferencesKey("notificationStatusLogin")
+                            )
                             dataStoragePreference.save(image, preferencesKey("imageLogin"))
                             dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
                             dataStoragePreference.save(authKey, preferencesKey("auth_key"))
@@ -369,7 +409,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         finishAffinity()
 
                     }
-                  }
+                }
             } else {
                 ErrorBodyResponse(response, this, null)
                 progressDialog.hidedialog()
@@ -407,12 +447,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             Log.e("socialId", socialId)
             socialType = FOR_FACEBOOK_TYPE
 
-            appViewModel.sendSocialLoginData(security_key, device_Type, deviceToken!!, socialId, FOR_FACEBOOK_TYPE)
+            appViewModel.sendSocialLoginData(
+                security_key,
+                device_Type,
+                deviceToken!!,
+                socialId,
+                FOR_FACEBOOK_TYPE
+            )
 
 
             progressDialog.setProgressDialog()
             facebookCustomDataModel =
-                    FacebookCustomDataModel(socialName, socialId, socialEmail, socialImage, socialType)
+                FacebookCustomDataModel(socialName, socialId, socialEmail, socialImage, socialType)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -428,10 +474,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         }
 
         GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me/permissions/",
-                null,
-                HttpMethod.DELETE
+            AccessToken.getCurrentAccessToken(),
+            "/me/permissions/",
+            null,
+            HttpMethod.DELETE
         ) {
             LoginManager.getInstance().logOut()
         }.executeAsync()
@@ -479,7 +525,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                         socialName = account.displayName!!
                         socialType = FOR_GOOGLE_TYPE
 
-                        appViewModel.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
+                        appViewModel.sendSocialLoginData(
+                            security_key,
+                            device_Type,
+                            deviceToken!!,
+                            socialId,
+                            FOR_GOOGLE_TYPE
+                        )
 
                     } catch (e: Exception) {
                     }
@@ -489,12 +541,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             }
 
             override fun onErrorGoogle() {
-               // myCustomToast("Cancel Google Login")
+                // myCustomToast("Cancel Google Login")
             }
         })
 
     }
-
 
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
@@ -510,17 +561,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
                 socialImage = photo
                 socialEmail = account.email!!
                 socialName = account.displayName!!
-              //  socialType = FOR_GOOGLE_TYPE
+                //  socialType = FOR_GOOGLE_TYPE
 
-                appViewModel.sendSocialLoginData(security_key, device_Type, deviceToken!!,  socialId, FOR_GOOGLE_TYPE)
+                appViewModel.sendSocialLoginData(
+                    security_key,
+                    device_Type,
+                    deviceToken!!,
+                    socialId,
+                    FOR_GOOGLE_TYPE
+                )
 
             } catch (e: Exception) {
                 Log.d("GoogleException", "-----------$e")
             }
-
-
-
-
 
 
         } catch (e: ApiException) {
