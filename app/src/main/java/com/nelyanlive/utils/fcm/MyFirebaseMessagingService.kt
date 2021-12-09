@@ -62,7 +62,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
         val data1 = remoteMessage.data
 
-
         Log.e("new_message", "=======${data1["body"]!!}")
         Log.e("new_message", "=======${data1["data"]!!}")
 
@@ -74,10 +73,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         val userId = jsonMain.getString("receiverId")
         val groupId = jsonMain.getInt("groupId")
 
-
         Log.e("new_message", "=======${userId}")
         Log.e("new_message", "=======${senderID}")
-
 
         val intent1 = Intent(this, Chat1Activity::class.java)
             .putExtra("senderID", senderID)
@@ -91,7 +88,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
             .putExtra("groupChat", "true")
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-
         val pendingIntent = PendingIntent.getActivity(
             this, 0, if (groupId == 0) {
                 intent1
@@ -99,6 +95,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
                 intent
             }, PendingIntent.FLAG_ONE_SHOT
         )
+
+        // new
+        /*val pendingIntent = PendingIntent.getActivity(
+            this, 0, if (groupId == 0) {
+                intent1
+            } else {
+                intent
+            }, PendingIntent.FLAG_UPDATE_CURRENT
+        )*/
+
         val channelId = getString(R.string.default_notification_channel_id)
 
         val builder = NotificationCompat.Builder(this, channelId)

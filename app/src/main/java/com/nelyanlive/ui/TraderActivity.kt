@@ -365,20 +365,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     days = true
 //                                    dayErrorNumber = i
 
-//                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime.isNullOrEmpty()) {
-//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime.isNullOrEmpty()) {
-//                                        myCustomToast(getString(R.string.select_morning_time_previous))
-//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-////                                        ApiDataNew()
-//                                    }
-//
-//                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime.isNullOrEmpty()) {
-//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime.isNullOrEmpty()) {
-//                                        myCustomToast(getString(R.string.select_evening_time_previous))
-//                                    } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-////                                        ApiDataNew()
-//                                    }
-
                                     var ageErrorString = ""
                                     dayErrorNumber = 0
 //                                    ageErrorString = getDayError(
@@ -464,35 +450,35 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                     )
 
                                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Please select one time",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+                                                       myCustomToast(getString(R.string.selecttime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Please select Morning First Time",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+//                                                        Toast.makeText(
+//                                                            this,
+//                                                            "Please select Morning First Time",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+                                                       myCustomToast(getString(R.string.selectmorningtime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty()) {
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Please select Morning Last Time",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+//                                                        Toast.makeText(
+//                                                            this,
+//                                                            "Please select Morning Last Time",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+                                                       myCustomToast(getString(R.string.selectmorninglasttime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Please select Evening First Time",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+//                                                        Toast.makeText(
+//                                                            this,
+//                                                            "Please select Evening First Time",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+                                                       myCustomToast(getString(R.string.selecteveningtime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty()) {
-                                                        Toast.makeText(
-                                                            this,
-                                                            "Please select Evening Last Time",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+//                                                        Toast.makeText(
+//                                                            this,
+//                                                            "Please select Evening Last Time",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+                                                       myCustomToast(getString(R.string.selecteveninglasttime_txt))
                                                     } else {
                                                         json.put(
                                                             "time_from",

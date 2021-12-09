@@ -388,4 +388,9 @@
     <string name="event_type">Type d’événement</string>
     <string name="selecttime_txt">Please select time</string>
 
+    <string name="selectmorningtime_txt">Please select Morning First Time</string>
+    <string name="selectmorninglasttime_txt">Please select Morning Last Time</string>
+    <string name="selecteveningtime_txt">Please select Evening First Time</string>
+    <string name="selecteveninglasttime_txt">PPlease select Evening Last Time</string>
+
 </resources>

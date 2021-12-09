@@ -135,12 +135,17 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 try {
                     val i = Intent(this, ActivitiesOnMapActivity::class.java)
                     i.putExtra("type", listType)
-                    i.putExtra("dataString", dataString)
+//                    i.putExtra("dataString", dataString)
 //                    val bundle = Bundle()
 //
 //                    bundle.putString("type", listType)
 //                    bundle.putString("dataString", dataString)
 //                    i.putExtras(bundle)
+                    AllSharedPref.save(
+                        this,
+                        "dataString",
+                        dataString
+                    )
                     startActivity(i)
                 } catch (ex: Exception) {
                     Log.d(ActivitiesListActivity::class.java.name, "ActivitiesException_ex   " + ex)

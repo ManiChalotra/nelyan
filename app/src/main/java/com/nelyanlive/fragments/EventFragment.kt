@@ -1,5 +1,7 @@
 package com.nelyanlive.fragments
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -54,6 +56,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     private var locality: String = ""
     var minage: String = ""
     var maxage: String = ""
+    var noti: Boolean = false
 
     override fun onResume() {
         super.onResume()
@@ -62,6 +65,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -158,6 +162,26 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 }
             }
         }
+
+        var getNotiImg = AllSharedPref.restoreBoolean(requireContext(), "noti")
+        if (getNotiImg == false) {
+            img_noti.setImageResource(R.drawable.mute);
+        } else {
+            img_noti.setImageResource(R.drawable.unmute);
+        }
+
+        img_noti.setOnClickListener(View.OnClickListener {
+            dailogNotification()
+            /* if (img_noti.getDrawable()
+                     .getConstantState() == getResources().getDrawable(R.drawable.unmute)
+                     .getConstantState()
+             ) {
+                 img_noti.setImageResource(R.drawable.mute);
+             } else {
+                 img_noti.setImageResource(R.drawable.unmute);
+             }*/
+
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -504,6 +528,46 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             showSnackBar(requireActivity(), getString(R.string.no_internet_error))
         }
 
+    }
+
+    lateinit var dialog: Dialog
+    fun dailogNotification() {
+        dialog = Dialog(mContext)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.alert_notification_change)
+        dialog.setCancelable(true)
+        val tvYes: TextView = dialog.findViewById(R.id.tvYes)
+        val tvNo: TextView = dialog.findViewById(R.id.tvNo)
+        val tvMessage: TextView = dialog.findViewById(R.id.tvMessage)
+        tvMessage.text = if (img_noti.getDrawable()
+                .getConstantState() == getResources().getDrawable(R.drawable.unmute)
+                .getConstantState()
+        ) {
+            getString(R.string.are_you_sure_to_mute)
+        } else {
+            getString(R.string.are_you_sure_to_un_mute)
+        }
+        tvYes.setOnClickListener {
+            Log.d(EventFragment::class.java.name, "EventFragment_noti_yes   ")
+            dialog.dismiss()
+            if (img_noti.getDrawable()
+                    .getConstantState() == getResources().getDrawable(R.drawable.unmute)
+                    .getConstantState()
+            ) {
+                AllSharedPref.save(requireContext(), "noti", false)
+                img_noti.setImageResource(R.drawable.mute);
+            } else {
+                AllSharedPref.save(requireContext(), "noti", true)
+                img_noti.setImageResource(R.drawable.mute);
+                img_noti.setImageResource(R.drawable.unmute);
+            }
+//            setMuteNotifications()
+        }
+        tvNo.setOnClickListener {
+            Log.d(EventFragment::class.java.name, "EventFragment_noti_No   ")
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 }

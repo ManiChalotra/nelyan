@@ -141,76 +141,36 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
 
-            if (intent.hasExtra("dataString")) {
-                dataString = intent.getStringExtra("dataString")!!
+//            if (intent.hasExtra("dataString")) {
+//                dataString = intent.getStringExtra("dataString")!!
 
-                val jsonObject = JSONObject(dataString)
+            dataString = AllSharedPref.restoreString(this, "dataString")
 
-                val jsonArray = jsonObject.getJSONArray("data")
-                (0 until jsonArray.length()).map {
-                    val json = jsonArray.getJSONObject(it)
-                    if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
-                            .isNotEmpty()
-                    ) {
-                        list.add(
-                            DataMap(
-                                LatLng(
-                                    json.getString("latitude").toString().toDouble(),
-                                    json.getString("longitude").toString().toDouble()
-                                ),
-                                json.getString("activityname"),
-                                json.getString("city"),
-                                getImageFromArray(json.getJSONArray("activityimages")),
-                                json.getString("categoryId"),
-                                json.getString("id")
-                            )
+            val jsonObject = JSONObject(dataString)
+
+            val jsonArray = jsonObject.getJSONArray("data")
+            (0 until jsonArray.length()).map {
+                val json = jsonArray.getJSONObject(it)
+                if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
+                        .isNotEmpty()
+                ) {
+                    list.add(
+                        DataMap(
+                            LatLng(
+                                json.getString("latitude").toString().toDouble(),
+                                json.getString("longitude").toString().toDouble()
+                            ),
+                            json.getString("activityname"),
+                            json.getString("city"),
+                            getImageFromArray(json.getJSONArray("activityimages")),
+                            json.getString("categoryId"),
+                            json.getString("id")
                         )
-                    }
+                    )
+//                    }
                 }
             }
         }
-
-//        val bundle = intent.extras
-//
-//        if (bundle != null && !bundle.equals("")) {
-//            listType = bundle.getString("type").toString()
-//            dataString = bundle.getString("dataString")!!
-//
-////            if (intent.extras != null) {
-////                listType = intent.getStringExtra("type").toString()
-////                Log.e("qwe", intent.getStringExtra("type").toString())
-////
-////                if (intent.hasExtra("dataString")) {
-////                    dataString = intent.getStringExtra("dataString")!!
-//
-//            val jsonObject = JSONObject(dataString)
-//
-//            val jsonArray = jsonObject.getJSONArray("data")
-//            (0 until jsonArray.length()).map {
-//                val json = jsonArray.getJSONObject(it)
-//                if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
-//                        .isNotEmpty()
-//                ) {
-//                    list.add(
-//                        DataMap(
-//                            LatLng(
-//                                json.getString("latitude").toString().toDouble(),
-//                                json.getString("longitude").toString().toDouble()
-//                            ),
-//                            json.getString("activityname"),
-//                            json.getString("city"),
-//                            getImageFromArray(json.getJSONArray("activityimages")),
-//                            json.getString("categoryId"),
-//                            json.getString("id")
-//                        )
-//                    )
-////                        }
-////                    }
-//                }
-//            }
-//        }
-
-
         ivBack!!.setOnClickListener(this)
 
         launch(Dispatchers.Main.immediate) {

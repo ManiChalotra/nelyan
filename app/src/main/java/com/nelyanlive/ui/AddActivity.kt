@@ -190,6 +190,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 descp = et_description.text.toString()
                 phonee = et_phone.text.toString()
 
+                Log.d(
+                    AddActivity::class.java.name,
+                    "AddActivity  " + "  ShopName  " + shopName + "  website  " + website
+                            + "  minage " + minage + "  maxage" + maxage + "  activityname  " + activityName + "  descp " + descp +
+                            "  phonee " + phonee
+                )
                 if (!isImageSelected) {
                     myCustomToast(getString(R.string.media_missing_error))
                 } else {
@@ -506,6 +512,13 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         et_addressActivity.text = cityAddress
                         addressLatitude = place.latLng?.latitude.toString()
                         addressLongitude = place.latLng?.longitude.toString()
+
+                        Log.d(
+                            AddActivity::class.java.name,
+                            "AddActivity  " + "activityAddress  " + cityAddress + "activity_latitute  " + addressLatitude
+                                    + "  address_Longitude  " + addressLongitude
+                        )
+
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list = geocoder.getFromLocation(
                             place.latLng?.latitude!!.toDouble(),
@@ -730,6 +743,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 id: Long
                             ) {
                                 activityTypeId = typeId[position]
+                                Log.d(
+                                    AddActivity::class.java.name,
+                                    "AddActivity_  " + "  Activity_Name  " + activityName
+                                            + "   Activity_TypeId  " + activityTypeId
+                                )
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
