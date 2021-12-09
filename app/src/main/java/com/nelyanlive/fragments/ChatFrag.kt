@@ -84,10 +84,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
         groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
-        activityChatBinding.btnRegulation.setOnClickListener {
-            /* val i = Intent(mContext, RegulationActivity::class.java)
-             startActivity(i)*/
-        }
+        /*  activityChatBinding.btnRegulation.setOnClickListener {
+              *//* val i = Intent(mContext, RegulationActivity::class.java)
+             startActivity(i)*//*
+        }*/
 
         activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()

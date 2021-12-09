@@ -32,6 +32,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
     var title: String? = ""
     var message: String? = ""
     var notificationManager: NotificationManager? = null
+    var notifyID = 1
 
     val dataStoragePreference by lazy { DataStoragePreference(this) }
 
@@ -105,12 +106,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         )*/
 
         val channelId = getString(R.string.default_notification_channel_id)
+        var numMessages = 0;
 
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(data1["body"]!!).setAutoCancel(true)
             .setContentIntent(pendingIntent)
+
+//        builder.setContentText(currentText).setNumber(++numMessages);
+
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(

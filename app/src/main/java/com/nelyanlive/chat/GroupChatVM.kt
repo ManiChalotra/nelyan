@@ -52,6 +52,7 @@ class GroupChatVM : ViewModel()
     var message: ObservableField<String> = ObservableField("")
     var replymessage: ObservableField<String> = ObservableField("")
     var replymessageUserName: ObservableField<String> = ObservableField("")
+    var searchVisible: ObservableField<String> = ObservableField("")
 
     var senderName: ObservableField<String> = ObservableField("")
 
@@ -63,8 +64,7 @@ class GroupChatVM : ViewModel()
             R.layout.chat_text_left,
             R.layout.chat_text_right,
             R.layout.chat_image_right,
-            R.layout.chat_image_left
-        )
+            R.layout.chat_image_left)
     }
     val listChat by lazy { ArrayList<ChatData>() }
 
@@ -74,15 +74,11 @@ class GroupChatVM : ViewModel()
         {
             override fun onClick(view: View, position: Int, type: String)
             {
-
                 when (type)
                 {
-
                     "delete" ->
                     {
-                        dailogDelete(
-                            view.context, listChat[position].id, listChat[position].groupId, position
-                        )
+                        dailogDelete(view.context, listChat[position].id, listChat[position].groupId, position)
                     }
                     "flag" ->
                     {
@@ -93,9 +89,24 @@ class GroupChatVM : ViewModel()
                             listChat[position].groupId
                         )
                     }
+                    "replyclick" ->
+                    {
+                        for(i in 0 until listChat.size)
+                        {
+                            Log.e("checkpozz","----"+listChat[position].parentId+"-----"+(listChat[i].id)+"---"+listChat.size)
+                            if(listChat[position].parentId.equals(listChat[i].id))
+                            {
+                                try{
+                                    rvChat.getLayoutManager()!!.scrollToPosition(i)
+                                }
+                                catch (e: Exception) {
+
+                                }
+                            }
+                        }
+                    }
                     "arrayreply" ->
                     {
-
                         var filterPopUp: PopupWindow? = null
                         val v: View? = LayoutInflater.from(ctx).inflate(R.layout.res_reply, null)
                         view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
@@ -105,13 +116,13 @@ class GroupChatVM : ViewModel()
                         filterPopUp.setOutsideTouchable(true)
                         filterPopUp.setWidth(200)
                         filterPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-                          val llReply = v!!.findViewById<LinearLayout>(R.id.llReply)
-                          llReply.setOnClickListener {
-                              replymessage.set("'"+listChat[position].message+"'")
-                              replymessageUserName.set(listChat[position].senderName)
-                              replayerId=listChat[position].id
-                              filterPopUp.dismiss()
-                          }
+                        val llReply = v!!.findViewById<LinearLayout>(R.id.llReply)
+                        llReply.setOnClickListener {
+                            replymessage.set("'"+listChat[position].message+"'")
+                            replymessageUserName.set(listChat[position].senderName)
+                            replayerId=listChat[position].id
+                            filterPopUp.dismiss()
+                        }
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                             filterPopUp.showAsDropDown(view, -0, 0, Gravity.RIGHT)
@@ -246,6 +257,15 @@ class GroupChatVM : ViewModel()
             {
                 replymessage.set("")
             }
+            "searchoption" ->
+            {
+                searchVisible.set("true")
+            }
+            "Serchclose" ->
+            {
+                searchVisible.set("")
+            }
+
         }
     }
 

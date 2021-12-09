@@ -33,8 +33,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
-
             />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -49,7 +47,6 @@
             android:src="@drawable/placeholder"
             app:layout_constraintBottom_toBottomOf="@id/clReceiver"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
         <TextView
             android:id="@+id/tvReceiverName"
@@ -73,7 +70,6 @@
             app:layout_constraintStart_toStartOf="@id/ivReceiver"
             app:layout_constraintTop_toBottomOf="@+id/ivReceiver" />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clReceiver"
             android:layout_width="wrap_content"
@@ -87,34 +83,18 @@
             app:layout_constraintTop_toBottomOf="@id/tvDate">
 
             <ImageView
-                android:id="@+id/arrowRight"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
-                android:padding="@dimen/_5sdp"
-                android:src="@drawable/down_arrow"
-                app:tint="@color/black" />
-
-
-            <ImageView
                 android:id="@+id/image_right"
                 setChatMessages="@{model.message}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_110sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:scaleType="centerCrop"
+                android:layout_marginHorizontal="@dimen/_2sdp"
                 app:layout_constraintBottom_toTopOf="@+id/tvReceiverWithImageRight"
                 app:layout_constraintEnd_toStartOf="@id/tvReceiver"
-                app:layout_constraintStart_toEndOf="@+id/arrowRight"
-
-
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/tvReceiver"
@@ -137,6 +117,7 @@
                 android:minWidth="80dp"
                 android:layout_marginBottom="@dimen/_3sdp"
                 android:padding="2dp"
+                android:textIsSelectable="true"
                 android:text="@{model.description}"
                 android:textColor="@color/black"
                 android:textSize="14dp"
@@ -146,7 +127,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/image_right" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <ImageView
             android:id="@+id/imageselec"
@@ -160,7 +140,17 @@
             app:layout_constraintBottom_toBottomOf="@id/clReceiver"
             app:layout_constraintEnd_toStartOf="@id/clReceiver" />
 
-
+        <ImageView
+            android:id="@+id/arrowRight"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/leftarrow"
+            app:layout_constraintBottom_toBottomOf="@+id/imageselec"
+            app:layout_constraintEnd_toStartOf="@+id/imageselec"
+            app:layout_constraintTop_toTopOf="@+id/imageselec"
+            app:tint="@color/black" />
 
         <TextView
             android:id="@+id/tvReceiverTime"

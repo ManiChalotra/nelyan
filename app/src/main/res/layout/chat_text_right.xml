@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -73,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ivReceiver" />
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,68 +85,96 @@
             app:layout_constraintEnd_toStartOf="@id/ivReceiver"
             app:layout_constraintTop_toTopOf="@+id/ivReceiver">
 
-            <ImageView
-                android:id="@+id/arrowRight"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
-                android:padding="@dimen/_5sdp"
-                android:src="@drawable/down_arrow"
-                app:layout_constraintEnd_toStartOf="@+id/tvReceiver"
-                app:layout_constraintTop_toTopOf="@+id/tvReceiver"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvReceiverRelplaymessage"
-                setDrawableTint="@{model}"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/Relativreplyr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_toEndOf="@+id/arrowRight"
-                android:background="@color/verylitgray"
-                android:gravity="end"
-                android:includeFontPadding="false"
-                android:maxWidth="200dp"
-                android:minWidth="80dp"
-                android:padding="2dp"
-                android:text="@{model.parentmessage}"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:visibility="@{model.parentId.equals(`0`) ? View.GONE : View.VISIBLE}" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/rightchat"
+                android:backgroundTint="@color/lightgrey"
+                android:layout_margin="1dp"
+                android:padding="@dimen/_2sdp"
+                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`replyclick`)}"
+                android:visibility="@{model.parentId.equals(`0`) ? View.GONE : View.VISIBLE}">
+
+                <TextView
+                    android:id="@+id/tvReceiverRelplaymessageusername"
+                    setDrawableTint="@{model}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:maxWidth="200dp"
+                    android:minWidth="80dp"
+                    android:text="@{model.senderName}"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvReceiverRelplaymessage"
+                    setDrawableTint="@{model}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:maxWidth="200dp"
+                    android:minWidth="80dp"
+                    android:text="@{model.parentmessage}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tvReceiver"
                 setDrawableTint="@{model}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvReceiverRelplaymessage"
-                android:layout_marginStart="0dp"
-                android:layout_toEndOf="@+id/arrowRight"
-                android:drawableEnd="@drawable/blue_double_check"
+                android:gravity="end"
                 android:maxWidth="200dp"
                 android:minWidth="80dp"
+                android:textIsSelectable="true"
                 android:padding="8dp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_2sdp"
                 android:text="@{model.message}"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
-        </RelativeLayout>
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Relativreplyr" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`delete`)}"
             android:padding="@dimen/_5sdp"
             android:src="@drawable/dlt_icon_red"
-            android:visibility="@{model.isFlag.equals(``) ? View.VISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/relativRight"
-            app:layout_constraintEnd_toStartOf="@id/relativRight"
-            app:layout_constraintTop_toTopOf="@id/relativRight" />
+            app:layout_constraintBottom_toBottomOf="@+id/relativRight"
+            app:layout_constraintEnd_toStartOf="@+id/relativRight"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--        android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"-->
 
+        <ImageView
+            android:id="@+id/arrowRight"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/leftarrow"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:tint="@color/black" />
 
         <TextView
             android:id="@+id/tvReceiverTime"
