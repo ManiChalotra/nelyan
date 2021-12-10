@@ -2,6 +2,7 @@ package com.nelyanlive.adapter
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.R
 import com.nelyanlive.modals.DayTimeModel
+import kotlinx.android.synthetic.main.item_day_time_add_more.view.*
 import java.util.*
 
 class DayTimeRepeatAdapter(
@@ -55,6 +57,9 @@ class DayTimeRepeatAdapter(
         var tvEveningTotime = itemView.findViewById(R.id.tv_evening_totime) as TextView
         var spinnerDayss = itemView.findViewById(R.id.spinner_dayss) as Spinner
 
+        val txtdltday = itemView.ivdltday
+        val txtaddtraderday = itemView.tvAddtarderday
+        val lltraderday = itemView.ll_traderday
 
         fun initalize(dayTimeModelArrayList: ArrayList<DayTimeModel>, position: Int) {
 
@@ -160,11 +165,30 @@ class DayTimeRepeatAdapter(
                 mTimePicker.show()
 
             }
+
+            txtdltday.setOnClickListener {
+                lltraderday.visibility = View.GONE
+//                listner.onRemoveEventItem(position)
+//                txtaddtraderproduct.visibility = View.VISIBLE
+                Log.d(DayTimeRepeatAdapter::class.java.name, "DayTimeAdapter_174  " + position)
+                if (position == 0 || position == 1) {
+                    txtaddtraderday.visibility = View.VISIBLE
+                } else {
+
+                }
+            }
+            txtaddtraderday.setOnClickListener {
+                listner.onSingleTraderDay(list, position)
+                txtaddtraderday.visibility = View.GONE
+            }
+
         }
     }
 
     interface OnDayTimeRecyclerViewItemClickListner {
         fun dayTimeAdd(list: ArrayList<DayTimeModel>, position: Int)
+
+        fun onSingleTraderDay(list: ArrayList<DayTimeModel>, position: Int)
     }
 
 

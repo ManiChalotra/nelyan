@@ -15,14 +15,21 @@ import com.nelyanlive.R
 import com.nelyanlive.adapter.ProductDetailRepeatAdapter.ProductDetailsRepeatViewHolder
 import com.nelyanlive.modals.ProductDetailDataModel
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.item_product_details_repeat.view.*
 import java.util.*
 
-class ProductDetailRepeatAdapter(internal var context: Context, internal var list: ArrayList<ProductDetailDataModel> ,
-                                 internal var productRepeatListener: ProductRepeatListener) : RecyclerView.Adapter<ProductDetailsRepeatViewHolder>() {
+class ProductDetailRepeatAdapter(
+    internal var context: Context, internal var list: ArrayList<ProductDetailDataModel>,
+    internal var productRepeatListener: ProductRepeatListener
+) : RecyclerView.Adapter<ProductDetailsRepeatViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductDetailsRepeatViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ProductDetailsRepeatViewHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.item_product_details_repeat, parent, false)
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.item_product_details_repeat, parent, false)
         return ProductDetailsRepeatViewHolder(view)
     }
 
@@ -50,21 +57,24 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
         var ivEvent: ImageView = itemView.findViewById(R.id.ivProductImage)
         var ivCam: ImageView = itemView.findViewById(R.id.ivCam)
 
+        val txtdlttrader = itemView.ivdlttrader
+        val txtaddtraderproduct = itemView.tvAddtarderproduct
+        val lltraderproduct = itemView.ll_traderproduct
+
         fun bind(list: ArrayList<ProductDetailDataModel>, position: Int) {
 
             if (position == list.size - 1) {
                 tvAdd.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 tvAdd.visibility = View.GONE
             }
 
-            Glide.with(context).asBitmap().load(image_base_URl+list[position].image).into(ivEvent)
+            Glide.with(context).asBitmap().load(image_base_URl + list[position].image).into(ivEvent)
             edtProductTitle.setText(list[position].productTitle)
             edtDesc.setText(list[position].description)
             edtProductPrice.setText(list[position].productPrice)
 
-            ivCam.setOnClickListener{
+            ivCam.setOnClickListener {
                 productRepeatListener.addCameraGalleryImage(list, position)
             }
 
@@ -75,12 +85,36 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 productRepeatListener.ontraderItemClick(list, position)
             }
 
+            txtdlttrader.setOnClickListener {
+                lltraderproduct.visibility = View.GONE
+                productRepeatListener.onRemoveEventItem(position)
+//                txtaddtraderproduct.visibility = View.VISIBLE
+
+                if (position == 0) {
+                    txtaddtraderproduct.visibility = View.VISIBLE
+                } else {
+
+                }
+            }
+
+            txtaddtraderproduct.setOnClickListener {
+                productRepeatListener.onSingleTraderProduct(list, position)
+                txtaddtraderproduct.visibility = View.GONE
+            }
+
             edtProductTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].productTitle = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
@@ -88,8 +122,15 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 override fun afterTextChanged(s: Editable?) {
                     list[position].productPrice = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
@@ -97,8 +138,15 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
                 override fun afterTextChanged(s: Editable?) {
                     list[position].description = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
@@ -108,7 +156,10 @@ class ProductDetailRepeatAdapter(internal var context: Context, internal var lis
     interface ProductRepeatListener {
         fun ontraderItemClick(list: ArrayList<ProductDetailDataModel>, pos: Int)
         fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int)
-}
+
+        fun onSingleTraderProduct(list: ArrayList<ProductDetailDataModel>, position: Int)
+        fun onRemoveEventItem(position: Int)
+    }
 
 
 }

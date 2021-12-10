@@ -241,7 +241,12 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                     myCustomToast(getString(R.string.data_not_loaded))
                 } else {
                     val i = Intent(this, HomeChildCareOnMapActivity::class.java)
-                    i.putExtra("dataString", dataString)
+//                    i.putExtra("dataString", dataString)
+                    AllSharedPref.save(
+                        this,
+                        "dataString",
+                        dataString
+                    )
                     i.putExtra("type", "trader")
                     startActivity(i)
                 }

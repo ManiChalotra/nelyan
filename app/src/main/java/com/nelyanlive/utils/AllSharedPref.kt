@@ -2,7 +2,7 @@ package com.nelyanlive.utils
 
 import android.content.Context
 
-object  AllSharedPref {
+object AllSharedPref {
 
     internal var KEY = "Shared_Preferences"
 
@@ -12,13 +12,14 @@ object  AllSharedPref {
 
         return editor.commit()
     }
-    fun setToken(context: Context, key: String, value: String):Boolean{
-        val editor=context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
-        editor.putString(key,value)
+
+    fun setToken(context: Context, key: String, value: String): Boolean {
+        val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        editor.putString(key, value)
         return editor.commit()
     }
 
-    fun getToken(context: Context, key: String):String{
+    fun getToken(context: Context, key: String): String {
 
         val savedSession = context.getSharedPreferences(KEY, Context.MODE_PRIVATE)
         val default_value = ""
@@ -81,5 +82,10 @@ object  AllSharedPref {
         editor.commit()
     }
 
+    fun clearFilterValue(context: Context, key: String) {
+        val editor = context.getSharedPreferences(KEY, Context.MODE_PRIVATE).edit()
+        editor.remove(key)
+        editor.commit()
+    }
 
 }

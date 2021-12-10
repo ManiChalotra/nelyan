@@ -577,5 +577,9 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         }
     }
 
+    override fun onSingleTraderDay(list: java.util.ArrayList<DayTimeModel>, position: Int) {
+
+    }
+
 
 }

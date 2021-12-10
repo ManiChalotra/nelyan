@@ -26,7 +26,6 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.modals.ModelPOJO
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
-import kotlinx.android.synthetic.main.item_time_add_more.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -78,6 +77,8 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private lateinit var listEvent: ArrayList<ModelPOJO.AddEventDataModel>
     private lateinit var ageGroupRepeatAdapter: AgeGroupRepeatAdapter
     private lateinit var addEventRepeatAdapter: EventRepeatAdapter
+
+    lateinit var list: ArrayList<ModelPOJO.AddEventDataModel>
 
     private var cityName = ""
     private var cityLatitude = ""
@@ -153,11 +154,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 "", "", "", "", "", ""
             )
         )
-
         // clicks for images
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
+        tvAddEvent.setOnClickListener(this)
 
         btnSubmit.setOnClickListener(this)
         ivBack.setOnClickListener(this)
@@ -179,6 +180,28 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             R.id.ivImg2 -> {
                 imageSelectedType = "2"
                 checkPermission(this)
+            }
+            R.id.tvAddEvent -> {
+                listEvent.add(
+                    ModelPOJO.AddEventDataModel(
+                        "", "", "", "", "",
+                        "", "", "", "", "", ""
+                    )
+                )
+
+                listEvent.add(
+                    ModelPOJO.AddEventDataModel(
+                        "", "", "", "", "",
+                        "", "", "", "", "", ""
+                    )
+                )
+
+                Log.d(AddActivity::class.java.name, "OnAddEventClick   ")
+                rvEvent.visibility = View.VISIBLE
+
+                Log.d(AddActivity::class.java.name, "AddActivity_listeventsize   " + listEvent.size)
+
+                addEventRepeatAdapter.notifyDataSetChanged()
             }
 
             R.id.btnSubmit -> {
@@ -645,17 +668,54 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     }
 
-    override fun onRemoveEventItem(position: Int) {
+    override fun onRemoveEventItem(position: Int, list: Int) {
         Log.d(
             AddActivity::class.java.name,
-            "OnRemoveClick   " + position + "clickPosition   " + clickPosition
+            "OnRemoveClick   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list
         )
-        clickPosition = position.toString()
-        addEventRepeatAdapter.notifyItemChanged(position)
 
+//        clickPosition = position.toString()
+//        addEventRepeatAdapter.notifyItemChanged(position)
+        if (list == 0) {
+            rvEvent.visibility = View.GONE
+            tvAddEvent.visibility = View.VISIBLE
+        } else {
+
+        }
+    }
+
+    override fun onSingleEventItem(
+        list: ArrayList<ModelPOJO.AddEventDataModel>,
+        position: Int
+    ) {
+        rvEvent.visibility = View.VISIBLE
+        tvAddEvent.visibility = View.GONE
+        listEvent = ArrayList()
+        listEvent.add(
+            ModelPOJO.AddEventDataModel(
+                "", "", "", "", "",
+                "", "", "", "", "", ""
+            )
+        )
+        addEventRepeatAdapter.notifyDataSetChanged()
+    }
+
+    override fun onSingleAgeItem(
+        list: java.util.ArrayList<ModelPOJO.AgeGroupDataModel>,
+        position: Int
+    ) {
+        rvAgeGroup.visibility = View.VISIBLE
+        tvAddAgeGroup.visibility = View.GONE
+        list.add(
+            ModelPOJO.AgeGroupDataModel(
+                "", "", "", "", ""
+            )
+        )
+        addEventRepeatAdapter.notifyDataSetChanged()
     }
 
     override fun onAddEventItem(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
+
         when {
             listEvent[list.size - 1].image.isNullOrEmpty() -> {
                 myCustomToast(getString(R.string.select_image_in_previous))

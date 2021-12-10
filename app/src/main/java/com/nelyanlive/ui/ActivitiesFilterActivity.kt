@@ -261,7 +261,8 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             categoryId.add(id)
 
                         }
-                        val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
+                        val arrayAdapte1 =
+                            ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
                         traderType.setSelection(poz)
 //
@@ -396,6 +397,15 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("SelectValueactivity", SelectValue)
 
                             setResult(1212, intent)
+
+                            AllSharedPref.clearFilterValue(this, "returnNameEvent")
+                            AllSharedPref.clearFilterValue(this, "returnLocationEvent")
+                            AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
+                            AllSharedPref.clearFilterValue(this, "minage")
+                            AllSharedPref.clearFilterValue(this, "maxage")
+                            AllSharedPref.clearFilterValue(this, "SelectValueEvent")
+                            AllSharedPref.clearFilterValue(this, "AgeEvent")
+
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
@@ -411,6 +421,15 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("age", edtAge.text.toString())
 
                             setResult(1213, intent)
+
+                            AllSharedPref.clearFilterValue(this, "returnName")
+                            AllSharedPref.clearFilterValue(this, "returnLocation")
+                            AllSharedPref.clearFilterValue(this, "returnDistance")
+                            AllSharedPref.clearFilterValue(this, "minage")
+                            AllSharedPref.clearFilterValue(this, "maxage")
+                            AllSharedPref.clearFilterValue(this, "SelectValueactivity")
+                            AllSharedPref.clearFilterValue(this, "Age")
+
                             onBackPressed()
                         }
                         else -> {

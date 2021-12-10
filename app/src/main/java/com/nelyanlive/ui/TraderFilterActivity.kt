@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -38,6 +37,8 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
     var SelectValue = ""
     private var typeId = ""
     var ReturnDistance = ""
+    var ReturnName = ""
+    var ReturnLocation = ""
     var ActivityType = ""
     var poz: Int = 0
     private val job by lazy {
@@ -285,7 +286,15 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             }
             R.id.tvFilterclear -> {
                 val i = Intent(this, TraderListingActivity::class.java)
+//                val i = Intent(this, HomeActivity::class.java)
                 startActivity(i)
+//                et_name.setText("", TextView.BufferType.EDITABLE);
+
+                AllSharedPref.clearFilterValue(this, "returnnametrade")
+                AllSharedPref.clearFilterValue(this, "returnlocationtrade")
+                AllSharedPref.clearFilterValue(this, "returndistancetrade")
+                AllSharedPref.clearFilterValue(this, "SelectValuetrade")
+                finish()
             }
             R.id.et_location -> {
                 showPlacePicker()
@@ -295,8 +304,8 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
     }
 
     fun getFilterValues() {
-        var ReturnName = AllSharedPref.restoreString(this, "returnnametrade")
-        var ReturnLocation = AllSharedPref.restoreString(this, "returnlocationtrade")
+        ReturnName = AllSharedPref.restoreString(this, "returnnametrade")
+        ReturnLocation = AllSharedPref.restoreString(this, "returnlocationtrade")
         ReturnDistance = AllSharedPref.restoreString(this, "returndistancetrade")
         ActivityType = AllSharedPref.restoreString(this, "SelectValuetrade")
 
@@ -305,7 +314,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             "returnValues_Traderif   " + ReturnName + "   " + ReturnDistance + "  " + ActivityType
         )
         et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
-//        et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
 
         if (ReturnLocation != null && !ReturnLocation.equals("")) {
             et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);

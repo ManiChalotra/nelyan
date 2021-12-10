@@ -26,7 +26,13 @@ import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.modals.DayTimeModel
 import com.nelyanlive.modals.ProductDetailDataModel
 import com.nelyanlive.utils.*
+import kotlinx.android.synthetic.main.activity_addactivity.*
 import kotlinx.android.synthetic.main.activity_trader.*
+import kotlinx.android.synthetic.main.activity_trader.countycode
+import kotlinx.android.synthetic.main.activity_trader.ivBack
+import kotlinx.android.synthetic.main.activity_trader.ivImg1
+import kotlinx.android.synthetic.main.activity_trader.ivImg2
+import kotlinx.android.synthetic.main.activity_trader.trader_type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -449,36 +455,36 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                         dayTimeModelArrayList[i].selectedDay
                                                     )
 
-                                                   if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
-                                                       myCustomToast(getString(R.string.selecttime_txt))
+                                                    if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
+                                                        myCustomToast(getString(R.string.selecttime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
 //                                                        Toast.makeText(
 //                                                            this,
 //                                                            "Please select Morning First Time",
 //                                                            Toast.LENGTH_SHORT
 //                                                        ).show()
-                                                       myCustomToast(getString(R.string.selectmorningtime_txt))
+                                                        myCustomToast(getString(R.string.selectmorningtime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty()) {
 //                                                        Toast.makeText(
 //                                                            this,
 //                                                            "Please select Morning Last Time",
 //                                                            Toast.LENGTH_SHORT
 //                                                        ).show()
-                                                       myCustomToast(getString(R.string.selectmorninglasttime_txt))
+                                                        myCustomToast(getString(R.string.selectmorninglasttime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
 //                                                        Toast.makeText(
 //                                                            this,
 //                                                            "Please select Evening First Time",
 //                                                            Toast.LENGTH_SHORT
 //                                                        ).show()
-                                                       myCustomToast(getString(R.string.selecteveningtime_txt))
+                                                        myCustomToast(getString(R.string.selecteveningtime_txt))
                                                     } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty()) {
 //                                                        Toast.makeText(
 //                                                            this,
 //                                                            "Please select Evening Last Time",
 //                                                            Toast.LENGTH_SHORT
 //                                                        ).show()
-                                                       myCustomToast(getString(R.string.selecteveninglasttime_txt))
+                                                        myCustomToast(getString(R.string.selecteveninglasttime_txt))
                                                     } else {
                                                         json.put(
                                                             "time_from",
@@ -884,6 +890,45 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeRepeatAdapter.notifyDataSetChanged()
             }
+        }
+    }
+
+    override fun onSingleTraderDay(list: java.util.ArrayList<DayTimeModel>, position: Int) {
+
+        rvDayTime!!.visibility = View.VISIBLE
+//        txt_productdetails.visibility = View.VISIBLE
+        tvAddTraderDay.visibility = View.GONE
+        list.add(
+            DayTimeModel(
+                "", "", "", "",""
+            )
+        )
+        dayTimeRepeatAdapter.notifyDataSetChanged()
+    }
+
+    override fun onSingleTraderProduct(
+        list: ArrayList<ProductDetailDataModel>,
+        position: Int
+    ) {
+        rv_product_details.visibility = View.VISIBLE
+        txt_productdetails.visibility = View.VISIBLE
+        tvAddTraderProduct.visibility = View.GONE
+        list.add(
+            ProductDetailDataModel(
+                "", "", "", ""
+            )
+        )
+        productDetailRepeatAdapter.notifyDataSetChanged()
+    }
+
+    override fun onRemoveEventItem(position: Int) {
+//        rv_product_details.visibility = View.GONE
+//        txt_productdetails.visibility = View.GONE
+
+        Log.d(TraderActivity::class.java.name, "TraderActivity_Remove_Position  " + position)
+
+        if (position == 0) {
+            txt_productdetails.visibility = View.GONE
         }
     }
 

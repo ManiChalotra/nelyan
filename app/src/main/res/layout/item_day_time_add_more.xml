@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/back_shape"
         android:orientation="vertical"
+        android:id="@+id/ll_traderday"
         android:paddingLeft="@dimen/_5sdp"
         android:paddingTop="@dimen/_10sdp"
         android:paddingRight="@dimen/_5sdp"
@@ -19,6 +20,17 @@
         <TextView
             style="@style/CommonTextWrapcontent"
             android:text="@string/select_day" />
+
+        <ImageView
+            android:id="@+id/ivdltday"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="right"
+            android:layout_marginTop="-20dp"
+            android:backgroundTint="@color/grey"
+            android:scaleType="centerCrop"
+            android:src="@drawable/blk_cross" />
+
 
         <Spinner
             android:id="@+id/spinner_dayss"
@@ -88,4 +100,19 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAddtarderday"
+        style="@style/CommonTextWrapcontent"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/add_more_btn"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:text="Add Day"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone" />
+
 </LinearLayout>

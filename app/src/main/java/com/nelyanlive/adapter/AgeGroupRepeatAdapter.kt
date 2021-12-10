@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.AgeGroupDataModel>, var listner: OnAgeGroupRecyclerViewItemClickListener)
-    : RecyclerView.Adapter<AgeGroupRepeatAdapter.AgeGroupRepeatViewHolder>() {
+class AgeGroupRepeatAdapter(
+    var context: Context,
+    var list: ArrayList<ModelPOJO.AgeGroupDataModel>,
+    var listner: OnAgeGroupRecyclerViewItemClickListener
+) : RecyclerView.Adapter<AgeGroupRepeatAdapter.AgeGroupRepeatViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgeGroupRepeatViewHolder {
-        return AgeGroupRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false), listner)
+        return AgeGroupRepeatViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.item_time_add_more, parent, false),
+            listner
+        )
     }
 
     override fun onBindViewHolder(holder: AgeGroupRepeatViewHolder, position: Int) {
@@ -43,7 +50,10 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
     }
 
 
-    inner class AgeGroupRepeatViewHolder(itemView: View, var listner: OnAgeGroupRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
+    inner class AgeGroupRepeatViewHolder(
+        itemView: View,
+        var listner: OnAgeGroupRecyclerViewItemClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
         val addButton = itemView.tvAddMore
 
         val ageFrom = itemView.edtAgeFrom
@@ -51,6 +61,9 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
         val days = itemView.spinner_dayss
         val timeFrom = itemView.tv_mornning_fromtime
         val timeTo = itemView.tv_morning_totime
+        val txtAgeGroup = itemView.tvAddAgeGroup
+        val llagegroup = itemView.ll_agegroup
+        val removeButton = itemView.ivdltage
 
         fun initalize(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int) {
 
@@ -77,8 +90,15 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 override fun afterTextChanged(s: Editable?) {
                     list[position].ageFrom = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
@@ -86,15 +106,27 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 override fun afterTextChanged(s: Editable?) {
                     list[position].ageTo = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
 
             var name = ""
             days.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, pos: Int, id: Long) {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View,
+                    pos: Int,
+                    id: Long
+                ) {
                     // your code here
                     name = parentView?.getItemAtPosition(pos).toString()
                     list[position].days = name
@@ -111,9 +143,9 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker =
                     TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].timeFrom = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                        timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].timeFrom = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle(context.getString(R.string.select_time))
                 mTimePicker.show()
             }
@@ -124,9 +156,9 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 val minute = mcurrentTime[Calendar.MINUTE]
                 val mTimePicker =
                     TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
-                    timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
-                    list[position].timeTo = "$selectedHour:$selectedMinute"
-                }, hour, minute, true) //Yes 24 hour time
+                        timeTo.text = String.format("%02d:%02d", selectedHour, selectedMinute)
+                        list[position].timeTo = "$selectedHour:$selectedMinute"
+                    }, hour, minute, true) //Yes 24 hour time
                 mTimePicker.setTitle("Select Time")
                 mTimePicker.show()
             }
@@ -137,11 +169,33 @@ class AgeGroupRepeatAdapter(var context: Context, var list: ArrayList<ModelPOJO.
                 days.clearFocus()
                 listner.addAgeGroupItem(list, position)
             }
+
+            removeButton.setOnClickListener {
+                llagegroup.visibility = View.GONE
+//                txtAgeGroup.visibility = View.VISIBLE
+                Log.d(
+                    AgeGroupRepeatAdapter::class.java.name,
+                    "AgeGroupRepeatAdapter_position  " + position
+                )
+                if (position == 0) {
+                    txtAgeGroup.visibility = View.VISIBLE
+                } else {
+
+                }
+            }
+
+            txtAgeGroup.setOnClickListener {
+                listner.onSingleAgeItem(list, position)
+                txtAgeGroup.visibility = View.GONE
+            }
+
         }
     }
 
     interface OnAgeGroupRecyclerViewItemClickListener {
         fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int)
+
+        fun onSingleAgeItem(list: java.util.ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int)
 
     }
 
