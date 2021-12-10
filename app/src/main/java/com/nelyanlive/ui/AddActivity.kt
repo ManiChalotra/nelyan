@@ -158,7 +158,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
         ivImg3.setOnClickListener(this)
-        tvAddEvent.setOnClickListener(this)
+//        tvAddEvent.setOnClickListener(this)
 
         btnSubmit.setOnClickListener(this)
         ivBack.setOnClickListener(this)
@@ -182,26 +182,21 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 checkPermission(this)
             }
             R.id.tvAddEvent -> {
-                listEvent.add(
-                    ModelPOJO.AddEventDataModel(
-                        "", "", "", "", "",
-                        "", "", "", "", "", ""
+                Log.e("EventRepearAdapter_size", "--Activity--" + listEvent.size)
+                if (listEvent.size == 0) {
+                    listEvent.add(
+                        ModelPOJO.AddEventDataModel(
+                            "", "", "", "", "",
+                            "", "", "", "", "", ""
+                        )
                     )
-                )
+                    rvEvent.visibility = View.VISIBLE
+                    tvAddEvent.visibility = View.GONE
+                    addEventRepeatAdapter.notifyDataSetChanged()
 
-                listEvent.add(
-                    ModelPOJO.AddEventDataModel(
-                        "", "", "", "", "",
-                        "", "", "", "", "", ""
-                    )
-                )
-
-                Log.d(AddActivity::class.java.name, "OnAddEventClick   ")
-                rvEvent.visibility = View.VISIBLE
-
-                Log.d(AddActivity::class.java.name, "AddActivity_listeventsize   " + listEvent.size)
-
-                addEventRepeatAdapter.notifyDataSetChanged()
+                } else {
+                    tvAddEvent.visibility = View.GONE
+                }
             }
 
             R.id.btnSubmit -> {
@@ -676,12 +671,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
 //        clickPosition = position.toString()
 //        addEventRepeatAdapter.notifyItemChanged(position)
-        if (list == 0) {
-            rvEvent.visibility = View.GONE
-            tvAddEvent.visibility = View.VISIBLE
-        } else {
-
-        }
+//        if (list == 0) {
+//            rvEvent.visibility = View.GONE
+//            tvAddEvent.visibility = View.VISIBLE
+//        } else {
+//
+//        }
     }
 
     override fun onSingleEventItem(
@@ -697,7 +692,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 "", "", "", "", "", ""
             )
         )
-        addEventRepeatAdapter.notifyDataSetChanged()
+        /*   addEventRepeatAdapter.notifyDataSetChanged()*/
     }
 
     override fun onSingleAgeItem(

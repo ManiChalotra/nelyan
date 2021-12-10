@@ -199,23 +199,23 @@
             android:textSize="@dimen/_8sdp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvAddAgeGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@drawable/add_more_btn"
-        android:focusable="true"
-        android:fontFamily="@font/regular"
-        android:gravity="center"
-        android:paddingLeft="@dimen/_5sdp"
-        android:paddingRight="@dimen/_5sdp"
-        android:text="Add Age Group"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_8sdp"
-        android:visibility="gone" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvAddAgeGroup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:layout_marginTop="@dimen/_5sdp"-->
+<!--        android:background="@drawable/add_more_btn"-->
+<!--        android:focusable="true"-->
+<!--        android:fontFamily="@font/regular"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingLeft="@dimen/_5sdp"-->
+<!--        android:paddingRight="@dimen/_5sdp"-->
+<!--        android:text="Add Age Group"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/_8sdp"-->
+<!--        android:visibility="gone" />-->
 
 </LinearLayout>

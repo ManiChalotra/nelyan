@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.BR
+import kotlinx.android.synthetic.main.chat_text_right.view.*
 
 class RecyclerAdapterChat<T : AbstractModel>(
     @LayoutRes val layoutId: Int,
@@ -154,6 +155,7 @@ class RecyclerAdapterChat<T : AbstractModel>(
         model.adapterPosition = position
         onItemClick?.let { model.onItemClickChat = it }
         holder.bind(model)
+
         setAnimation(holder, position)
     }
 

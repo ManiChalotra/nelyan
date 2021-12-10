@@ -61,7 +61,7 @@ class AgeGroupRepeatAdapter(
         val days = itemView.spinner_dayss
         val timeFrom = itemView.tv_mornning_fromtime
         val timeTo = itemView.tv_morning_totime
-        val txtAgeGroup = itemView.tvAddAgeGroup
+//        val txtAgeGroup = itemView.tvAddAgeGroup
         val llagegroup = itemView.ll_agegroup
         val removeButton = itemView.ivdltage
 
@@ -177,17 +177,17 @@ class AgeGroupRepeatAdapter(
                     AgeGroupRepeatAdapter::class.java.name,
                     "AgeGroupRepeatAdapter_position  " + position
                 )
-                if (position == 0) {
-                    txtAgeGroup.visibility = View.VISIBLE
-                } else {
-
-                }
+//                if (position == 0) {
+//                    txtAgeGroup.visibility = View.VISIBLE
+//                } else {
+//
+//                }
             }
 
-            txtAgeGroup.setOnClickListener {
-                listner.onSingleAgeItem(list, position)
-                txtAgeGroup.visibility = View.GONE
-            }
+//            txtAgeGroup.setOnClickListener {
+//                listner.onSingleAgeItem(list, position)
+//                txtAgeGroup.visibility = View.GONE
+//            }
 
         }
     }

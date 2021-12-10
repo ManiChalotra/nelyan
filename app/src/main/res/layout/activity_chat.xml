@@ -101,19 +101,41 @@
             app:layout_constraintBottom_toTopOf="@id/rlBottom"
             app:layout_constraintTop_toBottomOf="@id/constSearch" />
 
-        <ImageView
-            android:id="@+id/imageSelected"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
+
+
+        <RelativeLayout
+            android:id="@+id/RelativSelectedImage"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_110sdp"
+            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintStart_toStartOf="@+id/rlBottom"
             android:layout_marginBottom="-5dp"
             android:background="@color/white"
-            android:elevation="@dimen/_5sdp"
-            android:padding="@dimen/_2sdp"
-            android:src="@drawable/age_icon"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
-            app:layout_constraintStart_toStartOf="@+id/rlBottom"/>
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageSelected"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginEnd="0dp"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/age_icon" />
+
+            <ImageView
+                android:id="@+id/imageSelectedImage"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/com_facebook_close">
+
+            </ImageView>
+
+        </RelativeLayout>
 
 
         <RelativeLayout

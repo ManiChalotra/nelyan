@@ -286,6 +286,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                         .putExtra("childCareType", childcareTypesId)
 
                     setResult(1214, intent)
+
                     onBackPressed()
 
                 }

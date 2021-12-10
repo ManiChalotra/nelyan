@@ -66,7 +66,7 @@ class EventRepeatAdapter(
         val city = itemView.et_city_add_event
         val removeButton = itemView.ivdlt
         val llevent = itemView.ll_event
-        val txtaddevent = itemView.tvAddEvent
+//        val txtaddevent = itemView.tvAddEvent
 
         //  for selecting the date
         var select_date = ""
@@ -102,31 +102,14 @@ class EventRepeatAdapter(
                 listner.onAddEventItem(list, position)
             }
 
-
             removeButton.setOnClickListener {
                 list.removeAt(position)
                 var ListSize = list.size
                 listner.onRemoveEventItem(position, ListSize)
-                llevent.visibility = View.GONE
-//                txtaddevent.visibility = View.VISIBLE
-//                Log.d(
-//                    AgeGroupRepeatAdapter::class.java.name,
-//                    "EventAdapter_RemoveClick   " + list.get(position)
-//                )
 
-                /*if (list.size == 0) {
-                    txtaddevent.visibility = View.VISIBLE
-                } else {
+                notifyDataSetChanged()
+                Log.e("EventRepearAdapter_size", "--RRRRR--" + list.size)
 
-                }
-*/
-//                notifyDataSetChanged()
-            }
-
-            txtaddevent.setOnClickListener {
-//                listner.onAddEventItem(list, position)
-                listner.onSingleEventItem(list, position)
-                txtaddevent.visibility = View.GONE
             }
 
             timeFrom.setOnClickListener {

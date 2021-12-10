@@ -5,9 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="model"
             type="com.nelyanlive.chat.ChatData" />
@@ -80,10 +78,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate"
             android:background="@drawable/rightchat"
             app:layout_constraintBottom_toTopOf="@id/tvReceiverTime"
-            app:layout_constraintEnd_toStartOf="@id/ivReceiver"
-            app:layout_constraintTop_toTopOf="@+id/ivReceiver">
+            app:layout_constraintEnd_toStartOf="@id/ivReceiver">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/Relativreplyr"
@@ -129,6 +127,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername" />
 
+                <ImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    setChatMessages="@{model.parentmessage}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername">
+
+                </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -170,6 +176,7 @@
             android:layout_height="@dimen/_20sdp"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
             android:padding="@dimen/_5sdp"
+            android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
             android:src="@drawable/leftarrow"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"

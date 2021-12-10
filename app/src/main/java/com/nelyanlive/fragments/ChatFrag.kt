@@ -57,7 +57,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatFrag(var userlocation: String, var userlat: String, var userlong: String, var ivBell: ImageView) : Fragment() {
+class ChatFrag(
+    var userlocation: String,
+    var userlat: String,
+    var userlong: String,
+    var ivBell: ImageView
+) : Fragment() {
 
     private var listner: CommunicationListner? = null
     lateinit var mContext: Context
@@ -78,44 +83,50 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         MyFirebaseMessagingService.myChatVisible = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        activityChatBinding = DataBindingUtil.inflate(LayoutInflater.from(container!!.context), R.layout.activity_chat, container, false)
+        activityChatBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(container!!.context),
+            R.layout.activity_chat,
+            container,
+            false
+        )
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
         groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
-        /*  activityChatBinding.btnRegulation.setOnClickListener {
-              *//* val i = Intent(mContext, RegulationActivity::class.java)
-             startActivity(i)*//*
-        }*/
 
         activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()
         }
 
+        activityChatBinding.imageSelectedImage.setOnClickListener { // close selecting image
+            imgPath = ""
+            activityChatBinding.RelativSelectedImage.visibility = View.GONE
+        }
+
         activityChatBinding.ivSend.setOnClickListener {
 
-            if (activityChatBinding.imageSelected.visibility==View.VISIBLE)
-            {
+            if (activityChatBinding.RelativSelectedImage.visibility == View.VISIBLE) {
                 // send image
-                activityChatBinding.relativProgress.visibility=View.VISIBLE
+                activityChatBinding.relativProgress.visibility = View.VISIBLE
                 setImage(imgPath)
-            }
-            else
-            {
-                if (activityChatBinding.etMessage.text.toString().trim().isEmpty())
-                {
-                    Toast.makeText(context, getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
-                }
-                else if (activityChatBinding.relativRelpy.visibility==View.VISIBLE)
-                {
+            } else {
+                if (activityChatBinding.etMessage.text.toString().trim().isEmpty()) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.please_enter_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) {
                     // send reply
                     groupChatVM.sendReplyChatMessage()
-                }
-                else
-                {
+                } else {
                     groupChatVM.sendChatMessage()
-                    activityChatBinding.imageSelected.visibility=View.GONE
+                    activityChatBinding.RelativSelectedImage.visibility = View.GONE
                 }
 
             }
@@ -144,7 +155,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     }
 
     val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance((mContext as Activity).application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance((mContext as Activity).application)
+            .create(AppViewModel::class.java)
     }
 
     private var authorization = ""
@@ -152,7 +164,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager =
+            view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
         val geocoder = Geocoder(view.context, Locale.getDefault())
@@ -172,107 +185,129 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         if (checkIfHasNetwork((mContext as Activity))) {
 
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
-            appViewModel.groupMessageApiData(security_key, authorization, if (!list[0].locality.isNullOrBlank()) {
-                list[0].locality
-            } else {
-                userlocation
-            }, "0", "20")
+            appViewModel.groupMessageApiData(
+                security_key, authorization, if (!list[0].locality.isNullOrBlank()) {
+                    list[0].locality
+                } else {
+                    userlocation
+                }, "0", "20"
+            )
 
         } else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeGroupMessageApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+        appViewModel.observeGroupMessageApiResponse()!!
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
-                    Log.e("observeGroupMessageApi", "-------------" + Gson().toJson(response.body()))
-                    val jsonMain = JSONObject(response.body().toString())
-                    Log.e("socket===", jsonMain.toString())
-                    val listData: ArrayList<ChatData> = ArrayList()
+                        Log.e(
+                            "observeGroupMessageApi",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+                        val jsonMain = JSONObject(response.body().toString())
+                        Log.e("socket===", jsonMain.toString())
+                        val listData: ArrayList<ChatData> = ArrayList()
 
-                    groupChatVM.groupId = ""
+                        groupChatVM.groupId = ""
 
-                    val jsonArray = jsonMain.getJSONArray("data")
+                        val jsonArray = jsonMain.getJSONArray("data")
 
-                    Log.e("socket=======", "====" + jsonArray.length())
+                        Log.e("socket=======", "====" + jsonArray.length())
 
-                    for (i in jsonArray.length() - 1 downTo 0) {
+                        for (i in jsonArray.length() - 1 downTo 0) {
 
-                        val json = jsonArray.getJSONObject(i)
-                        groupChatVM.groupId = json.getString("groupId")
+                            val json = jsonArray.getJSONObject(i)
+                            groupChatVM.groupId = json.getString("groupId")
 
-                        //decoding
-                        var val3 = ""
-                        var parentmessage = ""
-                        try {
-                            val lineSep = System.getProperty("line.separator")
-                            val ps2: String = json.getString("message")
-                            val tmp2: ByteArray = Base64.decode(ps2)
-                            val val2 = String(tmp2, StandardCharsets.UTF_8)
-                            val3 = val2.replace("<br />".toRegex(), lineSep!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                            //decoding
+                            var val3 = ""
+                            var parentmessage = ""
+                            try {
+                                val lineSep = System.getProperty("line.separator")
+                                val ps2: String = json.getString("message")
+                                val tmp2: ByteArray = Base64.decode(ps2)
+                                val val2 = String(tmp2, StandardCharsets.UTF_8)
+                                val3 = val2.replace("<br />".toRegex(), lineSep!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                            try {
+                                val lineSep = System.getProperty("line.separator")
+                                val ps2: String = json.getString("parentmessage")
+                                val tmp2: ByteArray = Base64.decode(ps2)
+                                val val2 = String(tmp2, StandardCharsets.UTF_8)
+                                parentmessage = val2.replace("<br />".toRegex(), lineSep!!)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                            listData.add(
+                                ChatData(
+                                    json.getString("id"),
+                                    json.getString("senderId"),
+                                    json.getString("receiverId"),
+                                    "",
+                                    json.getString("groupId"),
+                                    val3,
+                                    json.getString("readStatus"),
+                                    json.getString("messageType"),
+                                    json.getString("deletedId"),
+                                    json.getString("created"),
+                                    json.getString("updated"),
+                                    "",
+                                    json.getString("recieverImage"),
+                                    json.getString("senderName"),
+                                    json.getString("senderImage"),
+                                    groupChatVM.userId,
+                                    "1",
+                                    if (listData.size == 0) {
+                                        true
+                                    } else {
+                                        checkDateCompare(
+                                            json.getString("created"),
+                                            listData[listData.size - 1].created
+                                        )
+                                    },
+                                    json.getString("description"),
+                                    json.getString("parentId"),
+                                    parentmessage
+
+                                )
+                            )
                         }
 
-                        try {
-                            val lineSep = System.getProperty("line.separator")
-                            val ps2: String = json.getString("parentmessage")
-                            val tmp2: ByteArray = Base64.decode(ps2)
-                            val val2 = String(tmp2, StandardCharsets.UTF_8)
-                            parentmessage = val2.replace("<br />".toRegex(), lineSep!!)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                        if (groupChatVM.groupId.isNotEmpty()) setNotification(groupChatVM.groupId)
 
-                        listData.add(ChatData(
-                            json.getString("id"),
-                            json.getString("senderId"),
-                            json.getString("receiverId"),
-                            "",
-                            json.getString("groupId"),
-                            val3,
-                            json.getString("readStatus"),
-                            json.getString("messageType"),
-                            json.getString("deletedId"),
-                            json.getString("created"),
-                            json.getString("updated"),
-                            "",
-                            json.getString("recieverImage"),
-                            json.getString("senderName"),
-                            json.getString("senderImage"),
-                            groupChatVM.userId, "1", if (listData.size == 0) {
-                                true
-                            } else {
-                                checkDateCompare(json.getString("created"), listData[listData.size - 1].created)
-                            },json.getString("description"), json.getString("parentId"), parentmessage
-
-                        ))
-                    }
-
-                    if (groupChatVM.groupId.isNotEmpty()) setNotification(groupChatVM.groupId)
-
-                    if (listData.isNotEmpty()) {
-                        groupChatVM.listChat.addAll(listData)
-                        groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
-                        activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
-                        groupChatVM.noDataMessage.set("")
-                    } else {
-                        groupChatVM.noDataMessage.set("No chat found")
-                        groupChatVM.updateLocation(userlat, userlong, if (!list[0].locality.isNullOrBlank()) {
-                            list[0].locality
+                        if (listData.isNotEmpty()) {
+                            groupChatVM.listChat.addAll(listData)
+                            groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
+                            activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
+                            groupChatVM.noDataMessage.set("")
                         } else {
-                            userlocation
-                        })
+                            groupChatVM.noDataMessage.set("No chat found")
+                            groupChatVM.updateLocation(
+                                userlat, userlong, if (!list[0].locality.isNullOrBlank()) {
+                                    list[0].locality
+                                } else {
+                                    userlocation
+                                }
+                            )
 
+                        }
                     }
+                } else {
+
+                    Toast.makeText(
+                        mContext,
+                        getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
-            } else {
-
-                Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-
-            }
-        })
+            })
 
         activityChatBinding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom < oldBottom) {
@@ -313,39 +348,54 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeGroupNotifyApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+        appViewModel.observeGroupNotifyApiResponse()!!
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
-                    Log.e("observeGroupNotifyApi", "-------------" + Gson().toJson(response.body()))
-                    val jsonMain = JSONObject(response.body().toString())
-                    Log.e("socket===", jsonMain.toString())
-                    if (!jsonMain.isNull("data")) {
-                        val jsonData = jsonMain.getJSONObject("data")
+                        Log.e(
+                            "observeGroupNotifyApi",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+                        val jsonMain = JSONObject(response.body().toString())
+                        Log.e("socket===", jsonMain.toString())
+                        if (!jsonMain.isNull("data")) {
+                            val jsonData = jsonMain.getJSONObject("data")
 
-                        val notificationStatus = jsonData.getString("notification")
-                        groupChatVM.notifyStatus = if (notificationStatus == "1") {
-                            "0"
-                        } else {
-                            "1"
+                            val notificationStatus = jsonData.getString("notification")
+                            groupChatVM.notifyStatus = if (notificationStatus == "1") {
+                                "0"
+                            } else {
+                                "1"
+                            }
+
                         }
-
+                        ivBell.setImageResource(
+                            if (groupChatVM.notifyStatus == "0") {
+                                R.drawable.unmute
+                            } else {
+                                R.drawable.mute
+                            }
+                        )
+                        ivBell.visibility = View.VISIBLE
+                        ivBell.imageTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.colorAccent
+                            )
+                        )
                     }
-                    ivBell.setImageResource(if (groupChatVM.notifyStatus == "0") {
-                        R.drawable.unmute
-                    } else {
-                        R.drawable.mute
-                    })
-                    ivBell.visibility = View.VISIBLE
-                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorAccent))
+
+                } else {
+
+                    Toast.makeText(
+                        mContext,
+                        mContext.getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
-
-            } else {
-
-                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-
-            }
-        })
+            })
 
     }
 
@@ -378,41 +428,61 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     private fun setMuteNotifications() {
         if (checkIfHasNetwork((mContext as Activity))) {
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
-            appViewModel.changeNotifyApiData(security_key, authorization, groupChatVM.groupId, groupChatVM.notifyStatus)
+            appViewModel.changeNotifyApiData(
+                security_key,
+                authorization,
+                groupChatVM.groupId,
+                groupChatVM.notifyStatus
+            )
         } else {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 
-        appViewModel.observeChangeNotifyApiResponse()!!.observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+        appViewModel.observeChangeNotifyApiResponse()!!
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
-                    Log.e("observeGroupNotifyApi", "-------------" + Gson().toJson(response.body()))
-                    val jsonMain = JSONObject(response.body().toString())
-                    Log.e("socket===", jsonMain.toString())
-                    val jsonData = jsonMain.getJSONObject("data")
+                        Log.e(
+                            "observeGroupNotifyApi",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+                        val jsonMain = JSONObject(response.body().toString())
+                        Log.e("socket===", jsonMain.toString())
+                        val jsonData = jsonMain.getJSONObject("data")
 
-                    val notificationStatus = jsonData.getString("notification")
-                    groupChatVM.notifyStatus = if (notificationStatus == "1") {
-                        "0"
-                    } else {
-                        "1"
+                        val notificationStatus = jsonData.getString("notification")
+                        groupChatVM.notifyStatus = if (notificationStatus == "1") {
+                            "0"
+                        } else {
+                            "1"
+                        }
+                        ivBell.setImageResource(
+                            if (notificationStatus == "1") {
+                                R.drawable.unmute
+                            } else {
+                                R.drawable.mute
+                            }
+                        )
+                        ivBell.imageTintList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.colorAccent
+                            )
+                        )
+
                     }
-                    ivBell.setImageResource(if (notificationStatus == "1") {
-                        R.drawable.unmute
-                    } else {
-                        R.drawable.mute
-                    })
-                    ivBell.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.colorAccent))
+
+                } else {
+
+                    Toast.makeText(
+                        mContext,
+                        mContext.getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
-
-            } else {
-
-                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-
-            }
-        })
+            })
 
     }
 
@@ -443,7 +513,13 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
     )
 
     private fun requestPermission() {
-        let { ActivityCompat.requestPermissions((mContext as Activity), permissions, CAMERA_REQUEST) }
+        let {
+            ActivityCompat.requestPermissions(
+                (mContext as Activity),
+                permissions,
+                CAMERA_REQUEST
+            )
+        }
     }
 
     private var requestCodeGallary = 159
@@ -453,7 +529,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         val uploadImage = Dialog(mContext, R.style.Theme_Dialog)
         uploadImage.requestWindowFeature(Window.FEATURE_NO_TITLE)
         uploadImage.setContentView(R.layout.camera_gallery_popup)
-        uploadImage.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        uploadImage.window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
         uploadImage.setCancelable(true)
         uploadImage.setCanceledOnTouchOutside(true)
         uploadImage.window!!.setGravity(Gravity.BOTTOM)
@@ -492,7 +571,10 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             intent.type = "*/*"
             intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
             intent.action = Intent.ACTION_GET_CONTENT
-            this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
+            this.startActivityForResult(
+                Intent.createChooser(intent, "Select Picture"),
+                requestCodeGallary
+            )
 
 
         }
@@ -522,16 +604,13 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-
         if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
             try {
                 if (Uri.parse(imgPath) != null) {
                     imgPath = getPath(mContext, Uri.parse(imgPath)).toString()
-                    activityChatBinding.imageSelected.visibility=View.VISIBLE
-                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder).into(activityChatBinding.imageSelected)
-
-                    // setImage(imgPath)
+                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
+                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
+                        .into(activityChatBinding.imageSelected)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -542,8 +621,9 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
                 val uri = data!!.data
                 if (uri != null) {
                     imgPath = getPath(mContext, uri).toString()
-                    activityChatBinding.imageSelected.visibility=View.VISIBLE
-                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder).into(activityChatBinding.imageSelected)
+                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
+                    Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
+                        .into(activityChatBinding.imageSelected)
 
                     // getRealImagePath(imgPath)
                     //  setImage(imgPath)
@@ -574,7 +654,8 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
-                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+                )
                 return context?.let { getDataColumn(it, contentUri, null, null) }
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
@@ -601,7 +682,14 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         } else if ("content".equals(uri.scheme, ignoreCase = true)) {
 
             // Return the remote address
-            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else context?.let { getDataColumn(it, uri, null, null) }
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment else context?.let {
+                getDataColumn(
+                    it,
+                    uri,
+                    null,
+                    null
+                )
+            }
         } else if ("file".equals(uri.scheme, ignoreCase = true)) {
             return uri.path
         }
@@ -624,12 +712,18 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
         return "com.google.android.apps.photos.content" == uri.authority
     }
 
-    fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+    fun getDataColumn(
+        context: Context,
+        uri: Uri?,
+        selection: String?,
+        selectionArgs: Array<String>?
+    ): String? {
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
         try {
-            cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
+            cursor =
+                context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
             if (cursor != null && cursor.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)
@@ -661,37 +755,39 @@ class ChatFrag(var userlocation: String, var userlat: String, var userlong: Stri
 
         appViewModel.sendUploadImageData(type, users, imagePathList)
 
-        appViewModel.observeUploadImageResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
-                if (response.body() != null)
-                {
-                    val fileName = response.body()!!.data!![0].fileName.toString()
-                    var str = response.body()!!.data!![0].image.toString()
-                    str = str.replaceBeforeLast("/", "")
-                    groupChatVM.selectedImage = str
+        appViewModel.observeUploadImageResponse()!!
+            .observe(requireActivity(), androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    Log.d("urlDataLoading", "------------" + Gson().toJson(response.body()))
+                    if (response.body() != null) {
+                        val fileName = response.body()!!.data!![0].fileName.toString()
+                        var str = response.body()!!.data!![0].image.toString()
+                        str = str.replaceBeforeLast("/", "")
+                        groupChatVM.selectedImage = str
 
-                    /*      if (response.body()!!.data != null)
-                          {
+                        /*      if (response.body()!!.data != null)
+                              {
 
-                                  setImageTrue = false
-                                  groupChatVM.sendChatImageMessage(str)
-                              }*/
+                                      setImageTrue = false
+                                      groupChatVM.sendChatImageMessage(str)
+                                  }*/
 
-                    if (setImage.substring(1) == fileName && setImageTrue) {
-                        setImageTrue = false
-                        groupChatVM.sendChatImageMessage(str)
+                        if (setImage.substring(1) == fileName && setImageTrue) {
+                            setImageTrue = false
+                            groupChatVM.sendChatImageMessage(str)
+                        }
+                        activityChatBinding.RelativSelectedImage.visibility = View.GONE
+                        activityChatBinding.relativProgress.visibility = View.GONE // progressbar
+                    } else {
+                        ErrorBodyResponse(response, mContext, null)
                     }
-                    activityChatBinding.imageSelected.visibility=View.GONE
-                    activityChatBinding.relativProgress.visibility=View.GONE // progressbar
+                } else {
+                    Toast.makeText(
+                        mContext,
+                        mContext.getString(R.string.something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                else
-                {
-                    ErrorBodyResponse(response, mContext, null)
-                }
-            } else {
-                Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
-            }
-        })
+            })
     }
 }

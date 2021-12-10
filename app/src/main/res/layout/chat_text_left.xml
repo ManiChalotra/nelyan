@@ -166,6 +166,7 @@
             android:layout_height="@dimen/_20sdp"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
             android:padding="@dimen/_5sdp"
+            android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
             android:src="@drawable/chatrightarrow"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3"

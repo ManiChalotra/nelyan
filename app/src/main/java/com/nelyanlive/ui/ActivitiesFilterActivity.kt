@@ -378,6 +378,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             R.id.tvFilterclear -> {
                 val i = Intent(this, ActivitiesListActivity::class.java)
                 startActivity(i)
+                AllSharedPref.clearFilterValue(this, "returnName")
+                AllSharedPref.clearFilterValue(this, "returnLocation")
+                AllSharedPref.clearFilterValue(this, "returnDistance")
+                AllSharedPref.clearFilterValue(this, "minage")
+                AllSharedPref.clearFilterValue(this, "maxage")
+                AllSharedPref.clearFilterValue(this, "SelectValueactivity")
+                AllSharedPref.clearFilterValue(this, "Age")
                 finish()
             }
             R.id.btnFilter -> {
@@ -398,14 +405,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
                             setResult(1212, intent)
 
-                            AllSharedPref.clearFilterValue(this, "returnNameEvent")
-                            AllSharedPref.clearFilterValue(this, "returnLocationEvent")
-                            AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
-                            AllSharedPref.clearFilterValue(this, "minage")
-                            AllSharedPref.clearFilterValue(this, "maxage")
-                            AllSharedPref.clearFilterValue(this, "SelectValueEvent")
-                            AllSharedPref.clearFilterValue(this, "AgeEvent")
-
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
@@ -422,13 +421,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
                             setResult(1213, intent)
 
-                            AllSharedPref.clearFilterValue(this, "returnName")
-                            AllSharedPref.clearFilterValue(this, "returnLocation")
-                            AllSharedPref.clearFilterValue(this, "returnDistance")
-                            AllSharedPref.clearFilterValue(this, "minage")
-                            AllSharedPref.clearFilterValue(this, "maxage")
-                            AllSharedPref.clearFilterValue(this, "SelectValueactivity")
-                            AllSharedPref.clearFilterValue(this, "Age")
+
 
                             onBackPressed()
                         }

@@ -329,7 +329,7 @@ class ChatVM : ViewModel() {
                             true
                         } else {
                             checkDateCompare(json.getString("created"), listData[i - 1].created)
-                        }
+                        },"","0", ""
                     )
                 )
             }
@@ -460,7 +460,7 @@ class ChatVM : ViewModel() {
                         json.getString("senderName"),
                         json.getString("senderImage"),
                         userId, "1", false, json.getString("description"),
-                        json.getString("parentId"), parentmessage
+                        "0", parentmessage
                     )
                 )
 

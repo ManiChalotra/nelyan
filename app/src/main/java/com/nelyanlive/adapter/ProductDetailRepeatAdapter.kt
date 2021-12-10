@@ -58,7 +58,8 @@ class ProductDetailRepeatAdapter(
         var ivCam: ImageView = itemView.findViewById(R.id.ivCam)
 
         val txtdlttrader = itemView.ivdlttrader
-        val txtaddtraderproduct = itemView.tvAddtarderproduct
+
+        //        val txtaddtraderproduct = itemView.tvAddtarderproduct
         val lltraderproduct = itemView.ll_traderproduct
 
         fun bind(list: ArrayList<ProductDetailDataModel>, position: Int) {
@@ -90,17 +91,17 @@ class ProductDetailRepeatAdapter(
                 productRepeatListener.onRemoveEventItem(position)
 //                txtaddtraderproduct.visibility = View.VISIBLE
 
-                if (position == 0) {
-                    txtaddtraderproduct.visibility = View.VISIBLE
-                } else {
-
-                }
+//                if (position == 0) {
+//                    txtaddtraderproduct.visibility = View.VISIBLE
+//                } else {
+//
+//                }
             }
 
-            txtaddtraderproduct.setOnClickListener {
-                productRepeatListener.onSingleTraderProduct(list, position)
-                txtaddtraderproduct.visibility = View.GONE
-            }
+//            txtaddtraderproduct.setOnClickListener {
+//                productRepeatListener.onSingleTraderProduct(list, position)
+//                txtaddtraderproduct.visibility = View.GONE
+//            }
 
             edtProductTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
