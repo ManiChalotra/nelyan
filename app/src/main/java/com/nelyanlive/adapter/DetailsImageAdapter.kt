@@ -37,7 +37,8 @@ class DetailsImageAdapter(
                     holder.img.context,
                     FullScreen::class.java
                 )
-                    .putExtra("productImage", image_base_URl + dataList[position].images)
+//                    .putExtra("productImage", image_base_URl + dataList[position].images)
+                    .putExtra("productImage", image_base_URl + dataList)
             )
         }
     }

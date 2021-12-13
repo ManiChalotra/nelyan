@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="model"
             type="com.nelyanlive.chat.ChatData" />
@@ -112,6 +110,7 @@
                 android:layout_height="@dimen/_110sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:scaleType="centerCrop"
+                android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_marginHorizontal="@dimen/_2sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -150,8 +149,8 @@
 
         <ImageView
             android:id="@+id/arrowRight"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
             android:padding="@dimen/_5sdp"
             android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"

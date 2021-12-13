@@ -20,6 +20,6 @@ data class ChatData(
     var isFlag: String = "",
     var dateShown: Boolean = false,
     var description: String = "",
-    var parentId: String = "",
+    var parentId: String = "0",
     var parentmessage: String = ""
 ) : AbstractModel()

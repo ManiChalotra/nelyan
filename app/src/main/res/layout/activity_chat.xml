@@ -51,17 +51,15 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/editTextSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@android:color/transparent"
                     android:hint="Search"
-                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textSize="@dimen/_12sdp">
-
                 </EditText>
 
                 <ImageView
@@ -80,15 +78,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChatSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:visibility="@{groupChatVM.searchVisible.equals(`true`)? View.VISIBLE : View.GONE}"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/constSearch" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChat"
@@ -97,6 +86,7 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/_5sdp"
             android:orientation="vertical"
+
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/rlBottom"
             app:layout_constraintTop_toBottomOf="@id/constSearch" />

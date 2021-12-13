@@ -20,6 +20,8 @@ import android.os.Environment
 import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -97,21 +99,18 @@ class ChatFrag(
         )
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
-        groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
+        groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))/*  activityChatBinding.btnRegulation.setOnClickListener {
+              *//* val i = Intent(mContext, RegulationActivity::class.java)
+             startActivity(i)*//*
+        }*/
 
         activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()
         }
 
-        activityChatBinding.imageSelectedImage.setOnClickListener { // close selecting image
-            imgPath = ""
-            activityChatBinding.RelativSelectedImage.visibility = View.GONE
-        }
-
         activityChatBinding.ivSend.setOnClickListener {
 
-            if (activityChatBinding.RelativSelectedImage.visibility == View.VISIBLE) {
-                // send image
+            if (activityChatBinding.imageSelected.visibility == View.VISIBLE) { // send image
                 activityChatBinding.relativProgress.visibility = View.VISIBLE
                 setImage(imgPath)
             } else {
@@ -120,14 +119,15 @@ class ChatFrag(
                         context,
                         getString(R.string.please_enter_message),
                         Toast.LENGTH_SHORT
-                    ).show()
-                } else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) {
-                    // send reply
+                    )
+                        .show()
+                } else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) { // send reply
                     groupChatVM.sendReplyChatMessage()
                 } else {
                     groupChatVM.sendChatMessage()
-                    activityChatBinding.RelativSelectedImage.visibility = View.GONE
+                    activityChatBinding.imageSelected.visibility = View.GONE
                 }
+
             }
         }
 
@@ -303,7 +303,8 @@ class ChatFrag(
                         mContext,
                         getString(R.string.something_went_wrong),
                         Toast.LENGTH_SHORT
-                    ).show()
+                    )
+                        .show()
 
                 }
             })
@@ -322,10 +323,24 @@ class ChatFrag(
             dailogNotification()
         }
 
+        activityChatBinding.editTextSearch.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                groupChatVM.serchList(s.toString())
+            }
+        })
+
     }
 
     private fun checkDateCompare(created: String, created1: String): Boolean {
-
 
         val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
         val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
@@ -377,12 +392,13 @@ class ChatFrag(
                             }
                         )
                         ivBell.visibility = View.VISIBLE
-                        ivBell.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(
-                                mContext,
-                                R.color.colorAccent
+                        ivBell.imageTintList =
+                            ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    mContext,
+                                    R.color.colorAccent
+                                )
                             )
-                        )
                     }
 
                 } else {
@@ -397,7 +413,6 @@ class ChatFrag(
             })
 
     }
-
 
     lateinit var dialog: Dialog
 
@@ -463,12 +478,13 @@ class ChatFrag(
                                 R.drawable.mute
                             }
                         )
-                        ivBell.imageTintList = ColorStateList.valueOf(
-                            ContextCompat.getColor(
-                                mContext,
-                                R.color.colorAccent
+                        ivBell.imageTintList =
+                            ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    mContext,
+                                    R.color.colorAccent
+                                )
                             )
-                        )
 
                     }
 
@@ -487,14 +503,11 @@ class ChatFrag(
 
     fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(
-                mContext,
-                Manifest.permission.CAMERA
+                mContext, Manifest.permission.CAMERA
             ) + ActivityCompat.checkSelfPermission(
-                mContext,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                mContext, Manifest.permission.READ_EXTERNAL_STORAGE
             ) + ActivityCompat.checkSelfPermission(
-                mContext,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             uploadImage()
@@ -547,8 +560,7 @@ class ChatFrag(
             if (cameraIntent.resolveActivity((mContext as Activity).packageManager) != null) {
                 var photoFile: File? = null
                 try {
-                    val myDirectory =
-                        File(Environment.getExternalStorageDirectory(), "Pictures")
+                    val myDirectory = File(Environment.getExternalStorageDirectory(), "Pictures")
                     if (!myDirectory.exists()) {
                         myDirectory.mkdirs()
                     }
@@ -575,11 +587,9 @@ class ChatFrag(
                 requestCodeGallary
             )
 
-
         }
         uploadImage.show()
     }
-
 
     private var imgPath = ""
 
@@ -600,16 +610,19 @@ class ChatFrag(
 
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+
         if (requestCode == requestCodeCamera && resultCode == Activity.RESULT_OK) {
             try {
                 if (Uri.parse(imgPath) != null) {
                     imgPath = getPath(mContext, Uri.parse(imgPath)).toString()
-                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
+                    activityChatBinding.imageSelected.visibility = View.VISIBLE
                     Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
                         .into(activityChatBinding.imageSelected)
+
+                    // setImage(imgPath)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -620,7 +633,7 @@ class ChatFrag(
                 val uri = data!!.data
                 if (uri != null) {
                     imgPath = getPath(mContext, uri).toString()
-                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
+                    activityChatBinding.imageSelected.visibility = View.VISIBLE
                     Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
                         .into(activityChatBinding.imageSelected)
 
@@ -775,7 +788,7 @@ class ChatFrag(
                             setImageTrue = false
                             groupChatVM.sendChatImageMessage(str)
                         }
-                        activityChatBinding.RelativSelectedImage.visibility = View.GONE
+                        activityChatBinding.imageSelected.visibility = View.GONE
                         activityChatBinding.relativProgress.visibility = View.GONE // progressbar
                     } else {
                         ErrorBodyResponse(response, mContext, null)

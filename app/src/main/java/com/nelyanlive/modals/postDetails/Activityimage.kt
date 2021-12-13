@@ -1,6 +1,6 @@
 package com.nelyanlive.modals.postDetails
 
-data class Activityimage(
+data class Activityimage (
     val activityId: Int,
     val id: Int,
     val images: String,

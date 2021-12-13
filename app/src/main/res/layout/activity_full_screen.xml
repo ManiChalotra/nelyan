@@ -28,12 +28,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <RelativeLayout
+        android:id="@+id/imgslidelayoutfull"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/_5dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@id/ivCross2"
+        app:layout_constraintTop_toBottomOf="@id/ivCross">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_activties_images_full"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+            android:id="@+id/indicator_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:spi_dotColor="@color/grey"
+            app:spi_dotSelectedColor="@color/colorPrimaryDark"
+            app:spi_dotSelectedSize="@dimen/_6sdp"
+            app:spi_dotSize="@dimen/_6sdp" />
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/ivMainImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/ivCross2"
         app:layout_constraintTop_toBottomOf="@id/ivCross" />
-<!--    android:scaleType="centerCrop"-->
+    <!--    android:scaleType="centerCrop"-->
 </androidx.constraintlayout.widget.ConstraintLayout>

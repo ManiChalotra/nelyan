@@ -147,22 +147,18 @@ class ChatVM : ViewModel() {
             json.put("receiverId", senderID)
             json.put("messageType", 0)
             json.put("message", tmp)
-
             Log.e("send_message", "=======$json")
-
             socket.emit("send_message", json)
-
             message.set("")
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     fun sendChatImageMessage(str: String) {
-
         val json = JSONObject()
         try {
-
             //encoding
             val ps: String = str
             val tmp = Base64.encodeBytes(ps.toByteArray())
@@ -277,7 +273,7 @@ class ChatVM : ViewModel() {
     private val connectListener = Emitter.Listener {
         Log.e("socket", "chat   JOIN")
         Log.e("socket", it[0].toString())
-        Log.e("socket", it[0].toString())
+
     }
 
     private val chatList = Emitter.Listener {
@@ -303,8 +299,7 @@ class ChatVM : ViewModel() {
                 val val3 = val2.replace("<br />".toRegex(), lineSep!!)
 
                 listData.add(
-                    ChatData(
-                        json.getString("id"),
+                    ChatData(json.getString("id"),
                         json.getString("senderId"),
                         json.getString("receiverId"),
                         json.getString("chatConstantId"),
@@ -329,7 +324,7 @@ class ChatVM : ViewModel() {
                             true
                         } else {
                             checkDateCompare(json.getString("created"), listData[i - 1].created)
-                        },"","0", ""
+                        }
                     )
                 )
             }
@@ -460,7 +455,7 @@ class ChatVM : ViewModel() {
                         json.getString("senderName"),
                         json.getString("senderImage"),
                         userId, "1", false, json.getString("description"),
-                        "0", parentmessage
+                        json.getString("parentId"), parentmessage
                     )
                 )
 
@@ -511,7 +506,6 @@ class ChatVM : ViewModel() {
     private fun connectUser() {
         val json = JSONObject()
         try {
-
             Log.e("socket=connectUser", userId)
 
             json.put("userId", userId)
