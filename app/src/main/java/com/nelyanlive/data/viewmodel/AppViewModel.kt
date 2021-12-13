@@ -1051,7 +1051,9 @@ class AppViewModel : ViewModel() {
                     longitude,
                     ageGroup,
                     media,
-                    country_code
+                    country_code,
+                    minage,
+                    maxage
                 )
                     .enqueue(object : retrofit2.Callback<JsonObject> {
                         override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -1082,7 +1084,9 @@ class AppViewModel : ViewModel() {
                     latitude,
                     longitude,
                     media,
-                    country_code
+                    country_code,
+                    minage,
+                    maxage
                 )
                     .enqueue(object : retrofit2.Callback<JsonObject> {
                         override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -1114,7 +1118,9 @@ class AppViewModel : ViewModel() {
                     longitude,
                     addEvent,
                     media,
-                    country_code
+                    country_code,
+                    minage,
+                    maxage
                 )
                     .enqueue(object : retrofit2.Callback<JsonObject> {
                         override fun onFailure(call: Call<JsonObject>, t: Throwable) {

@@ -128,7 +128,6 @@ class ChatFrag(
                     groupChatVM.sendChatMessage()
                     activityChatBinding.RelativSelectedImage.visibility = View.GONE
                 }
-
             }
         }
 

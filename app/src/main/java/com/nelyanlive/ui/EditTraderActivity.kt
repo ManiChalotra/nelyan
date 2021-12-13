@@ -581,5 +581,8 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     }
 
+    override fun onRemoveTraderDay(position: Int, list: Int) {
 
+
+    }
 }

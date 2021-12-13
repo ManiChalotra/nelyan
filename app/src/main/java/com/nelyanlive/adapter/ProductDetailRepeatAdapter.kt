@@ -3,6 +3,7 @@ package com.nelyanlive.adapter
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,23 +87,29 @@ class ProductDetailRepeatAdapter(
                 productRepeatListener.ontraderItemClick(list, position)
             }
 
+            /* txtdlttrader.setOnClickListener {
+                 lltraderproduct.visibility = View.GONE
+                 productRepeatListener.onRemoveEventItem(position)
+ //                txtaddtraderproduct.visibility = View.VISIBLE
+
+ //                if (position == 0) {
+ //                    txtaddtraderproduct.visibility = View.VISIBLE
+ //                } else {
+ //
+ //                }
+             }*/
+
             txtdlttrader.setOnClickListener {
-                lltraderproduct.visibility = View.GONE
-                productRepeatListener.onRemoveEventItem(position)
-//                txtaddtraderproduct.visibility = View.VISIBLE
+                list.removeAt(position)
+                var ListSize = list.size
+                productRepeatListener.onRemoveTraderProductItem(position, ListSize)
 
-//                if (position == 0) {
-//                    txtaddtraderproduct.visibility = View.VISIBLE
-//                } else {
-//
-//                }
+                notifyDataSetChanged()
+                Log.d(
+                    ProductDetailRepeatAdapter::class.java.name,
+                    "ProductDetailsRepeatAdapter  " + position
+                )
             }
-
-//            txtaddtraderproduct.setOnClickListener {
-//                productRepeatListener.onSingleTraderProduct(list, position)
-//                txtaddtraderproduct.visibility = View.GONE
-//            }
-
             edtProductTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].productTitle = s.toString()
@@ -159,7 +166,7 @@ class ProductDetailRepeatAdapter(
         fun addCameraGalleryImage(list: ArrayList<ProductDetailDataModel>, pos: Int)
 
         fun onSingleTraderProduct(list: ArrayList<ProductDetailDataModel>, position: Int)
-        fun onRemoveEventItem(position: Int)
+        fun onRemoveTraderProductItem(position: Int, list: Int)
     }
 
 

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -172,20 +174,22 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             }
         }
 
-//        var getNotiImg = AllSharedPref.restoreBoolean(requireContext(), "noti")
-//        if (getNotiImg == false) {
-//            img_noti.setImageResource(R.drawable.mute);
-//        } else {
-//            img_noti.setImageResource(R.drawable.unmute);
-//        }
 
         var NotiType = AllSharedPref.restoreString(requireContext(), "EventPush")
         Log.d(EventFragment::class.java.name, "EventFragment_NotiType   " + NotiType)
         if (NotiType.equals("0")) {
             img_noti.setImageResource(R.drawable.mute);
+
         } else {
             img_noti.setImageResource(R.drawable.unmute);
         }
+
+        img_noti.imageTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                mContext,
+                R.color.colorAccent
+            )
+        )
 
         img_noti.setOnClickListener(View.OnClickListener {
             dailogNotification()

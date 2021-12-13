@@ -284,7 +284,9 @@ interface JsonPlaceHolder {
         @Field("ageGroup") ageGroup: String,
         //@Field("addEvent") addEvent: String,// sending json Array
         @Field("media") media: String,
-        @Field("country_code") country_code: String
+        @Field("country_code") country_code: String,
+        @Field("minAge") minage: String,
+        @Field("maxAge") maxage: String
 
     ): Call<JsonObject>
 
@@ -307,7 +309,9 @@ interface JsonPlaceHolder {
         //@Field("ageGroup") ageGroup: String,// sending json Array
         //@Field("addEvent") addEvent: String,// sending json Array
         @Field("media") media: String,// send json Array
-        @Field("country_code") country_code: String
+        @Field("country_code") country_code: String,
+        @Field("minAge") minage: String,
+        @Field("maxAge") maxage: String
     ): Call<JsonObject>
 
     @POST("addPost")
@@ -329,7 +333,9 @@ interface JsonPlaceHolder {
         //@Field("ageGroup") ageGroup: String,// sending json Array
         @Field("addEvent") addEvent: String,// sending json Array
         @Field("media") media: String,// send json Array
-        @Field("country_code") country_code: String
+        @Field("country_code") country_code: String,
+        @Field("minAge") minage: String,
+        @Field("maxAge") maxage: String
     ): Call<JsonObject>
 
     @POST("edit_myadd")

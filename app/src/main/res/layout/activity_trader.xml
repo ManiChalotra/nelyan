@@ -389,22 +389,21 @@
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                <TextView
-                    android:id="@+id/tvAddTraderDay"
-                    style="@style/CommonTextWrapcontent"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/add_more_btn"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:text="Add Day"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10sdp"
-                    android:visibility="gone" />
-
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvAddTraderDay"
+                style="@style/CommonTextWrapcontent"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/add_more_btn"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:text="Add Day"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txt_productdetails"
@@ -435,6 +434,7 @@
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
                     android:text="Add Product"
+                    android:layout_alignParentRight="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />

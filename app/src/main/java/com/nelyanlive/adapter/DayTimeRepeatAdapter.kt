@@ -58,7 +58,8 @@ class DayTimeRepeatAdapter(
         var spinnerDayss = itemView.findViewById(R.id.spinner_dayss) as Spinner
 
         val txtdltday = itemView.ivdltday
-//        val txtaddtraderday = itemView.tvAddtarderday
+
+        //        val txtaddtraderday = itemView.tvAddtarderday
         val lltraderday = itemView.ll_traderday
 
         fun initalize(dayTimeModelArrayList: ArrayList<DayTimeModel>, position: Int) {
@@ -165,23 +166,17 @@ class DayTimeRepeatAdapter(
                 mTimePicker.show()
 
             }
-
             txtdltday.setOnClickListener {
-                lltraderday.visibility = View.GONE
-//                listner.onRemoveEventItem(position)
-//                txtaddtraderproduct.visibility = View.VISIBLE
-                Log.d(DayTimeRepeatAdapter::class.java.name, "DayTimeAdapter_174  " + position)
-//                if (position == 0 || position == 1) {
-//                    txtaddtraderday.visibility = View.VISIBLE
-//                } else {
-//
-//                }
-            }
-//            txtaddtraderday.setOnClickListener {
-//                listner.onSingleTraderDay(list, position)
-//                txtaddtraderday.visibility = View.GONE
-//            }
+                list.removeAt(position)
+                var ListSize = list.size
+                listner.onRemoveTraderDay(position, ListSize)
 
+                notifyDataSetChanged()
+                Log.d(
+                    DayTimeRepeatAdapter::class.java.name,
+                    "DayTimeRepeatAdapter_position  " + position
+                )
+            }
         }
     }
 
@@ -189,7 +184,8 @@ class DayTimeRepeatAdapter(
         fun dayTimeAdd(list: ArrayList<DayTimeModel>, position: Int)
 
         fun onSingleTraderDay(list: ArrayList<DayTimeModel>, position: Int)
-    }
 
+        fun onRemoveTraderDay(position: Int, list: Int)
+    }
 
 }

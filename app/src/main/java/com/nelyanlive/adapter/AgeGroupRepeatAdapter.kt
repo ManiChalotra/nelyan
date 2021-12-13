@@ -171,8 +171,13 @@ class AgeGroupRepeatAdapter(
             }
 
             removeButton.setOnClickListener {
-                llagegroup.visibility = View.GONE
+//                llagegroup.visibility = View.GONE
 //                txtAgeGroup.visibility = View.VISIBLE
+                list.removeAt(position)
+                var ListSize = list.size
+                listner.onRemoveAgeItem(position, ListSize)
+
+                notifyDataSetChanged()
                 Log.d(
                     AgeGroupRepeatAdapter::class.java.name,
                     "AgeGroupRepeatAdapter_position  " + position
@@ -196,6 +201,8 @@ class AgeGroupRepeatAdapter(
         fun addAgeGroupItem(list: ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int)
 
         fun onSingleAgeItem(list: java.util.ArrayList<ModelPOJO.AgeGroupDataModel>, position: Int)
+
+        fun onRemoveAgeItem(position: Int, list: Int)
 
     }
 
