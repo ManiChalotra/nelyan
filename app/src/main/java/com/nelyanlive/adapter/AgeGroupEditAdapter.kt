@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
         var days = itemView.spinner_dayss!!
         var timeFrom = itemView.tv_mornning_fromtime!!
         var timeTo = itemView.tv_morning_totime!!
+        var imgdlt = itemView.ivdltage!!
 
         fun initialize(list: ArrayList<AgeGroupMyAds>, position: Int) {
             timeFrom.text = list[position].timeFrom
@@ -126,11 +128,25 @@ class AgeGroupEditAdapter(var context: Context, var list: ArrayList<AgeGroupMyAd
                 days.clearFocus()
                 listener.addAgeGroupItem(list, position)
             }
+
+            imgdlt.setOnClickListener {
+                list.removeAt(position)
+                var ListSize = list.size
+                listener.onRemoveAgeItem(position, ListSize)
+
+                notifyDataSetChanged()
+                Log.d(
+                    AgeGroupEditAdapter::class.java.name,
+                    "AgeGroupEditListener_position  " + position
+                )
+            }
         }
     }
 
     interface OnAgeGroupRecyclerViewItemClickListener {
         fun addAgeGroupItem(list: ArrayList<AgeGroupMyAds>, position: Int)
+
+        fun onRemoveAgeItem(position: Int, list: Int)
 
     }
 }
