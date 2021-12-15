@@ -92,6 +92,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                         it.context.getString(R.string.event)
                     )
                 startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
+
             } else {
                 tvFilter!!.text = getString(R.string.filter)
                 (mContext as HomeActivity).tvTitleToolbar!!.text =
@@ -247,7 +248,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, returnLat, returnLng, returnDistance,
-                        returnName, Age, returnLocation
+                        returnName, returnLocation, Age
                     )
                     eventProgressBar?.showProgressBar()
                 } else {

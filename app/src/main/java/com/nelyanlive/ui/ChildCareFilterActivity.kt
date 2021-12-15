@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -164,8 +163,10 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
             }
         }
         checkMvvmResponse()
-    }
 
+        ClearPreference()
+
+    }
 
     private fun showPlacePicker() {
         Places.initialize(applicationContext, googleMapKey)
@@ -270,6 +271,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
             }
             R.id.tvFilterclear -> {
                 val i = Intent(this, HomeChildCareListActivity::class.java)
+                ClearPreference()
                 startActivity(i)
                 finish()
             }
@@ -325,4 +327,12 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
         }
     }
 
+    fun ClearPreference() {
+
+        AllSharedPref.clearFilterValue(this, "returnnamechild")
+        AllSharedPref.clearFilterValue(this, "returnlocationchild")
+        AllSharedPref.clearFilterValue(this, "returndistancechild")
+        AllSharedPref.clearFilterValue(this, "Selectvaluechild")
+
+    }
 }

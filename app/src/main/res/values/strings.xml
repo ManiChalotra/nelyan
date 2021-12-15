@@ -397,4 +397,7 @@
     <string name="selecteveninglasttime_txt">PPlease select Evening Last Time</string>
     <string name="age_from">Age From</string>
     <string name="age_to">Age To</string>
+
+    <string name="min_age">Min Age</string>
+    <string name="max_age">Max Age</string>
 </resources>

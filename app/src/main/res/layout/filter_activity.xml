@@ -114,6 +114,7 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
+
             </LinearLayout>
 
             <View

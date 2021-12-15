@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:id="@+id/frame_container"
     tools:context=".ui.TraderListingActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
@@ -41,22 +41,21 @@
 
             <TextView
                 style="@style/HeaderText"
+                android:layout_gravity="center"
                 android:text="@string/trader_artisant"
-                android:textColor="@color/black"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_city_zipcode"
                 style="@style/HeaderText"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:singleLine="true"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:paddingEnd="@dimen/_25sdp"
                 android:paddingStart="@dimen/_25sdp"
-                />
+                android:paddingEnd="@dimen/_25sdp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
         <ImageView
@@ -73,15 +72,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header"
-        android:paddingEnd="@dimen/_5sdp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/tvFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_weight="0"
             android:background="@drawable/text_outlinebg"
             android:fontFamily="@font/bold"
             android:paddingLeft="@dimen/_20sdp"

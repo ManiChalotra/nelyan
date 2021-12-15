@@ -64,6 +64,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         setContentView(R.layout.fragment_trade_filter)
         initalizeClicks()
         getFilterValues()
+
         Log.d(
             "TraderFilterActivity ",
             "OnCreateTraderFilter   "
@@ -94,7 +95,14 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             Log.e("checkdata", "categoty" + "----" + arr.get(0).get(i).toString())
             if (ReturnDistance.equals(arr.get(0).get(i).toString())) {
                 Log.e("checkdata", "categoty_if" + i + arr.get(0).get(i).toString())
-                spinner_trader_distance.setSelection(i)
+//                spinner_trader_distance.setSelection(i)
+
+                if (ReturnName.equals("") || ReturnName == null) {
+
+                } else {
+                    spinner_trader_distance.setSelection(i)
+                }
+
             }
         }
 
@@ -286,14 +294,8 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             }
             R.id.tvFilterclear -> {
                 val i = Intent(this, TraderListingActivity::class.java)
-//                val i = Intent(this, HomeActivity::class.java)
+                ClearPreference()
                 startActivity(i)
-//                et_name.setText("", TextView.BufferType.EDITABLE);
-
-                AllSharedPref.clearFilterValue(this, "returnnametrade")
-                AllSharedPref.clearFilterValue(this, "returnlocationtrade")
-                AllSharedPref.clearFilterValue(this, "returndistancetrade")
-                AllSharedPref.clearFilterValue(this, "SelectValuetrade")
                 finish()
             }
             R.id.et_location -> {
@@ -330,5 +332,12 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         .first()
             }
         }
+    }
+
+    fun ClearPreference() {
+        AllSharedPref.clearFilterValue(this, "returnnametrade")
+        AllSharedPref.restoreString(this, "returnlocationtrade")
+        AllSharedPref.restoreString(this, "returndistancetrade")
+        AllSharedPref.restoreString(this, "SelectValuetrade")
     }
 }

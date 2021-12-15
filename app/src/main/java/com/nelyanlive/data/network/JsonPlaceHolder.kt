@@ -110,7 +110,8 @@ interface JsonPlaceHolder {
     fun postDetail(
         @Header("security_key") securityKey: String?,
         @Header("auth_key") authKey: String?,
-        @Field("type") type: String?, @Field("postid") postid: String?,
+        @Field("type") type: String?,
+        @Field("postid") postid: String?,
         @Field("categoryId") categoryId: String?
     ): Call<JsonObject>
 
@@ -352,6 +353,8 @@ interface JsonPlaceHolder {
         @Field("website") website: String,
         @Field("phone") phone: String,
         @Field("address") address: String,
+        @Field("minAge") minAge: String,
+        @Field("maxAge") maxAge: String,
         @Field("city") city: String,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
@@ -377,6 +380,8 @@ interface JsonPlaceHolder {
         @Field("website") website: String,
         @Field("phone") phone: String,
         @Field("address") address: String,
+        @Field("minAge") minAge: String,
+        @Field("maxAge") maxAge: String,
         @Field("city") city: String,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
@@ -402,6 +407,8 @@ interface JsonPlaceHolder {
         @Field("website") website: String,
         @Field("phone") phone: String,
         @Field("address") address: String,
+        @Field("minAge") minAge: String,
+        @Field("maxAge") maxAge: String,
         @Field("city") city: String,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
@@ -427,6 +434,8 @@ interface JsonPlaceHolder {
         @Field("website") website: String,
         @Field("phone") phone: String,
         @Field("address") address: String,
+        @Field("minAge") minAge: String,
+        @Field("maxAge") maxAge: String,
         @Field("city") city: String,
         @Field("latitude") latitude: String,
         @Field("longitude") longitude: String,
@@ -768,8 +777,8 @@ interface JsonPlaceHolder {
         @Field("long") longitude: String?,
         @Field("distance") distance: String?,
         @Field("name") name: String?,
+        @Field("address") address: String?,
         @Field("Age") Age: String?,
-        @Field("address") address: String?
     ): Call<JsonObject>
 
     @POST("completeprofile_sociallogin")

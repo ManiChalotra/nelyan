@@ -95,9 +95,16 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
             }
 
             removeButton.setOnClickListener {
-                name.clearFocus()
+//                name.clearFocus()
                 list.removeAt(position)
-                listener.onRemoveEventItem(position)
+                var ListSize = list.size
+                listener.onRemoveEventItem(position, ListSize)
+
+                notifyDataSetChanged()
+                Log.d(
+                    EventEditAdapter::class.java.name,
+                    "EventEditAdapter_position  " + position
+                )
             }
 
             // add text watcher  for age To
@@ -248,7 +255,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
         fun onAddEventItem(list: ArrayList<EventMyAds>, position: Int)
         fun addCameraGalleryImage(position: Int)
         fun cityAddEvent(list: ArrayList<EventMyAds>, position: Int, city: TextView)
-        fun onRemoveEventItem(position: Int)
+        fun onRemoveEventItem(position: Int,list: Int)
     }
 }
 

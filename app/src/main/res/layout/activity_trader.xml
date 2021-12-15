@@ -427,6 +427,7 @@
                 <TextView
                     android:id="@+id/tvAddTraderProduct"
                     style="@style/CommonTextWrapcontent"
+                    android:layout_alignParentRight="true"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/add_more_btn"
@@ -434,7 +435,6 @@
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
                     android:text="Add Product"
-                    android:layout_alignParentRight="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />

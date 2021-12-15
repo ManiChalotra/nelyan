@@ -4,6 +4,7 @@ package com.nelyanlive.adapter
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.modals.myAd.TraderProductMyAds
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.item_product_details_repeat.view.*
 import java.util.*
 
 class EditProductDetailRepeatAdapter(internal var context: Context, internal var list: ArrayList<TraderProductMyAds>,
@@ -40,6 +42,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
         var edtProductPrice: EditText = itemView.findViewById(R.id.edtProductPrice)
         private var ivEvent: ImageView = itemView.findViewById(R.id.ivProductImage)
         var ivCam: ImageView = itemView.findViewById(R.id.ivCam)
+        val txtdlttrader = itemView.ivdlttrader
 
         fun bind(list: ArrayList<TraderProductMyAds>, position: Int) {
 
@@ -96,6 +99,18 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
                 }
             })
 
+            txtdlttrader.setOnClickListener {
+                list.removeAt(position)
+                var ListSize = list.size
+                productRepeatListener.onRemoveTraderProductItem(position, ListSize)
+
+                notifyDataSetChanged()
+                Log.d(
+                    ProductDetailRepeatAdapter::class.java.name,
+                    "ProductDetailsRepeatAdapter  " + position
+                )
+            }
+
         }
 
     }
@@ -103,6 +118,8 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
     interface ProductRepeatListener {
         fun ontraderItemClick(list: ArrayList<TraderProductMyAds>, pos: Int)
         fun addCameraGalleryImage(list: ArrayList<TraderProductMyAds>, pos: Int)
+
+        fun onRemoveTraderProductItem(position: Int, list: Int)
 
     }
 }

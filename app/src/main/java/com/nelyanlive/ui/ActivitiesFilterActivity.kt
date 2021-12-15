@@ -58,6 +58,12 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     //    var int poz = 0
     var poz: Int = 0
 
+    var ReturnName: String = ""
+    var ReturnLocation: String = ""
+    var ReturnMinAge: String = ""
+    var ReturnMaxAge: String = ""
+    var Age: String = ""
+
     private val job by lazy { Job() }
     private val activitisDatalist by lazy { ArrayList<HomeAcitivityResponseData>() }
 
@@ -189,6 +195,27 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             Log.d(ActivitiesFilterActivity::class.java.name, "ActivitiesFilter_else   ")
             et_name.hint = getString(R.string.enter_event_name)
         }
+
+//        ClearPreference()
+
+    }
+
+    fun ClearPreference() {
+        AllSharedPref.clearFilterValue(this, "returnName")
+        AllSharedPref.clearFilterValue(this, "returnLocation")
+        AllSharedPref.clearFilterValue(this, "returnDistance")
+        AllSharedPref.clearFilterValue(this, "minage")
+        AllSharedPref.clearFilterValue(this, "maxage")
+        AllSharedPref.clearFilterValue(this, "SelectValueactivity")
+        AllSharedPref.clearFilterValue(this, "Age")
+
+        AllSharedPref.clearFilterValue(this, "returnNameEvent")
+        AllSharedPref.clearFilterValue(this, "returnLocationEvent")
+        AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
+        AllSharedPref.clearFilterValue(this, "minage")
+        AllSharedPref.clearFilterValue(this, "maxage")
+        AllSharedPref.clearFilterValue(this, "SelectValueEvent")
+        AllSharedPref.clearFilterValue(this, "AgeEvent")
     }
 
     override fun onResume() {
@@ -264,8 +291,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                         val arrayAdapte1 =
                             ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
-                        traderType.setSelection(poz)
-//
+//                        traderType.setSelection(poz)
+
+                        if (ReturnName.equals("") || ReturnName == null) {
+
+                        } else {
+                            traderType.setSelection(poz)
+                        }
                         // for check the value wit api
 
                         traderType.onItemSelectedListener =
@@ -376,16 +408,39 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 dateDialog()
             }
             R.id.tvFilterclear -> {
-                val i = Intent(this, ActivitiesListActivity::class.java)
-                startActivity(i)
-                AllSharedPref.clearFilterValue(this, "returnName")
-                AllSharedPref.clearFilterValue(this, "returnLocation")
-                AllSharedPref.clearFilterValue(this, "returnDistance")
-                AllSharedPref.clearFilterValue(this, "minage")
-                AllSharedPref.clearFilterValue(this, "maxage")
-                AllSharedPref.clearFilterValue(this, "SelectValueactivity")
-                AllSharedPref.clearFilterValue(this, "Age")
-                finish()
+
+                if (ScreenName.equals(getString(R.string.activity))) {
+                    val i = Intent(this, ActivitiesListActivity::class.java)
+                    ClearPreference()
+                    startActivity(i)
+//                    AllSharedPref.clearFilterValue(this, "returnName")
+//                    AllSharedPref.clearFilterValue(this, "returnLocation")
+//                    AllSharedPref.clearFilterValue(this, "returnDistance")
+//                    AllSharedPref.clearFilterValue(this, "minage")
+//                    AllSharedPref.clearFilterValue(this, "maxage")
+//                    AllSharedPref.clearFilterValue(this, "SelectValueactivity")
+//                    AllSharedPref.clearFilterValue(this, "Age")
+
+                    Log.d(
+                        ActivitiesFilterActivity::class.java.name,
+                        "getReturnName   " + AllSharedPref.restoreString(this, "returnName")
+                    )
+                    finish()
+
+                } else if (ScreenName.equals(getString(R.string.event))) {
+                    val i = Intent(this, HomeActivity::class.java)
+                    i.putExtra("eventfragment", "EventFragment")
+                    startActivity(i)
+                    AllSharedPref.clearFilterValue(this, "returnNameEvent")
+                    AllSharedPref.clearFilterValue(this, "returnLocationEvent")
+                    AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
+                    AllSharedPref.clearFilterValue(this, "minage")
+                    AllSharedPref.clearFilterValue(this, "maxage")
+                    AllSharedPref.clearFilterValue(this, "SelectValueactivityEvent")
+                    AllSharedPref.clearFilterValue(this, "AgeEvent")
+                    finish()
+
+                }
             }
             R.id.btnFilter -> {
                 if (et_location.text.isNullOrEmpty()) {
@@ -404,7 +459,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("SelectValueactivity", SelectValue)
 
                             setResult(1212, intent)
-
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
@@ -434,12 +488,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     }
 
     fun getFilterValues() {
-
-        var ReturnName: String = ""
-        var ReturnLocation: String = ""
-        var ReturnMinAge: String = ""
-        var ReturnMaxAge: String = ""
-        var Age: String = ""
 
         if (ScreenName.equals(getString(R.string.activity))) {
 

@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -33,12 +32,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.Gson
 import com.nelyanlive.R
 import com.nelyanlive.current_location.LocationService
@@ -60,10 +53,12 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, CoroutineScope, CommunicationListner {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+    View.OnClickListener, CoroutineScope, CommunicationListner {
 
     val appViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
     }
 
     val dataStoragePreference by lazy {
@@ -142,25 +137,38 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         launch(Dispatchers.Main.immediate) {
             userId = dataStoragePreference.emitStoredValue(preferencesKey<String>("id")).first()
-            authorization = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-            val userImage = dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
-            userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-            userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-            val userName = dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
-            userType = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
+            authorization =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            val userImage =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
+            userlocation =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+            userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                .first()
+            userlong =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                    .first()
+            val userName =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
+            userType =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
             callBadgeService(authorization)
 
             Picasso.get().load(from_admin_image_base_URl + userImage)
-                    .placeholder(ContextCompat.getDrawable(
-                            ivHomeUserpic!!.context,
-                            R.drawable.placeholder
-                    )!!).into(ivHomeUserpic)
+                .placeholder(
+                    ContextCompat.getDrawable(
+                        ivHomeUserpic!!.context,
+                        R.drawable.placeholder
+                    )!!
+                ).into(ivHomeUserpic)
 
             tvUserName!!.text = userName
         }
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(foregroundOnlyBroadcastReceiver, IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            foregroundOnlyBroadcastReceiver,
+            IntentFilter(LocationService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST)
+        )
 
     }
 
@@ -177,7 +185,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
 
-                    Log.e("observeBadgeApiResponse", "-------------" + Gson().toJson(response.body()))
+                    Log.e(
+                        "observeBadgeApiResponse",
+                        "-------------" + Gson().toJson(response.body())
+                    )
                     val jsonMain = JSONObject(response.body().toString())
                     Log.e("socket===", jsonMain.toString())
 
@@ -228,7 +239,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         homeFusedLocation = LocationServices.getFusedLocationProviderClient(this)
 
-        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
             homeFusedLocation.lastLocation.addOnSuccessListener { location: Location? ->
             }
         }
@@ -248,18 +263,39 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         bottomNavigationBar = findViewById(R.id.navigationbar)
         bottomNavigationBar!!.setOnNavigationItemSelectedListener(this)
-        bottomNavigationBar!!.setOnNavigationItemReselectedListener { }
+        bottomNavigationBar!!.setOnNavigationItemReselectedListener {
+            Log.d(HomeActivity::class.java.name, "HomeActivity_BottomReselet  ")
+
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
+            if (currentFragment !is HomeFragment) {
+                iv_bell!!.visibility = View.GONE
+                tvTitleToolbar!!.visibility = View.GONE
+                ivToolBarImage!!.visibility = View.VISIBLE
+                fragment = HomeFragment()
+                loadFragment(fragment)
+            }
+
+        }
         setDrawerClicks()
         setToolBarClicks()
         try {
 
             if (intent.hasExtra("groupChat")) {
                 launch(Dispatchers.Main.immediate) {
-                    userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-                    userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-                    userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+                    userlocation =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                            .first()
+                    userlat =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                            .first()
+                    userlong =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                            .first()
 
-                    Log.e("dataHome ------", "-----222-----$userlocation------$userlat------$userlong----")
+                    Log.e(
+                        "dataHome ------",
+                        "-----222-----$userlocation------$userlat------$userlong----"
+                    )
                     bottomNavigationBar!!.selectedItemId = R.id.chat
                 }
             }
@@ -283,6 +319,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (intent.hasExtra("activity")) {
                 if (intent.getStringExtra("activity") == "acti") {
                     OpenActivity(ActivityDetailsActivity::class.java)
+                }
+            }
+            if (intent.hasExtra("eventfragment")) {
+                if (intent.getStringExtra("eventfragment").equals("EventFragment")) {
+                    tvTitleToolbar!!.visibility = View.VISIBLE
+                    ivToolBarImage!!.visibility = View.GONE
+                    tvTitleToolbar!!.text =
+                        getString(R.string.upcoming_events) + "\n" + userlocation
+                    iv_bell!!.setImageResource(R.drawable.location_circle)
+                    iv_bell!!.imageTintList = null
+                    fragment = EventFragment(userlat, userlong, userlocation)
+                    loadFragment(fragment)
                 }
             }
         } catch (e: Exception) {
@@ -340,12 +388,18 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         iv_back!!.visibility = View.VISIBLE
         iv_back!!.setOnClickListener {
 
-            val inputManager = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            val inputManager =
+                it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                it.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
 
             mDrawerLayout!!.openDrawer(navigation_view!!)
-            mDrawerToggle = object : ActionBarDrawerToggle(this@HomeActivity, mDrawerLayout,
-                    R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            mDrawerToggle = object : ActionBarDrawerToggle(
+                this@HomeActivity, mDrawerLayout,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            ) {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     val min = 0.9f
@@ -475,7 +529,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.publier -> {
                 if (currentFragment !is PublisherFrag) {
                     launch(Dispatchers.Main.immediate) {
-                        val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
+                        val userType2 =
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin"))
+                                .first()
                         if (userType2 == "2") {
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
@@ -498,7 +554,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
                     val geocoder = Geocoder(this, Locale.getDefault())
-                    val list = geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
+                    val list =
+                        geocoder.getFromLocation(userlat.toDouble(), userlong.toDouble(), 1)
 
                     tvTitleToolbar!!.text = if (!list[0].locality.isNullOrBlank()) {
                         list[0].locality
@@ -513,7 +570,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if (currentFragment !is EventFragment) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
-                    tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
+                    tvTitleToolbar!!.text =
+                        getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
                     iv_bell!!.imageTintList = null
                     fragment = EventFragment(userlat, userlong, userlocation)
@@ -527,9 +585,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun loadFragment(fragment: Fragment): Boolean {
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.frame_container, fragment)
+            .commit()
         return true
     }
 
@@ -556,8 +614,16 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 myCustomToast(getString(R.string.press_again_to_exit))
             }
             doubleBackToExitPressedOnce = true
-            Handler(Looper.myLooper()!!).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+            Handler(Looper.myLooper()!!).postDelayed(
+                { doubleBackToExitPressedOnce = false },
+                2000
+            )
         } else {
+            iv_bell!!.visibility = View.GONE
+            tvTitleToolbar!!.visibility = View.GONE
+            ivToolBarImage!!.visibility = View.VISIBLE
+            fragment = HomeFragment()
+            loadFragment(fragment)
             bottomNavigationBar!!.selectedItemId = R.id.home
         }
     }
@@ -581,7 +647,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                     launch(Dispatchers.Main.immediate) {
                         val i = Intent(this@HomeActivity, LoginActivity::class.java)
-                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        i.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(i)
                         dialog!!.dismiss()
                         dataStoragePreference.deleteDataBase()

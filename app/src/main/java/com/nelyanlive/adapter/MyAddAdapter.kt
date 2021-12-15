@@ -22,9 +22,11 @@ import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.alert_chat_delete.*
 
 
-class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayList<GetActivitypostMyAds>,
-                   internal var activitiesDeleteEditListener: OnActivitiesDeleteEditClickListner) :
-        RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder>() {
+class MyAddAdapter(
+    var context: Context, internal var myadsActivitylist: ArrayList<GetActivitypostMyAds>,
+    internal var activitiesDeleteEditListener: OnActivitiesDeleteEditClickListner
+) :
+    RecyclerView.Adapter<MyAddAdapter.RecyclerViewHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var dialog: Dialog? = null
     private var popupWindow: PopupWindow? = null
@@ -49,9 +51,27 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
-                callPopup(ivDot, adapterPosition, myadsList.id, myadsList.activityname, myadsList.typeofActivityId,
-                        myadsList.nameOfShop, myadsList.description, myadsList.website, myadsList.address, myadsList.latitude, myadsList.longitude, myadsList.city, myadsList.country_code,
-                        myadsList.phone, myadsList.ageGroups, myadsList.events, myadsList.activityimages)
+                callPopup(
+                    ivDot,
+                    adapterPosition,
+                    myadsList.id,
+                    myadsList.activityname,
+                    myadsList.typeofActivityId,
+                    myadsList.nameOfShop,
+                    myadsList.description,
+                    myadsList.website,
+                    myadsList.address,
+                    myadsList.minAge,
+                    myadsList.maxAge,
+                    myadsList.latitude,
+                    myadsList.longitude,
+                    myadsList.city,
+                    myadsList.country_code,
+                    myadsList.phone,
+                    myadsList.ageGroups,
+                    myadsList.events,
+                    myadsList.activityimages
+                )
 
             }
 
@@ -62,7 +82,8 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
 
             if (myadsList.activityimages.size != null && myadsList.activityimages.size != 0)
-                Glide.with(context).load(image_base_URl + myadsList.activityimages[0].images).error(R.mipmap.no_image_placeholder).into(ivActivityImage)
+                Glide.with(context).load(image_base_URl + myadsList.activityimages[0].images)
+                    .error(R.mipmap.no_image_placeholder).into(ivActivityImage)
             else
                 ivActivityImage.setImageResource(R.mipmap.no_image_placeholder)
 
@@ -71,7 +92,10 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
                 context.OpenActivity(ActivityDetailsActivity::class.java) {
 
-                    Log.e("fafsdfa", "===ActivityDetailsActivity==${myadsList.latitude}=====${myadsList.longitude}=====")
+                    Log.e(
+                        "fafsdfa",
+                        "===ActivityDetailsActivity==${myadsList.latitude}=====${myadsList.longitude}====="
+                    )
 
                     putString("activityId", myadsList.id.toString())
                     putString("categoryId", myadsList.categoryId.toString())
@@ -83,14 +107,37 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         }
     }
 
-    private fun callPopup(ivDot: ImageView, adapterPosition: Int, adId: Int, activityname: String, typeofActivityId: Int,
-                          nameOfShop: String, description: String, website: String, address: String, latti: String, longi: String, city: String, countryCode: String, phone: String,
-                          ageGroups: ArrayList<AgeGroupMyAds>, events: ArrayList<EventMyAds>, activityimages: ArrayList<ActivityimageMyAds>) {
+    private fun callPopup(
+        ivDot: ImageView,
+        adapterPosition: Int,
+        adId: Int,
+        activityname: String,
+        typeofActivityId: Int,
+        nameOfShop: String,
+        description: String,
+        website: String,
+        address: String,
+        minage: String,
+        maxage: String,
+        latti: String,
+        longi: String,
+        city: String,
+        countryCode: String,
+        phone: String,
+        ageGroups: ArrayList<AgeGroupMyAds>,
+        events: ArrayList<EventMyAds>,
+        activityimages: ArrayList<ActivityimageMyAds>
+    ) {
         val layoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = layoutInflater.inflate(R.layout.alert_dot, null)
         val editt = popupView.findViewById<View>(R.id.tvEdit) as TextView
         val deletee = popupView.findViewById<View>(R.id.tvDelete) as TextView
-        popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+        popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
 
         popupWindow!!.isTouchable = true
         popupWindow!!.isOutsideTouchable = true
@@ -98,8 +145,24 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
         popupWindow!!.showAsDropDown(ivDot, -250, 0, Gravity.END)
 
         editt.setOnClickListener {
-            activitiesDeleteEditListener.onEditActivitiesAdClick(adapterPosition, adId.toString(), typeofActivityId.toString(), nameOfShop, activityname,
-                    description, website, countryCode, phone, address, latti, longi, city, ageGroups, activityimages, events)
+            activitiesDeleteEditListener.onEditActivitiesAdClick(
+                adapterPosition,
+                adId.toString(),
+                typeofActivityId.toString(),
+                nameOfShop,
+                activityname,
+                description,
+                website,
+                countryCode,
+                phone,
+                address,
+                latti,
+                longi,
+                city,
+                ageGroups,
+                activityimages,
+                events
+            )
             popupWindow!!.dismiss()
         }
 
@@ -143,10 +206,24 @@ class MyAddAdapter(var context: Context, internal var myadsActivitylist: ArrayLi
 
     interface OnActivitiesDeleteEditClickListner {
         fun onActivitiesDeleteAdClick(position: Int, adID: String?)
-        fun onEditActivitiesAdClick(position: Int, adID: String?, activityTypeId: String, nameofShop: String, nameofActivity: String,
-                                    description: String, website: String, countryCode: String, phoneNumber: String, address: String, latti: String, longi: String, city: String,
-                                    ageGroupListMyAds: ArrayList<AgeGroupMyAds>, ActivityimagesList: ArrayList<ActivityimageMyAds>,
-                                    eventMyAdsList: ArrayList<EventMyAds>)
+        fun onEditActivitiesAdClick(
+            position: Int,
+            adID: String?,
+            activityTypeId: String,
+            nameofShop: String,
+            nameofActivity: String,
+            description: String,
+            website: String,
+            countryCode: String,
+            phoneNumber: String,
+            address: String,
+            latti: String,
+            longi: String,
+            city: String,
+            ageGroupListMyAds: ArrayList<AgeGroupMyAds>,
+            ActivityimagesList: ArrayList<ActivityimageMyAds>,
+            eventMyAdsList: ArrayList<EventMyAds>
+        )
     }
 
 }

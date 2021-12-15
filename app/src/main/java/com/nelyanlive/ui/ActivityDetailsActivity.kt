@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -239,6 +240,11 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
 
                         val mResponse = response.body().toString()
                         val jsonObject = JSONObject(mResponse)
+                        Log.d(
+                            ActivityDetailsActivity::class.java.name,
+                            "ActivityDetails_JsonObject     " + jsonObject
+                                    + "   MResponse    " + mResponse
+                        )
                         if (!jsonObject.getJSONObject("data").isNull("user")) {
                             setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
                         }
@@ -254,8 +260,19 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         tv_activitydesc.text =
                             jsonObject.getJSONObject("data").get("description").toString()
 
-
                         tvWebsite.text = jsonObject.getJSONObject("data").get("website").toString()
+
+                        var getMinAge = jsonObject.getJSONObject("data").get("minAge").toString()
+                        var getMaxAge = jsonObject.getJSONObject("data").get("maxAge").toString()
+
+                        txt_minage.text = getMinAge
+                        txt_maxage.text = getMaxAge
+
+                        Log.d(
+                            ActivityDetailsActivity::class.java.name,
+                            "ActivityDetailsActivity_MinAge   " + getMinAge + "   MaxAge   " + getMaxAge
+                        )
+
 
                         if (jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
                             tv_phn.visibility = View.VISIBLE
@@ -267,8 +284,10 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                             tv_phn.visibility = View.GONE
                             tv_phntxt.visibility = View.GONE
                         }
-                        tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
-                        tv_actvity_address.text = jsonObject.getJSONObject("data").get("address").toString()
+                        tv_activitydesc.text =
+                            jsonObject.getJSONObject("data").get("description").toString()
+                        tv_actvity_address.text =
+                            jsonObject.getJSONObject("data").get("address").toString()
 
                         longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                         latitude = jsonObject.getJSONObject("data").get("latitude").toString()

@@ -1162,6 +1162,8 @@ class AppViewModel : ViewModel() {
         description: String,
         phone: String,
         address: String,
+        minage: String,
+        maxage: String,
         website: String,
         city: String,
         latitude: String,
@@ -1188,6 +1190,8 @@ class AppViewModel : ViewModel() {
                     website,
                     phone,
                     address,
+                    minage,
+                    maxage,
                     city,
                     latitude,
                     longitude,
@@ -1224,6 +1228,8 @@ class AppViewModel : ViewModel() {
                     website,
                     phone,
                     address,
+                    minage,
+                    maxage,
                     city,
                     latitude,
                     longitude,
@@ -1259,6 +1265,8 @@ class AppViewModel : ViewModel() {
                     website,
                     phone,
                     address,
+                    minage,
+                    maxage,
                     city,
                     latitude,
                     longitude,
@@ -1294,6 +1302,8 @@ class AppViewModel : ViewModel() {
                     website,
                     phone,
                     address,
+                    minage,
+                    maxage,
                     city,
                     latitude,
                     longitude,
@@ -2076,7 +2086,7 @@ class AppViewModel : ViewModel() {
 
     fun sendFilterEventListData(
         securityKey: String?, authKey: String?, lati: String?, longi: String?, distance: String?,
-        name: String?, Age: String, address: String?
+        name: String?, address: String?,Age: String,
     ) {
         JsonPlaceHolder().getEventFilter(
             securityKey,

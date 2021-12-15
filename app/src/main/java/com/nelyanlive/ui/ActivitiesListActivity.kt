@@ -37,6 +37,11 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+import android.content.Intent
+
+
+
+
 
 class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner, CoroutineScope {
@@ -104,6 +109,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         getString(R.string.activity)
                     )
                 startActivityForResult(i, LAUNCH_SECOND_ACTIVITY)
+
             } else {
 
                 if (checkIfHasNetwork(this)) {
@@ -119,7 +125,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                         )
                         tv_userCityOrZipcode.text = locality
                         activity_list_progressbar?.showProgressBar()
-
                     }
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
