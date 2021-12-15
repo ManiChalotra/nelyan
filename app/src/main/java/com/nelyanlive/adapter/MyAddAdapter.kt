@@ -35,7 +35,6 @@ class MyAddAdapter(
 
     inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
         var tvAddress = itemView.findViewById(R.id.tv_address) as TextView
         var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
         var tvNameOfShop = itemView.findViewById(R.id.tv_nameOfShop) as TextView
@@ -80,13 +79,11 @@ class MyAddAdapter(
             tvAddress.text = myadsList.address
             tvNameOfShop.text = myadsList.nameOfShop
 
-
             if (myadsList.activityimages.size != null && myadsList.activityimages.size != 0)
                 Glide.with(context).load(image_base_URl + myadsList.activityimages[0].images)
                     .error(R.mipmap.no_image_placeholder).into(ivActivityImage)
             else
                 ivActivityImage.setImageResource(R.mipmap.no_image_placeholder)
-
 
             llActivityDetails.setOnClickListener {
 
@@ -156,6 +153,8 @@ class MyAddAdapter(
                 countryCode,
                 phone,
                 address,
+                minage,
+                maxage,
                 latti,
                 longi,
                 city,
@@ -217,6 +216,8 @@ class MyAddAdapter(
             countryCode: String,
             phoneNumber: String,
             address: String,
+            minage: String,
+            maxage: String,
             latti: String,
             longi: String,
             city: String,

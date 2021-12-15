@@ -270,9 +270,9 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                 showPlacePicker()
             }
             R.id.tvFilterclear -> {
-                val i = Intent(this, HomeChildCareListActivity::class.java)
-                ClearPreference()
-                startActivity(i)
+//                val i = Intent(this, HomeChildCareListActivity::class.java)
+//                ClearPreference()
+//                startActivity(i)
                 finish()
             }
             R.id.btnSearch -> {

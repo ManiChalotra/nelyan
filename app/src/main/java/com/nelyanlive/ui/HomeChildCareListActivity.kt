@@ -384,6 +384,4 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
             childProgressbar?.hideProgressBar()
         })
     }
-
-
 }

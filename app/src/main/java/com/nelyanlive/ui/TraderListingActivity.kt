@@ -125,6 +125,10 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
 
+        Log.d(
+            TraderListingActivity::class.java.name,
+            "TraderOnCreate_Name  " + AllSharedPref.restoreString(this, "returnnametrade")
+        )
     }
 
     private fun initalizeClicks() {

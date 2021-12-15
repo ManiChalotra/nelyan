@@ -149,7 +149,8 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
             countycode.setCountryForPhoneCode(countryCodee.toInt())
             postID = intent.getStringExtra("adID").toString()
             activityTypeId = intent.getStringExtra("activityTypeId").toString()
-
+            edtAgeFrom.setText(intent.getStringExtra("minage"))
+            edtAgeTo.setText(intent.getStringExtra("maxage"))
             Log.d(
                 EditActivity::class.java.name,
                 "EditActivity_ShopName   " + intent.getStringExtra("nameofShop")

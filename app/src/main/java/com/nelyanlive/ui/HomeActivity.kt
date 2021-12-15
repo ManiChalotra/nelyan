@@ -133,6 +133,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onResume() {
         super.onResume()
 
+        ClearPreference()
+
         Log.d("homeAuthKey", "----------$authorization")
 
         launch(Dispatchers.Main.immediate) {
@@ -227,6 +229,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_home)
         //  appUpdateManager = AppUpdateManagerFactory.create(this)
         //  checkUpdate()
+
+        ClearPreference()
+
         MyFirebaseMessagingService.chatNotifyLive.observe(this, Observer {
 
             if (it.equals("true")) {
@@ -713,6 +718,35 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
     val blackColour = { textView: TextView ->
         textView.setTextColor(Color.parseColor("#000000"))
+    }
+
+    fun ClearPreference() {
+        AllSharedPref.clearFilterValue(this, "returnName")
+        AllSharedPref.clearFilterValue(this, "returnLocation")
+        AllSharedPref.clearFilterValue(this, "returnDistance")
+        AllSharedPref.clearFilterValue(this, "minage")
+        AllSharedPref.clearFilterValue(this, "maxage")
+        AllSharedPref.clearFilterValue(this, "SelectValueactivity")
+        AllSharedPref.clearFilterValue(this, "Age")
+
+        AllSharedPref.clearFilterValue(this, "returnNameEvent")
+        AllSharedPref.clearFilterValue(this, "returnLocationEvent")
+        AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
+        AllSharedPref.clearFilterValue(this, "minage")
+        AllSharedPref.clearFilterValue(this, "maxage")
+        AllSharedPref.clearFilterValue(this, "SelectValueEvent")
+        AllSharedPref.clearFilterValue(this, "AgeEvent")
+
+        AllSharedPref.clearFilterValue(this, "returnnamechild")
+        AllSharedPref.clearFilterValue(this, "returnlocationchild")
+        AllSharedPref.clearFilterValue(this, "returndistancechild")
+        AllSharedPref.clearFilterValue(this, "Selectvaluechild")
+
+        AllSharedPref.clearFilterValue(this, "returnnametrade")
+        AllSharedPref.restoreString(this, "returnlocationtrade")
+        AllSharedPref.restoreString(this, "returndistancetrade")
+        AllSharedPref.restoreString(this, "SelectValuetrade")
+
     }
 
     override fun onDestroy() {

@@ -191,31 +191,34 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
 
                         val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
                         trader_type.adapter = arrayAdapter1
-                        trader_type.setSelection(poz)
-                        trader_type.onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
+//                        trader_type.setSelection(poz)
+                        if (!ReturnName.equals("")){
+                            trader_type.setSelection(poz)
+                        }
+                            trader_type.onItemSelectedListener =
+                                object : AdapterView.OnItemSelectedListener {
+                                    override fun onItemSelected(
+                                        parent: AdapterView<*>?,
+                                        view: View?,
+                                        position: Int,
+                                        id: Long
+                                    ) {
 //                                    SelectValue = trader_type.getSelectedItem()
 //                                        .toString()
-                                    typeId = if (position != 0) {
-                                        traderID[position]!!
+                                        typeId = if (position != 0) {
+                                            traderID[position]!!
 
-                                    } else {
-                                        ""
+                                        } else {
+                                            ""
+                                        }
+
+                                        SelectValue = typeId
                                     }
 
-                                    SelectValue = typeId
+                                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                                        //TODO("Not yet implemented")
+                                    }
                                 }
-
-                                override fun onNothingSelected(parent: AdapterView<*>?) {
-                                    //TODO("Not yet implemented")
-                                }
-                            }
 
                     }
                 } else {
@@ -293,9 +296,9 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 }
             }
             R.id.tvFilterclear -> {
-                val i = Intent(this, TraderListingActivity::class.java)
+//                val i = Intent(this, TraderListingActivity::class.java)
                 ClearPreference()
-                startActivity(i)
+//                startActivity(i)
                 finish()
             }
             R.id.et_location -> {
