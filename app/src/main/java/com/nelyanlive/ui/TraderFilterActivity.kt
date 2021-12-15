@@ -1,6 +1,5 @@
 package com.nelyanlive.ui
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -102,7 +101,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 } else {
                     spinner_trader_distance.setSelection(i)
                 }
-
             }
         }
 
@@ -133,7 +131,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
         }
-
     }
 
     private fun initalizeClicks() {
@@ -156,7 +153,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         et_location.setOnClickListener(this)
 
     }
-
 
     val traderType: MutableList<String?> = mutableListOf()
     val traderID: MutableList<String?> = mutableListOf()
@@ -192,34 +188,33 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
                         trader_type.adapter = arrayAdapter1
 //                        trader_type.setSelection(poz)
-                        if (!ReturnName.equals("")){
+                        if (!ReturnName.equals("")) {
                             trader_type.setSelection(poz)
                         }
-                            trader_type.onItemSelectedListener =
-                                object : AdapterView.OnItemSelectedListener {
-                                    override fun onItemSelected(
-                                        parent: AdapterView<*>?,
-                                        view: View?,
-                                        position: Int,
-                                        id: Long
-                                    ) {
+                        trader_type.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
 //                                    SelectValue = trader_type.getSelectedItem()
 //                                        .toString()
-                                        typeId = if (position != 0) {
-                                            traderID[position]!!
+                                    typeId = if (position != 0) {
+                                        traderID[position]!!
 
-                                        } else {
-                                            ""
-                                        }
-
-                                        SelectValue = typeId
+                                    } else {
+                                        ""
                                     }
 
-                                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                                        //TODO("Not yet implemented")
-                                    }
+                                    SelectValue = typeId
                                 }
 
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    //TODO("Not yet implemented")
+                                }
+                            }
                     }
                 } else {
                     ErrorBodyResponse(response, this, null)
@@ -248,8 +243,6 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 val status: Status = Autocomplete.getStatusFromIntent(data!!)
                 Log.i("dddddd", status.statusMessage.toString())
             }
-
-
         }
     }
 
