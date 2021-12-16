@@ -14,10 +14,7 @@ import android.graphics.drawable.ColorDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
-import android.os.StrictMode
+import android.os.*
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.Editable
@@ -30,12 +27,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.nelyanlive.HELPER.GoogleHelper.TAG
 import com.nelyanlive.R
 import com.nelyanlive.chat.ChatData
 import com.nelyanlive.chat.GroupChatVM
@@ -58,19 +57,22 @@ import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.recyclerview.widget.RecyclerView
+
 
 class ChatFrag(
-    var userlocation: String,
-    var userlat: String,
-    var userlong: String,
-    var ivBell: ImageView
+    var userlocation: String, var userlat: String,
+    var userlong: String, var ivBell: ImageView
 ) : Fragment() {
-
+    var currentPage = 0
+    val globalMessageList by lazy { ArrayList<ChatData>() }
+    val globalMessageStoreList by lazy { ArrayList<ChatData>() }
     private var listner: CommunicationListner? = null
     lateinit var mContext: Context
     val groupChatVM: GroupChatVM by viewModels()
     lateinit var activityChatBinding: ActivityChatBinding
-
+    var paginationCheck = false
+    var recuclerviewsetOnPosition = 1
     override fun onResume() {
         super.onResume()
         MyFirebaseMessagingService.myChatVisible = false
@@ -99,18 +101,20 @@ class ChatFrag(
         )
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
-        groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))/*  activityChatBinding.btnRegulation.setOnClickListener {
+        groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
+        /*  activityChatBinding.btnRegulation.setOnClickListener {
               *//* val i = Intent(mContext, RegulationActivity::class.java)
              startActivity(i)*//*
         }*/
-
         activityChatBinding.ivAttachment.setOnClickListener {
             checkPermission()
         }
+        activityChatBinding.btnRegulation.setOnClickListener {
+            activityChatBinding.editTextSearch.requestFocus()
+        }
 
         activityChatBinding.ivSend.setOnClickListener {
-
-            if (activityChatBinding.imageSelected.visibility == View.VISIBLE) { // send image
+            if (activityChatBinding.RelativSelectedImage.visibility == View.VISIBLE) { // send image
                 activityChatBinding.relativProgress.visibility = View.VISIBLE
                 setImage(imgPath)
             } else {
@@ -119,18 +123,15 @@ class ChatFrag(
                         context,
                         getString(R.string.please_enter_message),
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 } else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) { // send reply
                     groupChatVM.sendReplyChatMessage()
                 } else {
                     groupChatVM.sendChatMessage()
-                    activityChatBinding.imageSelected.visibility = View.GONE
+                    activityChatBinding.RelativSelectedImage.visibility = View.GONE
                 }
-
             }
         }
-
         ivBell.visibility = View.GONE
         return activityChatBinding.root
     }
@@ -181,26 +182,15 @@ class ChatFrag(
         groupChatVM.rvChat = activityChatBinding.rvChat
         groupChatVM.connectSocket(view.context)
 
-        if (checkIfHasNetwork((mContext as Activity))) {
 
-            authorization = AllSharedPref.restoreString(mContext, "auth_key")
-            appViewModel.groupMessageApiData(
-                security_key, authorization, if (!list[0].locality.isNullOrBlank()) {
-                    list[0].locality
-                } else {
-                    userlocation
-                }, "0", "20"
-            )
 
-        } else {
-            showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
-        }
 
+        callgetMessageApi()
         appViewModel.observeGroupMessageApiResponse()!!
             .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
-
+                        activityChatBinding.relativProgress.visibility = View.GONE
                         Log.e(
                             "observeGroupMessageApi",
                             "-------------" + Gson().toJson(response.body())
@@ -272,21 +262,34 @@ class ChatFrag(
                                     },
                                     json.getString("description"),
                                     json.getString("parentId"),
-                                    parentmessage
+                                    parentmessage, json.getString("parentmessageType")
 
                                 )
                             )
                         }
 
                         if (groupChatVM.groupId.isNotEmpty()) setNotification(groupChatVM.groupId)
-
                         if (listData.isNotEmpty()) {
-                            groupChatVM.listChat.addAll(listData)
+                            paginationCheck = true
+                            globalMessageList.clear()
+                            groupChatVM.listChat.clear()  // swapping
+                            globalMessageList.addAll(listData)// fist time 1-10
+                            globalMessageList.addAll(globalMessageStoreList)// fist time 1-10
+
+                            groupChatVM.listChat.addAll(globalMessageList)
                             groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
-                            activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - 1)
+                            activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - recuclerviewsetOnPosition)
+                            recuclerviewsetOnPosition += 19
                             groupChatVM.noDataMessage.set("")
                         } else {
-                            groupChatVM.noDataMessage.set("No chat found")
+                            try {
+                                if (globalMessageStoreList.size == 0) {
+                                    groupChatVM.noDataMessage.set("No chat found")
+                                }
+                            } catch (e: Exception) {
+                                groupChatVM.noDataMessage.set("No chat found")
+                            }
+
                             groupChatVM.updateLocation(
                                 userlat, userlong, if (!list[0].locality.isNullOrBlank()) {
                                     list[0].locality
@@ -294,11 +297,12 @@ class ChatFrag(
                                     userlocation
                                 }
                             )
-
                         }
+                        globalMessageStoreList.clear()
+                        globalMessageStoreList.addAll(globalMessageList)
                     }
                 } else {
-
+                    activityChatBinding.relativProgress.visibility = View.GONE
                     Toast.makeText(
                         mContext,
                         getString(R.string.something_went_wrong),
@@ -308,6 +312,23 @@ class ChatFrag(
 
                 }
             })
+
+        activityChatBinding.rvChat.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                Log.e("positionLast", "DDDDDDD")
+
+                if (!recyclerView.canScrollVertically(-1)) {
+                    if (paginationCheck) {
+                        paginationCheck = false
+                        activityChatBinding.relativProgress.visibility = View.VISIBLE
+                        currentPage++
+                        callgetMessageApi()
+                        Log.e("positionLast", "listChat.size.toString()" + currentPage)
+                    }
+                }
+            }
+        })
 
         activityChatBinding.rvChat.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom < oldBottom) {
@@ -341,10 +362,8 @@ class ChatFrag(
     }
 
     private fun checkDateCompare(created: String, created1: String): Boolean {
-
         val date1 = SimpleDateFormat("dd").format(Date(created.toLong() * 1000))
         val date2 = SimpleDateFormat("dd").format(Date(created1.toLong() * 1000))
-
         return date1 != date2
     }
 
@@ -618,7 +637,7 @@ class ChatFrag(
             try {
                 if (Uri.parse(imgPath) != null) {
                     imgPath = getPath(mContext, Uri.parse(imgPath)).toString()
-                    activityChatBinding.imageSelected.visibility = View.VISIBLE
+                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
                     Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
                         .into(activityChatBinding.imageSelected)
 
@@ -633,7 +652,7 @@ class ChatFrag(
                 val uri = data!!.data
                 if (uri != null) {
                     imgPath = getPath(mContext, uri).toString()
-                    activityChatBinding.imageSelected.visibility = View.VISIBLE
+                    activityChatBinding.RelativSelectedImage.visibility = View.VISIBLE
                     Glide.with(this).load(imgPath).error(R.mipmap.no_image_placeholder)
                         .into(activityChatBinding.imageSelected)
 
@@ -788,7 +807,7 @@ class ChatFrag(
                             setImageTrue = false
                             groupChatVM.sendChatImageMessage(str)
                         }
-                        activityChatBinding.imageSelected.visibility = View.GONE
+                        activityChatBinding.RelativSelectedImage.visibility = View.GONE
                         activityChatBinding.relativProgress.visibility = View.GONE // progressbar
                     } else {
                         ErrorBodyResponse(response, mContext, null)
@@ -801,5 +820,22 @@ class ChatFrag(
                     ).show()
                 }
             })
+    }
+
+    fun callgetMessageApi() {
+        if (checkIfHasNetwork((mContext as Activity))) {
+            authorization = AllSharedPref.restoreString(mContext, "auth_key")
+            appViewModel.groupMessageApiData(
+                security_key, authorization, if (!list[0].locality.isNullOrBlank()) {
+                    list[0].locality
+                } else {
+                    userlocation
+                }, currentPage.toString(), "20"
+            )
+            Log.e("ScrollCheck", "$$$$$$$$$$$$$$$" + currentPage.toString())
+        } else {
+            showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
+        }
+
     }
 }

@@ -6,16 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
+import com.nelyanlive.AppUtils.hideKeyboard
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
+import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.ui.Chat1Activity
+import com.nelyanlive.utils.from_admin_image_base_URl
 import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -53,9 +60,7 @@ class GroupChatVM : ViewModel()
             R.layout.chat_image_left
         )
     }
-    /*  val SearchChatAdapter by lazy {
-        SerchchatAdapter<ChatData>(R.layout.res_serchchat)
-      }*/
+
     val listChat by lazy { ArrayList<ChatData>() }
 
     init
@@ -142,57 +147,50 @@ class GroupChatVM : ViewModel()
                     }
                     "fullscreen" ->
                     {
+                        val listActivityimage = ArrayList<Activityimage>()
+                        listActivityimage.clear()
+                        var totalimages=0
+                        var findpoz=0
+                        for (i in 0 until listChat.size)
+                        {
+                            if (listChat[i].messageType.equals("1")) // Image
+                            {
+                                totalimages++
+                                Log.e("checkimage","==="+ listChat[i].message)
+                                listActivityimage.add(Activityimage(0,
+                                    listChat[i].id.toInt(), from_admin_image_base_URl+listChat[i].message.toString(), 1))
+                            }
+                            if (listChat[i].message.equals(listChat[position].message)) // Image
+                            {
+                                findpoz=totalimages
+                            }
+                        }
+
                         (view.context as Activity).startActivity(
                             Intent(view.context, FullScreen::class.java).putExtra(
-                                "image", listChat[position].message
-                            )
-                        )
+                                "image", findpoz.toString()
+                            ).putExtra("imagearry",listActivityimage))
                     }
                 }
             }
         })
-/*
-    SearchChatAdapter.setOnItemClick(object : SerchchatAdapter.OnItemClick
-    {
-      override fun onClick(view: View, position: Int, type: String)
-      {
-        when (type)
-        {
-          "Search" ->
-          {
-            for (i in 0 until listChat.size)
-            {
-              Log.e(
-                "checkpozz",
-                "----" + listChat[position].parentId + "-----" + (listChat[i].id) + "---" + listChat.size
-              )
-              if (listChat[position].parentId.equals(listChat[i].id))
-              {
-                try
-                {
-                  rvChat.getLayoutManager()!!.scrollToPosition(i)
-                } catch (e: Exception)
-                {
-
-                }
-              }
-            }
-
-          }
-        }
-      }
-    })
-*/
-
-
     }
 
     fun serchList(text: String)
     {
+        var listfilter=ArrayList<ChatData>()
         if (text.isNotEmpty())
         {
-            val a = listChat.filter { text.equals(it.message.trim(), true) || text.equals(it.description.trim(), true) }
-            groupChatAdapter.addItems(a)
+            for (i in 0 until listChat.size)
+            {
+                if (listChat.get(i).message.toLowerCase().contains(text.toLowerCase())||listChat.get(i).description.toLowerCase().contains(text.toLowerCase()))
+                {
+                    listfilter.add(listChat.get(i))
+                }
+            }
+            noDataMessage.set("")
+            //  val a = listChat.filter { text.equals(it.message, true) || text.equals(it.description, true) }
+            groupChatAdapter.addItems(listfilter)
             groupChatAdapter.notifyDataSetChanged()
         }
         else
@@ -286,16 +284,11 @@ class GroupChatVM : ViewModel()
             {
                 if (message.get()!!.trim().isEmpty())
                 {
-                    Toast.makeText(
-                        view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT
-                    ).show()
-                } else
+                    Toast.makeText(view.context, view.context.getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                }
+                else
                 {
-                    Toast.makeText(
-                        view.context,
-                        "enter message-----${message.get().toString().trim()}----",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(view.context, "enter message-----${message.get().toString().trim()}----", Toast.LENGTH_SHORT).show()
                 }
             }
             "replyclose" ->
@@ -305,12 +298,16 @@ class GroupChatVM : ViewModel()
             "searchoption" ->
             {
                 searchVisible.set("true")
+                // view.requestFocus()
+                val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
             "Serchclose" ->
             {
                 searchVisible.set("")
-            }
 
+                hideKeyboard(view.context as Activity)
+            }
         }
     }
 
@@ -467,7 +464,8 @@ class GroupChatVM : ViewModel()
 
             Log.e("socket", "sfdafdsfdsfsdf")
 
-        } catch (e: Exception)
+        }
+        catch (e: Exception)
         {
             e.printStackTrace()
         }
@@ -534,9 +532,12 @@ class GroupChatVM : ViewModel()
 
     }
 
+
+
+
     private val newMessage = Emitter.Listener {
 
-        Log.e("socket", "chat    newMessage")
+        Log.e("socketmychat", "chat    newMessage")
         Log.e("socket", it[0].toString())
 
         try
@@ -582,7 +583,7 @@ class GroupChatVM : ViewModel()
                     false,
                     json.getString("description"),
                     json.getString("parentId"),
-                    parentmessage
+                    parentmessage,json.getString("parentmessageType")
 
                 )
             )
@@ -597,7 +598,6 @@ class GroupChatVM : ViewModel()
 
                     rvChat.scrollToPosition(listChat.size - 1)
                     Log.e("socket=gsdfgsdfg==chat", listChat.size.toString())
-
                     if (listChat.isEmpty()) noDataMessage.set("No chat found") else
                     {
                         noDataMessage.set("")
@@ -610,6 +610,7 @@ class GroupChatVM : ViewModel()
         }
 
     }
+
     private val deleteData = Emitter.Listener {
 
         Log.e("socket", "chat    deleteData")

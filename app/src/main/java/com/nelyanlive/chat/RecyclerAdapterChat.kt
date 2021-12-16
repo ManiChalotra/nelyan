@@ -1,5 +1,8 @@
 package com.nelyanlive.chat
 
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.nelyanlive.BR
+import kotlinx.android.synthetic.main.chat_text_left.view.*
 import kotlinx.android.synthetic.main.chat_text_right.view.*
 
 class RecyclerAdapterChat<T : AbstractModel>(
@@ -150,8 +154,10 @@ class RecyclerAdapterChat<T : AbstractModel>(
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VH<T>, position: Int) {
-
         val model = items[position]
+        val model2 = items[position] as ChatData
+
+
         model.adapterPosition = position
         onItemClick?.let { model.onItemClickChat = it }
         holder.bind(model)

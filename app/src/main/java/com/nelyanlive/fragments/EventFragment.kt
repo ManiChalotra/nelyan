@@ -254,6 +254,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
                 }
+            } else {
+
             }
         }
     }

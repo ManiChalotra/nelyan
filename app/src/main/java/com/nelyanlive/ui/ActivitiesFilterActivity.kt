@@ -410,9 +410,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             R.id.tvFilterclear -> {
 
                 if (ScreenName.equals(getString(R.string.activity))) {
-//                    val i = Intent(this, ActivitiesListActivity::class.java)
+                    val i = Intent(this, ActivitiesListActivity::class.java)
                     ClearPreference()
-//                    startActivity(i)
+                    startActivity(i)
 //                    AllSharedPref.clearFilterValue(this, "returnName")
 //                    AllSharedPref.clearFilterValue(this, "returnLocation")
 //                    AllSharedPref.clearFilterValue(this, "returnDistance")

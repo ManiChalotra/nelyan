@@ -1,8 +1,11 @@
 package com.nelyanlive.chat
 
 import android.content.res.ColorStateList
+import android.text.Html
+import android.text.util.Linkify
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -12,6 +15,7 @@ import com.nelyanlive.R
 import com.nelyanlive.utils.from_admin_image_base_URl
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.chat_text_right.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,7 +71,7 @@ object BindingAdapter {
     @JvmStatic
     fun setMessageTime(tvText: TextView, str: String) {
 
-        if (str.isNotEmpty()) {
+        if (str.isNotEmpty()&&!str.equals("null")) {
             val data1 = Date(str.toLong() * 1000)
             val data2 = Date()
             data2.hours = 0
@@ -188,18 +192,18 @@ object BindingAdapter {
     @BindingAdapter(value = ["setChatImage"], requireAll = false)
     @JvmStatic
     fun setChatImage(
-            ivImage: ImageView,
-            str: String?
+        ivImage: ImageView,
+        str: String?
 
     ) {
         if (!str.isNullOrEmpty()) {
 
 
             Picasso.get().load(from_admin_image_base_URl + str).resize(100, 100)
-                    .placeholder(ContextCompat.getDrawable(
-                            ivImage.context,
-                            R.drawable.placeholder
-                    )!!).into(ivImage)
+                .placeholder(ContextCompat.getDrawable(
+                    ivImage.context,
+                    R.drawable.placeholder
+                )!!).into(ivImage)
 
         } else {
             ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context, R.drawable.placeholder))
@@ -209,22 +213,41 @@ object BindingAdapter {
     @BindingAdapter(value = ["setChatMessages"], requireAll = false)
     @JvmStatic
     fun setChatMessages(
-            ivImage: ImageView,
-            str: String?
+        ivImage: ImageView,
+        str: String?)
+    {
+        if (!str.isNullOrEmpty())
+        {
 
-    ) {
-        if (!str.isNullOrEmpty()) {
+            Picasso.get().load(from_admin_image_base_URl + str).placeholder(
+                ContextCompat.getDrawable(
+                    ivImage.context, R.drawable.placeholder
+                )!!
+            ).into(ivImage)
 
-
-            Picasso.get().load(from_admin_image_base_URl + str)
-                    .placeholder(ContextCompat.getDrawable(
-                            ivImage.context,
-                            R.drawable.placeholder
-                    )!!).into(ivImage)
-
-        } else {
-            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context, R.drawable.placeholder))
+        } else
+        {
+            ivImage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    ivImage.context,
+                    R.drawable.placeholder
+                )
+            )
         }
     }
+    @BindingAdapter(value = ["bind:setChatMText"], requireAll = false)
+    @JvmStatic
+    fun setChatMText(
+        txt: TextView,
+        str: String?) = if (!str.isNullOrEmpty())
+    {
+        txt.text = str
+        Linkify.addLinks(txt, Linkify.ALL)
+
+    }
+    else
+    {
+    }
+
 
 }

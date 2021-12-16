@@ -40,9 +40,6 @@ import kotlin.coroutines.CoroutineContext
 import android.content.Intent
 
 
-
-
-
 class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     ActivityListAdapter.OnHomeActivitiesRecyclerViewItemClickListner, CoroutineScope {
 
@@ -289,6 +286,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
+            } else {
+                finish()
             }
         }
     }

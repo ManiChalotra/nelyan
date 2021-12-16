@@ -27,8 +27,8 @@ class DetailsImageAdapter(
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------" + dataList[position].images)
-        Glide.with(a).asBitmap().load(image_base_URl + dataList[position].images).into(holder.img)
+        Log.d("serverImages", "------------------------------" +image_base_URl+ dataList[position].images)
+        Glide.with(a).asBitmap().load(dataList[position].images).into(holder.img)
 //        holder.img.setScaleType(ImageView.ScaleType.FIT_XY);
 //        holder.img.setAdjustViewBounds(true)
         holder.img.setOnClickListener {

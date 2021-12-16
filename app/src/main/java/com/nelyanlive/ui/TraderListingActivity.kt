@@ -61,8 +61,9 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
     private var locality: String = ""
 
     override fun onResume() {
-        super.onResume()
 
+        Log.d("TraderActivity", "----------" + "  onResume   ")
+        super.onResume()
     }
 
 
@@ -76,6 +77,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             listType = intent.getStringExtra("type").toString()
             Log.e("qwe", intent.getStringExtra("type").toString())
         }
+
         checkMvvmResponse()
         if (tvFilter.text == getString(R.string.filter)) {
             launch(Dispatchers.Main.immediate) {
@@ -238,7 +240,17 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ivBack -> {
-                onBackPressed()
+                if (intent.extras != null) {
+                    var GetClearDtaa = intent.getStringExtra("screentrade").toString()
+                    if (GetClearDtaa != null && !GetClearDtaa.equals("")) {
+//                        onBackPressed()
+                        Log.d("TraderActivity", "TraderActivity_247   " + GetClearDtaa)
+                        finish()
+                    } else {
+                        onBackPressed()
+                    }
+                }
+//                onBackPressed()
             }
             R.id.ivMap -> {
                 if (dataString.isEmpty()) {
@@ -290,9 +302,21 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        Log.d("TraderActivity", "TraderActivity_309   ")
+//        if (intent.extras != null) {
+//            Log.d("TraderActivity", "TraderActivity_304   ")
+//            var GetClearDtaa = intent.getStringExtra("cleartrade").toString()
+//            if (GetClearDtaa != null && !GetClearDtaa.equals("")) {
+//                Log.d("TraderActivity", "TraderActivity_307   " + GetClearDtaa)
+////                finish()
+//            } else {
+//                Log.d("TraderActivity", "TraderActivity_375   ")
+//            }
+//        }
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            Log.d("TraderActivity", "TraderActivity_311  ")
             if (resultCode == 1215) {
+                Log.d("TraderActivity", "TraderActivity_1215   ")
 //                tvFilter.text = getString(R.string.clear_filter)
                 tvFilter.text = getString(R.string.clear_filter)
                 val returnName = data!!.getStringExtra("name")
@@ -353,7 +377,26 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
+            } else {
+//                if (intent.extras != null) {
+//                    Log.d("TraderActivity", "TraderActivity_369   ")
+//                    var GetClearDtaa = intent.getStringExtra("screentrade").toString()
+//                    Log.d("TraderActivity", "TraderActivity_381   " + GetClearDtaa)
+//                    if (GetClearDtaa.equals("screentrade")) {
+//                        Log.d("TraderActivity", "TraderActivity_372   " + GetClearDtaa)
+//                        finish()
+//                    } else {
+//                        Log.d("TraderActivity", "TraderActivity_375   ")
+//                    }
+//                } else{
+//                    Log.d("TraderActivity", "TraderActivity_389   ")
+//                }
+
+                Log.d("TraderActivity", "TraderActivity_379   ")
             }
+
+        } else {
+            Log.d("TraderActivity", "TraderActivity_395   ")
         }
     }
 

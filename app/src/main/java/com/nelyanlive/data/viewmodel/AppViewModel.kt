@@ -1931,8 +1931,8 @@ class AppViewModel : ViewModel() {
         distance: String,
         name: String?,
         typeId: String?,
-        Age: String,
-        address: String
+        address: String,
+        Age: String
     ) {
         JsonPlaceHolder().activityFilter_Api(
             securityKey,
@@ -1942,8 +1942,8 @@ class AppViewModel : ViewModel() {
             distance,
             name,
             typeId,
-            Age,
-            address
+            address,
+            Age
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {

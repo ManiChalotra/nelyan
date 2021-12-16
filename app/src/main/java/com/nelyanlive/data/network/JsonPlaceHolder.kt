@@ -729,8 +729,8 @@ interface JsonPlaceHolder {
         @Field("distance") distance: String?,
         @Field("name") name: String?,
         @Field("type") typeId: String?,
+        @Field("address") address: String?,
         @Field("Age") Age: String?,
-        @Field("address") address: String?
     ): Call<JsonObject>
 
     @POST("TraderFilter")

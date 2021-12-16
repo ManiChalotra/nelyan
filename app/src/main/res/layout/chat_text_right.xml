@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:bind="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -109,8 +109,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    bind:setChatMText="@{model.parentmessage}"
                     android:id="@+id/tvReceiverRelplaymessage"
-                    setDrawableTint="@{model}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -119,15 +119,18 @@
                     android:minWidth="80dp"
                     android:text="@{model.parentmessage}"
                     android:textColor="@color/black"
+                    android:visibility="@{model.parentmessageType.equals(`0`) ? View.VISIBLE : View.GONE}"
                     android:textSize="@dimen/_8sdp"
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername" />
 
                 <ImageView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
                     setChatMessages="@{model.parentmessage}"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:visibility="@{model.parentmessageType.equals(`1`) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername">
 
@@ -136,7 +139,7 @@
 
             <TextView
                 android:id="@+id/tvReceiver"
-                setDrawableTint="@{model}"
+                bind:setChatMText="@{model.message}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"

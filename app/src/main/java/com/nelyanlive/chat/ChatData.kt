@@ -21,5 +21,6 @@ data class ChatData(
     var dateShown: Boolean = false,
     var description: String = "",
     var parentId: String = "0",
-    var parentmessage: String = ""
+    var parentmessage: String = "",
+    var parentmessageType: String = ""
 ) : AbstractModel()

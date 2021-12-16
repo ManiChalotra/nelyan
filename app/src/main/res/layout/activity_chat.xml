@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:background="@color/transparent"
-                android:drawableRight="@drawable/places_ic_search"
+                android:drawableEnd="@drawable/places_ic_search"
                 android:drawableTint="@color/white"
                 android:fontFamily="@font/semibold"
                 android:onClick="@{(view)->groupChatVM.onClick(view,`searchoption`)}"
@@ -56,11 +56,12 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@android:color/transparent"
+                    android:focusable="true"
                     android:hint="Search"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    android:textSize="@dimen/_12sdp">
-                </EditText>
+                    android:textSize="@dimen/_12sdp"></EditText>
 
                 <ImageView
                     android:id="@+id/imageSearch"
@@ -78,7 +79,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChat"
             setRecyclerAdapter="@{groupChatVM.groupChatAdapter}"
@@ -94,11 +94,11 @@
             android:id="@+id/RelativSelectedImage"
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
-            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
-            app:layout_constraintStart_toStartOf="@+id/rlBottom"
             android:layout_marginBottom="-5dp"
             android:background="@color/white"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintStart_toStartOf="@+id/rlBottom">
 
             <ImageView
                 android:id="@+id/imageSelected"

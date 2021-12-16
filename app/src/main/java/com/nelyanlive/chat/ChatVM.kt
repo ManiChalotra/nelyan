@@ -16,6 +16,8 @@ import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
+import com.nelyanlive.modals.postDetails.Activityimage
+import com.nelyanlive.utils.from_admin_image_base_URl
 import com.nelyanlive.utils.socketBaseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -61,11 +63,35 @@ class ChatVM : ViewModel() {
                 when (type) {
                     "fullscreen" -> {
                         // disconnectSocket()
+                        val listActivityimage = ArrayList<Activityimage>()
+                        listActivityimage.clear()
+                        var totalimages=0
+                        var findpoz=0
+                        for (i in 0 until listChat.size)
+                        {
+                            if (listChat[i].messageType.equals("1")) // Image
+                            {
+                                totalimages++
+                                Log.e("checkimage","==="+ listChat[i].message)
+                                listActivityimage.add(
+                                    Activityimage(0,
+                                        listChat[i].id.toInt(), from_admin_image_base_URl+listChat[i].message.toString(), 1)
+                                )
+                            }
+                            if (listChat[i].message.equals(listChat[position].message)) // Image
+                            {
+                                findpoz=totalimages
+                            }
+                        }
 
                         (view.context as Activity).startActivity(
+                            Intent(view.context, FullScreen::class.java).putExtra(
+                                "image", findpoz.toString()
+                            ).putExtra("imagearry",listActivityimage))
+                        /*(view.context as Activity).startActivity(
                             Intent(view.context, FullScreen::class.java)
                                 .putExtra("image", listChat[position].message)
-                        )
+                        )*/
                     }
 
                     "delete" -> {
@@ -454,8 +480,8 @@ class ChatVM : ViewModel() {
                         json.getString("recieverImage"),
                         json.getString("senderName"),
                         json.getString("senderImage"),
-                        userId, "1", false, json.getString("description"),
-                        json.getString("parentId"), parentmessage
+                        userId, "", false, json.getString("description"),
+                        json.getString("parentId"), parentmessage,json.getString("parentmessageType")
                     )
                 )
 

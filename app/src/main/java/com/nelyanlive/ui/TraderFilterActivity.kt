@@ -289,10 +289,12 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 }
             }
             R.id.tvFilterclear -> {
-//                val i = Intent(this, TraderListingActivity::class.java)
+                val i = Intent(this, TraderListingActivity::class.java)
+                i.putExtra("screentrade", "screentrade")
                 ClearPreference()
-//                startActivity(i)
+                startActivity(i)
                 finish()
+
             }
             R.id.et_location -> {
                 showPlacePicker()
@@ -332,8 +334,15 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
 
     fun ClearPreference() {
         AllSharedPref.clearFilterValue(this, "returnnametrade")
-        AllSharedPref.restoreString(this, "returnlocationtrade")
-        AllSharedPref.restoreString(this, "returndistancetrade")
-        AllSharedPref.restoreString(this, "SelectValuetrade")
+        AllSharedPref.clearFilterValue(this, "returnlocationtrade")
+        AllSharedPref.clearFilterValue(this, "returndistancetrade")
+        AllSharedPref.clearFilterValue(this, "SelectValuetrade")
+
+//        AllSharedPref.save(
+//            this,
+//            "cleartrade",
+//            "cleartrade"
+//        )
+
     }
 }

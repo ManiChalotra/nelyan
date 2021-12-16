@@ -200,12 +200,10 @@ class MessagesVM : ViewModel() {
         Log.e("socket", it[0].toString())
 
         try {
-
             getUserList()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private val seenMessages = Emitter.Listener {
