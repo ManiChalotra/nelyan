@@ -47,6 +47,7 @@ class GroupChatVM : ViewModel() {
     var replymessage: ObservableField<String> = ObservableField("")
     var replymessageUserName: ObservableField<String> = ObservableField("")
     var searchVisible: ObservableField<String> = ObservableField("")
+    var serchempty: ObservableField<String> = ObservableField("")
     var senderName: ObservableField<String> = ObservableField("")
     var senderImage: ObservableField<String> = ObservableField("")
     var noDataMessage: ObservableField<String> = ObservableField("")
@@ -282,6 +283,7 @@ class GroupChatVM : ViewModel() {
             }
             "searchoption" -> {
                 searchVisible.set("true")
+                serchempty.set("")
                 // view.requestFocus()
                 val imm =
                     view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -289,6 +291,7 @@ class GroupChatVM : ViewModel() {
             }
             "Serchclose" -> {
                 searchVisible.set("")
+                serchempty.set("")
                 groupChatAdapter.addItems(listChat)
                 groupChatAdapter.notifyDataSetChanged()
                 rvChat.getLayoutManager()!!.scrollToPosition(listChat.size - 1)

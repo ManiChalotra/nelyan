@@ -86,6 +86,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
         }
 
+        Log.d(MyAddActivity::class.java.name, "MyAdsActivity_onCreate   ")
         checkMvvmResponse()
         hitMyAdsListApi()
     }

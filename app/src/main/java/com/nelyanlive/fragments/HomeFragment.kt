@@ -135,13 +135,21 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope,
             }
 
             1 -> {
-                requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
-                { putString("type", "2") }
-            }
-            2 -> {
+                /*requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
+                { putString("type", "2") }*/
+
                 val i = Intent(requireActivity(), TraderListingActivity::class.java)
                 i.putExtra("type", "3")
                 requireActivity().startActivity(i)
+
+            }
+            2 -> {
+               /* val i = Intent(requireActivity(), TraderListingActivity::class.java)
+                i.putExtra("type", "3")
+                requireActivity().startActivity(i)*/
+
+                requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
+               { putString("type", "2") }
             }
 
             3 -> {
@@ -152,10 +160,8 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope,
                     )
                 }
             }
-
         }
     }
-
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -163,7 +169,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope,
                 iv_back!!.setImageResource(R.drawable.menu)
                 iv_back!!.visibility = View.GONE
             }
-
         }
     }
 

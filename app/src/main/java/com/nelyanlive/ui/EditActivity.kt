@@ -18,7 +18,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.nelyanlive.R
 import com.nelyanlive.adapter.AgeGroupEditAdapter
 import com.nelyanlive.adapter.EventEditAdapter
@@ -58,7 +57,6 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     var image1: String = ""
     var image2: String = ""
     var image3: String = ""
-
 
     private val job by lazy { kotlinx.coroutines.Job() }
 
@@ -720,7 +718,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
             EditActivity::class.java.name,
             "OnRemoveClick_Age   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list
         )
-
+        event = true
         clickPosition = position.toString()
         ageGroupEditAdapter.notifyItemChanged(position)
         if (list == 0) {
@@ -763,6 +761,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     }
 
     override fun onRemoveEventItem(position: Int, list: Int) {
+        age = true
         Log.d(
             EditActivity::class.java.name,
             "OnRemoveClick   " + position + "clickPosition   " + clickPosition
@@ -860,7 +859,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                         val jsonObject = JSONObject(response.body().toString())
                         val jsonArray = jsonObject.getJSONArray("data")
 
-                        Log.d(EditActivity::class.java.name,"EditActivity_jsonArray  " + jsonArray)
+                        Log.d(EditActivity::class.java.name, "EditActivity_jsonArray  " + jsonArray)
                         typeList.clear()
                         typeListId.clear()
                         typeList.add("")
@@ -1018,6 +1017,10 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                 image3,
                 typeEmpty
             )
+            Log.d(
+                AppViewModel::class.java.name,
+                "EditActivity_1020      " + typeEmpty + "  age_1020  " + age
+            )
         } else {
             appViewModel.send_editActivity_Data(
                 security_key,
@@ -1044,10 +1047,40 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                 image3,
                 typeEmpty
             )
+            Log.d(
+                AppViewModel::class.java.name,
+                "EditActivity_1047      " + typeEmpty + " Age_1049  " + age
+            )
         }
-//        appViewModel.send_editActivity_Data(security_key, authKey, postID, "1", activityTypeId, et_shopName.text.toString(), et_activityName.text.toString(),
-//                et_description.text.toString(), et_phone.text.toString(), et_addressActivity.text.toString(), etWebsite.text.toString(), cityName, addressLatitude, addressLongitude, ageGroup.toString(),
-//                addEvent.toString(), countryCodee, image1, image2, image3, typeEmpty)
+        appViewModel.send_editActivity_Data(
+            security_key,
+            authKey,
+            postID,
+            "1",
+            activityTypeId,
+            et_shopName.text.toString(),
+            et_activityName.text.toString(),
+            et_description.text.toString(),
+            et_phone.text.toString(),
+            et_addressActivity.text.toString(),
+            edtAgeFrom.text.toString(),
+            edtAgeTo.text.toString(),
+            etWebsite.text.toString(),
+            cityName,
+            addressLatitude,
+            addressLongitude,
+            ageGroup.toString(),
+            addEvent.toString(),
+            countryCodee,
+            image1,
+            image2,
+            image3,
+            typeEmpty
+        )
+        Log.d(
+            AppViewModel::class.java.name,
+            "EditActivity_1074      " + typeEmpty + " age_1077  " + age
+        )
     }
 
 

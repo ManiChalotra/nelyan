@@ -1178,6 +1178,7 @@ class AppViewModel : ViewModel() {
     ) {
         when (typeEmpty) {
             "1" -> {
+                Log.d(AppViewModel::class.java.name,"AppViewModel_1181    ")
                 JsonPlaceHolder().editMyaddActivity(
                     securityKey,
                     authkey,
@@ -1216,6 +1217,7 @@ class AppViewModel : ViewModel() {
                     })
             }
             "2" -> {
+                Log.d(AppViewModel::class.java.name,"AppViewModel_1220    ")
                 JsonPlaceHolder().editMyaddActivitywithoutAge(
                     securityKey,
                     authkey,
@@ -1253,6 +1255,7 @@ class AppViewModel : ViewModel() {
                     })
             }
             "3" -> {
+                Log.d(AppViewModel::class.java.name,"AppViewModel_1258    ")
                 JsonPlaceHolder().editMyaddActivitywithoutEvent(
                     securityKey,
                     authkey,
@@ -1290,6 +1293,7 @@ class AppViewModel : ViewModel() {
                     })
             }
             "4" -> {
+                Log.d(AppViewModel::class.java.name,"AppViewModel_1296    ")
                 JsonPlaceHolder().editMyaddActivitywithoutAgeEvent(
                     securityKey,
                     authkey,

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:bind="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:bind="http://schemas.android.com/tools">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="model"
-            type="com.nelyanlive.chat.ChatData"/>
+            type="com.nelyanlive.chat.ChatData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,39 +18,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tvDate"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             setMessageListTime="@{model.created}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp"
-            android:gravity="center"
             android:visibility="@{model.dateShown ? View.VISIBLE : View.GONE}"
-            android:text=""
-            android:paddingBottom="@dimen/_2sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivSender"
+            setChatImage="@{model.senderImage}"
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:padding="3dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
-            setChatImage="@{model.senderImage}"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`chat`)}"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/placeholder"
             app:layout_constraintBottom_toBottomOf="@id/relativLeft"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvSenderName"
@@ -56,12 +57,12 @@
             android:layout_marginBottom="-10dp"
             android:background="@drawable/chattext"
             android:backgroundTint="@color/colorAccent"
-            android:gravity="center"
-            android:maxWidth="@dimen/_30sdp"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:gravity="center"
             android:includeFontPadding="false"
+            android:maxWidth="@dimen/_30sdp"
             android:maxLength="15"
+            android:maxLines="1"
             android:padding="1dp"
             android:text="@{model.senderName}"
             android:textAllCaps="true"
@@ -77,8 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/chat"
             android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/chat"
             app:layout_constraintBottom_toTopOf="@id/tvSenderTime"
             app:layout_constraintStart_toEndOf="@+id/ivSender"
             app:layout_constraintTop_toBottomOf="@id/tvDate">
@@ -87,14 +88,14 @@
                 android:id="@+id/Relativreplyr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="1dp"
                 android:background="@drawable/chat"
                 android:backgroundTint="@color/lightgrey"
-                android:layout_margin="1dp"
-                android:padding="@dimen/_2sdp"
                 android:clickable="true"
                 android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`replyclick`)}"
-                android:visibility="@{model.parentId.equals(`0`) ? View.GONE : View.VISIBLE}">
+                android:padding="@dimen/_2sdp"
+                android:visibility="@{model.parentId.equals(`0`) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tvReceiverRelplaymessageusername"
@@ -113,7 +114,6 @@
 
                 <TextView
                     android:id="@+id/tvReceiverRelplaymessage"
-                    bind:setChatMText="@{model.parentmessage}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -121,12 +121,13 @@
                     android:maxWidth="200dp"
                     android:minWidth="80dp"
                     android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`replyclick`)}"
-                    android:visibility="@{model.parentmessageType.equals(`0`) ? View.VISIBLE : View.GONE}"
                     android:text="@{model.parentmessage}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_8sdp"
+                    android:visibility="@{model.parentmessageType.equals(`0`) ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername"
+                    bind:setChatMText="@{model.parentmessage}" />
 
                 <ImageView
                     setChatMessages="@{model.parentmessage}"
@@ -142,16 +143,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                bind:setChatMText="@{model.message}"
                 android:id="@+id/tvSender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/Relativreplyr"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_gravity="center"
                 android:maxWidth="200dp"
-                android:textIsSelectable="true"
                 android:minWidth="80dp"
                 android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
                 android:paddingVertical="@dimen/_8sdp"
@@ -159,7 +155,13 @@
                 android:paddingEnd="@dimen/_2sdp"
                 android:text="@{model.message}"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textColorHighlight="@color/grey"
+                android:textIsSelectable="true"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Relativreplyr"
+                bind:setChatMText="@{model.message}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
@@ -180,22 +182,21 @@
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
-            android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
             android:src="@drawable/leftarrow"
+            android:visibility="@{model.isFlag.equals(``) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
         <TextView
             android:id="@+id/tvSenderTime"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             setMessageTime="@{model.created}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:textSize="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/relativLeft"
-            android:textSize="8dp"/>
-
+            app:layout_constraintStart_toStartOf="@id/relativLeft" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
