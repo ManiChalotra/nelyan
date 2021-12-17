@@ -117,11 +117,11 @@
                     android:includeFontPadding="false"
                     android:maxWidth="200dp"
                     android:minWidth="80dp"
+                    android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`replyclick`)}"
                     android:text="@{model.parentmessage}"
                     android:textColor="@color/black"
                     android:visibility="@{model.parentmessageType.equals(`0`) ? View.VISIBLE : View.GONE}"
                     android:textSize="@dimen/_8sdp"
-                    android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvReceiverRelplaymessageusername" />
 

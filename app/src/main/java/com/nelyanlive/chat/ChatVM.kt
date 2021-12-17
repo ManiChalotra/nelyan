@@ -88,10 +88,6 @@ class ChatVM : ViewModel() {
                             Intent(view.context, FullScreen::class.java).putExtra(
                                 "image", findpoz.toString()
                             ).putExtra("imagearry",listActivityimage))
-                        /*(view.context as Activity).startActivity(
-                            Intent(view.context, FullScreen::class.java)
-                                .putExtra("image", listChat[position].message)
-                        )*/
                     }
 
                     "delete" -> {

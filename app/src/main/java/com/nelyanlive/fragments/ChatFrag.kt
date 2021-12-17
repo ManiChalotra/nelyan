@@ -62,17 +62,16 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ChatFrag(
     var userlocation: String, var userlat: String,
-    var userlong: String, var ivBell: ImageView
-) : Fragment() {
-    var currentPage = 0
+    var userlong: String, var ivBell: ImageView) : Fragment() {
+    var currentPage=0
     val globalMessageList by lazy { ArrayList<ChatData>() }
     val globalMessageStoreList by lazy { ArrayList<ChatData>() }
     private var listner: CommunicationListner? = null
     lateinit var mContext: Context
     val groupChatVM: GroupChatVM by viewModels()
     lateinit var activityChatBinding: ActivityChatBinding
-    var paginationCheck = false
-    var recuclerviewsetOnPosition = 1
+    var paginationCheck=false
+    var recuclerviewsetOnPosition=1
     override fun onResume() {
         super.onResume()
         MyFirebaseMessagingService.myChatVisible = false
@@ -112,22 +111,28 @@ class ChatFrag(
         activityChatBinding.btnRegulation.setOnClickListener {
             activityChatBinding.editTextSearch.requestFocus()
         }
+        activityChatBinding.imageSelectedImage.setOnClickListener {
 
-        activityChatBinding.ivSend.setOnClickListener {
+            activityChatBinding.RelativSelectedImage.visibility=View.GONE
+
+        }
+
+        activityChatBinding.ivSend.setOnClickListener{
             if (activityChatBinding.RelativSelectedImage.visibility == View.VISIBLE) { // send image
                 activityChatBinding.relativProgress.visibility = View.VISIBLE
                 setImage(imgPath)
-            } else {
+            }
+            else
+            {
                 if (activityChatBinding.etMessage.text.toString().trim().isEmpty()) {
-                    Toast.makeText(
-                        context,
-                        getString(R.string.please_enter_message),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) { // send reply
+                    Toast.makeText(context, getString(R.string.please_enter_message), Toast.LENGTH_SHORT).show()
+                }
+                else if (activityChatBinding.relativRelpy.visibility == View.VISIBLE) { // send reply
                     groupChatVM.sendReplyChatMessage()
-                } else {
-                    groupChatVM.sendChatMessage()
+                }
+                else
+                {
+                    groupChatVM.sendChatMessage(activityChatBinding.etMessage.text.toString())
                     activityChatBinding.RelativSelectedImage.visibility = View.GONE
                 }
             }
@@ -190,7 +195,7 @@ class ChatFrag(
             .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
-                        activityChatBinding.relativProgress.visibility = View.GONE
+                        activityChatBinding.relativProgress.visibility=View.GONE
                         Log.e(
                             "observeGroupMessageApi",
                             "-------------" + Gson().toJson(response.body())
@@ -262,15 +267,16 @@ class ChatFrag(
                                     },
                                     json.getString("description"),
                                     json.getString("parentId"),
-                                    parentmessage, json.getString("parentmessageType")
+                                    parentmessage,json.getString("parentmessageType")
 
                                 )
                             )
                         }
 
                         if (groupChatVM.groupId.isNotEmpty()) setNotification(groupChatVM.groupId)
-                        if (listData.isNotEmpty()) {
-                            paginationCheck = true
+                        if (listData.isNotEmpty())
+                        {
+                            paginationCheck=true
                             globalMessageList.clear()
                             groupChatVM.listChat.clear()  // swapping
                             globalMessageList.addAll(listData)// fist time 1-10
@@ -279,14 +285,18 @@ class ChatFrag(
                             groupChatVM.listChat.addAll(globalMessageList)
                             groupChatVM.groupChatAdapter.addItems(groupChatVM.listChat)
                             activityChatBinding.rvChat.smoothScrollToPosition(groupChatVM.listChat.size - recuclerviewsetOnPosition)
-                            recuclerviewsetOnPosition += 19
+                            recuclerviewsetOnPosition+=29
                             groupChatVM.noDataMessage.set("")
                         } else {
-                            try {
-                                if (globalMessageStoreList.size == 0) {
+                            try
+                            {
+                                if(globalMessageStoreList.size==0)
+                                {
                                     groupChatVM.noDataMessage.set("No chat found")
                                 }
-                            } catch (e: Exception) {
+                            }
+                            catch (e:Exception)
+                            {
                                 groupChatVM.noDataMessage.set("No chat found")
                             }
 
@@ -295,14 +305,13 @@ class ChatFrag(
                                     list[0].locality
                                 } else {
                                     userlocation
-                                }
-                            )
+                                })
                         }
                         globalMessageStoreList.clear()
                         globalMessageStoreList.addAll(globalMessageList)
                     }
                 } else {
-                    activityChatBinding.relativProgress.visibility = View.GONE
+                    activityChatBinding.relativProgress.visibility=View.GONE
                     Toast.makeText(
                         mContext,
                         getString(R.string.something_went_wrong),
@@ -313,18 +322,22 @@ class ChatFrag(
                 }
             })
 
-        activityChatBinding.rvChat.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        activityChatBinding.rvChat.addOnScrollListener(object : RecyclerView.OnScrollListener()
+        {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int)
+            {
                 super.onScrollStateChanged(recyclerView, newState)
-                Log.e("positionLast", "DDDDDDD")
+                Log.e("positionLast","DDDDDDD")
 
-                if (!recyclerView.canScrollVertically(-1)) {
-                    if (paginationCheck) {
-                        paginationCheck = false
-                        activityChatBinding.relativProgress.visibility = View.VISIBLE
+                if (!recyclerView.canScrollVertically(-1))
+                {
+                    if(paginationCheck)
+                    {
+                        paginationCheck=false
+                        activityChatBinding.relativProgress.visibility=View.VISIBLE
                         currentPage++
                         callgetMessageApi()
-                        Log.e("positionLast", "listChat.size.toString()" + currentPage)
+                        Log.e("positionLast", "listChat.size.toString()"+currentPage)
                     }
                 }
             }
@@ -822,7 +835,8 @@ class ChatFrag(
             })
     }
 
-    fun callgetMessageApi() {
+    fun callgetMessageApi()
+    {
         if (checkIfHasNetwork((mContext as Activity))) {
             authorization = AllSharedPref.restoreString(mContext, "auth_key")
             appViewModel.groupMessageApiData(
@@ -830,10 +844,12 @@ class ChatFrag(
                     list[0].locality
                 } else {
                     userlocation
-                }, currentPage.toString(), "20"
+                }, currentPage.toString(), "30"
             )
-            Log.e("ScrollCheck", "$$$$$$$$$$$$$$$" + currentPage.toString())
-        } else {
+            Log.e("ScrollCheck","$$$$$$$$$$$$$$$"+currentPage.toString())
+        }
+        else
+        {
             showSnackBar((mContext as Activity), getString(R.string.no_internet_error))
         }
 

@@ -32,10 +32,10 @@
                 android:drawableEnd="@drawable/places_ic_search"
                 android:drawableTint="@color/white"
                 android:fontFamily="@font/semibold"
+                android:visibility="@{groupChatVM.searchVisible.equals(`true`)? View.GONE : View.VISIBLE}"
                 android:onClick="@{(view)->groupChatVM.onClick(view,`searchoption`)}"
                 android:text="@string/discussions_and_tips"
                 android:textColor="@color/white"
-                android:visibility="@{groupChatVM.searchVisible.equals(`true`)? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,12 +56,15 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:background="@android:color/transparent"
-                    android:focusable="true"
                     android:hint="Search"
                     android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    android:focusable="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
-                    android:textSize="@dimen/_12sdp"></EditText>
+                    android:textSize="@dimen/_12sdp">
+                </EditText>
 
                 <ImageView
                     android:id="@+id/imageSearch"
@@ -94,11 +97,12 @@
             android:id="@+id/RelativSelectedImage"
             android:layout_width="@dimen/_110sdp"
             android:layout_height="@dimen/_110sdp"
+            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintStart_toStartOf="@+id/rlBottom"
             android:layout_marginBottom="-5dp"
             android:background="@color/white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/rlBottom"
-            app:layout_constraintStart_toStartOf="@+id/rlBottom">
+            android:clickable="true"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageSelected"

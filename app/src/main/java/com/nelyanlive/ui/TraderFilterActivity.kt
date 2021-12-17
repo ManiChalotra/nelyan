@@ -283,16 +283,16 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         .putExtra("typeId", typeId)
                         .putExtra("location", et_location.text.toString().trim())
                         .putExtra("SelectValuetrade", SelectValue)
-
+                        .putExtra("screentrade", "screentrade")
                     setResult(1215, intent)
                     onBackPressed()
                 }
             }
             R.id.tvFilterclear -> {
-                val i = Intent(this, TraderListingActivity::class.java)
-                i.putExtra("screentrade", "screentrade")
+//                val i = Intent(this, TraderListingActivity::class.java)
+//                i.putExtra("screentrade", "screentrade")
                 ClearPreference()
-                startActivity(i)
+//                startActivity(i)
                 finish()
 
             }

@@ -29,29 +29,33 @@ import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
 
-class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAdapter.OnHomeRecyclerViewItemClickListner{
+class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope,
+    MyHomeAdapter.OnHomeRecyclerViewItemClickListner {
 
     val appViewModel: AppViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application).create(AppViewModel::class.java)
+        ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+            .create(AppViewModel::class.java)
     }
 
     private val job = Job()
 
-    private  var listener:CommunicationListner?= null
+    private var listener: CommunicationListner? = null
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
     private val dataList by lazy { ArrayList<HomeModal>() }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onResume() {
         super.onResume()
-        if(listener!= null){
+        if (listener != null) {
             listener!!.onFargmentActive(1)
         }
     }
@@ -59,9 +63,10 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initialize()
-           //hideKeyboard
-            val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        //hideKeyboard
+        val inputManager =
+            view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
         val authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
         Log.d("authorization", "---------------$authKey")
@@ -76,63 +81,76 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
     }
 
     private fun checkMvvmResponse() {
-        appViewModel.observeHomeCategoryResponse()!!.observe(requireActivity(), androidx.lifecycle.Observer { response ->
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
-                    homeFargProgressBar?.hideProgressBar()
-                    Log.d("homeCategoryResponse", "-------------" + Gson().toJson(response.body()))
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-                    val listArray = jsonObject.getJSONArray("data")
-                    val mSizeOfData = listArray.length()
+        appViewModel.observeHomeCategoryResponse()!!
+            .observe(requireActivity(), androidx.lifecycle.Observer { response ->
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
+                        homeFargProgressBar?.hideProgressBar()
+                        Log.d(
+                            "homeCategoryResponse",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+                        val listArray = jsonObject.getJSONArray("data")
+                        val mSizeOfData = listArray.length()
 
-                    dataList.clear()
+                        dataList.clear()
 
-                    for (i in 0 until mSizeOfData) {
-                        val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name").toString()
-                        val image = jsonObject.getJSONArray("data").getJSONObject(i).get("image").toString()
-                        dataList.add(HomeModal(image, name))
+                        for (i in 0 until mSizeOfData) {
+                            val name = jsonObject.getJSONArray("data").getJSONObject(i).get("name")
+                                .toString()
+                            val image =
+                                jsonObject.getJSONArray("data").getJSONObject(i).get("image")
+                                    .toString()
+                            dataList.add(HomeModal(image, name))
+                        }
+
+                        rv_home?.adapter =
+                            MyHomeAdapter(requireActivity(), dataList, this@HomeFragment)
                     }
-
-                    rv_home?.adapter = MyHomeAdapter(requireActivity(), dataList, this@HomeFragment)
+                } else {
+                    ErrorBodyResponse(response, requireActivity(), homeFargProgressBar)
                 }
-            } else {
-                ErrorBodyResponse(response, requireActivity(), homeFargProgressBar)
-            }
-        })
+            })
 
         appViewModel.getException()!!.observe(requireActivity(), androidx.lifecycle.Observer {
             try {
                 requireActivity().myCustomToast(it)
                 homeFargProgressBar?.hideProgressBar()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            catch (e:Exception)
-            {e.printStackTrace()}
         })
     }
 
     override fun onItemHomeClickListner(list: java.util.ArrayList<HomeModal>, position: Int) {
-        when(position){
+        when (position) {
 
-            0->{
+            0 -> {
                 requireActivity().OpenActivity(ActivitiesListActivity::class.java)
                 {
-                    putString("type","1")
+                    putString("type", "1")
                 }
             }
 
-            1->{
+            1 -> {
                 requireActivity().OpenActivity(HomeChildCareListActivity::class.java)
-                {putString("type","2")}
+                { putString("type", "2") }
             }
-            2->{
+            2 -> {
                 val i = Intent(requireActivity(), TraderListingActivity::class.java)
-                i.putExtra("type","3")
+                i.putExtra("type", "3")
                 requireActivity().startActivity(i)
             }
 
-            3->{
-                requireActivity().OpenActivity(TraderListingActivity::class.java){putString("type","4")}
+            3 -> {
+                requireActivity().OpenActivity(TraderListingActivity::class.java) {
+                    putString(
+                        "type",
+                        "4"
+                    )
+                }
             }
 
         }
@@ -151,11 +169,11 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope , MyHomeAd
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is CommunicationListner){
+        if (context is CommunicationListner) {
             listener = context
-        }else{
+        } else {
 
-throw RuntimeException("Home Fragment not Attached")
+            throw RuntimeException("Home Fragment not Attached")
         }
     }
 

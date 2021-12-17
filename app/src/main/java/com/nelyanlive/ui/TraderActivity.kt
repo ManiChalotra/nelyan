@@ -835,21 +835,45 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 myCustomToast(getString(R.string.select_day_previous))
             }
             dayTimeModelArrayList[list.size - 1].firstStarttime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_morning_time_previous))
+//                myCustomToast(getString(R.string.select_morning_time_previous))
+                if (dayTimeModelArrayList[list.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[list.size - 1].secondEndtime!!.isNotEmpty()) {
+                    dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
+                    dayTimeRepeatAdapter.notifyDataSetChanged()
+                } else {
+                    myCustomToast(getString(R.string.select_morning_time_previous))
+                }
 
             }
             dayTimeModelArrayList[list.size - 1].firstEndtime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_morning_time_previous))
+//                myCustomToast(getString(R.string.select_morning_time_previous))
 
+                if (dayTimeModelArrayList[list.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[list.size - 1].secondEndtime!!.isNotEmpty()) {
+                    dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
+                    dayTimeRepeatAdapter.notifyDataSetChanged()
+                } else {
+                    myCustomToast(getString(R.string.select_morning_time_previous))
+                }
             }
             dayTimeModelArrayList[list.size - 1].secondStarttime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
-
+//                myCustomToast(getString(R.string.select_evening_time_previous))
+                if (dayTimeModelArrayList[list.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[list.size - 1].firstEndtime!!.isNotEmpty()) {
+                    dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
+                    dayTimeRepeatAdapter.notifyDataSetChanged()
+                } else {
+                    myCustomToast(getString(R.string.select_evening_time_previous))
+                }
             }
             dayTimeModelArrayList[list.size - 1].secondEndtime.isNullOrEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
+//                myCustomToast(getString(R.string.select_evening_time_previous))
+                if (dayTimeModelArrayList[list.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[list.size - 1].firstEndtime!!.isNotEmpty()) {
+                    dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
+                    dayTimeRepeatAdapter.notifyDataSetChanged()
+                } else {
+                    myCustomToast(getString(R.string.select_evening_time_previous))
+                }
 
             }
+
             else -> {
                 dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeRepeatAdapter.notifyDataSetChanged()

@@ -1,11 +1,10 @@
 package com.nelyanlive.chat
 
 import android.content.res.ColorStateList
-import android.text.Html
+import android.graphics.Color
 import android.text.util.Linkify
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import com.nelyanlive.R
 import com.nelyanlive.utils.from_admin_image_base_URl
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.chat_text_right.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,11 +55,22 @@ object BindingAdapter {
             iv.visibility = View.GONE
         } else {
             if (data.readStatus == "0") {
-                iv.setImageDrawable(ContextCompat.getDrawable(iv.context, R.drawable.blue_double_check))
-                iv.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(iv.context, R.color.grey))
+                iv.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iv.context,
+                        R.drawable.blue_double_check
+                    )
+                )
+                iv.imageTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(iv.context, R.color.grey))
 
             } else {
-                iv.setImageDrawable(ContextCompat.getDrawable(iv.context, R.drawable.blue_double_check))
+                iv.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        iv.context,
+                        R.drawable.blue_double_check
+                    )
+                )
             }
         }
 
@@ -71,7 +80,7 @@ object BindingAdapter {
     @JvmStatic
     fun setMessageTime(tvText: TextView, str: String) {
 
-        if (str.isNotEmpty()&&!str.equals("null")) {
+        if (str.isNotEmpty() && !str.equals("null")) {
             val data1 = Date(str.toLong() * 1000)
             val data2 = Date()
             data2.hours = 0
@@ -178,12 +187,15 @@ object BindingAdapter {
 
         if (str.isFlag == "") {
             if (str.readStatus == "1") {
-                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.blue))
+                tv.compoundDrawableTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.blue))
             } else {
-                tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.lightgrey))
+                tv.compoundDrawableTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.lightgrey))
             }
         } else {
-            tv.compoundDrawableTintList = ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.grey))
+            tv.compoundDrawableTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(tv.context, R.color.grey))
         }
 
 
@@ -200,33 +212,14 @@ object BindingAdapter {
 
 
             Picasso.get().load(from_admin_image_base_URl + str).resize(100, 100)
-                .placeholder(ContextCompat.getDrawable(
-                    ivImage.context,
-                    R.drawable.placeholder
-                )!!).into(ivImage)
+                .placeholder(
+                    ContextCompat.getDrawable(
+                        ivImage.context,
+                        R.drawable.placeholder
+                    )!!
+                ).into(ivImage)
 
         } else {
-            ivImage.setImageDrawable(ContextCompat.getDrawable(ivImage.context, R.drawable.placeholder))
-        }
-    }
-
-    @BindingAdapter(value = ["setChatMessages"], requireAll = false)
-    @JvmStatic
-    fun setChatMessages(
-        ivImage: ImageView,
-        str: String?)
-    {
-        if (!str.isNullOrEmpty())
-        {
-
-            Picasso.get().load(from_admin_image_base_URl + str).placeholder(
-                ContextCompat.getDrawable(
-                    ivImage.context, R.drawable.placeholder
-                )!!
-            ).into(ivImage)
-
-        } else
-        {
             ivImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     ivImage.context,
@@ -235,18 +228,41 @@ object BindingAdapter {
             )
         }
     }
+
+    @BindingAdapter(value = ["setChatMessages"], requireAll = false)
+    @JvmStatic
+    fun setChatMessages(
+        ivImage: ImageView,
+        str: String?
+    ) {
+        if (!str.isNullOrEmpty()) {
+
+            Picasso.get().load(from_admin_image_base_URl + str).placeholder(
+                ContextCompat.getDrawable(
+                    ivImage.context, R.drawable.placeholder
+                )!!
+            ).into(ivImage)
+
+        } else {
+            ivImage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    ivImage.context,
+                    R.drawable.placeholder
+                )
+            )
+        }
+    }
+
     @BindingAdapter(value = ["bind:setChatMText"], requireAll = false)
     @JvmStatic
     fun setChatMText(
         txt: TextView,
-        str: String?) = if (!str.isNullOrEmpty())
-    {
+        str: String?
+    ) = if (!str.isNullOrEmpty()) {
         txt.text = str
         Linkify.addLinks(txt, Linkify.ALL)
-
-    }
-    else
-    {
+        txt.setLinkTextColor(Color.parseColor("#DA26A0CD"))
+    } else {
     }
 
 

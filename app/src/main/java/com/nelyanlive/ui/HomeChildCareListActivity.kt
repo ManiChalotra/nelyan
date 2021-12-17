@@ -271,7 +271,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
             } else {
-                finish()
+                checkMvvmResponse()
             }
         }
     }

@@ -287,7 +287,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
             } else {
-                finish()
+                checkMvvmResponse()
             }
         }
     }

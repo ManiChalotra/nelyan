@@ -11,11 +11,11 @@
     <ImageView
         android:id="@+id/detailsimg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:scaleType="centerCrop"
         android:src="@mipmap/no_image_placeholder" />
-</androidx.cardview.widget.CardView><!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+</androidx.cardview.widget.CardView>
+    <!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
     <!--    android:layout_width="match_parent"-->
     <!--    android:layout_height="wrap_content"-->

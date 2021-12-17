@@ -3,6 +3,7 @@ package com.nelyanlive.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.fullscreen.FullScreen
+import com.nelyanlive.modals.postDetails.Activityimage
 import com.nelyanlive.modals.traderPostDetails.TraderProduct
 import com.nelyanlive.utils.image_base_URl
 import kotlinx.android.synthetic.main.item_traders_products.view.*
@@ -44,10 +46,39 @@ class TradersProductListAdapter(var context: Context, var traderProductList: Arr
             tvProductPrice.text = list[position].price + " €"
 
             image.setOnClickListener {
+
+                val listActivityimage = ArrayList<Activityimage>()
+                listActivityimage.clear()
+                var totalimages=0
+                var findpoz=0
+
+                for (i in 0 until list.size)
+                {
+
+                    totalimages++
+                    Log.e("checkimage","==="+ list[i].image)
+                    listActivityimage.add(
+                        Activityimage(0,
+                            list[i].id.toInt(), image_base_URl +list[i].image.toString(), 1)
+                    )
+
+                    if (list[i].image.equals(list[position].image)) // Image
+                    {
+                        findpoz=totalimages
+                    }
+                }
+
                 (image.context as Activity).startActivity(
-                    Intent(image.context, FullScreen::class.java)
-                    .putExtra("productImage",image_base_URl+list[position].image))
+                    Intent(image.context, FullScreen::class.java).putExtra(
+                        "image", findpoz.toString()
+                    ).putExtra("imagearry",listActivityimage))
+
+
+                /*  (image.context as Activity).startActivity(
+                      Intent(image.context, FullScreen::class.java)
+                      .putExtra("productImage",image_base_URl+list[position].image))*/
             }
+
         }
     }
 }

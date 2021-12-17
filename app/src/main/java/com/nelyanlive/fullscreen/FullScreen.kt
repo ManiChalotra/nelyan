@@ -3,13 +3,10 @@ package com.nelyanlive.fullscreen
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.adapter.DetailsImageAdapter
 import com.nelyanlive.modals.postDetails.Activityimage
-import com.nelyanlive.utils.from_admin_image_base_URl
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_full_screen.*
 import java.util.ArrayList
 
@@ -23,9 +20,8 @@ class FullScreen : AppCompatActivity() {
 
         listActivityimage = intent.getSerializableExtra("imagearry") as ArrayList<Activityimage>
 
-        val ad = DetailsImageAdapter(this, listActivityimage)
-        rv_activties_images_full.getLayoutManager()!!
-            .scrollToPosition(intent.getStringExtra("image")!!.toInt() - 1)
+        val ad = DetailsImageAdapter(this, listActivityimage,"Fullscreen")
+        rv_activties_images_full.getLayoutManager()!!.scrollToPosition(intent.getStringExtra("image")!!.toInt() - 1)
 
         rv_activties_images_full!!.adapter = ad
         indicator_full!!.attachToRecyclerView(rv_activties_images_full!!)

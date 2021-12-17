@@ -255,7 +255,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                             if (maxage.isEmpty()) {
                                                 myCustomToast("Please select age to")
                                             } else {
-                                                if (minage > maxage) {
+                                                if (maxage < minage) {
                                                     myCustomToast("age to should be greater than age from")
                                                 } else {
                                                     if (et_addressActivity.text.toString()
@@ -735,6 +735,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
             else -> {
                 list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
                 ageGroupRepeatAdapter.notifyDataSetChanged()
+                /* if (listAge[list.size - 1].ageFrom!! > listAge[list.size - 1].ageTo!!) {
+                     myCustomToast("Age To should be greater than Age From")
+                 } else {
+                     list.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
+                     ageGroupRepeatAdapter.notifyDataSetChanged()
+                 }*/
             }
         }
     }

@@ -253,9 +253,10 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                         tv_activitydesc.text =
                             jsonObject.getJSONObject("data").get("description").toString()
-
-
+                        
                         tvWebsite.text = jsonObject.getJSONObject("data").get("website").toString()
+                        txt_minage.text = jsonObject.getJSONObject("data").get("minAge").toString()
+                        txt_maxage.text = jsonObject.getJSONObject("data").get("maxAge").toString()
 
                         if (jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
                             tv_phn.visibility = View.VISIBLE
@@ -302,7 +303,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         }
 
                         if (mSizeOfData != 0) {
-                            val ad = DetailsImageAdapter(this, listActivityimage)
+                            val ad = DetailsImageAdapter(this, listActivityimage, "other")
                             rvActivtiesImages!!.adapter = ad
                             indicator!!.attachToRecyclerView(rvActivtiesImages!!)
                         }
