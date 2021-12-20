@@ -159,9 +159,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/cityChat"
             android:textSize="@dimen/_10sp"
+            android:gravity="center"
             android:textColor="@color/colorAccent"
             android:id="@+id/tv_chatTab"
-            android:layout_marginBottom="@dimen/_3sdp"
 
             />
 

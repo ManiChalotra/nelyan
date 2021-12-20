@@ -344,16 +344,16 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                     if (edtAgeFrom.text.toString()
                                             .isEmpty() && edtAgeTo.text.toString().isEmpty()
                                     ) {
-                                        myCustomToast("Please select age")
+                                        myCustomToast(getString(R.string.select_age_text))
                                     } else {
                                         if (edtAgeFrom.text.toString().isEmpty()) {
-                                            myCustomToast("Please select age from")
+                                            myCustomToast(getString(R.string.select_age_from))
                                         } else {
                                             if (edtAgeTo.text.toString().isEmpty()) {
-                                                myCustomToast("Please select age to")
+                                                myCustomToast(getString(R.string.select_age_to))
                                             } else {
                                                 if (edtAgeFrom.text.toString() > edtAgeTo.text.toString()) {
-                                                    myCustomToast("age to should be greater than age from")
+                                                    myCustomToast(getString(R.string.ageto_fromage_text))
                                                 } else {
 
                                                     var ageErrorString = ""

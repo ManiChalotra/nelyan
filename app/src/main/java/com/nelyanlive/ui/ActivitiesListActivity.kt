@@ -185,7 +185,6 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                     locality = list[0].locality
                     Log.e("location_changed", "==dasfasdf=$latitude==$longitude===${list[0]}")
 
-
                     Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
                     if (latitude != "0.0") {
                         tv_userCityOrZipcode.text = locality

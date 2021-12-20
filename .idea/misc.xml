@@ -121,7 +121,7 @@
         <entry key="app/src/main/res/layout/row_image_slider.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/row_myevent.xml" value="0.22" />
         <entry key="app/src/main/res/layout/row_spinner_custom.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/row_upcoming_details.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/row_upcoming_details.xml" value="0.2" />
         <entry key="app/src/main/res/layout/size_customspinner.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/tookbar.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/trader_customspinner.xml" value="0.18489583333333334" />
@@ -129,6 +129,7 @@
         <entry key="app/src/main/res/layout/view_custom_marker.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/menu/activity_drawer_drawer.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/menu/bottom_navigation_home_menu.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/menu/popupmenu.xml" value="0.18020833333333333" />
       </map>
     </option>
   </component>

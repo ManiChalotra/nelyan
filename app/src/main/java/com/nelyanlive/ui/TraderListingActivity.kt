@@ -295,10 +295,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
         Log.d("TraderActivity", "TraderActivity_309   ")
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            Log.d("TraderActivity", "TraderActivity_311  ")
 
             if (resultCode == 1215) {
-                Log.d("TraderActivity", "TraderActivity_1215   ")
 //                tvFilter.text = getString(R.string.clear_filter)
                 tvFilter.text = getString(R.string.clear_filter)
                 val returnName = data!!.getStringExtra("name")
@@ -362,11 +360,9 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
             } else {
                 checkMvvmResponse()
 
-                Log.d("TraderActivity", "TraderActivity_379   ")
             }
 
         } else {
-            Log.d("TraderActivity", "TraderActivity_395   ")
         }
     }
 

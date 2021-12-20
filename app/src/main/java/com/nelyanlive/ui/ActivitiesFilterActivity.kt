@@ -138,8 +138,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             "45KM",
             "50KM"
         )
-        val kmValue =
-            arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
+        val kmValue = arrayOf<String?>("", "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50")
 
         val adapter1: ArrayAdapter<*> = ArrayAdapter<Any?>(
             this, R.layout.size_customspinner, km
@@ -283,13 +282,11 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 Log.e("checkmyactivity", "-CCCCC_id ---" + id)
                             }
 
-
                             category.add(name)
                             categoryId.add(id)
 
                         }
-                        val arrayAdapte1 =
-                            ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
+                        val arrayAdapte1 = ArrayAdapter(this, R.layout.customspinner, category as List<Any?>)
                         traderType.adapter = arrayAdapte1
 //                        traderType.setSelection(poz)
 
@@ -317,13 +314,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                         "Selected_traderType    " + traderType.getSelectedItem()
                                             .toString()
                                     )
-//                                    SelectValue = traderType.getSelectedItem()
-//                                        .toString()
-//                                    AllSharedPref.save(
-//                                        this,
-//                                        "selecttype",
-//                                        "HelloIndia"
-//                                    )
                                     typeId = if (position != 0) {
                                         categoryId[position]!!
                                     } else {

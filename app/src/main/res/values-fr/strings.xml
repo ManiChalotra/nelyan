@@ -38,7 +38,6 @@
     <string name="lorem_ipsum">Lorem ipsum</string>
     <string name="logout">Se déconnecter</string>
 
-
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="strok" />
@@ -47,21 +46,21 @@
     <string name="permissions_is_mandatory">Autorisations obligatoires</string>
     <string name="ok">Ok</string>
 
-
     <string name="go_to_settings_to_give_permissions">Allez dans les paramètres pour donner des autorisations car les autorisations sont obligatoires</string>
     <string name="contactUs">Nous contacter</string>
     <string name="Email">Email</string>
     <string name="Comment">Commentaire</string>
     <string name="nursery">Crèche</string>
-<!--    <string name="activity">Activité / événement </string>-->
-    <string name="activity">Activités, associations, événements  </string>
+    <!--    <string name="activity">Activité / événement </string>-->
+    <string name="activity">Activités, associations, événements</string>
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
     <string name="babySitter">Baby-sitter</string>
     <string name="traderArtisans">Commerçant</string>
     <string name="publisher">Publier</string>
     <string name="myMessage">Messages</string>
-    <string name="cityChat">Discussion</string>
+    <!--    <string name="cityChat">Discussion</string>-->
+    <string name="cityChat">Discussions by Bons plans</string>
     <string name="event">Événements</string>
     <string name="description1">Description:</string>
     <string name="name_of_nurserie">Name of Nurserie</string>
@@ -246,7 +245,7 @@
     <string name="switch_as_a_professional">Changer en tant que professionnel</string>
     <string name="switch_as_a_consultant">Changer en tant qu\'utilisateur</string>
     <string name="ads">Annonces</string>
-<!--    <string name="events">Événements</string>-->
+    <!--    <string name="events">Événements</string>-->
     <string name="events">Événements à venir</string>
     <string name="sports">Sports</string>
     <string name="dance">Dance</string>
@@ -300,9 +299,9 @@
     <string name="press_again_to_exit">Appuyez à nouveau pour quitter l\'application.</string>
     <string name="publish_caps">Publier</string>
     <string name="facebook_have_not_installed">Facebook n\'a pas été installé.</string>
-<!--    <string name="clear_filter">Supprimer le filtre</string>-->
+    <!--    <string name="clear_filter">Supprimer le filtre</string>-->
     <string name="clear_filter_txt">Supprimer le filtre</string>
-    <string name="clear_filter">modifiy</string>
+    <string name="clear_filter">modifier</string>
     <string name="marked_as_favourite">Vous avez marqué ce post comme favori</string>
     <string name="removed_from_favourite">Vous avez supprimé ce message de vos favoris</string>
     <string name="data_not_loaded">Les données ne sont pas encore chargées</string>
@@ -381,13 +380,19 @@
     <string name="cat_maternal">Assistante maternelle</string>
     <string name="cat_baby_sitter">Baby-sitter</string>
     <string name="update_complete">Mise à jour terminée</string>
-    <string name="discussions_and_tips">discussions et bons plans</string>
+    <!--    <string name="discussions_and_tips">discussions et bons plans</string>-->
+    <string name="discussions_and_tips">BONS PLANS ET PROMOTIONS</string>
     <string name="update">Mettez à jour maintenant</string>
     <string name="a_new_version_of_nelyan_application_is_available">Une nouvelle version de l\'application Nelyan est disponible sur play store</string>
     <string name="update_available">Mise à jour disponible</string>
 
     <string name="event_type">Type d’événement</string>
     <string name="selecttime_txt">Please select time</string>
+
+    <string name="select_age_text">Please select Age</string>
+    <string name="select_age_from">Please select age From</string>
+    <string name="select_age_to">Please select age To</string>
+    <string name="ageto_fromage_text">age to should be greater than age from</string>
 
     <string name="selectmorningtime_txt">Please select Morning First Time</string>
     <string name="selectmorninglasttime_txt">Please select Morning Last Time</string>

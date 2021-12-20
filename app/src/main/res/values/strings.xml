@@ -302,7 +302,7 @@
     <string name="publish_caps">PUBLISH</string>
     <string name="facebook_have_not_installed">Facebook have not been installed.</string>
     <!--    <string name="clear_filter">Clear Filter</string>-->
-    <string name="clear_filter">Modifier</string>
+    <string name="clear_filter">modify the filter</string>
     <string name="marked_as_favourite">You marked this post as your favourite</string>
     <string name="removed_from_favourite">You removed this post from your favourite</string>
     <string name="data_not_loaded">Data not loaded yet</string>
@@ -391,6 +391,10 @@
     <string name="clear_filter_txt">Clear Filter</string>
     <string name="selecttime_txt">Please select time</string>
 
+    <string name="select_age_text">Please select Age</string>
+    <string name="select_age_from">Please select age From</string>
+    <string name="select_age_to">Please select age To</string>
+    <string name="ageto_fromage_text">age to should be greater than age from</string>
     <string name="selectmorningtime_txt">Please select Morning First Time</string>
     <string name="selectmorninglasttime_txt">Please select Morning Last Time</string>
     <string name="selecteveningtime_txt">Please select Evening First Time</string>

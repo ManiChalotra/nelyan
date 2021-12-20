@@ -21,11 +21,34 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
-        <TextView
-            style="@style/HeaderText"
+        <!--        <TextView-->
+        <!--            style="@style/HeaderText"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:text="@string/activity"-->
+        <!--            android:textColor="@color/black" />-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/activity"
-            android:textColor="@color/black" />
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_centerInParent="true"
+                android:text="@string/activity"
+                android:layout_gravity="center"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_userCityOrZipcodeEvent"
+                style="@style/HeaderText"
+                android:layout_gravity="center"
+                android:text=""
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivFilter"

@@ -21,12 +21,26 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/left_arrow" />
 
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvName"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            style="@style/HeaderText"-->
+        <!--            android:layout_toRightOf="@+id/ivBack"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:text="@string/activity"-->
+        <!--            android:textColor="@color/black" />-->
+
         <TextView
             android:id="@+id/tvName"
-            style="@style/HeaderText"
+            style="@style/HeaderTextActivity"
             android:layout_centerInParent="true"
-            android:text="@string/activity"
-            android:textColor="@color/black" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toRightOf="@+id/ivBack"
+            android:gravity="center"
+            android:text="@string/activity" />
+
     </RelativeLayout>
 
     <com.tuyenmonkey.mkloader.MKLoader

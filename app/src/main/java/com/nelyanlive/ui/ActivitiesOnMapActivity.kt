@@ -2,6 +2,8 @@ package com.nelyanlive.ui
 
 import android.content.Context
 import android.graphics.*
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -22,6 +24,7 @@ import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.utils.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_activities_map.*
+import kotlinx.android.synthetic.main.fragment_activity_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,6 +32,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, CoroutineScope,
@@ -41,6 +45,7 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
     private var listType: String? = null
     var latitude = ""
     var longitude = ""
+    private var locality: String = ""
     private lateinit var markerView: View
     private var mMap: GoogleMap? = null
     var lat = 0.0
@@ -181,6 +186,31 @@ class ActivitiesOnMapActivity : CheckLocationActivity(), OnMapReadyCallback, Cor
         ivFilter!!.setOnClickListener { onBackPressed() }
 
 
+        launch(Dispatchers.Main.immediate) {
+            latitude =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                    .first()
+            longitude =
+                dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                    .first()
+
+            val geocoder = Geocoder(this@ActivitiesOnMapActivity, Locale.getDefault())
+            var list: List<Address>
+            Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
+
+            if (latitude.toDouble() != 0.0) {
+                list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                locality = list[0].locality
+                Log.e("location_changed", "==dasfasdf=$latitude==$longitude===${list[0]}")
+
+                Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
+                if (latitude != "0.0") {
+                    tv_userCityOrZipcodeEvent.text = locality
+
+                }
+            }
+        }
 
         markerView =
             (mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(

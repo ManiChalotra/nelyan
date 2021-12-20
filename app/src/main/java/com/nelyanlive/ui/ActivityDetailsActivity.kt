@@ -253,7 +253,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         tv_city.text = jsonObject.getJSONObject("data").get("city").toString()
                         tv_activitydesc.text =
                             jsonObject.getJSONObject("data").get("description").toString()
-                        
+
                         tvWebsite.text = jsonObject.getJSONObject("data").get("website").toString()
                         txt_minage.text = jsonObject.getJSONObject("data").get("minAge").toString()
                         txt_maxage.text = jsonObject.getJSONObject("data").get("maxAge").toString()
@@ -268,8 +268,10 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                             tv_phn.visibility = View.GONE
                             tv_phntxt.visibility = View.GONE
                         }
-                        tv_activitydesc.text = jsonObject.getJSONObject("data").get("description").toString()
-                        tv_actvity_address.text = jsonObject.getJSONObject("data").get("address").toString()
+                        tv_activitydesc.text =
+                            jsonObject.getJSONObject("data").get("description").toString()
+                        tv_actvity_address.text =
+                            jsonObject.getJSONObject("data").get("address").toString()
 
                         longitude = jsonObject.getJSONObject("data").get("longitude").toString()
                         latitude = jsonObject.getJSONObject("data").get("latitude").toString()
@@ -296,7 +298,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                                 Activityimage(
                                     activityId.toString().toInt(),
                                     id.toString().toInt(),
-                                    image_base_URl+images.toString(),
+                                    image_base_URl + images.toString(),
                                     mediaType.toString().toInt()
                                 )
                             )
@@ -401,6 +403,8 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                                 val status = model.get("status")
                                 val createdAt = model.get("createdAt")
                                 val updatedAt = model.get("updatedAt")
+                                val minAge = model.get("minAge")
+                                val maxAge = model.get("maxAge")
                                 val listArrayEventsTimings: JSONArray =
                                     jsonObject.getJSONObject("data").getJSONArray("events")
                                         .getJSONObject(k).getJSONArray("eventstimings")
@@ -474,7 +478,9 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                                         price.toString(),
                                         status.toString().toInt(),
                                         updatedAt.toString(),
-                                        userId.toString().toInt()
+                                        userId.toString().toInt(),
+                                        minAge.toString(), maxAge.toString()
+
                                     )
                                 )
                             }

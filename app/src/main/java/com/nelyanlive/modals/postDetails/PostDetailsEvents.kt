@@ -15,5 +15,7 @@ data class PostDetailsEvents(
         val price: String,
         val status: Int,
         val updatedAt: String,
-        val userId: Int
+        val userId: Int,
+        val minAge: String,
+        val maxAge: String
 )
