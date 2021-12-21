@@ -338,7 +338,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             )
         }
         progressDialog.setProgressDialog()
-
     }
 
     private fun checkMvvmResponse() {
@@ -361,21 +360,16 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                         val name = jsonObject.getJSONObject("data").get("name").toString()
                         val password = jsonObject.getJSONObject("data").get("password").toString()
                         val type = jsonObject.getJSONObject("data").get("type").toString()
-                        val notificationStatus =
-                            jsonObject.getJSONObject("data").get("notificationStatus").toString()
+                        val notificationStatus = jsonObject.getJSONObject("data").get("notificationStatus").toString()
                         val image = jsonObject.getJSONObject("data").get("image").toString()
                         val phone = jsonObject.getJSONObject("data").get("phone").toString()
                         val authKey = jsonObject.getJSONObject("data").get("authKey").toString()
-                        val cityOrZipcode =
-                            jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
+                        val cityOrZipcode = jsonObject.getJSONObject("data").get("cityOrZipcode").toString()
                         val latitude = jsonObject.getJSONObject("data").get("lat").toString()
                         val longitude = jsonObject.getJSONObject("data").get("lng").toString()
                         val EventPush = jsonObject.getJSONObject("data").get("eventPush").toString()
 
-                        Log.d(
-                            LoginActivity::class.java.name,
-                            "SignUpActivity_EventPush    " + EventPush
-                        )
+                        Log.d(LoginActivity::class.java.name, "SignUpActivity_EventPush    " + EventPush)
 
                         AllSharedPref.save(this, "auth_key", authKey)
                         AllSharedPref.save(this, "EventPush", EventPush)
@@ -386,17 +380,13 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                             dataStoragePreference.save(name, preferencesKey("nameLogin"))
                             dataStoragePreference.save(password, preferencesKey("passwordLogin"))
                             dataStoragePreference.save(type, preferencesKey("typeLogin"))
-                            dataStoragePreference.save(
-                                notificationStatus,
-                                preferencesKey("notificationStatusLogin")
-                            )
+                            dataStoragePreference.save(notificationStatus, preferencesKey("notificationStatusLogin"))
                             dataStoragePreference.save(image, preferencesKey("imageLogin"))
                             dataStoragePreference.save(phone, preferencesKey("phoneLogin"))
                             dataStoragePreference.save(authKey, preferencesKey("auth_key"))
                             dataStoragePreference.save(cityOrZipcode, preferencesKey("cityLogin"))
                             dataStoragePreference.save(latitude, preferencesKey("latitudeLogin"))
                             dataStoragePreference.save(longitude, preferencesKey("longitudeLogin"))
-
                         }
 
                         progressDialog.hidedialog()

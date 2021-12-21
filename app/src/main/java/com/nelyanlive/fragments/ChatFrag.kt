@@ -187,9 +187,6 @@ class ChatFrag(
         groupChatVM.rvChat = activityChatBinding.rvChat
         groupChatVM.connectSocket(view.context)
 
-
-
-
         callgetMessageApi()
         appViewModel.observeGroupMessageApiResponse()!!
             .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
@@ -361,6 +358,7 @@ class ChatFrag(
 
             override fun afterTextChanged(s: Editable?) {
                 groupChatVM.serchList(s.toString())
+
             }
         })
 

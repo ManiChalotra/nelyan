@@ -14,12 +14,15 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+
 import com.gun0912.tedpermission.BuildConfig;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.nelyanlive.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -34,17 +37,13 @@ public abstract class image extends AppCompatActivity {
     private Uri mImageUri;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Bitmap bitmap;
-    private String encodedImage,pictureFilePath,kk,strIMg="";
+    private String encodedImage, pictureFilePath, kk, strIMg = "";
 
-    public void image(String type)
-    {
-        if(type.equals("camera"))
-        {
+    public void image(String type) {
+        if (type.equals("camera")) {
             camera();
 
-        }else
-        {
-
+        } else {
 
             dialog = new Dialog(image.this);
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -75,32 +74,26 @@ public abstract class image extends AppCompatActivity {
 
         try {
             dialog.dismiss();
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            try
-            {
+            try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
                 strIMg = convertImageToString(bitmap);
-                selectedImage(bitmap,"");
+                selectedImage(bitmap, "");
                 Log.e("catch_bitmap", "value: " + strIMg);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-        else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
             try {
                 File imgFile = new File(pictureFilePath);
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
-                bitmap = Bitmap.createScaledBitmap(bitmap,700, 700, true);
-            }catch (Exception e)
-            {
+                bitmap = Bitmap.createScaledBitmap(bitmap, 700, 700, true);
+            } catch (Exception e) {
 
             }
 
@@ -110,8 +103,7 @@ public abstract class image extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
             Bitmap rotatedBitmap = null;
 
@@ -134,9 +126,9 @@ public abstract class image extends AppCompatActivity {
                     rotatedBitmap = bitmap;
             }
             try {
-                rotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap,700, 700, true);
+                rotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, 700, 700, true);
                 strIMg = convertimage(rotatedBitmap);
-                selectedImage(rotatedBitmap,"");
+                selectedImage(rotatedBitmap, "");
 
             } catch (Exception e) {
                 dialog.dismiss();
@@ -145,6 +137,7 @@ public abstract class image extends AppCompatActivity {
 
 
     }
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
@@ -153,8 +146,7 @@ public abstract class image extends AppCompatActivity {
     }
 
     //    File imgFile = new File(pictureFilePath);
-    public String convertimage(Bitmap bit)
-    {
+    public String convertimage(Bitmap bit) {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         bit.compress(Bitmap.CompressFormat.JPEG, 70, bout);
         byte[] imagearray = bout.toByteArray();
@@ -163,12 +155,12 @@ public abstract class image extends AppCompatActivity {
         String kk = encodedImage;
         return kk;
     }
-    private File getPictureFile() throws IOException
-    {
+
+    private File getPictureFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String pictureFile = "BusinessEvents" + timeStamp;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(pictureFile,  ".jpg", storageDir);
+        File image = File.createTempFile(pictureFile, ".jpg", storageDir);
         pictureFilePath = image.getAbsolutePath();
 
         return image;
@@ -180,15 +172,15 @@ public abstract class image extends AppCompatActivity {
         bit.compress(Bitmap.CompressFormat.JPEG, 70, bout);
         byte[] imagearray = bout.toByteArray();
 
-        kk= mImageUri.toString();
+        kk = mImageUri.toString();
         kk = android.util.Base64.encodeToString(imagearray, android.util.Base64.DEFAULT);
 
         return kk;
     }
+
     public abstract void selectedImage(Bitmap var1, String var2);
 
-    public  void camera()
-    {
+    public void camera() {
         PermissionListener permissionlistener = new PermissionListener() {
 
             public void onPermissionGranted() {
@@ -198,11 +190,7 @@ public abstract class image extends AppCompatActivity {
                     File pictureFile = null;
                     try {
                         pictureFile = getPictureFile();
-                    }
-
-                    catch (IOException ex)
-
-                    {
+                    } catch (IOException ex) {
                         Toast.makeText(image.this,
                                 "Photo file can't be created, please try again",
                                 Toast.LENGTH_SHORT).show();
@@ -211,7 +199,7 @@ public abstract class image extends AppCompatActivity {
 
                     if (pictureFile != null) {
                         Uri photoURI = FileProvider.getUriForFile(image.this,
-                                BuildConfig.APPLICATION_ID+".provider",
+                                BuildConfig.APPLICATION_ID + ".provider",
                                 pictureFile);
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
@@ -221,9 +209,8 @@ public abstract class image extends AppCompatActivity {
             }
 
             @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions)
-            {
-                Toast.makeText(getApplicationContext(), "Permission Denied" , Toast.LENGTH_SHORT).show();
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         };
 

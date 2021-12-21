@@ -2,10 +2,8 @@ package com.nelyanlive.HELPER;
 
 import android.content.Intent;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 /*
  * Created by 123 on 26-09-2017.
  */
-
 
 public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -56,6 +53,7 @@ public class GoogleHelper implements GoogleApiClient.OnConnectionFailedListener 
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     public void onResult(int requestCode, int resultCode, Intent data) {

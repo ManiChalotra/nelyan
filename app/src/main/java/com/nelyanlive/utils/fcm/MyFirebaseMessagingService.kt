@@ -151,7 +151,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
                     manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
                 } else {
                     if (groupId == 0) {
-
                         manager.notify(
                             ((Date().time / 1000L % Int.MAX_VALUE).toInt()),
                             builder.build()

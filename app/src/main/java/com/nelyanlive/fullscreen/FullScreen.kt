@@ -8,29 +8,28 @@ import com.nelyanlive.R
 import com.nelyanlive.adapter.DetailsImageAdapter
 import com.nelyanlive.modals.postDetails.Activityimage
 import kotlinx.android.synthetic.main.activity_full_screen.*
-import java.util.ArrayList
+import java.util.*
 
 class FullScreen : AppCompatActivity() {
 
     var str = ""
     var listActivityimage = ArrayList<Activityimage>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_screen)
 
         listActivityimage = intent.getSerializableExtra("imagearry") as ArrayList<Activityimage>
 
-        val ad = DetailsImageAdapter(this, listActivityimage,"Fullscreen")
+        val ad = DetailsImageAdapter(this, listActivityimage, "Fullscreen")
         rv_activties_images_full.getLayoutManager()!!.scrollToPosition(intent.getStringExtra("image")!!.toInt() - 1)
 
         rv_activties_images_full!!.adapter = ad
         indicator_full!!.attachToRecyclerView(rv_activties_images_full!!)
 
-
 /*
         if (intent.hasExtra("image")) {
             str = from_admin_image_base_URl + intent.getStringExtra("image")!!
-
             Picasso.get().load(str)
                 .placeholder(
                     ContextCompat.getDrawable(
@@ -47,6 +46,8 @@ class FullScreen : AppCompatActivity() {
             Log.d(FullScreen::class.java.name, "FullScreen_Str   " + str)
         }
 
-        ivCross.setOnClickListener { onBackPressed() }
+        ivCross.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
