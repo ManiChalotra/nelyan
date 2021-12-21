@@ -2083,7 +2083,7 @@ class AppViewModel : ViewModel() {
 
     fun sendFilterEventListData(
         securityKey: String?, authKey: String?, lati: String?, longi: String?, distance: String?,
-        name: String?, address: String?,Age: String,
+        name: String?, address: String?, Age: String,
     ) {
         JsonPlaceHolder().getEventFilter(
             securityKey,

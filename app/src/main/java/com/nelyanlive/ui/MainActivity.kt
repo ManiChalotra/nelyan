@@ -2,33 +2,21 @@ package com.nelyanlive.ui
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.preferencesKey
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
 import com.nelyanlive.HELPER.LanguageHelper
 import com.nelyanlive.R
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.utils.CheckPlayStoreVersion
-import com.nelyanlive.utils.OpenActivity
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -39,20 +27,17 @@ class MainActivity : CheckPlayStoreVersion() {
     var mContext: Context? = null
     var ivLogo: ImageView? = null
 
-
     private lateinit var dataStoragePreference: DataStoragePreference
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val sharedPreferences = getSharedPreferences("Language", Context.MODE_PRIVATE)
-       val language =  sharedPreferences.getString("language", "fr")!!
+        val language = sharedPreferences.getString("language", "fr")!!
 
         Log.d("sharedPreferences---", "--------language------------$language")
         LanguageHelper.setLocale(this, language)
@@ -62,9 +47,9 @@ class MainActivity : CheckPlayStoreVersion() {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Log.w(
-                            "gg",
-                            "Fetching FCM registration token failed",
-                            task.exception
+                        "gg",
+                        "Fetching FCM registration token failed",
+                        task.exception
                     )
                     return@OnCompleteListener
                 }
@@ -115,8 +100,8 @@ class MainActivity : CheckPlayStoreVersion() {
         try {
             val packageName = context.applicationContext.packageName
             packageInfo = context.packageManager.getPackageInfo(
-                    packageName,
-                    PackageManager.GET_SIGNATURES
+                packageName,
+                PackageManager.GET_SIGNATURES
             )
             Log.e("Package gjfghjfghName=", context.applicationContext.packageName)
             for (signature in packageInfo.signatures) {
@@ -135,7 +120,6 @@ class MainActivity : CheckPlayStoreVersion() {
         Log.d("key_fb", "--------------------$key")
         return key
     }
-
 
 
 }

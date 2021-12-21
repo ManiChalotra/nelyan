@@ -573,10 +573,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.event -> {
                 if (currentFragment !is EventFragment) {
+                    bottomNavigationBar!!.menu.getItem(4).isCheckable = false
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
-                    tvTitleToolbar!!.text =
-                        getString(R.string.upcoming_events) + "\n" + userlocation
+                    tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation
                     iv_bell!!.setImageResource(R.drawable.location_circle)
                     iv_bell!!.imageTintList = null
                     fragment = EventFragment(userlat, userlong, userlocation)
@@ -584,7 +584,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
         }
-
         return true
     }
 

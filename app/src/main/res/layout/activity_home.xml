@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,15 +8,14 @@
     tools:context=".ui.HomeActivity">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/homeProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/homeProgressBar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/mDrawerLayout"
@@ -31,8 +29,9 @@
             android:layout_height="wrap_content">
 
 
-            <include layout="@layout/tookbar"
-                android:id="@+id/toolbar"/>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/tookbar" />
 
             <FrameLayout
                 android:id="@+id/frame_container"
@@ -68,9 +67,9 @@
                     app:itemTextAppearanceInactive="@style/TextStyleBN"
                     app:itemTextColor="@color/black"
                     app:labelVisibilityMode="labeled"
-                    app:menu="@menu/bottom_navigation_home_menu"
-                    >
-                    <include layout="@layout/bottom_navigation"/>
+                    app:menu="@menu/bottom_navigation_home_menu">
+
+                    <include layout="@layout/bottom_navigation" />
 
 
                 </com.google.android.material.bottomnavigation.BottomNavigationView>
@@ -84,15 +83,13 @@
             android:id="@+id/navigation_view"
             android:layout_width="250dp"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            >
+            android:layout_gravity="start">
 
             <RelativeLayout
                 android:id="@+id/drawerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/app"
-               >
+                android:background="@color/app">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -200,10 +197,6 @@
 
 
     </androidx.drawerlayout.widget.DrawerLayout>
-
-
-
-
 
 
 </RelativeLayout>

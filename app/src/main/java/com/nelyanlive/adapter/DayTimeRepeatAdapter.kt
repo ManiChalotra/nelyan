@@ -94,7 +94,7 @@ class DayTimeRepeatAdapter(
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
                 }
             }
-            
+
             val days: MutableList<String?> = ArrayList()
             days.add("")
             days.add(context.getString(R.string.monday))

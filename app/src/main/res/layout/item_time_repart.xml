@@ -6,10 +6,12 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_5sdp"
     android:orientation="vertical">
+
     <TextView
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/select_time1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,23 +55,24 @@
         </LinearLayout>
 
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_gravity="center"
                 android:text="@string/to1" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_morning_totime"
                     style="@style/CommonTextMatchparent"
@@ -79,6 +82,7 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -92,6 +96,7 @@
         style="@style/CommonTextWrapcontent"
         android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/select_time2" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,23 +140,24 @@
         </LinearLayout>
 
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_gravity="center"
                 android:text="@string/to1" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_evening_totime"
                     style="@style/CommonTextMatchparent"
@@ -161,6 +167,7 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/grey" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

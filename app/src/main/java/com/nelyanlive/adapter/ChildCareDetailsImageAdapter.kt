@@ -37,7 +37,6 @@ class ChildCareDetailsImageAdapter(
             var findpoz = 0
 
             for (i in 0 until dataList.size) {
-
                 totalimages++
                 Log.e("checkimage", "===" + dataList[i].image)
                 listActivityimage.add(
@@ -57,7 +56,6 @@ class ChildCareDetailsImageAdapter(
                     "image", findpoz.toString()
                 ).putExtra("imagearry", listActivityimage)
             )
-
         }
     }
 
@@ -70,5 +68,4 @@ class ChildCareDetailsImageAdapter(
         var videoPic: ImageView? = null
 
     }
-
 }

@@ -44,7 +44,8 @@ import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope, OnMapReadyCallback {
+class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
+    OnMapReadyCallback {
 
     var rc: RecyclerView? = null
     var rvChildcareImages: RecyclerView? = null
@@ -57,13 +58,16 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
     var tvTitle: TextView? = null
     var indicator: ScrollingPagerIndicator? = null
 
-    var categoryId=""
-    var postId=""
+    var categoryId = ""
+    var postId = ""
 
     private val job by lazy {
         Job()
     }
-    private val appViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(this.application).create(AppViewModel::class.java) }
+    private val appViewModel by lazy {
+        ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+            .create(AppViewModel::class.java)
+    }
     private val dataStoragePreference by lazy { DataStoragePreference(this@HomeChildCareDetailsActivity) }
     private var authkey: String? = null
 
@@ -145,7 +149,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         dialog!!.setCancelable(true)
 
         dialog!!.ll_twitter_share.setOnClickListener {
-             CommonMethodsKotlin.twitterShare(this)
+            CommonMethodsKotlin.twitterShare(this)
             dialog!!.dismiss()
         }
         dialog!!.ll_instra_share.setOnClickListener {
@@ -159,36 +163,42 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         dialog!!.ll_gmail_share.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
             email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.nelyan_app))
-            email.putExtra(Intent.EXTRA_TEXT, "Nelyan.. social app. \n"+
-                    "https://play.google.com/store/apps/details?id=com.nelyan")
+            email.putExtra(
+                Intent.EXTRA_TEXT, "Nelyan.. social app. \n" +
+                        "https://play.google.com/store/apps/details?id=com.nelyan"
+            )
             email.setPackage("com.google.android.gm")
             email.type = "message/rfc822"
             try {
                 startActivity(email)
             } catch (ex: ActivityNotFoundException) {
-                myCustomToast( getString(R.string.gmail_not_error))
+                myCustomToast(getString(R.string.gmail_not_error))
             }
 
             dialog!!.dismiss()
         }
         dialog!!.ll_whatsapp_share.setOnClickListener {
-        CommonMethodsKotlin.whatsAppShare(this)
+            CommonMethodsKotlin.whatsAppShare(this)
 
             dialog!!.dismiss()
         }
         dialog!!.ll_fv_share.setOnClickListener {
-        CommonMethodsKotlin.fbShare(this)
+            CommonMethodsKotlin.fbShare(this)
 
-            val content =  ShareLinkContent.Builder()
-                    .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
-                    .setShareHashtag( ShareHashtag.Builder().setHashtag("Nelyan App").build())
-                    .build()
+            val content = ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.nelyan"))
+                .setShareHashtag(ShareHashtag.Builder().setHashtag("Nelyan App").build())
+                .build()
 
             try {
                 shareDialog!!.show(content) // Show ShareDialog
 
             } catch (ex: ActivityNotFoundException) {
-                Toast.makeText(this, getString(R.string.facebook_have_not_installed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.facebook_have_not_installed),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             dialog!!.dismiss()
         }
@@ -197,80 +207,90 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
 
     private fun checkMvvmResponse() {
 
-        appViewModel.observePostDetailApiResponse()!!.observe(this, androidx.lifecycle.Observer { response ->
+        appViewModel.observePostDetailApiResponse()!!
+            .observe(this, androidx.lifecycle.Observer { response ->
 
-            if (response!!.isSuccessful && response.code() == 200) {
-                if (response.body() != null) {
+                if (response!!.isSuccessful && response.code() == 200) {
+                    if (response.body() != null) {
 
+                        childcare_details_progressbar?.hideProgressBar()
+                        Log.d(
+                            "postDetailsResponse",
+                            "-------------" + Gson().toJson(response.body())
+                        )
+
+                        val mResponse = response.body().toString()
+                        val jsonObject = JSONObject(mResponse)
+
+                        if (!jsonObject.getJSONObject("data").isNull("user")) {
+                            setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
+                        }
+
+                        val message = jsonObject.get("msg").toString()
+                        myCustomToast(message)
+
+                        tv_child_care_name.text =
+                            jsonObject.getJSONObject("data").get("name").toString()
+                        tv_child_care_description.text =
+                            jsonObject.getJSONObject("data").get("description").toString()
+                        tv_available_place.text =
+                            jsonObject.getJSONObject("data").get("availableplace").toString()
+
+                        //tvPhone
+                        if (jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
+                            tv_childcare_phone.text =
+                                jsonObject.getJSONObject("data").get("countryCode")
+                                    .toString() + "-" + jsonObject.getJSONObject("data")
+                                    .get("phone").toString()
+
+                        } else {
+                            tvPhone.visibility = View.GONE
+                            tv_childcare_phone.visibility = View.GONE
+
+                        }
+                        tv_child_care_address.text =
+                            jsonObject.getJSONObject("data").get("address").toString()
+
+                        longitude = jsonObject.getJSONObject("data").get("longitude").toString()
+                        latitude = jsonObject.getJSONObject("data").get("latitude").toString()
+
+                        val listArray: JSONArray =
+                            jsonObject.getJSONObject("data").getJSONArray("ChildCareImages")
+                        val mSizeOfData: Int = listArray.length()
+
+                        if (listChildCareimage != null) {
+                            listChildCareimage.clear()
+                        } else {
+                            listChildCareimage = ArrayList()
+                        }
+                        for (i in 0 until mSizeOfData) {
+                            val model = listArray.getJSONObject(i)
+                            val createdAt = model.get("createdAt")
+                            val updatedAt = model.get("updatedAt")
+                            val postId = model.get("postId")
+                            val images = model.get("image")
+                            val id = model.get("id")
+
+                            listChildCareimage.add(
+                                ChildCareImage(
+                                    createdAt.toString(), id.toString().toInt(), images.toString(),
+                                    postId.toString().toInt(), updatedAt.toString()
+                                )
+                            )
+                        }
+
+                        if (mSizeOfData != 0) {
+                            val childCareDetailsImageAdapter =
+                                ChildCareDetailsImageAdapter(this, listChildCareimage)
+                            rvChildcareImages!!.adapter = childCareDetailsImageAdapter
+                            indicator!!.attachToRecyclerView(rvChildcareImages!!)
+                        }
+                    }
+                } else {
+                    ErrorBodyResponse(response, this, childcare_details_progressbar)
                     childcare_details_progressbar?.hideProgressBar()
-                    Log.d("postDetailsResponse", "-------------" + Gson().toJson(response.body()))
-
-                    val mResponse = response.body().toString()
-                    val jsonObject = JSONObject(mResponse)
-
-                    if(!jsonObject.getJSONObject("data").isNull("user")) {
-                        setUserData(jsonObject.getJSONObject("data").getJSONObject("user"))
-                    }
-
-                    val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
-
-                    tv_child_care_name.text = jsonObject.getJSONObject("data").get("name").toString()
-                    tv_child_care_description.text = jsonObject.getJSONObject("data").get("description").toString()
-                    tv_available_place.text = jsonObject.getJSONObject("data").get("availableplace").toString()
-
-                    //tvPhone
-                    if(jsonObject.getJSONObject("data").get("phone").toString().isNotBlank()) {
-                        tv_childcare_phone.text = jsonObject.getJSONObject("data").get("countryCode").toString() + "-" +
-                                    jsonObject.getJSONObject("data").get("phone").toString()
-
-                    }
-                    else
-                    {
-                        tvPhone.visibility = View.GONE
-                        tv_childcare_phone.visibility = View.GONE
-
-                    }
-                    tv_child_care_address.text = jsonObject.getJSONObject("data").get("address").toString()
-
-
-
-                    longitude = jsonObject.getJSONObject("data").get("longitude").toString()
-                    latitude = jsonObject.getJSONObject("data").get("latitude").toString()
-
-
-                    val listArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("ChildCareImages")
-                    val mSizeOfData: Int = listArray.length()
-
-                    if (listChildCareimage != null) {
-                        listChildCareimage.clear()
-                    } else {
-                        listChildCareimage = ArrayList()
-                    }
-                    for (i in 0 until mSizeOfData) {
-                        val model = listArray.getJSONObject(i)
-                        val createdAt = model.get("createdAt")
-                        val updatedAt = model.get("updatedAt")
-                        val postId = model.get("postId")
-                        val images = model.get("image")
-                        val id = model.get("id")
-
-                        listChildCareimage.add(ChildCareImage(createdAt.toString(), id.toString().toInt(), images.toString(),
-                                postId.toString().toInt(), updatedAt.toString()))
-                    }
-
-                    if (mSizeOfData != 0) {
-                        val childCareDetailsImageAdapter = ChildCareDetailsImageAdapter(this, listChildCareimage)
-                        rvChildcareImages!!.adapter = childCareDetailsImageAdapter
-                        indicator!!.attachToRecyclerView(rvChildcareImages!!)
-                    }
-
                 }
-            } else {
-                ErrorBodyResponse(response, this, childcare_details_progressbar)
-                childcare_details_progressbar?.hideProgressBar()
-            }
-        })
+            })
 
         appViewModel.getException()!!.observe(this, Observer {
             myCustomToast(it)
@@ -281,7 +301,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
     private fun setUserData(jsonObject: JSONObject) {
 
 
-        if(userId!=jsonObject.getString("id")) {
+        if (userId != jsonObject.getString("id")) {
             tvMessage.visibility = View.VISIBLE
             iv_msg.visibility = View.VISIBLE
             iv_msg.setOnClickListener {
@@ -301,15 +321,17 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         try {
-            if (intent.extras !=null){
-                val latti= intent.getStringExtra("latti")
-                val longi= intent.getStringExtra("longi")
+            if (intent.extras != null) {
+                val latti = intent.getStringExtra("latti")
+                val longi = intent.getStringExtra("longi")
 
                 val india = LatLng(latti!!.toDouble(), longi!!.toDouble())
-                mMap!!.addMarker(MarkerOptions()
-                    .position(india)
-                    .title("Activity"))
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india,15f))
+                mMap!!.addMarker(
+                    MarkerOptions()
+                        .position(india)
+                        .title("Activity")
+                )
+                mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(india, 15f))
             }
 
         } catch (e: Exception) {
@@ -321,9 +343,9 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         get() = Dispatchers.Main + job
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
+        when (v!!.id) {
             R.id.ivBack -> {
-              onBackPressed()
+                onBackPressed()
             }
             R.id.ivShare -> {
                 dailogshare()

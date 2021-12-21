@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="@dimen/album_dp_0"
         android:id="@+id/tab1"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/album_dp_0"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.20">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintWidth_percent="0.50"
             android:src="@drawable/home_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.50"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_homeTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/home"
-            android:textSize="@dimen/_10sp"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/tv_homeTab"
             android:layout_marginBottom="@dimen/_3sdp"
+            android:text="@string/home"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
             />
 
@@ -43,88 +42,84 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
-        app:layout_constraintStart_toEndOf="@+id/tab1"
-        android:layout_width="@dimen/album_dp_0"
         android:id="@+id/tab2"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/album_dp_0"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@+id/tab1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.20">
 
 
         <ImageView
             android:id="@+id/ivBadge"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/ivChat"
-            app:layout_constraintStart_toEndOf="@id/ivChat"
             android:background="@drawable/custom_thumb"
             android:backgroundTint="@color/red"
             android:visibility="gone"
-            />
+            app:layout_constraintEnd_toEndOf="@id/ivChat"
+            app:layout_constraintStart_toEndOf="@id/ivChat"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/ivChat"
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintWidth_percent="0.50"
             android:src="@drawable/message_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.50"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/myMessage"
-            android:textSize="@dimen/_10sp"
-            android:textColor="@color/colorAccent"
             android:id="@+id/tv_messageTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_3sdp"
+            android:text="@string/myMessage"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
-        app:layout_constraintStart_toEndOf="@+id/tab2"
-        android:layout_width="@dimen/album_dp_0"
         android:id="@+id/tab3"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/album_dp_0"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@+id/tab2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.20">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintWidth_percent="0.50"
             android:src="@drawable/publier_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.50"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/publisher"
-            android:textSize="@dimen/_10sp"
-            android:textColor="@color/colorAccent"
             android:id="@+id/tv_publisherTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_3sdp"
+            android:text="@string/publisher"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
             />
 
@@ -132,36 +127,35 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
-        app:layout_constraintStart_toEndOf="@+id/tab3"
-        android:layout_width="@dimen/album_dp_0"
         android:id="@+id/tab4"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/album_dp_0"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@+id/tab3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.20">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintWidth_percent="0.50"
             android:src="@drawable/chat_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.50"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_chatTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/cityChat"
-            android:textSize="@dimen/_10sp"
             android:gravity="center"
+            android:text="@string/cityChat"
             android:textColor="@color/colorAccent"
-            android:id="@+id/tv_chatTab"
+            android:textSize="@dimen/_10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
             />
 
@@ -169,38 +163,35 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
-        app:layout_constraintStart_toEndOf="@+id/tab4"
-        android:layout_width="@dimen/album_dp_0"
         android:id="@+id/tab5"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/album_dp_0"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@+id/tab4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.20">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
             android:layout_height="@dimen/album_dp_0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_3sdp"
-            app:layout_constraintWidth_percent="0.50"
             android:src="@drawable/event_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.50"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.50" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_eventTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/event"
-            android:textSize="@dimen/_10sp"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/tv_eventTab"
             android:layout_marginBottom="@dimen/_3sdp"
-            />
-
+            android:text="@string/event"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

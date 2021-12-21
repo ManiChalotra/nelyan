@@ -3,322 +3,306 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/trader_details_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/trader_details_progressbar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
 
     <RelativeLayout
-                android:id="@+id/header"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+
+        >
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            style="@style/HeaderText"
+            android:layout_centerInParent="true"
+            android:text="@string/trader_artisant"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/share_icon" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nvsMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_trader_type"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:drawableStart="@drawable/house_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center" />
+
+            <RelativeLayout
+                android:id="@+id/imgslidelayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
 
-                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rc_trader_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/trader_indicator"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                <ImageView
-                    android:id="@+id/ivBack"
+                <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                    android:id="@+id/trader_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:src="@drawable/left_arrow" />
-
-                <TextView
-                    style="@style/HeaderText"
-                    android:layout_centerInParent="true"
-                    android:text="@string/trader_artisant"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:id="@+id/ivShare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:src="@drawable/share_icon" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:spi_dotColor="@color/grey"
+                    app:spi_dotSelectedColor="@color/colorPrimaryDark"
+                    app:spi_dotSelectedSize="@dimen/_6sdp"
+                    app:spi_dotSize="@dimen/_6sdp" />
             </RelativeLayout>
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nvsMain"
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/name"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:fontFamily="@font/semibold" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/description"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_trader_desc"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/_9sdp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shops_timings"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/header"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:nestedScrollingEnabled="true"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                >
+            <TextView
+                android:id="@+id/tv_trader_no_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/_30sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/no_days_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
 
-                <LinearLayout
+
+            <TextView
+                android:id="@+id/tvMessage"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/message"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivMessage"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:src="@drawable/message_ico"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tvPhoneTrader"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/phone"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_trader_phone"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColor="@color/black"
+                android:textIsSelectable="true" />
+
+
+            <TextView
+                android:id="@+id/tvEmailAddress"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/email_address"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_trader_email"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColor="@color/black"
+                android:textIsSelectable="true" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/website"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/tv_website"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColor="@color/black"
+                android:textIsSelectable="true" />
+
+            <TextView
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/product_detail"
+                android:textAllCaps="true"
+                android:textColor="@color/grey" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_traderproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:id="@+id/tv_trader_no_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/regular"
+                android:text="@string/no_product_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tv_trader_address"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableStart="@drawable/location_black"
+                android:drawableEnd="@drawable/colored_map"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/_9sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent" />
 
-                    <TextView
-                        android:id="@+id/tv_trader_type"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:drawableStart="@drawable/house_icon"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:gravity="center"
-                        />
+                <ImageView
+                    android:id="@+id/ivMapImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-                   <RelativeLayout
-                        android:id="@+id/imgslidelayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_200sdp"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        >
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rc_trader_images"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"/>
-
-                        <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                            android:id="@+id/trader_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rc_trader_images"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            app:spi_dotColor="@color/grey"
-                            app:spi_dotSelectedColor="@color/colorPrimaryDark"
-                            app:spi_dotSelectedSize="@dimen/_6sdp"
-                            app:spi_dotSize="@dimen/_6sdp" />
-                    </RelativeLayout>
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/name"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-                    <TextView
-                        android:id="@+id/tv_shop_name"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:fontFamily="@font/semibold"
-                        />
-
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/description"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/tv_trader_desc"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textIsSelectable="true"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:textSize="@dimen/_9sdp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_shops_timings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="vertical"
-                        android:nestedScrollingEnabled="true"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_trader_no_days"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_days_found"
-                        android:visibility="gone"
-                        android:layout_margin="@dimen/_30sdp"
-                        android:fontFamily="@font/regular"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp" />
+            </RelativeLayout>
+        </LinearLayout>
 
 
-
-
-                    <TextView
-                        android:id="@+id/tvMessage"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/message"
-                        android:visibility="gone"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <ImageView
-                        android:id="@+id/ivMessage"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:visibility="gone"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@drawable/message_ico"
-                        />
-
-
-
-                    <TextView
-                        android:id="@+id/tvPhoneTrader"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/phone"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/tv_trader_phone"
-                        style="@style/CommonTextWrapcontent"
-                        android:textIsSelectable="true"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:textColor="@color/black" />
-
-
-
-                    <TextView
-                        android:id="@+id/tvEmailAddress"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/email_address"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/tv_trader_email"
-                        style="@style/CommonTextWrapcontent"
-                        android:textIsSelectable="true"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/website"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/tv_website"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:textIsSelectable="true"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:fontFamily="@font/bold"
-                        android:text="@string/product_detail"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_traderproduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="vertical"/>
-
-                    <TextView
-                        android:id="@+id/tv_trader_no_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_product_found"
-                        android:visibility="gone"
-                        android:fontFamily="@font/regular"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-
-
-
-
-
-                    <TextView
-                        android:id="@+id/tv_trader_address"
-                        style="@style/CommonTextWrapcontent"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:drawableStart="@drawable/location_black"
-                        android:drawableEnd="@drawable/colored_map"
-                        android:textIsSelectable="true"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_9sdp" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_90sdp"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_20sdp">
-
-                        <fragment
-                            android:id="@+id/map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <ImageView
-                            android:id="@+id/ivMapImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
-
-                    </RelativeLayout>
-                </LinearLayout>
-
-
-            </androidx.core.widget.NestedScrollView>
-
-
+    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

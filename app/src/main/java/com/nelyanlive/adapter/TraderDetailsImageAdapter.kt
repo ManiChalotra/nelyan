@@ -16,8 +16,9 @@ import com.nelyanlive.modals.traderPostDetails.Tradersimage
 import com.nelyanlive.ui.TraderPublishActivty
 import com.nelyanlive.utils.image_base_URl
 
-class TraderDetailsImageAdapter(traderDetailsActivity: TraderPublishActivty,
-                                var dataList: ArrayList<Tradersimage>
+class TraderDetailsImageAdapter(
+    traderDetailsActivity: TraderPublishActivty,
+    var dataList: ArrayList<Tradersimage>
 ) : RecyclerView.Adapter<TraderDetailsImageAdapter.Vh>() {
     var a: Activity = traderDetailsActivity
 
@@ -27,8 +28,8 @@ class TraderDetailsImageAdapter(traderDetailsActivity: TraderPublishActivty,
     }
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
-        Log.d("serverImages", "------------------------------"+ dataList[position].images)
-        Glide.with(a).asBitmap().load(image_base_URl+ dataList[position].images).into(holder.img)
+        Log.d("serverImages", "------------------------------" + dataList[position].images)
+        Glide.with(a).asBitmap().load(image_base_URl + dataList[position].images).into(holder.img)
 
         holder.img.setOnClickListener {
             val listActivityimage = ArrayList<Activityimage>()
@@ -36,11 +37,13 @@ class TraderDetailsImageAdapter(traderDetailsActivity: TraderPublishActivty,
             var totalimages = 0
             var findpoz = 0
 
-            for (i in 0 until dataList.size)
-            {
+            for (i in 0 until dataList.size) {
 
                 totalimages++
-                Log.e("checkimage", "===" + dataList[i].images)
+                Log.e(
+                    "checkimage",
+                    "===" + dataList[i].images + "   DatalistSize   " + dataList.size
+                )
                 listActivityimage.add(
                     Activityimage(
                         0, dataList[i].id.toInt(), image_base_URl + dataList[i].images.toString(), 1
@@ -60,7 +63,6 @@ class TraderDetailsImageAdapter(traderDetailsActivity: TraderPublishActivty,
             )
 
         }
-
 
 
     }

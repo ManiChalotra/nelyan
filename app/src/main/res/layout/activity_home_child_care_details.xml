@@ -41,15 +41,14 @@
     </RelativeLayout>
 
     <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/childcare_details_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mk_type="FishSpinner"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_5dp"
-        android:id="@+id/childcare_details_progressbar"
         android:visibility="gone"
         app:mk_color="@color/colorPrimary"
-        />
+        app:mk_type="FishSpinner" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -57,8 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,23 +70,22 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                >
+                app:layout_constraintRight_toRightOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_childcare_images"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/child_care_indicator"
                     android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_centerInParent="true"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
                     android:id="@+id/child_care_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rv_childcare_images"
                     android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
@@ -98,6 +95,7 @@
                     app:spi_dotSelectedColor="@color/colorPrimaryDark"
                     app:spi_dotSelectedSize="@dimen/_6sdp"
                     app:spi_dotSize="@dimen/_6sdp" />
+
             </RelativeLayout>
 
             <LinearLayout
@@ -265,9 +263,9 @@
                             android:id="@+id/tv_child_care_address"
                             style="@style/CommonTextWrapcontent"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:textIsSelectable="true"
                             android:drawableRight="@drawable/colored_map"
                             android:textColor="@color/black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_9sdp" />
 
                         <RelativeLayout
@@ -287,8 +285,7 @@
                             <ImageView
                                 android:id="@+id/ivMapImage"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                />
+                                android:layout_height="match_parent" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -300,9 +297,9 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/btnModify"
