@@ -278,7 +278,6 @@ class AppViewModel : ViewModel() {
                     myAdsListMutableLiveData?.value = response
                 }
             })
-
     }
 
     // get profile api
@@ -365,7 +364,6 @@ class AppViewModel : ViewModel() {
             })
     }
 
-
     // get Group Notification check api
     private var groupGroupNotifyMutableLiveData: MutableLiveData<Response<JsonObject>?>? = null
 
@@ -411,13 +409,11 @@ class AppViewModel : ViewModel() {
 
                     exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                 }
-
                 override fun onResponse(
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
                     Log.e("observeBadgeApiResponse", "--ress---$response--------")
-
                     badgeMutableLiveData?.value = response
                 }
             })

@@ -55,8 +55,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
             checkMvvmResponse()
         }
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -64,9 +62,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
         btnEdit.visibility = View.GONE
 
     }
-
-
-    
     private  fun checkMvvmResponse(){
        appViewModel.observeProfileApiResponse()!!.observe(this, Observer { response->
 
@@ -121,7 +116,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, CoroutineScop
                 }else{
                     myCustomToast(getString(R.string.wait_a_while_to_load_all_data))
                 }
-
             }
             R.id.ivBack->{
                 onBackPressed()

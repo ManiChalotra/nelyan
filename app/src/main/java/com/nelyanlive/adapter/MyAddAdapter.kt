@@ -177,6 +177,7 @@ class MyAddAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+
         holder.bind(myadsActivitylist[position])
     }
 

@@ -45,6 +45,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
             .create(AppViewModel::class.java)
     }
+
     val dataStoragePreference by lazy { DataStoragePreference(this@SignupActivity) }
     private var imgPath = ""
     private var imgPathNormal = ""
@@ -74,7 +75,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     // dialog
     private val progressDialog = ProgressDialog(this)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -82,7 +82,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         settingSpinnerForTypeSelection()
 
     }
-
 
     private fun initalize() {
         ivBack.setOnClickListener(this)
@@ -102,8 +101,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     override fun onResume() {
         super.onResume()
 
-
-
         launch(Dispatchers.Main.immediate) {
 
             // for terms condition
@@ -120,8 +117,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             socialSignup = intent?.extras?.getString("socialLogin").toString()
             imgPath = intent?.extras?.getString("socialImage").toString()
-
-
 
             if (socialSignup == "SOCIAL_LOGIN") {
                 tv_passwordSignup.visibility = View.GONE
@@ -153,7 +148,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     iv_uploader.setImageResource(R.drawable.img_uploader)
                 }
 
-
             } else {
                 tv_passwordSignup.visibility = View.VISIBLE
                 password.visibility = View.VISIBLE
@@ -167,7 +161,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         checkMvvmResponse()
 
     }
-
 
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -251,7 +244,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val currentTS = tsLong.toString()
         Log.e("current", currentTS)
 
-
         if (imgPath.isNullOrEmpty()) {
             appViewModel.sendcompleteSocialLogin_withoutImage_Data(
                 security_key, socialID, email, name, type, cityLatitude, cityLongitude,
@@ -286,7 +278,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
     }
 
-
     private fun hitSignUpapi(name: String, email: String, password: String, type: String) {
 
         val tsLong = System.currentTimeMillis() / 1000
@@ -301,7 +292,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val city = cityName.toRequestBody("text/plain".toMediaTypeOrNull())
         val lat = cityLatitude.toRequestBody("text/plain".toMediaTypeOrNull())
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
-
 
         if (imgPathNormal.isEmpty()) {
             Log.e("sadfdfaf", "==33333===$deviceToken===")
@@ -497,7 +487,6 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
             progressDialog.hidedialog()
         })
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

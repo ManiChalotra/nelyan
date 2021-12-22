@@ -95,7 +95,6 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     private var activityTypeId = ""
     private var countryCodee = ""
 
-
     private val typeList: ArrayList<String> = ArrayList()
     private val typeListId: ArrayList<String> = ArrayList()
     private var selectedPosition = 0
@@ -213,6 +212,19 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
 
         listAddEventDataModel = ArrayList()
         listAddEventDataModel = intent.getParcelableArrayListExtra<EventMyAds>("eventMyAdsList")!!
+
+        Log.d(EditActivity::class.java.name, "EditActivity_eventlist   " + listAddEventDataModel)
+        Log.d(EditActivity::class.java.name, "EditActivity_agelist   " + listAgeGroupDataModel)
+
+        if (listAgeGroupDataModel.isNullOrEmpty()) {
+            rvAgeGroup.visibility = View.GONE
+            tvAddAgeGroup.visibility = View.VISIBLE
+        }
+
+        if (listAddEventDataModel.isNullOrEmpty()) {
+            rvEvent.visibility = View.GONE
+            tvAddEvent.visibility = View.VISIBLE
+        }
 
         if (listAddEventDataModel.isEmpty()) listAddEventDataModel.add(
             EventMyAds(
@@ -351,113 +363,113 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                         } else {
                                             if (edtAgeTo.text.toString().isEmpty()) {
                                                 myCustomToast(getString(R.string.select_age_to))
-                                            } else {
+                                            } /*else {
                                                 if (edtAgeFrom.text.toString() > edtAgeTo.text.toString()) {
                                                     myCustomToast(getString(R.string.ageto_fromage_text))
+                                                }*/ else {
+
+                                                var ageErrorString = ""
+                                                ageErrorNumber = 0
+                                                var eventErrorString = ""
+                                                eventErrorNumber = 0
+
+                                                if (clickPosition.equals("0")) {
+                                                    Log.d(
+                                                        AddActivity::class.java.name,
+                                                        "AddActivity_agegroup_if  "
+                                                    )
                                                 } else {
 
-                                                    var ageErrorString = ""
-                                                    ageErrorNumber = 0
-                                                    var eventErrorString = ""
-                                                    eventErrorNumber = 0
+                                                    ageErrorString = getAgeError(
+                                                        listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageFrom,
+                                                        ageErrorString,
+                                                        getString(R.string.fill_age_group_from_in_previous_data),
+                                                        1
+                                                    )
+                                                    ageErrorString = getAgeError(
+                                                        listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageTo,
+                                                        ageErrorString,
+                                                        getString(R.string.fill_age_group_to),
+                                                        2
+                                                    )
+                                                    ageErrorString = getAgeError(
+                                                        listAgeGroupDataModel[listAgeGroupDataModel.size - 1].days,
+                                                        ageErrorString,
+                                                        getString(R.string.select_days_in_previous),
+                                                        3
+                                                    )
+                                                    ageErrorString = getAgeError(
+                                                        listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeFrom,
+                                                        ageErrorString,
+                                                        getString(R.string.select_from_time),
+                                                        4
+                                                    )
+                                                    ageErrorString = getAgeError(
+                                                        listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeTo,
+                                                        ageErrorString,
+                                                        getString(R.string.select_to_time),
+                                                        5
+                                                    )
+                                                }
+                                                if (clickPosition.equals("0")) {
 
-                                                    if (clickPosition.equals("0")) {
-                                                        Log.d(
-                                                            AddActivity::class.java.name,
-                                                            "AddActivity_agegroup_if  "
-                                                        )
-                                                    } else {
+                                                } else {
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].image,
+                                                        eventErrorString,
+                                                        getString(R.string.select_image_in_previous),
+                                                        1
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].name,
+                                                        eventErrorString,
+                                                        getString(R.string.fill_event_name_in_previous),
+                                                        2
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].dateFrom,
+                                                        eventErrorString,
+                                                        getString(R.string.select_from_date_in_previous),
+                                                        3
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].dateTo,
+                                                        eventErrorString,
+                                                        getString(R.string.select_to_date_in_previous),
+                                                        4
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].startTime,
+                                                        eventErrorString,
+                                                        getString(R.string.select_from_time),
+                                                        5
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].endTime,
+                                                        eventErrorString,
+                                                        getString(R.string.select_to_time),
+                                                        6
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].description,
+                                                        eventErrorString,
+                                                        getString(R.string.fill_description_in_previous),
+                                                        7
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].price,
+                                                        eventErrorString,
+                                                        getString(R.string.fill_price_previous),
+                                                        8
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].city,
+                                                        eventErrorString,
+                                                        getString(R.string.fill_city_previous),
+                                                        9
+                                                    )
 
-                                                        ageErrorString = getAgeError(
-                                                            listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageFrom,
-                                                            ageErrorString,
-                                                            getString(R.string.fill_age_group_from_in_previous_data),
-                                                            1
-                                                        )
-                                                        ageErrorString = getAgeError(
-                                                            listAgeGroupDataModel[listAgeGroupDataModel.size - 1].ageTo,
-                                                            ageErrorString,
-                                                            getString(R.string.fill_age_group_to),
-                                                            2
-                                                        )
-                                                        ageErrorString = getAgeError(
-                                                            listAgeGroupDataModel[listAgeGroupDataModel.size - 1].days,
-                                                            ageErrorString,
-                                                            getString(R.string.select_days_in_previous),
-                                                            3
-                                                        )
-                                                        ageErrorString = getAgeError(
-                                                            listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeFrom,
-                                                            ageErrorString,
-                                                            getString(R.string.select_from_time),
-                                                            4
-                                                        )
-                                                        ageErrorString = getAgeError(
-                                                            listAgeGroupDataModel[listAgeGroupDataModel.size - 1].timeTo,
-                                                            ageErrorString,
-                                                            getString(R.string.select_to_time),
-                                                            5
-                                                        )
-                                                    }
-                                                    if (clickPosition.equals("0")) {
-
-                                                    } else {
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].image,
-                                                            eventErrorString,
-                                                            getString(R.string.select_image_in_previous),
-                                                            1
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].name,
-                                                            eventErrorString,
-                                                            getString(R.string.fill_event_name_in_previous),
-                                                            2
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].dateFrom,
-                                                            eventErrorString,
-                                                            getString(R.string.select_from_date_in_previous),
-                                                            3
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].dateTo,
-                                                            eventErrorString,
-                                                            getString(R.string.select_to_date_in_previous),
-                                                            4
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].startTime,
-                                                            eventErrorString,
-                                                            getString(R.string.select_from_time),
-                                                            5
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].endTime,
-                                                            eventErrorString,
-                                                            getString(R.string.select_to_time),
-                                                            6
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].description,
-                                                            eventErrorString,
-                                                            getString(R.string.fill_description_in_previous),
-                                                            7
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].price,
-                                                            eventErrorString,
-                                                            getString(R.string.fill_price_previous),
-                                                            8
-                                                        )
-                                                        eventErrorString = getEventError(
-                                                            listAddEventDataModel[listAddEventDataModel.size - 1].city,
-                                                            eventErrorString,
-                                                            getString(R.string.fill_city_previous),
-                                                            9
-                                                        )
-
-                                                    }
+                                                }
 
 //                                    var eventErrorString = ""
 //                                    eventErrorNumber = 0
@@ -472,98 +484,98 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
 //                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
 
 
-                                                    if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
-                                                        myCustomToast(ageErrorString)
+                                                if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
+                                                    myCustomToast(ageErrorString)
+                                                } else {
+                                                    if (eventErrorNumber != 0 && eventErrorString.isNotEmpty()) {
+                                                        myCustomToast(eventErrorString)
                                                     } else {
-                                                        if (eventErrorNumber != 0 && eventErrorString.isNotEmpty()) {
-                                                            myCustomToast(eventErrorString)
-                                                        } else {
 
 
-                                                            if (age) {
-                                                                ageGroup = JSONArray()
-                                                                for (i in 0 until listAgeGroupDataModel.size) {
-                                                                    val json = JSONObject()
-                                                                    json.put(
-                                                                        "age_from",
-                                                                        listAgeGroupDataModel[i].ageFrom
-                                                                    )
-                                                                    json.put(
-                                                                        "age_to",
-                                                                        listAgeGroupDataModel[i].ageTo
-                                                                    )
-                                                                    json.put(
-                                                                        "days",
-                                                                        listAgeGroupDataModel[i].days
-                                                                    )
-                                                                    json.put(
-                                                                        "time_from",
-                                                                        listAgeGroupDataModel[i].timeFrom
-                                                                    )
-                                                                    json.put(
-                                                                        "time_to",
-                                                                        listAgeGroupDataModel[i].timeTo
-                                                                    )
-                                                                    ageGroup.put(json)
-                                                                }
+                                                        if (age) {
+                                                            ageGroup = JSONArray()
+                                                            for (i in 0 until listAgeGroupDataModel.size) {
+                                                                val json = JSONObject()
+                                                                json.put(
+                                                                    "age_from",
+                                                                    listAgeGroupDataModel[i].ageFrom
+                                                                )
+                                                                json.put(
+                                                                    "age_to",
+                                                                    listAgeGroupDataModel[i].ageTo
+                                                                )
+                                                                json.put(
+                                                                    "days",
+                                                                    listAgeGroupDataModel[i].days
+                                                                )
+                                                                json.put(
+                                                                    "time_from",
+                                                                    listAgeGroupDataModel[i].timeFrom
+                                                                )
+                                                                json.put(
+                                                                    "time_to",
+                                                                    listAgeGroupDataModel[i].timeTo
+                                                                )
+                                                                ageGroup.put(json)
                                                             }
-                                                            if (event) {
-                                                                addEvent = JSONArray()
-                                                                for (i in 0 until listAddEventDataModel.size) {
-                                                                    val json = JSONObject()
-                                                                    json.put(
-                                                                        "image",
-                                                                        listAddEventDataModel[i].image
-                                                                    )
-                                                                    json.put(
-                                                                        "name",
-                                                                        listAddEventDataModel[i].name
-                                                                    )
-                                                                    json.put("file_type", "image")
-                                                                    json.put(
-                                                                        "date_from",
-                                                                        listAddEventDataModel[i].dateFrom
-                                                                    )
-                                                                    json.put(
-                                                                        "date_to",
-                                                                        listAddEventDataModel[i].dateTo
-                                                                    )
-                                                                    json.put(
-                                                                        "time_from",
-                                                                        listAddEventDataModel[i].startTime
-                                                                    )
-                                                                    json.put(
-                                                                        "time_to",
-                                                                        listAddEventDataModel[i].endTime
-                                                                    )
-                                                                    json.put(
-                                                                        "description",
-                                                                        listAddEventDataModel[i].description
-                                                                    )
-                                                                    json.put(
-                                                                        "price",
-                                                                        listAddEventDataModel[i].price
-                                                                    )
-                                                                    json.put(
-                                                                        "city",
-                                                                        listAddEventDataModel[i].city
-                                                                    )
-                                                                    json.put(
-                                                                        "lat",
-                                                                        listAddEventDataModel[i].latitude
-                                                                    )
-                                                                    json.put(
-                                                                        "lng",
-                                                                        listAddEventDataModel[i].longitude
-                                                                    )
-                                                                    addEvent.put(json)
-                                                                }
-                                                            }
-                                                            hitFinallyActivityAddPostApi()
                                                         }
+                                                        if (event) {
+                                                            addEvent = JSONArray()
+                                                            for (i in 0 until listAddEventDataModel.size) {
+                                                                val json = JSONObject()
+                                                                json.put(
+                                                                    "image",
+                                                                    listAddEventDataModel[i].image
+                                                                )
+                                                                json.put(
+                                                                    "name",
+                                                                    listAddEventDataModel[i].name
+                                                                )
+                                                                json.put("file_type", "image")
+                                                                json.put(
+                                                                    "date_from",
+                                                                    listAddEventDataModel[i].dateFrom
+                                                                )
+                                                                json.put(
+                                                                    "date_to",
+                                                                    listAddEventDataModel[i].dateTo
+                                                                )
+                                                                json.put(
+                                                                    "time_from",
+                                                                    listAddEventDataModel[i].startTime
+                                                                )
+                                                                json.put(
+                                                                    "time_to",
+                                                                    listAddEventDataModel[i].endTime
+                                                                )
+                                                                json.put(
+                                                                    "description",
+                                                                    listAddEventDataModel[i].description
+                                                                )
+                                                                json.put(
+                                                                    "price",
+                                                                    listAddEventDataModel[i].price
+                                                                )
+                                                                json.put(
+                                                                    "city",
+                                                                    listAddEventDataModel[i].city
+                                                                )
+                                                                json.put(
+                                                                    "lat",
+                                                                    listAddEventDataModel[i].latitude
+                                                                )
+                                                                json.put(
+                                                                    "lng",
+                                                                    listAddEventDataModel[i].longitude
+                                                                )
+                                                                addEvent.put(json)
+                                                            }
+                                                        }
+                                                        hitFinallyActivityAddPostApi()
                                                     }
                                                 }
                                             }
+//                                            }
                                         }
                                     }
                                 }

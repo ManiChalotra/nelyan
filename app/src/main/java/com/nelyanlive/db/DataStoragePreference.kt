@@ -17,14 +17,14 @@ class DataStoragePreference(context: Context) {
 
     suspend fun <T> save(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore.edit { preferences ->
-            if(preferences.contains(KEY)) preferences.remove(KEY)
-
+            if (preferences.contains(KEY)) preferences.remove(KEY)
             preferences[KEY] = saveValue
         }
     }
+
     suspend fun <T> saveFCM(saveValue: T, KEY: Preferences.Key<T>) {
         dataStore2.edit { preferences ->
-            if(preferences.contains(KEY)) preferences.remove(KEY)
+            if (preferences.contains(KEY)) preferences.remove(KEY)
 
             preferences[KEY] = saveValue
         }
@@ -32,7 +32,6 @@ class DataStoragePreference(context: Context) {
 
     fun <T> emitStoredValue(value: Preferences.Key<T>): Flow<T> {
         return dataStore.data.catch {
-
             if (it is IOException) {
                 emit(emptyPreferences())
             } else {
@@ -42,6 +41,7 @@ class DataStoragePreference(context: Context) {
             it[value] ?: null as T
         }
     }
+
     fun <T> emitStoredFCMValue(value: Preferences.Key<T>): Flow<T> {
         return dataStore2.data.catch {
 
@@ -55,7 +55,7 @@ class DataStoragePreference(context: Context) {
         }
     }
 
-  suspend  fun deleteDataBase(){
+    suspend fun deleteDataBase() {
         dataStore.edit {
             it.clear()
         }

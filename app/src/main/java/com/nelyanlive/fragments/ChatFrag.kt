@@ -169,8 +169,7 @@ class ChatFrag(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputManager =
-            view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
         val geocoder = Geocoder(view.context, Locale.getDefault())
@@ -439,6 +438,7 @@ class ChatFrag(
     lateinit var dialog: Dialog
 
     fun dailogNotification() {
+
         dialog = Dialog(mContext)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.alert_notification_change)
@@ -459,6 +459,7 @@ class ChatFrag(
             dialog.dismiss()
         }
         dialog.show()
+
     }
 
     private fun setMuteNotifications() {

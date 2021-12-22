@@ -1,8 +1,11 @@
 package com.nelyanlive.utils.fcm
 
+import android.app.Notification.DEFAULT_SOUND
+import android.app.Notification.DEFAULT_VIBRATE
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -37,6 +40,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
     val dataStoragePreference by lazy { DataStoragePreference(this) }
 
     private var job = Job()
+
+    var summaryNotificationBuilder: NotificationCompat.Builder? = null
+    var bundleNotificationId = 1
+    var singleNotificationId = 1
+    var GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL"
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -84,39 +92,43 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
             .putExtra("disconnect", userId)
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        val intent = Intent(this, HomeActivity::class.java)
-            .putExtra("groupChat", "true")
+        val intent = Intent(this, HomeActivity::class.java).putExtra("groupChat", "true")
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val pendingIntent = PendingIntent.getActivity(
+        /*val pendingIntent = PendingIntent.getActivity(
             this, 0, if (groupId == 0) {
-                intent1
+                intent1setFlags
             } else {
                 intent
             }, PendingIntent.FLAG_ONE_SHOT
-        )
+        )*/
 
         // new
-        /*val pendingIntent = PendingIntent.getActivity(
-            this, 0, if (groupId == 0) {
-                intent1
-            } else {
-                intent
-            }, PendingIntent.FLAG_UPDATE_CURRENT
-        )*/
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            bundleNotificationId,
+            intent,
+            FLAG_UPDATE_CURRENT
+        )
 
         val channelId = getString(R.string.default_notification_channel_id)
         var numMessages = 0;
+        val groupKey = "bundle_notification_$bundleNotificationId"
 
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(data1["body"]!!).setAutoCancel(true)
+            .setGroup(groupKey)
+            .setGroupSummary(false)
             .setContentIntent(pendingIntent)
 
 //        builder.setContentText(currentText).setNumber(++numMessages);
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -127,7 +139,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
         }
 
+        summaryNotificationBuilder = NotificationCompat.Builder(this, "bundle_channel_id")
+            .setGroup(groupKey)
+            .setGroupSummary(true)
+            .setContentTitle(title)
+            .setContentText(data1["body"]!!).setAutoCancel(true)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setDefaults(DEFAULT_SOUND or DEFAULT_VIBRATE)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        if (singleNotificationId === bundleNotificationId) singleNotificationId =
+            bundleNotificationId else singleNotificationId++
         Log.e("new_message", "==212=222====${myId}")
+
+        builder.setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_SUMMARY);
+        summaryNotificationBuilder!!.setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_SUMMARY);
 
         launch(Dispatchers.Main.immediate) {
             myId = DataStoragePreference(AppController.getInstance()).emitStoredValue(
@@ -141,7 +168,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
             Log.e("new_message", "==212=111324234231111==564==${groupId}")
 
             if (groupId == 0) {
-
                 chatNotification.value = "true"
             }
 
@@ -149,12 +175,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
                 if (myChatVisible) {
                     manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+                    manager.notify(bundleNotificationId, summaryNotificationBuilder!!.build())
                 } else {
                     if (groupId == 0) {
-                        manager.notify(
-                            ((Date().time / 1000L % Int.MAX_VALUE).toInt()),
-                            builder.build()
-                        )
+                        manager.notify(((Date().time / 1000L % Int.MAX_VALUE).toInt()), builder.build())
+                        manager.notify(bundleNotificationId, summaryNotificationBuilder!!.build())
                     }
                 }
             }

@@ -156,18 +156,36 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             hitTypeTradeActivity_Api()
 
-            dayTimeModelArrayList =
-                intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
-            productDetailDataModelArrayList =
-                intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
+            dayTimeModelArrayList = intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
 
+            productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
+
+            Log.d(
+                EditTraderActivity::class.java.name,
+                "EditTraderActivity_productlist   " + productDetailDataModelArrayList.size
+            )
+
+            Log.d(
+                EditTraderActivity::class.java.name,
+                "EditTraderActivity_daylist   " + dayTimeModelArrayList.size
+            )
 
             if (productDetailDataModelArrayList.isEmpty()) productDetailDataModelArrayList.add(
                 TraderProductMyAds("", 0, "", "", "", 0)
             )
 
-            productDetailRepeatAdapter =
-                EditProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this)
+            if (productDetailDataModelArrayList.isNullOrEmpty()) {
+                rv_product_details.visibility = View.GONE
+                rv_product_details.visibility = View.GONE
+                tvAddTraderProduct.visibility = View.VISIBLE
+            }
+
+            if (dayTimeModelArrayList.isNullOrEmpty()) {
+                rvDayTime!!.visibility = View.GONE
+                tvAddTraderDay.visibility = View.VISIBLE
+            }
+
+            productDetailRepeatAdapter = EditProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this)
             rv_product_details!!.layoutManager = LinearLayoutManager(this)
             rv_product_details!!.adapter = productDetailRepeatAdapter
 
@@ -187,7 +205,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     )
                 }
             }
-
 
             dayTimeAdapter = DayTimeRepeatAdapter(this, dayTimeList, this)
             rvDayTime!!.layoutManager = LinearLayoutManager(this)
@@ -507,7 +524,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 if (productDetailDataModelArrayList.size == 0) {
                     productDetailDataModelArrayList.add(
                         TraderProductMyAds(
-                            "", 0, "", "", "",0
+                            "", 0, "", "", "", 0
                         )
                     )
                     rv_product_details!!.visibility = View.VISIBLE

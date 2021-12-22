@@ -279,7 +279,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 fragment = HomeFragment()
                 loadFragment(fragment)
             }
-
         }
         setDrawerClicks()
         setToolBarClicks()
@@ -287,15 +286,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             if (intent.hasExtra("groupChat")) {
                 launch(Dispatchers.Main.immediate) {
-                    userlocation =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                            .first()
-                    userlat =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
-                            .first()
-                    userlong =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
-                            .first()
+                    userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+
+                    userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+
+                    userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
 
                     Log.e(
                         "dataHome ------",
