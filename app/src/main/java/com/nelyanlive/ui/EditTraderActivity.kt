@@ -3,6 +3,7 @@ package com.nelyanlive.ui
 import android.app.Activity
 import android.content.Intent
 import android.location.Geocoder
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -156,9 +157,11 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
             hitTypeTradeActivity_Api()
 
-            dayTimeModelArrayList = intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
+            dayTimeModelArrayList =
+                intent.getSerializableExtra("daytimeList") as ArrayList<TraderDaysTimingMyAds>
 
-            productDetailDataModelArrayList = intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
+            productDetailDataModelArrayList =
+                intent.getSerializableExtra("traderProductList") as ArrayList<TraderProductMyAds>
 
             Log.d(
                 EditTraderActivity::class.java.name,
@@ -170,22 +173,23 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 "EditTraderActivity_daylist   " + dayTimeModelArrayList.size
             )
 
-            if (productDetailDataModelArrayList.isEmpty()) productDetailDataModelArrayList.add(
+            /*if (productDetailDataModelArrayList.isEmpty()) productDetailDataModelArrayList.add(
                 TraderProductMyAds("", 0, "", "", "", 0)
-            )
+            )*/
 
-            if (productDetailDataModelArrayList.isNullOrEmpty()) {
+            if (productDetailDataModelArrayList.isNullOrEmpty() || productDetailDataModelArrayList.size == 0) {
                 rv_product_details.visibility = View.GONE
-                rv_product_details.visibility = View.GONE
+                txt_productdetails.visibility = View.GONE
                 tvAddTraderProduct.visibility = View.VISIBLE
             }
 
-            if (dayTimeModelArrayList.isNullOrEmpty()) {
+            if (dayTimeModelArrayList.isNullOrEmpty() || dayTimeModelArrayList.size == 0) {
                 rvDayTime!!.visibility = View.GONE
                 tvAddTraderDay.visibility = View.VISIBLE
             }
 
-            productDetailRepeatAdapter = EditProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this)
+            productDetailRepeatAdapter =
+                EditProductDetailRepeatAdapter(this, productDetailDataModelArrayList, this)
             rv_product_details!!.layoutManager = LinearLayoutManager(this)
             rv_product_details!!.adapter = productDetailRepeatAdapter
 
@@ -310,20 +314,41 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             val authkey = AllSharedPref.restoreString(this, "auth_key")
 
             var typeEmpty = ""
-            when {
-                dayTime && product -> {
+            Log.e("chheckkk","--="+selectDayGroup.toString()+"--=="+productDetailsGroup.toString())
+                if(tvAddTraderDay.visibility==View.VISIBLE&&tvAddTraderProduct.visibility==View.VISIBLE) // day is empty
+                {
+                    typeEmpty = "2"
+                }
+                else if(tvAddTraderDay.visibility!=View.VISIBLE&&tvAddTraderProduct.visibility!=View.VISIBLE) //
+                {
                     typeEmpty = "0"
                 }
-                !product && dayTime -> {
-                    typeEmpty = "3"
-                }
-                product && !dayTime -> {
+                else if(tvAddTraderDay.visibility==View.VISIBLE) // day is emptyy
+                {
                     typeEmpty = "1"
                 }
-                !product && !dayTime -> {
+                else if(tvAddTraderProduct.visibility==View.VISIBLE) // prduck is emptyyy
+                {
+                    typeEmpty = "3"
+                }
+            Log.e("chheckkk","^^^&^&*%^&^&^&"+typeEmpty+"--==")
+
+/*
+            when {
+                dayTime && product -> { // editTraderPost_Api (both yes)
+                    typeEmpty = "0"
+                }
+                !product && dayTime -> { // product empty day true
+                    typeEmpty = "3"
+                }
+                product && !dayTime -> { // editTraderPost_ApiwithoutDay
+                    typeEmpty = "1"
+                }
+                !product && !dayTime -> { // editTraderPost_ApiWitoutProductandDay
                     typeEmpty = "2"
                 }
             }
+*/
 
             appViewModel.send_editPostTraderData(
                 security_key,
@@ -421,6 +446,8 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         myCustomToast(getString(R.string.post_updated))
                         OpenActivity(HomeActivity::class.java)
 
+                    }else{
+                        Log.d("addPostTraderResopnse", "-----------_else " + Gson().toJson(response.body()))
                     }
                 } else {
                     progressDialog.hidedialog()
@@ -513,6 +540,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     dayTimeAdapter.notifyDataSetChanged()
 
                 } else {
+                    rvDayTime!!.visibility = View.VISIBLE
                     tvAddTraderDay.visibility = View.GONE
                 }
 
@@ -598,33 +626,36 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                     )
 
 
-                                    productErrorString = getProductError(
-                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].image,
-                                        productErrorString,
-                                        getString(R.string.select_image_in_previous),
-                                        1
-                                    )
-                                    productErrorString = getProductError(
-                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].title,
-                                        productErrorString,
-                                        getString(R.string.fill_title_previous),
-                                        2
-                                    )
-                                    productErrorString = getProductError(
-                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].price,
-                                        productErrorString,
-                                        getString(R.string.fill_price_previous),
-                                        3
-                                    )
-                                    productErrorString = getProductError(
-                                        productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].description,
-                                        productErrorString,
-                                        getString(R.string.fill_description_in_previous),
-                                        4
-                                    )
+                                    if (productDetailDataModelArrayList.size == 0) {
 
+                                    } else {
+                                        productErrorString = getProductError(
+                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].image,
+                                            productErrorString,
+                                            getString(R.string.select_image_in_previous),
+                                            1
+                                        )
+                                        productErrorString = getProductError(
+                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].title,
+                                            productErrorString,
+                                            getString(R.string.fill_title_previous),
+                                            2
+                                        )
+                                        productErrorString = getProductError(
+                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].price,
+                                            productErrorString,
+                                            getString(R.string.fill_price_previous),
+                                            3
+                                        )
+                                        productErrorString = getProductError(
+                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].description,
+                                            productErrorString,
+                                            getString(R.string.fill_description_in_previous),
+                                            4
+                                        )
+
+                                    }
                                 }
-
                                 if (dayErrornumber != 0 && dayErrorString.isNotEmpty()) {
                                     myCustomToast(dayErrorString)
                                 } else {
@@ -792,13 +823,31 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
         clickPosition = position.toString()
         productDetailRepeatAdapter.notifyItemChanged(position)
-        if (list == 0) {
+        /*if (list == 0) {
+
+//            dayTime = true
+            product = false
             rv_product_details.visibility = View.GONE
             rv_product_details.visibility = View.GONE
             tvAddTraderProduct.visibility = View.VISIBLE
         } else {
 
+        }*/
+        tvAddTraderProduct.visibility = View.VISIBLE
+        if (productDetailDataModelArrayList.size == 0) {
+
+            rv_product_details.visibility = View.GONE
+            rv_product_details.visibility = View.GONE
+            tvAddTraderProduct.visibility = View.VISIBLE
+            product = false
+        } else {
+            product = true
         }
+
+        Log.d(
+            EditTraderActivity::class.java.name,
+            "EditTraderActivity_productlist   " + productDetailDataModelArrayList.size
+        )
     }
 
     override fun addCameraGalleryImage(list: java.util.ArrayList<TraderProductMyAds>, pos: Int) {
@@ -841,14 +890,26 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             "OnRemoveClick_Age   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list
         )
 
+
         clickPosition = position.toString()
         dayTimeAdapter.notifyItemChanged(position)
-        if (list == 0) {
+
+        /*     if (list == 0) {
+                 dayTime = false
+                 product = true
+                 rvDayTime!!.visibility = View.GONE
+                 tvAddTraderDay.visibility = View.VISIBLE
+             } else {
+
+             }*/
+        tvAddTraderDay.visibility = View.VISIBLE
+        if (dayTimeModelArrayList.size ==0) {
+
             rvDayTime!!.visibility = View.GONE
             tvAddTraderDay.visibility = View.VISIBLE
+            dayTime = false
         } else {
-
+            dayTime = true
         }
-
     }
 }

@@ -191,6 +191,10 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
 
         listAgeGroupDataModel = ArrayList()
         listAgeGroupDataModel = intent.getParcelableArrayListExtra<AgeGroupMyAds>("ageGroupList")!!
+        if (listAgeGroupDataModel.isNullOrEmpty()||listAgeGroupDataModel.size==0) {
+            rvAgeGroup.visibility = View.GONE
+            tvAddAgeGroup.visibility = View.VISIBLE
+        }
 
         if (listAgeGroupDataModel.isEmpty()) listAgeGroupDataModel.add(
             AgeGroupMyAds(
@@ -216,12 +220,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
         Log.d(EditActivity::class.java.name, "EditActivity_eventlist   " + listAddEventDataModel)
         Log.d(EditActivity::class.java.name, "EditActivity_agelist   " + listAgeGroupDataModel)
 
-        if (listAgeGroupDataModel.isNullOrEmpty()) {
-            rvAgeGroup.visibility = View.GONE
-            tvAddAgeGroup.visibility = View.VISIBLE
-        }
 
-        if (listAddEventDataModel.isNullOrEmpty()) {
+
+        if (listAddEventDataModel.isNullOrEmpty()||listAddEventDataModel.size==0) {
             rvEvent.visibility = View.GONE
             tvAddEvent.visibility = View.VISIBLE
         }
@@ -299,6 +300,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                     ageGroupEditAdapter.notifyDataSetChanged()
 
                 } else {
+                    rvAgeGroup.visibility = View.VISIBLE
                     tvAddAgeGroup.visibility = View.GONE
                 }
             }
@@ -332,6 +334,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                     eventEditAdapter.notifyDataSetChanged()
 
                 } else {
+                    rvEvent.visibility = View.VISIBLE
                     tvAddEvent.visibility = View.GONE
                 }
             }

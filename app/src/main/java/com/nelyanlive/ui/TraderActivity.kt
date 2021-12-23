@@ -55,6 +55,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
             .create(AppViewModel::class.java)
     }
+
     private var imageSelectedType = ""
     private var isImageSelected = false
 
@@ -215,6 +216,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 productDetailsGroup.toString(),
                 media.toString(),
                 if (days) "1" else "0",
+
                 if (product) "1" else "0"
             )
 
@@ -271,13 +273,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 if (response!!.isSuccessful && response.code() == 200) {
                     Log.d("addPostTraderResopnse", "-----------" + Gson().toJson(response.body()))
                     if (response.body() != null) {
-
                         progressDialog.hidedialog()
                         finishAffinity()
                         OpenActivity(HomeActivity::class.java)
 
                     }
                 } else {
+                    Log.d("addPostTraderResopnse", "Error    ")
                     progressDialog.hidedialog()
                     ErrorBodyResponse(response, this, null)
                 }
@@ -513,7 +515,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                             "day_name",
                                                             dayTimeModelArrayList[i].selectedDay
                                                         )
-
 
                                                         if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
                                                             Log.d(
@@ -1006,6 +1007,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         clickPosition = position.toString()
         productDetailRepeatAdapter.notifyItemChanged(position)
         if (list == 0) {
+            days = true
+            product = false
             rv_product_details.visibility = View.GONE
             rv_product_details.visibility = View.GONE
             tvAddTraderProduct.visibility = View.VISIBLE
