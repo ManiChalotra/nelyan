@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2" />
         <entry key="app/src/main/res/drawable-v24/btn1_shape.xml" value="0.18981481481481483" />
+        <entry key="app/src/main/res/drawable-v24/chat.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/drawable/alert_dialog_shape.xml" value="0.19333333333333333" />
         <entry key="app/src/main/res/drawable/alert_shape.xml" value="0.19333333333333333" />
         <entry key="app/src/main/res/drawable/btn1_shape.xml" value="0.18981481481481483" />
@@ -95,7 +96,7 @@
         <entry key="app/src/main/res/layout/fragment_trader_publish.xml" value="0.17" />
         <entry key="app/src/main/res/layout/item_day.xml" value="0.16458333333333333" />
         <entry key="app/src/main/res/layout/item_day_time_add_more.xml" value="0.16458333333333333" />
-        <entry key="app/src/main/res/layout/item_event_add_more.xml" value="0.16458333333333333" />
+        <entry key="app/src/main/res/layout/item_event_add_more.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_product_details_repeat.xml" value="0.15" />
         <entry key="app/src/main/res/layout/item_time_add_more.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/item_time_repart.xml" value="0.16927083333333334" />

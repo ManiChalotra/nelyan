@@ -55,7 +55,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
             .create(AppViewModel::class.java)
     }
-
     private var imageSelectedType = ""
     private var isImageSelected = false
 
@@ -216,7 +215,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 productDetailsGroup.toString(),
                 media.toString(),
                 if (days) "1" else "0",
-
                 if (product) "1" else "0"
             )
 
@@ -260,6 +258,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
+
                                 }
                             }
                     }
@@ -273,13 +272,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                 if (response!!.isSuccessful && response.code() == 200) {
                     Log.d("addPostTraderResopnse", "-----------" + Gson().toJson(response.body()))
                     if (response.body() != null) {
+
                         progressDialog.hidedialog()
                         finishAffinity()
                         OpenActivity(HomeActivity::class.java)
 
                     }
                 } else {
-                    Log.d("addPostTraderResopnse", "Error    ")
                     progressDialog.hidedialog()
                     ErrorBodyResponse(response, this, null)
                 }
@@ -516,95 +515,14 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                                             dayTimeModelArrayList[i].selectedDay
                                                         )
 
-                                                        if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty() && dayTimeModelArrayList[i].selectedDay!!.isNotEmpty()) {
-                                                            Log.d(
-                                                                TraderActivity::class.java.name,
-                                                                "TraderActivity_519  "
-                                                            )
-                                                            json.put(
-                                                                "time_from",
-                                                                dayTimeModelArrayList[i].firstStarttime
-                                                            )
-                                                            json.put(
-                                                                "time_to",
-                                                                dayTimeModelArrayList[i].firstEndtime
-                                                            )
-                                                            json.put(
-                                                                "secondStartTime",
-                                                                dayTimeModelArrayList[i].secondStarttime
-                                                            )
-                                                            json.put(
-                                                                "secondEndTime",
-                                                                dayTimeModelArrayList[i].secondEndtime
-                                                            )
-                                                            selectDayGroup.put(json)
-                                                            hitFinalTraderPostApi()
-//                                                            myCustomToast(getString(R.string.selecttime_txt))
+
+                                                        if (dayTimeModelArrayList[i].selectedDay!!.isEmpty()) {
+                                                            myCustomToast(getString(R.string.select_day))
                                                         } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isNotEmpty()) {
-
-                                                            Log.d(
-                                                                TraderActivity::class.java.name,
-                                                                "TraderActivity_528  "
-                                                            )
-
                                                             myCustomToast(getString(R.string.selectmorningtime_txt))
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].firstEndtime!!.isEmpty()) {
-                                                            Log.d(
-                                                                TraderActivity::class.java.name,
-                                                                "TraderActivity_534  "
-                                                            )
-                                                            json.put(
-                                                                "time_from",
-                                                                dayTimeModelArrayList[i].firstStarttime
-                                                            )
-                                                            json.put(
-                                                                "time_to",
-                                                                dayTimeModelArrayList[i].firstEndtime
-                                                            )
-                                                            json.put(
-                                                                "secondStartTime",
-                                                                dayTimeModelArrayList[i].secondStarttime
-                                                            )
-                                                            json.put(
-                                                                "secondEndTime",
-                                                                dayTimeModelArrayList[i].secondEndtime
-                                                            )
-                                                            selectDayGroup.put(json)
-                                                            hitFinalTraderPostApi()
-//                                                            myCustomToast(getString(R.string.selectmorninglasttime_txt))
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty()) {
-                                                            Log.d(
-                                                                TraderActivity::class.java.name,
-                                                                "TraderActivity_540  "
-                                                            )
-
+                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isNotEmpty() ) {
 
                                                             myCustomToast(getString(R.string.selecteveningtime_txt))
-                                                        } else if (dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[dayTimeModelArrayList.size - 1].secondEndtime!!.isEmpty()) {
-//
-                                                            Log.d(
-                                                                TraderActivity::class.java.name,
-                                                                "TraderActivity_545  "
-                                                            )
-                                                            json.put(
-                                                                "time_from",
-                                                                dayTimeModelArrayList[i].firstStarttime
-                                                            )
-                                                            json.put(
-                                                                "time_to",
-                                                                dayTimeModelArrayList[i].firstEndtime
-                                                            )
-                                                            json.put(
-                                                                "secondStartTime",
-                                                                dayTimeModelArrayList[i].secondStarttime
-                                                            )
-                                                            json.put(
-                                                                "secondEndTime",
-                                                                dayTimeModelArrayList[i].secondEndtime
-                                                            )
-                                                            selectDayGroup.put(json)
-                                                            hitFinalTraderPostApi()
-//                                                            myCustomToast(getString(R.string.selecteveninglasttime_txt))
                                                         } else {
                                                             json.put(
                                                                 "time_from",
@@ -633,17 +551,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
                                                             selectDayGroup.put(json)
                                                             if (product) {
-                                                                Log.d(
-                                                                    TraderActivity::class.java.name,
-                                                                    "TraderActivity_Products   " + product
-                                                                )
                                                                 productDetailsGroup = JSONArray()
                                                                 for (i in 0 until productArrayList.size) {
-
-                                                                    Log.d(
-                                                                        TraderActivity::class.java.name,
-                                                                        "TraderActivity_Products_644   " + productArrayList.size
-                                                                    )
                                                                     val json = JSONObject()
                                                                     json.put(
                                                                         "image",
@@ -904,22 +813,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         when {
             dayTimeModelArrayList[list.size - 1].selectedDay.isNullOrEmpty() -> {
                 myCustomToast(getString(R.string.select_day_previous))
-                Log.d(
-                    TraderActivity::class.java.name,
-                    "TraderActivity_898   " + dayTimeModelArrayList[list.size - 1].selectedDay
-                )
-
             }
-            dayTimeModelArrayList[list.size - 1].selectedDay!!.isNotEmpty() -> {
-                Log.d(
-                    TraderActivity::class.java.name,
-                    "TraderActivity_905   " + dayTimeModelArrayList[list.size - 1].selectedDay
-                )
-                dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
-                dayTimeRepeatAdapter.notifyDataSetChanged()
-            }
-
-            /*dayTimeModelArrayList[list.size - 1].firstStarttime.isNullOrEmpty() -> {
+            dayTimeModelArrayList[list.size - 1].firstStarttime.isNullOrEmpty() -> {
 //                myCustomToast(getString(R.string.select_morning_time_previous))
                 if (dayTimeModelArrayList[list.size - 1].secondStarttime!!.isNotEmpty() && dayTimeModelArrayList[list.size - 1].secondEndtime!!.isNotEmpty()) {
                     dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
@@ -957,7 +852,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                     myCustomToast(getString(R.string.select_evening_time_previous))
                 }
 
-            }*/
+            }
 
             else -> {
                 dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
@@ -1007,8 +902,6 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         clickPosition = position.toString()
         productDetailRepeatAdapter.notifyItemChanged(position)
         if (list == 0) {
-            days = true
-            product = false
             rv_product_details.visibility = View.GONE
             rv_product_details.visibility = View.GONE
             tvAddTraderProduct.visibility = View.VISIBLE

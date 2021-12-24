@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -287,6 +288,10 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
                         val mSizeOfAgeGroup: Int = listArrayAgeGroups.length()
                         val mSizeOfEvents: Int = listArrayEvents.length()
 
+                        Log.d(
+                            ActivityDetailsActivity::class.java.name,
+                            "ActivityDetailsActivity_EventLength   " + mSizeOfEvents
+                        )
                         listActivityimage.clear()
                         for (i in 0 until mSizeOfData) {
                             val model = listArray.getJSONObject(i)

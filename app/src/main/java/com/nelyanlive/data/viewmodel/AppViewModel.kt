@@ -56,7 +56,6 @@ class AppViewModel : ViewModel() {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                 }
-
                 override fun onResponse(
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
@@ -1392,7 +1391,7 @@ class AppViewModel : ViewModel() {
                     )
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1395  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1395  ")
                                 exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                             }
 
@@ -1400,7 +1399,7 @@ class AppViewModel : ViewModel() {
                                 call: Call<JsonObject>,
                                 response: Response<JsonObject>
                             ) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1403  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1403  ")
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })
@@ -1431,7 +1430,7 @@ class AppViewModel : ViewModel() {
                     )
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1434  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1434  ")
                                 exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                             }
 
@@ -1439,7 +1438,7 @@ class AppViewModel : ViewModel() {
                                 call: Call<JsonObject>,
                                 response: Response<JsonObject>
                             ) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1442  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1442  ")
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })
@@ -1469,7 +1468,7 @@ class AppViewModel : ViewModel() {
                     )
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1472  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1472  ")
                                 exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                             }
 
@@ -1477,7 +1476,7 @@ class AppViewModel : ViewModel() {
                                 call: Call<JsonObject>,
                                 response: Response<JsonObject>
                             ) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1480  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1480  ")
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })
@@ -1506,7 +1505,7 @@ class AppViewModel : ViewModel() {
                     )
                         .enqueue(object : retrofit2.Callback<JsonObject> {
                             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1509  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1509  ")
                                 exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage
                             }
 
@@ -1514,7 +1513,7 @@ class AppViewModel : ViewModel() {
                                 call: Call<JsonObject>,
                                 response: Response<JsonObject>
                             ) {
-                                Log.d(AppViewModel::class.java.name,"AppviewModel_1517  ")
+                                Log.d(AppViewModel::class.java.name, "AppviewModel_1517  ")
                                 addPostTraderMutableLiveData?.value = response
                             }
                         })

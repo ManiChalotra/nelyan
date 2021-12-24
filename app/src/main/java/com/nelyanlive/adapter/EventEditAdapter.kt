@@ -20,8 +20,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
-                       var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.Adapter<EventEditAdapter.EventRepeatViewHolder>() {
+class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.Adapter<EventEditAdapter.EventRepeatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventRepeatViewHolder {
         return EventRepeatViewHolder(LayoutInflater.from(context).inflate(R.layout.item_event_add_more, parent, false), listener)
@@ -35,7 +34,6 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
         return list.size
     }
 
-
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
@@ -43,7 +41,6 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
     override fun getItemViewType(position: Int): Int {
         return position
     }
-
 
     inner class EventRepeatViewHolder(itemView: View, var listener: OnEventRecyclerViewItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
@@ -58,6 +55,8 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
         val price = itemView.edtPrice!!
         val city = itemView.et_city_add_event!!
         val removeButton = itemView.ivdlt
+        val edtAgeFrom = itemView.edtAgeFrom
+        val edtAgeTo = itemView.edtAgeTo
 
         var selectDate = ""
         var day = ""
@@ -77,6 +76,8 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>,
             timeFrom.text = list[position].startTime
             timeTo.text = list[position].endTime
             city.text = list[position].city
+           // edtAgeFrom.text = list[position].
+           // edtAgeTo.text = list[position].
 
             image.setOnClickListener {
                 listener.addCameraGalleryImage(position)

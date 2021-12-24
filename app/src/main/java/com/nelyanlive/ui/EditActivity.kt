@@ -28,6 +28,13 @@ import com.nelyanlive.modals.myAd.AgeGroupMyAds
 import com.nelyanlive.modals.myAd.EventMyAds
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
+import kotlinx.android.synthetic.main.activity_addactivity.countycode
+import kotlinx.android.synthetic.main.activity_addactivity.ivBack
+import kotlinx.android.synthetic.main.activity_addactivity.ivImg1
+import kotlinx.android.synthetic.main.activity_addactivity.ivImg2
+import kotlinx.android.synthetic.main.activity_addactivity.ivImg3
+import kotlinx.android.synthetic.main.activity_addactivity.trader_type
+import kotlinx.android.synthetic.main.activity_trader.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -52,6 +59,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
         ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
             .create(AppViewModel::class.java)
     }
+
     private var imageSelectedType = ""
 
     var image1: String = ""
@@ -165,7 +173,6 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                         .error(R.mipmap.no_image_placeholder).into(ivImg1)
                     image1 = activityimageList[0].images
 
-
                 }
                 2 -> {
                     Glide.with(this).load(image_base_URl + activityimageList[0].images)
@@ -175,13 +182,11 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                     image1 = activityimageList[0].images
                     image2 = activityimageList[1].images
                 }
+
                 3 -> {
-                    Glide.with(this).load(image_base_URl + activityimageList[0].images)
-                        .error(R.mipmap.no_image_placeholder).into(ivImg1)
-                    Glide.with(this).load(image_base_URl + activityimageList[1].images)
-                        .error(R.mipmap.no_image_placeholder).into(ivImg2)
-                    Glide.with(this).load(image_base_URl + activityimageList[2].images)
-                        .error(R.mipmap.no_image_placeholder).into(ivImg3)
+                    Glide.with(this).load(image_base_URl + activityimageList[0].images).error(R.mipmap.no_image_placeholder).into(ivImg1)
+                    Glide.with(this).load(image_base_URl + activityimageList[1].images).error(R.mipmap.no_image_placeholder).into(ivImg2)
+                    Glide.with(this).load(image_base_URl + activityimageList[2].images).error(R.mipmap.no_image_placeholder).into(ivImg3)
                     image1 = activityimageList[0].images
                     image2 = activityimageList[1].images
                     image3 = activityimageList[2].images
@@ -191,7 +196,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
 
         listAgeGroupDataModel = ArrayList()
         listAgeGroupDataModel = intent.getParcelableArrayListExtra<AgeGroupMyAds>("ageGroupList")!!
-        if (listAgeGroupDataModel.isNullOrEmpty()||listAgeGroupDataModel.size==0) {
+        if (listAgeGroupDataModel.isNullOrEmpty() || listAgeGroupDataModel.size == 0) {
             rvAgeGroup.visibility = View.GONE
             tvAddAgeGroup.visibility = View.VISIBLE
         }
@@ -220,9 +225,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
         Log.d(EditActivity::class.java.name, "EditActivity_eventlist   " + listAddEventDataModel)
         Log.d(EditActivity::class.java.name, "EditActivity_agelist   " + listAgeGroupDataModel)
 
-
-
-        if (listAddEventDataModel.isNullOrEmpty()||listAddEventDataModel.size==0) {
+        if (listAddEventDataModel.isNullOrEmpty() || listAddEventDataModel.size == 0) {
             rvEvent.visibility = View.GONE
             tvAddEvent.visibility = View.VISIBLE
         }
@@ -495,7 +498,8 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                     } else {
 
 
-                                                        if (age) {
+//                                                        if (age) {
+                                                        if (tvAddAgeGroup.visibility == View.GONE) {
                                                             ageGroup = JSONArray()
                                                             for (i in 0 until listAgeGroupDataModel.size) {
                                                                 val json = JSONObject()
@@ -522,7 +526,10 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                                 ageGroup.put(json)
                                                             }
                                                         }
-                                                        if (event) {
+
+//                                                        if (event) {
+
+                                                        if (tvAddEvent.visibility == View.GONE) {
                                                             addEvent = JSONArray()
                                                             for (i in 0 until listAddEventDataModel.size) {
                                                                 val json = JSONObject()
@@ -733,7 +740,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
             EditActivity::class.java.name,
             "OnRemoveClick_Age   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list
         )
-        event = true
+//        event = true
         clickPosition = position.toString()
         ageGroupEditAdapter.notifyItemChanged(position)
         if (list == 0) {
@@ -776,7 +783,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     }
 
     override fun onRemoveEventItem(position: Int, list: Int) {
-        age = true
+//        age = true
         Log.d(
             EditActivity::class.java.name,
             "OnRemoveClick   " + position + "clickPosition   " + clickPosition
@@ -991,6 +998,23 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     private fun hitFinallyActivityAddPostApi() {
 
         var typeEmpty = ""
+
+        if (tvAddAgeGroup.visibility == View.VISIBLE && tvAddEvent.visibility == View.VISIBLE) // all empty
+        {
+            typeEmpty = "4"
+        } else if (tvAddAgeGroup.visibility == View.GONE && tvAddEvent.visibility == View.GONE) //editMyaddActivitywithoutAgeEvent
+        {
+            typeEmpty = "1"
+        } else if (tvAddAgeGroup.visibility == View.VISIBLE) // day is emptyy editMyaddActivitywithoutAge
+        {
+            typeEmpty = "2"
+        } else if (tvAddEvent.visibility == View.VISIBLE) // prduck is emptyyy //editMyaddActivitywithoutEvent
+        {
+            typeEmpty = "3"
+        }
+        Log.e("chheckkk_EditActivity", "^^^&^&*%^&^&^&" + typeEmpty + "--==")
+
+/*
         when {
             event && age -> {
                 typeEmpty = "1"
@@ -1005,6 +1029,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                 typeEmpty = "4"
             }
         }
+*/
 
         if (clickPosition.equals("0")) {
             appViewModel.send_editActivity_Data(

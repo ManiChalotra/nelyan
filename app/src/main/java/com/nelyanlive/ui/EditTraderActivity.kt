@@ -664,7 +664,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         myCustomToast(productErrorString)
                                     } else {
 
-                                        if (dayTime) {
+                                        if (tvAddTraderDay.visibility==View.GONE) {
                                             selectDayGroup = JSONArray()
                                             for (i in 0 until dayTimeList.size) {
                                                 val json = JSONObject()
@@ -683,7 +683,16 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             }
                                         }
 
-                                        if (product) {
+                                        //  else if(tvAddTraderDay.visibility==View.VISIBLE) // day is emptyy
+                                        //                {
+                                        //                    typeEmpty = "1"
+                                        //                }
+                                        //                else if(tvAddTraderProduct.visibility==View.VISIBLE) // prduck is emptyyy
+                                        //                {
+                                        //                    typeEmpty = "3"
+                                        //                }
+                                     //   if (product) {
+                                        if (tvAddTraderProduct.visibility==View.GONE) {
                                             productDetailsGroup = JSONArray()
                                             for (i in 0 until productDetailDataModelArrayList.size) {
                                                 val json = JSONObject()
@@ -833,10 +842,9 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         } else {
 
         }*/
-        tvAddTraderProduct.visibility = View.VISIBLE
+       // tvAddTraderProduct.visibility = View.VISIBLE
         if (productDetailDataModelArrayList.size == 0) {
 
-            rv_product_details.visibility = View.GONE
             rv_product_details.visibility = View.GONE
             tvAddTraderProduct.visibility = View.VISIBLE
             product = false
@@ -902,8 +910,8 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
              } else {
 
              }*/
-        tvAddTraderDay.visibility = View.VISIBLE
-        if (dayTimeModelArrayList.size ==0) {
+
+        if (dayTimeModelArrayList.size ==1) {
 
             rvDayTime!!.visibility = View.GONE
             tvAddTraderDay.visibility = View.VISIBLE
