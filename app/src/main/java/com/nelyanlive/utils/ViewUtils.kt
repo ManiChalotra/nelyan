@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-//val base_URL = "https://app.nelyan.com/api/"
-val base_URL = "http://192.168.1.54:1052/api/"
+val base_URL = "https://app.nelyan.com/api/"
+//val base_URL = "http://192.168.1.54:1052/api/"
 //val base_URL = "http://3.13.214.27:1052/api/"   //old
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
@@ -35,8 +35,8 @@ val device_Type = "1"
 val from_admin_image_base_URl = "https://app.nelyan.com/uploads/users/"
    //val image_base_URl = "http://3.13.214.27:1052"   // old
 val image_base_URl = "https://app.nelyan.com"
-//const val socketBaseUrl = "https://app.nelyan.com"
-const val socketBaseUrl = "http://192.168.1.109:1052"
+const val socketBaseUrl = "https://app.nelyan.com"
+//const val socketBaseUrl = "http://192.168.1.109:1052"
 val FOR_FACEBOOK_TYPE = "2"
 val FOR_GOOGLE_TYPE = "1"
 

@@ -24,6 +24,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textIsSelectable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/llSender"
+            app:layout_constraintTop_toTopOf="@+id/llSender" />
+
+        <TextView
             android:id="@+id/tvDate"
             setMessageListTime="@{model.created}"
             android:layout_width="wrap_content"
