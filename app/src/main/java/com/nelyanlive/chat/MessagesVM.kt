@@ -3,8 +3,13 @@ package com.nelyanlive.chat
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
@@ -58,13 +63,37 @@ class MessagesVM : ViewModel() {
                             MessagesVM::class.java.name,
                             "MessageVM_Id    " + listMembers[position].id + "  " + "MessageVM_UserId  " + listMembers[position].user_id
                         )
-                        delDialog(listMembers[position].user_id)
+                        deletpopup(view,position)
+
                     }
                 }
             }
         })
     }
+                        fun  deletpopup(view: View,position:Int)
+                        {
+                            var filterPopUp: PopupWindow? = null
+                            val v: View? = LayoutInflater.from(ctx).inflate(R.layout.res_reply, null)
+                            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                            // Creating the PopupWindow
+                            filterPopUp = PopupWindow(view.context)
+                            filterPopUp.setContentView(v)
+                            filterPopUp.setOutsideTouchable(true)
+                            filterPopUp.setWidth(200)
+                            filterPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                            val llDelete = v!!.findViewById<LinearLayout>(R.id.llDelete)
 
+                            llDelete.setOnClickListener {
+                                delDialog(listMembers[position].user_id)
+                                filterPopUp.dismiss()
+                            }
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                filterPopUp.showAsDropDown(view, -0, 0, Gravity.RIGHT)
+                            }
+                            filterPopUp.setFocusable(true)
+                            }
+/*
     fun dailogDelete(context: Context, id: String, groupId: String, position: Int) {
         dialog = Dialog(context)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -100,6 +129,7 @@ class MessagesVM : ViewModel() {
         }
         dialog.show()
     }
+*/
 
     fun onClick(view: View, s: String) {
         when (s) {

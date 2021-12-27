@@ -404,4 +404,6 @@
 
     <string name="min_age">Min Age</string>
     <string name="max_age">Max Age</string>
+    <string name="add_age_groupe">Add age groupe</string>
+    <string name="add_a_event">Add a event</string>
 </resources>

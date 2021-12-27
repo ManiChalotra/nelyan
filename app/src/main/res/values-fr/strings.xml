@@ -60,7 +60,7 @@
     <string name="publisher">Publier</string>
     <string name="myMessage">Messages</string>
     <!--    <string name="cityChat">Discussion</string>-->
-    <string name="cityChat">Discussions by Bons plans</string>
+    <string name="cityChat">Bons plans</string>
     <string name="event">Événements</string>
     <string name="description1">Description:</string>
     <string name="name_of_nurserie">Name of Nurserie</string>
@@ -204,7 +204,7 @@
     <string name="price">Prix(€)</string>
     <string name="price11">Prix</string>
 <!--    <string name="add_more">Ajouter plus</string>-->
-    <string name="add_more">Ajouter plus</string>
+    <string name="add_more">Ajouter un horaire par groupe d’âge</string>
     <string name="add_more_event">Ajouter un événement</string>
     <string name="type_of_child_care">Type de garde</string>
     <string name="type">Type</string>

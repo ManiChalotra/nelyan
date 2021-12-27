@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -9,7 +10,7 @@
             type="com.nelyanlive.chat.ChatListResponse" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -89,8 +90,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_2sdp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/ivmore"
                         app:layout_constraintStart_toEndOf="@id/iv_activity_image"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -155,16 +156,19 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <!--android:drawableStart="@{model.unreadcount.equals(`0`) ? @drawable/blue_double_check : null}"-->
-
+                    <ImageView
+                        android:id="@+id/ivmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/option_dot"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:padding="@dimen/_5sdp"
+                        android:onClick="@{(view)->model.onItemClick.onClick(view,model.adapterPosition,`delete`)}"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
-
         </com.daimajia.swipe.SwipeLayout>
-
-
     </LinearLayout>
 </layout>
 

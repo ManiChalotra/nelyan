@@ -121,10 +121,13 @@ interface JsonPlaceHolder {
         @Header("auth_key") auth_key: String?
     ): Call<JsonObject>
 
-    @GET("myAddList")
+
+    @POST("myAddList")
+    @FormUrlEncoded
     fun getmyAddListAPI(
         @Header("security_key") securityKey: String?,
-        @Header("auth_key") auth_key: String?
+        @Header("auth_key") auth_key: String?,
+        @Field("type") type: String?
     ): Call<JsonObject>
 
     @GET("get_profile")

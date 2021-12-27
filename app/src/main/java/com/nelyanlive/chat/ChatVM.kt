@@ -56,8 +56,8 @@ class ChatVM : ViewModel() {
     }
     val listChat by lazy { ArrayList<ChatData>() }
 
-    init {
-
+    init
+    {
         chatAdapter.setOnItemClick(object : RecyclerAdapterChat.OnItemClick {
             override fun onClick(view: View, position: Int, type: String) {
                 when (type) {
@@ -100,7 +100,6 @@ class ChatVM : ViewModel() {
                             position
                         )
                     }
-
                 }
             }
         })
@@ -113,6 +112,7 @@ class ChatVM : ViewModel() {
         dialog.setCancelable(true)
         val tvYes: TextView = dialog.findViewById(R.id.tvYes)
         val tvNo: TextView = dialog.findViewById(R.id.tvNo)
+
         tvYes.setOnClickListener {
             dialog.dismiss()
             val json = JSONObject()
@@ -189,9 +189,7 @@ class ChatVM : ViewModel() {
             json.put("receiverId", senderID)
             json.put("messageType", 1)
             json.put("message", tmp)
-
             Log.e("send_message", "=======$json")
-
             socket.emit("send_message", json)
 
             message.set("")

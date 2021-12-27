@@ -225,12 +225,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 descp = et_description.text.toString()
                 phonee = et_phone.text.toString()
 
-                Log.d(
-                    AddActivity::class.java.name,
-                    "AddActivity  " + "  ShopName  " + shopName + "  website  " + website
-                            + "  minage " + minage + "  maxage  " + maxage + "  activityname  " + activityName + "  descp " + descp +
-                            "  phonee " + phonee
-                )
+                Log.d(AddActivity::class.java.name, "AddActivity  " + "  ShopName  " + shopName + "  website  " + website
+                            + "  minage " + minage + "  maxage  " + maxage + "  activityname  " + activityName + "  descp " + descp + "  phonee " + phonee)
+
                 if (!isImageSelected) {
                     myCustomToast(getString(R.string.media_missing_error))
                 } else {
@@ -450,62 +447,20 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                                 addEvent = JSONArray()
                                                                 for (i in 0 until listEvent.size) {
                                                                     val json = JSONObject()
-                                                                    json.put(
-                                                                        "image",
-                                                                        listEvent[i].image.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "name",
-                                                                        listEvent[i].name.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "file_type",
-                                                                        "image"
-                                                                    )
-                                                                    json.put(
-                                                                        "date_from",
-                                                                        listEvent[i].dateFrom.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "date_to",
-                                                                        listEvent[i].dateTo.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "time_from",
-                                                                        listEvent[i].timeFrom.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "time_to",
-                                                                        listEvent[i].timeTo
-                                                                    )
-                                                                    json.put(
-                                                                        "description",
-                                                                        listEvent[i].description.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "minAge",
-                                                                        listEvent[i].minAge.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "maxAge",
-                                                                        listEvent[i].maxAge.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "price",
-                                                                        listEvent[i].price.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "city",
-                                                                        listEvent[i].city.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "lat",
-                                                                        listEvent[i].lati.toString()
-                                                                    )
-                                                                    json.put(
-                                                                        "lng",
-                                                                        listEvent[i].longi.toString()
-                                                                    )
+                                                                    json.put("image", listEvent[i].image.toString())
+                                                                    json.put("name", listEvent[i].name.toString())
+                                                                    json.put("file_type", "image")
+                                                                    json.put("date_from", listEvent[i].dateFrom.toString())
+                                                                    json.put("date_to", listEvent[i].dateTo.toString())
+                                                                    json.put("time_from", listEvent[i].timeFrom.toString())
+                                                                    json.put("time_to", listEvent[i].timeTo)
+                                                                    json.put("description", listEvent[i].description.toString())
+                                                                    json.put("minAge", listEvent[i].minAge.toString())
+                                                                    json.put("maxAge", listEvent[i].maxAge.toString())
+                                                                    json.put("price", listEvent[i].price.toString())
+                                                                    json.put("city", listEvent[i].city.toString())
+                                                                    json.put("lat", listEvent[i].lati.toString())
+                                                                    json.put("lng", listEvent[i].longi.toString())
 
                                                                     Log.d(
                                                                         AddActivity::class.java.name,

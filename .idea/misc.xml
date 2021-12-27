@@ -46,7 +46,7 @@
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_terms.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/activity_trader.xml" value="0.17962962962962964" />
+        <entry key="app/src/main/res/layout/activity_trader.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_trader_preview.xml" value="0.1390625" />
         <entry key="app/src/main/res/layout/activity_walkthrough.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/add_log.xml" value="0.18489583333333334" />
@@ -108,7 +108,7 @@
         <entry key="app/src/main/res/layout/list_chat.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/list_favorite.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/list_masg.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/list_message.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/list_message.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_my_add.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/list_noti.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/list_sectorization.xml" value="0.18489583333333334" />

@@ -16,10 +16,11 @@ data class EventMyAds(
         var image: String,
         var latitude: String,
         var longitude: String,
+        var minAge: String?,
+        var maxAge: String?,
         var name: String,
         var price: String,
         val status: Int,
-        val updatedAt: String,
         val userId: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -31,16 +32,19 @@ data class EventMyAds(
             parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!,
-        parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!,
             parcel.readInt(),
-            parcel.readString()!!,
             parcel.readInt())
-
+//EventMyAds(activityId=1695, city=Mohli, createdAt=2021-12-27T13:11:25.000Z, description=jioiuhjuihj, dateFrom=27/12/2021,
+// dateTo=31/12/2021, startTime=18:40, endTime=20:40, id=954, image=/uploads/users/1640610628789-file.jpg,
+// latitude=31.2409038, longitude=77.5834959, minAge=22, maxAge=66, name=2e34e32er4, price=565, status=1, userId=1263)
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(activityId)
         parcel.writeString(city)
@@ -54,10 +58,11 @@ data class EventMyAds(
         parcel.writeString(image)
         parcel.writeString(latitude)
         parcel.writeString(longitude)
+        parcel.writeString(minAge)
+        parcel.writeString(maxAge)
         parcel.writeString(name)
         parcel.writeString(price)
         parcel.writeInt(status)
-        parcel.writeString(updatedAt)
         parcel.writeInt(userId)
     }
 

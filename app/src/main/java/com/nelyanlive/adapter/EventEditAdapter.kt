@@ -76,8 +76,8 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
             timeFrom.text = list[position].startTime
             timeTo.text = list[position].endTime
             city.text = list[position].city
-           // edtAgeFrom.text = list[position].
-           // edtAgeTo.text = list[position].
+            edtAgeFrom.setText(list[position].minAge)
+            edtAgeTo.setText(list[position].maxAge)
 
             image.setOnClickListener {
                 listener.addCameraGalleryImage(position)
@@ -137,6 +137,32 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
             name.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].name = s.toString()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
+            edtAgeFrom.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].minAge = s.toString()
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
+            edtAgeTo.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].maxAge = s.toString()
                 }
 
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

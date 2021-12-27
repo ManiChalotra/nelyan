@@ -62,6 +62,8 @@ class EventRepeatAdapter(
         val timeFrom = itemView.edClo2
         val timeTo = itemView.edClo3
         val description = itemView.edtDesc
+        val edtAgeFrom = itemView.edtAgeFrom
+        val edtAgeTo = itemView.edtAgeTo
         val price = itemView.edtPrice
         val city = itemView.et_city_add_event
         val removeButton = itemView.ivdlt
@@ -183,6 +185,39 @@ class EventRepeatAdapter(
             description.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     list[position].description = s.toString()
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
+
+            edtAgeFrom.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].minAge = s.toString()
+                }
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
+
+            edtAgeTo.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    list[position].maxAge = s.toString()
                 }
 
                 override fun beforeTextChanged(

@@ -24,6 +24,8 @@
             style="@style/HeaderText"
             android:layout_centerInParent="true"
             android:text="@string/activity"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/_50sdp"
             android:textColor="@color/black" />
 
     </RelativeLayout>
@@ -391,8 +393,10 @@
                     android:id="@+id/tvAddAgeGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="end"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/add_more_btn"
                     android:focusable="true"
@@ -400,7 +404,7 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:text="Add Age Group"
+                    android:text="@string/add_age_groupe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_8sdp"
@@ -426,15 +430,12 @@
             <TextView
                 android:id="@+id/tvAddEvent"
                 style="@style/CommonTextWrapcontent"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/add_more_btn"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
-                android:text="Add Event"
+                android:text="@string/add_a_event"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone" />

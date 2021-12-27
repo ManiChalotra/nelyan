@@ -252,13 +252,11 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     parent: AdapterView<*>?,
                                     view: View?,
                                     position: Int,
-                                    id: Long
-                                ) {
+                                    id: Long) {
                                     traderTypeId = typeId[position]
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
-
                                 }
                             }
                     }

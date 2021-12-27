@@ -86,7 +86,6 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     private lateinit var listAgeGroupDataModel: ArrayList<AgeGroupMyAds>
     private lateinit var listAddEventDataModel: ArrayList<EventMyAds>
     private lateinit var activityimageList: ArrayList<ActivityimageMyAds>
-
     private lateinit var ageGroupEditAdapter: AgeGroupEditAdapter
     private lateinit var eventEditAdapter: EventEditAdapter
 
@@ -128,34 +127,34 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addactivity)
-        initializeClicks()
-        checkMvvmResponse()
 
+        checkMvvmResponse()
+        initializeClicks()
         Log.d("onCreate_EditActivity   ", "onCreate_EditActiivty   ")
         countycode.setOnCountryChangeListener {
             countryCodee = countycode.selectedCountryCode.toString()
         }
     }
 
-    private fun initializeClicks() {
-
-        if (intent.extras != null) {
-
-            et_shopName.setText(intent.getStringExtra("nameofShop"))
-            et_activityName.setText(intent.getStringExtra("nameofActivity"))
-            et_description.setText(intent.getStringExtra("description"))
-            et_phone.setText(intent.getStringExtra("phoneNumber"))
-            et_addressActivity.text = intent.getStringExtra("address")
-            etWebsite.setText(intent.getStringExtra("website"))
-            addressLatitude = intent.getStringExtra("latti")!!
-            cityName = intent.getStringExtra("city")!!
-            addressLongitude = intent.getStringExtra("longi")!!
-            countryCodee = intent.getStringExtra("countryCode").toString()
-            countycode.setCountryForPhoneCode(countryCodee.toInt())
-            postID = intent.getStringExtra("adID").toString()
-            activityTypeId = intent.getStringExtra("activityTypeId").toString()
-            edtAgeFrom.setText(intent.getStringExtra("minage"))
-            edtAgeTo.setText(intent.getStringExtra("maxage"))
+    private fun initializeClicks()
+    {
+        if (intent.extras != null)
+        {
+            et_shopName.setText(intent.getStringExtra("nameofShop")?:"")
+            et_activityName.setText(intent.getStringExtra("nameofActivity")?:"")
+            et_description.setText(intent.getStringExtra("descriptiondata")?:"")
+            et_phone.setText(intent.getStringExtra("phoneNumber")?:"")
+            et_addressActivity.text = intent.getStringExtra("address")?:""
+            etWebsite.setText(intent.getStringExtra("website")?:"")
+            addressLatitude = intent.getStringExtra("latti")?:""
+            cityName = intent.getStringExtra("city")?:""
+            addressLongitude = intent.getStringExtra("longi")?:""
+            countryCodee = intent.getStringExtra("countryCodedata").toString()?:""
+            countycode.setCountryForPhoneCode(countryCodee.toInt())?:""
+            postID = intent.getStringExtra("adID").toString()?:""
+            activityTypeId = intent.getStringExtra("activityTypeId").toString()?:""
+            edtAgeFrom.setText(intent.getStringExtra("minage")?:"")
+            edtAgeTo.setText(intent.getStringExtra("maxage")?:"")
             Log.d(
                 EditActivity::class.java.name,
                 "EditActivity_ShopName   " + intent.getStringExtra("nameofShop")
@@ -220,7 +219,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
         rvAgeGroup!!.adapter = ageGroupEditAdapter
 
         listAddEventDataModel = ArrayList()
-        listAddEventDataModel = intent.getParcelableArrayListExtra<EventMyAds>("eventMyAdsList")!!
+       listAddEventDataModel = intent.getParcelableArrayListExtra<EventMyAds>("eventMyAdsList")!!
 
         Log.d(EditActivity::class.java.name, "EditActivity_eventlist   " + listAddEventDataModel)
         Log.d(EditActivity::class.java.name, "EditActivity_agelist   " + listAgeGroupDataModel)
@@ -246,8 +245,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                 "",
                 "",
                 "",
-                0,
                 "",
+                "",
+                0,
                 0
             )
         )
@@ -327,8 +327,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                             "",
                             "",
                             "",
-                            0,
                             "",
+                            "",
+                            0,
                             0
                         )
                     )
@@ -533,10 +534,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                             addEvent = JSONArray()
                                                             for (i in 0 until listAddEventDataModel.size) {
                                                                 val json = JSONObject()
-                                                                json.put(
-                                                                    "image",
-                                                                    listAddEventDataModel[i].image
-                                                                )
+                                                                json.put("image", listAddEventDataModel[i].image)
                                                                 json.put(
                                                                     "name",
                                                                     listAddEventDataModel[i].name
@@ -578,6 +576,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                                     "lng",
                                                                     listAddEventDataModel[i].longitude
                                                                 )
+                                                                json.put("minAge", listAddEventDataModel[i].minAge.toString())
+                                                                json.put("maxAge", listAddEventDataModel[i].maxAge.toString())
+
                                                                 addEvent.put(json)
                                                             }
                                                         }
@@ -847,8 +848,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                         "",
                         "",
                         "",
-                        0,
                         "",
+                        "",
+                        0,
                         0
                     )
                 )

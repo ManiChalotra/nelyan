@@ -260,8 +260,8 @@ class AppViewModel : ViewModel() {
         return myAdsListMutableLiveData
     }
 
-    fun sendMyAdsListData(securityKey: String?, authkey: String?) {
-        JsonPlaceHolder().getmyAddListAPI(securityKey, authkey)
+    fun sendMyAdsListData(securityKey: String?, authkey: String?, type: String?) {
+        JsonPlaceHolder().getmyAddListAPI(securityKey, authkey,type)
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     exceptionLiveData!!.value = t.message + "\n" + t.localizedMessage

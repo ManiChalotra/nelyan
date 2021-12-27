@@ -158,7 +158,6 @@
                 android:layout_gravity="center"
                 android:maxWidth="200dp"
                 android:minWidth="80dp"
-                android:onClick="@{(view)->model.onItemClickChat.onClick(view,model.adapterPosition,`arrayreply`)}"
                 android:paddingVertical="@dimen/_8sdp"
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"

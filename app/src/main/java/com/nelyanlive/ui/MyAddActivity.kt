@@ -98,7 +98,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
     private fun hitMyAdsListApi() {
         if (checkIfHasNetwork(this)) {
             authorization = AllSharedPref.restoreString(this, "auth_key")
-            appViewModel.sendMyAdsListData(security_key, authorization)
+            appViewModel.sendMyAdsListData(security_key, authorization,selectedTypeAds)
             myads_progressBar?.showProgressBar()
         } else {
             showSnackBar(this, getString(R.string.no_internet_error))
@@ -142,20 +142,13 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                         val myAdsResponse =
                             Gson().fromJson(response.body().toString(), MyAdsResponsee::class.java)
 
-                        dataList.clear()
-                        dataList.addAll(myAdsResponse.data.getActivitypost)
-
-                        childCareList.clear()
-                        childCareList.addAll(myAdsResponse.data.getChildcarePosts)
-
-                        traderList.clear()
-                        traderList.addAll(myAdsResponse.data.GetTrader)
-
                         recyclerview!!.visibility = View.GONE
                         tv_no_ad!!.visibility = View.VISIBLE
 
                         when (selectedTypeAds) {
                             "2" -> {
+                                childCareList.clear()
+                                childCareList.addAll(myAdsResponse.data.getChildcarePosts)
                                 if (childCareList.size != 0) {
                                     recyclerview!!.visibility = View.VISIBLE
                                     tv_no_ad!!.visibility = View.GONE
@@ -163,6 +156,8 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                 }
                             }
                             "3" -> {
+                                traderList.clear()
+                                traderList.addAll(myAdsResponse.data.GetTrader)
                                 if (traderList.size != 0) {
                                     recyclerview!!.visibility = View.VISIBLE
                                     tv_no_ad!!.visibility = View.GONE
@@ -170,6 +165,8 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                 }
                             }
                             "1" -> {
+                                dataList.clear()
+                                dataList.addAll(myAdsResponse.data.getActivitypost)
                                 if (dataList.size != 0) {
                                     recyclerview!!.visibility = View.VISIBLE
                                     tv_no_ad!!.visibility = View.GONE
@@ -372,11 +369,11 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
         val intent = Intent(this, EditActivity::class.java)
         intent.putExtra("adID", adID)
+        intent.putExtra("countryCodedata", countryCode)
         intent.putExtra("activityTypeId", activityTypeId)
         intent.putExtra("nameofShop", nameofShop)
         intent.putExtra("nameofActivity", nameofActivity)
-        intent.putExtra("description", description)
-        intent.putExtra("countryCode", countryCode)
+        intent.putExtra("descriptiondata", description)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("address", address)
         intent.putExtra("minage", minage)
@@ -423,7 +420,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
         intent.putExtra("adID", adID)
         intent.putExtra("traderTypeId", traderTypeId)
         intent.putExtra("nameofShop", nameofShop)
-        intent.putExtra("description", description)
+        intent.putExtra("description", description.toString())
         intent.putExtra("countryCode", countryCode)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("address", address)

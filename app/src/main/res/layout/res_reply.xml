@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/_2sdp"
     android:background="@color/white"
-    android:id="@+id/llReply">
+    android:id="@+id/llDelete">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textStyle="bold"
-    android:text="Reply"
+    android:text="Delete"
     android:textSize="@dimen/_10sdp"
     android:textColor="@color/black">
 

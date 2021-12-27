@@ -50,13 +50,10 @@ class MyAddAdapter(
 
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
-                callPopup(
-                    ivDot,
-                    adapterPosition,
-                    myadsList.id,
+                callPopup(ivDot,
+                    adapterPosition, myadsList.id,
                     myadsList.activityname,
-                    myadsList.typeofActivityId,
-                    myadsList.nameOfShop,
+                    myadsList.typeofActivityId, myadsList.nameOfShop,
                     myadsList.description,
                     myadsList.website,
                     myadsList.address,
