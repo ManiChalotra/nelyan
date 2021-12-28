@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -567,6 +568,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             R.id.tv_address -> {
                 showPlacePicker()
             }
+
             R.id.btn_trader_submit -> {
 
                 if (traderTypeId == "") {
@@ -581,52 +583,51 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                             if (tv_address.text.toString().isEmpty()) {
                                 myCustomToast(getString(R.string.address_missing_error))
                             } else {
-
-
                                 var dayErrorString = ""
                                 dayErrornumber = 0
                                 var productErrorString = ""
                                 productErrorNumber = 0
 
                                 if (clickPosition.equals("0")) {
-                                    Log.d(
-                                        AddActivity::class.java.name,
-                                        "AddActivity_agegroup_if  "
-                                    )
-                                } else {
-                                    dayErrorString = getDayError(
-                                        dayTimeList[dayTimeList.size - 1].selectedDay,
-                                        dayErrorString,
-                                        getString(R.string.select_day_previous),
-                                        1
-                                    )
-                                    dayErrorString = getDayError(
-                                        dayTimeList[dayTimeList.size - 1].firstStarttime,
-                                        dayErrorString,
-                                        getString(R.string.select_morning_time_previous),
-                                        2
-                                    )
-                                    dayErrorString = getDayError(
-                                        dayTimeList[dayTimeList.size - 1].firstEndtime,
-                                        dayErrorString,
-                                        getString(R.string.select_morning_time_previous),
-                                        3
-                                    )
-                                    dayErrorString = getDayError(
-                                        dayTimeList[dayTimeList.size - 1].secondStarttime,
-                                        dayErrorString,
-                                        getString(R.string.select_evening_time_previous),
-                                        4
-                                    )
-                                    dayErrorString = getDayError(
-                                        dayTimeList[dayTimeList.size - 1].secondEndtime,
-                                        dayErrorString,
-                                        getString(R.string.select_evening_time_previous),
-                                        5
-                                    )
+                                    Log.d(AddActivity::class.java.name, "AddActivity_agegroup_if  ")
+                                }
+                                else {
+                                    /*   dayErrorString = getDayError(
+                                          dayTimeList[dayTimeList.size - 1].selectedDay,
+                                          dayErrorString,
+                                          getString(R.string.select_day_previous),
+                                          1
+                                      )
+                                     dayErrorString = getDayError(
+                                          dayTimeList[dayTimeList.size - 1].firstStarttime,
+                                          dayErrorString,
+                                          getString(R.string.select_morning_time_previous),
+                                          2
+                                      )
+                                      dayErrorString = getDayError(
+                                          dayTimeList[dayTimeList.size - 1].firstEndtime,
+                                          dayErrorString,
+                                          getString(R.string.select_morning_time_previous),
+                                          3
+                                      )
+                                      dayErrorString = getDayError(
+                                          dayTimeList[dayTimeList.size - 1].secondStarttime,
+                                          dayErrorString,
+                                          getString(R.string.select_evening_time_previous),
+                                          4
+                                      )
+                                      dayErrorString = getDayError(
+                                          dayTimeList[dayTimeList.size - 1].secondEndtime,
+                                          dayErrorString,
+                                          getString(R.string.select_evening_time_previous),
+                                          5
+                                      )*/
 
-
-                                    if (productDetailDataModelArrayList.size == 0) {
+                                    if (dayTimeList[dayTimeList.size - 1].selectedDay!!.isEmpty()) {
+                                        dayErrornumber=11
+                                        dayErrorString=getString(R.string.select_day)
+                                    }
+                                   else if (productDetailDataModelArrayList.size == 0) {
 
                                     } else {
                                         productErrorString = getProductError(
@@ -656,14 +657,18 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
                                     }
                                 }
+
+
                                 if (dayErrornumber != 0 && dayErrorString.isNotEmpty()) {
                                     myCustomToast(dayErrorString)
-                                } else {
 
+                                }
+                                else {
                                     if (productErrorNumber != 0 && productErrorString.isNotEmpty()) {
                                         myCustomToast(productErrorString)
-                                    } else {
-
+                                    }
+                                    else {
+// day validations
                                         if (tvAddTraderDay.visibility==View.GONE) {
                                             selectDayGroup = JSONArray()
                                             for (i in 0 until dayTimeList.size) {
@@ -671,10 +676,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                                 json.put("day_name", dayTimeList[i].selectedDay)
                                                 json.put("time_from", dayTimeList[i].firstStarttime)
                                                 json.put("time_to", dayTimeList[i].firstEndtime)
-                                                json.put(
-                                                    "secondStartTime",
-                                                    dayTimeList[i].secondStarttime
-                                                )
+                                                json.put("secondStartTime", dayTimeList[i].secondStarttime)
                                                 json.put(
                                                     "secondEndTime",
                                                     dayTimeList[i].secondEndtime
@@ -902,16 +904,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         clickPosition = position.toString()
         dayTimeAdapter.notifyItemChanged(position)
 
-        /*     if (list == 0) {
-                 dayTime = false
-                 product = true
-                 rvDayTime!!.visibility = View.GONE
-                 tvAddTraderDay.visibility = View.VISIBLE
-             } else {
-
-             }*/
-
-        if (dayTimeModelArrayList.size ==1) {
+        if (list ==0) {
 
             rvDayTime!!.visibility = View.GONE
             tvAddTraderDay.visibility = View.VISIBLE

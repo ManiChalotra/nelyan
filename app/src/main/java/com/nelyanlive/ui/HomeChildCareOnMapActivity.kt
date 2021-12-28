@@ -67,17 +67,10 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 ) {
                     list.add(
                         DataMap(
-                            LatLng(
-                                json.getString("latitude").toString().toDouble(),
+                            LatLng(json.getString("latitude").toString().toDouble(),
                                 json.getString("longitude").toString().toDouble()
                             ),
-                            json.getString(
-                                if (type == "childCare") {
-                                    "name"
-                                } else {
-                                    "nameOfShop"
-                                }
-                            ),
+                            json.getString(if (type == "childCare") { "name" } else { "nameOfShop" }),
                             json.getString("city"),
                             getImageFromArray(
                                 json.getJSONArray(

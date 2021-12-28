@@ -529,9 +529,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.publier -> {
                 if (currentFragment !is PublisherFrag) {
                     launch(Dispatchers.Main.immediate) {
-                        val userType2 =
-                            dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin"))
-                                .first()
+                        val userType2 = dataStoragePreference.emitStoredValue(preferencesKey<String>("typeLogin")).first()
                         if (userType2 == "2") {
                             tvTitleToolbar!!.visibility = View.VISIBLE
                             ivToolBarImage!!.visibility = View.GONE
@@ -568,7 +566,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.event -> {
                 if (currentFragment !is EventFragment) {
-                    bottomNavigationBar!!.menu.getItem(4).isCheckable = false
+                   // bottomNavigationBar!!.menu.getItem(4).isCheckable = false
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
                     tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + userlocation

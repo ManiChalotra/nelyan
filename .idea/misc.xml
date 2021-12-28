@@ -13,7 +13,7 @@
         <entry key="app/src/main/res/drawable/placeholder.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_activities_map.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/activity_addactivity.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_addactivity.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_baby_sitter.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.18" />
@@ -138,5 +138,12 @@
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.15" />
+      </ProjectState>
+    </option>
   </component>
 </project>

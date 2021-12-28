@@ -11,6 +11,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
+import kotlin.math.log
 
 class AppViewModel : ViewModel() {
 
@@ -1169,6 +1170,7 @@ class AppViewModel : ViewModel() {
         img3: String,
         typeEmpty: String
     ) {
+
         when (typeEmpty) {
             "1" -> {
                 JsonPlaceHolder().editMyaddActivity(
@@ -1209,6 +1211,8 @@ class AppViewModel : ViewModel() {
                     })
             }
             "2" -> {
+                Log.e("checlagesize","==="+addEvent.toString())
+
                 JsonPlaceHolder().editMyaddActivitywithoutAge(
                     securityKey,
                     authkey,

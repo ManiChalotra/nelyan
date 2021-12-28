@@ -139,8 +139,7 @@ class ActivityDetailsActivity : AppCompatActivity(), View.OnClickListener, Corou
             postId = intent.getStringExtra("activityId")!!
         }
         launch(Dispatchers.Main.immediate) {
-            authkey =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
+            authkey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
             appViewModel.postDetailsApiData(security_key, authkey, "1", postId, categoryId)
             activity_details_progressbar?.showProgressBar()
         }

@@ -98,7 +98,6 @@ class TraderListingAdapter(var context: Context, private var traderPostList: Arr
             else
                 ivTraderImage.setImageResource(R.mipmap.no_image_placeholder)
 
-
             if (traderPostList.isFav ==1){
                 favourite!!.setImageResource(R.drawable.heart)
             }else {

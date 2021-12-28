@@ -125,10 +125,13 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private fun initializeClicks() {
 
         dayTimeModelArrayList = ArrayList()
-        dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
+        tvAddTraderDay.visibility=View.VISIBLE
+        tvAddTraderProduct.visibility=View.VISIBLE
+        txt_productdetails.visibility=View.GONE
+       // dayTimeModelArrayList.add(DayTimeModel("", "", "", "", ""))
 
         productArrayList = ArrayList()
-        productArrayList.add(ProductDetailDataModel("", "", "", ""))
+      //  productArrayList.add(ProductDetailDataModel("", "", "", ""))
 
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
@@ -375,14 +378,9 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
             }
 
             R.id.tvAddTraderProduct -> {
-
                 Log.e("TraderActivity", "--Activity--" + productArrayList.size)
                 if (productArrayList.size == 0) {
-                    productArrayList.add(
-                        ProductDetailDataModel(
-                            "", "", "", ""
-                        )
-                    )
+                    productArrayList.add(ProductDetailDataModel("", "", "", ""))
                     rv_product_details!!.visibility = View.VISIBLE
                     txt_productdetails!!.visibility = View.VISIBLE
                     tvAddTraderProduct.visibility = View.GONE
@@ -463,10 +461,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                             }
 
                                             if (dayTimeModelArrayList.size == 0) {
-                                                Log.d(
-                                                    TraderActivity::class.java.name,
-                                                    "TraderActivity_SelectDay   " + dayTimeModelArrayList.size
-                                                )
+                                                Log.d(TraderActivity::class.java.name, "TraderActivity_SelectDay   " + dayTimeModelArrayList.size)
 
                                                 if (product) {
                                                     productDetailsGroup = JSONArray()

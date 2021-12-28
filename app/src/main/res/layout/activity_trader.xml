@@ -399,7 +399,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
-                android:text="Add Day"
+                android:text="Add opening hours"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone" />
@@ -434,7 +434,7 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:text="Add Product"
+                    android:text="Add a product"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />

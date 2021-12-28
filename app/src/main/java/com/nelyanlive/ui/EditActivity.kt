@@ -464,32 +464,31 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                         7
                                                     )
                                                     eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].minAge,
+                                                        eventErrorString,
+                                                        getString(R.string.select_age_from),
+                                                        8
+                                                    )
+                                                    eventErrorString = getEventError(
+                                                        listAddEventDataModel[listAddEventDataModel.size - 1].maxAge,
+                                                        eventErrorString,
+                                                        getString(R.string.select_age_to),
+                                                        9
+                                                    )
+                                                    eventErrorString = getEventError(
                                                         listAddEventDataModel[listAddEventDataModel.size - 1].price,
                                                         eventErrorString,
                                                         getString(R.string.fill_price_previous),
-                                                        8
+                                                        10
                                                     )
                                                     eventErrorString = getEventError(
                                                         listAddEventDataModel[listAddEventDataModel.size - 1].city,
                                                         eventErrorString,
                                                         getString(R.string.fill_city_previous),
-                                                        9
+                                                        11
                                                     )
 
                                                 }
-
-//                                    var eventErrorString = ""
-//                                    eventErrorNumber = 0
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].startTime, eventErrorString, getString(R.string.select_from_time), 5)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].endTime, eventErrorString, getString(R.string.select_to_time), 6)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
-//                                    eventErrorString = getEventError(listAddEventDataModel[listAddEventDataModel.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
-
 
                                                 if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
                                                     myCustomToast(ageErrorString)
@@ -498,8 +497,6 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                                         myCustomToast(eventErrorString)
                                                     } else {
 
-
-//                                                        if (age) {
                                                         if (tvAddAgeGroup.visibility == View.GONE) {
                                                             ageGroup = JSONArray()
                                                             for (i in 0 until listAgeGroupDataModel.size) {
@@ -1089,11 +1086,9 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                 image3,
                 typeEmpty
             )
-            Log.d(
-                AppViewModel::class.java.name,
-                "EditActivity_1047      " + typeEmpty + " Age_1049  " + age
-            )
+            Log.e("checlagesize" ,"XXXXXXX"+ addEvent.toString() + " Age_1049  ")
         }
+/*
         appViewModel.send_editActivity_Data(
             security_key,
             authKey,
@@ -1119,6 +1114,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
             image3,
             typeEmpty
         )
+*/
         Log.d(
             AppViewModel::class.java.name,
             "EditActivity_1074      " + typeEmpty + " age_1077  " + age

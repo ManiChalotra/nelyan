@@ -400,14 +400,14 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/add_more_btn"
                     android:focusable="true"
+                    android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:text="@string/add_age_groupe"
+                    android:text="@string/add_more"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_8sdp"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -435,7 +435,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
-                android:text="@string/add_a_event"
+                android:text="@string/add_an_event"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone" />

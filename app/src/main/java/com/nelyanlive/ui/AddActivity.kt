@@ -145,15 +145,17 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         // initalize the lists
 
         listAge = ArrayList()
-        listAge.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
+        tvAddEvent.visibility=View.VISIBLE
+        tvAddAgeGroup.visibility=View.VISIBLE
+       // listAge.add(ModelPOJO.AgeGroupDataModel("", "", "", "", ""))
 
         listEvent = ArrayList()
-        listEvent.add(
+      /*  listEvent.add(
             ModelPOJO.AddEventDataModel(
                 "", "", "", "", "",
                 "", "", "", "", "", "", "", ""
             )
-        )
+        )*/
         // clicks for images
         ivImg1.setOnClickListener(this)
         ivImg2.setOnClickListener(this)
@@ -271,13 +273,14 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                     ageErrorNumber = 0
                                                     var eventErrorString = ""
                                                     eventErrorNumber = 0
-
-                                                    if (clickPosition.equals("0")) {
+/////////////////aGE GROUP
+                                                    if (tvAddAgeGroup.visibility==View.VISIBLE) {
                                                         Log.d(
                                                             AddActivity::class.java.name,
                                                             "AddActivity_agegroup_if  "
                                                         )
                                                     } else {
+                                                        ageErrorNumber=1
                                                         Log.d(
                                                             AddActivity::class.java.name,
                                                             "AddActivity_agegroup_else  "
@@ -343,10 +346,11 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                         getString(R.string.select_to_time),
                                         5
                                     )*/
-
-                                                    if (clickPosition.equals("0")) {
+///////////eVENTS
+                                                    if (tvAddEvent.visibility==View.VISIBLE) {
 
                                                     } else {
+                                                        eventErrorNumber = 1
                                                         eventErrorString = getEventError(
                                                             listEvent[listEvent.size - 1].image,
                                                             eventErrorString,
@@ -389,11 +393,24 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                             getString(R.string.fill_description_in_previous),
                                                             7
                                                         )
+
+                                                        eventErrorString = getEventError(
+                                                            listEvent[listEvent.size - 1].minAge,
+                                                            eventErrorString,
+                                                            getString(R.string.select_age_from),
+                                                            8
+                                                        )
+                                                        eventErrorString = getEventError(
+                                                            listEvent[listEvent.size - 1].maxAge,
+                                                            eventErrorString,
+                                                            getString(R.string.select_age_to),
+                                                            9
+                                                      )
                                                         eventErrorString = getEventError(
                                                             listEvent[listEvent.size - 1].price,
                                                             eventErrorString,
                                                             getString(R.string.fill_price_previous),
-                                                            8
+                                                            10
                                                         )
                                                         eventErrorString = getEventError(
                                                             listEvent[listEvent.size - 1].city,
@@ -403,29 +420,9 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                                         )
                                                     }
 
-//                                        var eventErrorString = ""
-//                                        eventErrorNumber = 0
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].image, eventErrorString, getString(R.string.select_image_in_previous), 1)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].name, eventErrorString, getString(R.string.fill_event_name_in_previous), 2)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateFrom, eventErrorString, getString(R.string.select_from_date_in_previous), 3)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].dateTo, eventErrorString, getString(R.string.select_to_date_in_previous), 4)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeFrom, eventErrorString, getString(R.string.select_from_time), 5)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].timeTo, eventErrorString, getString(R.string.select_to_time), 6)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].description, eventErrorString, getString(R.string.fill_description_in_previous), 7)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].price, eventErrorString, getString(R.string.fill_price_previous), 8)
-//                                        eventErrorString = getEventError(listEvent[listEvent.size - 1].city, eventErrorString, getString(R.string.fill_city_previous), 9)
-
                                                     if (ageErrorNumber != 0 && ageErrorString.isNotEmpty()) {
                                                         myCustomToast(ageErrorString)
                                                     } else {
-
-                                                        if (clickPosition.equals("0")) {
-
-                                                        }
-
-                                                        if (clickPosition.equals("0")) {
-
-                                                        }
                                                         if (eventErrorNumber != 0 && eventErrorString.isNotEmpty()) {
                                                             myCustomToast(eventErrorString)
                                                         } else {
@@ -515,12 +512,12 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
                                                                 }
                                                             }
+                                                            myCustomToast("sucess")
                                                             hitFinallyActivityAddPostApi()
                                                         }
                                                     }
                                                 }
                                             }
-//                                            }
                                         }
                                     }
                                 }
@@ -976,6 +973,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private fun hitFinallyActivityAddPostApi() {
         Log.d(AddActivity::class.java.name, "AddActivity_hitfinallyApi   ")
         var typeEmpty = ""
+/*
         when {
             event && age -> {
                 typeEmpty = "0"
@@ -990,7 +988,20 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 typeEmpty = "2"
             }
         }
-
+*/
+        if (tvAddAgeGroup.visibility == View.VISIBLE && tvAddEvent.visibility == View.VISIBLE) // all get_addPOSt_withoutevent_age_Activity_Api
+        {
+            typeEmpty = "2"
+        } else if (tvAddAgeGroup.visibility == View.GONE && tvAddEvent.visibility == View.GONE) //get_addPOSt_Activity_Api
+        {
+            typeEmpty = "0"
+        } else if (tvAddAgeGroup.visibility == View.VISIBLE) // day is emptyy get_addPOSt_without_age_Activity_Api
+        {
+            typeEmpty = "3"
+        } else if (tvAddEvent.visibility == View.VISIBLE) // prduck is emptyyy //get_addPOSt_without_age_Activity_Api
+        {
+            typeEmpty = "1"
+        }
         Log.d(AddActivity::class.java.name, "AddActivity_Age   " + minage + "  " + maxage)
         if (clickPosition.equals("0")) {
             appViewModel.send_addPostActivity_Data(
@@ -1039,9 +1050,6 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                 maxage
             )
         }
-//        appViewModel.send_addPostActivity_Data(security_key, authKey, "1", activityTypeId, shopName, activityName,
-//                descp, phonee, cityAddress, cityName, website, addressLatitude, addressLongitude, ageGroup.toString(),
-//                addEvent.toString(), media.toString(), countryCodee, typeEmpty)
 
     }
 
