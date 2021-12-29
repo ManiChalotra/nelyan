@@ -118,7 +118,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         val groupKey = "bundle_notification_$bundleNotificationId"
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.mipmap.app_launcher)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(data1["body"]!!).setAutoCancel(true)
             .setGroup(groupKey)

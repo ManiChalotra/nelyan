@@ -81,7 +81,7 @@
         <entry key="app/src/main/res/layout/fragment_child_care.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/layout/fragment_drawer.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_drawer_new_home.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_event.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/fragment_event.xml" value="0.21" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.16458333333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.16458333333333333" />
         <entry key="app/src/main/res/layout/fragment_map_activity.xml" value="0.18489583333333334" />

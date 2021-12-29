@@ -33,6 +33,14 @@ import kotlinx.android.synthetic.main.tookbar.*
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import android.graphics.drawable.BitmapDrawable
+
+import android.graphics.Bitmap
+
+import android.graphics.drawable.Drawable
+
+
+
 
 class EventFragment(var userLat: String, var userLong: String, var userLocation: String) :
     Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
@@ -576,19 +584,24 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         tvYes.setOnClickListener {
             Log.d(EventFragment::class.java.name, "EventFragment_noti_yes   ")
             dialog.dismiss()
+            val bmap = (img_noti.drawable as BitmapDrawable).bitmap
 
-            if (img_noti.getDrawable()
-                    .getConstantState() == getResources().getDrawable(R.drawable.unmute)
-                    .getConstantState()
-            ) {
+            val myDrawable = resources.getDrawable(R.drawable.unmute)
+            val myLogo = (myDrawable as BitmapDrawable).bitmap
+            if(bmap.sameAs(myLogo))
+            {
                 typenoti = "0"
                 AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.mute);
-            } else {
+            }
+            else
+            {
                 typenoti = "1"
                 AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.unmute);
             }
+
+
             setMuteNotifications()
         }
         tvNo.setOnClickListener {
