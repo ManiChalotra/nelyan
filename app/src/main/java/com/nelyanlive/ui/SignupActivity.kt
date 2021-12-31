@@ -50,6 +50,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private var imgPath = ""
     private var imgPathNormal = ""
     private var cityName = ""
+    private var onlycity = ""
     private var cityLatitude = ""
     private var cityLongitude = ""
 
@@ -290,6 +291,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         val mType = type.toRequestBody("text/plain".toMediaTypeOrNull())
         val mSecond = currentTS.toRequestBody("text/plain".toMediaTypeOrNull())
         val city = cityName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val citydata = onlycity.toRequestBody("text/plain".toMediaTypeOrNull())
         val lat = cityLatitude.toRequestBody("text/plain".toMediaTypeOrNull())
         val longi = cityLongitude.toRequestBody("text/plain".toMediaTypeOrNull())
 
@@ -305,7 +307,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                 mPassword,
                 mType,
                 mSecond,
-                city,
+                city,citydata,
                 lat,
                 longi
             )
@@ -324,7 +326,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             appViewModel.Send_SIGNUP_withIMAGE_Data(
                 security_key, device_Type, deviceToken, mName,
-                mEmail, mPassword, mType, mSecond, city, lat, longi, photo
+                mEmail, mPassword, mType, mSecond, city,  citydata, lat, longi, photo
             )
         }
         progressDialog.setProgressDialog()
@@ -496,6 +498,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                     val place = Autocomplete.getPlaceFromIntent(data!!)
 
                     cityName = place.name.toString()
+                    onlycity = place.name.toString()
                     tv_city.setText(cityName.toString())
 
                     cityLatitude = place.latLng?.latitude.toString()

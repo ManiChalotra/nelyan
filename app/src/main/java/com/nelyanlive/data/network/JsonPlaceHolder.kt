@@ -37,6 +37,7 @@ interface JsonPlaceHolder {
         @Part("role") role: RequestBody?,
         @Part("second") second: RequestBody?,
         @Part("city") city: RequestBody?,
+        @Part("onlycity") onlycity: RequestBody?,
         @Part("lat") lat: RequestBody?,
         @Part("longi") longi: RequestBody?,
         @Part image: MultipartBody.Part?
@@ -54,6 +55,7 @@ interface JsonPlaceHolder {
         @Part("role") role: RequestBody?,
         @Part("second") second: RequestBody?,
         @Part("city") city: RequestBody?,
+        @Part("onlycity") onlycity: RequestBody?,
         @Part("lat") lat: RequestBody?,
         @Part("longi") longi: RequestBody?
     ): Call<JsonObject>

@@ -59,6 +59,9 @@ import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.app.NotificationManager
+import com.facebook.FacebookSdk.getApplicationContext
+
 
 class ChatFrag(
     var userlocation: String, var userlat: String,
@@ -76,6 +79,8 @@ class ChatFrag(
     override fun onResume() {
         super.onResume()
         MyFirebaseMessagingService.myChatVisible = false
+
+
 
         if (listner != null) {
             listner!!.onFargmentActive(4)
@@ -101,6 +106,8 @@ class ChatFrag(
         )
         activityChatBinding.groupChatVM = groupChatVM
         mContext = container.context
+        val notifManager: NotificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notifManager.cancelAll()
         groupChatVM.noDataMessage.set(mContext.getString(R.string.loading_chat))
         /*  activityChatBinding.btnRegulation.setOnClickListener {
               *//* val i = Intent(mContext, RegulationActivity::class.java)

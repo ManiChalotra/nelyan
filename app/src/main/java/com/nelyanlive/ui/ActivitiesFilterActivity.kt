@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
@@ -108,13 +109,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
         launch(Dispatchers.Main.immediate) {
 //            et_location.text =
 //                dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-            latitudee =
-                dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+            latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                     .first()
             longitudee =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                     .first()
         }
+        Log.d("EventFragment ", "returnValues_Event" + AllSharedPref.restoreString(this, "AgeEvent"))
 
         btnFilter = findViewById(R.id.btnFilter)
         activityTypes = findViewById(R.id.trader_type)
@@ -406,9 +407,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                     finish()
 
                 } else if (ScreenName.equals(getString(R.string.event))) {
-                    val i = Intent(this, HomeActivity::class.java)
-                    i.putExtra("eventfragment", "EventFragment")
-                    startActivity(i)
+
                     AllSharedPref.clearFilterValue(this, "returnNameEvent")
                     AllSharedPref.clearFilterValue(this, "returnLocationEvent")
                     AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
@@ -416,6 +415,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                     AllSharedPref.clearFilterValue(this, "maxage")
                     AllSharedPref.clearFilterValue(this, "SelectValueactivityEvent")
                     AllSharedPref.clearFilterValue(this, "AgeEvent")
+                    val i = Intent(this, HomeActivity::class.java)
+                    i.putExtra("eventfragment", "EventFragment")
+                    startActivity(i)
                     finish()
 
                 }
@@ -437,6 +439,13 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("SelectValueactivity", SelectValue)
 
                             setResult(1212, intent)
+
+                            AllSharedPref.save(this, "returnNameEvent",  et_name.text.toString()!!)
+                            AllSharedPref.save(this, "returnDistanceEvent", distance!!)
+                            AllSharedPref.save(this, "minage", edtAgeFrom.text.toString())
+                            AllSharedPref.save(this, "maxage",  edtAgeTo.text.toString())
+                            AllSharedPref.save(this, "SelectValueEvent", SelectValue)
+                            AllSharedPref.save(this, "AgeEvent", Age)
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
@@ -452,9 +461,15 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 .putExtra("age", edtAge.text.toString())
 
                             setResult(1213, intent)
+                         /*   ReturnName = .restoreString(this, "returnName")
+                            ReturnLocation = AllSharedPref.restoreString(this, "returnLocation")
+                            ReturnDistance = AllSharedPref.restoreString(this, "returnDistance")
+                            ReturnMinAge = AllSharedPref.restoreString(this, "minage")
+                            ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
+                            ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
+                            Age = AllSharedPref.restoreString(this, "Age")
 
-
-
+*/
                             onBackPressed()
                         }
                         else -> {

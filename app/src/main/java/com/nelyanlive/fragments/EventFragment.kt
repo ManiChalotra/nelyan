@@ -51,7 +51,11 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             .create(AppViewModel::class.java)
     }
     private val FILTER_ACTIVITY_REQUEST_CODE = 1122
-
+    private var returnName = ""
+    private var returnLocation = ""
+    private var returnDistance =""
+    private var returnLat =""
+    private var returnLng =""
     private lateinit var mContext: Context
     private var ivFavouritee: ImageView? = null
     private var tvFilter: TextView? = null
@@ -71,6 +75,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
     var maxage: String = ""
     var noti: Boolean = false
     var authorization = ""
+    var TypeActivity = ""
     var typenoti = ""
     var type: String = ""
 
@@ -93,13 +98,20 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         rc = v.findViewById(R.id.rc_event)
         tvFilter = v.findViewById(R.id.tvFilter)
         tvFilter!!.setOnClickListener {
+
+            Log.d("EventFragment ",  AllSharedPref.restoreString(mContext, "returnDistance") + "  " + AllSharedPref.restoreString(requireContext(),
+                "returnNameEvent")+ "  " + AllSharedPref.restoreString(requireContext(), "AgeEvent"))
+
             if (tvFilter!!.text == getString(R.string.filter) || tvFilter!!.text == getString(R.string.clear_filter)) {
                 val intent =
-                    Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra(
-                        "name",
-                        it.context.getString(R.string.event)
-                    )
+                    Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra("name", it.context.getString(R.string.event))
                 startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
+                AllSharedPref.save(mContext, "returnNameEvent", returnName!!)
+                AllSharedPref.save(mContext, "returnDistanceEvent", returnDistance!!)
+                AllSharedPref.save(mContext, "minage", minage)
+                AllSharedPref.save(mContext, "maxage", maxage)
+                AllSharedPref.save(mContext, "SelectValueEvent", TypeActivity)
+                AllSharedPref.save(mContext, "AgeEvent", Age)
 
             } else {
                 tvFilter!!.text = getString(R.string.filter)
@@ -107,6 +119,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     getString(R.string.upcoming_events) + "\n" + locality
 
                 if (checkIfHasNetwork(requireActivity())) {
+
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, userLat, userLong, "",
@@ -221,36 +234,18 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             if (resultCode == 1212) {
                 tvFilter!!.text = getString(R.string.clear_filter)
 
-                val returnName = data!!.getStringExtra("name")
-                val returnLocation = data.getStringExtra("location")
-                val returnDistance = data.getStringExtra("distance")
-                val returnLat = data.getStringExtra("latitude")
-                val returnLng = data.getStringExtra("longitude")
+                returnName = data!!.getStringExtra("name").toString()
+                returnLocation = data.getStringExtra("location").toString()
+                returnDistance = data.getStringExtra("distance").toString()
+                returnLat = data.getStringExtra("latitude").toString()
+                returnLng = data.getStringExtra("longitude").toString()
                 minage = data.getStringExtra("minage")!!
                 maxage = data.getStringExtra("maxage")!!
-                var TypeActivity = data.getStringExtra("SelectValueactivity")!!
+                TypeActivity = data.getStringExtra("SelectValueactivity")!!
                 Age = data.getStringExtra("age")!!
 
-                (mContext as HomeActivity).tvTitleToolbar!!.text =
-                    getString(R.string.upcoming_events) + "\n" + returnLocation
+                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
 
-                Log.d(EventFragment::class.java.name, "returndistance   " + returnDistance)
-
-                AllSharedPref.save(mContext, "returnNameEvent", returnName!!)
-                AllSharedPref.save(mContext, "returnDistanceEvent", returnDistance!!)
-                AllSharedPref.save(mContext, "minage", minage!!)
-                AllSharedPref.save(mContext, "maxage", maxage!!)
-                AllSharedPref.save(mContext, "SelectValueEvent", TypeActivity!!)
-                AllSharedPref.save(mContext, "AgeEvent", Age!!)
-
-                Log.d(
-                    "EventFragment ",
-                    "returnValues_Event   " + AllSharedPref.restoreString(
-                        mContext,
-                        "returnDistance"
-                    ) + "  " +
-                            AllSharedPref.restoreString(mContext, "SelectValue")
-                )
 
                 if (checkIfHasNetwork(requireActivity())) {
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
@@ -265,6 +260,9 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             } else {
 
             }
+            Log.d("EventFragment ", "returnValues_Event   " + AllSharedPref.restoreString(
+                mContext, "returnDistance") + "  " + AllSharedPref.restoreString(requireContext(),
+                "returnNameEvent")+ "  " + AllSharedPref.restoreString(requireContext(), "AgeEvent"))
         }
     }
 
@@ -600,8 +598,6 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.unmute);
             }
-
-
             setMuteNotifications()
         }
         tvNo.setOnClickListener {

@@ -45,13 +45,14 @@ class AppViewModel : ViewModel() {
         role: RequestBody?,
         second: RequestBody?,
         city: RequestBody?,
+        onlycity: RequestBody?,
         latituude: RequestBody?,
         longitude: RequestBody?,
         image: MultipartBody.Part?
     ) {
         JsonPlaceHolder().getSignUp_woithImage_APi(
             securityKey, deviceType, deviceToken,
-            name, email, password, role, second, city, latituude, longitude, image
+            name, email, password, role, second, city,onlycity, latituude, longitude, image
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -76,12 +77,13 @@ class AppViewModel : ViewModel() {
         role: RequestBody?,
         second: RequestBody?,
         city: RequestBody?,
+        onlycity: RequestBody?,
         latituude: RequestBody?,
         longitude: RequestBody?
     ) {
         JsonPlaceHolder().getSignUp_withoutImage_APi(
             securityKey, deviceType, deviceToken, name, email,
-            password, role, second, city, latituude, longitude
+            password, role, second, city,onlycity, latituude, longitude
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {

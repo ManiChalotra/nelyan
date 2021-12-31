@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
@@ -102,6 +101,7 @@
             android:clickable="true"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/rlBottom"
+            app:layout_constraintEnd_toEndOf="@+id/rlBottom"
             app:layout_constraintStart_toStartOf="@+id/rlBottom">
 
             <ImageView
