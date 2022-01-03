@@ -23,9 +23,9 @@
         <TextView
             style="@style/HeaderText"
             android:layout_centerInParent="true"
-            android:text="@string/activity"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/_50sdp"
+            android:gravity="center"
+            android:text="@string/activity"
             android:textColor="@color/black" />
 
     </RelativeLayout>

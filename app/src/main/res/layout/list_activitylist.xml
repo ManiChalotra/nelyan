@@ -73,6 +73,12 @@
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
+                <TextView
+                    android:id="@+id/tv_minmaxage"
+                    style="@style/CommonTextWrapcontent"
+                    android:fontFamily="@font/semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:id="@+id/tv_description"

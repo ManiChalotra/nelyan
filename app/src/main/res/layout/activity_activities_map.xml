@@ -30,23 +30,27 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginHorizontal="@dimen/_50sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_toEndOf="@+id/ivBack"
             android:orientation="vertical">
 
             <TextView
                 style="@style/HeaderText"
                 android:layout_centerInParent="true"
-                android:text="@string/activity"
                 android:layout_gravity="center"
+                android:text="@string/activity"
+                android:singleLine="true"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_userCityOrZipcodeEvent"
                 style="@style/HeaderText"
                 android:layout_gravity="center"
-                android:text=""
                 android:singleLine="true"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>

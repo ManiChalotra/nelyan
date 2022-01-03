@@ -53,6 +53,7 @@
     <string name="nursery">Crèche</string>
     <!--    <string name="activity">Activité / événement </string>-->
     <string name="activity">Activités, associations, événements</string>
+    <string name="filteractivity">Liste des activités</string>
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
     <string name="babySitter">Baby-sitter</string>

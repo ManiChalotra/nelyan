@@ -54,6 +54,7 @@
     <string name="Comment">Comment</string>
     <string name="nursery">Nursery</string>
     <string name="activity">Activity</string>
+    <string name="filteractivity">Activity</string>
     <string name="materialAssitant">Material Assistant</string>
     <string name="maternal_asistant">Maternal Assistant</string>
     <string name="babySitter">Baby Sitter</string>
@@ -230,7 +231,8 @@
     <string name="yoga_trainer">Yoga Trainer</string>
     <string name="gym_trainer">Gym Trainer</string>
     <string name="filter">Filter</string>
-    <string name="trader_artisant">Trader / Artisant</string>
+   <!-- <string name="trader_artisant">Trader / Artisant</string>-->
+    <string name="trader_artisant">Commerces</string>
     <string name="no_product_found">No Product found</string>
     <string name="child_care_details">Child Care Details</string>
     <string name="modify">MODIFY</string>

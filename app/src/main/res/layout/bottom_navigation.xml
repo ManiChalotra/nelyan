@@ -153,6 +153,7 @@
             android:text="@string/cityChat"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/_10sp"
+            android:layout_marginBottom="@dimen/_3sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -53,7 +53,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
         val timeTo = itemView.edClo3!!
         val description = itemView.edtDesc!!
         val price = itemView.edtPrice!!
-        val city = itemView.et_city_add_event!!
+        val city = itemView.et_city_add!!
         val removeButton = itemView.ivdlt
         val edtAgeFrom = itemView.edtAgeFrom
         val edtAgeTo = itemView.edtAgeTo

@@ -52,6 +52,7 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
         lateinit var etimetwo: TextView
         lateinit var eprice: TextView
         lateinit var edesc: TextView
+        lateinit var tv_eventage: TextView
         lateinit var eimg: ImageView
         lateinit var ivEventFav: ImageView
         lateinit var llEvent: LinearLayout
@@ -69,6 +70,7 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             edesc = itemView.findViewById(R.id.tv_eventdesc)
             ivEventFav = itemView.findViewById(R.id.iv_event_fav)
             eimg = itemView.findViewById(R.id.iv_eventimg)
+            tv_eventage = itemView.findViewById(R.id.tv_eventage)
 
             Glide.with(context!!).load(image_base_URl +eventList.img).error(R.mipmap.no_image_placeholder).into(eimg)
 
@@ -80,6 +82,7 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             etimetwo.text = context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
             eprice.text = eventList.eventPrice
             edesc.text = eventList.eventDesc
+            tv_eventage.text = "Min age ${eventList.minAge}  -  Max age ${eventList.maxAge}"
 
             llEvent.setOnClickListener {
 

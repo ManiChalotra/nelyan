@@ -4,4 +4,4 @@ package com.nelyanlive.modals
                            var eventStartDate: String,var eventEndDate: String,
                            var eventStartTime: String, var eventEndTime: String,
                            var eventPrice: String, var eventDesc: String, var isFav: String
-                           , var activityId: String, var latitude: String, var longitude: String)
+                           , var activityId: String, var latitude: String, var longitude: String,var minAge: String, var maxAge: String)

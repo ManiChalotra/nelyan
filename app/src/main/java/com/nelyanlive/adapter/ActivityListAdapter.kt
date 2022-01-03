@@ -30,6 +30,7 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
         var tvNameOfShop = itemView.findViewById(R.id.tv_nameOfShop) as TextView
         var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
         var tvMsg = itemView.findViewById(R.id.tv_available_place) as TextView
+        var tv_minmaxage = itemView.findViewById(R.id.tv_minmaxage) as TextView
         var ivActivityImage = itemView.findViewById(R.id.iv_activity_image) as ImageView
         var ivFavourite = itemView.findViewById(R.id.iv_favouritessss) as ImageView
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
@@ -40,6 +41,7 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
             tvActivityname.text = homeAcitivityList.activityname
             tvDescription.text = homeAcitivityList.description
             tvAddress.text = homeAcitivityList.address
+            tv_minmaxage.text = "Min age ${homeAcitivityList.minAge}  -  Max age${homeAcitivityList.maxAge}"
 
             when (homeAcitivityList.typeofActivityId) {
                 5 -> {

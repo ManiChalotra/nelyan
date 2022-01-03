@@ -318,6 +318,9 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                             val activityId =
                                 jsonObject.getJSONArray("data").getJSONObject(i).get("activityId")
                                     .toString()
+                             val maxAge = jsonObject.getJSONArray("data").getJSONObject(i).get("maxAge")  .toString()
+                             val minAge = jsonObject.getJSONArray("data").getJSONObject(i).get("minAge")
+                                    .toString()
 
                             if (jsonObject.getJSONArray("data").getJSONObject(i)
                                     .getJSONArray("eventstimings").length() != 0
@@ -351,14 +354,17 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                                         isFav,
                                         activityId,
                                         latitude,
-                                        longitude
+                                        longitude,
+                                        minAge,
+                                        maxAge,
                                     )
                                 )
                             } else {
                                 dataList.add(
                                     HomeEventModel(
                                         id, image, name, city, "", "", "", "",
-                                        price, description, isFav, activityId, latitude, longitude
+                                        price, description, isFav, activityId, latitude, longitude  ,minAge,
+                                        maxAge,
                                     )
                                 )
                             }
@@ -433,6 +439,10 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                                 val isFav =
                                     jsonObject.getJSONArray("data").getJSONObject(i).get("isFav")
                                         .toString()
+                                val maxAge = jsonObject.getJSONArray("data").getJSONObject(i).get("maxAge")  .toString()
+                                val minAge = jsonObject.getJSONArray("data").getJSONObject(i).get("minAge")
+                                    .toString()
+
                                 val latitude =
                                     jsonObject.getJSONArray("data").getJSONObject(i).get("latitude")
                                         .toString()
@@ -481,7 +491,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                                             isFav,
                                             activityId,
                                             latitude,
-                                            longitude
+                                            longitude,  minAge,
+                                            maxAge,
                                         )
                                     )
                                 } else {
@@ -500,7 +511,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                                             isFav,
                                             activityId,
                                             latitude,
-                                            longitude
+                                            longitude,  minAge,
+                                            maxAge,
                                         )
                                     )
                                 }
@@ -571,10 +583,11 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         val tvYes: TextView = dialog.findViewById(R.id.tvYes)
         val tvNo: TextView = dialog.findViewById(R.id.tvNo)
         val tvMessage: TextView = dialog.findViewById(R.id.tvMessage)
-        tvMessage.text = if (img_noti.getDrawable()
-                .getConstantState() == getResources().getDrawable(R.drawable.unmute)
-                .getConstantState()
-        ) {
+        val bmap = (img_noti.drawable as BitmapDrawable).bitmap
+        val myDrawable = resources.getDrawable(R.drawable.unmute)
+        val myLogo = (myDrawable as BitmapDrawable).bitmap
+        tvMessage.text=  if(bmap.sameAs(myLogo))
+        {
             getString(R.string.are_you_sure_to_mute)
         } else {
             getString(R.string.are_you_sure_to_un_mute)
@@ -582,10 +595,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
         tvYes.setOnClickListener {
             Log.d(EventFragment::class.java.name, "EventFragment_noti_yes   ")
             dialog.dismiss()
-            val bmap = (img_noti.drawable as BitmapDrawable).bitmap
 
-            val myDrawable = resources.getDrawable(R.drawable.unmute)
-            val myLogo = (myDrawable as BitmapDrawable).bitmap
+
             if(bmap.sameAs(myLogo))
             {
                 typenoti = "0"

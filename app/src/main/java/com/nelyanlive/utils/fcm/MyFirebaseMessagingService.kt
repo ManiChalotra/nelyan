@@ -71,8 +71,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         var image =""
         var userId=""
         var groupId=1
+        var type=""
         try {
             val jsonMain = JSONObject(data1["data"]!!.toString())
+             type = jsonMain.getString("type")
              senderID = jsonMain.getString("senderId")
              name = jsonMain.getString("senderName")
              image = jsonMain.getString("senderImage")
@@ -104,13 +106,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, if (groupId == 0) {
-                intent1
+        val pendingIntent = PendingIntent.getActivity(this, 0, if (groupId == 0) { intent1
             }
         else {
-            val intent = Intent(this, HomeActivity::class.java)
-              //  .putExtra("groupChat", "true")
-                .putExtra("eventfragment", "EventFragment")
+            var intent = Intent()
+            if(type.equals("1"))
+            {
+                intent = Intent(this, HomeActivity::class.java)
+                    .putExtra("eventfragment", "EventFragment")
+            }
+            else
+            {
+                intent = Intent(this, HomeActivity::class.java)
+                    .putExtra("groupChat", "groupChat")
+            }
+
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }, PendingIntent.FLAG_ONE_SHOT
         )

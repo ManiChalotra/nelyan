@@ -34,6 +34,7 @@ class EventRepeatAdapter(
 
     override fun onBindViewHolder(holder: EventRepeatViewHolder, position: Int) {
         holder.initalize(list, position)
+
     }
 
     override fun getItemCount(): Int {
@@ -65,9 +66,10 @@ class EventRepeatAdapter(
         val edtAgeFrom = itemView.edtAgeFrom
         val edtAgeTo = itemView.edtAgeTo
         val price = itemView.edtPrice
-        val city = itemView.et_city_add_event
+        val et_city_add = itemView.et_city_add
         val removeButton = itemView.ivdlt
         val llevent = itemView.ll_event
+
 //        val txtaddevent = itemView.tvAddEvent
 
         //  for selecting the date
@@ -88,25 +90,27 @@ class EventRepeatAdapter(
             dateTo.text = list[position].dateTo
             timeFrom.text = list[position].timeFrom
             timeTo.text = list[position].timeTo
-            city.text = list[position].city
+
+
+            et_city_add.setOnClickListener {
+                listner.cityAddEvent(list, position,et_city_add)
+            }
 
             image.setOnClickListener {
                 listner.addCameraGalleryImage(list, position)
             }
 
-            city.setOnClickListener { listner.cityAddEvent(list, position, city) }
-
             addButton.setOnClickListener {
                 description.clearFocus()
                 price.clearFocus()
                 name.clearFocus()
-                city.clearFocus()
+               // city.clearFocus()
                 listner.onAddEventItem(list, position)
             }
 
             removeButton.setOnClickListener {
                 list.removeAt(position)
-                var ListSize = list.size
+                val ListSize = list.size
                 listner.onRemoveEventItem(position, ListSize)
 
                 notifyDataSetChanged()
@@ -114,12 +118,12 @@ class EventRepeatAdapter(
 
             }
 
+
             timeFrom.setOnClickListener {
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
                 val minute = mcurrentTime[Calendar.MINUTE]
-                val mTimePicker =
-                    TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
+                val mTimePicker = TimePickerDialog(context, { timePicker, selectedHour, selectedMinute ->
                         timeFrom.text = String.format("%02d:%02d", selectedHour, selectedMinute)
                         list[position].timeFrom = "$selectedHour:$selectedMinute"
                     }, hour, minute, true)

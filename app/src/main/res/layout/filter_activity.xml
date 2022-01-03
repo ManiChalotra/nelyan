@@ -35,7 +35,7 @@
             style="@style/HeaderTextActivity"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/activity" />
+            android:text="@string/filteractivity" />
 
     </RelativeLayout>
 

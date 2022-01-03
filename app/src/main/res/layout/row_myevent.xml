@@ -110,7 +110,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="start"
                         android:orientation="horizontal">
@@ -192,6 +192,15 @@
                             android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_eventage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text=""
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp" />
 
                 </LinearLayout>
 

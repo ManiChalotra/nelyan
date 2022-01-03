@@ -65,32 +65,22 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
                         .isNotEmpty()
                 ) {
+                    try {
                     list.add(
                         DataMap(
                             LatLng(json.getString("latitude").toString().toDouble(),
-                                json.getString("longitude").toString().toDouble()
-                            ),
-                            json.getString(if (type == "childCare") { "name" } else { "nameOfShop" }),
+                                json.getString("longitude").toString().toDouble()),
+                            json.getString( "nameOfShop" ),
                             json.getString("city"),
-                            getImageFromArray(
-                                json.getJSONArray(
-                                    if (type == "childCare") {
-                                        "ChildCareImages"
-                                    } else {
-                                        "tradersimages"
-                                    }
-                                )
-                            ),
-                            json.getString(
-                                if (type == "childCare") {
-                                    "type"
-                                } else {
-                                    "typeofTraderId"
-                                }
-                            ),
+                            getImageFromArray(json.getJSONArray("tradersimages")),
+                            json.getString("typeofTraderId"),
                             json.getString("id")
                         )
                     )
+                    }catch (E:Exception)
+                    {
+
+                    }
 //                    }
                 }
             }
@@ -226,13 +216,7 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
     private fun getImageFromArray(jsonArray: JSONArray): String {
-        return if (jsonArray.length() > 0) jsonArray.getJSONObject(0).getString(
-            if (type == "childCare") {
-                "image"
-            } else {
-                "images"
-            }
-        ) else ""
+        return if (jsonArray.length() > 0) jsonArray.getJSONObject(0).getString("images") else ""
     }
 
 }

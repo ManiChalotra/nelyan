@@ -24,7 +24,7 @@ import java.util.regex.Pattern
 
 val base_URL = "https://app.nelyan.com/api/"
 //val base_URL = "http://192.168.1.109:1052/api/"
-//val base_URL = "http://3.13.214.27:1052/api/"   //old
+
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"
 val InVALID_AUTH_TOEKN = "Invalid Auth Token"

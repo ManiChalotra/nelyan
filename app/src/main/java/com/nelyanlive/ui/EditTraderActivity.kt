@@ -871,18 +871,18 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             dayTimeList[list.size - 1].selectedDay!!.isEmpty() -> {
                 myCustomToast(getString(R.string.select_day_previous))
             }
-            dayTimeList[list.size - 1].firstStarttime!!.isEmpty() -> {
-                myCustomToast(getString(R.string.select_morning_time_previous))
-            }
-            dayTimeList[list.size - 1].firstEndtime!!.isEmpty() -> {
-                myCustomToast(getString(R.string.select_morning_time_previous))
-            }
-            dayTimeList[list.size - 1].secondStarttime!!.isEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
-            }
-            dayTimeList[list.size - 1].secondEndtime!!.isEmpty() -> {
-                myCustomToast(getString(R.string.select_evening_time_previous))
-            }
+            /* dayTimeList[list.size - 1].firstStarttime!!.isEmpty() -> {
+                 myCustomToast(getString(R.string.select_morning_time_previous))
+             }
+             dayTimeList[list.size - 1].firstEndtime!!.isEmpty() -> {
+                 myCustomToast(getString(R.string.select_morning_time_previous))
+             }
+             dayTimeList[list.size - 1].secondStarttime!!.isEmpty() -> {
+                 myCustomToast(getString(R.string.select_evening_time_previous))
+             }
+             dayTimeList[list.size - 1].secondEndtime!!.isEmpty() -> {
+                 myCustomToast(getString(R.string.select_evening_time_previous))
+             }*/
             else -> {
                 dayTimeList.add(DayTimeModel("", "", "", "", ""))
                 dayTimeAdapter.notifyDataSetChanged()

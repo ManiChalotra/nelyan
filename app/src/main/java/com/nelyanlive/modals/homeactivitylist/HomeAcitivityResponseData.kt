@@ -7,6 +7,8 @@ data class HomeAcitivityResponseData(
         val activityname: String,
         val adMsg: String,
         val address: String,
+        val minAge: String,
+        val maxAge: String,
         val ageGroups: ArrayList<AgeGroup>,
         val categoryId: Int,
         val city: String,
