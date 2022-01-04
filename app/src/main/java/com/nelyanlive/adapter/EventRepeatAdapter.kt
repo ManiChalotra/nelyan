@@ -70,7 +70,6 @@ class EventRepeatAdapter(
         val removeButton = itemView.ivdlt
         val llevent = itemView.ll_event
 
-//        val txtaddevent = itemView.tvAddEvent
 
         //  for selecting the date
         var select_date = ""
@@ -85,6 +84,7 @@ class EventRepeatAdapter(
             name.setText(list[position].name)
             description.setText(list[position].description)
             price.setText(list[position].price)
+            et_city_add.setText(list[position].city)
 
             dateFrom.text = list[position].dateFrom
             dateTo.text = list[position].dateTo

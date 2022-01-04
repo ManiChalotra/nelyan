@@ -492,11 +492,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
             Age = AllSharedPref.restoreString(this, "Age")
 
-            Log.d(
-                "ActivityFilterActivity ",
+            Log.d("ActivityFilterActivity ",
                 "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
-                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
-            )
+                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation)
             et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
             edtAge.setText(Age, TextView.BufferType.EDITABLE);
 
@@ -504,9 +502,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
             } else {
                 launch(Dispatchers.Main.immediate) {
-                    et_location.text =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
-                            .first()
+                    et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
                     latitudee =
                         dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                             .first()
@@ -525,11 +521,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             ActivityType = AllSharedPref.restoreString(this, "SelectValueEvent")
             Age = AllSharedPref.restoreString(this, "AgeEvent")
 
-            Log.d(
-                "ActivityFilterActivity ",
+            Log.d("ActivityFilterActivity ",
                 "returnValues_if   " + ReturnName + "   " + ReturnDistance + "  " + ReturnMinAge + "  " +
-                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation
-            )
+                        ReturnMaxAge + "   " + ActivityType + "  " + ReturnLocation)
             et_name.setText(ReturnName, TextView.BufferType.EDITABLE);
             edtAge.setText(Age, TextView.BufferType.EDITABLE);
 
@@ -537,19 +531,14 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 et_location.setText(ReturnLocation, TextView.BufferType.EDITABLE);
             } else {
                 launch(Dispatchers.Main.immediate) {
-                    et_location.text =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                    et_location.text = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+                    latitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                             .first()
-                    latitudee =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
-                            .first()
-                    longitudee =
-                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                    longitudee = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                             .first()
                 }
             }
         } else {
-
         }
     }
 }

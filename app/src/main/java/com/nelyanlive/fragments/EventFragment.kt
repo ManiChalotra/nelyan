@@ -177,7 +177,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             longitude = userLong
             locality = userLocation
             Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
-            if (latitude != "0.0") {
+            if (latitude != "0.0"||!latitude.equals("")) {
 
                 (mContext as HomeActivity).tvTitleToolbar!!.text =
                     getString(R.string.upcoming_events) + "\n" + locality
@@ -193,6 +193,20 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
                 }
+            }
+            else{
+                   if (checkIfHasNetwork(requireActivity())) {
+                    authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+                    appViewModel.sendFilterEventListData(
+                        security_key, authKey,
+                        userLat, userLong, "",
+                        "", locality, Age
+                    )
+                    eventProgressBar?.showProgressBar()
+                } else {
+                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+                }
+
             }
         }
 
@@ -249,6 +263,12 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
 
                 if (checkIfHasNetwork(requireActivity())) {
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+
+                    if(latitude.equals(""))
+                    {
+                        returnLat=userLat
+                        returnLng=userLong
+                    }
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, returnLat, returnLng, returnDistance,
                         returnName, returnLocation, Age
@@ -325,48 +345,20 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                             if (jsonObject.getJSONArray("data").getJSONObject(i)
                                     .getJSONArray("eventstimings").length() != 0
                             ) {
-                                val eventStartdate =
-                                    jsonObject.getJSONArray("data").getJSONObject(i)
-                                        .getJSONArray("eventstimings")
+                                val eventStartdate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings")
                                         .getJSONObject(0).get("dateFrom").toString()
-                                val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i)
-                                    .getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("dateTo").toString()
-                                val eventStartTime =
-                                    jsonObject.getJSONArray("data").getJSONObject(i)
-                                        .getJSONArray("eventstimings")
-                                        .getJSONObject(0).get("startTime").toString()
-                                val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i)
-                                    .getJSONArray("eventstimings")
-                                    .getJSONObject(0).get("endTime").toString()
+                                val eventEndDate = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").getJSONObject(0).get("dateTo").toString()
+                                val eventStartTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").getJSONObject(0).get("startTime").toString()
+                                val eventEndTime = jsonObject.getJSONArray("data").getJSONObject(i).getJSONArray("eventstimings").getJSONObject(0).get("endTime").toString()
                                 dataList.add(
-                                    HomeEventModel(
-                                        id,
-                                        image,
-                                        name,
-                                        city,
-                                        eventStartdate,
-                                        eventEndDate,
-                                        eventStartTime,
-                                        eventEndTime,
-                                        price,
-                                        description,
-                                        isFav,
-                                        activityId,
-                                        latitude,
-                                        longitude,
-                                        minAge,
-                                        maxAge,
-                                    )
-                                )
+                                    HomeEventModel(id, image, name,
+                                        city, eventStartdate, eventEndDate, eventStartTime, eventEndTime, price, description, isFav, activityId,
+                                        latitude, longitude, minAge, maxAge,))
                             } else {
                                 dataList.add(
                                     HomeEventModel(
                                         id, image, name, city, "", "", "", "",
-                                        price, description, isFav, activityId, latitude, longitude  ,minAge,
-                                        maxAge,
-                                    )
-                                )
+                                        price, description, isFav, activityId, latitude, longitude  ,minAge, maxAge,))
                             }
                         }
 
@@ -414,10 +406,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     if (response!!.isSuccessful && response.code() == 200) {
                         if (response.body() != null) {
                             eventProgressBar?.hideProgressBar()
-                            Log.d(
-                                "homeFilterEventResponse",
-                                "-------------" + Gson().toJson(response.body())
-                            )
+                            Log.d("homeFilterEventResponse",
+                                "-------------" + Gson().toJson(response.body()))
                             val mResponse = response.body().toString()
                             val jsonObject = JSONObject(mResponse)
                             val listArray = jsonObject.getJSONArray("data")

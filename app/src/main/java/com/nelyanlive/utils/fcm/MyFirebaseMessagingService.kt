@@ -59,12 +59,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         Log.e("new_message", "=======$remoteMessage")
         Log.e("new_message", "=======${remoteMessage.data}")
         var myId = ""
-
         val data1 = remoteMessage.data
-
         Log.e("new_message", "=======${data1["body"]!!}")
         Log.e("new_message", "=======${data1["data"]!!}")
-
 
         var senderID=""
         var name =""
@@ -72,9 +69,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         var userId=""
         var groupId=1
         var type=""
+        type = data1["type"].toString()
         try {
             val jsonMain = JSONObject(data1["data"]!!.toString())
-             type = jsonMain.getString("type")
+
              senderID = jsonMain.getString("senderId")
              name = jsonMain.getString("senderName")
              image = jsonMain.getString("senderImage")

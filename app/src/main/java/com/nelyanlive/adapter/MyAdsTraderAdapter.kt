@@ -47,11 +47,8 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
         fun bind(myadsList: GetTraderMyAds) {
             ivDot.setImageResource(R.drawable.option_dot)
-
             ivDot.setOnClickListener {
                 Log.e("Dot Click", "Clikkceckk")
-
-
                 callPopup(ivDot, adapterPosition, myadsList.id, myadsList.typeofTraderId, myadsList.nameOfShop, myadsList.description,
                     myadsList.country_code, myadsList.phone, myadsList.address,myadsList.city,myadsList.latitude,myadsList.longitude, myadsList.email, myadsList.website, myadsList.tradersimages,
                     myadsList.traderDaysTimings, myadsList.traderProducts)

@@ -276,9 +276,8 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                             returnDistance!!,
                             returnName,
                             typeId,
-                            Age,
                             filteredAddress!!,
-
+                            Age
                             )
                         activity_list_progressbar?.showProgressBar()
                     }

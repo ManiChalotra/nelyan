@@ -1,5 +1,6 @@
 package com.nelyanlive.fragments
 
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,7 +43,8 @@ class MessageFragment : Fragment() {
             false
         )
         fragmentMessageBinding.messageVM = messagesVM
-
+        val notifManager: NotificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notifManager.cancelAll()
         messagesVM.userId = (container.context as HomeActivity).userId
         messagesVM.noDataMessage.set(container.context.getString(R.string.loading_messages))
 

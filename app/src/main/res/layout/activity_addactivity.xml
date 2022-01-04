@@ -302,15 +302,18 @@
                 android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
-
             <TextView
                 android:id="@+id/et_addressActivity"
-                style="@style/SimpleEdittext"
+                style="@style/CommonTextMatchparent"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:hint="@string/address" />
+
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/black" />
 
             <TextView

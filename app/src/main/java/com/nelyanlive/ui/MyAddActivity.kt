@@ -144,7 +144,7 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
 
                         recyclerview!!.visibility = View.GONE
                         tv_no_ad!!.visibility = View.VISIBLE
-
+                    try {
                         when (selectedTypeAds) {
                             "2" -> {
                                 childCareList.clear()
@@ -174,6 +174,10 @@ class MyAddActivity : AppCompatActivity(), CoroutineScope, View.OnClickListener,
                                 }
                             }
                         }
+                }catch (E:Exception)
+            {
+
+            }
                     }
                 } else {
                     ErrorBodyResponse(response, this, myads_progressBar)

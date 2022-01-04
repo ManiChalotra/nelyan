@@ -107,6 +107,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     private var countryCodee = "+33"
     private var lastPos = 0
 
+
     var clickPosition: String = ""
     private lateinit var updateEventList: ArrayList<ModelPOJO.AddEventDataModel>
     private var pos = -1
@@ -594,6 +595,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                         val place = Autocomplete.getPlaceFromIntent(data!!)
                         cityAddress = place.address.toString()
                         et_addressActivity.text = cityAddress
+
                         addressLatitude = place.latLng?.latitude.toString()
                         addressLongitude = place.latLng?.longitude.toString()
 
@@ -704,6 +706,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     ) {
         updateEventList = list
         pos = position
+
         showPlacePicker(addEventRequestCode)
     }
 
@@ -773,8 +776,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     ) {
         rvAgeGroup.visibility = View.VISIBLE
         tvAddAgeGroup.visibility = View.GONE
-        list.add(
-            ModelPOJO.AgeGroupDataModel(
+        list.add(ModelPOJO.AgeGroupDataModel(
                 "", "", "", "", ""
             )
         )
@@ -782,10 +784,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
     }
 
     override fun onRemoveAgeItem(position: Int, list: Int) {
-        Log.d(
-            AddActivity::class.java.name,
-            "OnRemoveClick_Age   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list
-        )
+        Log.d(AddActivity::class.java.name, "OnRemoveClick_Age   " + position + "    clickPosition   " + clickPosition + "   ListSize  " + list)
 
         clickPosition = position.toString()
         ageGroupRepeatAdapter.notifyItemChanged(position)

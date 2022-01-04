@@ -289,10 +289,11 @@
 
             <TextView
                 android:id="@+id/tv_address"
-                style="@style/SimpleEdittext"
+                style="@style/CommonTextMatchparent"
                 android:drawableLeft="@drawable/location_grey"
                 android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/address" />
+
 
             <View
                 android:layout_width="match_parent"
