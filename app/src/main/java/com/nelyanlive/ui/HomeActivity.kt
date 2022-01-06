@@ -272,6 +272,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             Log.d(HomeActivity::class.java.name, "HomeActivity_BottomReselet  ")
 
             val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
+/*
             if (currentFragment !is HomeFragment) {
                 iv_bell!!.visibility = View.GONE
                 tvTitleToolbar!!.visibility = View.GONE
@@ -279,6 +280,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 fragment = HomeFragment()
                 loadFragment(fragment)
             }
+*/
         }
         setDrawerClicks()
         setToolBarClicks()
@@ -340,42 +342,6 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
 
-    /* private fun checkUpdate() {
-       // Returns an intent object that you use to check for an update.
-       val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-       // Checks that the platform will allow the specified type of update.
-       Log.d("TAG", "Checking for updates")
-       appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-           if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-               && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-               // Request the update.
-               Log.d("TAG", "Update available")
-               appUpdateManager.registerListener(listener)
-               appUpdateManager.startUpdateFlowForResult(
-                   // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                   appUpdateInfo,
-                   // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                   AppUpdateType.FLEXIBLE,
-                   // The current activity making the update request.
-                   this,
-                   // Include a request code to later monitor this update request.
-                   MY_REQUEST_CODE)
-           }
-           else {
-               Log.d("TAG", "No Update available")
-           } } }
-
-   private val listener: InstallStateUpdatedListener = InstallStateUpdatedListener { installState ->
-       if (installState.installStatus() == InstallStatus.DOWNLOADED) {
-           // After the update is downloaded, show a notification
-           // and request user confirmation to restart the app.
-           Log.d("TAG", "An update has been downloaded")
-           Toast.makeText(this,getString(R.string.update_complete), Toast.LENGTH_SHORT).show()
-           // appUpdateManager.unregisterListener(listener)
-           appUpdateManager.completeUpdate()
-       }
-   }
-    */
     private fun initalize() {
         tvLog.setOnClickListener(this)
     }

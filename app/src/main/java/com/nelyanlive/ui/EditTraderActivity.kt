@@ -334,22 +334,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                 }
             Log.e("chheckkk","^^^&^&*%^&^&^&"+typeEmpty+"--==")
 
-/*
-            when {
-                dayTime && product -> { // editTraderPost_Api (both yes)
-                    typeEmpty = "0"
-                }
-                !product && dayTime -> { // product empty day true
-                    typeEmpty = "3"
-                }
-                product && !dayTime -> { // editTraderPost_ApiwithoutDay
-                    typeEmpty = "1"
-                }
-                !product && !dayTime -> { // editTraderPost_ApiWitoutProductandDay
-                    typeEmpty = "2"
-                }
-            }
-*/
 
             appViewModel.send_editPostTraderData(
                 security_key,
@@ -570,13 +554,13 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             }
 
             R.id.btn_trader_submit -> {
-
                 if (traderTypeId == "") {
                     myCustomToast(getString(R.string.trader_type_missing_error))
                 } else {
                     if (et_trader_shop_name.text.toString().isEmpty()) {
                         myCustomToast(getString(R.string.shop_name_missing_error))
-                    } else {
+                    }
+                    else {
                         if (et_description_trader.text.toString().isEmpty()) {
                             myCustomToast(getString(R.string.description_missing))
                         } else {
@@ -588,7 +572,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                 var productErrorString = ""
                                 productErrorNumber = 0
 
-                                if (clickPosition.equals("0")) {
+                                if (tvAddTraderDay.visibility==View.VISIBLE &&tvAddTraderProduct.visibility==View.VISIBLE) {
                                     Log.d(AddActivity::class.java.name, "AddActivity_agegroup_if  ")
                                 }
                                 else {
@@ -622,14 +606,11 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                           getString(R.string.select_evening_time_previous),
                                           5
                                       )*/
-
-                                    if (dayTimeList[dayTimeList.size - 1].selectedDay!!.isEmpty()) {
+                                    if (tvAddTraderDay.visibility==View.GONE) {
                                         dayErrornumber=11
                                         dayErrorString=getString(R.string.select_day)
                                     }
-                                   else if (productDetailDataModelArrayList.size == 0) {
-
-                                    } else {
+                                   else if (tvAddTraderProduct.visibility==View.GONE) {
                                         productErrorString = getProductError(
                                             productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].image,
                                             productErrorString,
@@ -654,7 +635,6 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             getString(R.string.fill_description_in_previous),
                                             4
                                         )
-
                                     }
                                 }
 
@@ -685,15 +665,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                             }
                                         }
 
-                                        //  else if(tvAddTraderDay.visibility==View.VISIBLE) // day is emptyy
-                                        //                {
-                                        //                    typeEmpty = "1"
-                                        //                }
-                                        //                else if(tvAddTraderProduct.visibility==View.VISIBLE) // prduck is emptyyy
-                                        //                {
-                                        //                    typeEmpty = "3"
-                                        //                }
-                                     //   if (product) {
+
                                         if (tvAddTraderProduct.visibility==View.GONE) {
                                             productDetailsGroup = JSONArray()
                                             for (i in 0 until productDetailDataModelArrayList.size) {
@@ -736,8 +708,9 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         s: String,
         i: Int
     ): String {
-
+        productErrorNumber=1
         return when {
+
             productFrom.isNullOrBlank() -> when {
                 productErrorString.isBlank() -> {
                     s

@@ -52,7 +52,7 @@
     <string name="Comment">Commentaire</string>
     <string name="nursery">Crèche</string>
     <!--    <string name="activity">Activité / événement </string>-->
-    <string name="activity">Liste des activités</string>
+    <string name="activity">Activité, association, événement</string>
     <string name="filteractivity">Liste des activités</string>
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
@@ -180,6 +180,7 @@
     <string name="date1">Date événement:</string>
     <string name="years">Années</string>
     <string name="years_masculine">Ans</string>
+    <string name="years_masculinesmall">ans</string>
     <string name="no_age_group_found">Pas d\'information sur l\'âge</string>
     <string name="facebook_not_error">Facebook n\'a pas été installé</string>
     <string name="whatsapp_not_error">Whatsapp n\'a pas été installé</string>

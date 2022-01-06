@@ -841,7 +841,7 @@ class ChatFrag(
                     list[0].locality
                 } else {
                     userlocation
-                }, currentPage.toString(), "30"
+                }, currentPage.toString(), "50"
             )
             Log.e("ScrollCheck", "$$$$$$$$$$$$$$$" + currentPage.toString())
         } else {

@@ -46,6 +46,7 @@
             <TextView
                 style="@style/HeaderText"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:text="@string/activity_list"
                 android:singleLine="true"
                 android:textColor="@color/black" />

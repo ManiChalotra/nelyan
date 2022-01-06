@@ -73,12 +73,30 @@
                     android:fontFamily="@font/semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
-                <TextView
-                    android:id="@+id/tv_minmaxage"
-                    style="@style/CommonTextWrapcontent"
-                    android:fontFamily="@font/semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/agegroup"
+                        app:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:id="@+id/tv_minmaxage"
+                        style="@style/CommonTextWrapcontent"
+                        android:fontFamily="@fontl/semibold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tv_description"

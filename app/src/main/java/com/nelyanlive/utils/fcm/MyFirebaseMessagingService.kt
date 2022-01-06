@@ -128,7 +128,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         var numMessages = 0;
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.latest_logo)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(data1["body"]!!).setAutoCancel(true)
             .setContentIntent(pendingIntent)

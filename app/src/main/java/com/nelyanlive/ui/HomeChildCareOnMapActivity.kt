@@ -43,46 +43,51 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
             onBackPressed()
         }
 
+
         if (intent.extras != null) {
-
-//            if(intent.hasExtra("dataString"))
-//            {
             type = intent.getStringExtra("type")!!
-            tvTitle.text = if (type == "childCare") {
-                "Child Care"
-            } else {
-                "Traders/Artisant"
+
+            if(type.equals("childCare"))
+            {
+                tvTitlechildcare.text = getString(R.string.child_care)
             }
-//                dataString = intent.getStringExtra("dataString")!!
-
+           else {
+                tvTitlechildcare.text = getString(R.string.trader_artisant)
+            }
+        }
             dataString = AllSharedPref.restoreString(this, "dataString")
-
             val jsonObject = JSONObject(dataString)
 
             val jsonArray = jsonObject.getJSONArray("data")
             (0 until jsonArray.length()).map {
                 val json = jsonArray.getJSONObject(it)
                 if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
-                        .isNotEmpty()
-                ) {
-                    try {
+                        .isNotEmpty()) {
+
                     list.add(
                         DataMap(
                             LatLng(json.getString("latitude").toString().toDouble(),
                                 json.getString("longitude").toString().toDouble()),
                             json.getString( "nameOfShop" ),
+                            try {
+                                json.getString("typeofTraderId")
+                            }
+                            catch (e:Exception)
+                            {
+                                json.getString("typeofActivityId")
+                            }
+
+                           , json.getString("id"),
                             json.getString("city"),
-                            getImageFromArray(json.getJSONArray("tradersimages")),
-                            json.getString("typeofTraderId"),
-                            json.getString("id")
+                            try {
+                                getImageFromArray(json.getJSONArray("tradersimages"))
+                            }
+                            catch (e:Exception)
+                            {
+                                getImageFromArray(json.getJSONArray("activityimages"))
+                            }
                         )
                     )
-                    }catch (E:Exception)
-                    {
-
-                    }
-//                    }
-                }
             }
         }
 

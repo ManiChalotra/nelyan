@@ -23,8 +23,8 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
     var image: ImageView? = null
 
 
-    inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-
+    inner class RecyclerViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
+    {
         var tvAddress = itemView.findViewById(R.id.tv_address) as TextView
         var tvActivityname = itemView.findViewById(R.id.tv_activityname) as TextView
         var tvNameOfShop = itemView.findViewById(R.id.tv_nameOfShop) as TextView
@@ -36,12 +36,12 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
         var llActivityDetails = itemView.findViewById(R.id.ll_activity_details) as LinearLayout
 
-        fun bindMethod(homeAcitivityList: HomeAcitivityResponseData) {
-
+        fun bindMethod(homeAcitivityList: HomeAcitivityResponseData)
+        {
             tvActivityname.text = homeAcitivityList.activityname
             tvDescription.text = homeAcitivityList.description
             tvAddress.text = homeAcitivityList.address
-            tv_minmaxage.text = "Min age ${homeAcitivityList.minAge}  -  Max age${homeAcitivityList.maxAge}"
+            tv_minmaxage.text = "  Min ${homeAcitivityList.minAge} ${context!!.getString(R.string.years_masculinesmall)} -  Max ${homeAcitivityList.maxAge} ${context!!.getString(R.string.years_masculinesmall)}"
 
             when (homeAcitivityList.typeofActivityId) {
                 5 -> {

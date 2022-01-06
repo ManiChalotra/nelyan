@@ -65,7 +65,7 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             eStartdate = itemView.findViewById(R.id.tv_eventStartdate)
             eEnddate = itemView.findViewById(R.id.tv_eventEnddate)
             etime = itemView.findViewById(R.id.tv_eventtime)
-            etimetwo = itemView.findViewById(R.id.tv_eventtimetwo)
+          //  etimetwo = itemView.findViewById(R.id.tv_eventtimetwo)
             eprice = itemView.findViewById(R.id.tv_eventprice)
             edesc = itemView.findViewById(R.id.tv_eventdesc)
             ivEventFav = itemView.findViewById(R.id.iv_event_fav)
@@ -78,11 +78,10 @@ class MyEventAdapter(activity: FragmentActivity, internal var datalist: ArrayLis
             eloc.text = eventList.eventLocation
             eStartdate.text = context!!.getString(R.string.startdate1)+" "+eventList.eventStartDate
             eEnddate.text = context!!.getString(R.string.end_date1)+" "+eventList.eventEndDate
-            etime.text = context!!.getString(R.string.start_time1)+" "+eventList.eventStartTime
-            etimetwo.text = context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
+            etime.text = context!!.getString(R.string.start_time1)+" "+eventList.eventStartTime+"  "+context!!.getString(R.string.end_time1)+" "+eventList.eventEndTime
             eprice.text = eventList.eventPrice
             edesc.text = eventList.eventDesc
-            tv_eventage.text = "Min age ${eventList.minAge}  -  Max age ${eventList.maxAge}"
+            tv_eventage.text = "Min ${eventList.minAge} ${context!!.getString(R.string.years_masculinesmall)}  -  Max ${eventList.maxAge} ${context!!.getString(R.string.years_masculinesmall)}"
 
             llEvent.setOnClickListener {
 

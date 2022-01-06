@@ -97,33 +97,13 @@ class GroupChatVM : ViewModel() {
                                 }
                             }
                         }
+
+
                     }
                     "arrayreply" -> {
                         replymessage.set("'" + listChat[position].message + "'")
                         replymessageUserName.set(listChat[position].senderName)
                         replayerId = listChat[position].id
-
-                        //                        var filterPopUp: PopupWindow? = null
-                        //                        val v: View? = LayoutInflater.from(ctx).inflate(R.layout.res_reply, null)
-                        //                        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                        //                        // Creating the PopupWindow
-                        //                        filterPopUp = PopupWindow(view.context)
-                        //                        filterPopUp.setContentView(v)
-                        //                        filterPopUp.setOutsideTouchable(true)
-                        //                        filterPopUp.setWidth(200)
-                        //                        filterPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-                        //                        val llReply = v!!.findViewById<LinearLayout>(R.id.llReply)
-                        //                        llReply.setOnClickListener {
-                        //                            replymessage.set("'" + listChat[position].message + "'")
-                        //                            replymessageUserName.set(listChat[position].senderName)
-                        //                            replayerId = listChat[position].id
-                        //                            filterPopUp.dismiss()
-                        //                        }
-                        //
-                        //                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        //                            filterPopUp.showAsDropDown(view, -0, 0, Gravity.RIGHT)
-                        //                        }
-                        //                        filterPopUp.setFocusable(true)
                     }
                     "chat" -> {
                         disconnectSocket()
@@ -172,14 +152,14 @@ class GroupChatVM : ViewModel() {
         })
     }
 
-    fun serchList(text: String) {
+    fun serchList(text: String)
+    {
         var listfilter = ArrayList<ChatData>()
         if (text.isNotEmpty()) {
             for (i in 0 until listChat.size) {
                 if (listChat.get(i).message.toLowerCase()
                         .contains(text.toLowerCase()) || listChat.get(i).description.toLowerCase()
-                        .contains(text.toLowerCase())
-                ) {
+                        .contains(text.toLowerCase())) {
                     listfilter.add(listChat.get(i))
                 }
             }
@@ -208,10 +188,8 @@ class GroupChatVM : ViewModel() {
                 json.put("userId", userId)
                 json.put("messageId", id)
                 json.put("groupId", groupId)
-
                 Log.e("socket", "=======$json")
                 socket.emit("delete_group_message", json)
-
                 message.set("")
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -248,7 +226,6 @@ class GroupChatVM : ViewModel() {
                     json.put("messageId", id1)
                     json.put("groupId", groupId)
                     json.put("comment", etReport.text.toString())
-
                     Log.e("socket", "=======$json")
                     socket.emit("report_user", json)
 
@@ -285,8 +262,7 @@ class GroupChatVM : ViewModel() {
                 searchVisible.set("true")
                 serchempty.set("")
                 // view.requestFocus()
-                val imm =
-                    view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
             "Serchclose" -> {
@@ -347,9 +323,7 @@ class GroupChatVM : ViewModel() {
 
         val json = JSONObject()
         try { //encoding
-            val messagetext: String =
-                message.get()
-                    .toString() // val messagetext = Base64.encodeBytes(messagemj.toByteArray())
+            val messagetext: String = message.get().toString() // val messagetext = Base64.encodeBytes(messagemj.toByteArray())
 
             val ps: String = str
             val tmp = Base64.encodeBytes(ps.toByteArray())
@@ -361,11 +335,14 @@ class GroupChatVM : ViewModel() {
                 json.put("message", tmp)
                 json.put("description", messagetext)
                 Log.e("send_group_message", "==With Image=====$json")
-            } else {
+            }
+            else
+            {
                 json.put("message", tmp)
                 json.put("description", "")
                 Log.e("send_group_message", "=======$json")
             }
+
             socket.emit("send_group_message", json)
             message.set("")
         } catch (e: Exception) {

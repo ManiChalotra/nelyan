@@ -6,8 +6,7 @@
     android:id="@+id/cl_1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="@dimen/_5sdp"
+
     android:background="@android:color/transparent">
 
     <androidx.cardview.widget.CardView
@@ -42,8 +41,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/iv_eventimg"
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_65sdp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/no_image_placeholder"
                     app:riv_corner_radius="@dimen/_8sdp" />
@@ -179,28 +178,20 @@
                             android:layout_width="@dimen/_10sdp"
                             android:layout_height="@dimen/_10sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/clock_purple_icon" />
+                            android:src="@drawable/agegroup"
+                            app:tint="@color/colorPrimaryDark" />
 
                         <TextView
-                            android:id="@+id/tv_eventtimetwo"
+                            android:id="@+id/tv_eventage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/regular"
                             android:text=""
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
 
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/tv_eventage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text=""
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_8sdp" />
 
                 </LinearLayout>
 

@@ -178,6 +178,7 @@
     <string name="date1">Date:</string>
     <string name="years">Years</string>
     <string name="years_masculine">Years</string>
+    <string name="years_masculinesmall">years</string>
     <string name="no_age_group_found">No age group found</string>
     <string name="facebook_not_error">Facebook have not been installed.</string>
     <string name="whatsapp_not_error">Whatsapp have not been installed.</string>

@@ -45,7 +45,7 @@ class EventsOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
 
             if (intent.hasExtra("dataString")) {
 //                tvTitle.text ="Events"
-                tvTitle.text = getString(R.string.events)
+                tvTitlechildcare.text = getString(R.string.events)
                 dataString = intent.getStringExtra("dataString")!!
 
                 val jsonObject = JSONObject(dataString)

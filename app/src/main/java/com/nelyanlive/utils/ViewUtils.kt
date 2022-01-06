@@ -39,7 +39,6 @@ const val socketBaseUrl = "https://app.nelyan.com"
 //const val socketBaseUrl = "http://192.168.1.109:1052"
 val FOR_FACEBOOK_TYPE = "2"
 val FOR_GOOGLE_TYPE = "1"
-
 val MESSAGE = "msg"
 
 fun isUserNameValid(username: String): Boolean {

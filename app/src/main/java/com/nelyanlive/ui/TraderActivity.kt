@@ -754,7 +754,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         s: String,
         i: Int
     ): String {
-
+        productErrorNumber = 1
         return when {
             productFrom.isNullOrBlank() -> when {
                 productErrorString.isBlank() -> {
