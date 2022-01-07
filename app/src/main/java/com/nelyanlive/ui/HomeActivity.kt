@@ -606,7 +606,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val jsonObject = JSONObject(mResponse)
                     Log.d("logoutResponse", "---222------" + Gson().toJson(response.body()))
                     val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
+
+                    myCustomToast(getString(R.string.logout_successful))
 
                     launch(Dispatchers.Main.immediate) {
                         val i = Intent(this@HomeActivity, LoginActivity::class.java)

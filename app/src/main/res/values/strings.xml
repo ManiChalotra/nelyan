@@ -221,7 +221,9 @@
     <string name="description">Description</string>
     <string name="type_of_trader">Type of Trader</string>
     <string name="select_day">Select Day</string>
-    <string name="add_day">Add opening hours</string>
+    <string name="add_day">Ajouter des horaires d\'ouvertures</string>
+    <string name="logout_successful">ogout successful</string>
+    <string name="login_successful">login successful</string>
     <string name="select_time">Select Time</string>
     <string name="invalid_email_address">Please enter a valid email</string>
     <string name="doctor">Doctor</string>
@@ -409,4 +411,5 @@
     <string name="max_age">Max Age</string>
     <string name="add_age_groupe">Add age groupe</string>
     <string name="add_a_event">Add a event</string>
+    <string name="add_a_product">Add a product</string>
 </resources>

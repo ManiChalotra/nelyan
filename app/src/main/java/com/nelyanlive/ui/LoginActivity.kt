@@ -267,15 +267,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
         appViewModel.observeLOginResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    Log.d(
-                        "" +
-                                "", "---------" + Gson().toJson(response.body())
-                    )
+                    Log.d("" + "", "---------" + Gson().toJson(response.body()))
                     val mResponse: String = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
-
                     val message = jsonObject.get("msg").toString()
-                    myCustomToast(message)
+                    myCustomToast(getString(R.string.login_successful))
 
                     val id = jsonObject.getJSONObject("data").get("id").toString()
                     val email = jsonObject.getJSONObject("data").get("email").toString()

@@ -27,7 +27,7 @@
     </string>
     <string name="loremipsum">During this summer, many cities show movies in the park. Bring a blanket,snacks,a light sweater and enjoy the magic of cinema.</string>
     <string name="home">Accueil</string>
-    <string name="add"> annonces</string>
+    <string name="add"> Ajouter un produit</string>
     <string name="alert">Mes alertes</string>
     <string name="favo">Mes favoris</string>
     <string name="profile">Profil</string>
@@ -225,7 +225,9 @@
     <string name="description">Description</string>
     <string name="type_of_trader">Type</string>
     <string name="select_day">Jours</string>
-    <string name="add_day">Ajouter un jour</string>
+    <string name="login_successful">connexion réussie</string>
+    <string name="logout_successful">déconnexion réussie</string>
+    <string name="add_day">Ajouter des horaires d\'ouvertures</string>
     <string name="select_time">Horaires</string>
     <string name="invalid_email_address">Veuillez entrer un email valide</string>
     <string name="doctor">Doctor</string>
@@ -407,5 +409,6 @@
 
     <string name="min_age">À partir</string>
     <string name="max_age">Jusqu’à</string>
+    <string name="add_a_product">Ajouter des produits</string>
 
 </resources>

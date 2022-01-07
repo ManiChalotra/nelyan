@@ -400,7 +400,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/_5sdp"
                 android:paddingRight="@dimen/_5sdp"
-                android:text="Add opening hours"
+                android:text="@string/add_day"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:visibility="gone" />
@@ -435,7 +435,7 @@
                     android:gravity="center"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    android:text="Add a product"
+                    android:text="@string/add_a_product"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />

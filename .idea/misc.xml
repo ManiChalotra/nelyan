@@ -6,11 +6,24 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.2" />
         <entry key="app/src/main/res/drawable-v24/btn1_shape.xml" value="0.18981481481481483" />
         <entry key="app/src/main/res/drawable-v24/chat.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable-v24/round_shape.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/drawable/alert_dialog_shape.xml" value="0.19333333333333333" />
         <entry key="app/src/main/res/drawable/alert_shape.xml" value="0.19333333333333333" />
         <entry key="app/src/main/res/drawable/btn1_shape.xml" value="0.18981481481481483" />
         <entry key="app/src/main/res/drawable/chattext.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_videocam_24.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/imageoutline_bg.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/pink_rect.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/pink_white_circle.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/drawable/placeholder.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/rightchat.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/selected_outlinbg.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/setting_shape.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/shadow_gray.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/shadow_setting.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/drawable/shape.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_activities_map.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_addactivity.xml" value="0.25" />
@@ -133,7 +146,7 @@
         <entry key="app/src/main/res/menu/activity_drawer_drawer.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/menu/bottom_navigation_home_menu.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/menu/popupmenu.xml" value="0.18020833333333333" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/app_launcher.xml" value="0.33" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/app_launcher.xml" value="0.5" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/app_launcher_round.xml" value="0.5" />
       </map>
     </option>
