@@ -34,11 +34,13 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
     private var latitudee = ""
     private var longitudee = ""
     var SelectValue = ""
+    var SelectName = ""
     private var typeId = ""
     var ReturnDistance = ""
     var ReturnName = ""
     var ReturnLocation = ""
     var ActivityType = ""
+    var ActivityName = ""
     var poz: Int = 0
     private val job by lazy {
         Job()
@@ -94,13 +96,13 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             Log.e("checkdata", "categoty" + "----" + arr.get(0).get(i).toString())
             if (ReturnDistance.equals(arr.get(0).get(i).toString())) {
                 Log.e("checkdata", "categoty_if" + i + arr.get(0).get(i).toString())
-//                spinner_trader_distance.setSelection(i)
+                spinner_trader_distance.setSelection(i)
 
-                if (ReturnName.equals("") || ReturnName == null) {
-
-                } else {
-                    spinner_trader_distance.setSelection(i)
-                }
+//                if (ReturnName.equals("") || ReturnName == null) {
+//
+//                } else {
+//                    spinner_trader_distance.setSelection(i)
+//                }
             }
         }
 
@@ -112,7 +114,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                     position: Int,
                     id: Long
                 ) {
-                    distance = if (kmValue[position].isNullOrBlank()) {
+                    distance = if (kmValue[position].isNullOrBlank()|| km[position]=="0KM") {
                         ""
                     } else {
                         kmValue[position]!!
@@ -120,7 +122,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // TODO("Not yet implemented")
+
                 }
             }
         checkMvvmResponse()
@@ -188,7 +190,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         val arrayAdapter1 = ArrayAdapter(this, R.layout.customspinner, traderType)
                         trader_type.adapter = arrayAdapter1
 //                        trader_type.setSelection(poz)
-                        if (!ReturnName.equals("")) {
+                        if (!ActivityName.equals("")) {
                             trader_type.setSelection(poz)
                         }
                         trader_type.onItemSelectedListener =
@@ -199,8 +201,8 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                                     position: Int,
                                     id: Long
                                 ) {
-//                                    SelectValue = trader_type.getSelectedItem()
-//                                        .toString()
+                                    SelectName = trader_type.getSelectedItem()
+                                        .toString()
                                     typeId = if (position != 0) {
                                         traderID[position]!!
 
@@ -283,6 +285,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
                         .putExtra("typeId", typeId)
                         .putExtra("location", et_location.text.toString().trim())
                         .putExtra("SelectValuetrade", SelectValue)
+                        .putExtra("SelectNametrade", SelectName)
                         .putExtra("screentrade", "screentrade")
                     setResult(1215, intent)
                     onBackPressed()
@@ -291,9 +294,18 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
             R.id.tvFilterclear -> {
 //                val i = Intent(this, TraderListingActivity::class.java)
 //                i.putExtra("screentrade", "screentrade")
-                ClearPreference()
-//                startActivity(i)
-                finish()
+//                ClearPreference()
+////                startActivity(i)
+//                finish()
+
+                /**
+                 * @author Pardeep Sharma
+                 *  to clear all data on clear button
+                 */
+              ClearPreference()
+                val intent = Intent()
+                setResult(1, intent)
+                onBackPressed()
 
             }
             R.id.et_location -> {
@@ -308,6 +320,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         ReturnLocation = AllSharedPref.restoreString(this, "returnlocationtrade")
         ReturnDistance = AllSharedPref.restoreString(this, "returndistancetrade")
         ActivityType = AllSharedPref.restoreString(this, "SelectValuetrade")
+        ActivityName= AllSharedPref.restoreString(this, "SelectNametrade")
 
         Log.d(
             "TraderFilterActivity ",
@@ -337,6 +350,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
         AllSharedPref.clearFilterValue(this, "returnlocationtrade")
         AllSharedPref.clearFilterValue(this, "returndistancetrade")
         AllSharedPref.clearFilterValue(this, "SelectValuetrade")
+        AllSharedPref.clearFilterValue(this, "SelectNametrade")
 
 //        AllSharedPref.save(
 //            this,

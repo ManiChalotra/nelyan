@@ -306,7 +306,8 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 val returnlng = data.getStringExtra("longitude")
                 val typeId = data.getStringExtra("typeId")
                 tv_city_zipcode.text = data.getStringExtra("location")
-                var TypeActivity = data.getStringExtra("SelectValuetrade")!!
+                val TypeActivity = data.getStringExtra("SelectValuetrade")!!
+                val ActivityName = data.getStringExtra("SelectNametrade")!!
 
                 Log.e(
                     "=======",
@@ -322,6 +323,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 AllSharedPref.save(this, "returnlocationtrade", returnLocation!!)
                 AllSharedPref.save(this, "returndistancetrade", returnDistance!!)
                 AllSharedPref.save(this, "SelectValuetrade", TypeActivity!!)
+                AllSharedPref.save(this, "SelectNametrade", ActivityName!!)
 
                 Log.d(
                     "TraderActivity ",
@@ -357,12 +359,65 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
-            } else {
+            } else if (resultCode == 1){
+                /**
+                 * @author Pardeep Sharma
+                 *  to clear all data in case of clear filter
+                 *  created on 11-01-2022
+                 */
+                 tvFilter.text = getString(R.string.filter)
+                    launch(Dispatchers.Main.immediate) {
+                        latitude =
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                                .first()
+                        longitude =
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                                .first()
+
+                        val geocoder = Geocoder(this@TraderListingActivity, Locale.getDefault())
+                        val list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                        locality = if (!list[0].locality.isNullOrBlank()) {
+                            list[0].locality
+                        } else {
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                                .first()
+                        }
+
+                        Log.e("location_changed", "==2=ifffff=$latitude==$longitude=")
+                        if (latitude != "0.0") {
+
+                            tv_city_zipcode.text = locality
+                            if (checkIfHasNetwork(this@TraderListingActivity)) {
+                                launch(Dispatchers.Main.immediate) {
+                                    val authKey =
+                                        dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                            .first()
+
+                                    appViewModel.sendFilterTraderListData(
+                                        security_key, authKey,
+                                        latitude, longitude,
+                                        "", "", "",
+                                        locality
+                                    )
+
+                                    trader_list_progressbar?.showProgressBar()
+                                }
+                            } else {
+                                showSnackBar(
+                                    this@TraderListingActivity,
+                                    getString(R.string.no_internet_error)
+                                )
+                            }
+                        }
+                    }
+                }
+
+            else {
                 checkMvvmResponse()
 
             }
 
-        } else {
         }
     }
 

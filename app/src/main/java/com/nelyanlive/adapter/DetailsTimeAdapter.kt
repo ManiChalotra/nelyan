@@ -21,8 +21,8 @@ class DetailsTimeAdapter(activityDetailsActivity: FragmentActivity, datalisttime
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         holder.t1.text = datalisttime[position].fromTime
-        holder.t2.text = datalisttime[position].fromYears + " "+a.getString(R.string.years_masculine)
-        holder.t3.text = datalisttime[position].toTime
+        holder.t3.text = datalisttime[position].fromYears + " "+a.getString(R.string.years_masculine)
+        holder.t2.text = datalisttime[position].toTime
         holder.t4.text = datalisttime[position].toYears + " "+a.getString(R.string.years_masculine)
     }
 

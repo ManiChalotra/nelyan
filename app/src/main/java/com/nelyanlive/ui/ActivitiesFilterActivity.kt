@@ -170,7 +170,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // TODO("Not yet implemented")
+
             }
         }
         if (tvName.text != getString(R.string.event)) {
@@ -328,7 +328,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                                    //TODO("Not yet implemented")
+
                                 }
                             }
                     }

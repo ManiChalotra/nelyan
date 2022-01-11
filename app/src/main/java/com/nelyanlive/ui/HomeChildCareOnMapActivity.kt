@@ -63,29 +63,61 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
                 val json = jsonArray.getJSONObject(it)
                 if (json.getString("latitude").isNotEmpty() && json.getString("longitude")
                         .isNotEmpty()) {
+ /*
+ {"id":5816,"userId":1371,"type":2,"ChildcareType":2,
+ "name":"c","availableplace":8,"phone":"",
+ "countryCode":"+33","description":"g",
+ "latitude":"30.71099249999999","longitude":"76.7210554",
+ "city":"Sahibzada Ajit Singh Nagar",
+ "address":"Phase 3B2, Sector 60, Sahibzada Ajit Singh Nagar,
+  Punjab 160059, India","ispublished":1,"status":1,
+  "createdAt":"2022-01-11T06:22:42.000Z",
+  "updatedAt":"2022-01-11T06:22:42.000Z",
+  "isFav":0,"distance":0.4773917459565597,
+  "ChildCareImages":[{"id":11556,"postId":5816,
+  "image":"\/uploads\/users\/1641882160916-file.png",
+  "updatedAt":"2022-01-11T06:22:42.000Z",
+  "createdAt":"2022-01-11T06:22:42.000Z"}]}
+  */
+                    /**
+                     * @author Pardeep Sharma
+                     * to open other activity by marker click
+                     */
+                     var name = ""
+                     var typeId = ""
+                    var activityId = ""
+                    if (type.equals("childCare")){
+                        name = json.getString( "name" )
+                        typeId = json.getInt("type").toString()
+                        activityId = (json.getJSONArray("ChildCareImages")[0] as JSONObject).getString("image")
+                    }else {
+                        name = json.getString("nameOfShop")
+                        try {
+                            typeId = json.getString("typeofTraderId")
+                        }
+                        catch (e:Exception)
+                        {
+                            typeId =  json.getString("typeofActivityId")
+                        }
 
+                        try {
+                          activityId =  getImageFromArray(json.getJSONArray("tradersimages"))
+                        }
+                        catch (e:Exception)
+                        {
+                         activityId = getImageFromArray(json.getJSONArray("activityimages"))
+                        }
+                    }
                     list.add(
                         DataMap(
                             LatLng(json.getString("latitude").toString().toDouble(),
                                 json.getString("longitude").toString().toDouble()),
-                            json.getString( "nameOfShop" ),
-                            try {
-                                json.getString("typeofTraderId")
-                            }
-                            catch (e:Exception)
-                            {
-                                json.getString("typeofActivityId")
-                            }
+                          name,
 
+                            typeId
                            , json.getString("id"),
                             json.getString("city"),
-                            try {
-                                getImageFromArray(json.getJSONArray("tradersimages"))
-                            }
-                            catch (e:Exception)
-                            {
-                                getImageFromArray(json.getJSONArray("activityimages"))
-                            }
+                            activityId
                         )
                     )
             }
@@ -134,14 +166,14 @@ class HomeChildCareOnMapActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onInfoWindowClick(marker: Marker) {
         if (type == "childCare") {
             OpenActivity(HomeChildCareDetailsActivity::class.java) {
-                putString("activityId", list[marker.tag.toString().toInt()].activityId)
-                putString("categoryId", list[marker.tag.toString().toInt()].categoryId)
+                putString("activityId", list[marker.tag.toString().toInt()].url)
+                putString("categoryId", list[marker.tag.toString().toInt()].snippet)
                 putString("latti", marker.position.latitude.toString())
                 putString("longi", marker.position.longitude.toString())
             }
         } else {
             OpenActivity(TraderPublishActivty::class.java) {
-                putString("postId", list[marker.tag.toString().toInt()].activityId)
+                putString("postId", list[marker.tag.toString().toInt()].url)
                 putString("latti", marker.position.latitude.toString())
                 putString("longi", marker.position.longitude.toString())
             }

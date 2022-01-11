@@ -606,7 +606,12 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                           getString(R.string.select_evening_time_previous),
                                           5
                                       )*/
-                                    if (tvAddTraderDay.visibility==View.GONE) {
+                              //      if (tvAddTraderDay.visibility==View.GONE) {
+                                    /**
+                                     * @author pardeep sharma
+                                     * to hit the api even when day is already selected or not
+                                     */
+                                  if (dayTimeList[0].selectedDay==""){
                                         dayErrornumber=11
                                         dayErrorString=getString(R.string.select_day)
                                     }
@@ -639,7 +644,10 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                 }
 
 
-                                if (dayErrornumber != 0 && dayErrorString.isNotEmpty()) {
+                 //previous             //  if (dayErrornumber != 0 && dayErrorString.isNotEmpty()) {
+                                // changes by pardeep sharma
+                                // if day is selected then should not show error
+                                if (dayErrornumber != 0 && dayErrorString== "Select Day") {
                                     myCustomToast(dayErrorString)
 
                                 }

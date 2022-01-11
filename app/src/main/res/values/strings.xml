@@ -172,6 +172,7 @@
     <string name="family_factory">Family Factory</string>
     <string name="activity_details">Activity Details</string>
     <string name="no_days_found">No days found</string>
+    <string name="no_days_found_activity">No days found</string>
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="age">Age:</string>
     <string name="name_of_traineship">Name of Traineship:</string>
@@ -412,4 +413,5 @@
     <string name="add_age_groupe">Add age groupe</string>
     <string name="add_a_event">Add a event</string>
     <string name="add_a_product">Add a product</string>
+    <string name="daysTitle">Opening hours</string>
 </resources>

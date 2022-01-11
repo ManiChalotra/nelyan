@@ -111,7 +111,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/name"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_shop_name"
@@ -128,7 +128,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/description"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_trader_desc"
@@ -138,6 +138,18 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/_9sdp" />
+
+            <TextView
+                android:id="@+id/tv_days_title"
+                style="@style/CommonTextWrapcontent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="@string/daysTitle"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:fontFamily="@font/bold" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_shops_timings"
@@ -192,7 +204,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/phone"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_trader_phone"
@@ -211,7 +223,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/email_address"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_trader_email"
@@ -228,7 +240,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/website"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_website"
@@ -245,7 +257,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/product_detail"
                 android:textAllCaps="true"
-                android:textColor="@color/grey" />
+                android:textColor="@color/black" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_traderproduct"
@@ -281,7 +293,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
+                android:layout_height="@dimen/_300sdp"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"

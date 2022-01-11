@@ -151,7 +151,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                 position: Int,
                 id: Long
             ) {
-                distance = if (kmValue[position].isNullOrBlank()) {
+                distance = if (kmValue[position].isNullOrBlank()|| km[position]=="0KM") {
                     ""
                 } else {
                     kmValue[position]!!

@@ -195,7 +195,7 @@ class ChatFrag(
 
         callgetMessageApi()
         appViewModel.observeGroupMessageApiResponse()!!
-            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+            .observe(viewLifecycleOwner, { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
                         activityChatBinding.relativProgress.visibility = View.GONE

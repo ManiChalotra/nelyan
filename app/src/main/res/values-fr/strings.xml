@@ -52,7 +52,8 @@
     <string name="Comment">Commentaire</string>
     <string name="nursery">Crèche</string>
     <!--    <string name="activity">Activité / événement </string>-->
-    <string name="activity">Activité, association, événement</string>
+<!--    <string name="activity">Activité, association, événement</string>-->
+    <string name="activity">Liste des activités</string>
     <string name="filteractivity">Liste des activités</string>
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
@@ -67,8 +68,8 @@
     <string name="name_of_nurserie">Name of Nurserie</string>
     <string name="name_of_nursery">Name of Nursery</string>
     <string name="address">Adresse</string>
-    <string name="select_time1">Heure début</string>
-    <string name="select_time2">Heure fin</string>
+    <string name="select_time1">Horaires de la matinée</string>
+    <string name="select_time2">Horaires de l’après midi</string>
     <string name="city">Ville</string>
     <string name="no_ads_availalbe">Aucune annonce disponible</string>
     <string name="no_favourite_availalbe">Aucune annonce favorite disponible</string>
@@ -173,7 +174,8 @@
     <string name="website">Site Web</string>
     <string name="family_factory">Family Factory</string>
     <string name="activity_details">Détails de l\'activité</string>
-    <string name="no_days_found">Date indisponible</string>
+    <string name="no_days_found">Horaire d\'ouverture non renseigné</string>
+    <string name="no_days_found_activity">Pas d’information sur les horaires par groupe</string>
     <string name="no_upcoming_events">Pas d\'événement</string>
     <string name="age">Âge:</string>
     <string name="name_of_traineship">Nom de l\'événement:</string>
@@ -224,7 +226,7 @@
     <string name="product_price_with_dollar">Prix (€)</string>
     <string name="description">Description</string>
     <string name="type_of_trader">Type</string>
-    <string name="select_day">Jours</string>
+    <string name="select_day">Merci de renseigner le jour</string>
     <string name="login_successful">connexion réussie</string>
     <string name="logout_successful">déconnexion réussie</string>
     <string name="add_day">Ajouter des horaires d\'ouvertures</string>
@@ -410,5 +412,5 @@
     <string name="min_age">À partir</string>
     <string name="max_age">Jusqu’à</string>
     <string name="add_a_product">Ajouter des produits</string>
-
+    <string name="daysTitle">Horaires d\'ouvertures</string>
 </resources>

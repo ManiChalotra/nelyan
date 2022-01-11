@@ -203,7 +203,12 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                     myCustomToast(getString(R.string.data_not_loaded))
                 } else {
                     val i = Intent(this, HomeChildCareOnMapActivity::class.java)
-                    i.putExtra("dataString", dataString)
+                  //  i.putExtra("dataString", dataString)
+                    AllSharedPref.save(
+                        this,
+                        "dataString",
+                        dataString
+                    )
                     i.putExtra("type", "childCare")
                     startActivity(i)
                 }
@@ -310,12 +315,13 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         childProgressbar?.hideProgressBar()
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
-                        dataString = response.body().toString()
+
                         val homeChildcareResponse = Gson().fromJson<HomeChiildCareREsponse>(
                             response.body().toString(), HomeChiildCareREsponse::class.java
                         )
                         childCareDatalist.clear()
                         childCareDatalist.addAll(homeChildcareResponse.data)
+                        dataString = mResponse
                         if (childCareDatalist.size == 0) {
                             recyclerview!!.visibility = View.GONE
                             tv_no_childcare!!.visibility = View.VISIBLE
@@ -336,14 +342,14 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                         childProgressbar?.hideProgressBar()
                         Log.d("homeChilcCare", "-------------" + Gson().toJson(response.body()))
                         val mResponse = response.body().toString()
-                        dataString = response.body().toString()
+
                         val homeChildcareResponse = Gson().fromJson(
                             response.body().toString(),
                             HomeChiildCareREsponse::class.java
                         )
                         childCareDatalist.clear()
                         childCareDatalist.addAll(homeChildcareResponse.data)
-
+                        dataString = mResponse
                         if (childCareDatalist.size == 0) {
                             recyclerview!!.visibility = View.GONE
                             tv_no_childcare!!.visibility = View.VISIBLE
