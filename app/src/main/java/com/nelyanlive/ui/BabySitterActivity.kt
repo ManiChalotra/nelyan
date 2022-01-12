@@ -179,6 +179,9 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         if (descp_baby_sitter.isEmpty()) {
                                             myCustomToast(getString(R.string.description_missing))
                                         }
+                                        else if (phoneNumber.length in 1..7){
+                                            myCustomToast("Phone number should not less than 8 digits")
+                                        }
                                         else {
                                             // checking the list
                                             if (selectedUrlListing.size == urlListingFromResponse.size) {

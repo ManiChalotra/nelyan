@@ -222,7 +222,8 @@
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/message"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
                             android:textSize="@dimen/_12sdp"
                             android:visibility="gone" />
 
@@ -251,6 +252,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:textColor="@color/black"
+
                             android:textIsSelectable="true"
                             android:textSize="@dimen/_10sdp" />
 

@@ -66,7 +66,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private val job by lazy { kotlinx.coroutines.Job() }
     private lateinit var dayTimeRepeatAdapter: DayTimeRepeatAdapter
     private lateinit var productDetailRepeatAdapter: ProductDetailRepeatAdapter
-    private var countryCodee = ""
+    private var countryCodee = "+33"
     private var productPhotoPosition = 0
     private var selectDayGroup: JSONArray = JSONArray()
     private var productDetailsGroup: JSONArray = JSONArray()
@@ -410,7 +410,11 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                         } else {
                             if (et_description_trader.text.isEmpty()) {
                                 myCustomToast(getString(R.string.description_missing))
-                            } else {
+                            }
+                            else if (et_trader_phone.text.length in 1..7){
+                                myCustomToast("Phone number should not less than 8 digits")
+                            }
+                            else {
                                 if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {
