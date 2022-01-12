@@ -39,9 +39,6 @@ import android.graphics.Bitmap
 
 import android.graphics.drawable.Drawable
 
-
-
-
 class EventFragment(var userLat: String, var userLong: String, var userLocation: String) :
     Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
 
@@ -277,7 +274,34 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
                 }
-            } else {
+            }  else if (resultCode==1){
+                tvFilter!!.text = getString(R.string.filter)
+
+                returnLocation = data?.getStringExtra("location").toString()
+                returnLat = data?.getStringExtra("latitude").toString()
+                returnLng = data?.getStringExtra("longitude").toString()
+                returnDistance = ""
+                 Age = ""
+                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
+
+
+                if (checkIfHasNetwork(requireActivity())) {
+                    authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+
+                    if(latitude.equals(""))
+                    {
+                        returnLat=userLat
+                        returnLng=userLong
+                    }
+                    appViewModel.sendFilterEventListData(
+                        security_key, authKey, returnLat, returnLng, returnDistance,
+                        returnName, returnLocation, Age
+                    )
+                    eventProgressBar?.showProgressBar()
+                } else {
+                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+                }
+            }else {
 
             }
             Log.d("EventFragment ", "returnValues_Event   " + AllSharedPref.restoreString(

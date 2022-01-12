@@ -95,7 +95,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var userlong = ""
     var userId = ""
     lateinit var fragment: Fragment
-
+    var oldLat = ""
+    var oldLong = ""
+    var oldLocation = ""
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
@@ -145,11 +147,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
             userlocation =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+           oldLocation = userlocation
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                 .first()
+            oldLat = userlat
             userlong =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                     .first()
+         oldLong = userlong
             val userName =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType =

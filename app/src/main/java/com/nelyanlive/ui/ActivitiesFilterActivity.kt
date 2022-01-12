@@ -60,6 +60,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
     var poz: Int = 0
 
     var ReturnName: String = ""
+    var ActivityName: String = ""
     var ReturnLocation: String = ""
     var ReturnMinAge: String = ""
     var ReturnMaxAge: String = ""
@@ -162,7 +163,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                 position: Int,
                 id: Long
             ) {
-                distance = if (kmValue[position].isNullOrBlank()) {
+                distance = if (kmValue[position].isNullOrBlank() || km[position]=="0KM") {
                     ""
                 } else {
                     kmValue[position]!!
@@ -177,7 +178,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             viewType.visibility = View.VISIBLE
             tvType.visibility = View.VISIBLE
             llType.visibility = View.VISIBLE
-
+            edtAge.setText(Age)
             launch(Dispatchers.Main.immediate) {
                 authKey = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
                     .first()
@@ -291,7 +292,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                         traderType.adapter = arrayAdapte1
 //                        traderType.setSelection(poz)
 
-                        if (ReturnName.equals("") || ReturnName == null) {
+                        if (ActivityName.equals("") || ActivityName == null) {
 
                         } else {
                             traderType.setSelection(poz)
@@ -315,6 +316,9 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                                         "Selected_traderType    " + traderType.getSelectedItem()
                                             .toString()
                                     )
+                                    // set spinner name in shared
+                                    ActivityName = traderType.getSelectedItem().toString()
+
                                     typeId = if (position != 0) {
                                         categoryId[position]!!
                                     } else {
@@ -402,24 +406,41 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
 
                 if (ScreenName.equals(getString(R.string.activity))) {
 //                    val i = Intent(this, ActivitiesListActivity::class.java)
+//                    ClearPreference()
+////                    startActivity(i)
+//                    finish()
+
+                    /**
+                     * @author Pardeep Sharma
+                     *  to clear all data on clear button
+                     */
                     ClearPreference()
-//                    startActivity(i)
-                    finish()
+                    val intent = Intent()
+                        .putExtra("latitude", latitudee)
+                        .putExtra("longitude", longitudee)
+                        .putExtra("location", et_location.text.toString())
+                    setResult(1, intent)
+                    onBackPressed()
 
                 } else if (ScreenName.equals(getString(R.string.event))) {
 
-                    AllSharedPref.clearFilterValue(this, "returnNameEvent")
-                    AllSharedPref.clearFilterValue(this, "returnLocationEvent")
-                    AllSharedPref.clearFilterValue(this, "returnDistanceEvent")
-                    AllSharedPref.clearFilterValue(this, "minage")
-                    AllSharedPref.clearFilterValue(this, "maxage")
-                    AllSharedPref.clearFilterValue(this, "SelectValueactivityEvent")
-                    AllSharedPref.clearFilterValue(this, "AgeEvent")
-                    val i = Intent(this, HomeActivity::class.java)
-                    i.putExtra("eventfragment", "EventFragment")
-                    startActivity(i)
-                    finish()
 
+//                    val i = Intent(this, HomeActivity::class.java)
+//                    i.putExtra("eventfragment", "EventFragment")
+//                    i.putExtra("clear", true)
+//                    startActivity(i)
+//                    finish()
+                    /**
+                     * @author Pardeep Sharma
+                     *  to clear all data on clear button
+                     */
+                    ClearPreference()
+                    val intent = Intent()
+                        .putExtra("latitude", latitudee)
+                        .putExtra("longitude", longitudee)
+                        .putExtra("location", et_location.text.toString())
+                    setResult(1, intent)
+                    onBackPressed()
                 }
             }
             R.id.btnFilter -> {
@@ -446,6 +467,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             AllSharedPref.save(this, "maxage",  edtAgeTo.text.toString())
                             AllSharedPref.save(this, "SelectValueEvent", SelectValue)
                             AllSharedPref.save(this, "AgeEvent", Age)
+                            AllSharedPref.save(this, "ActivityName", ActivityName)
                             onBackPressed()
                         }
                         getString(R.string.activity) -> {
@@ -490,6 +512,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             ReturnMinAge = AllSharedPref.restoreString(this, "minage")
             ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
             ActivityType = AllSharedPref.restoreString(this, "SelectValueactivity")
+            ActivityName = AllSharedPref.restoreString(this, "ActivityName")
             Age = AllSharedPref.restoreString(this, "Age")
 
             Log.d("ActivityFilterActivity ",
@@ -519,6 +542,7 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
             ReturnMinAge = AllSharedPref.restoreString(this, "minage")
             ReturnMaxAge = AllSharedPref.restoreString(this, "maxage")
             ActivityType = AllSharedPref.restoreString(this, "SelectValueEvent")
+            ActivityName = AllSharedPref.restoreString(this, "ActivityName")
             Age = AllSharedPref.restoreString(this, "AgeEvent")
 
             Log.d("ActivityFilterActivity ",
@@ -538,7 +562,6 @@ class ActivitiesFilterActivity : AppCompatActivity(), CoroutineScope, View.OnCli
                             .first()
                 }
             }
-        } else {
         }
     }
 }

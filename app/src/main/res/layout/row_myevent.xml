@@ -179,7 +179,7 @@
                             android:layout_height="@dimen/_10sdp"
                             android:layout_gravity="center"
                             android:src="@drawable/age_icon"
-                            app:tint="@color/colorPrimaryDark" />
+                            />
 
                         <TextView
                             android:id="@+id/tv_eventage"

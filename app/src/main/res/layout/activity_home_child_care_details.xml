@@ -186,7 +186,8 @@
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/description"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
@@ -202,8 +203,9 @@
                             style="@style/CommonTextWrapcontent"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/number_of_places_still_available"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
@@ -239,7 +241,8 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/phone"
-                            android:textColor="@color/grey"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
@@ -256,7 +259,8 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/address"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView

@@ -95,7 +95,11 @@ class MyAdsTraderAdapter(var context: Context, internal var myadsTraderlist: Arr
 
 
             tvTraderdesc.text = myadsList.description
-            phone.text = myadsList.country_code+"-"+myadsList.phone
+            if (myadsList.phone!="") {
+                phone.visibility = View.VISIBLE
+                phone.text = myadsList.country_code + "-" + myadsList.phone
+            }else
+                phone.visibility = View.GONE
             tvAddress.text = myadsList.address
 
             if (myadsList.tradersimages.size >0)

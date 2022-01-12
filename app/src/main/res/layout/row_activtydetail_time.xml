@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/age_icon" />
+                android:src="@drawable/white_clock" />
 
             <TextView
                 android:id="@+id/text2"
@@ -84,7 +84,7 @@
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/white_clock" />
+                android:src="@drawable/age_icon" />
 
             <TextView
                 android:id="@+id/text3"

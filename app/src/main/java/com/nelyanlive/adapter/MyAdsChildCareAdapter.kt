@@ -34,13 +34,14 @@ class MyAdsChildCareAdapter(var context: Context, private var myadsChildCarelist
         var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
         var tvMsg = itemView.findViewById(R.id.tv_available_place) as TextView
         var ivActivityImage = itemView.findViewById(R.id.iv_activity_image) as ImageView
+        var ageicon = itemView.findViewById(R.id.ageicon) as ImageView
         var ivDot = itemView.findViewById(R.id.iv_favouritessss) as ImageView
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
         var llActivityDetails = itemView.findViewById(R.id.ll_activity_details) as LinearLayout
 
 
         fun bind(myadsList: GetChildcarePostMyAds) {
-
+            ageicon.visibility = View.GONE
             ivDot.setImageResource(R.drawable.option_dot)
 
             ivDot.setOnClickListener {

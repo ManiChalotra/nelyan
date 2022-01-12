@@ -40,6 +40,7 @@ class MyAddAdapter(
         var tvNameOfShop = itemView.findViewById(R.id.tv_nameOfShop) as TextView
         var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
         var tvMsg = itemView.findViewById(R.id.tv_available_place) as TextView
+        var tv_minmaxage = itemView.findViewById(R.id.tv_minmaxage) as TextView
         var ivActivityImage = itemView.findViewById(R.id.iv_activity_image) as ImageView
         var ivDot = itemView.findViewById(R.id.iv_favouritessss) as ImageView
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
@@ -75,6 +76,7 @@ class MyAddAdapter(
             tvDescription.text = myadsList.description
             tvAddress.text = myadsList.address
             tvNameOfShop.text = myadsList.nameOfShop
+            tv_minmaxage.text = "  Min ${myadsList.minAge} ${context!!.getString(R.string.years_masculinesmall)} -  Max ${myadsList.maxAge} ${context!!.getString(R.string.years_masculinesmall)}"
 
             if (myadsList.activityimages.size != null && myadsList.activityimages.size != 0)
                 Glide.with(context).load(image_base_URl + myadsList.activityimages[0].images)

@@ -45,6 +45,7 @@
     <string name="heading">Titre</string>
     <string name="permissions_is_mandatory">Autorisations obligatoires</string>
     <string name="ok">Ok</string>
+    <string name="age1">Âge:Si l’âge n’est pas applicable, mettez 1 à 99</string>
 
     <string name="go_to_settings_to_give_permissions">Allez dans les paramètres pour donner des autorisations car les autorisations sont obligatoires</string>
     <string name="contactUs">Nous contacter</string>
@@ -90,7 +91,7 @@
     <string name="address_missing_error">Veuillez saisir l\'adresse</string>
     <string name="description_missing">Veuillez entrer la description</string>
     <string name="select_image_video_error">Veuillez sélectionner au moins une image</string>
-    <string name="submit">Envoyer</string>
+    <string name="submit">Valider</string>
     <string name="price1">Prix:</string>
     <string name="startdate1">Date début:</string>
     <string name="end_date1">Date fin:</string>

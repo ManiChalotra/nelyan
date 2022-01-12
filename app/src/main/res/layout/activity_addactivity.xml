@@ -283,7 +283,7 @@
                     android:digits="0123456789"
                     android:hint="@string/phone_number"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:maxLength="10"
                     android:maxLines="1" />
 
@@ -319,7 +319,8 @@
             <TextView
                 style="@style/CommonTextWrapcontent"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/age" />
+                android:textColor="@color/black"
+                android:text="@string/age1" />
 
             <LinearLayout
                 android:layout_width="match_parent"

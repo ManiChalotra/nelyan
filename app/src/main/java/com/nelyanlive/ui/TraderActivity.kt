@@ -66,7 +66,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
     private val job by lazy { kotlinx.coroutines.Job() }
     private lateinit var dayTimeRepeatAdapter: DayTimeRepeatAdapter
     private lateinit var productDetailRepeatAdapter: ProductDetailRepeatAdapter
-    private var countryCodee = "+33"
+    private var countryCodee = ""
     private var productPhotoPosition = 0
     private var selectDayGroup: JSONArray = JSONArray()
     private var productDetailsGroup: JSONArray = JSONArray()
@@ -198,6 +198,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
+//     var numberPhone = ""
+//            if (et_trader_phone.text.toString().trim().isEmpty()){
+//                numberPhone =""
+//
+//            } else
+//                numberPhone = et_trader_phone.text.toString().trim()
 
             appViewModel.send_addPostTraderData(
                 security_key,

@@ -175,6 +175,7 @@
     <string name="no_days_found_activity">No days found</string>
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="age">Age:</string>
+    <string name="age1">Age:If the age is not applicable, put 1 to 99</string>
     <string name="name_of_traineship">Name of Traineship:</string>
     <string name="date1">Date:</string>
     <string name="years">Years</string>
