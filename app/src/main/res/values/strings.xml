@@ -54,6 +54,7 @@
     <string name="Comment">Comment</string>
     <string name="nursery">Nursery</string>
     <string name="activity">Activity</string>
+    <string name="activity1">Activity</string>
     <string name="filteractivity">Activity</string>
     <string name="materialAssitant">Material Assistant</string>
     <string name="maternal_asistant">Maternal Assistant</string>
@@ -175,6 +176,7 @@
     <string name="no_days_found_activity">No days found</string>
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="age">Age:</string>
+    <string name="age1">Age:If the age is not applicable, put 1 to 99</string>
     <string name="name_of_traineship">Name of Traineship:</string>
     <string name="date1">Date:</string>
     <string name="years">Years</string>
@@ -414,4 +416,5 @@
     <string name="add_a_event">Add a event</string>
     <string name="add_a_product">Add a product</string>
     <string name="daysTitle">Opening hours</string>
+    <string name="phonenumbernot">Phone number should not less than 8 digits</string>
 </resources>

@@ -22,6 +22,10 @@ import com.nelyanlive.data.viewmodel.AppViewModel
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.fragment_child_care.*
+import kotlinx.android.synthetic.main.fragment_child_care.et_location
+import kotlinx.android.synthetic.main.fragment_child_care.et_name
+import kotlinx.android.synthetic.main.fragment_child_care.tvFilterclear
+import kotlinx.android.synthetic.main.fragment_trade_filter.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -45,7 +49,8 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
     private var mDay = 0
     private var latitudee = ""
     private var longitudee = ""
-    var SelectValue = ""
+    var SelectName = ""
+    var ActivityName = ""
     private var ReturnDistance = ""
     var poz: Int = 0
     private var ChildType = ""
@@ -214,8 +219,10 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                             ArrayAdapter<String>(this, R.layout.customspinner, childCareType)
                         childCareTypes!!.adapter = arrayAdapter
 
-                        childType.setSelection(poz)
-
+                       // childType.setSelection(poz)
+                        if (!ActivityName.equals("")) {
+                            childCareTypes?.setSelection(poz)
+                        }
                         childCareTypes!!.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
@@ -224,6 +231,8 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                                     position: Int,
                                     id: Long
                                 ) {
+                                    SelectName = childCareTypes?.getSelectedItem()
+                                        .toString()
                                     childcareTypesId = if (position != 0) {
                                         childCareTypeId[position]!!
                                     } else {
@@ -270,10 +279,17 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                 showPlacePicker()
             }
             R.id.tvFilterclear -> {
-//                val i = Intent(this, HomeChildCareListActivity::class.java)
+//                ClearPreference()
+//                finish()
+
+                /**
+                 * @author Pardeep Sharma
+                 *  to clear all data on clear button
+                 */
                 ClearPreference()
-//                startActivity(i)
-                finish()
+                val intent = Intent()
+                setResult(1, intent)
+                onBackPressed()
             }
             R.id.btnSearch -> {
                 if (et_location.text.isNullOrEmpty()) {
@@ -286,6 +302,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
                         .putExtra("distance", distance)
                         .putExtra("location", et_location.text.toString().trim())
                         .putExtra("childCareType", childcareTypesId)
+                        .putExtra("SelectNameChild", SelectName)
 
                     setResult(1214, intent)
 
@@ -297,11 +314,11 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
     }
 
     fun getFilterValues() {
-        var ReturnName = AllSharedPref.restoreString(this, "returnnamechild")
-        var ReturnLocation = AllSharedPref.restoreString(this, "returnlocationchild")
+        val ReturnName = AllSharedPref.restoreString(this, "returnnamechild")
+        val ReturnLocation = AllSharedPref.restoreString(this, "returnlocationchild")
         ReturnDistance = AllSharedPref.restoreString(this, "returndistancechild")
         ChildType = AllSharedPref.restoreString(this, "Selectvaluechild")
-
+        ActivityName= AllSharedPref.restoreString(this, "SelectNameChild")
         Log.d(
             "ChildFilterActivity ",
             "returnValues_Childif   " + ReturnName + "   " + ReturnDistance + "  " + ChildType
@@ -333,6 +350,7 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
         AllSharedPref.clearFilterValue(this, "returnlocationchild")
         AllSharedPref.clearFilterValue(this, "returndistancechild")
         AllSharedPref.clearFilterValue(this, "Selectvaluechild")
+        AllSharedPref.clearFilterValue(this, "SelectNameChild")
 
     }
 }

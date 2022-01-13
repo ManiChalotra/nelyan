@@ -241,10 +241,10 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 AllSharedPref.save(this, "returnName", returnName!!)
                 AllSharedPref.save(this, "returnLocation", returnLocation!!)
                 AllSharedPref.save(this, "returnDistance", returnDistance!!)
-                AllSharedPref.save(this, "minage", minage!!)
-                AllSharedPref.save(this, "maxage", maxage!!)
-                AllSharedPref.save(this, "SelectValueactivity", TypeActivity!!)
-                AllSharedPref.save(this, "Age", Age!!)
+                AllSharedPref.save(this, "minage", minage)
+                AllSharedPref.save(this, "maxage", maxage)
+                AllSharedPref.save(this, "SelectValueactivity", TypeActivity)
+                AllSharedPref.save(this, "Age", Age)
 
                 Log.e(
                     "ActivityListActivity ",
@@ -284,6 +284,55 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
+            } else if (resultCode == 1){
+                (tvFilter.text == getString(R.string.filter))
+                    launch(Dispatchers.Main.immediate) {
+                       // returnLocation = data?.getStringExtra("location").toString()
+                       // latitude = data?.getStringExtra("latitude").toString()
+                     //   longitude = data?.getStringExtra("longitude").toString()
+
+                        Age = ""
+
+                        val geocoder = Geocoder(this@ActivitiesListActivity, Locale.getDefault())
+                        var list: List<Address>
+                        Log.e("location_changed", "==2=ifdsfdsfdsffff=$latitude==$longitude===$locality")
+
+                        if (latitude.toDouble() != 0.0) {
+                            list = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                            locality = list[0].locality
+                            Log.e("location_changed", "==dasfasdf=$latitude==$longitude===${list[0]}")
+
+                            Log.e("location_changed", "==2=ifffff=$latitude==$longitude===$locality")
+                            if (latitude != "0.0") {
+                                tv_userCityOrZipcode.text = locality
+                                if (checkIfHasNetwork(this@ActivitiesListActivity)) {
+                                    launch(Dispatchers.Main.immediate) {
+                                        val authKey =
+                                            dataStoragePreference.emitStoredValue(
+                                                preferencesKey<String>(
+                                                    "auth_key"
+                                                )
+                                            )
+                                                .first()
+                                        appViewModel.sendFilterActivityListData(
+                                            security_key, authKey,
+                                            latitude, longitude, "", "", "",
+                                            locality, Age
+                                        )
+                                        activity_list_progressbar?.showProgressBar()
+                                    }
+                                } else {
+                                    showSnackBar(
+                                        this@ActivitiesListActivity,
+                                        getString(R.string.no_internet_error)
+                                    )
+                                }
+
+                            }
+                        }
+                    }
+
             } else {
                 checkMvvmResponse()
             }

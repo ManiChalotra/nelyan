@@ -64,7 +64,7 @@
                     android:button="@drawable/radio_button_selector"
                     android:fontFamily="@font/medium"
                     android:paddingStart="@dimen/_10sdp"
-                    android:text="@string/activity"
+                    android:text="@string/activity1"
                     android:textColor="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton

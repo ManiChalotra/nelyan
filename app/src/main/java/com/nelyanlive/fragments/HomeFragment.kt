@@ -141,7 +141,12 @@ class HomeFragment : Fragment(), View.OnClickListener, CoroutineScope,
                 val i = Intent(requireActivity(), TraderListingActivity::class.java)
                 i.putExtra("type", "3")
                 requireActivity().startActivity(i)
-
+                // to clear all data
+                AllSharedPref.clearFilterValue(requireContext(), "returnnametrade")
+                AllSharedPref.clearFilterValue(requireContext(), "returnlocationtrade")
+                AllSharedPref.clearFilterValue(requireContext(), "returndistancetrade")
+                AllSharedPref.clearFilterValue(requireContext(), "SelectValuetrade")
+                AllSharedPref.clearFilterValue(requireContext(), "SelectNametrade")
             }
             2 -> {
                /* val i = Intent(requireActivity(), TraderListingActivity::class.java)

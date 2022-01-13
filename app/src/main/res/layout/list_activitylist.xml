@@ -82,18 +82,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/ageicon"
                         android:layout_width="@dimen/_10sdp"
                         android:layout_height="@dimen/_10sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/age_icon"
-                        app:tint="@color/colorPrimaryDark" />
+                         />
 
                     <TextView
                         android:id="@+id/tv_minmaxage"
                         style="@style/CommonTextWrapcontent"
-                        android:fontFamily="@fontl/semibold"
+                        android:fontFamily="@font/semibold"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                 </LinearLayout>
 

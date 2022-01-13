@@ -256,6 +256,7 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
                     {
                         tvEmailAddress.visibility = View.GONE
                         tv_trader_email.visibility = View.GONE
+                        underlineemail.visibility = View.GONE
                     }
                     else
                     {
@@ -333,10 +334,12 @@ class TraderPublishActivty : AppCompatActivity() , OnMapReadyCallback, View.OnCl
 
                         rvDays!!.visibility = View.VISIBLE
                         tv_trader_no_days!!.visibility = View.GONE
+                        underlinetrade!!.visibility = View.VISIBLE
                     }
                     else {
                         rvDays!!.visibility = View.GONE
                         tv_trader_no_days!!.visibility = View.VISIBLE
+                        tv_trader_no_days!!.visibility = View.GONE
                     }
 
                     if (listTraderProduct != null) {

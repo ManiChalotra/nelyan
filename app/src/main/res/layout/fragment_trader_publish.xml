@@ -104,10 +104,80 @@
                     app:spi_dotSize="@dimen/_6sdp" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@drawable/round_shape" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@color/app" />
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@drawable/round_shape" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@color/app" />
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@drawable/round_shape" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_170sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@color/app" />
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@drawable/round_shape" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_130sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@color/app" />
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@drawable/round_shape" />
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                >
+
+
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/name"
                 android:textAllCaps="true"
@@ -116,14 +186,19 @@
             <TextView
                 android:id="@+id/tv_shop_name"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/_25sdp"
                 android:fontFamily="@font/semibold" />
-
+                <View
+                    android:id="@+id/underlinedesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/description"
@@ -133,17 +208,23 @@
             <TextView
                 android:id="@+id/tv_trader_desc"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/_9sdp" />
-
+                <View
+                    android:id="@+id/underlinedesc1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
             <TextView
                 android:id="@+id/tv_days_title"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:text="@string/daysTitle"
                 android:textAllCaps="true"
@@ -155,8 +236,7 @@
                 android:id="@+id/rv_shops_timings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:nestedScrollingEnabled="true"
                 android:orientation="vertical"
@@ -178,20 +258,18 @@
             <TextView
                 android:id="@+id/tvMessage"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/message"
                 android:textAllCaps="true"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/ivMessage"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/message_ico"
                 android:visibility="gone" />
 
@@ -199,7 +277,6 @@
             <TextView
                 android:id="@+id/tvPhoneTrader"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/phone"
@@ -209,16 +286,22 @@
             <TextView
                 android:id="@+id/tv_trader_phone"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textIsSelectable="true" />
-
+                <View
+                    android:id="@+id/underlinephone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
 
             <TextView
                 android:id="@+id/tvEmailAddress"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/email_address"
@@ -228,14 +311,20 @@
             <TextView
                 android:id="@+id/tv_trader_email"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textIsSelectable="true" />
-
+                <View
+                    android:id="@+id/underlineemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/website"
@@ -245,14 +334,22 @@
             <TextView
                 android:id="@+id/tv_website"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textIsSelectable="true" />
 
+                <View
+                    android:id="@+id/underlinewebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
+
             <TextView
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/bold"
                 android:text="@string/product_detail"
@@ -263,10 +360,19 @@
                 android:id="@+id/rv_traderproduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+                <View
+                    android:id="@+id/underlinetrade"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:background="@color/grey"
+                    />
             <TextView
                 android:id="@+id/tv_trader_no_product"
                 android:layout_width="wrap_content"
@@ -282,7 +388,6 @@
             <TextView
                 android:id="@+id/tv_trader_address"
                 style="@style/CommonTextWrapcontent"
-                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableStart="@drawable/location_black"
                 android:drawableEnd="@drawable/colored_map"
@@ -311,7 +416,10 @@
                     android:layout_height="match_parent" />
 
             </RelativeLayout>
+            </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
 
 
     </androidx.core.widget.NestedScrollView>

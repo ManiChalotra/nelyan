@@ -227,6 +227,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 val returnLat = data.getStringExtra("latitude")
                 val returnlng = data.getStringExtra("longitude")
                 val childCareType = data.getStringExtra("childCareType")
+                val childCareName = data.getStringExtra("SelectNameChild")
                 tv_userCityOrZipcode.text = data.getStringExtra("location")
                 val geocoder = Geocoder(this, Locale.getDefault())
                 var returnLocation = data.getStringExtra("location")
@@ -235,6 +236,7 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 AllSharedPref.save(this, "returnlocationchild", returnLocation!!)
                 AllSharedPref.save(this, "returndistancechild", returnDistance!!)
                 AllSharedPref.save(this, "Selectvaluechild", childCareType!!)
+                AllSharedPref.save(this, "SelectNameChild", childCareName!!)
 
                 Log.d(
                     "ChildCareListActivity ",
@@ -275,7 +277,52 @@ class HomeChildCareListActivity : AppCompatActivity(), View.OnClickListener,
                 } else {
                     showSnackBar(this, getString(R.string.no_internet_error))
                 }
-            } else {
+            } else if(resultCode==1){
+                (tvFilter.text == getString(R.string.filter))
+                    launch(Dispatchers.Main.immediate) {
+                        latitude =
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                                .first()
+                        longitude =
+                            dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                                .first()
+                        val geocoder = Geocoder(this@HomeChildCareListActivity, Locale.getDefault())
+                        val list: List<Address>
+                        Log.e("location_changed", "==3=ifffff=$latitude==$longitude===$locality=")
+                        if (latitude != "0.0") {
+                            list =
+                                geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+
+                            locality = list[0].locality
+
+                            tv_userCityOrZipcode.text = locality
+                            if (checkIfHasNetwork(this@HomeChildCareListActivity)) {
+                                launch(Dispatchers.Main.immediate) {
+                                    val authKey =
+                                        dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key"))
+                                            .first()
+                                    appViewModel.sendChildCareFilterData(
+                                        security_key,
+                                        authKey,
+                                        latitude,
+                                        longitude,
+                                        "",
+                                        "",
+                                        locality,
+                                        ""
+                                    )
+                                    childProgressbar?.showProgressBar()
+                                }
+                            } else {
+                                showSnackBar(
+                                    this@HomeChildCareListActivity,
+                                    getString(R.string.no_internet_error)
+                                )
+                            }
+                        }
+
+                }
+            }else {
                 checkMvvmResponse()
             }
         }

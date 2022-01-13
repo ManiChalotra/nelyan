@@ -123,6 +123,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -133,7 +134,7 @@
 
                         <View
                             android:layout_width="1dp"
-                            android:layout_height="@dimen/_70sdp"
+                            android:layout_height="@dimen/_45sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
@@ -144,7 +145,7 @@
 
                         <View
                             android:layout_width="1dp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_height="@dimen/_45sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
@@ -166,7 +167,7 @@
 
                         <View
                             android:layout_width="1dp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_height="@dimen/_130sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@color/app" />
 
@@ -186,77 +187,118 @@
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/description"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:id="@+id/tv_child_care_description"
                             style="@style/CommonTextWrapcontent"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="8dp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:textColor="@color/black"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/_10sdp" />
+                        <View
+                            android:id="@+id/underlinedesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/_1sdp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="@dimen/_25sdp"
+                            android:background="@color/grey"
+                             />
 
                         <TextView
                             style="@style/CommonTextWrapcontent"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/bold"
                             android:text="@string/number_of_places_still_available"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:id="@+id/tv_available_place"
                             style="@style/CommonTextWrapcontent"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="8dp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="2"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
-
+                        <View
+                            android:id="@+id/underlineavailable_place"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/_1sdp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="@dimen/_25sdp"
+                            android:background="@color/grey"
+                            />
                         <TextView
                             android:id="@+id/tvMessage"
                             style="@style/CommonTextWrapcontent"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/message"
-                            android:textColor="@color/grey"
+                            android:visibility="gone"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp"
-                            android:visibility="gone" />
+                             />
 
                         <ImageView
                             android:id="@+id/iv_msg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:src="@drawable/message_ico"
-                            android:visibility="gone" />
-
+                           android:visibility="gone"  />
+                        <View
+                            android:id="@+id/underlinemsg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/_1sdp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="@dimen/_25sdp"
+                            android:background="@color/grey"
+                          android:visibility="gone"  />
                         <TextView
                             android:id="@+id/tvPhone"
                             style="@style/CommonTextWrapcontent"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/phone"
-                            android:textColor="@color/grey"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView
                             android:id="@+id/tv_childcare_phone"
                             style="@style/CommonTextWrapcontent"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="8dp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:textColor="@color/black"
+
                             android:textIsSelectable="true"
                             android:textSize="@dimen/_10sdp" />
-
+                        <View
+                            android:id="@+id/underlinephone"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/_1sdp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="@dimen/_25sdp"
+                            android:background="@color/grey"
+                            />
                         <TextView
                             style="@style/CommonTextWrapcontent"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:drawablePadding="@dimen/_10sdp"
                             android:text="@string/address"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/bold"
                             android:textSize="@dimen/_12sdp" />
 
                         <TextView

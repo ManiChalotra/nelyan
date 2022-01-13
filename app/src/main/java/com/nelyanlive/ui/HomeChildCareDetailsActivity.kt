@@ -246,6 +246,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
                         } else {
                             tvPhone.visibility = View.GONE
                             tv_childcare_phone.visibility = View.GONE
+                            underlinephone.visibility = View.GONE
 
                         }
                         tv_child_care_address.text =
@@ -304,6 +305,7 @@ class HomeChildCareDetailsActivity : AppCompatActivity(), View.OnClickListener, 
         if (userId != jsonObject.getString("id")) {
             tvMessage.visibility = View.VISIBLE
             iv_msg.visibility = View.VISIBLE
+            underlinemsg.visibility = View.VISIBLE
             iv_msg.setOnClickListener {
                 startActivity(
                     Intent(this, Chat1Activity::class.java)

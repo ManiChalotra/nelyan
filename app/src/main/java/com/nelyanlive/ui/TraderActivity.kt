@@ -198,6 +198,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
+//     var numberPhone = ""
+//            if (et_trader_phone.text.toString().trim().isEmpty()){
+//                numberPhone =""
+//
+//            } else
+//                numberPhone = et_trader_phone.text.toString().trim()
 
             appViewModel.send_addPostTraderData(
                 security_key,
@@ -404,7 +410,11 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                         } else {
                             if (et_description_trader.text.isEmpty()) {
                                 myCustomToast(getString(R.string.description_missing))
-                            } else {
+                            }
+                            else if (et_trader_phone.text.length in 1..7){
+                                myCustomToast("Phone number should not less than 8 digits")
+                            }
+                            else {
                                 if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 } else {

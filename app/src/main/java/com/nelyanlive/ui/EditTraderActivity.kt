@@ -611,6 +611,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                      * @author pardeep sharma
                                      * to hit the api even when day is already selected or not
                                      */
+                                    if (dayTimeList.size>0)
                                   if (dayTimeList[0].selectedDay==""){
                                         dayErrornumber=11
                                         dayErrorString=getString(R.string.select_day)

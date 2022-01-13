@@ -37,6 +37,7 @@ class HomeChildCareListAdapter(var context: Context, internal var childCareDatal
         var tvDescription = itemView.findViewById(R.id.tv_description) as TextView
         var tvMsg = itemView.findViewById(R.id.tv_available_place) as TextView
         var ivActivityImage = itemView.findViewById(R.id.iv_activity_image) as ImageView
+        var ageicon = itemView.findViewById(R.id.ageicon) as ImageView
         var ivFavourite = itemView.findViewById(R.id.iv_favouritessss) as ImageView
         var rl_1 = itemView.findViewById(R.id.rl_1) as RelativeLayout
         var llActivityDetails = itemView.findViewById(R.id.ll_activity_details) as LinearLayout
@@ -46,6 +47,7 @@ class HomeChildCareListAdapter(var context: Context, internal var childCareDatal
             tvActivityname.text = homeChildCareList.name
             tvDescription.text = homeChildCareList.description
             tvAddress.text = homeChildCareList.city
+            ageicon.visibility = View.GONE
             tvMsg.text = context.getString(R.string.available_place)+" "+homeChildCareList.availableplace.toString()
 
             when (homeChildCareList.ChildcareType.toString()) {

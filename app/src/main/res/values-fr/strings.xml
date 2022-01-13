@@ -45,6 +45,7 @@
     <string name="heading">Titre</string>
     <string name="permissions_is_mandatory">Autorisations obligatoires</string>
     <string name="ok">Ok</string>
+    <string name="age1">Âge:Si l’âge n’est pas applicable, mettez 1 à 99</string>
 
     <string name="go_to_settings_to_give_permissions">Allez dans les paramètres pour donner des autorisations car les autorisations sont obligatoires</string>
     <string name="contactUs">Nous contacter</string>
@@ -54,6 +55,7 @@
     <!--    <string name="activity">Activité / événement </string>-->
 <!--    <string name="activity">Activité, association, événement</string>-->
     <string name="activity">Liste des activités</string>
+    <string name="activity1">Activité, association, événement</string>
     <string name="filteractivity">Liste des activités</string>
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
@@ -90,7 +92,7 @@
     <string name="address_missing_error">Veuillez saisir l\'adresse</string>
     <string name="description_missing">Veuillez entrer la description</string>
     <string name="select_image_video_error">Veuillez sélectionner au moins une image</string>
-    <string name="submit">Envoyer</string>
+    <string name="submit">Valider</string>
     <string name="price1">Prix:</string>
     <string name="startdate1">Date début:</string>
     <string name="end_date1">Date fin:</string>
@@ -396,9 +398,9 @@
     <string name="event_type">Type d’événement</string>
     <string name="selecttime_txt">Please select time</string>
 
-    <string name="select_age_text">Please select Age</string>
-    <string name="select_age_from">Please select age From</string>
-    <string name="select_age_to">Please select age To</string>
+    <string name="select_age_text">> Veuillez saisir l’âge</string>
+    <string name="select_age_from"> Veuillez saisir maxium</string>
+    <string name="select_age_to">Veuillez saisir l’âge minimum</string>
     <string name="ageto_fromage_text">age to should be greater than age from</string>
 
     <string name="selectmorningtime_txt">Please select Morning First Time</string>
@@ -413,4 +415,7 @@
     <string name="max_age">Jusqu’à</string>
     <string name="add_a_product">Ajouter des produits</string>
     <string name="daysTitle">Horaires d\'ouvertures</string>
+    <string name="phonenumbernot">Veuillez saisir un numéro de téléphone valide</string>
+
+
 </resources>

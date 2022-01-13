@@ -29,7 +29,8 @@ class ErrorBodyResponse<T> {
             failureMethod(context, msg, progressBar)
         } catch (ex: Exception) {
             ex.printStackTrace()
-            failureMethod(context, ex.localizedMessage, progressBar)
+            // comment
+          //  failureMethod(context, ex.localizedMessage, progressBar)
         }
     }
 

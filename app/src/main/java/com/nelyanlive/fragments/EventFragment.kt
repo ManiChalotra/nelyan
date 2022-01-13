@@ -39,9 +39,6 @@ import android.graphics.Bitmap
 
 import android.graphics.drawable.Drawable
 
-
-
-
 class EventFragment(var userLat: String, var userLong: String, var userLocation: String) :
     Fragment(), OnItemSelectedListener, MyEventAdapter.OnEventItemClickListner {
 
@@ -123,7 +120,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, userLat, userLong, "",
-                        "", userLocation, Age
+                        "", userLocation, Age,TypeActivity
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -187,7 +184,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     appViewModel.sendFilterEventListData(
                         security_key, authKey,
                         latitude, longitude, "",
-                        "", locality, Age
+                        "", locality, Age,""
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -200,7 +197,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     appViewModel.sendFilterEventListData(
                         security_key, authKey,
                         userLat, userLong, "",
-                        "", locality, Age
+                        "", locality, Age,""
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
@@ -227,7 +224,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
             )
         )
 
-        img_noti.setOnClickListener(View.OnClickListener {
+        img_noti.setOnClickListener {
             dailogNotification()
             /* if (img_noti.getDrawable()
                      .getConstantState() == getResources().getDrawable(R.drawable.unmute)
@@ -238,7 +235,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                  img_noti.setImageResource(R.drawable.unmute);
              }*/
 
-        })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -271,14 +268,40 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                     }
                     appViewModel.sendFilterEventListData(
                         security_key, authKey, returnLat, returnLng, returnDistance,
-                        returnName, returnLocation, Age
+                        returnName, returnLocation, Age,TypeActivity
                     )
                     eventProgressBar?.showProgressBar()
                 } else {
                     showSnackBar(requireActivity(), getString(R.string.no_internet_error))
                 }
-            } else {
+            }  else if (resultCode==1){
+                tvFilter!!.text = getString(R.string.filter)
 
+                returnLocation = data?.getStringExtra("location").toString()
+                returnLat = data?.getStringExtra("latitude").toString()
+                returnLng = data?.getStringExtra("longitude").toString()
+                returnDistance = ""
+                 Age = ""
+                TypeActivity = ""
+                (mContext as HomeActivity).tvTitleToolbar!!.text = getString(R.string.upcoming_events) + "\n" + returnLocation
+
+
+                if (checkIfHasNetwork(requireActivity())) {
+                    authKey = AllSharedPref.restoreString(requireContext(), "auth_key")
+
+                    if(latitude.equals(""))
+                    {
+                        returnLat=userLat
+                        returnLng=userLong
+                    }
+                    appViewModel.sendFilterEventListData(
+                        security_key, authKey, returnLat, returnLng, returnDistance,
+                        returnName, returnLocation, Age,TypeActivity
+                    )
+                    eventProgressBar?.showProgressBar()
+                } else {
+                    showSnackBar(requireActivity(), getString(R.string.no_internet_error))
+                }
             }
             Log.d("EventFragment ", "returnValues_Event   " + AllSharedPref.restoreString(
                 mContext, "returnDistance") + "  " + AllSharedPref.restoreString(requireContext(),

@@ -784,6 +784,7 @@ interface JsonPlaceHolder {
         @Field("name") name: String?,
         @Field("address") address: String?,
         @Field("Age") Age: String?,
+        @Field("type") typeId: String?
     ): Call<JsonObject>
 
     @POST("completeprofile_sociallogin")

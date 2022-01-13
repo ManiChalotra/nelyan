@@ -2090,7 +2090,7 @@ class AppViewModel : ViewModel() {
 
     fun sendFilterEventListData(
         securityKey: String?, authKey: String?, lati: String?, longi: String?, distance: String?,
-        name: String?, address: String?, Age: String,
+        name: String?, address: String?, Age: String,type: String
     ) {
         JsonPlaceHolder().getEventFilter(
             securityKey,
@@ -2100,7 +2100,7 @@ class AppViewModel : ViewModel() {
             distance,
             name,
             address,
-            Age
+            Age,type
         )
             .enqueue(object : retrofit2.Callback<JsonObject> {
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
