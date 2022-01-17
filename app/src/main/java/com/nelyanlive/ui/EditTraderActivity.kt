@@ -616,7 +616,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                         dayErrornumber=11
                                         dayErrorString=getString(R.string.select_day)
                                     }
-                                   else if (tvAddTraderProduct.visibility==View.GONE) {
+                                    if (tvAddTraderProduct.visibility==View.GONE) {
                                         productErrorString = getProductError(
                                             productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].image,
                                             productErrorString,
@@ -648,7 +648,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                  //previous             //  if (dayErrornumber != 0 && dayErrorString.isNotEmpty()) {
                                 // changes by pardeep sharma
                                 // if day is selected then should not show error
-                                if (dayErrornumber != 0 && dayErrorString== "Select Day") {
+                                if (dayErrornumber != 0 && dayErrorString== getString(R.string.select_day)) {
                                     myCustomToast(dayErrorString)
 
                                 }

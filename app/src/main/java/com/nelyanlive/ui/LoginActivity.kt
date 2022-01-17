@@ -149,8 +149,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope,
             savedPassword =
                 dataStoragePreference.emitStoredFCMValue(preferencesKey<String>("password")).first()
 
-            if (savedUser != "null" && savedUser != null) tv_emailLogin.text =
-                Editable.Factory.getInstance().newEditable(savedUser)
+            if (savedUser != "null" && savedUser != null)
+                tv_emailLogin.text = Editable.Factory.getInstance().newEditable(savedUser)
             if (savedPassword != "null" && savedPassword != null) tv_passwordLogin.text =
                 Editable.Factory.getInstance().newEditable(savedPassword)
         }

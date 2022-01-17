@@ -314,7 +314,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
 
             Log.e("sadfdfaf", "==222222===$deviceToken===")
 
-            progressDialog.setProgressDialog()
+           // progressDialog.setProgressDialog()
 
         } else {
             // hit with updating the image
@@ -335,6 +335,8 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
     private fun checkMvvmResponse() {
         appViewModel.observeSignupResponse()!!
             .observe(this, androidx.lifecycle.Observer { response ->
+
+                progressDialog.hidedialog()
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
 
@@ -387,8 +389,9 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
                         }
                     }
                 } else {
-                    ErrorBodyResponse(response, this, null)
                     progressDialog.hidedialog()
+                    ErrorBodyResponse(response, this, null)
+
 
                 }
             })
@@ -413,7 +416,7 @@ class SignupActivity : OpenCameraGallery(), OnItemSelectedListener, CoroutineSco
         // for  privacy policy
 
         appViewModel.observePrivacyPolicyResponse()!!
-            .observe(this, androidx.lifecycle.Observer { response ->
+            .observe(this, { response ->
                 if (response!!.isSuccessful && response.code() == 200) {
                     if (response.body() != null) {
                         Log.d("getContent_privacy", "---------" + Gson().toJson(response.body()))
