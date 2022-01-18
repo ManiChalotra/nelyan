@@ -412,7 +412,8 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                 myCustomToast(getString(R.string.description_missing))
                             }
                             else if (et_trader_phone.text.length in 1..7){
-                                myCustomToast("Phone number should not less than 8 digits")
+                            //    myCustomToast("Phone number should not less than 8 digits")
+                                myCustomToast(getString(R.string.phonenumbernot))
                             }
                             else {
                                 if (tv_address.text.isEmpty()) {

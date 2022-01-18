@@ -249,7 +249,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
                                 if (descp.isEmpty()) {
                                     myCustomToast(getString(R.string.description_missing))
                                 } else if (phonee.length in 1..7){
-                                    myCustomToast("Phone number should not less than 8 digits")
+                                    myCustomToast(getString(R.string.phonenumbernot))
                                 }
                                 else {
                                     if (minage.isEmpty() && maxage.isEmpty()) {

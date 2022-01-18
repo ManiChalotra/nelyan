@@ -360,7 +360,8 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                 if (et_addressActivity.text.toString().isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
                                 }  else if (et_phone.text.length in 1..7){
-                                    myCustomToast("Phone number should not less than 8 digits")
+                                 //   myCustomToast("Phone number should not less than 8 digits")
+                                    myCustomToast(getString(R.string.phonenumbernot))
                                 }
                                 else {
                                     if (edtAgeFrom.text.toString()

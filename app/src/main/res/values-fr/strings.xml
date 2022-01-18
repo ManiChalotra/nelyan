@@ -45,7 +45,7 @@
     <string name="heading">Titre</string>
     <string name="permissions_is_mandatory">Autorisations obligatoires</string>
     <string name="ok">Ok</string>
-    <string name="age1">Âge:Si l’âge n’est pas applicable, mettez 1 à 99</string>
+    <string name="age1"><b>Âge:</b> Si l’âge n’est pas applicable, mettez 1 à 99</string>
 
     <string name="go_to_settings_to_give_permissions">Allez dans les paramètres pour donner des autorisations car les autorisations sont obligatoires</string>
     <string name="contactUs">Nous contacter</string>
@@ -399,8 +399,8 @@
     <string name="selecttime_txt">Please select time</string>
 
     <string name="select_age_text">> Veuillez saisir l’âge</string>
-    <string name="select_age_from"> Veuillez saisir maxium</string>
-    <string name="select_age_to">Veuillez saisir l’âge minimum</string>
+    <string name="select_age_from"> Veuillez saisir minimum</string>
+    <string name="select_age_to">Veuillez saisir l’âge maximum</string>
     <string name="ageto_fromage_text">age to should be greater than age from</string>
 
     <string name="selectmorningtime_txt">Please select Morning First Time</string>
