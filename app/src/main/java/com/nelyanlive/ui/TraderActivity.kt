@@ -429,33 +429,35 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                                     productErrorNumber = 0
 
 
-                                    if (productArrayList.size == 0) {
+                                    if (productArrayList.size> 0) {
 
-                                    } else {
-                                        productErrorString = getProductError(
-                                            productArrayList[productArrayList.size - 1].image,
-                                            productErrorString,
-                                            getString(R.string.select_image_in_previous),
-                                            1
-                                        )
-                                        productErrorString = getProductError(
-                                            productArrayList[productArrayList.size - 1].productTitle,
-                                            productErrorString,
-                                            getString(R.string.fill_title_previous),
-                                            2
-                                        )
-                                        productErrorString = getProductError(
-                                            productArrayList[productArrayList.size - 1].productPrice,
-                                            productErrorString,
-                                            getString(R.string.fill_price_previous),
-                                            3
-                                        )
-                                        productErrorString = getProductError(
-                                            productArrayList[productArrayList.size - 1].description,
-                                            productErrorString,
-                                            getString(R.string.fill_description_in_previous),
-                                            4
-                                        )
+                                   // } else {
+                                       for ( i in 0 until productArrayList.size) {
+                                           productErrorString = getProductError(
+                                               productArrayList[i].image,
+                                               productErrorString,
+                                               getString(R.string.select_image_in_previous),
+                                               1
+                                           )
+                                           productErrorString = getProductError(
+                                               productArrayList[i].productTitle,
+                                               productErrorString,
+                                               getString(R.string.fill_title_previous),
+                                               2
+                                           )
+                                           productErrorString = getProductError(
+                                               productArrayList[i].productPrice,
+                                               productErrorString,
+                                               getString(R.string.fill_price_previous),
+                                               3
+                                           )
+                                           productErrorString = getProductError(
+                                               productArrayList[i].description,
+                                               productErrorString,
+                                               getString(R.string.fill_description_in_previous),
+                                               4
+                                           )
+                                       }
                                     }
                                     if (dayErrorNumber != 0 && ageErrorString.isNotEmpty()) {
                                         myCustomToast(ageErrorString)

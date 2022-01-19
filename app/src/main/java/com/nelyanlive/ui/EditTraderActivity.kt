@@ -606,41 +606,47 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                                           getString(R.string.select_evening_time_previous),
                                           5
                                       )*/
-                              //      if (tvAddTraderDay.visibility==View.GONE) {
+                                    //      if (tvAddTraderDay.visibility==View.GONE) {
                                     /**
                                      * @author pardeep sharma
                                      * to hit the api even when day is already selected or not
                                      */
-                                    if (dayTimeList.size>0)
-                                  if (dayTimeList[0].selectedDay==""){
-                                        dayErrornumber=11
-                                        dayErrorString=getString(R.string.select_day)
-                                    }
-                                    if (tvAddTraderProduct.visibility==View.GONE) {
+                                    if (dayTimeList.size > 0)
+                                        if (tvAddTraderDay.visibility == View.GONE && dayTimeList[0].selectedDay == "") {
+                                            dayErrornumber = 11
+                                            dayErrorString = getString(R.string.select_day)
+                                        }
+                                    if (tvAddTraderProduct.visibility == View.GONE) {
+                                        /**
+                                         * for check if any field is empty
+                                         */
+                                        for (i in 0 until productDetailDataModelArrayList.size) {
+
                                         productErrorString = getProductError(
-                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].image,
+                                            productDetailDataModelArrayList[i].image,
                                             productErrorString,
                                             getString(R.string.select_image_in_previous),
                                             1
                                         )
                                         productErrorString = getProductError(
-                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].title,
+                                            productDetailDataModelArrayList[i].title,
                                             productErrorString,
                                             getString(R.string.fill_title_previous),
                                             2
                                         )
                                         productErrorString = getProductError(
-                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].price,
+                                            productDetailDataModelArrayList[i].price,
                                             productErrorString,
                                             getString(R.string.fill_price_previous),
                                             3
                                         )
                                         productErrorString = getProductError(
-                                            productDetailDataModelArrayList[productDetailDataModelArrayList.size - 1].description,
+                                            productDetailDataModelArrayList[i].description,
                                             productErrorString,
                                             getString(R.string.fill_description_in_previous),
                                             4
                                         )
+                                        }
                                     }
                                 }
 
