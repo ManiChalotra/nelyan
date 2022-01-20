@@ -35,6 +35,13 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
         return list.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class EditProductDetailRepeatHolder(var view: View, var productRepeatListener: ProductRepeatListener) : RecyclerView.ViewHolder(view) {
         var tvAdd: TextView = itemView.findViewById(R.id.tv_myAdd)
         var edtDesc: EditText = itemView.findViewById(R.id.edtDesc)

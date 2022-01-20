@@ -147,14 +147,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("imageLogin")).first()
             userlocation =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-           oldLocation = userlocation
+
             userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
                 .first()
-            oldLat = userlat
+
             userlong =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
                     .first()
-         oldLong = userlong
+
             val userName =
                 dataStoragePreference.emitStoredValue(preferencesKey<String>("nameLogin")).first()
             userType =
@@ -289,61 +289,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         setDrawerClicks()
         setToolBarClicks()
-        try {
 
-            if (intent.hasExtra("groupChat")) {
-                launch(Dispatchers.Main.immediate) {
-                    userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
-
-                    userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
-
-                    userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
-
-                    Log.e(
-                        "dataHome ------",
-                        "-----222-----$userlocation------$userlat------$userlong----"
-                    )
-                    bottomNavigationBar!!.selectedItemId = R.id.chat
-                }
-            }
-
-            if (intent.hasExtra("chat")) {
-                userId = intent.getStringExtra("chat")!!
-                bottomNavigationBar!!.selectedItemId = R.id.msg
-            }
-            if (intent.hasExtra("activity")) {
-                if (intent.getStringExtra("activity") == "map") {
-
-                    OpenActivity(ActivitiesFilterActivity::class.java)
-                }
-            }
-
-            if (intent.hasExtra("activity")) {
-                if (intent.getStringExtra("activity") == "nurFrag") {
-                    OpenActivity(HomeChildCareDetailsActivity::class.java)
-                }
-            }
-            if (intent.hasExtra("activity")) {
-                if (intent.getStringExtra("activity") == "acti") {
-                    OpenActivity(ActivityDetailsActivity::class.java)
-                }
-            }
-            if (intent.hasExtra("eventfragment")) {
-                if (intent.getStringExtra("eventfragment").equals("EventFragment")) {
-                    tvTitleToolbar!!.visibility = View.VISIBLE
-                    ivToolBarImage!!.visibility = View.GONE
-                    tvTitleToolbar!!.text =
-                        getString(R.string.upcoming_events) + "\n" + userlocation
-                    iv_bell!!.setImageResource(R.drawable.location_circle)
-                    iv_bell!!.imageTintList = null
-                    fragment = EventFragment(userlat, userlong, userlocation)
-                    loadFragment(fragment)
-                }
-            }
-        } catch (e: Exception) {
-            fragment = HomeFragment()
-            loadFragment(fragment)
-        }
+        // call load data method
+        loadData(intent)
     }
 
 
@@ -716,5 +664,84 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+    }
+
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        loadData(intent!!)
+    }
+
+    private fun loadData(intent: Intent){
+        try {
+
+            if (intent.hasExtra("groupChat")) {
+                launch(Dispatchers.Main.immediate) {
+                    userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
+
+                    userlat = dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin")).first()
+
+                    userlong = dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin")).first()
+
+                    Log.e(
+                        "dataHome ------",
+                        "-----222-----$userlocation------$userlat------$userlong----"
+                    )
+                    bottomNavigationBar!!.selectedItemId = R.id.chat
+                }
+            }
+
+            if (intent.hasExtra("chat")) {
+                userId = intent.getStringExtra("chat")!!
+                bottomNavigationBar!!.selectedItemId = R.id.msg
+            }
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "map") {
+
+                    OpenActivity(ActivitiesFilterActivity::class.java)
+                }
+            }
+
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "nurFrag") {
+                    OpenActivity(HomeChildCareDetailsActivity::class.java)
+                }
+            }
+            if (intent.hasExtra("activity")) {
+                if (intent.getStringExtra("activity") == "acti") {
+                    OpenActivity(ActivityDetailsActivity::class.java)
+                }
+            }
+            if (intent.hasExtra("eventfragment")) {
+                // set for using location
+                launch(Dispatchers.Main.immediate) {
+                    userlocation =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin"))
+                            .first()
+
+                    userlat =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("latitudeLogin"))
+                            .first()
+
+                    userlong =
+                        dataStoragePreference.emitStoredValue(preferencesKey<String>("longitudeLogin"))
+                            .first()
+
+                    if (intent.getStringExtra("eventfragment").equals("EventFragment")) {
+                        tvTitleToolbar!!.visibility = View.VISIBLE
+                        ivToolBarImage!!.visibility = View.GONE
+                        tvTitleToolbar!!.text =
+                            getString(R.string.upcoming_events) + "\n" + userlocation
+                        iv_bell!!.setImageResource(R.drawable.location_circle)
+                        iv_bell!!.imageTintList = null
+                        fragment = EventFragment(userlat, userlong, userlocation)
+                        loadFragment(fragment)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            fragment = HomeFragment()
+            loadFragment(fragment)
+        }
     }
 }

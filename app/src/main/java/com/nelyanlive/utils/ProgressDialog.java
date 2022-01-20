@@ -91,7 +91,7 @@ public class ProgressDialog {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(context);
-        tvText.setText("Loading...");
+        tvText.setText(R.string.loading);
         tvText.setTextColor(ContextCompat.getColor(context, R.color.white));
         tvText.setTextColor(Color.parseColor("#9c238d"));
         tvText.setTextSize(20);

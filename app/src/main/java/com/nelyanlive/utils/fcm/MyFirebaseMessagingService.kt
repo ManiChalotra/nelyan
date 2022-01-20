@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
+
 
 class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
@@ -128,10 +130,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         var numMessages = 0;
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.applogo)
-            .setContentTitle(getString(R.string.app_name))
-            .setContentText(data1["body"]!!).setAutoCancel(true)
-            .setContentIntent(pendingIntent)
+        val icon = BitmapFactory.decodeResource(resources, R.mipmap.applogo)
+
+
+            builder.setSmallIcon(notificationIcon)
+            builder.setLargeIcon(icon)
+            .setColor(getResources().getColor(R.color.albumColorPrimary))
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(data1["body"]!!).setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+
 
 //        builder.setContentText(currentText).setNumber(++numMessages);
 
@@ -199,4 +207,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         var chatNotifyLive: LiveData<String> = chatNotification
 
     }
+
+    private val notificationIcon: Int
+        get() {
+            val useWhiteIcon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+            return if (useWhiteIcon) R.drawable.newlogo else R.drawable.newlogo
+        }
 }

@@ -225,7 +225,8 @@
             android:label="@string/app_name" />
 
 
-        <service android:name=".utils.fcm.MyFirebaseMessagingService">
+        <service android:name=".utils.fcm.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
