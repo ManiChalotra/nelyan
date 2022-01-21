@@ -42,26 +42,49 @@ class ActivityListAdapter(activity: FragmentActivity, internal var homeAcitiviti
             tvDescription.text = homeAcitivityList.description
             tvAddress.text = homeAcitivityList.address
             tv_minmaxage.text = "  Min ${homeAcitivityList.minAge} ${context!!.getString(R.string.years_masculinesmall)} -  Max ${homeAcitivityList.maxAge} ${context!!.getString(R.string.years_masculinesmall)}"
-
+            /*
+                                   [{"id":5,"name":"Sorties et parcs",
+                                   "created":1606905733,"updated":1628196399},
+                                   {"id":14,"name":"Activité sportive","created"
+                                   :1625873590,"updated":1631190238},
+                                   {"id":26,"name":"Divers","created":1631190223,
+                                   "updated":1631191269},{"id":27,"name":
+                                   "Loisir et ateliers","created":1631191322,
+                                   "updated":1631191322},{"id":28,"name":
+                                   "Cours et langues","created":1631192176,
+                                   "updated":1631192176},{"id":29,
+                                   "name":"Activité culturelle et artistique",
+                                   "created":1631192435,"updated":1633186017},
+                                   {"id":30,"name":"Association",
+                                   "created":1633071219,"updated":1633071219}]
+                                    */
             when (homeAcitivityList.typeofActivityId) {
                 5 -> {
-                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.sports)
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Sorties et parcs"
 
                 }
-                9 -> {
-                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.dance)
+                14 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Activité sportive"
 
                 }
-                10 -> {
-                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.drawing)
+                26 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Divers"
 
                 }
-                11 -> {
-                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.zumba)
+                27 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Loisir et ateliers"
 
                 }
-                13 -> {
-                    tvMsg.text = context!!.getString(R.string.type)+" "+context!!.getString(R.string.tutor_mother_subject)
+                28 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Cours et langues"
+
+                }
+                29 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Activité culturelle et artistique"
+
+                }
+                30 -> {
+                    tvMsg.text = context!!.getString(R.string.type)+" "+"Association"
 
                 }
             }

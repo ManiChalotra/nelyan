@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
@@ -77,6 +78,7 @@ class EventRepeatAdapter(
         var month = ""
         var year = ""
         var date_timestamp = ""
+        var date_timestamp_toDate = ""
 
         fun initalize(list: ArrayList<ModelPOJO.AddEventDataModel>, position: Int) {
 
@@ -260,21 +262,61 @@ class EventRepeatAdapter(
                     else (selectedmonth + 1).toString()
 
                     year = selectedyear.toString()
-                    date_timestamp = calDateToTimeStamp(
-                        "$day-$month-$year"
-                    ).toString()
+                    if (type=="1") {
+                        date_timestamp = calDateToTimeStamp(
+                            "$day-$month-$year"
+                        ).toString()
+                    }else{
+                        date_timestamp_toDate = calDateToTimeStamp(
+                            "$day-$month-$year"
+                        ).toString()
+                    }
                     select_date = "$day/$month/$selectedyear"
 
                     when (type) {
                         "1" -> {
-                            list[position].dateFrom = select_date
-                            notifyDataSetChanged()
+                            // check the cases if date is put after the end date
+                            // check by pardeep sharma
+                            if (date_timestamp_toDate != "") {
+                                if (date_timestamp.toLong() < date_timestamp_toDate.toLong()) {
+                                    list[position].dateFrom = select_date
+                                    notifyDataSetChanged()
+                                } else {
+                                    date_timestamp = ""
+                                    list[position].dateFrom = ""
+                                    notifyDataSetChanged()
+                                    Toast.makeText(
+                                        context,
+                                        "La date de début doit être inférieure à la date de fin",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            } else {
+                                list[position].dateFrom = select_date
+                                notifyDataSetChanged()
+                            }
                         }
-
                         "2" -> {
+                            // check the cases if date is put before the start date
+                        if (date_timestamp!=""){
+                            if (date_timestamp.toLong() < date_timestamp_toDate.toLong()) {
+                                list[position].dateTo = select_date
+                                notifyDataSetChanged()
+                            }else{
+                                // clear the values
+                                date_timestamp_toDate = ""
+                                list[position].dateTo = ""
+                                notifyDataSetChanged()
+                                Toast.makeText(
+                                    context,
+                                    "La date de fin doit être supérieur de la date de début",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }else {
                             list[position].dateTo = select_date
                             notifyDataSetChanged()
-
+                        }
                         }
                     }
                 }, mYear, mMonth, mDay

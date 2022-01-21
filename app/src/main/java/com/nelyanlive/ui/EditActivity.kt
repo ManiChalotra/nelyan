@@ -898,6 +898,7 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
                                 selectedPosition = i
                             }
                         }
+
                         val arrayAdapter = ArrayAdapter(this, R.layout.customspinner, typeList)
                         trader_type.adapter = arrayAdapter
                         trader_type.setSelection(selectedPosition + 1)
