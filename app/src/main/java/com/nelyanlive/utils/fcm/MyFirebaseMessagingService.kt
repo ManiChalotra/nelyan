@@ -211,6 +211,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
     private val notificationIcon: Int
         get() {
             val useWhiteIcon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-            return if (useWhiteIcon) R.drawable.logo_blanc else R.drawable.logo_blanc
+            return if (useWhiteIcon) R.drawable.newblanklogo else R.drawable.newblanklogo
         }
 }

@@ -566,7 +566,12 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                         } else {
                             if (tv_address.text.toString().isEmpty()) {
                                 myCustomToast(getString(R.string.address_missing_error))
-                            } else {
+                            }
+                            // check for valid email
+                            else if(et_trader_email.text.toString().isNotEmpty() && !isEmailValid(et_trader_email.text.toString())){
+                                myCustomToast(getString(R.string.enter_valid_email))
+                            }
+                            else {
                                 var dayErrorString = ""
                                 dayErrornumber = 0
                                 var productErrorString = ""
