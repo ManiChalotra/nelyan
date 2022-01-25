@@ -266,7 +266,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
                                 // check the cases if date is put after the end date
                                 // check by pardeep sharma
                                 if (date_timestamp_toDate != "") {
-                                    if (dateTimeStamp.toLong() < date_timestamp_toDate.toLong()) {
+                                    if (dateTimeStamp.toLong() <= date_timestamp_toDate.toLong()) {
                                         list[position].dateFrom = selectDate
                                         notifyDataSetChanged()
                                     } else {
@@ -287,7 +287,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
                             "2" -> {
                                 // check the cases if date is put before the start date
                                 if (dateTimeStamp!=""){
-                                    if (dateTimeStamp.toLong() < date_timestamp_toDate.toLong()) {
+                                    if (dateTimeStamp.toLong() <= date_timestamp_toDate.toLong()) {
                                         list[position].dateTo = selectDate
                                         notifyDataSetChanged()
                                     }else{

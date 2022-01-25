@@ -133,9 +133,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
         val icon = BitmapFactory.decodeResource(resources, R.mipmap.applogo)
 
 
-            builder.setSmallIcon(notificationIcon)
+        builder.setSmallIcon(notificationIcon)
             builder.setLargeIcon(icon)
-            .setColor(getResources().getColor(R.color.albumColorPrimary))
+            .setColor(getResources().getColor(R.color.black))
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(data1["body"]!!).setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -211,7 +211,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
     private val notificationIcon: Int
         get() {
             val useWhiteIcon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-            return if (useWhiteIcon) R.drawable.logoblank else R.drawable.logoblank
+            return if (useWhiteIcon) R.drawable.colorlogo else R.drawable.colorlogo
+
         }
 
 }

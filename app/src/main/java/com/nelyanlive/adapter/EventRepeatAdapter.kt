@@ -278,7 +278,7 @@ class EventRepeatAdapter(
                             // check the cases if date is put after the end date
                             // check by pardeep sharma
                             if (date_timestamp_toDate != "") {
-                                if (date_timestamp.toLong() < date_timestamp_toDate.toLong()) {
+                                if (date_timestamp.toLong() <= date_timestamp_toDate.toLong()) {
                                     list[position].dateFrom = select_date
                                     notifyDataSetChanged()
                                 } else {
@@ -299,7 +299,7 @@ class EventRepeatAdapter(
                         "2" -> {
                             // check the cases if date is put before the start date
                         if (date_timestamp!=""){
-                            if (date_timestamp.toLong() < date_timestamp_toDate.toLong()) {
+                            if (date_timestamp.toLong() <= date_timestamp_toDate.toLong()) {
                                 list[position].dateTo = select_date
                                 notifyDataSetChanged()
                             }else{
