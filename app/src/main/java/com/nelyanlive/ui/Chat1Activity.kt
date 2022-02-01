@@ -104,8 +104,8 @@ class Chat1Activity :  OpenCameraGallery() {
 
     var setImage = ""
     var setImageTrue = false
-    fun setImage(imgPath: String?) {
 
+    fun setImage(imgPath: String?) {
         val mfile: File?
         mfile = File(imgPath!!)
         val imageFile: RequestBody = mfile.asRequestBody("image/*".toMediaTypeOrNull())
@@ -147,13 +147,10 @@ class Chat1Activity :  OpenCameraGallery() {
                 }
             }
             else {
-
                 Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                 progressDialog.hidedialog()
 
             }
         })
     }
-
-
 }
