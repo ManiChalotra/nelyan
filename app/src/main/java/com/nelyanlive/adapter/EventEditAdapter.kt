@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
@@ -63,6 +64,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
         var year = ""
         var month = ""
         var dateTimeStamp = ""
+        var date_timestamp_toDate = ""
 
         fun initialize(list: ArrayList<EventMyAds>, position: Int) {
 
@@ -98,7 +100,7 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
             removeButton.setOnClickListener {
 //                name.clearFocus()
                 list.removeAt(position)
-                var ListSize = list.size
+                val ListSize = list.size
                 listener.onRemoveEventItem(position, ListSize)
 
                 notifyDataSetChanged()
@@ -234,9 +236,16 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
 
                         year = selectedyear.toString()
 
-                        dateTimeStamp = dateToTimeStamp(
+
+                        if (type=="1") {
+                            dateTimeStamp = dateToTimeStamp(
                                 "$day-$month-$year"
-                        ).toString()
+                            ).toString()
+                        }else{
+                            date_timestamp_toDate = dateToTimeStamp(
+                                "$day-$month-$year"
+                            ).toString()
+                        }
                         Log.e("day", day)
                         Log.e("month", month)
                         Log.e("year", selectedyear.toString())
@@ -244,13 +253,59 @@ class EventEditAdapter(var context: Context, var list: ArrayList<EventMyAds>, va
                         selectDate = "$day/$month/$selectedyear"
 
 
-                        if (type == "1") {
-                            list[position].dateFrom = selectDate
-                            notifyDataSetChanged()
-                        } else if (type == "2") {
-                            list[position].dateTo = selectDate
-                            notifyDataSetChanged()
-
+//                        if (type == "1") {
+//                            list[position].dateFrom = selectDate
+//                            notifyDataSetChanged()
+//                        } else if (type == "2") {
+//                            list[position].dateTo = selectDate
+//                            notifyDataSetChanged()
+//
+//                        }
+                        when (type) {
+                            "1" -> {
+                                // check the cases if date is put after the end date
+                                // check by pardeep sharma
+                                if (date_timestamp_toDate != "") {
+                                    if (dateTimeStamp.toLong() <= date_timestamp_toDate.toLong()) {
+                                        list[position].dateFrom = selectDate
+                                        notifyDataSetChanged()
+                                    } else {
+                                        dateTimeStamp = ""
+                                        list[position].dateFrom = ""
+                                        notifyDataSetChanged()
+                                        Toast.makeText(
+                                            context,
+                                            "La date de début doit être inférieure à la date de fin",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                } else {
+                                    list[position].dateFrom = selectDate
+                                    notifyDataSetChanged()
+                                }
+                            }
+                            "2" -> {
+                                // check the cases if date is put before the start date
+                                if (dateTimeStamp!=""){
+                                    if (dateTimeStamp.toLong() <= date_timestamp_toDate.toLong()) {
+                                        list[position].dateTo = selectDate
+                                        notifyDataSetChanged()
+                                    }else{
+                                        // clear the values
+                                        date_timestamp_toDate = ""
+                                        list[position].dateTo = ""
+                                        notifyDataSetChanged()
+                                        Toast.makeText(
+                                            context,
+                                            "La date de fin doit être supérieur de la date de début",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }else {
+                                    list[position].dateTo = selectDate
+                                    notifyDataSetChanged()
+                                }
+                            }
                         }
                     }, mYear, mMonth, mDay
             )

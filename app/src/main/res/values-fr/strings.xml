@@ -178,6 +178,7 @@
     <string name="activity_details">Détails de l\'activité</string>
     <string name="no_days_found">Horaire d\'ouverture non renseigné</string>
     <string name="no_days_found_activity">Pas d’information sur les horaires par groupe</string>
+    <string name="no_days_found_activity_1">Pas d’information</string>
     <string name="no_upcoming_events">Pas d\'événement</string>
     <string name="age">Âge:</string>
     <string name="name_of_traineship">Nom de l\'événement:</string>
@@ -185,12 +186,12 @@
     <string name="years">Années</string>
     <string name="years_masculine">Ans</string>
     <string name="years_masculinesmall">ans</string>
-    <string name="no_age_group_found">Pas d\'information sur l\'âge</string>
+    <string name="no_age_group_found">Pas d\'information</string>
     <string name="facebook_not_error">Facebook n\'a pas été installé</string>
     <string name="whatsapp_not_error">Whatsapp n\'a pas été installé</string>
     <string name="gmail_not_error">GMail n\'a pas été installé</string>
     <string name="age_group_from">Âge à partir de </string>
-    <string name="age_group">Âge</string>
+    <string name="age_group">Horaire / Groupe d’âge</string>
     <string name="age_group_years">Âge Groupe</string>
     <string name="days">Jours</string>
     <string name="age_group_to">Âge jusqu\'à</string>
@@ -417,5 +418,6 @@
     <string name="daysTitle">Horaires d\'ouvertures</string>
     <string name="phonenumbernot">Veuillez saisir un numéro de téléphone valide</string>
     <string name="loading">Chargement...</string>
+    <string name="enter_valid_email">Veuillez saisir une adresse e-mail valide</string>
 
 </resources>

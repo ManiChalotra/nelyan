@@ -198,34 +198,29 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
         if (checkIfHasNetwork(this@TraderActivity)) {
             val authkey = AllSharedPref.restoreString(this, "auth_key")
-//     var numberPhone = ""
-//            if (et_trader_phone.text.toString().trim().isEmpty()){
-//                numberPhone =""
-//
-//            } else
-//                numberPhone = et_trader_phone.text.toString().trim()
 
-            appViewModel.send_addPostTraderData(
-                security_key,
-                authkey,
-                "3",
-                traderTypeId,
-                et_trader_shop_name.text.toString().trim(),
-                et_description_trader.text.toString().trim(),
-                countryCodee,
-                et_trader_phone.text.toString().trim(),
-                tv_address.text.toString().trim(),
-                cityName,
-                cityLatitude,
-                cityLongitude,
-                et_trader_email.text.toString(),
-                et_web_address.text.toString(),
-                selectDayGroup.toString(),
-                productDetailsGroup.toString(),
-                media.toString(),
-                if (days) "1" else "0",
-                if (product) "1" else "0"
-            )
+
+                appViewModel.send_addPostTraderData(
+                    security_key,
+                    authkey,
+                    "3",
+                    traderTypeId,
+                    et_trader_shop_name.text.toString().trim(),
+                    et_description_trader.text.toString().trim(),
+                    countryCodee,
+                    et_trader_phone.text.toString().trim(),
+                    tv_address.text.toString().trim(),
+                    cityName,
+                    cityLatitude,
+                    cityLongitude,
+                    et_trader_email.text.toString(),
+                    et_web_address.text.toString(),
+                    selectDayGroup.toString(),
+                    productDetailsGroup.toString(),
+                    media.toString(),
+                    if (days) "1" else "0",
+                    if (product) "1" else "0"
+                )
 
         } else {
             showSnackBar(this@TraderActivity, getString(R.string.no_internet_error))
@@ -418,7 +413,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
                             else {
                                 if (tv_address.text.isEmpty()) {
                                     myCustomToast(getString(R.string.address_missing_error))
-                                } else {
+                                }
+                                // check for valid email
+                                else if(et_trader_email.text.toString().isNotEmpty() && !isEmailValid(et_trader_email.text.toString())){
+                                        showSnackBar(this@TraderActivity, getString(R.string.enter_valid_email))
+                                }
+                                else {
 
                                     days = true
 

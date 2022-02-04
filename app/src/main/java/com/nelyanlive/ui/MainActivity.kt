@@ -69,32 +69,10 @@ class MainActivity : CheckPlayStoreVersion() {
         mContext = this
         ivLogo = findViewById(R.id.ivLogo)
         GetVersionCode().execute()
-
-        /* timer = Timer()
-         timer!!.schedule(object : TimerTask() {
-             override fun run() {
-                 launch (Dispatchers.Main.immediate){
-                     dataStoragePreference = DataStoragePreference(this@MainActivity)
-                     val email = dataStoragePreference.emitStoredValue(preferencesKey<String>("emailLogin")).first()
-                     val authkey  = dataStoragePreference.emitStoredValue(preferencesKey<String>("auth_key")).first()
-
-
-                     if(!email.isNullOrEmpty() && !authkey.isNullOrEmpty()){
-                         OpenActivity(HomeActivity::class.java)
-                         finishAffinity()
-                     }else {
-                         val i = Intent(this@MainActivity, WalkthroughActivity::class.java)
-                         startActivity(i)
-                         finishAffinity()
-
-                     }
-                 }
-             }
-         }, 3000)*/
     }
 
 
-    fun printKeyHash(context: Activity): String? {
+    private fun printKeyHash(context: Activity): String? {
         val packageInfo: PackageInfo
         var key: String? = null
         try {

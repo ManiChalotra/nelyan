@@ -103,8 +103,8 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
                 val intent =
                     Intent(requireContext(), ActivitiesFilterActivity::class.java).putExtra("name", it.context.getString(R.string.event))
                 startActivityForResult(intent, FILTER_ACTIVITY_REQUEST_CODE)
-                AllSharedPref.save(mContext, "returnNameEvent", returnName!!)
-                AllSharedPref.save(mContext, "returnDistanceEvent", returnDistance!!)
+                AllSharedPref.save(mContext, "returnNameEvent", returnName)
+                AllSharedPref.save(mContext, "returnDistanceEvent", returnDistance)
                 AllSharedPref.save(mContext, "minage", minage)
                 AllSharedPref.save(mContext, "maxage", maxage)
                 AllSharedPref.save(mContext, "SelectValueEvent", TypeActivity)

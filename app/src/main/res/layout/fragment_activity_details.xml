@@ -499,7 +499,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/regular"
-                            android:text="@string/no_days_found_activity"
+                            android:text="@string/no_days_found_activity_1"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_14sdp"
                             android:visibility="gone" />
