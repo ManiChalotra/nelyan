@@ -1,6 +1,7 @@
 package com.nelyanlive.utils
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.datastore.preferences.core.preferencesKey
 import com.nelyanlive.R
+import com.nelyanlive.current_location.SharedUtil
 import com.nelyanlive.db.DataStoragePreference
 import com.nelyanlive.ui.HomeActivity
 import com.nelyanlive.ui.WalkthroughActivity
@@ -103,6 +105,7 @@ abstract class CheckPlayStoreVersion : BaseActivity(), CoroutineScope {
         override fun onPostExecute(onlineVersion: String?) {
             super.onPostExecute(onlineVersion)
             Log.e("datacheck","one")
+            dataStoragePreference = DataStoragePreference(this@CheckPlayStoreVersion)
             if (onlineVersion != null && onlineVersion.isNotEmpty()) {
                 Log.e("datacheck","two")
                 try {
@@ -114,11 +117,17 @@ abstract class CheckPlayStoreVersion : BaseActivity(), CoroutineScope {
                     )
                     val online_version = java.lang.Float.valueOf(onlineVersion.replace(".", ""))!!
                     val diff = java.lang.Float.compare(current_version, online_version)
-                    if (diff < 0) {
-                        openUpdateDialog()
-                    } else {
-                        callNextActivity()
-                    }
+
+                        if (diff < 0) {
+
+                            if (SharedUtil.getPref(applicationContext)==true)
+                                openUpdateDialog()
+                            else
+                                callNextActivity()
+                        } else {
+                            callNextActivity()
+                        }
+
                 } catch (e: PackageManager.NameNotFoundException) {
                     e.printStackTrace()
                 }
@@ -183,6 +192,7 @@ abstract class CheckPlayStoreVersion : BaseActivity(), CoroutineScope {
         val update = dialog.findViewById<View>(R.id.update) as TextView
 
         update.setOnClickListener {
+          SharedUtil.savePref(this,true)
             try {
                 startActivity(
                     Intent(
