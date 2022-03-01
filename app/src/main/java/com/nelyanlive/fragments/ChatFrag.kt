@@ -608,21 +608,46 @@ class ChatFrag(
         tv_cancel.setOnClickListener { uploadImage.dismiss() }
         tvGallery.setOnClickListener {
             uploadImage.dismiss()
-            val intent = Intent()
-            intent.type = "*/*"
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
-            intent.action = Intent.ACTION_GET_CONTENT
-            this.startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                requestCodeGallary
-            )
+//            val intent = Intent()
+//            intent.type = "*/*"
+//            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            this.startActivityForResult(
+//                Intent.createChooser(intent, "Select Picture"),
+//                requestCodeGallary
+//            )
 
+            showFileChooser()
         }
         uploadImage.show()
     }
 
     private var imgPath = ""
 
+    // function for image able to select from downloads also
+    /**
+     * @author Pardeep Sharma
+     * created for image upload from download
+     */
+    private fun showFileChooser() {
+        if (Build.VERSION.SDK_INT < 19) {
+            val intent = Intent()
+            intent.setType("image/jpeg");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(
+                Intent.createChooser(
+                    intent,
+                    "Select Picture"
+                ), requestCodeGallary
+            )
+        } else {
+            val i = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            );
+            startActivityForResult(i, requestCodeGallary)
+        }
+    }
     private fun createImageFile(): File? {
         val image: File?
 

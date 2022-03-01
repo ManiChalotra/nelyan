@@ -123,7 +123,6 @@ interface JsonPlaceHolder {
         @Header("auth_key") auth_key: String?
     ): Call<JsonObject>
 
-
     @POST("myAddList")
     @FormUrlEncoded
     fun getmyAddListAPI(

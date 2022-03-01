@@ -111,20 +111,40 @@ abstract class OpenCameraGallery : AppCompatActivity() {
             uploadImage.dismiss()
             //  selectImage(ivProfile, "1")
 
-            val intent = Intent()
-            intent.type = "*/*"
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
-            //  intent.setType("image/* , video/*")   // for both image and video
-            //  intent.type = "image/*"     // only for image
-            //intent.type = "video/*"     // only for video
-            intent.action = Intent.ACTION_GET_CONTENT
-            this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
-
+//            val intent = Intent()
+//            intent.type = "*/*"
+//            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
+//            //  intent.setType("image/* , video/*")   // for both image and video
+//            //  intent.type = "image/*"     // only for image
+//            //intent.type = "video/*"     // only for video
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            this.startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCodeGallary)
+            showFileChooser()
 
         }
         uploadImage.show()
     }
 
+    //
+    private fun showFileChooser() {
+        if (Build.VERSION.SDK_INT < 19) {
+            val intent = Intent()
+            intent.setType("image/jpeg");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(
+                Intent.createChooser(
+                    intent,
+                    "Select Picture"
+                ), requestCodeGallary
+            )
+        } else {
+            val i = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            );
+            startActivityForResult(i, requestCodeGallary)
+        }
+    }
 
     private fun requestPermission() {
         let { ActivityCompat.requestPermissions(it, permissions, CAMERA_REQUEST) }

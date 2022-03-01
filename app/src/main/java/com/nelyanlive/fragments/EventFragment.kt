@@ -612,7 +612,7 @@ class EventFragment(var userLat: String, var userLong: String, var userLocation:
 
             if(bmap.sameAs(myLogo))
             {
-                typenoti = "0"
+                 typenoti = "0"
                 AllSharedPref.save(requireContext(), "EventPush", typenoti)
                 img_noti.setImageResource(R.drawable.mute);
             }

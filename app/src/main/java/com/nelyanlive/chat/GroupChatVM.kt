@@ -112,8 +112,7 @@ class GroupChatVM : ViewModel() {
                                 "senderID", listChat[position].senderId
                             ).putExtra("senderName", listChat[position].senderName)
                                 .putExtra("senderImage", listChat[position].senderImage)
-                                .putExtra("userId", userId)
-                        )
+                                .putExtra("userId", userId))
 
                     }
                     "fullscreen" -> {
@@ -154,7 +153,7 @@ class GroupChatVM : ViewModel() {
 
     fun serchList(text: String)
     {
-        var listfilter = ArrayList<ChatData>()
+        val listfilter = ArrayList<ChatData>()
         if (text.isNotEmpty()) {
             for (i in 0 until listChat.size) {
                 if (listChat.get(i).message.toLowerCase()
@@ -170,7 +169,7 @@ class GroupChatVM : ViewModel() {
         } else {
             groupChatAdapter.addItems(listChat)
             groupChatAdapter.notifyDataSetChanged()
-            rvChat.getLayoutManager()!!.scrollToPosition(listChat.size - 1)
+            rvChat.layoutManager!!.scrollToPosition(listChat.size - 1)
         }
     }
 
