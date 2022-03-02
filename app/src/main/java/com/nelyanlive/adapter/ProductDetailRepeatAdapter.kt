@@ -15,7 +15,9 @@ import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.adapter.ProductDetailRepeatAdapter.ProductDetailsRepeatViewHolder
 import com.nelyanlive.modals.ProductDetailDataModel
+import com.nelyanlive.utils.CommonMethodsKotlin
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.android.synthetic.main.item_product_details_repeat.view.*
 import java.util.*
 
@@ -158,6 +160,9 @@ class ProductDetailRepeatAdapter(
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
+
+            CommonMethodsKotlin().scrollableEditText(edtDesc,R.id.edtDesc)
+
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -264,6 +265,21 @@ class EditActivity : OpenCameraGallery(), View.OnClickListener,
         ivBack.setOnClickListener(this)
         et_addressActivity.setOnClickListener(this)
         tvAddEvent.setOnClickListener(this)
+
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+
+        et_description.setOnTouchListener { v, event ->
+            if (v.id == R.id.et_description) {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
+        }
     }
 
     override fun onClick(v: View?) {

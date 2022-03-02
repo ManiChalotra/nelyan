@@ -361,7 +361,7 @@
                 android:id="@+id/et_descriptionBabySitter"
                 style="@style/SimpleEdittext"
                 android:hint="@string/description"
-                android:maxLines="3"
+                android:maxLines="10"
 
                 />
 

@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -238,6 +239,20 @@ class EventRepeatAdapter(
                 }
             })
 
+            /**
+             * @author Pardeep Sharma
+             * to make the edittext scrollable
+             */
+
+            description.setOnTouchListener { v, event ->
+                if (v.id == R.id.edtDesc) {
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                    when (event.action and MotionEvent.ACTION_MASK) {
+                        MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                false
+            }
         }
 
         private fun select_date_register_popup(position: Int, type: String) {

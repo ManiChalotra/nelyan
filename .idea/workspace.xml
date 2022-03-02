@@ -26,21 +26,48 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_installreferrer_installreferrer_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_installreferrer_installreferrer_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_volley_volley_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_volley_volley_1_1_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_daimajia_swipelayout_library_1_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_daimajia_swipelayout_library_1_2_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_applinks_5_15_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_applinks_5_15_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_common_5_15_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_common_5_15_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_core_5_15_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_core_5_15_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_login_5_15_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_login_5_15_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_share_5_15_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_android_facebook_share_5_15_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_felipecsl_asymmetricgridview_library_2_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_felipecsl_asymmetricgridview_library_2_0_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_warkiz_widget_indicatorseekbar_2_1_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_warkiz_widget_indicatorseekbar_2_1_2_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_makeramen_roundedimageview_2_3_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_makeramen_roundedimageview_2_3_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_picasso_picasso_2_71828_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_picasso_picasso_2_71828_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_yanzhenjie_album_2_1_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_yanzhenjie_album_2_1_3_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__gun0912_ted_tedpermission_2_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__gun0912_ted_tedpermission_2_2_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Nelyan.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Nelyan.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/chat/GroupChatVM.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/chat/GroupChatVM.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/data/network/JsonPlaceHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/data/network/JsonPlaceHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/fragments/ChatFrag.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/fragments/ChatFrag.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/fragments/EventFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/fragments/EventFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/utils/OpenCameraGallery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/utils/OpenCameraGallery.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/chat_text_right.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/chat_text_right.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EditProductDetailRepeatAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EditProductDetailRepeatAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EventRepeatAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EventRepeatAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/ProductDetailRepeatAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/ProductDetailRepeatAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/AddActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/AddActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/BabySitterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/BabySitterActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditBabySitterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditBabySitterActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditTraderActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditTraderActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/TraderActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/TraderActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/utils/CommonMethodsKotlin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/nelyanlive/utils/CommonMethodsKotlin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_addactivity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_addactivity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_baby_sitter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_baby_sitter.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_trader.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_trader.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_event_add_more.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_event_add_more.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_product_details_repeat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_product_details_repeat.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-fr/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/root/.android/avd/Pixel_3a_API_30_x86.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@SWPRHYFQSSCARGUC]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -95,7 +122,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="BundleExportedModule" value="Nelyan.app" />
-    <property name="DEBUGGABLE_DEVICE" value="emulator-5554" />
+    <property name="DEBUGGABLE_DEVICE" value="oppo-cph2119-SWPRHYFQSSCARGUC" />
     <property name="DEBUGGABLE_PROCESS" value="com.nelyanlive" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@/root/.android/avd/Pixel_3a_API_30_x86.avd" />
@@ -212,9 +239,10 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="477" y="206" width="402" height="381" key="AndroidCreateXmlResourceDialog/0.27.1366.741@0.27.1366.741" timestamp="1642591098535" />
-    <state x="430" y="144" width="505" height="505" key="AndroidProcessChooserDialog" timestamp="1646135684016">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="430" y="115" width="505" height="505" key="AndroidProcessChooserDialog" timestamp="1646209481983">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="430" y="115" key="AndroidProcessChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1646209481983" />
     <state x="430" y="144" width="505" height="505" key="AndroidProcessChooserDialog/0.27.1366.741@0.27.1366.741" timestamp="1646135684016" />
     <state width="640" height="441" key="DebuggerActiveHint" timestamp="1643262704170">
       <screen x="0" y="27" width="1366" height="741" />
@@ -224,21 +252,25 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="456" y="125" width="472" height="543" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1642572074089" />
-    <state width="1320" height="167" key="GridCell.Tab.0.bottom" timestamp="1646137336662">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state width="1323" height="296" key="GridCell.Tab.0.bottom" timestamp="1646209625903">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="296" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
     <state width="1320" height="167" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1646137336662" />
-    <state width="1320" height="167" key="GridCell.Tab.0.center" timestamp="1646137336661">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state width="1323" height="296" key="GridCell.Tab.0.center" timestamp="1646209625903">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="296" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
     <state width="1320" height="167" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1646137336661" />
-    <state width="1320" height="167" key="GridCell.Tab.0.left" timestamp="1646137336661">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state width="1323" height="296" key="GridCell.Tab.0.left" timestamp="1646209625903">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="296" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
     <state width="1320" height="167" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1646137336661" />
-    <state width="1320" height="167" key="GridCell.Tab.0.right" timestamp="1646137336662">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state width="1323" height="296" key="GridCell.Tab.0.right" timestamp="1646209625903">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="1323" height="296" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
     <state width="1320" height="167" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1646137336662" />
     <state x="132" y="85" width="1092" height="622" key="MergeDialog" timestamp="1641812328555">
       <screen x="0" y="27" width="1366" height="741" />
@@ -252,25 +284,28 @@
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="148" y="38" width="1101" height="730" key="SettingsEditor/0.27.1366.741@0.27.1366.741" timestamp="1642760645019" />
-    <state width="683" height="371" key="XDebugger.FullValuePopup" timestamp="1643971114771">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state width="683" height="365" key="XDebugger.FullValuePopup" timestamp="1646209617574">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state width="683" height="365" key="XDebugger.FullValuePopup/0.0.1366.728@0.0.1366.728" timestamp="1646209617574" />
     <state width="683" height="371" key="XDebugger.FullValuePopup/0.27.1366.741@0.27.1366.741" timestamp="1643971114771" />
     <state x="455" y="176" width="446" height="440" key="chooseDestDirectoryDialog" timestamp="1642742567990">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="455" y="176" width="446" height="440" key="chooseDestDirectoryDialog/0.27.1366.741@0.27.1366.741" timestamp="1642742567990" />
-    <state x="293" y="27" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1646137277393">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="293" y="0" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1646218475925">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="293" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1646218475925" />
     <state x="293" y="27" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.741@0.27.1366.741" timestamp="1646137277393" />
     <state x="187" y="108" width="981" height="576" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1642414526297">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="187" y="108" width="981" height="576" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.27.1366.741@0.27.1366.741" timestamp="1642414526297" />
-    <state x="240" y="165" width="752" height="522" key="find.popup" timestamp="1646136923709">
-      <screen x="0" y="27" width="1366" height="741" />
+    <state x="240" y="136" width="752" height="558" key="find.popup" timestamp="1646210064419">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="240" y="136" width="752" height="558" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1646210064419" />
     <state x="240" y="165" width="752" height="522" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1646136923709" />
     <state x="123" y="90" width="1110" height="612" key="git4idea.branch.GitSmartOperationDialog" timestamp="1641812249659">
       <screen x="0" y="27" width="1366" height="741" />
@@ -290,7 +325,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>347</line>
+          <line>363</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
@@ -310,47 +345,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>496</line>
+          <line>512</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>499</line>
+          <line>515</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EditProductDetailRepeatAdapter.kt</url>
-          <line>74</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EditProductDetailRepeatAdapter.kt</url>
-          <line>30</line>
-          <option name="timeStamp" value="64" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/adapter/EditProductDetailRepeatAdapter.kt</url>
-          <line>80</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>536</line>
+          <line>552</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>503</line>
+          <line>519</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>393</line>
+          <line>409</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>505</line>
+          <line>521</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
@@ -360,17 +380,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>894</line>
+          <line>910</line>
           <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>895</line>
+          <line>911</line>
           <option name="timeStamp" value="100" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
-          <line>901</line>
+          <line>917</line>
           <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
@@ -422,6 +442,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/utils/OpenCameraGallery.kt</url>
           <line>197</line>
           <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/fragments/HomeFragment.kt</url>
+          <line>105</line>
+          <option name="timeStamp" value="149" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

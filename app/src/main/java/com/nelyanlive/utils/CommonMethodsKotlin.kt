@@ -1,5 +1,6 @@
 package com.nelyanlive.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -10,6 +11,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Telephony
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
+import android.widget.EditText
 import android.widget.Toast
 import com.nelyanlive.R
 import java.io.UnsupportedEncodingException
@@ -482,6 +486,18 @@ class CommonMethodsKotlin {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
+    fun scrollableEditText(field: EditText,mainId:Int){
+        field.setOnTouchListener { v, event ->
+            if (v.id == mainId) {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
+        }
+    }
 
 
 

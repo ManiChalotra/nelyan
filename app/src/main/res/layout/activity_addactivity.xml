@@ -212,10 +212,12 @@
                 android:backgroundTint="@color/transparent"
                 android:fontFamily="@font/regular"
                 android:hint="@string/description"
-                android:maxLines="3"
+               android:inputType="textMultiLine"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
+                android:gravity="top"
+                android:maxLines="10"
                 android:textSize="@dimen/_10sdp" />
 
             <View

@@ -60,7 +60,8 @@
     <string name="materialAssitant">Assistante maternelle</string>
     <string name="maternal_asistant">Assistante maternelle</string>
     <string name="babySitter">Baby-sitter</string>
-    <string name="traderArtisans">Commerçant</string>
+<!--    <string name="traderArtisans">Commerçant</string>-->
+    <string name="traderArtisans"> Commerces, professionnels</string>
     <string name="publisher">Publier</string>
     <string name="myMessage">Messages</string>
     <!--    <string name="cityChat">Discussion</string>-->
@@ -161,7 +162,7 @@
     <string name="name_of_shop">Nom de la structure </string>
     <string name="name_of_shop1">Nom de la structure :</string>
     <string name="enter_you_scroll_message_of_ad">Enter you scroll message of ad</string>
-    <string name="number_of_places_still_available">Number of places still available</string>
+    <string name="number_of_places_still_available">Places disponibles</string>
     <string name="add_information">Ajouter des informations</string>
     <string name="nursery_missing_erorr">Veuillez saisir le nom</string>
     <string name="nursery_info_missing_error">Veuillez rajouter une description </string>
@@ -220,7 +221,9 @@
     <string name="baby_sitter">Baby-sitter</string>
     <string name="name_of_child_care">Nom</string>
     <string name="activity_types">Types d\'activité</string>
-    <string name="to_add_the_post_you_have_to_change_the_from_consultant_type_to_professional_type">Pour ajouter une annonce, vous devez passer d\'un utilisateur à professionnel</string>
+    <string name="to_add_the_post_you_have_to_change_the_from_consultant_type_to_professional_type">
+        Pour ajouter une annonce, vous devez passer d\' utilisateur à professionnel</string>
+
     <string name="open_settings">Paramètres</string>
     <string name="product_detail">Détails du produit</string>
     <string name="add_product_image">Photo</string>

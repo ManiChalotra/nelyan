@@ -1,11 +1,13 @@
 package com.nelyanlive.adapter
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -15,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nelyanlive.R
 import com.nelyanlive.modals.myAd.TraderProductMyAds
+import com.nelyanlive.utils.CommonMethodsKotlin
 import com.nelyanlive.utils.image_base_URl
+import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.android.synthetic.main.item_product_details_repeat.view.*
 import java.util.*
 
@@ -51,6 +55,7 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
         var ivCam: ImageView = itemView.findViewById(R.id.ivCam)
         val txtdlttrader = itemView.ivdlttrader
 
+        @SuppressLint("ClickableViewAccessibility")
         fun bind(list: ArrayList<TraderProductMyAds>, position: Int) {
 
             if (position == list.size - 1) {
@@ -105,6 +110,12 @@ class EditProductDetailRepeatAdapter(internal var context: Context, internal var
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
+            /**
+             * @author Pardeep Sharma
+             * to make the edittext scrollable
+             */
+
+            CommonMethodsKotlin().scrollableEditText(edtDesc,R.id.edtDesc)
 
             txtdlttrader.setOnClickListener {
                 list.removeAt(position)

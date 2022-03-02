@@ -100,7 +100,7 @@
             android:backgroundTint="@color/transparent"
             android:fontFamily="@font/regular"
             android:hint="@string/description"
-            android:maxLines="3"
+            android:maxLines="10"
             android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"

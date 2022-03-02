@@ -1,10 +1,12 @@
 package com.nelyanlive.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -107,6 +109,7 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         } }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initalizeClicks() {
 
         ivImg.setOnClickListener(this)
@@ -125,6 +128,13 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
             countryCodee = countycode_baby_sitter.selectedCountryCode.toString()
         }
         checkMvvmResponse()
+
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+        CommonMethodsKotlin().scrollableEditText(et_descriptionBabySitter,R.id.et_descriptionBabySitter)
+
     }
 
     override fun onClick(v: View?) {

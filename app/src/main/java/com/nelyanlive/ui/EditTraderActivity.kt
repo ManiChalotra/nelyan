@@ -1,11 +1,13 @@
 package com.nelyanlive.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.location.Geocoder
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -125,6 +127,7 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initalizeClicks() {
         ivImg.setOnClickListener(this)
         ivImg1.setOnClickListener(this)
@@ -250,6 +253,21 @@ class EditTraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
                     }
                 }
             }
+        }
+
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+
+        et_description_trader.setOnTouchListener { v, event ->
+            if (v.id == R.id.et_description_trader) {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
         }
         launch(Dispatchers.Main.immediate) {
             authKey =

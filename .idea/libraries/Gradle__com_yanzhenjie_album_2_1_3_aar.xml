@@ -3,6 +3,7 @@
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6d5b56046a7a30749f127f8d286c3f32/jetified-album-2.1.3/annotations.zip!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6122cd36fc571cea46319dca62da0bca/jetified-album-2.1.3/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f40951560eff55bda9098f55dad104d/jetified-album-2.1.3/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6d5b56046a7a30749f127f8d286c3f32/jetified-album-2.1.3/jars/classes.jar!/" />
@@ -11,6 +12,9 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6122cd36fc571cea46319dca62da0bca/jetified-album-2.1.3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6122cd36fc571cea46319dca62da0bca/jetified-album-2.1.3/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6122cd36fc571cea46319dca62da0bca/jetified-album-2.1.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f40951560eff55bda9098f55dad104d/jetified-album-2.1.3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f40951560eff55bda9098f55dad104d/jetified-album-2.1.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9f40951560eff55bda9098f55dad104d/jetified-album-2.1.3/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yanzhenjie/album/2.1.3/6251c40acc998fcdd3432c8fccf1181aad83b446/album-2.1.3-javadoc.jar!/" />

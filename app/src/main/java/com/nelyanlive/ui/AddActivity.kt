@@ -1,10 +1,12 @@
 package com.nelyanlive.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -141,6 +143,7 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initalizeClicks() {
 
         // initalize the lists
@@ -167,6 +170,20 @@ class AddActivity : OpenCameraGallery(), OnItemSelectedListener, View.OnClickLis
         ivBack.setOnClickListener(this)
         et_addressActivity.setOnClickListener(this)
 
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+
+        et_description.setOnTouchListener { v, event ->
+            if (v.id == R.id.et_description) {
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
+        }
     }
 
     override fun onClick(v: View?) {

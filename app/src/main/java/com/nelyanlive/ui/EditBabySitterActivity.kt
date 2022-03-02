@@ -5,6 +5,7 @@ import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.datastore.preferences.core.preferencesKey
@@ -170,6 +171,12 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
             countryCodee = countycode_baby_sitter.selectedCountryCode.toString()
         }
         checkMvvmResponse()
+
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+        CommonMethodsKotlin().scrollableEditText(et_descriptionBabySitter,R.id.et_descriptionBabySitter)
 
     }
 

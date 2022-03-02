@@ -1,10 +1,12 @@
 package com.nelyanlive.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -27,9 +29,11 @@ import com.nelyanlive.modals.DayTimeModel
 import com.nelyanlive.modals.ProductDetailDataModel
 import com.nelyanlive.utils.*
 import kotlinx.android.synthetic.main.activity_addactivity.*
+import kotlinx.android.synthetic.main.activity_baby_sitter.*
 import kotlinx.android.synthetic.main.activity_trader.*
 import kotlinx.android.synthetic.main.activity_trader.countycode
 import kotlinx.android.synthetic.main.activity_trader.ivBack
+import kotlinx.android.synthetic.main.activity_trader.ivImg
 import kotlinx.android.synthetic.main.activity_trader.ivImg1
 import kotlinx.android.synthetic.main.activity_trader.ivImg2
 import kotlinx.android.synthetic.main.activity_trader.trader_type
@@ -122,6 +126,7 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initializeClicks() {
 
         dayTimeModelArrayList = ArrayList()
@@ -142,6 +147,12 @@ class TraderActivity : OpenCameraGallery(), View.OnClickListener, CoroutineScope
         tvAddTraderDay!!.setOnClickListener(this)
         tvAddTraderProduct!!.setOnClickListener(this)
 
+        /**
+         * @author Pardeep Sharma
+         * to make the edittext scrollable
+         */
+
+        CommonMethodsKotlin().scrollableEditText(et_description_trader,R.id.et_description_trader)
     }
 
     private fun showPlacePicker() {
