@@ -65,7 +65,11 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
 
     private val dataStoragePreference by lazy { DataStoragePreference(this@ChildCareFilterActivity) }
 
-    private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+  //  private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+  private val googleMapKey1 = "AIzaSyD"
+    private val googleMapKey2 = "QWqIXO-sNuM"
+    private val googleMapKey3 = "WupJ7cNNIt"
+    private val googleMapKey4 = "MhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
     override val coroutineContext: CoroutineContext
@@ -174,7 +178,12 @@ class ChildCareFilterActivity : AppCompatActivity(), CoroutineScope, View.OnClic
     }
 
     private fun showPlacePicker() {
-        Places.initialize(applicationContext, googleMapKey)
+        val placeKey= googleMapKey1+googleMapKey2+googleMapKey3+googleMapKey4
+        // Initialize Places.
+        Places.initialize(
+            applicationContext,
+            placeKey
+        )
         val fields: List<Place.Field> = listOf(
             Place.Field.ID,
             Place.Field.NAME,

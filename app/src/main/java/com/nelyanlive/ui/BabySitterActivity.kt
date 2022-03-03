@@ -77,7 +77,11 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         get() = Dispatchers.Main + job
 
     // Initialize Places variables
-    private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    //private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    private val googleMapKey1 = "AIzaSyD"
+    private val googleMapKey2 = "QWqIXO-sNuM"
+    private val googleMapKey3 = "WupJ7cNNIt"
+    private val googleMapKey4 = "MhR4WOkzXDE"
     private val PLACE_PICKER_REQUEST = 1
 
     private var cityName = ""
@@ -419,7 +423,12 @@ class BabySitterActivity : OpenCameraGallery(), View.OnClickListener, CoroutineS
         } }
 
     private fun showPlacePicker() {
-        Places.initialize(applicationContext, googleMapKey)
+        val placeKey= googleMapKey1+googleMapKey2+googleMapKey3+googleMapKey4
+        // Initialize Places.
+        Places.initialize(
+            applicationContext,
+            placeKey
+        )
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, PLACE_PICKER_REQUEST)

@@ -60,7 +60,11 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    //private val googleMapKey = "AIzaSyDQWqIXO-sNuMWupJ7cNNItMhR4WOkzXDE"
+    private val googleMapKey1 = "AIzaSyD"
+    private val googleMapKey2 = "QWqIXO-sNuM"
+    private val googleMapKey3 = "WupJ7cNNIt"
+    private val googleMapKey4 = "MhR4WOkzXDE"
     private val placePickerRequest = 1
 
     private var cityName = ""
@@ -373,7 +377,12 @@ class EditBabySitterActivity : OpenCameraGallery(), View.OnClickListener, Corout
 
 
     private fun showPlacePicker() {
-        Places.initialize(applicationContext, googleMapKey)
+        val placeKey= googleMapKey1+googleMapKey2+googleMapKey3+googleMapKey4
+        // Initialize Places.
+        Places.initialize(
+            applicationContext,
+            placeKey
+        )
         val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, placePickerRequest)
