@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
 
@@ -45,6 +47,10 @@ public class AppController extends Application implements AppLifecycleHandler.Ap
                 .setAlbumLoader(new     MediaLoader())
                 .setLocale(Locale.getDefault())
                 .build());
+
+        // to disable the night mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
     }
 
 

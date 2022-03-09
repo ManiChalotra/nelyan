@@ -42,6 +42,7 @@ class TraderFilterActivity : AppCompatActivity(), View.OnClickListener, Coroutin
     var ActivityType = ""
     var ActivityName = ""
     var poz: Int = 0
+
     private val job by lazy {
         Job()
     }

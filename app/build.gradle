@@ -18,8 +18,8 @@ android {
         applicationId "com.nelyanlive"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 29
-        versionName "1.28"
+        versionCode 30
+        versionName "1.29"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,13 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    // for localization show
+    bundle {
+        language {
+            enableSplit = false
+        }
     }
 }
 

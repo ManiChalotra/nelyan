@@ -237,9 +237,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
     private fun checkMvvmResponse() {
         appViewModel.observeNotificationEnableResponse()!!.observe(this, Observer { response ->
 
-
             Log.d("observeNotificationEnableResponse ", "---------" + Gson().toJson(response!!.body()))
-
 
             if (response.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
@@ -290,11 +288,11 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
         })
 
 
-        // for terms conditipon
+        // for terms condition
         appViewModel.observeTermsConditionResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
-                    Log.d("getContent_terms", "---------" + Gson().toJson(response.body()))
+                    Log.d("getContent_terms", "-------" + Gson().toJson(response.body()))
 
                     val mResponse = response.body().toString()
                     val jsonObject = JSONObject(mResponse)
@@ -305,7 +303,7 @@ class SettingsActivity : AppCompatActivity(), CoroutineScope, View.OnClickListen
             }
         })
 
-        //Logout API
+        // Logout API
         appViewModel.observeLogoutResponse()!!.observe(this, Observer { response ->
             if (response!!.isSuccessful && response.code() == 200) {
                 if (response.body() != null) {
