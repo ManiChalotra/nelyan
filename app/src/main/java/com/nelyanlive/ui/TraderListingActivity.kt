@@ -216,7 +216,7 @@ class TraderListingActivity : AppCompatActivity(), View.OnClickListener,
                 val jsonObject = JSONObject(mResponse)
 
                 val message = jsonObject.get("msg").toString()
-                if (message == "You marked this Post as Your Favourite") {
+                if (message == "You marked this post as your favourite.") {
                     myCustomToast(getString(R.string.marked_as_fav))
 
                     ivFavourite.setImageResource(R.drawable.heart)

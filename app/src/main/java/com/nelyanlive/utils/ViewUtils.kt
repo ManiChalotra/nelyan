@@ -23,7 +23,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 val base_URL = "https://app.nelyan.com/api/"
-//val base_URL = "http://192.168.1.222:1052/api/"
+//val base_URL = "http://192.168.1.109:1052/api/"
 
 val security_key = "nelyan@2021"
 val UNAUTHORIZED = "Invalid Authorization Key"

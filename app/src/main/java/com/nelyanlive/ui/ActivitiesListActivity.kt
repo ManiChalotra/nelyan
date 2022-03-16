@@ -424,7 +424,7 @@ class ActivitiesListActivity : AppCompatActivity(), AdapterView.OnItemSelectedLi
                 val mResponse = response.body().toString()
                 val jsonObject = JSONObject(mResponse)
                 val message = jsonObject.get("msg").toString()
-                if (message == "You marked this Post as Your Favourite") {
+                if (message == "You marked this post as your favourite.") {
                     myCustomToast(getString(R.string.marked_as_favourite))
                     ivFavouritee!!.setImageResource(R.drawable.heart)
                 } else {
