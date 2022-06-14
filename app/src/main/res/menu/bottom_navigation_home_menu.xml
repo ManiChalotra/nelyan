@@ -17,11 +17,13 @@
         android:icon="@drawable/publier_icon"
         android:title="Publisher" />
 
+<!--
     <item
         android:id="@+id/chat"
         android:enabled="true"
         android:icon="@drawable/chat_icon"
         android:title="City Tchat" />
+-->
     <item
         android:id="@+id/event"
         android:enabled="true"

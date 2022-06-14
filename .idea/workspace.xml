@@ -6,8 +6,9 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
@@ -34,7 +35,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/root/.android/avd/Pixel_3a_API_30_x86.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/root/.android/avd/Pixel_XL_API_31.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -82,6 +83,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="23VDhcgi9zT4OKnAHRLCCpLFaeT" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -98,22 +107,30 @@
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
     <property name="ExportApk.BuildVariants" value="release" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="android-custom-view/root/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.3.0/b42a5159ef2c670d26ce08246ec5aaf8f92e5a42/material-1.3.0-sources.jar!/com/google/android/material/bottomnavigation/BottomNavigationView.java_SELECTED" value="BottomNavigationView" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="memory.settings.postsync.last.time.stamp" value="1646811523802" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1654860642115" />
+    <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="emulator" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.nelyanlive.fragments" />
     </key>
   </component>
   <component name="RunManager">
@@ -138,8 +155,7 @@
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
-      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
@@ -194,100 +210,6 @@
     </task>
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="203" y="131" width="950" height="530" key="#PSD" timestamp="1647421786747">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="203" y="131" width="950" height="530" key="#PSD/0.27.1366.741@0.27.1366.741" timestamp="1647421786747" />
-    <state x="262" y="238" key="#xdebugger.evaluate" timestamp="1647433595526">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="262" y="238" key="#xdebugger.evaluate/0.27.1366.741@0.27.1366.741" timestamp="1647433595526" />
-    <state x="477" y="206" width="402" height="381" key="AndroidCreateXmlResourceDialog" timestamp="1642591098535">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="477" y="206" width="402" height="381" key="AndroidCreateXmlResourceDialog/0.27.1366.741@0.27.1366.741" timestamp="1642591098535" />
-    <state x="430" y="144" width="495" height="505" key="AndroidProcessChooserDialog" timestamp="1647434033689">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="430" y="115" key="AndroidProcessChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1646209481983" />
-    <state x="430" y="144" width="495" height="505" key="AndroidProcessChooserDialog/0.27.1366.741@0.27.1366.741" timestamp="1647434033689" />
-    <state width="640" height="441" key="DebuggerActiveHint" timestamp="1647345759983">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state width="640" height="441" key="DebuggerActiveHint/0.27.1366.741@0.27.1366.741" timestamp="1647345759983" />
-    <state x="456" y="125" width="472" height="543" key="FileChooserDialogImpl" timestamp="1642572074089">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="456" y="125" width="472" height="543" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1642572074089" />
-    <state width="1320" height="138" key="GridCell.Tab.0.bottom" timestamp="1647434144785">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state width="1323" height="296" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
-    <state width="1320" height="138" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1647434144785" />
-    <state width="1320" height="138" key="GridCell.Tab.0.center" timestamp="1647434144784">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state width="1323" height="296" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
-    <state width="1320" height="138" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1647434144784" />
-    <state width="1320" height="138" key="GridCell.Tab.0.left" timestamp="1647434144784">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state width="1323" height="296" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
-    <state width="1320" height="138" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1647434144784" />
-    <state width="1320" height="138" key="GridCell.Tab.0.right" timestamp="1647434144784">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state width="1323" height="296" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1646209625903" />
-    <state width="1320" height="138" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1647434144784" />
-    <state x="132" y="85" width="1092" height="622" key="MergeDialog" timestamp="1641812328555">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="132" y="85" width="1092" height="622" key="MergeDialog/0.27.1366.741@0.27.1366.741" timestamp="1641812328555" />
-    <state x="268" y="143" width="819" height="507" key="NewModule_or_Project.wizard" timestamp="1641983099784">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="268" y="143" width="819" height="507" key="NewModule_or_Project.wizard/0.27.1366.741@0.27.1366.741" timestamp="1641983099784" />
-    <state x="148" y="38" width="1101" height="730" key="SettingsEditor" timestamp="1642760645019">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="148" y="38" width="1101" height="730" key="SettingsEditor/0.27.1366.741@0.27.1366.741" timestamp="1642760645019" />
-    <state width="683" height="365" key="XDebugger.FullValuePopup" timestamp="1646209617574">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="683" height="365" key="XDebugger.FullValuePopup/0.0.1366.728@0.0.1366.728" timestamp="1646209617574" />
-    <state width="683" height="371" key="XDebugger.FullValuePopup/0.27.1366.741@0.27.1366.741" timestamp="1643971114771" />
-    <state x="455" y="176" width="446" height="440" key="chooseDestDirectoryDialog" timestamp="1642742567990">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="455" y="176" width="446" height="440" key="chooseDestDirectoryDialog/0.27.1366.741@0.27.1366.741" timestamp="1642742567990" />
-    <state x="293" y="0" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1646218475925">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="293" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1646218475925" />
-    <state x="293" y="27" width="770" height="741" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.741@0.27.1366.741" timestamp="1646137277393" />
-    <state x="187" y="108" width="981" height="576" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1642414526297">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="187" y="108" width="981" height="576" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.27.1366.741@0.27.1366.741" timestamp="1642414526297" />
-    <state x="240" y="165" width="752" height="522" key="find.popup" timestamp="1647433840863">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="240" y="136" width="752" height="558" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1646210064419" />
-    <state x="240" y="165" width="752" height="522" key="find.popup/0.27.1366.741@0.27.1366.741" timestamp="1647433840863" />
-    <state x="123" y="90" width="1110" height="612" key="git4idea.branch.GitSmartOperationDialog" timestamp="1641812249659">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="123" y="90" width="1110" height="612" key="git4idea.branch.GitSmartOperationDialog/0.27.1366.741@0.27.1366.741" timestamp="1641812249659" />
-    <state x="158" y="123" width="1040" height="547" key="new project wizard" timestamp="1642416987099">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="158" y="123" width="1040" height="547" key="new project wizard/0.27.1366.741@0.27.1366.741" timestamp="1642416987099" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1646725924918">
-      <screen x="0" y="27" width="1366" height="741" />
-    </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.27.1366.741@0.27.1366.741" timestamp="1646725924918" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -295,16 +217,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
           <line>367</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/ActivitiesListActivity.kt</url>
-          <line>224</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/ActivitiesListActivity.kt</url>
-          <line>238</line>
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/EditActivity.kt</url>
@@ -430,11 +342,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/HomeChildCareListActivity.kt</url>
           <line>422</line>
           <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/nelyanlive/ui/ActivitiesListActivity.kt</url>
-          <line>426</line>
-          <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20">
+        app:layout_constraintWidth_percent="0.25">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
@@ -41,14 +41,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tab2"
         android:layout_width="@dimen/album_dp_0"
         android:layout_height="match_parent"
         app:layout_constraintStart_toEndOf="@+id/tab1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20">
+        app:layout_constraintWidth_percent="0.25">
 
 
         <ImageView
@@ -96,7 +95,7 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toEndOf="@+id/tab2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20">
+        app:layout_constraintWidth_percent="0.25">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
@@ -132,7 +131,8 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toEndOf="@+id/tab3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20">
+        app:layout_constraintWidth_percent="0.20"
+        android:visibility="gone">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"
@@ -167,9 +167,9 @@
         android:id="@+id/tab5"
         android:layout_width="@dimen/album_dp_0"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@+id/tab4"
+        app:layout_constraintStart_toEndOf="@+id/tab3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20">
+        app:layout_constraintWidth_percent="0.25">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="@dimen/album_dp_0"

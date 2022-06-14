@@ -135,7 +135,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
         builder.setSmallIcon(notificationIcon)
             builder.setLargeIcon(icon)
-            .setColor(getResources().getColor(R.color.black))
+//            .setColor(getResources().getColor(R.color.black))
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(data1["body"]!!).setAutoCancel(true)
                 .setContentIntent(pendingIntent)

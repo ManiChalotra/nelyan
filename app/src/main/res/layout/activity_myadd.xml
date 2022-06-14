@@ -62,13 +62,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/activities"
-            android:gravity="center"
-            android:textSize="@dimen/_14sdp"
+            android:paddingLeft="15dp"
+             android:textSize="@dimen/_14sdp"
             android:textColor="@color/app"
             android:fontFamily="@font/semibold"
             android:layout_weight="1"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_child_care"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,6 +81,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_trader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

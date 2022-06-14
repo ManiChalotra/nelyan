@@ -106,6 +106,7 @@
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
+                    android:visibility="gone"
                     android:id="@+id/btn_child_care"
                     style="@style/CommonTextWrapcontent"
                     android:layout_width="wrap_content"
@@ -119,6 +120,7 @@
 
                 <androidx.appcompat.widget.AppCompatRadioButton
 
+                    android:visibility="gone"
                     android:id="@+id/btn_traderArtisans"
                     style="@style/CommonTextWrapcontent"
                     android:layout_width="wrap_content"

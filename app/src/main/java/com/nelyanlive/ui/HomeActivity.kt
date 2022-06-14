@@ -269,7 +269,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ivToolBarImage = findViewById(R.id.ivToolBarImage)
         iv_bell = findViewById(R.id.iv_bell)
         mDrawerLayout = findViewById(R.id.mDrawerLayout)
-        loadFragment(HomeFragment())
+//        loadFragment(HomeFragment())
+        loadFragment(ActivitiesListFragment())
 
         bottomNavigationBar = findViewById(R.id.navigationbar)
         bottomNavigationBar!!.setOnNavigationItemSelectedListener(this)
@@ -426,11 +427,13 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when (item.itemId) {
 
             R.id.home -> {
-                if (currentFragment !is HomeFragment) {
+//                if (currentFragment !is HomeFragment) {
+                if (currentFragment !is ActivitiesListFragment) {
                     iv_bell!!.visibility = View.GONE
                     tvTitleToolbar!!.visibility = View.GONE
                     ivToolBarImage!!.visibility = View.VISIBLE
-                    fragment = HomeFragment()
+//                    fragment = HomeFragment()
+                    fragment = ActivitiesListFragment()
                     loadFragment(fragment)
                 }
             }
@@ -466,7 +469,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     }
                 }
             }
-            R.id.chat -> {
+           /* R.id.chat -> {
                 if (currentFragment !is ChatFrag) {
                     tvTitleToolbar!!.visibility = View.VISIBLE
                     ivToolBarImage!!.visibility = View.GONE
@@ -482,7 +485,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     fragment = ChatFrag(userlocation, userlat, userlong, iv_bell!!)
                     loadFragment(fragment)
                 }
-            }
+            }*/
             R.id.event -> {
                 if (currentFragment !is EventFragment) {
                    // bottomNavigationBar!!.menu.getItem(4).isCheckable = false
@@ -522,7 +525,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onBackPressed() {
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_container)
-        if (currentFragment is HomeFragment) {
+//        if (currentFragment is HomeFragment) {
+        if (currentFragment is ActivitiesListFragment) {
             if (doubleBackToExitPressedOnce) {
                 finishAffinity()
                 return
@@ -538,7 +542,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             iv_bell!!.visibility = View.GONE
             tvTitleToolbar!!.visibility = View.GONE
             ivToolBarImage!!.visibility = View.VISIBLE
-            fragment = HomeFragment()
+//            fragment = HomeFragment()
+            fragment = ActivitiesListFragment()
             loadFragment(fragment)
             bottomNavigationBar!!.selectedItemId = R.id.home
         }
@@ -675,7 +680,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun loadData(intent: Intent){
         try {
 
-            if (intent.hasExtra("groupChat")) {
+            /*if (intent.hasExtra("groupChat")) {
                 launch(Dispatchers.Main.immediate) {
                     userlocation = dataStoragePreference.emitStoredValue(preferencesKey<String>("cityLogin")).first()
 
@@ -689,7 +694,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     )
                     bottomNavigationBar!!.selectedItemId = R.id.chat
                 }
-            }
+            }*/
 
             if (intent.hasExtra("chat")) {
                 userId = intent.getStringExtra("chat")!!
@@ -740,7 +745,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
         } catch (e: Exception) {
-            fragment = HomeFragment()
+//            fragment = HomeFragment()
+            fragment = ActivitiesListFragment()
             loadFragment(fragment)
         }
     }
